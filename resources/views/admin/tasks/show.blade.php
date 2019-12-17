@@ -17,14 +17,6 @@
                 <tbody>
                     <tr>
                         <th>
-                            {{ trans('cruds.task.fields.id') }}
-                        </th>
-                        <td>
-                            {{ $task->id }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
                             {{ trans('cruds.task.fields.name') }}
                         </th>
                         <td>
@@ -91,6 +83,16 @@
                         </th>
                         <td>
                             {{ $task->user_create->name ?? '' }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.task.fields.construction_contract') }}
+                        </th>
+                        <td>
+                            @foreach($task->construction_contracts as $key => $construction_contract)
+                                <span class="label label-info">{{ $construction_contract->code }}</span>
+                            @endforeach
                         </td>
                     </tr>
                 </tbody>

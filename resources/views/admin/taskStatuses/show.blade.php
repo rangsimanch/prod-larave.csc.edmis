@@ -17,14 +17,6 @@
                 <tbody>
                     <tr>
                         <th>
-                            {{ trans('cruds.taskStatus.fields.id') }}
-                        </th>
-                        <td>
-                            {{ $taskStatus->id }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
                             {{ trans('cruds.taskStatus.fields.name') }}
                         </th>
                         <td>
@@ -39,8 +31,25 @@
                 </a>
             </div>
         </div>
-
-
     </div>
 </div>
+
+<div class="card">
+    <div class="card-header">
+        {{ trans('global.relatedData') }}
+    </div>
+    <ul class="nav nav-tabs" role="tablist" id="relationship-tabs">
+        <li class="nav-item">
+            <a class="nav-link" href="#status_tasks" role="tab" data-toggle="tab">
+                {{ trans('cruds.task.title') }}
+            </a>
+        </li>
+    </ul>
+    <div class="tab-content">
+        <div class="tab-pane" role="tabpanel" id="status_tasks">
+            @includeIf('admin.taskStatuses.relationships.statusTasks', ['tasks' => $taskStatus->statusTasks])
+        </div>
+    </div>
+</div>
+
 @endsection

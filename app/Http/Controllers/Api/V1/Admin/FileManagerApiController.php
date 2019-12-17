@@ -20,12 +20,13 @@ class FileManagerApiController extends Controller
     {
         abort_if(Gate::denies('file_manager_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new FileManagerResource(FileManager::with(['construction_contract', 'team'])->get());
+        return new FileManagerResource(FileManager::with(['construction_contracts', 'team'])->get());
     }
 
     public function store(StoreFileManagerRequest $request)
     {
         $fileManager = FileManager::create($request->all());
+        $fileManager->construction_contracts()->sync($request->input('construction_contracts', []));
 
         if ($request->input('file_upload', false)) {
             $fileManager->addMedia(storage_path('tmp/uploads/' . $request->input('file_upload')))->toMediaCollection('file_upload');
@@ -40,12 +41,13 @@ class FileManagerApiController extends Controller
     {
         abort_if(Gate::denies('file_manager_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new FileManagerResource($fileManager->load(['construction_contract', 'team']));
+        return new FileManagerResource($fileManager->load(['construction_contracts', 'team']));
     }
 
     public function update(UpdateFileManagerRequest $request, FileManager $fileManager)
     {
         $fileManager->update($request->all());
+        $fileManager->construction_contracts()->sync($request->input('construction_contracts', []));
 
         if ($request->input('file_upload', false)) {
             if (!$fileManager->file_upload || $request->input('file_upload') !== $fileManager->file_upload->file_name) {

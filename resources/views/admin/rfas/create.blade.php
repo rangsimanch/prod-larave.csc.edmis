@@ -241,15 +241,19 @@
                 <span class="help-block">{{ trans('cruds.rfa.fields.document_status_helper') }}</span>
             </div>
             <div class="form-group">
-                <label for="construction_contract_id">{{ trans('cruds.rfa.fields.construction_contract') }}</label>
-                <select class="form-control select2 {{ $errors->has('construction_contract') ? 'is-invalid' : '' }}" name="construction_contract_id" id="construction_contract_id">
+                <label for="construction_contracts">{{ trans('cruds.rfa.fields.construction_contract') }}</label>
+                <div style="padding-bottom: 4px">
+                    <span class="btn btn-info btn-xs select-all" style="border-radius: 0">{{ trans('global.select_all') }}</span>
+                    <span class="btn btn-info btn-xs deselect-all" style="border-radius: 0">{{ trans('global.deselect_all') }}</span>
+                </div>
+                <select class="form-control select2 {{ $errors->has('construction_contracts') ? 'is-invalid' : '' }}" name="construction_contracts[]" id="construction_contracts" multiple>
                     @foreach($construction_contracts as $id => $construction_contract)
-                        <option value="{{ $id }}" {{ old('construction_contract_id') == $id ? 'selected' : '' }}>{{ $construction_contract }}</option>
+                        <option value="{{ $id }}" {{ in_array($id, old('construction_contracts', [])) ? 'selected' : '' }}>{{ $construction_contract }}</option>
                     @endforeach
                 </select>
-                @if($errors->has('construction_contract_id'))
+                @if($errors->has('construction_contracts'))
                     <div class="invalid-feedback">
-                        {{ $errors->first('construction_contract_id') }}
+                        {{ $errors->first('construction_contracts') }}
                     </div>
                 @endif
                 <span class="help-block">{{ trans('cruds.rfa.fields.construction_contract_helper') }}</span>

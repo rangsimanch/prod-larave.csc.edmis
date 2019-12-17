@@ -22,9 +22,6 @@
 
                         </th>
                         <th>
-                            {{ trans('cruds.rfa.fields.id') }}
-                        </th>
-                        <th>
                             {{ trans('cruds.rfa.fields.title') }}
                         </th>
                         <th>
@@ -79,7 +76,7 @@
                             {{ trans('cruds.rfa.fields.document_status') }}
                         </th>
                         <th>
-                            {{ trans('cruds.rfa.fields.indenture') }}
+                            {{ trans('cruds.rfa.fields.construction_contract') }}
                         </th>
                         <th>
                             &nbsp;
@@ -91,9 +88,6 @@
                         <tr data-entry-id="{{ $rfa->id }}">
                             <td>
 
-                            </td>
-                            <td>
-                                {{ $rfa->id ?? '' }}
                             </td>
                             <td>
                                 {{ $rfa->title ?? '' }}
@@ -154,7 +148,7 @@
                                 {{ $rfa->document_status->status_name ?? '' }}
                             </td>
                             <td>
-                                @foreach($rfa->indentures as $key => $item)
+                                @foreach($rfa->construction_contracts as $key => $item)
                                     <span class="badge badge-info">{{ $item->code }}</span>
                                 @endforeach
                             </td>

@@ -22,9 +22,6 @@
 
                         </th>
                         <th>
-                            {{ trans('cruds.user.fields.id') }}
-                        </th>
-                        <th>
                             {{ trans('cruds.user.fields.img_user') }}
                         </th>
                         <th>
@@ -58,7 +55,7 @@
                             {{ trans('cruds.user.fields.approved') }}
                         </th>
                         <th>
-                            {{ trans('cruds.user.fields.indenture') }}
+                            {{ trans('cruds.user.fields.construction_contract') }}
                         </th>
                         <th>
                             &nbsp;
@@ -70,9 +67,6 @@
                         <tr data-entry-id="{{ $user->id }}">
                             <td>
 
-                            </td>
-                            <td>
-                                {{ $user->id ?? '' }}
                             </td>
                             <td>
                                 @if($user->img_user)
@@ -115,7 +109,7 @@
                                 <input type="checkbox" disabled="disabled" {{ $user->approved ? 'checked' : '' }}>
                             </td>
                             <td>
-                                @foreach($user->indentures as $key => $item)
+                                @foreach($user->construction_contracts as $key => $item)
                                     <span class="badge badge-info">{{ $item->code }}</span>
                                 @endforeach
                             </td>
@@ -186,7 +180,7 @@
 @endcan
 
   $.extend(true, $.fn.dataTable.defaults, {
-    order: [[ 1, 'desc' ]],
+    order: [[ 2, 'desc' ]],
     pageLength: 100,
   });
   $('.datatable-User:not(.ajaxTable)').DataTable({ buttons: dtButtons })

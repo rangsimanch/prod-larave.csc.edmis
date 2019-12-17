@@ -16,10 +16,6 @@ class AddRelationshipFieldsToUsersTable extends Migration
             $table->unsignedInteger('jobtitle_id')->nullable();
 
             $table->foreign('jobtitle_id', 'jobtitle_fk_622295')->references('id')->on('jobtitles');
-
-            $table->unsignedInteger('construction_contract_id')->nullable();
-
-            $table->foreign('construction_contract_id', 'construction_contract_fk_738353')->references('id')->on('construction_contracts');
         });
     }
 }

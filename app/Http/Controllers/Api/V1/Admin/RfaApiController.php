@@ -20,12 +20,13 @@ class RfaApiController extends Controller
     {
         abort_if(Gate::denies('rfa_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new RfaResource(Rfa::with(['type', 'issueby', 'assign', 'create_by', 'action_by', 'comment_by', 'information_by', 'comment_status', 'for_status', 'document_status', 'construction_contract', 'team'])->get());
+        return new RfaResource(Rfa::with(['type', 'issueby', 'assign', 'create_by', 'action_by', 'comment_by', 'information_by', 'comment_status', 'for_status', 'document_status', 'construction_contracts', 'team'])->get());
     }
 
     public function store(StoreRfaRequest $request)
     {
         $rfa = Rfa::create($request->all());
+        $rfa->construction_contracts()->sync($request->input('construction_contracts', []));
 
         if ($request->input('file_upload_1', false)) {
             $rfa->addMedia(storage_path('tmp/uploads/' . $request->input('file_upload_1')))->toMediaCollection('file_upload_1');
@@ -40,12 +41,13 @@ class RfaApiController extends Controller
     {
         abort_if(Gate::denies('rfa_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new RfaResource($rfa->load(['type', 'issueby', 'assign', 'create_by', 'action_by', 'comment_by', 'information_by', 'comment_status', 'for_status', 'document_status', 'construction_contract', 'team']));
+        return new RfaResource($rfa->load(['type', 'issueby', 'assign', 'create_by', 'action_by', 'comment_by', 'information_by', 'comment_status', 'for_status', 'document_status', 'construction_contracts', 'team']));
     }
 
     public function update(UpdateRfaRequest $request, Rfa $rfa)
     {
         $rfa->update($request->all());
+        $rfa->construction_contracts()->sync($request->input('construction_contracts', []));
 
         if ($request->input('file_upload_1', false)) {
             if (!$rfa->file_upload_1 || $request->input('file_upload_1') !== $rfa->file_upload_1->file_name) {

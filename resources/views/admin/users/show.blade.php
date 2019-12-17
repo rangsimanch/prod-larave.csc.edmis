@@ -17,14 +17,6 @@
                 <tbody>
                     <tr>
                         <th>
-                            {{ trans('cruds.user.fields.id') }}
-                        </th>
-                        <td>
-                            {{ $user->id }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
                             {{ trans('cruds.user.fields.img_user') }}
                         </th>
                         <td>
@@ -122,7 +114,9 @@
                             {{ trans('cruds.user.fields.construction_contract') }}
                         </th>
                         <td>
-                            {{ $user->construction_contract->code ?? '' }}
+                            @foreach($user->construction_contracts as $key => $construction_contract)
+                                <span class="label label-info">{{ $construction_contract->code }}</span>
+                            @endforeach
                         </td>
                     </tr>
                 </tbody>

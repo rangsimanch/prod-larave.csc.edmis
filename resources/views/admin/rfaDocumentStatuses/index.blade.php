@@ -23,9 +23,6 @@
 
                         </th>
                         <th>
-                            {{ trans('cruds.rfaDocumentStatus.fields.id') }}
-                        </th>
-                        <th>
                             {{ trans('cruds.rfaDocumentStatus.fields.status_name') }}
                         </th>
                         <th>
@@ -38,9 +35,6 @@
                         <tr data-entry-id="{{ $rfaDocumentStatus->id }}">
                             <td>
 
-                            </td>
-                            <td>
-                                {{ $rfaDocumentStatus->id ?? '' }}
                             </td>
                             <td>
                                 {{ $rfaDocumentStatus->status_name ?? '' }}
@@ -73,10 +67,11 @@
                 </tbody>
             </table>
         </div>
-
-
     </div>
 </div>
+
+
+
 @endsection
 @section('scripts')
 @parent

@@ -41,9 +41,6 @@ class DepartmentController extends Controller
                 ));
             });
 
-            $table->editColumn('id', function ($row) {
-                return $row->id ? $row->id : "";
-            });
             $table->editColumn('name', function ($row) {
                 return $row->name ? $row->name : "";
             });
@@ -90,6 +87,8 @@ class DepartmentController extends Controller
     public function show(Department $department)
     {
         abort_if(Gate::denies('department_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $department->load('departmentJobtitles');
 
         return view('admin.departments.show', compact('department'));
     }

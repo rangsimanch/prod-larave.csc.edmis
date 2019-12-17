@@ -7,17 +7,14 @@
     </div>
 
     <div class="card-body">
-        <div class="mb-2">
+        <div class="form-group">
+            <div class="form-group">
+                <a class="btn btn-default" href="{{ route('admin.user-alerts.index') }}">
+                    {{ trans('global.back_to_list') }}
+                </a>
+            </div>
             <table class="table table-bordered table-striped">
                 <tbody>
-                    <tr>
-                        <th>
-                            {{ trans('cruds.userAlert.fields.id') }}
-                        </th>
-                        <td>
-                            {{ $userAlert->id }}
-                        </td>
-                    </tr>
                     <tr>
                         <th>
                             {{ trans('cruds.userAlert.fields.alert_text') }}
@@ -36,12 +33,20 @@
                     </tr>
                     <tr>
                         <th>
-                            Users
+                            {{ trans('cruds.userAlert.fields.user') }}
                         </th>
                         <td>
-                            @foreach($userAlert->users as $id => $user)
-                                <span class="label label-info label-many">{{ $user->name }}</span>
+                            @foreach($userAlert->users as $key => $user)
+                                <span class="label label-info">{{ $user->name }}</span>
                             @endforeach
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            {{ trans('cruds.userAlert.fields.note') }}
+                        </th>
+                        <td>
+                            {{ $userAlert->note }}
                         </td>
                     </tr>
                     <tr>
@@ -54,12 +59,15 @@
                     </tr>
                 </tbody>
             </table>
-            <a style="margin-top:20px;" class="btn btn-default" href="{{ url()->previous() }}">
-                {{ trans('global.back_to_list') }}
-            </a>
+            <div class="form-group">
+                <a class="btn btn-default" href="{{ route('admin.user-alerts.index') }}">
+                    {{ trans('global.back_to_list') }}
+                </a>
+            </div>
         </div>
-
-
     </div>
 </div>
+
+
+
 @endsection

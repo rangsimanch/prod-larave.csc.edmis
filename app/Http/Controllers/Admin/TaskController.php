@@ -24,7 +24,7 @@ class TaskController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $query = Task::with(['status', 'tags', 'user_create', 'construction_contract', 'team'])->select(sprintf('%s.*', (new Task)->table));
+            $query = Task::with(['status', 'tags', 'user_create', 'construction_contracts', 'team'])->select(sprintf('%s.*', (new Task)->table));
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
@@ -45,9 +45,6 @@ class TaskController extends Controller
                 ));
             });
 
-            $table->editColumn('id', function ($row) {
-                return $row->id ? $row->id : "";
-            });
             $table->editColumn('name', function ($row) {
                 return $row->name ? $row->name : "";
             });
@@ -100,6 +97,7 @@ class TaskController extends Controller
     {
         $task = Task::create($request->all());
         $task->tags()->sync($request->input('tags', []));
+        $task->construction_contracts()->sync($request->input('construction_contracts', []));
 
         if ($request->input('attachment', false)) {
             $task->addMedia(storage_path('tmp/uploads/' . $request->input('attachment')))->toMediaCollection('attachment');
@@ -118,7 +116,7 @@ class TaskController extends Controller
 
         $user_creates = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $task->load('status', 'tags', 'user_create', 'construction_contract', 'team');
+        $task->load('status', 'tags', 'user_create', 'construction_contracts', 'team');
 
         return view('admin.tasks.edit', compact('statuses', 'tags', 'user_creates', 'task'));
     }
@@ -127,6 +125,7 @@ class TaskController extends Controller
     {
         $task->update($request->all());
         $task->tags()->sync($request->input('tags', []));
+        $task->construction_contracts()->sync($request->input('construction_contracts', []));
 
         if ($request->input('attachment', false)) {
             if (!$task->attachment || $request->input('attachment') !== $task->attachment->file_name) {
@@ -143,7 +142,7 @@ class TaskController extends Controller
     {
         abort_if(Gate::denies('task_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $task->load('status', 'tags', 'user_create', 'construction_contract', 'team');
+        $task->load('status', 'tags', 'user_create', 'construction_contracts', 'team');
 
         return view('admin.tasks.show', compact('task'));
     }

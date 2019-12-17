@@ -23,9 +23,6 @@
 
                         </th>
                         <th>
-                            {{ trans('cruds.userAlert.fields.id') }}
-                        </th>
-                        <th>
                             {{ trans('cruds.userAlert.fields.alert_text') }}
                         </th>
                         <th>
@@ -33,6 +30,9 @@
                         </th>
                         <th>
                             {{ trans('cruds.userAlert.fields.user') }}
+                        </th>
+                        <th>
+                            {{ trans('cruds.userAlert.fields.note') }}
                         </th>
                         <th>
                             {{ trans('cruds.userAlert.fields.created_at') }}
@@ -49,9 +49,6 @@
 
                             </td>
                             <td>
-                                {{ $userAlert->id ?? '' }}
-                            </td>
-                            <td>
                                 {{ $userAlert->alert_text ?? '' }}
                             </td>
                             <td>
@@ -61,6 +58,9 @@
                                 @foreach($userAlert->users as $key => $item)
                                     <span class="badge badge-info">{{ $item->name }}</span>
                                 @endforeach
+                            </td>
+                            <td>
+                                {{ $userAlert->note ?? '' }}
                             </td>
                             <td>
                                 {{ $userAlert->created_at ?? '' }}
@@ -88,10 +88,11 @@
                 </tbody>
             </table>
         </div>
-
-
     </div>
 </div>
+
+
+
 @endsection
 @section('scripts')
 @parent

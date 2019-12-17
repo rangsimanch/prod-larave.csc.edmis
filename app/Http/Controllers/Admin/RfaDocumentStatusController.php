@@ -54,6 +54,8 @@ class RfaDocumentStatusController extends Controller
     {
         abort_if(Gate::denies('rfa_document_status_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
+        $rfaDocumentStatus->load('documentStatusRfas');
+
         return view('admin.rfaDocumentStatuses.show', compact('rfaDocumentStatus'));
     }
 

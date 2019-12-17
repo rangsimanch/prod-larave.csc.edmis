@@ -66,7 +66,7 @@ class UserAlertsController extends Controller
 
     public function read(Request $request)
     {
-        $alerts = \Auth::user()->userAlerts()->where('read', false)->get();
+        $alerts = \Auth::user()->userUserAlerts()->where('read', false)->get();
 
         foreach ($alerts as $alert) {
             $pivot       = $alert->pivot;

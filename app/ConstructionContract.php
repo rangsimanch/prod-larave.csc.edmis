@@ -40,23 +40,23 @@ class ConstructionContract extends Model
         'total_distance_km',
     ];
 
-    public function constructionContractUsers()
-    {
-        return $this->hasMany(User::class, 'construction_contract_id', 'id');
-    }
-
-    public function constructionContractFileManagers()
-    {
-        return $this->hasMany(FileManager::class, 'construction_contract_id', 'id');
-    }
-
     public function constructionContractRfas()
     {
-        return $this->hasMany(Rfa::class, 'construction_contract_id', 'id');
+        return $this->belongsToMany(Rfa::class);
+    }
+
+    public function constructionContractUsers()
+    {
+        return $this->belongsToMany(User::class);
     }
 
     public function constructionContractTasks()
     {
-        return $this->hasMany(Task::class, 'construction_contract_id', 'id');
+        return $this->belongsToMany(Task::class);
+    }
+
+    public function constructionContractFileManagers()
+    {
+        return $this->belongsToMany(FileManager::class);
     }
 }

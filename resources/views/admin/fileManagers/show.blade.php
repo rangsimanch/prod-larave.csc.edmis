@@ -17,14 +17,6 @@
                 <tbody>
                     <tr>
                         <th>
-                            {{ trans('cruds.fileManager.fields.id') }}
-                        </th>
-                        <td>
-                            {{ $fileManager->id }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
                             {{ trans('cruds.fileManager.fields.file_name') }}
                         </th>
                         <td>
@@ -56,7 +48,9 @@
                             {{ trans('cruds.fileManager.fields.construction_contract') }}
                         </th>
                         <td>
-                            {{ $fileManager->construction_contract->code ?? '' }}
+                            @foreach($fileManager->construction_contracts as $key => $construction_contract)
+                                <span class="label label-info">{{ $construction_contract->code }}</span>
+                            @endforeach
                         </td>
                     </tr>
                 </tbody>

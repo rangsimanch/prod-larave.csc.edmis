@@ -22,9 +22,6 @@
 
                         </th>
                         <th>
-                            {{ trans('cruds.rfa.fields.id') }}
-                        </th>
-                        <th>
                             {{ trans('cruds.rfa.fields.title') }}
                         </th>
                         <th>
@@ -79,6 +76,9 @@
                             {{ trans('cruds.rfa.fields.document_status') }}
                         </th>
                         <th>
+                            {{ trans('cruds.rfa.fields.construction_contract') }}
+                        </th>
+                        <th>
                             &nbsp;
                         </th>
                     </tr>
@@ -88,9 +88,6 @@
                         <tr data-entry-id="{{ $rfa->id }}">
                             <td>
 
-                            </td>
-                            <td>
-                                {{ $rfa->id ?? '' }}
                             </td>
                             <td>
                                 {{ $rfa->title ?? '' }}
@@ -149,6 +146,11 @@
                             </td>
                             <td>
                                 {{ $rfa->document_status->status_name ?? '' }}
+                            </td>
+                            <td>
+                                @foreach($rfa->construction_contracts as $key => $item)
+                                    <span class="badge badge-info">{{ $item->code }}</span>
+                                @endforeach
                             </td>
                             <td>
                                 @can('rfa_show')

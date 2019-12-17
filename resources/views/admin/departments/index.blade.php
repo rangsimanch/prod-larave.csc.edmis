@@ -26,9 +26,6 @@
 
                     </th>
                     <th>
-                        {{ trans('cruds.department.fields.id') }}
-                    </th>
-                    <th>
                         {{ trans('cruds.department.fields.name') }}
                     </th>
                     <th>
@@ -40,10 +37,11 @@
                 </tr>
             </thead>
         </table>
-
-
     </div>
 </div>
+
+
+
 @endsection
 @section('scripts')
 @parent
@@ -89,7 +87,6 @@
     ajax: "{{ route('admin.departments.index') }}",
     columns: [
       { data: 'placeholder', name: 'placeholder' },
-{ data: 'id', name: 'id' },
 { data: 'name', name: 'name' },
 { data: 'code', name: 'code' },
 { data: 'actions', name: '{{ trans('global.actions') }}' }

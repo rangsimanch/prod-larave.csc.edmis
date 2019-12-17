@@ -54,6 +54,8 @@ class TaskStatusController extends Controller
     {
         abort_if(Gate::denies('task_status_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
+        $taskStatus->load('statusTasks');
+
         return view('admin.taskStatuses.show', compact('taskStatus'));
     }
 

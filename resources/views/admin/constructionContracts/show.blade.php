@@ -17,14 +17,6 @@
                 <tbody>
                     <tr>
                         <th>
-                            {{ trans('cruds.constructionContract.fields.id') }}
-                        </th>
-                        <td>
-                            {{ $constructionContract->id }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
                             {{ trans('cruds.constructionContract.fields.name') }}
                         </th>
                         <td>
@@ -136,18 +128,13 @@
     </div>
     <ul class="nav nav-tabs" role="tablist" id="relationship-tabs">
         <li class="nav-item">
-            <a class="nav-link" href="#construction_contract_users" role="tab" data-toggle="tab">
-                {{ trans('cruds.user.title') }}
-            </a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="#construction_contract_file_managers" role="tab" data-toggle="tab">
-                {{ trans('cruds.fileManager.title') }}
-            </a>
-        </li>
-        <li class="nav-item">
             <a class="nav-link" href="#construction_contract_rfas" role="tab" data-toggle="tab">
                 {{ trans('cruds.rfa.title') }}
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#construction_contract_users" role="tab" data-toggle="tab">
+                {{ trans('cruds.user.title') }}
             </a>
         </li>
         <li class="nav-item">
@@ -155,19 +142,24 @@
                 {{ trans('cruds.task.title') }}
             </a>
         </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#construction_contract_file_managers" role="tab" data-toggle="tab">
+                {{ trans('cruds.fileManager.title') }}
+            </a>
+        </li>
     </ul>
     <div class="tab-content">
-        <div class="tab-pane" role="tabpanel" id="construction_contract_users">
-            @includeIf('admin.constructionContracts.relationships.constructionContractUsers', ['users' => $constructionContract->constructionContractUsers])
-        </div>
-        <div class="tab-pane" role="tabpanel" id="construction_contract_file_managers">
-            @includeIf('admin.constructionContracts.relationships.constructionContractFileManagers', ['fileManagers' => $constructionContract->constructionContractFileManagers])
-        </div>
         <div class="tab-pane" role="tabpanel" id="construction_contract_rfas">
             @includeIf('admin.constructionContracts.relationships.constructionContractRfas', ['rfas' => $constructionContract->constructionContractRfas])
         </div>
+        <div class="tab-pane" role="tabpanel" id="construction_contract_users">
+            @includeIf('admin.constructionContracts.relationships.constructionContractUsers', ['users' => $constructionContract->constructionContractUsers])
+        </div>
         <div class="tab-pane" role="tabpanel" id="construction_contract_tasks">
             @includeIf('admin.constructionContracts.relationships.constructionContractTasks', ['tasks' => $constructionContract->constructionContractTasks])
+        </div>
+        <div class="tab-pane" role="tabpanel" id="construction_contract_file_managers">
+            @includeIf('admin.constructionContracts.relationships.constructionContractFileManagers', ['fileManagers' => $constructionContract->constructionContractFileManagers])
         </div>
     </div>
 </div>

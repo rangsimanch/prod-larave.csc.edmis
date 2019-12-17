@@ -17,14 +17,6 @@
                 <tbody>
                     <tr>
                         <th>
-                            {{ trans('cruds.rfaCommentStatus.fields.id') }}
-                        </th>
-                        <td>
-                            {{ $rfaCommentStatus->id }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
                             {{ trans('cruds.rfaCommentStatus.fields.name') }}
                         </th>
                         <td>
@@ -39,8 +31,33 @@
                 </a>
             </div>
         </div>
-
-
     </div>
 </div>
+
+<div class="card">
+    <div class="card-header">
+        {{ trans('global.relatedData') }}
+    </div>
+    <ul class="nav nav-tabs" role="tablist" id="relationship-tabs">
+        <li class="nav-item">
+            <a class="nav-link" href="#comment_status_rfas" role="tab" data-toggle="tab">
+                {{ trans('cruds.rfa.title') }}
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#for_status_rfas" role="tab" data-toggle="tab">
+                {{ trans('cruds.rfa.title') }}
+            </a>
+        </li>
+    </ul>
+    <div class="tab-content">
+        <div class="tab-pane" role="tabpanel" id="comment_status_rfas">
+            @includeIf('admin.rfaCommentStatuses.relationships.commentStatusRfas', ['rfas' => $rfaCommentStatus->commentStatusRfas])
+        </div>
+        <div class="tab-pane" role="tabpanel" id="for_status_rfas">
+            @includeIf('admin.rfaCommentStatuses.relationships.forStatusRfas', ['rfas' => $rfaCommentStatus->forStatusRfas])
+        </div>
+    </div>
+</div>
+
 @endsection
