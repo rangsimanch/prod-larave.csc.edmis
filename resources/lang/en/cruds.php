@@ -157,6 +157,8 @@ return [
             'created_at_helper' => '',
             'updated_at'        => 'Updated at',
             'updated_at_helper' => '',
+            'note'              => 'Note',
+            'note_helper'       => '',
         ],
     ],
     'department'             => [

@@ -26,7 +26,7 @@ class RfaController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $query = Rfa::with(['type', 'issueby', 'assign', 'create_by', 'action_by', 'comment_by', 'information_by', 'comment_status', 'for_status', 'document_status', 'construction_contract', 'team'])->select(sprintf('%s.*', (new Rfa)->table));
+            $query = Rfa::with(['type', 'issueby', 'assign', 'create_by', 'action_by', 'comment_by', 'information_by', 'comment_status', 'for_status', 'document_status', 'construction_contracts', 'team'])->select(sprintf('%s.*', (new Rfa)->table));
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
@@ -47,9 +47,6 @@ class RfaController extends Controller
                 ));
             });
 
-            $table->editColumn('id', function ($row) {
-                return $row->id ? $row->id : "";
-            });
             $table->editColumn('title', function ($row) {
                 return $row->title ? $row->title : "";
             });
@@ -119,12 +116,14 @@ class RfaController extends Controller
                 return $row->document_status ? $row->document_status->status_name : '';
             });
 
-            $table->addColumn('construction_contract_code', function ($row) {
-                return $row->construction_contract ? $row->construction_contract->code : '';
-            });
+            $table->editColumn('construction_contract', function ($row) {
+                $labels = [];
 
-            $table->editColumn('construction_contract.name', function ($row) {
-                return $row->construction_contract ? (is_string($row->construction_contract) ? $row->construction_contract : $row->construction_contract->name) : '';
+                foreach ($row->construction_contracts as $construction_contract) {
+                    $labels[] = sprintf('<span class="label label-info label-many">%s</span>', $construction_contract->code);
+                }
+
+                return implode(' ', $labels);
             });
 
             $table->rawColumns(['actions', 'placeholder', 'type', 'issueby', 'assign', 'file_upload_1', 'create_by', 'action_by', 'comment_by', 'information_by', 'comment_status', 'for_status', 'document_status', 'construction_contract']);
@@ -159,7 +158,7 @@ class RfaController extends Controller
 
         $document_statuses = RfaDocumentStatus::all()->pluck('status_name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $construction_contracts = ConstructionContract::all()->pluck('code', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $construction_contracts = ConstructionContract::all()->pluck('code', 'id');
 
         return view('admin.rfas.create', compact('types', 'issuebies', 'assigns', 'create_bies', 'action_bies', 'comment_bies', 'information_bies', 'comment_statuses', 'for_statuses', 'document_statuses', 'construction_contracts'));
     }
@@ -167,6 +166,7 @@ class RfaController extends Controller
     public function store(StoreRfaRequest $request)
     {
         $rfa = Rfa::create($request->all());
+        $rfa->construction_contracts()->sync($request->input('construction_contracts', []));
 
         foreach ($request->input('file_upload_1', []) as $file) {
             $rfa->addMedia(storage_path('tmp/uploads/' . $file))->toMediaCollection('file_upload_1');
@@ -199,9 +199,9 @@ class RfaController extends Controller
 
         $document_statuses = RfaDocumentStatus::all()->pluck('status_name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $construction_contracts = ConstructionContract::all()->pluck('code', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $construction_contracts = ConstructionContract::all()->pluck('code', 'id');
 
-        $rfa->load('type', 'issueby', 'assign', 'create_by', 'action_by', 'comment_by', 'information_by', 'comment_status', 'for_status', 'document_status', 'construction_contract', 'team');
+        $rfa->load('type', 'issueby', 'assign', 'create_by', 'action_by', 'comment_by', 'information_by', 'comment_status', 'for_status', 'document_status', 'construction_contracts', 'team');
 
         return view('admin.rfas.edit', compact('types', 'issuebies', 'assigns', 'create_bies', 'action_bies', 'comment_bies', 'information_bies', 'comment_statuses', 'for_statuses', 'document_statuses', 'construction_contracts', 'rfa'));
     }
@@ -209,6 +209,7 @@ class RfaController extends Controller
     public function update(UpdateRfaRequest $request, Rfa $rfa)
     {
         $rfa->update($request->all());
+        $rfa->construction_contracts()->sync($request->input('construction_contracts', []));
 
         if (count($rfa->file_upload_1) > 0) {
             foreach ($rfa->file_upload_1 as $media) {
@@ -233,7 +234,7 @@ class RfaController extends Controller
     {
         abort_if(Gate::denies('rfa_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $rfa->load('type', 'issueby', 'assign', 'create_by', 'action_by', 'comment_by', 'information_by', 'comment_status', 'for_status', 'document_status', 'construction_contract', 'team');
+        $rfa->load('type', 'issueby', 'assign', 'create_by', 'action_by', 'comment_by', 'information_by', 'comment_status', 'for_status', 'document_status', 'construction_contracts', 'team');
 
         return view('admin.rfas.show', compact('rfa'));
     }

@@ -42,9 +42,6 @@ class JobtitleController extends Controller
                 ));
             });
 
-            $table->editColumn('id', function ($row) {
-                return $row->id ? $row->id : "";
-            });
             $table->editColumn('name', function ($row) {
                 return $row->name ? $row->name : "";
             });
@@ -106,7 +103,7 @@ class JobtitleController extends Controller
     {
         abort_if(Gate::denies('jobtitle_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $jobtitle->load('departments');
+        $jobtitle->load('departments', 'jobtitleUsers');
 
         return view('admin.jobtitles.show', compact('jobtitle'));
     }

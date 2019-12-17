@@ -17,14 +17,6 @@
                 <tbody>
                     <tr>
                         <th>
-                            {{ trans('cruds.rfa.fields.id') }}
-                        </th>
-                        <td>
-                            {{ $rfa->id }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
                             {{ trans('cruds.rfa.fields.title') }}
                         </th>
                         <td>
@@ -184,7 +176,9 @@
                             {{ trans('cruds.rfa.fields.construction_contract') }}
                         </th>
                         <td>
-                            {{ $rfa->construction_contract->code ?? '' }}
+                            @foreach($rfa->construction_contracts as $key => $construction_contract)
+                                <span class="label label-info">{{ $construction_contract->code }}</span>
+                            @endforeach
                         </td>
                     </tr>
                 </tbody>

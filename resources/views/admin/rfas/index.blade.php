@@ -26,9 +26,6 @@
 
                     </th>
                     <th>
-                        {{ trans('cruds.rfa.fields.id') }}
-                    </th>
-                    <th>
                         {{ trans('cruds.rfa.fields.title') }}
                     </th>
                     <th>
@@ -86,9 +83,6 @@
                         {{ trans('cruds.rfa.fields.construction_contract') }}
                     </th>
                     <th>
-                        {{ trans('cruds.constructionContract.fields.name') }}
-                    </th>
-                    <th>
                         &nbsp;
                     </th>
                 </tr>
@@ -144,7 +138,6 @@
     ajax: "{{ route('admin.rfas.index') }}",
     columns: [
       { data: 'placeholder', name: 'placeholder' },
-{ data: 'id', name: 'id' },
 { data: 'title', name: 'title' },
 { data: 'document_number', name: 'document_number' },
 { data: 'rfa_code', name: 'rfa_code' },
@@ -163,8 +156,7 @@
 { data: 'note_3', name: 'note_3' },
 { data: 'for_status_name', name: 'for_status.name' },
 { data: 'document_status_status_name', name: 'document_status.status_name' },
-{ data: 'construction_contract_code', name: 'construction_contract.code' },
-{ data: 'construction_contract.name', name: 'construction_contract.name' },
+{ data: 'construction_contract', name: 'construction_contracts.code' },
 { data: 'actions', name: '{{ trans('global.actions') }}' }
     ],
     order: [[ 1, 'desc' ]],

@@ -54,6 +54,8 @@ class TaskTagController extends Controller
     {
         abort_if(Gate::denies('task_tag_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
+        $taskTag->load('tagTasks');
+
         return view('admin.taskTags.show', compact('taskTag'));
     }
 

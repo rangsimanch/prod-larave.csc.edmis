@@ -23,9 +23,6 @@
 
                         </th>
                         <th>
-                            {{ trans('cruds.taskStatus.fields.id') }}
-                        </th>
-                        <th>
                             {{ trans('cruds.taskStatus.fields.name') }}
                         </th>
                         <th>
@@ -38,9 +35,6 @@
                         <tr data-entry-id="{{ $taskStatus->id }}">
                             <td>
 
-                            </td>
-                            <td>
-                                {{ $taskStatus->id ?? '' }}
                             </td>
                             <td>
                                 {{ $taskStatus->name ?? '' }}
@@ -73,10 +67,11 @@
                 </tbody>
             </table>
         </div>
-
-
     </div>
 </div>
+
+
+
 @endsection
 @section('scripts')
 @parent

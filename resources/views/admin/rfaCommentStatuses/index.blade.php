@@ -23,9 +23,6 @@
 
                         </th>
                         <th>
-                            {{ trans('cruds.rfaCommentStatus.fields.id') }}
-                        </th>
-                        <th>
                             {{ trans('cruds.rfaCommentStatus.fields.name') }}
                         </th>
                         <th>
@@ -38,9 +35,6 @@
                         <tr data-entry-id="{{ $rfaCommentStatus->id }}">
                             <td>
 
-                            </td>
-                            <td>
-                                {{ $rfaCommentStatus->id ?? '' }}
                             </td>
                             <td>
                                 {{ $rfaCommentStatus->name ?? '' }}
@@ -73,10 +67,11 @@
                 </tbody>
             </table>
         </div>
-
-
     </div>
 </div>
+
+
+
 @endsection
 @section('scripts')
 @parent

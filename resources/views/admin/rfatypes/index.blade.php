@@ -23,9 +23,6 @@
 
                         </th>
                         <th>
-                            {{ trans('cruds.rfatype.fields.id') }}
-                        </th>
-                        <th>
                             {{ trans('cruds.rfatype.fields.type_name') }}
                         </th>
                         <th>
@@ -41,9 +38,6 @@
                         <tr data-entry-id="{{ $rfatype->id }}">
                             <td>
 
-                            </td>
-                            <td>
-                                {{ $rfatype->id ?? '' }}
                             </td>
                             <td>
                                 {{ $rfatype->type_name ?? '' }}
@@ -79,10 +73,11 @@
                 </tbody>
             </table>
         </div>
-
-
     </div>
 </div>
+
+
+
 @endsection
 @section('scripts')
 @parent

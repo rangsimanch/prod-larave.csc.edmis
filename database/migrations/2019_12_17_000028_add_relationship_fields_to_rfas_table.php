@@ -52,10 +52,6 @@ class AddRelationshipFieldsToRfasTable extends Migration
             $table->unsignedInteger('team_id')->nullable();
 
             $table->foreign('team_id', 'team_fk_673427')->references('id')->on('teams');
-
-            $table->unsignedInteger('construction_contract_id')->nullable();
-
-            $table->foreign('construction_contract_id', 'construction_contract_fk_739602')->references('id')->on('construction_contracts');
         });
     }
 }

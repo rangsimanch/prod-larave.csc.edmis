@@ -25,7 +25,7 @@ class UsersController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $query = User::with(['team', 'jobtitle', 'roles', 'construction_contract'])->select(sprintf('%s.*', (new User)->table));
+            $query = User::with(['team', 'jobtitle', 'roles', 'construction_contracts'])->select(sprintf('%s.*', (new User)->table));
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
@@ -46,9 +46,6 @@ class UsersController extends Controller
                 ));
             });
 
-            $table->editColumn('id', function ($row) {
-                return $row->id ? $row->id : "";
-            });
             $table->editColumn('img_user', function ($row) {
                 if ($photo = $row->img_user) {
                     return sprintf(
@@ -94,12 +91,14 @@ class UsersController extends Controller
             $table->editColumn('approved', function ($row) {
                 return '<input type="checkbox" disabled ' . ($row->approved ? 'checked' : null) . '>';
             });
-            $table->addColumn('construction_contract_code', function ($row) {
-                return $row->construction_contract ? $row->construction_contract->code : '';
-            });
+            $table->editColumn('construction_contract', function ($row) {
+                $labels = [];
 
-            $table->editColumn('construction_contract.name', function ($row) {
-                return $row->construction_contract ? (is_string($row->construction_contract) ? $row->construction_contract : $row->construction_contract->name) : '';
+                foreach ($row->construction_contracts as $construction_contract) {
+                    $labels[] = sprintf('<span class="label label-info label-many">%s</span>', $construction_contract->code);
+                }
+
+                return implode(' ', $labels);
             });
 
             $table->rawColumns(['actions', 'placeholder', 'img_user', 'team', 'jobtitle', 'roles', 'approved', 'construction_contract']);
@@ -120,7 +119,7 @@ class UsersController extends Controller
 
         $roles = Role::all()->pluck('title', 'id');
 
-        $construction_contracts = ConstructionContract::all()->pluck('code', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $construction_contracts = ConstructionContract::all()->pluck('code', 'id');
 
         return view('admin.users.create', compact('teams', 'jobtitles', 'roles', 'construction_contracts'));
     }
@@ -129,6 +128,7 @@ class UsersController extends Controller
     {
         $user = User::create($request->all());
         $user->roles()->sync($request->input('roles', []));
+        $user->construction_contracts()->sync($request->input('construction_contracts', []));
 
         if ($request->input('img_user', false)) {
             $user->addMedia(storage_path('tmp/uploads/' . $request->input('img_user')))->toMediaCollection('img_user');
@@ -147,9 +147,9 @@ class UsersController extends Controller
 
         $roles = Role::all()->pluck('title', 'id');
 
-        $construction_contracts = ConstructionContract::all()->pluck('code', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $construction_contracts = ConstructionContract::all()->pluck('code', 'id');
 
-        $user->load('team', 'jobtitle', 'roles', 'construction_contract');
+        $user->load('team', 'jobtitle', 'roles', 'construction_contracts');
 
         return view('admin.users.edit', compact('teams', 'jobtitles', 'roles', 'construction_contracts', 'user'));
     }
@@ -158,6 +158,7 @@ class UsersController extends Controller
     {
         $user->update($request->all());
         $user->roles()->sync($request->input('roles', []));
+        $user->construction_contracts()->sync($request->input('construction_contracts', []));
 
         if ($request->input('img_user', false)) {
             if (!$user->img_user || $request->input('img_user') !== $user->img_user->file_name) {
@@ -174,7 +175,7 @@ class UsersController extends Controller
     {
         abort_if(Gate::denies('user_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $user->load('team', 'jobtitle', 'roles', 'construction_contract', 'issuebyRfas', 'assignRfas', 'createByRfas', 'actionByRfas', 'commentByRfas', 'informationByRfas', 'userCreateTasks', 'userUserAlerts');
+        $user->load('team', 'jobtitle', 'roles', 'construction_contracts', 'issuebyRfas', 'assignRfas', 'createByRfas', 'actionByRfas', 'commentByRfas', 'informationByRfas', 'userCreateTasks', 'userUserAlerts');
 
         return view('admin.users.show', compact('user'));
     }

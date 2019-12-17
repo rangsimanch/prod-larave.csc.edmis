@@ -54,6 +54,8 @@ class RfatypesController extends Controller
     {
         abort_if(Gate::denies('rfatype_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
+        $rfatype->load('typeRfas');
+
         return view('admin.rfatypes.show', compact('rfatype'));
     }
 

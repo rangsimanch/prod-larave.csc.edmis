@@ -23,9 +23,6 @@
 
                         </th>
                         <th>
-                            {{ trans('cruds.role.fields.id') }}
-                        </th>
-                        <th>
                             {{ trans('cruds.role.fields.title') }}
                         </th>
                         <th>
@@ -41,9 +38,6 @@
                         <tr data-entry-id="{{ $role->id }}">
                             <td>
 
-                            </td>
-                            <td>
-                                {{ $role->id ?? '' }}
                             </td>
                             <td>
                                 {{ $role->title ?? '' }}
@@ -81,10 +75,11 @@
                 </tbody>
             </table>
         </div>
-
-
     </div>
 </div>
+
+
+
 @endsection
 @section('scripts')
 @parent

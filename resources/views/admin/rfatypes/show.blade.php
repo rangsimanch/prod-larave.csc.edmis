@@ -17,14 +17,6 @@
                 <tbody>
                     <tr>
                         <th>
-                            {{ trans('cruds.rfatype.fields.id') }}
-                        </th>
-                        <td>
-                            {{ $rfatype->id }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
                             {{ trans('cruds.rfatype.fields.type_name') }}
                         </th>
                         <td>
@@ -47,8 +39,25 @@
                 </a>
             </div>
         </div>
-
-
     </div>
 </div>
+
+<div class="card">
+    <div class="card-header">
+        {{ trans('global.relatedData') }}
+    </div>
+    <ul class="nav nav-tabs" role="tablist" id="relationship-tabs">
+        <li class="nav-item">
+            <a class="nav-link" href="#type_rfas" role="tab" data-toggle="tab">
+                {{ trans('cruds.rfa.title') }}
+            </a>
+        </li>
+    </ul>
+    <div class="tab-content">
+        <div class="tab-pane" role="tabpanel" id="type_rfas">
+            @includeIf('admin.rfatypes.relationships.typeRfas', ['rfas' => $rfatype->typeRfas])
+        </div>
+    </div>
+</div>
+
 @endsection

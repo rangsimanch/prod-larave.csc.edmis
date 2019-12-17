@@ -17,14 +17,6 @@
                 <tbody>
                     <tr>
                         <th>
-                            {{ trans('cruds.role.fields.id') }}
-                        </th>
-                        <td>
-                            {{ $role->id }}
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
                             {{ trans('cruds.role.fields.title') }}
                         </th>
                         <td>
@@ -62,18 +54,10 @@
                 {{ trans('cruds.user.title') }}
             </a>
         </li>
-        <li class="nav-item">
-            <a class="nav-link" href="#role_indentures" role="tab" data-toggle="tab">
-                {{ trans('cruds.indenture.title') }}
-            </a>
-        </li>
     </ul>
     <div class="tab-content">
         <div class="tab-pane" role="tabpanel" id="roles_users">
             @includeIf('admin.roles.relationships.rolesUsers', ['users' => $role->rolesUsers])
-        </div>
-        <div class="tab-pane" role="tabpanel" id="role_indentures">
-            @includeIf('admin.roles.relationships.roleIndentures', ['indentures' => $role->roleIndentures])
         </div>
     </div>
 </div>

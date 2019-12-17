@@ -12,10 +12,6 @@ class AddRelationshipFieldsToFileManagersTable extends Migration
             $table->unsignedInteger('team_id')->nullable();
 
             $table->foreign('team_id', 'team_fk_726009')->references('id')->on('teams');
-
-            $table->unsignedInteger('construction_contract_id')->nullable();
-
-            $table->foreign('construction_contract_id', 'construction_contract_fk_739595')->references('id')->on('construction_contracts');
         });
     }
 }

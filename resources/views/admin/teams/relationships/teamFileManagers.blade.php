@@ -34,6 +34,9 @@
                             {{ trans('cruds.fileManager.fields.file_upload') }}
                         </th>
                         <th>
+                            {{ trans('cruds.fileManager.fields.construction_contract') }}
+                        </th>
+                        <th>
                             &nbsp;
                         </th>
                     </tr>
@@ -58,6 +61,11 @@
                                     <a href="{{ $media->getUrl() }}" target="_blank">
                                         {{ trans('global.view_file') }}
                                     </a>
+                                @endforeach
+                            </td>
+                            <td>
+                                @foreach($fileManager->construction_contracts as $key => $item)
+                                    <span class="badge badge-info">{{ $item->code }}</span>
                                 @endforeach
                             </td>
                             <td>

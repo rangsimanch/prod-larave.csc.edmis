@@ -22,9 +22,6 @@
 
                     </th>
                     <th>
-                        {{ trans('cruds.fileManager.fields.id') }}
-                    </th>
-                    <th>
                         {{ trans('cruds.fileManager.fields.file_name') }}
                     </th>
                     <th>
@@ -35,9 +32,6 @@
                     </th>
                     <th>
                         {{ trans('cruds.fileManager.fields.construction_contract') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.constructionContract.fields.name') }}
                     </th>
                     <th>
                         &nbsp;
@@ -95,12 +89,10 @@
     ajax: "{{ route('admin.file-managers.index') }}",
     columns: [
       { data: 'placeholder', name: 'placeholder' },
-{ data: 'id', name: 'id' },
 { data: 'file_name', name: 'file_name' },
 { data: 'code', name: 'code' },
 { data: 'file_upload', name: 'file_upload', sortable: false, searchable: false },
-{ data: 'construction_contract_code', name: 'construction_contract.code' },
-{ data: 'construction_contract.name', name: 'construction_contract.name' },
+{ data: 'construction_contract', name: 'construction_contracts.code' },
 { data: 'actions', name: '{{ trans('global.actions') }}' }
     ],
     order: [[ 1, 'desc' ]],

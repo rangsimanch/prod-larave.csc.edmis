@@ -21,7 +21,7 @@ class FileManagerController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $query = FileManager::with(['construction_contract', 'team'])->select(sprintf('%s.*', (new FileManager)->table));
+            $query = FileManager::with(['construction_contracts', 'team'])->select(sprintf('%s.*', (new FileManager)->table));
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
@@ -42,9 +42,6 @@ class FileManagerController extends Controller
                 ));
             });
 
-            $table->editColumn('id', function ($row) {
-                return $row->id ? $row->id : "";
-            });
             $table->editColumn('file_name', function ($row) {
                 return $row->file_name ? $row->file_name : "";
             });
@@ -64,12 +61,14 @@ class FileManagerController extends Controller
 
                 return implode(', ', $links);
             });
-            $table->addColumn('construction_contract_code', function ($row) {
-                return $row->construction_contract ? $row->construction_contract->code : '';
-            });
+            $table->editColumn('construction_contract', function ($row) {
+                $labels = [];
 
-            $table->editColumn('construction_contract.name', function ($row) {
-                return $row->construction_contract ? (is_string($row->construction_contract) ? $row->construction_contract : $row->construction_contract->name) : '';
+                foreach ($row->construction_contracts as $construction_contract) {
+                    $labels[] = sprintf('<span class="label label-info label-many">%s</span>', $construction_contract->code);
+                }
+
+                return implode(' ', $labels);
             });
 
             $table->rawColumns(['actions', 'placeholder', 'file_upload', 'construction_contract']);
@@ -84,7 +83,7 @@ class FileManagerController extends Controller
     {
         abort_if(Gate::denies('file_manager_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $construction_contracts = ConstructionContract::all()->pluck('code', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $construction_contracts = ConstructionContract::all()->pluck('code', 'id');
 
         return view('admin.fileManagers.create', compact('construction_contracts'));
     }
@@ -92,6 +91,7 @@ class FileManagerController extends Controller
     public function store(StoreFileManagerRequest $request)
     {
         $fileManager = FileManager::create($request->all());
+        $fileManager->construction_contracts()->sync($request->input('construction_contracts', []));
 
         foreach ($request->input('file_upload', []) as $file) {
             $fileManager->addMedia(storage_path('tmp/uploads/' . $file))->toMediaCollection('file_upload');
@@ -104,9 +104,9 @@ class FileManagerController extends Controller
     {
         abort_if(Gate::denies('file_manager_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $construction_contracts = ConstructionContract::all()->pluck('code', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $construction_contracts = ConstructionContract::all()->pluck('code', 'id');
 
-        $fileManager->load('construction_contract', 'team');
+        $fileManager->load('construction_contracts', 'team');
 
         return view('admin.fileManagers.edit', compact('construction_contracts', 'fileManager'));
     }
@@ -114,6 +114,7 @@ class FileManagerController extends Controller
     public function update(UpdateFileManagerRequest $request, FileManager $fileManager)
     {
         $fileManager->update($request->all());
+        $fileManager->construction_contracts()->sync($request->input('construction_contracts', []));
 
         if (count($fileManager->file_upload) > 0) {
             foreach ($fileManager->file_upload as $media) {
@@ -138,7 +139,7 @@ class FileManagerController extends Controller
     {
         abort_if(Gate::denies('file_manager_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $fileManager->load('construction_contract', 'team');
+        $fileManager->load('construction_contracts', 'team');
 
         return view('admin.fileManagers.show', compact('fileManager'));
     }
