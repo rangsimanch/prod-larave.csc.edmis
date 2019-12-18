@@ -1,65 +1,76 @@
 @extends('layouts.admin')
 @section('content')
-@can('task_create')
-    <div style="margin-bottom: 10px;" class="row">
+<div class="content">
+    @can('task_create')
+        <div style="margin-bottom: 10px;" class="row">
+            <div class="col-lg-12">
+                <a class="btn btn-success" href="{{ route("admin.tasks.create") }}">
+                    {{ trans('global.add') }} {{ trans('cruds.task.title_singular') }}
+                </a>
+                <button class="btn btn-warning" data-toggle="modal" data-target="#csvImportModal">
+                    {{ trans('global.app_csvImport') }}
+                </button>
+                @include('csvImport.modal', ['model' => 'Task', 'route' => 'admin.tasks.parseCsvImport'])
+            </div>
+        </div>
+    @endcan
+    <div class="row">
         <div class="col-lg-12">
-            <a class="btn btn-success" href="{{ route("admin.tasks.create") }}">
-                {{ trans('global.add') }} {{ trans('cruds.task.title_singular') }}
-            </a>
-            <button class="btn btn-warning" data-toggle="modal" data-target="#csvImportModal">
-                {{ trans('global.app_csvImport') }}
-            </button>
-            @include('csvImport.modal', ['model' => 'Task', 'route' => 'admin.tasks.parseCsvImport'])
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    {{ trans('cruds.task.title_singular') }} {{ trans('global.list') }}
+                </div>
+                <div class="panel-body">
+                    <table class=" table table-bordered table-striped table-hover ajaxTable datatable datatable-Task">
+                        <thead>
+                            <tr>
+                                <th width="10">
+
+                                </th>
+                                <th>
+                                    {{ trans('cruds.task.fields.name') }}
+                                </th>
+                                <th>
+                                    {{ trans('cruds.task.fields.description') }}
+                                </th>
+                                <th>
+                                    {{ trans('cruds.task.fields.status') }}
+                                </th>
+                                <th>
+                                    {{ trans('cruds.task.fields.tag') }}
+                                </th>
+                                <th>
+                                    {{ trans('cruds.task.fields.due_date') }}
+                                </th>
+                                <th>
+                                    {{ trans('cruds.task.fields.end_date') }}
+                                </th>
+                                <th>
+                                    {{ trans('cruds.task.fields.attachment') }}
+                                </th>
+                                <th>
+                                    {{ trans('cruds.task.fields.create_by_user') }}
+                                </th>
+                                <th>
+                                    {{ trans('cruds.task.fields.construction_contract') }}
+                                </th>
+                                <th>
+                                    {{ trans('cruds.constructionContract.fields.name') }}
+                                </th>
+                                <th>
+                                    &nbsp;
+                                </th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+
+
+
         </div>
     </div>
-@endcan
-<div class="card">
-    <div class="card-header">
-        {{ trans('cruds.task.title_singular') }} {{ trans('global.list') }}
-    </div>
-
-    <div class="card-body">
-        <table class=" table table-bordered table-striped table-hover ajaxTable datatable datatable-Task">
-            <thead>
-                <tr>
-                    <th width="10">
-
-                    </th>
-                    <th>
-                        {{ trans('cruds.task.fields.name') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.task.fields.description') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.task.fields.status') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.task.fields.tag') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.task.fields.due_date') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.task.fields.end_date') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.task.fields.attachment') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.task.fields.user_create') }}
-                    </th>
-                    <th>
-                        &nbsp;
-                    </th>
-                </tr>
-            </thead>
-        </table>
-    </div>
 </div>
-
-
-
 @endsection
 @section('scripts')
 @parent
@@ -112,7 +123,9 @@
 { data: 'due_date', name: 'due_date' },
 { data: 'end_date', name: 'end_date' },
 { data: 'attachment', name: 'attachment', sortable: false, searchable: false },
-{ data: 'user_create_name', name: 'user_create.name' },
+{ data: 'create_by_user_name', name: 'create_by_user.name' },
+{ data: 'construction_contract_code', name: 'construction_contract.code' },
+{ data: 'construction_contract.name', name: 'construction_contract.name' },
 { data: 'actions', name: '{{ trans('global.actions') }}' }
     ],
     order: [[ 1, 'desc' ]],

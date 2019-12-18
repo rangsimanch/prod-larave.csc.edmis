@@ -24,8 +24,13 @@ class RfaCommentStatus extends Model
         'deleted_at',
     ];
 
-    public function rfas()
+    public function commentStatusRfas()
     {
         return $this->hasMany(Rfa::class, 'comment_status_id', 'id');
+    }
+
+    public function forStatusRfas()
+    {
+        return $this->hasMany(Rfa::class, 'for_status_id', 'id');
     }
 }

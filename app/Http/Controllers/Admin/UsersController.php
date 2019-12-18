@@ -88,6 +88,17 @@ class UsersController extends Controller
 
                 return implode(' ', $labels);
             });
+            $table->editColumn('signature', function ($row) {
+                if ($photo = $row->signature) {
+                    return sprintf(
+                        '<a href="%s" target="_blank"><img src="%s" width="50px" height="50px"></a>',
+                        $photo->url,
+                        $photo->thumbnail
+                    );
+                }
+
+                return '';
+            });
             $table->editColumn('approved', function ($row) {
                 return '<input type="checkbox" disabled ' . ($row->approved ? 'checked' : null) . '>';
             });
@@ -101,7 +112,7 @@ class UsersController extends Controller
                 return implode(' ', $labels);
             });
 
-            $table->rawColumns(['actions', 'placeholder', 'img_user', 'team', 'jobtitle', 'roles', 'approved', 'construction_contract']);
+            $table->rawColumns(['actions', 'placeholder', 'img_user', 'team', 'jobtitle', 'roles', 'signature', 'approved', 'construction_contract']);
 
             return $table->make(true);
         }
@@ -132,6 +143,10 @@ class UsersController extends Controller
 
         if ($request->input('img_user', false)) {
             $user->addMedia(storage_path('tmp/uploads/' . $request->input('img_user')))->toMediaCollection('img_user');
+        }
+
+        if ($request->input('signature', false)) {
+            $user->addMedia(storage_path('tmp/uploads/' . $request->input('signature')))->toMediaCollection('signature');
         }
 
         return redirect()->route('admin.users.index');
@@ -168,6 +183,14 @@ class UsersController extends Controller
             $user->img_user->delete();
         }
 
+        if ($request->input('signature', false)) {
+            if (!$user->signature || $request->input('signature') !== $user->signature->file_name) {
+                $user->addMedia(storage_path('tmp/uploads/' . $request->input('signature')))->toMediaCollection('signature');
+            }
+        } elseif ($user->signature) {
+            $user->signature->delete();
+        }
+
         return redirect()->route('admin.users.index');
     }
 
@@ -175,7 +198,7 @@ class UsersController extends Controller
     {
         abort_if(Gate::denies('user_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $user->load('team', 'jobtitle', 'roles', 'construction_contracts', 'issuebyRfas', 'assignRfas', 'createByRfas', 'actionByRfas', 'commentByRfas', 'informationByRfas', 'userCreateTasks', 'userUserAlerts');
+        $user->load('team', 'jobtitle', 'roles', 'construction_contracts', 'issuebyRfas', 'assignRfas', 'commentByRfas', 'informationByRfas', 'createByUserRfas', 'updateByUserRfas', 'approveByUserRfas', 'createByUserTasks', 'userUserAlerts');
 
         return view('admin.users.show', compact('user'));
     }

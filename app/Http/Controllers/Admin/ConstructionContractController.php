@@ -54,7 +54,7 @@ class ConstructionContractController extends Controller
     {
         abort_if(Gate::denies('construction_contract_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $constructionContract->load('constructionContractRfas', 'constructionContractUsers', 'constructionContractTasks', 'constructionContractFileManagers');
+        $constructionContract->load('constructionContractRfas', 'constructionContractTasks', 'constructionContractFileManagers', 'constructionContractUsers');
 
         return view('admin.constructionContracts.show', compact('constructionContract'));
     }

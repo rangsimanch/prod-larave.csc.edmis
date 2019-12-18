@@ -33,6 +33,10 @@ class UsersApiController extends Controller
             $user->addMedia(storage_path('tmp/uploads/' . $request->input('img_user')))->toMediaCollection('img_user');
         }
 
+        if ($request->input('signature', false)) {
+            $user->addMedia(storage_path('tmp/uploads/' . $request->input('signature')))->toMediaCollection('signature');
+        }
+
         return (new UserResource($user))
             ->response()
             ->setStatusCode(Response::HTTP_CREATED);
@@ -57,6 +61,14 @@ class UsersApiController extends Controller
             }
         } elseif ($user->img_user) {
             $user->img_user->delete();
+        }
+
+        if ($request->input('signature', false)) {
+            if (!$user->signature || $request->input('signature') !== $user->signature->file_name) {
+                $user->addMedia(storage_path('tmp/uploads/' . $request->input('signature')))->toMediaCollection('signature');
+            }
+        } elseif ($user->signature) {
+            $user->signature->delete();
         }
 
         return (new UserResource($user))

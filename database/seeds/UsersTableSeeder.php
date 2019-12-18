@@ -12,7 +12,7 @@ class UsersTableSeeder extends Seeder
                 'id'             => 1,
                 'name'           => 'Admin',
                 'email'          => 'admin@admin.com',
-                'password'       => '$2y$10$RigVH6ZOhh4V3xyTIGjj7uGo8umXbeNX/VcO8ZiH4rQBYIBIGD.JS',
+                'password'       => '$2y$10$X8qsGdvgXU6z86LuX0dUyee0OsamlTtSd3QF9UkdBkFb4ocjN3r8S',
                 'remember_token' => null,
                 'approved'       => 1,
                 'workphone'      => '',

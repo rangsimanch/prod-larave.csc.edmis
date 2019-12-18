@@ -1,5 +1,5 @@
 <?php
 
 return [
-    'site_title' => 'CSC-EDMIS',
+    'site_title' => 'Electronic Document Management Information System',
 ];
