@@ -24,7 +24,7 @@ class TaskStatus extends Model
         'deleted_at',
     ];
 
-    public function tasks()
+    public function statusTasks()
     {
         return $this->hasMany(Task::class, 'status_id', 'id');
     }

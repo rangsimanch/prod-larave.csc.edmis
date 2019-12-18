@@ -42,21 +42,21 @@ class ConstructionContract extends Model
 
     public function constructionContractRfas()
     {
-        return $this->belongsToMany(Rfa::class);
-    }
-
-    public function constructionContractUsers()
-    {
-        return $this->belongsToMany(User::class);
+        return $this->hasMany(Rfa::class, 'construction_contract_id', 'id');
     }
 
     public function constructionContractTasks()
     {
-        return $this->belongsToMany(Task::class);
+        return $this->hasMany(Task::class, 'construction_contract_id', 'id');
     }
 
     public function constructionContractFileManagers()
     {
         return $this->belongsToMany(FileManager::class);
+    }
+
+    public function constructionContractUsers()
+    {
+        return $this->belongsToMany(User::class);
     }
 }

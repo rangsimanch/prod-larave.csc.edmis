@@ -39,7 +39,7 @@ class Task extends Model implements HasMedia
         'updated_at',
         'deleted_at',
         'description',
-        'user_create_id',
+        'create_by_user_id',
         'construction_contract_id',
     ];
 
@@ -90,9 +90,9 @@ class Task extends Model implements HasMedia
         return $this->getMedia('attachment')->last();
     }
 
-    public function user_create()
+    public function create_by_user()
     {
-        return $this->belongsTo(User::class, 'user_create_id');
+        return $this->belongsTo(User::class, 'create_by_user_id');
     }
 
     public function construction_contract()

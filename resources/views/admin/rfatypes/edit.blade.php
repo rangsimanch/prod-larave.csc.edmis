@@ -1,45 +1,45 @@
 @extends('layouts.admin')
 @section('content')
+<div class="content">
 
-<div class="card">
-    <div class="card-header">
-        {{ trans('global.edit') }} {{ trans('cruds.rfatype.title_singular') }}
-    </div>
-
-    <div class="card-body">
-        <form action="{{ route("admin.rfatypes.update", [$rfatype->id]) }}" method="POST" enctype="multipart/form-data">
-            @csrf
-            @method('PUT')
-            <div class="form-group {{ $errors->has('type_name') ? 'has-error' : '' }}">
-                <label for="type_name">{{ trans('cruds.rfatype.fields.type_name') }}</label>
-                <input type="text" id="type_name" name="type_name" class="form-control" value="{{ old('type_name', isset($rfatype) ? $rfatype->type_name : '') }}">
-                @if($errors->has('type_name'))
-                    <em class="invalid-feedback">
-                        {{ $errors->first('type_name') }}
-                    </em>
-                @endif
-                <p class="helper-block">
-                    {{ trans('cruds.rfatype.fields.type_name_helper') }}
-                </p>
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    {{ trans('global.edit') }} {{ trans('cruds.rfatype.title_singular') }}
+                </div>
+                <div class="panel-body">
+                    <form method="POST" action="{{ route("admin.rfatypes.update", [$rfatype->id]) }}" enctype="multipart/form-data">
+                        @method('PUT')
+                        @csrf
+                        <div class="form-group {{ $errors->has('type_name') ? 'has-error' : '' }}">
+                            <label for="type_name">{{ trans('cruds.rfatype.fields.type_name') }}</label>
+                            <input class="form-control" type="text" name="type_name" id="type_name" value="{{ old('type_name', $rfatype->type_name) }}">
+                            @if($errors->has('type_name'))
+                                <span class="help-block" role="alert">{{ $errors->first('type_name') }}</span>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.rfatype.fields.type_name_helper') }}</span>
+                        </div>
+                        <div class="form-group {{ $errors->has('type_code') ? 'has-error' : '' }}">
+                            <label for="type_code">{{ trans('cruds.rfatype.fields.type_code') }}</label>
+                            <input class="form-control" type="text" name="type_code" id="type_code" value="{{ old('type_code', $rfatype->type_code) }}">
+                            @if($errors->has('type_code'))
+                                <span class="help-block" role="alert">{{ $errors->first('type_code') }}</span>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.rfatype.fields.type_code_helper') }}</span>
+                        </div>
+                        <div class="form-group">
+                            <button class="btn btn-danger" type="submit">
+                                {{ trans('global.save') }}
+                            </button>
+                        </div>
+                    </form>
+                </div>
             </div>
-            <div class="form-group {{ $errors->has('type_code') ? 'has-error' : '' }}">
-                <label for="type_code">{{ trans('cruds.rfatype.fields.type_code') }}</label>
-                <input type="text" id="type_code" name="type_code" class="form-control" value="{{ old('type_code', isset($rfatype) ? $rfatype->type_code : '') }}">
-                @if($errors->has('type_code'))
-                    <em class="invalid-feedback">
-                        {{ $errors->first('type_code') }}
-                    </em>
-                @endif
-                <p class="helper-block">
-                    {{ trans('cruds.rfatype.fields.type_code_helper') }}
-                </p>
-            </div>
-            <div>
-                <input class="btn btn-danger" type="submit" value="{{ trans('global.save') }}">
-            </div>
-        </form>
 
 
+
+        </div>
     </div>
 </div>
 @endsection

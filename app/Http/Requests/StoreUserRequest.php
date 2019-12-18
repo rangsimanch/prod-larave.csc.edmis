@@ -19,32 +19,38 @@ class StoreUserRequest extends FormRequest
     public function rules()
     {
         return [
-            'name'     => [
+            'name'                     => [
                 'required',
             ],
-            'dob'      => [
+            'dob'                      => [
                 'required',
                 'date_format:' . config('panel.date_format'),
             ],
-            'gender'   => [
+            'gender'                   => [
                 'required',
             ],
-            'team_id'  => [
+            'team_id'                  => [
                 'required',
                 'integer',
             ],
-            'email'    => [
+            'email'                    => [
                 'required',
                 'unique:users',
             ],
-            'password' => [
+            'password'                 => [
                 'required',
             ],
-            'roles.*'  => [
+            'roles.*'                  => [
                 'integer',
             ],
-            'roles'    => [
+            'roles'                    => [
                 'required',
+                'array',
+            ],
+            'construction_contracts.*' => [
+                'integer',
+            ],
+            'construction_contracts'   => [
                 'array',
             ],
         ];

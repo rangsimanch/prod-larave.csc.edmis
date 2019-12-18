@@ -1,83 +1,88 @@
 @extends('layouts.admin')
 @section('content')
-@can('rfatype_create')
-    <div style="margin-bottom: 10px;" class="row">
-        <div class="col-lg-12">
-            <a class="btn btn-success" href="{{ route("admin.rfatypes.create") }}">
-                {{ trans('global.add') }} {{ trans('cruds.rfatype.title_singular') }}
-            </a>
+<div class="content">
+    @can('rfatype_create')
+        <div style="margin-bottom: 10px;" class="row">
+            <div class="col-lg-12">
+                <a class="btn btn-success" href="{{ route("admin.rfatypes.create") }}">
+                    {{ trans('global.add') }} {{ trans('cruds.rfatype.title_singular') }}
+                </a>
+            </div>
         </div>
-    </div>
-@endcan
-<div class="card">
-    <div class="card-header">
-        {{ trans('cruds.rfatype.title_singular') }} {{ trans('global.list') }}
-    </div>
+    @endcan
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    {{ trans('cruds.rfatype.title_singular') }} {{ trans('global.list') }}
+                </div>
+                <div class="panel-body">
+                    <div class="table-responsive">
+                        <table class=" table table-bordered table-striped table-hover datatable datatable-Rfatype">
+                            <thead>
+                                <tr>
+                                    <th width="10">
 
-    <div class="card-body">
-        <div class="table-responsive">
-            <table class=" table table-bordered table-striped table-hover datatable datatable-Rfatype">
-                <thead>
-                    <tr>
-                        <th width="10">
+                                    </th>
+                                    <th>
+                                        {{ trans('cruds.rfatype.fields.type_name') }}
+                                    </th>
+                                    <th>
+                                        {{ trans('cruds.rfatype.fields.type_code') }}
+                                    </th>
+                                    <th>
+                                        &nbsp;
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach($rfatypes as $key => $rfatype)
+                                    <tr data-entry-id="{{ $rfatype->id }}">
+                                        <td>
 
-                        </th>
-                        <th>
-                            {{ trans('cruds.rfatype.fields.type_name') }}
-                        </th>
-                        <th>
-                            {{ trans('cruds.rfatype.fields.type_code') }}
-                        </th>
-                        <th>
-                            &nbsp;
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach($rfatypes as $key => $rfatype)
-                        <tr data-entry-id="{{ $rfatype->id }}">
-                            <td>
+                                        </td>
+                                        <td>
+                                            {{ $rfatype->type_name ?? '' }}
+                                        </td>
+                                        <td>
+                                            {{ $rfatype->type_code ?? '' }}
+                                        </td>
+                                        <td>
+                                            @can('rfatype_show')
+                                                <a class="btn btn-xs btn-primary" href="{{ route('admin.rfatypes.show', $rfatype->id) }}">
+                                                    {{ trans('global.view') }}
+                                                </a>
+                                            @endcan
 
-                            </td>
-                            <td>
-                                {{ $rfatype->type_name ?? '' }}
-                            </td>
-                            <td>
-                                {{ $rfatype->type_code ?? '' }}
-                            </td>
-                            <td>
-                                @can('rfatype_show')
-                                    <a class="btn btn-xs btn-primary" href="{{ route('admin.rfatypes.show', $rfatype->id) }}">
-                                        {{ trans('global.view') }}
-                                    </a>
-                                @endcan
+                                            @can('rfatype_edit')
+                                                <a class="btn btn-xs btn-info" href="{{ route('admin.rfatypes.edit', $rfatype->id) }}">
+                                                    {{ trans('global.edit') }}
+                                                </a>
+                                            @endcan
 
-                                @can('rfatype_edit')
-                                    <a class="btn btn-xs btn-info" href="{{ route('admin.rfatypes.edit', $rfatype->id) }}">
-                                        {{ trans('global.edit') }}
-                                    </a>
-                                @endcan
+                                            @can('rfatype_delete')
+                                                <form action="{{ route('admin.rfatypes.destroy', $rfatype->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
+                                                    <input type="hidden" name="_method" value="DELETE">
+                                                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                                    <input type="submit" class="btn btn-xs btn-danger" value="{{ trans('global.delete') }}">
+                                                </form>
+                                            @endcan
 
-                                @can('rfatype_delete')
-                                    <form action="{{ route('admin.rfatypes.destroy', $rfatype->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
-                                        <input type="hidden" name="_method" value="DELETE">
-                                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                                        <input type="submit" class="btn btn-xs btn-danger" value="{{ trans('global.delete') }}">
-                                    </form>
-                                @endcan
+                                        </td>
 
-                            </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
 
-                        </tr>
-                    @endforeach
-                </tbody>
-            </table>
+
+
         </div>
     </div>
 </div>
-
-
-
 @endsection
 @section('scripts')
 @parent
