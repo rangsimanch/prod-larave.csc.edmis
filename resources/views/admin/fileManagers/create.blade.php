@@ -1,74 +1,71 @@
 @extends('layouts.admin')
 @section('content')
+<div class="content">
 
-<div class="card">
-    <div class="card-header">
-        {{ trans('global.create') }} {{ trans('cruds.fileManager.title_singular') }}
-    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    {{ trans('global.create') }} {{ trans('cruds.fileManager.title_singular') }}
+                </div>
+                <div class="panel-body">
+                    <form method="POST" action="{{ route("admin.file-managers.store") }}" enctype="multipart/form-data">
+                        @csrf
+                        <div class="form-group {{ $errors->has('file_name') ? 'has-error' : '' }}">
+                            <label for="file_name">{{ trans('cruds.fileManager.fields.file_name') }}</label>
+                            <input class="form-control" type="text" name="file_name" id="file_name" value="{{ old('file_name', '') }}">
+                            @if($errors->has('file_name'))
+                                <span class="help-block" role="alert">{{ $errors->first('file_name') }}</span>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.fileManager.fields.file_name_helper') }}</span>
+                        </div>
+                        <div class="form-group {{ $errors->has('code') ? 'has-error' : '' }}">
+                            <label for="code">{{ trans('cruds.fileManager.fields.code') }}</label>
+                            <input class="form-control" type="text" name="code" id="code" value="{{ old('code', '') }}">
+                            @if($errors->has('code'))
+                                <span class="help-block" role="alert">{{ $errors->first('code') }}</span>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.fileManager.fields.code_helper') }}</span>
+                        </div>
+                        <div class="form-group {{ $errors->has('file_upload') ? 'has-error' : '' }}">
+                            <label for="file_upload">{{ trans('cruds.fileManager.fields.file_upload') }}</label>
+                            <div class="needsclick dropzone" id="file_upload-dropzone">
+                            </div>
+                            @if($errors->has('file_upload'))
+                                <span class="help-block" role="alert">{{ $errors->first('file_upload') }}</span>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.fileManager.fields.file_upload_helper') }}</span>
+                        </div>
+                        <div class="form-group {{ $errors->has('construction_contracts') ? 'has-error' : '' }}">
+                            <label for="construction_contracts">{{ trans('cruds.fileManager.fields.construction_contract') }}</label>
+                            <div style="padding-bottom: 4px">
+                                <span class="btn btn-info btn-xs select-all" style="border-radius: 0">{{ trans('global.select_all') }}</span>
+                                <span class="btn btn-info btn-xs deselect-all" style="border-radius: 0">{{ trans('global.deselect_all') }}</span>
+                            </div>
+                            <select class="form-control select2" name="construction_contracts[]" id="construction_contracts" multiple>
+                                @foreach($construction_contracts as $id => $construction_contract)
+                                    <option value="{{ $id }}" {{ in_array($id, old('construction_contracts', [])) ? 'selected' : '' }}>{{ $construction_contract }}</option>
+                                @endforeach
+                            </select>
+                            @if($errors->has('construction_contracts'))
+                                <span class="help-block" role="alert">{{ $errors->first('construction_contracts') }}</span>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.fileManager.fields.construction_contract_helper') }}</span>
+                        </div>
+                        <div class="form-group">
+                            <button class="btn btn-danger" type="submit">
+                                {{ trans('global.save') }}
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
 
-    <div class="card-body">
-        <form method="POST" action="{{ route("admin.file-managers.store") }}" enctype="multipart/form-data">
-            @csrf
-            <div class="form-group">
-                <label for="file_name">{{ trans('cruds.fileManager.fields.file_name') }}</label>
-                <input class="form-control {{ $errors->has('file_name') ? 'is-invalid' : '' }}" type="text" name="file_name" id="file_name" value="{{ old('file_name', '') }}">
-                @if($errors->has('file_name'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('file_name') }}
-                    </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.fileManager.fields.file_name_helper') }}</span>
-            </div>
-            <div class="form-group">
-                <label for="code">{{ trans('cruds.fileManager.fields.code') }}</label>
-                <input class="form-control {{ $errors->has('code') ? 'is-invalid' : '' }}" type="text" name="code" id="code" value="{{ old('code', '') }}">
-                @if($errors->has('code'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('code') }}
-                    </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.fileManager.fields.code_helper') }}</span>
-            </div>
-            <div class="form-group">
-                <label for="file_upload">{{ trans('cruds.fileManager.fields.file_upload') }}</label>
-                <div class="needsclick dropzone {{ $errors->has('file_upload') ? 'is-invalid' : '' }}" id="file_upload-dropzone">
-                </div>
-                @if($errors->has('file_upload'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('file_upload') }}
-                    </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.fileManager.fields.file_upload_helper') }}</span>
-            </div>
-            <div class="form-group">
-                <label for="construction_contracts">{{ trans('cruds.fileManager.fields.construction_contract') }}</label>
-                <div style="padding-bottom: 4px">
-                    <span class="btn btn-info btn-xs select-all" style="border-radius: 0">{{ trans('global.select_all') }}</span>
-                    <span class="btn btn-info btn-xs deselect-all" style="border-radius: 0">{{ trans('global.deselect_all') }}</span>
-                </div>
-                <select class="form-control select2 {{ $errors->has('construction_contracts') ? 'is-invalid' : '' }}" name="construction_contracts[]" id="construction_contracts" multiple>
-                    @foreach($construction_contracts as $id => $construction_contract)
-                        <option value="{{ $id }}" {{ in_array($id, old('construction_contracts', [])) ? 'selected' : '' }}>{{ $construction_contract }}</option>
-                    @endforeach
-                </select>
-                @if($errors->has('construction_contracts'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('construction_contracts') }}
-                    </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.fileManager.fields.construction_contract_helper') }}</span>
-            </div>
-            <div class="form-group">
-                <button class="btn btn-danger" type="submit">
-                    {{ trans('global.save') }}
-                </button>
-            </div>
-        </form>
+
+
+        </div>
     </div>
 </div>
-
-
-
 @endsection
 
 @section('scripts')

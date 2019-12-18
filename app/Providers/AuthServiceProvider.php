@@ -29,5 +29,14 @@ class AuthServiceProvider extends ServiceProvider
         if (!app()->runningInConsole()) {
             Passport::routes();
         };
+
+        // Auth gates for: TeamSelect
+        Gate::define('construction_contract_select', function ($user) {
+            return !$user->isAdmin() && ($user->construction_contracts->count() > 1);
+        });
+
+        Gate::define('assign_item_to_member', function ($user) {
+            return $user->isAdmin() || $user->isTeamAdmin();
+        });
     }
 }

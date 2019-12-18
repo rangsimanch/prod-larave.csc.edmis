@@ -26,6 +26,7 @@ class User extends Authenticatable implements HasMedia
 
     protected $appends = [
         'img_user',
+        'signature',
     ];
 
     protected $hidden = [
@@ -61,7 +62,6 @@ class User extends Authenticatable implements HasMedia
         'jobtitle_id',
         'remember_token',
         'email_verified_at',
-        'construction_contract_id',
     ];
 
     public function getIsAdminAttribute()
@@ -88,6 +88,8 @@ class User extends Authenticatable implements HasMedia
         User::observe(new \App\Observers\UserActionObserver);
     }
 
+    
+
     public function registerMediaConversions(Media $media = null)
     {
         $this->addMediaConversion('thumb')->width(50)->height(50);
@@ -103,16 +105,6 @@ class User extends Authenticatable implements HasMedia
         return $this->hasMany(Rfa::class, 'assign_id', 'id');
     }
 
-    public function createByRfas()
-    {
-        return $this->hasMany(Rfa::class, 'create_by_id', 'id');
-    }
-
-    public function actionByRfas()
-    {
-        return $this->hasMany(Rfa::class, 'action_by_id', 'id');
-    }
-
     public function commentByRfas()
     {
         return $this->hasMany(Rfa::class, 'comment_by_id', 'id');
@@ -123,9 +115,24 @@ class User extends Authenticatable implements HasMedia
         return $this->hasMany(Rfa::class, 'information_by_id', 'id');
     }
 
-    public function userCreateTasks()
+    public function createByUserRfas()
     {
-        return $this->hasMany(Task::class, 'user_create_id', 'id');
+        return $this->hasMany(Rfa::class, 'create_by_user_id', 'id');
+    }
+
+    public function updateByUserRfas()
+    {
+        return $this->hasMany(Rfa::class, 'update_by_user_id', 'id');
+    }
+
+    public function approveByUserRfas()
+    {
+        return $this->hasMany(Rfa::class, 'approve_by_user_id', 'id');
+    }
+
+    public function createByUserTasks()
+    {
+        return $this->hasMany(Task::class, 'create_by_user_id', 'id');
     }
 
     public function userUserAlerts()
@@ -192,8 +199,31 @@ class User extends Authenticatable implements HasMedia
         return $this->belongsToMany(Role::class);
     }
 
-    public function construction_contract()
+<<<<<<< HEAD
+    public function construction_contracts()
     {
-        return $this->belongsTo(ConstructionContract::class, 'construction_contract_id');
+        return $this->belongsToMany(ConstructionContract::class);
+    }
+
+    public function isAdmin()
+    {
+        return $this->role_id === 1;
+=======
+    public function getSignatureAttribute()
+    {
+        $file = $this->getMedia('signature')->last();
+
+        if ($file) {
+            $file->url       = $file->getUrl();
+            $file->thumbnail = $file->getUrl('thumb');
+        }
+
+        return $file;
+    }
+
+    public function construction_contracts()
+    {
+        return $this->belongsToMany(ConstructionContract::class);
+>>>>>>> 6583fa6204f7846f680bc6147fc560b6bd156dcf
     }
 }

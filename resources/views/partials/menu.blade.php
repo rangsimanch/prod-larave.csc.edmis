@@ -1,76 +1,76 @@
-<div class="sidebar">
-    <nav class="sidebar-nav">
-
-        <ul class="nav">
+<aside class="main-sidebar">
+    <section class="sidebar" style="height: auto;">
+        <ul class="sidebar-menu tree" data-widget="tree">
             <li>
                 <select class="searchable-field form-control">
 
                 </select>
             </li>
-            <li class="nav-item">
-                <a href="{{ route("admin.home") }}" class="nav-link">
-                    <i class="nav-icon fas fa-fw fa-tachometer-alt">
+            <li>
+                <a href="{{ route("admin.home") }}">
+                    <i class="fas fa-fw fa-tachometer-alt">
 
                     </i>
                     {{ trans('global.dashboard') }}
                 </a>
             </li>
             @can('request_for_approval_access')
-                <li class="nav-item nav-dropdown">
-                    <a class="nav-link  nav-dropdown-toggle" href="#">
-                        <i class="fa-fw fas fa-file-signature nav-icon">
+                <li class="treeview">
+                    <a href="#">
+                        <i class="fa-fw fas fa-file-signature">
 
                         </i>
-                        {{ trans('cruds.requestForApproval.title') }}
+                        <span>{{ trans('cruds.requestForApproval.title') }}</span>
+                        <span class="pull-right-container"><i class="fa fa-fw fa-angle-left pull-right"></i></span>
                     </a>
-                    <ul class="nav-dropdown-items">
+                    <ul class="treeview-menu">
                         @can('rfa_access')
-                            <li class="nav-item">
-                                <a href="{{ route("admin.rfas.index") }}" class="nav-link {{ request()->is('admin/rfas') || request()->is('admin/rfas/*') ? 'active' : '' }}">
-                                    <i class="fa-fw fas fa-book nav-icon">
+                            <li class="{{ request()->is('admin/rfas') || request()->is('admin/rfas/*') ? 'active' : '' }}">
+                                <a href="{{ route("admin.rfas.index") }}">
+                                    <i class="fa-fw fas fa-book">
 
                                     </i>
-                                    {{ trans('cruds.rfa.title') }}
+                                    <span>{{ trans('cruds.rfa.title') }}</span>
                                 </a>
                             </li>
                         @endcan
                         @can('rfatype_access')
-                            <li class="nav-item">
-                                <a href="{{ route("admin.rfatypes.index") }}" class="nav-link {{ request()->is('admin/rfatypes') || request()->is('admin/rfatypes/*') ? 'active' : '' }}">
-                                    <i class="fa-fw fas fa-clipboard-list nav-icon">
+                            <li class="{{ request()->is('admin/rfatypes') || request()->is('admin/rfatypes/*') ? 'active' : '' }}">
+                                <a href="{{ route("admin.rfatypes.index") }}">
+                                    <i class="fa-fw fas fa-clipboard-list">
 
                                     </i>
-                                    {{ trans('cruds.rfatype.title') }}
+                                    <span>{{ trans('cruds.rfatype.title') }}</span>
                                 </a>
                             </li>
                         @endcan
                         @can('rfa_comment_status_access')
-                            <li class="nav-item">
-                                <a href="{{ route("admin.rfa-comment-statuses.index") }}" class="nav-link {{ request()->is('admin/rfa-comment-statuses') || request()->is('admin/rfa-comment-statuses/*') ? 'active' : '' }}">
-                                    <i class="fa-fw fas fa-tasks nav-icon">
+                            <li class="{{ request()->is('admin/rfa-comment-statuses') || request()->is('admin/rfa-comment-statuses/*') ? 'active' : '' }}">
+                                <a href="{{ route("admin.rfa-comment-statuses.index") }}">
+                                    <i class="fa-fw fas fa-tasks">
 
                                     </i>
-                                    {{ trans('cruds.rfaCommentStatus.title') }}
+                                    <span>{{ trans('cruds.rfaCommentStatus.title') }}</span>
                                 </a>
                             </li>
                         @endcan
                         @can('rfa_document_status_access')
-                            <li class="nav-item">
-                                <a href="{{ route("admin.rfa-document-statuses.index") }}" class="nav-link {{ request()->is('admin/rfa-document-statuses') || request()->is('admin/rfa-document-statuses/*') ? 'active' : '' }}">
-                                    <i class="fa-fw fas fa-spinner nav-icon">
+                            <li class="{{ request()->is('admin/rfa-document-statuses') || request()->is('admin/rfa-document-statuses/*') ? 'active' : '' }}">
+                                <a href="{{ route("admin.rfa-document-statuses.index") }}">
+                                    <i class="fa-fw fas fa-spinner">
 
                                     </i>
-                                    {{ trans('cruds.rfaDocumentStatus.title') }}
+                                    <span>{{ trans('cruds.rfaDocumentStatus.title') }}</span>
                                 </a>
                             </li>
                         @endcan
                         @can('rfa_calendar_access')
-                            <li class="nav-item">
-                                <a href="{{ route("admin.rfa-calendars.index") }}" class="nav-link {{ request()->is('admin/rfa-calendars') || request()->is('admin/rfa-calendars/*') ? 'active' : '' }}">
-                                    <i class="fa-fw far fa-calendar-alt nav-icon">
+                            <li class="{{ request()->is('admin/rfa-calendars') || request()->is('admin/rfa-calendars/*') ? 'active' : '' }}">
+                                <a href="{{ route("admin.rfa-calendars.index") }}">
+                                    <i class="fa-fw far fa-calendar-alt">
 
                                     </i>
-                                    {{ trans('cruds.rfaCalendar.title') }}
+                                    <span>{{ trans('cruds.rfaCalendar.title') }}</span>
                                 </a>
                             </li>
                         @endcan
@@ -78,81 +78,82 @@
                 </li>
             @endcan
             @can('user_management_access')
-                <li class="nav-item nav-dropdown">
-                    <a class="nav-link  nav-dropdown-toggle" href="#">
-                        <i class="fa-fw fas fa-users nav-icon">
+                <li class="treeview">
+                    <a href="#">
+                        <i class="fa-fw fas fa-users">
 
                         </i>
-                        {{ trans('cruds.userManagement.title') }}
+                        <span>{{ trans('cruds.userManagement.title') }}</span>
+                        <span class="pull-right-container"><i class="fa fa-fw fa-angle-left pull-right"></i></span>
                     </a>
-                    <ul class="nav-dropdown-items">
+                    <ul class="treeview-menu">
                         @can('user_access')
-                            <li class="nav-item">
-                                <a href="{{ route("admin.users.index") }}" class="nav-link {{ request()->is('admin/users') || request()->is('admin/users/*') ? 'active' : '' }}">
-                                    <i class="fa-fw fas fa-user nav-icon">
+                            <li class="{{ request()->is('admin/users') || request()->is('admin/users/*') ? 'active' : '' }}">
+                                <a href="{{ route("admin.users.index") }}">
+                                    <i class="fa-fw fas fa-user">
 
                                     </i>
-                                    {{ trans('cruds.user.title') }}
+                                    <span>{{ trans('cruds.user.title') }}</span>
                                 </a>
                             </li>
                         @endcan
                         @can('team_access')
-                            <li class="nav-item">
-                                <a href="{{ route("admin.teams.index") }}" class="nav-link {{ request()->is('admin/teams') || request()->is('admin/teams/*') ? 'active' : '' }}">
-                                    <i class="fa-fw fas fa-users nav-icon">
+                            <li class="{{ request()->is('admin/teams') || request()->is('admin/teams/*') ? 'active' : '' }}">
+                                <a href="{{ route("admin.teams.index") }}">
+                                    <i class="fa-fw fas fa-users">
 
                                     </i>
-                                    {{ trans('cruds.team.title') }}
+                                    <span>{{ trans('cruds.team.title') }}</span>
                                 </a>
                             </li>
                         @endcan
                         @can('department_access')
-                            <li class="nav-item">
-                                <a href="{{ route("admin.departments.index") }}" class="nav-link {{ request()->is('admin/departments') || request()->is('admin/departments/*') ? 'active' : '' }}">
-                                    <i class="fa-fw fas fa-chalkboard-teacher nav-icon">
+                            <li class="{{ request()->is('admin/departments') || request()->is('admin/departments/*') ? 'active' : '' }}">
+                                <a href="{{ route("admin.departments.index") }}">
+                                    <i class="fa-fw fas fa-chalkboard-teacher">
 
                                     </i>
-                                    {{ trans('cruds.department.title') }}
+                                    <span>{{ trans('cruds.department.title') }}</span>
                                 </a>
                             </li>
                         @endcan
                         @can('jobtitle_access')
-                            <li class="nav-item">
-                                <a href="{{ route("admin.jobtitles.index") }}" class="nav-link {{ request()->is('admin/jobtitles') || request()->is('admin/jobtitles/*') ? 'active' : '' }}">
-                                    <i class="fa-fw fas fa-address-card nav-icon">
+                            <li class="{{ request()->is('admin/jobtitles') || request()->is('admin/jobtitles/*') ? 'active' : '' }}">
+                                <a href="{{ route("admin.jobtitles.index") }}">
+                                    <i class="fa-fw fas fa-address-card">
 
                                     </i>
-                                    {{ trans('cruds.jobtitle.title') }}
+                                    <span>{{ trans('cruds.jobtitle.title') }}</span>
                                 </a>
                             </li>
                         @endcan
                         @can('role_access')
-                            <li class="nav-item">
-                                <a href="{{ route("admin.roles.index") }}" class="nav-link {{ request()->is('admin/roles') || request()->is('admin/roles/*') ? 'active' : '' }}">
-                                    <i class="fa-fw fas fa-briefcase nav-icon">
+                            <li class="{{ request()->is('admin/roles') || request()->is('admin/roles/*') ? 'active' : '' }}">
+                                <a href="{{ route("admin.roles.index") }}">
+                                    <i class="fa-fw fas fa-briefcase">
 
                                     </i>
-                                    {{ trans('cruds.role.title') }}
+                                    <span>{{ trans('cruds.role.title') }}</span>
                                 </a>
                             </li>
                         @endcan
                         @can('permission_access')
-                            <li class="nav-item">
-                                <a href="{{ route("admin.permissions.index") }}" class="nav-link {{ request()->is('admin/permissions') || request()->is('admin/permissions/*') ? 'active' : '' }}">
-                                    <i class="fa-fw fas fa-unlock-alt nav-icon">
+                            <li class="{{ request()->is('admin/permissions') || request()->is('admin/permissions/*') ? 'active' : '' }}">
+                                <a href="{{ route("admin.permissions.index") }}">
+                                    <i class="fa-fw fas fa-unlock-alt">
 
                                     </i>
-                                    {{ trans('cruds.permission.title') }}
+                                    <span>{{ trans('cruds.permission.title') }}</span>
                                 </a>
                             </li>
                         @endcan
                         @can('audit_log_access')
-                            <li class="nav-item">
-                                <a href="{{ route("admin.audit-logs.index") }}" class="nav-link {{ request()->is('admin/audit-logs') || request()->is('admin/audit-logs/*') ? 'active' : '' }}">
-                                    <i class="fa-fw fas fa-file-alt nav-icon">
+                            <li class="{{ request()->is('admin/audit-logs') || request()->is('admin/audit-logs/*') ? 'active' : '' }}">
+                                <a href="{{ route("admin.audit-logs.index") }}">
+                                    <i class="fa-fw fas fa-file-alt">
 
                                     </i>
-                                    {{ trans('cruds.auditLog.title') }}
+                                    <span>{{ trans('cruds.auditLog.title') }}</span>
                                 </a>
                             </li>
                         @endcan
@@ -160,51 +161,52 @@
                 </li>
             @endcan
             @can('task_management_access')
-                <li class="nav-item nav-dropdown">
-                    <a class="nav-link  nav-dropdown-toggle" href="#">
-                        <i class="fa-fw fas fa-list nav-icon">
+                <li class="treeview">
+                    <a href="#">
+                        <i class="fa-fw fas fa-list">
 
                         </i>
-                        {{ trans('cruds.taskManagement.title') }}
+                        <span>{{ trans('cruds.taskManagement.title') }}</span>
+                        <span class="pull-right-container"><i class="fa fa-fw fa-angle-left pull-right"></i></span>
                     </a>
-                    <ul class="nav-dropdown-items">
+                    <ul class="treeview-menu">
                         @can('task_status_access')
-                            <li class="nav-item">
-                                <a href="{{ route("admin.task-statuses.index") }}" class="nav-link {{ request()->is('admin/task-statuses') || request()->is('admin/task-statuses/*') ? 'active' : '' }}">
-                                    <i class="fa-fw fas fa-server nav-icon">
+                            <li class="{{ request()->is('admin/task-statuses') || request()->is('admin/task-statuses/*') ? 'active' : '' }}">
+                                <a href="{{ route("admin.task-statuses.index") }}">
+                                    <i class="fa-fw fas fa-server">
 
                                     </i>
-                                    {{ trans('cruds.taskStatus.title') }}
+                                    <span>{{ trans('cruds.taskStatus.title') }}</span>
                                 </a>
                             </li>
                         @endcan
                         @can('task_tag_access')
-                            <li class="nav-item">
-                                <a href="{{ route("admin.task-tags.index") }}" class="nav-link {{ request()->is('admin/task-tags') || request()->is('admin/task-tags/*') ? 'active' : '' }}">
-                                    <i class="fa-fw fas fa-server nav-icon">
+                            <li class="{{ request()->is('admin/task-tags') || request()->is('admin/task-tags/*') ? 'active' : '' }}">
+                                <a href="{{ route("admin.task-tags.index") }}">
+                                    <i class="fa-fw fas fa-server">
 
                                     </i>
-                                    {{ trans('cruds.taskTag.title') }}
+                                    <span>{{ trans('cruds.taskTag.title') }}</span>
                                 </a>
                             </li>
                         @endcan
                         @can('task_access')
-                            <li class="nav-item">
-                                <a href="{{ route("admin.tasks.index") }}" class="nav-link {{ request()->is('admin/tasks') || request()->is('admin/tasks/*') ? 'active' : '' }}">
-                                    <i class="fa-fw fas fa-briefcase nav-icon">
+                            <li class="{{ request()->is('admin/tasks') || request()->is('admin/tasks/*') ? 'active' : '' }}">
+                                <a href="{{ route("admin.tasks.index") }}">
+                                    <i class="fa-fw fas fa-briefcase">
 
                                     </i>
-                                    {{ trans('cruds.task.title') }}
+                                    <span>{{ trans('cruds.task.title') }}</span>
                                 </a>
                             </li>
                         @endcan
                         @can('tasks_calendar_access')
-                            <li class="nav-item">
-                                <a href="{{ route("admin.tasks-calendars.index") }}" class="nav-link {{ request()->is('admin/tasks-calendars') || request()->is('admin/tasks-calendars/*') ? 'active' : '' }}">
-                                    <i class="fa-fw fas fa-calendar nav-icon">
+                            <li class="{{ request()->is('admin/tasks-calendars') || request()->is('admin/tasks-calendars/*') ? 'active' : '' }}">
+                                <a href="{{ route("admin.tasks-calendars.index") }}">
+                                    <i class="fa-fw fas fa-calendar">
 
                                     </i>
-                                    {{ trans('cruds.tasksCalendar.title') }}
+                                    <span>{{ trans('cruds.tasksCalendar.title') }}</span>
                                 </a>
                             </li>
                         @endcan
@@ -212,47 +214,47 @@
                 </li>
             @endcan
             @can('user_alert_access')
-                <li class="nav-item">
-                    <a href="{{ route("admin.user-alerts.index") }}" class="nav-link {{ request()->is('admin/user-alerts') || request()->is('admin/user-alerts/*') ? 'active' : '' }}">
-                        <i class="fa-fw fas fa-bell nav-icon">
+                <li class="{{ request()->is('admin/user-alerts') || request()->is('admin/user-alerts/*') ? 'active' : '' }}">
+                    <a href="{{ route("admin.user-alerts.index") }}">
+                        <i class="fa-fw fas fa-bell">
 
                         </i>
-                        {{ trans('cruds.userAlert.title') }}
+                        <span>{{ trans('cruds.userAlert.title') }}</span>
                     </a>
                 </li>
             @endcan
             @can('file_manager_access')
-                <li class="nav-item">
-                    <a href="{{ route("admin.file-managers.index") }}" class="nav-link {{ request()->is('admin/file-managers') || request()->is('admin/file-managers/*') ? 'active' : '' }}">
-                        <i class="fa-fw fas fa-file-pdf nav-icon">
+                <li class="{{ request()->is('admin/file-managers') || request()->is('admin/file-managers/*') ? 'active' : '' }}">
+                    <a href="{{ route("admin.file-managers.index") }}">
+                        <i class="fa-fw fas fa-file-pdf">
 
                         </i>
-                        {{ trans('cruds.fileManager.title') }}
+                        <span>{{ trans('cruds.fileManager.title') }}</span>
                     </a>
                 </li>
             @endcan
             @can('construction_contract_access')
-                <li class="nav-item">
-                    <a href="{{ route("admin.construction-contracts.index") }}" class="nav-link {{ request()->is('admin/construction-contracts') || request()->is('admin/construction-contracts/*') ? 'active' : '' }}">
-                        <i class="fa-fw fas fa-book-open nav-icon">
+                <li class="{{ request()->is('admin/construction-contracts') || request()->is('admin/construction-contracts/*') ? 'active' : '' }}">
+                    <a href="{{ route("admin.construction-contracts.index") }}">
+                        <i class="fa-fw fas fa-book-open">
 
                         </i>
-                        {{ trans('cruds.constructionContract.title') }}
+                        <span>{{ trans('cruds.constructionContract.title') }}</span>
                     </a>
                 </li>
             @endcan
-            <li class="nav-item">
-                <a href="{{ route("admin.systemCalendar") }}" class="nav-link {{ request()->is('admin/system-calendar') || request()->is('admin/system-calendar/*') ? 'active' : '' }}">
-                    <i class="nav-icon fa-fw fas fa-calendar">
+            <li class="{{ request()->is('admin/system-calendar') || request()->is('admin/system-calendar/*') ? 'active' : '' }}">
+                <a href="{{ route("admin.systemCalendar") }}">
+                    <i class="fas fa-fw fa-calendar">
 
                     </i>
-                    {{ trans('global.systemCalendar') }}
+                    <span>{{ trans('global.systemCalendar') }}</span>
                 </a>
             </li>
             @php($unread = \App\QaTopic::unreadCount())
-                <li class="nav-item">
-                    <a href="{{ route("admin.messenger.index") }}" class="{{ request()->is('admin/messenger') || request()->is('admin/messenger/*') ? 'active' : '' }} nav-link">
-                        <i class="nav-icon fa-fw fa fa-envelope">
+                <li class="{{ request()->is('admin/messenger') || request()->is('admin/messenger/*') ? 'active' : '' }}">
+                    <a href="{{ route("admin.messenger.index") }}">
+                        <i class="fa-fw fa fa-envelope">
 
                         </i>
                         <span>{{ trans('global.messages') }}</span>
@@ -261,16 +263,14 @@
                         @endif
                     </a>
                 </li>
-                <li class="nav-item">
-                    <a href="#" class="nav-link" onclick="event.preventDefault(); document.getElementById('logoutform').submit();">
-                        <i class="nav-icon fas fa-fw fa-sign-out-alt">
+                <li>
+                    <a href="#" onclick="event.preventDefault(); document.getElementById('logoutform').submit();">
+                        <i class="fas fa-fw fa-sign-out-alt">
 
                         </i>
                         {{ trans('global.logout') }}
                     </a>
                 </li>
         </ul>
-
-    </nav>
-    <button class="sidebar-minimizer brand-minimizer" type="button"></button>
-</div>
+    </section>
+</aside>

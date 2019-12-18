@@ -17,14 +17,6 @@ class AddRelationshipFieldsToRfasTable extends Migration
 
             $table->foreign('assign_id', 'assign_fk_594338')->references('id')->on('users');
 
-            $table->unsignedInteger('create_by_id')->nullable();
-
-            $table->foreign('create_by_id', 'create_by_fk_594341')->references('id')->on('users');
-
-            $table->unsignedInteger('action_by_id')->nullable();
-
-            $table->foreign('action_by_id', 'action_by_fk_594342')->references('id')->on('users');
-
             $table->unsignedInteger('comment_by_id')->nullable();
 
             $table->foreign('comment_by_id', 'comment_by_fk_594343')->references('id')->on('users');
@@ -52,6 +44,22 @@ class AddRelationshipFieldsToRfasTable extends Migration
             $table->unsignedInteger('team_id')->nullable();
 
             $table->foreign('team_id', 'team_fk_673427')->references('id')->on('teams');
+
+            $table->unsignedInteger('construction_contract_id')->nullable();
+
+            $table->foreign('construction_contract_id', 'construction_contract_fk_746744')->references('id')->on('construction_contracts');
+
+            $table->unsignedInteger('create_by_user_id')->nullable();
+
+            $table->foreign('create_by_user_id', 'create_by_user_fk_746745')->references('id')->on('users');
+
+            $table->unsignedInteger('update_by_user_id')->nullable();
+
+            $table->foreign('update_by_user_id', 'update_by_user_fk_746746')->references('id')->on('users');
+
+            $table->unsignedInteger('approve_by_user_id')->nullable();
+
+            $table->foreign('approve_by_user_id', 'approve_by_user_fk_746747')->references('id')->on('users');
         });
     }
 }

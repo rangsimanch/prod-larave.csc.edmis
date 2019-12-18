@@ -44,20 +44,21 @@ class Rfa extends Model implements HasMedia
         'type_id',
         'rfa_code',
         'assign_id',
-        'issueby_id',
-        'updated_at',
         'deleted_at',
+        'updated_at',
         'created_at',
+        'issueby_id',
         'submit_date',
-        'create_by_id',
-        'action_by_id',
         'receive_date',
-        'comment_by_id',
         'for_status_id',
+        'comment_by_id',
         'document_number',
         'comment_status_id',
+        'create_by_user_id',
+        'update_by_user_id',
         'information_by_id',
         'document_status_id',
+        'approve_by_user_id',
         'construction_contract_id',
     ];
 
@@ -68,6 +69,24 @@ class Rfa extends Model implements HasMedia
         Rfa::observe(new \App\Observers\RfaActionObserver);
     }
 
+     /**
+     * Set to null if empty
+     * @param $input
+     */
+    public function setCreatedByIdAttribute($input)
+    {
+        $this->attributes['create_by_id'] = $input ? $input : null;
+    }
+
+    /**
+     * Set to null if empty
+     * @param $input
+     */
+    public function setCreatedByConstructionContractIdAttribute($input)
+    {
+        $this->attributes['construction_contract_id'] = $input ? $input : null;
+    }
+
     public function registerMediaConversions(Media $media = null)
     {
         $this->addMediaConversion('thumb')->width(50)->height(50);
@@ -76,6 +95,11 @@ class Rfa extends Model implements HasMedia
     public function type()
     {
         return $this->belongsTo(Rfatype::class, 'type_id');
+    }
+
+    public function construction_contract()
+    {
+        return $this->belongsTo(ConstructionContract::class, 'construction_contract_id');
     }
 
     public function getSubmitDateAttribute($value)
@@ -101,16 +125,6 @@ class Rfa extends Model implements HasMedia
     public function getFileUpload1Attribute()
     {
         return $this->getMedia('file_upload_1');
-    }
-
-    public function create_by()
-    {
-        return $this->belongsTo(User::class, 'create_by_id');
-    }
-
-    public function action_by()
-    {
-        return $this->belongsTo(User::class, 'action_by_id');
     }
 
     public function comment_by()
@@ -148,9 +162,19 @@ class Rfa extends Model implements HasMedia
         return $this->belongsTo(RfaDocumentStatus::class, 'document_status_id');
     }
 
-    public function construction_contract()
+    public function create_by_user()
     {
-        return $this->belongsTo(ConstructionContract::class, 'construction_contract_id');
+        return $this->belongsTo(User::class, 'create_by_user_id');
+    }
+
+    public function update_by_user()
+    {
+        return $this->belongsTo(User::class, 'update_by_user_id');
+    }
+
+    public function approve_by_user()
+    {
+        return $this->belongsTo(User::class, 'approve_by_user_id');
     }
 
     public function team()

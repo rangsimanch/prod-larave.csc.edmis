@@ -5,15 +5,19 @@ Route::get('/home', function () {
     if (session('status')) {
         return redirect()->route('admin.home')->with('status', session('status'));
     }
-
     return redirect()->route('admin.home');
 });
 
 Auth::routes();
 // Admin
 
+
+
 Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'middleware' => ['auth']], function () {
+//Route::group(['middleware' => ['auth'], 'prefix' => 'admin', 'as' => 'admin.'], function () {
+
     Route::get('/', 'HomeController@index')->name('home');
+    //->middleware('ConstructionContract.Select');
     Route::get('user-alerts/read', 'UserAlertsController@read');
     // Permissions
     Route::delete('permissions/destroy', 'PermissionsController@massDestroy')->name('permissions.massDestroy');
@@ -118,4 +122,12 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::delete('messenger/{topic}', 'MessengerController@destroyTopic')->name('messenger.destroyTopic');
     Route::post('messenger/{topic}/reply', 'MessengerController@replyToTopic')->name('messenger.reply');
     Route::get('messenger/{topic}/reply', 'MessengerController@showReply')->name('messenger.showReply');
+
+  
+   });
+
+Route::group(['middleware' => ['auth'], 'prefix' => 'admin', 'as' => 'admin.'], function () {
+    Route::get('/constructionContracts-select', 'Auth\ConstructionContractSelectController@select')->name('constructionContracts-select.select');
+    Route::post('/constructionContracts-select', 'Auth\ConstructionContractSelectController@storeSelect')->name('constructionContracts-select.select');
+
 });

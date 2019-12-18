@@ -20,14 +20,13 @@ class TaskApiController extends Controller
     {
         abort_if(Gate::denies('task_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new TaskResource(Task::with(['status', 'tags', 'user_create', 'construction_contracts', 'team'])->get());
+        return new TaskResource(Task::with(['status', 'tags', 'create_by_user', 'construction_contract', 'team'])->get());
     }
 
     public function store(StoreTaskRequest $request)
     {
         $task = Task::create($request->all());
         $task->tags()->sync($request->input('tags', []));
-        $task->construction_contracts()->sync($request->input('construction_contracts', []));
 
         if ($request->input('attachment', false)) {
             $task->addMedia(storage_path('tmp/uploads/' . $request->input('attachment')))->toMediaCollection('attachment');
@@ -42,14 +41,13 @@ class TaskApiController extends Controller
     {
         abort_if(Gate::denies('task_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new TaskResource($task->load(['status', 'tags', 'user_create', 'construction_contracts', 'team']));
+        return new TaskResource($task->load(['status', 'tags', 'create_by_user', 'construction_contract', 'team']));
     }
 
     public function update(UpdateTaskRequest $request, Task $task)
     {
         $task->update($request->all());
         $task->tags()->sync($request->input('tags', []));
-        $task->construction_contracts()->sync($request->input('construction_contracts', []));
 
         if ($request->input('attachment', false)) {
             if (!$task->attachment || $request->input('attachment') !== $task->attachment->file_name) {

@@ -1,77 +1,85 @@
 @extends('layouts.admin')
 @section('content')
-@can('user_create')
-    <div style="margin-bottom: 10px;" class="row">
+<div class="content">
+    @can('user_create')
+        <div style="margin-bottom: 10px;" class="row">
+            <div class="col-lg-12">
+                <a class="btn btn-success" href="{{ route("admin.users.create") }}">
+                    {{ trans('global.add') }} {{ trans('cruds.user.title_singular') }}
+                </a>
+                <button class="btn btn-warning" data-toggle="modal" data-target="#csvImportModal">
+                    {{ trans('global.app_csvImport') }}
+                </button>
+                @include('csvImport.modal', ['model' => 'User', 'route' => 'admin.users.parseCsvImport'])
+            </div>
+        </div>
+    @endcan
+    <div class="row">
         <div class="col-lg-12">
-            <a class="btn btn-success" href="{{ route("admin.users.create") }}">
-                {{ trans('global.add') }} {{ trans('cruds.user.title_singular') }}
-            </a>
-            <button class="btn btn-warning" data-toggle="modal" data-target="#csvImportModal">
-                {{ trans('global.app_csvImport') }}
-            </button>
-            @include('csvImport.modal', ['model' => 'User', 'route' => 'admin.users.parseCsvImport'])
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    {{ trans('cruds.user.title_singular') }} {{ trans('global.list') }}
+                </div>
+                <div class="panel-body">
+                    <table class=" table table-bordered table-striped table-hover ajaxTable datatable datatable-User">
+                        <thead>
+                            <tr>
+                                <th width="10">
+
+                                </th>
+                                <th>
+                                    {{ trans('cruds.user.fields.img_user') }}
+                                </th>
+                                <th>
+                                    {{ trans('cruds.user.fields.name') }}
+                                </th>
+                                <th>
+                                    {{ trans('cruds.user.fields.dob') }}
+                                </th>
+                                <th>
+                                    {{ trans('cruds.user.fields.gender') }}
+                                </th>
+                                <th>
+                                    {{ trans('cruds.user.fields.workphone') }}
+                                </th>
+                                <th>
+                                    {{ trans('cruds.user.fields.team') }}
+                                </th>
+                                <th>
+                                    {{ trans('cruds.user.fields.jobtitle') }}
+                                </th>
+                                <th>
+                                    {{ trans('cruds.user.fields.email') }}
+                                </th>
+                                <th>
+                                    {{ trans('cruds.user.fields.email_verified_at') }}
+                                </th>
+                                <th>
+                                    {{ trans('cruds.user.fields.roles') }}
+                                </th>
+                                <th>
+                                    {{ trans('cruds.user.fields.signature') }}
+                                </th>
+                                <th>
+                                    {{ trans('cruds.user.fields.approved') }}
+                                </th>
+                                <th>
+                                    {{ trans('cruds.user.fields.construction_contract') }}
+                                </th>
+                                <th>
+                                    &nbsp;
+                                </th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+
+
+
         </div>
     </div>
-@endcan
-<div class="card">
-    <div class="card-header">
-        {{ trans('cruds.user.title_singular') }} {{ trans('global.list') }}
-    </div>
-
-    <div class="card-body">
-        <table class=" table table-bordered table-striped table-hover ajaxTable datatable datatable-User">
-            <thead>
-                <tr>
-                    <th width="10">
-
-                    </th>
-                    <th>
-                        {{ trans('cruds.user.fields.img_user') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.user.fields.name') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.user.fields.dob') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.user.fields.gender') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.user.fields.workphone') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.user.fields.team') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.user.fields.jobtitle') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.user.fields.email') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.user.fields.email_verified_at') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.user.fields.roles') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.user.fields.approved') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.user.fields.construction_contract') }}
-                    </th>
-                    <th>
-                        &nbsp;
-                    </th>
-                </tr>
-            </thead>
-        </table>
-    </div>
 </div>
-
-
-
 @endsection
 @section('scripts')
 @parent
@@ -127,6 +135,7 @@
 { data: 'email', name: 'email' },
 { data: 'email_verified_at', name: 'email_verified_at' },
 { data: 'roles', name: 'roles.title' },
+{ data: 'signature', name: 'signature', sortable: false, searchable: false },
 { data: 'approved', name: 'approved' },
 { data: 'construction_contract', name: 'construction_contracts.code' },
 { data: 'actions', name: '{{ trans('global.actions') }}' }

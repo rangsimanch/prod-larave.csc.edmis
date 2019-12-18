@@ -13,12 +13,13 @@
         "doctrine/dbal": "^2.9",
         "fideloper/proxy": "^4.0",
         "laravel/framework": "^6.2",
-        "laravel/tinker": "^1.0",
-        "yajra/laravel-datatables-oracle": "^9.7",
-        "laraveldaily/laravel-charts": "^0.1.10",
-        "spatie/laravel-medialibrary": "^7.12",
         "laravel/passport": "^7.4",
-        "nuovo/spreadsheet-reader": "^0.5.11"
+        "laravel/tinker": "^1.0",
+        "laravelcollective/html": "^6.0",
+        "laraveldaily/laravel-charts": "^0.1.10",
+        "nuovo/spreadsheet-reader": "^0.5.11",
+        "spatie/laravel-medialibrary": "^7.12",
+        "yajra/laravel-datatables-oracle": "^9.7"
     },
     "require-dev": {
         "facade/ignition": "^1.4",

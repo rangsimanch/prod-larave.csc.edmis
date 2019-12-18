@@ -3,12 +3,12 @@
 <div class="content">
     <div class="row">
         <div class="col-lg-12">
-            <div class="card">
-                <div class="card-header">
+            <div class="panel panel-default">
+                <div class="panel-heading">
                     Dashboard
                 </div>
 
-                <div class="card-body">
+                <div class="panel-body">
                     @if(session('status'))
                         <div class="alert alert-success" role="alert">
                             {{ session('status') }}
