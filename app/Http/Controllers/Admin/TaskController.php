@@ -11,12 +11,6 @@ use App\Http\Requests\UpdateTaskRequest;
 use App\Task;
 use App\TaskStatus;
 use App\TaskTag;
-<<<<<<< HEAD
-use App\User;
-use App\ConstructionContract;
-use Illuminate\Support\Facades\Auth;
-=======
->>>>>>> 6583fa6204f7846f680bc6147fc560b6bd156dcf
 use Gate;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -108,34 +102,13 @@ class TaskController extends Controller
 
         $tags = TaskTag::all()->pluck('name', 'id');
 
-<<<<<<< HEAD
-        // $construction_contract_id = ConstructionContract::has('constructionContractTasks')->get()->pluck('code', 'id');
-        // $user_create_id = ConstructionContract::with('constructionContractTasks')->findOrFail(session('construction_contract_id'))
-        //      ->constructionContractTasks->pluck('code', 'id');
-
-        // //$user_creates = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
-
-=======
->>>>>>> 6583fa6204f7846f680bc6147fc560b6bd156dcf
         return view('admin.tasks.create', compact('statuses', 'tags'));
     }
 
     public function store(StoreTaskRequest $request)
     {
-<<<<<<< HEAD
-
-        $data = $request->all();
-        $data['construction_contract_id'] = $data['construction_contract_id'] ?? session('construction_contract_id');
-        $data['user_create_id'] = $data['user_create_id'] ?? Auth::id();
-        $task = Task::create($data);
-
-        // $task = Task::create($request->all());
-        // $task->tags()->sync($request->input('tags', []));
-        // $task->construction_contracts()->sync($request->input('construction_contracts', []));
-=======
         $task = Task::create($request->all());
         $task->tags()->sync($request->input('tags', []));
->>>>>>> 6583fa6204f7846f680bc6147fc560b6bd156dcf
 
         if ($request->input('attachment', false)) {
             $task->addMedia(storage_path('tmp/uploads/' . $request->input('attachment')))->toMediaCollection('attachment');
@@ -152,13 +125,7 @@ class TaskController extends Controller
 
         $tags = TaskTag::all()->pluck('name', 'id');
 
-<<<<<<< HEAD
-        $user_creates = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
-        
-        $task->load('status', 'tags', 'user_create', 'construction_contracts', 'team');
-=======
         $task->load('status', 'tags', 'create_by_user', 'construction_contract', 'team');
->>>>>>> 6583fa6204f7846f680bc6147fc560b6bd156dcf
 
         return view('admin.tasks.edit', compact('statuses', 'tags', 'task'));
     }
@@ -172,21 +139,8 @@ class TaskController extends Controller
      */
     public function update(UpdateTaskRequest $request, $id)
     {
-<<<<<<< HEAD
-        // $task->update($request->all());
-        // $task->tags()->sync($request->input('tags', []));
-        // $task->construction_contracts()->sync($request->input('construction_contracts', []));
-
-        $data = $request->all();
-        $data['construction_contract_id'] = $data['construction_contract_id'] ?? session('construction_contract_id');
-        $data['user_create_id'] = $data['user_create_id'] ?? Auth::id();
-        $task = Task::findOrFail($id);
-        $task->update($data);
-
-=======
         $task->update($request->all());
         $task->tags()->sync($request->input('tags', []));
->>>>>>> 6583fa6204f7846f680bc6147fc560b6bd156dcf
 
         if ($request->input('attachment', false)) {
             if (!$task->attachment || $request->input('attachment') !== $task->attachment->file_name) {
@@ -204,12 +158,7 @@ class TaskController extends Controller
     {
         abort_if(Gate::denies('task_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-<<<<<<< HEAD
-        $task->load('status', 'tags', 'user_create', 'construction_contracts', 'team');
-        //$task = Task::findOrFail($id);
-=======
         $task->load('status', 'tags', 'create_by_user', 'construction_contract', 'team');
->>>>>>> 6583fa6204f7846f680bc6147fc560b6bd156dcf
 
         return view('admin.tasks.show', compact('task'));
     }

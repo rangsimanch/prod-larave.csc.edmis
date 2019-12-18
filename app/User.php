@@ -199,16 +199,6 @@ class User extends Authenticatable implements HasMedia
         return $this->belongsToMany(Role::class);
     }
 
-<<<<<<< HEAD
-    public function construction_contracts()
-    {
-        return $this->belongsToMany(ConstructionContract::class);
-    }
-
-    public function isAdmin()
-    {
-        return $this->role_id === 1;
-=======
     public function getSignatureAttribute()
     {
         $file = $this->getMedia('signature')->last();
@@ -224,6 +214,5 @@ class User extends Authenticatable implements HasMedia
     public function construction_contracts()
     {
         return $this->belongsToMany(ConstructionContract::class);
->>>>>>> 6583fa6204f7846f680bc6147fc560b6bd156dcf
     }
 }
