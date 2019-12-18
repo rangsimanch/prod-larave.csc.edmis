@@ -41,6 +41,16 @@ class FileManager extends Model implements HasMedia
         'construction_contract_id',
     ];
 
+
+    /**
+     * Set to null if empty
+     * @param $input
+     */
+    public function setCreatedByConstructionContractIdAttribute($input)
+    {
+        $this->attributes['construction_contract_id'] = $input ? $input : null;
+    }
+
     public function registerMediaConversions(Media $media = null)
     {
         $this->addMediaConversion('thumb')->width(50)->height(50);

@@ -68,6 +68,24 @@ class Rfa extends Model implements HasMedia
         Rfa::observe(new \App\Observers\RfaActionObserver);
     }
 
+     /**
+     * Set to null if empty
+     * @param $input
+     */
+    public function setCreatedByIdAttribute($input)
+    {
+        $this->attributes['create_by_id'] = $input ? $input : null;
+    }
+
+    /**
+     * Set to null if empty
+     * @param $input
+     */
+    public function setCreatedByConstructionContractIdAttribute($input)
+    {
+        $this->attributes['construction_contract_id'] = $input ? $input : null;
+    }
+
     public function registerMediaConversions(Media $media = null)
     {
         $this->addMediaConversion('thumb')->width(50)->height(50);

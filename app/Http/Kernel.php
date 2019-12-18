@@ -2,10 +2,18 @@
 
 namespace App\Http;
 
+use App\Http\Middleware\ConstructionContractSelect;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
 class Kernel extends HttpKernel
 {
+    /**
+     * The application's global HTTP middleware stack.
+     *
+     * These middleware are run during every request to your application.
+     *
+     * @var array
+     */
     protected $middleware = [
         \App\Http\Middleware\TrimStrings::class,
         \App\Http\Middleware\TrustProxies::class,
@@ -13,7 +21,11 @@ class Kernel extends HttpKernel
         \Illuminate\Foundation\Http\Middleware\CheckForMaintenanceMode::class,
         \Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull::class,
     ];
-
+/**
+     * The application's route middleware groups.
+     *
+     * @var array
+     */
     protected $middlewareGroups = [
         'api' => [
             'throttle:60,1',
@@ -21,6 +33,7 @@ class Kernel extends HttpKernel
             \App\Http\Middleware\AuthGates::class,
         ],
         'web' => [
+            \App\Http\Middleware\ConstructionContractSelect::class,
             \App\Http\Middleware\EncryptCookies::class,
             \Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse::class,
             \Illuminate\Session\Middleware\StartSession::class,
@@ -32,7 +45,13 @@ class Kernel extends HttpKernel
             \App\Http\Middleware\ApprovalMiddleware::class,
         ],
     ];
-
+ /**
+     * The application's route middleware.
+     *
+     * These middleware may be assigned to groups or used individually.
+     *
+     * @var array
+     */
     protected $routeMiddleware = [
         'can'              => \Illuminate\Auth\Middleware\Authorize::class,
         'auth'             => \Illuminate\Auth\Middleware\Authenticate::class,
@@ -43,5 +62,7 @@ class Kernel extends HttpKernel
         'bindings'         => \Illuminate\Routing\Middleware\SubstituteBindings::class,
         'password.confirm' => \Illuminate\Auth\Middleware\RequirePassword::class,
         'auth.basic'       => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
+       // 'ConstructionContract.Select' => \App\Http\Middleware\ConstructionContractSelect::class,
+        
     ];
 }

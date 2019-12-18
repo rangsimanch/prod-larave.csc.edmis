@@ -50,6 +50,24 @@ class Task extends Model implements HasMedia
         Task::observe(new \App\Observers\TaskActionObserver);
     }
 
+    /**
+     * Set to null if empty
+     * @param $input
+     */
+    public function setCreatedByIdAttribute($input)
+    {
+        $this->attributes['user_create_id'] = $input ? $input : null;
+    }
+
+    /**
+     * Set to null if empty
+     * @param $input
+     */
+    public function setCreatedByConstructionContractIdAttribute($input)
+    {
+        $this->attributes['construction_contract_id'] = $input ? $input : null;
+    }
+
     public function registerMediaConversions(Media $media = null)
     {
         $this->addMediaConversion('thumb')->width(50)->height(50);
@@ -94,6 +112,7 @@ class Task extends Model implements HasMedia
     {
         return $this->belongsTo(User::class, 'user_create_id');
     }
+
 
     public function construction_contract()
     {

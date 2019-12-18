@@ -12,10 +12,14 @@ use App\Task;
 use App\TaskStatus;
 use App\TaskTag;
 use App\User;
+use App\ConstructionContract;
+use Illuminate\Support\Facades\Auth;
 use Gate;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Yajra\DataTables\Facades\DataTables;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Input;
 
 class TaskController extends Controller
 {
@@ -80,6 +84,11 @@ class TaskController extends Controller
         return view('admin.tasks.index');
     }
 
+     /**
+     * Show the form for creating new Product.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function create()
     {
         abort_if(Gate::denies('task_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
@@ -88,16 +97,26 @@ class TaskController extends Controller
 
         $tags = TaskTag::all()->pluck('name', 'id');
 
-        $user_creates = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        // $construction_contract_id = ConstructionContract::has('constructionContractTasks')->get()->pluck('code', 'id');
+        // $user_create_id = ConstructionContract::with('constructionContractTasks')->findOrFail(session('construction_contract_id'))
+        //      ->constructionContractTasks->pluck('code', 'id');
 
-        return view('admin.tasks.create', compact('statuses', 'tags', 'user_creates'));
+        // //$user_creates = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+
+        return view('admin.tasks.create', compact('statuses', 'tags'));
     }
 
     public function store(StoreTaskRequest $request)
     {
-        $task = Task::create($request->all());
-        $task->tags()->sync($request->input('tags', []));
-        $task->construction_contracts()->sync($request->input('construction_contracts', []));
+
+        $data = $request->all();
+        $data['construction_contract_id'] = $data['construction_contract_id'] ?? session('construction_contract_id');
+        $data['user_create_id'] = $data['user_create_id'] ?? Auth::id();
+        $task = Task::create($data);
+
+        // $task = Task::create($request->all());
+        // $task->tags()->sync($request->input('tags', []));
+        // $task->construction_contracts()->sync($request->input('construction_contracts', []));
 
         if ($request->input('attachment', false)) {
             $task->addMedia(storage_path('tmp/uploads/' . $request->input('attachment')))->toMediaCollection('attachment');
@@ -115,17 +134,31 @@ class TaskController extends Controller
         $tags = TaskTag::all()->pluck('name', 'id');
 
         $user_creates = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
-
+        
         $task->load('status', 'tags', 'user_create', 'construction_contracts', 'team');
 
         return view('admin.tasks.edit', compact('statuses', 'tags', 'user_creates', 'task'));
     }
 
-    public function update(UpdateTaskRequest $request, Task $task)
+    /**
+     * Update Product in storage.
+     *
+     * @param  \App\Http\Requests\UpdateProductsRequest  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(UpdateTaskRequest $request, $id)
     {
-        $task->update($request->all());
-        $task->tags()->sync($request->input('tags', []));
-        $task->construction_contracts()->sync($request->input('construction_contracts', []));
+        // $task->update($request->all());
+        // $task->tags()->sync($request->input('tags', []));
+        // $task->construction_contracts()->sync($request->input('construction_contracts', []));
+
+        $data = $request->all();
+        $data['construction_contract_id'] = $data['construction_contract_id'] ?? session('construction_contract_id');
+        $data['user_create_id'] = $data['user_create_id'] ?? Auth::id();
+        $task = Task::findOrFail($id);
+        $task->update($data);
+
 
         if ($request->input('attachment', false)) {
             if (!$task->attachment || $request->input('attachment') !== $task->attachment->file_name) {
@@ -138,11 +171,13 @@ class TaskController extends Controller
         return redirect()->route('admin.tasks.index');
     }
 
+
     public function show(Task $task)
     {
         abort_if(Gate::denies('task_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $task->load('status', 'tags', 'user_create', 'construction_contracts', 'team');
+        //$task = Task::findOrFail($id);
 
         return view('admin.tasks.show', compact('task'));
     }

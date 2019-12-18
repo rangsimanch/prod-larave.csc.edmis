@@ -92,20 +92,7 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.task.fields.attachment_helper') }}</span>
             </div>
-            <div class="form-group">
-                <label class="required" for="user_create_id">{{ trans('cruds.task.fields.user_create') }}</label>
-                <select class="form-control select2 {{ $errors->has('user_create') ? 'is-invalid' : '' }}" name="user_create_id" id="user_create_id" required>
-                    @foreach($user_creates as $id => $user_create)
-                        <option value="{{ $id }}" {{ old('user_create_id') == $id ? 'selected' : '' }}>{{ $user_create }}</option>
-                    @endforeach
-                </select>
-                @if($errors->has('user_create_id'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('user_create_id') }}
-                    </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.task.fields.user_create_helper') }}</span>
-            </div>
+          
             <div class="form-group">
                 <button class="btn btn-danger" type="submit">
                     {{ trans('global.save') }}

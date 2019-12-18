@@ -88,6 +88,8 @@ class User extends Authenticatable implements HasMedia
         User::observe(new \App\Observers\UserActionObserver);
     }
 
+    
+
     public function registerMediaConversions(Media $media = null)
     {
         $this->addMediaConversion('thumb')->width(50)->height(50);
@@ -192,8 +194,13 @@ class User extends Authenticatable implements HasMedia
         return $this->belongsToMany(Role::class);
     }
 
-    public function construction_contract()
+    public function construction_contracts()
     {
-        return $this->belongsTo(ConstructionContract::class, 'construction_contract_id');
+        return $this->belongsToMany(ConstructionContract::class);
+    }
+
+    public function isAdmin()
+    {
+        return $this->role_id === 1;
     }
 }
