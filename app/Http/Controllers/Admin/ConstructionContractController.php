@@ -95,6 +95,7 @@ class ConstructionContractController extends Controller
     {
         abort_if(Gate::denies('construction_contract_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
+<<<<<<< HEAD
         $constructionContract = ConstructionContract::findOrFail($id);
         $task = Task::where('construction_contract', $id)->get();
         $filemanager = FileManager::where('construction_contract', $id)->get();
@@ -106,6 +107,11 @@ class ConstructionContractController extends Controller
         // $constructionContract->load('constructionContractRfas', 'constructionContractUsers', 'constructionContractTasks', 'constructionContractFileManagers');
 
         return view('admin.constructionContracts.show', compact('constructionContract', 'task', 'filemanager', 'rfa', 'users'));
+=======
+        $constructionContract->load('constructionContractRfas', 'constructionContractTasks', 'constructionContractFileManagers', 'constructionContractUsers');
+
+        return view('admin.constructionContracts.show', compact('constructionContract'));
+>>>>>>> 6583fa6204f7846f680bc6147fc560b6bd156dcf
     }
 
 
