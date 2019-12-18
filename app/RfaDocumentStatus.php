@@ -24,7 +24,7 @@ class RfaDocumentStatus extends Model
         'status_name',
     ];
 
-    public function rfas()
+    public function documentStatusRfas()
     {
         return $this->hasMany(Rfa::class, 'document_status_id', 'id');
     }

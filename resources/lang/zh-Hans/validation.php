@@ -92,16 +92,16 @@ return [
     'required_without_all'           => 'The :attribute field is required when none of :values are present.',
     'same'                           => 'The :attribute and :other must match.',
     'size'                           => [
-        'numeric' => 'The :attribute must be :size.',
+        'numeric' => ':attribute 长度必须是:size',
         'file'    => 'The :attribute must be :size kilobytes.',
-        'string'  => 'The :attribute must be :size characters.',
+        'string'  => ':attribute 必须:size 个字符',
         'array'   => 'The :attribute must contain :size items.',
     ],
-    'string'                         => 'The :attribute must be a string.',
-    'timezone'                       => 'The :attribute must be a valid zone.',
-    'unique'                         => 'The :attribute has already been taken.',
-    'uploaded'                       => 'The :attribute failed to upload.',
-    'url'                            => 'The :attribute format is invalid.',
+    'string'                         => ':attribute 必须是字符串。',
+    'timezone'                       => ':attribute 必须是有效区域。',
+    'unique'                         => ':attribute 已经被使用',
+    'uploaded'                       => ':attribute 更新失败',
+    'url'                            => ':attribute 格式无效。',
     'custom'                         => [
         'attribute-name' => [
             'rule-name' => 'custom-message',

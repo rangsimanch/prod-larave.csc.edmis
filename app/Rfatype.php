@@ -25,7 +25,7 @@ class Rfatype extends Model
         'deleted_at',
     ];
 
-    public function rfas()
+    public function typeRfas()
     {
         return $this->hasMany(Rfa::class, 'type_id', 'id');
     }

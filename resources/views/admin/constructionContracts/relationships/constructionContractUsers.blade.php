@@ -1,149 +1,166 @@
-@can('user_create')
-    <div style="margin-bottom: 10px;" class="row">
-        <div class="col-lg-12">
-            <a class="btn btn-success" href="{{ route("admin.users.create") }}">
-                {{ trans('global.add') }} {{ trans('cruds.user.title_singular') }}
-            </a>
+<div class="content">
+    @can('user_create')
+        <div style="margin-bottom: 10px;" class="row">
+            <div class="col-lg-12">
+                <a class="btn btn-success" href="{{ route("admin.users.create") }}">
+                    {{ trans('global.add') }} {{ trans('cruds.user.title_singular') }}
+                </a>
+            </div>
         </div>
-    </div>
-@endcan
+    @endcan
+    <div class="row">
+        <div class="col-lg-12">
 
-<div class="card">
-    <div class="card-header">
-        {{ trans('cruds.user.title_singular') }} {{ trans('global.list') }}
-    </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    {{ trans('cruds.user.title_singular') }} {{ trans('global.list') }}
+                </div>
+                <div class="panel-body">
 
-    <div class="card-body">
-        <div class="table-responsive">
-            <table class=" table table-bordered table-striped table-hover datatable datatable-User">
-                <thead>
-                    <tr>
-                        <th width="10">
+                    <div class="table-responsive">
+                        <table class=" table table-bordered table-striped table-hover datatable datatable-User">
+                            <thead>
+                                <tr>
+                                    <th width="10">
 
-                        </th>
-                        <th>
-                            {{ trans('cruds.user.fields.img_user') }}
-                        </th>
-                        <th>
-                            {{ trans('cruds.user.fields.name') }}
-                        </th>
-                        <th>
-                            {{ trans('cruds.user.fields.dob') }}
-                        </th>
-                        <th>
-                            {{ trans('cruds.user.fields.gender') }}
-                        </th>
-                        <th>
-                            {{ trans('cruds.user.fields.workphone') }}
-                        </th>
-                        <th>
-                            {{ trans('cruds.user.fields.team') }}
-                        </th>
-                        <th>
-                            {{ trans('cruds.user.fields.jobtitle') }}
-                        </th>
-                        <th>
-                            {{ trans('cruds.user.fields.email') }}
-                        </th>
-                        <th>
-                            {{ trans('cruds.user.fields.email_verified_at') }}
-                        </th>
-                        <th>
-                            {{ trans('cruds.user.fields.roles') }}
-                        </th>
-                        <th>
-                            {{ trans('cruds.user.fields.approved') }}
-                        </th>
-                        <th>
-                            {{ trans('cruds.user.fields.construction_contract') }}
-                        </th>
-                        <th>
-                            &nbsp;
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach($users as $key => $user)
-                        <tr data-entry-id="{{ $user->id }}">
-                            <td>
+                                    </th>
+                                    <th>
+                                        {{ trans('cruds.user.fields.img_user') }}
+                                    </th>
+                                    <th>
+                                        {{ trans('cruds.user.fields.name') }}
+                                    </th>
+                                    <th>
+                                        {{ trans('cruds.user.fields.dob') }}
+                                    </th>
+                                    <th>
+                                        {{ trans('cruds.user.fields.gender') }}
+                                    </th>
+                                    <th>
+                                        {{ trans('cruds.user.fields.workphone') }}
+                                    </th>
+                                    <th>
+                                        {{ trans('cruds.user.fields.team') }}
+                                    </th>
+                                    <th>
+                                        {{ trans('cruds.user.fields.jobtitle') }}
+                                    </th>
+                                    <th>
+                                        {{ trans('cruds.user.fields.email') }}
+                                    </th>
+                                    <th>
+                                        {{ trans('cruds.user.fields.email_verified_at') }}
+                                    </th>
+                                    <th>
+                                        {{ trans('cruds.user.fields.roles') }}
+                                    </th>
+                                    <th>
+                                        {{ trans('cruds.user.fields.signature') }}
+                                    </th>
+                                    <th>
+                                        {{ trans('cruds.user.fields.approved') }}
+                                    </th>
+                                    <th>
+                                        {{ trans('cruds.user.fields.construction_contract') }}
+                                    </th>
+                                    <th>
+                                        &nbsp;
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach($users as $key => $user)
+                                    <tr data-entry-id="{{ $user->id }}">
+                                        <td>
 
-                            </td>
-                            <td>
-                                @if($user->img_user)
-                                    <a href="{{ $user->img_user->getUrl() }}" target="_blank">
-                                        <img src="{{ $user->img_user->getUrl('thumb') }}" width="50px" height="50px">
-                                    </a>
-                                @endif
-                            </td>
-                            <td>
-                                {{ $user->name ?? '' }}
-                            </td>
-                            <td>
-                                {{ $user->dob ?? '' }}
-                            </td>
-                            <td>
-                                {{ App\User::GENDER_SELECT[$user->gender] ?? '' }}
-                            </td>
-                            <td>
-                                {{ $user->workphone ?? '' }}
-                            </td>
-                            <td>
-                                {{ $user->team->name ?? '' }}
-                            </td>
-                            <td>
-                                {{ $user->jobtitle->name ?? '' }}
-                            </td>
-                            <td>
-                                {{ $user->email ?? '' }}
-                            </td>
-                            <td>
-                                {{ $user->email_verified_at ?? '' }}
-                            </td>
-                            <td>
-                                @foreach($user->roles as $key => $item)
-                                    <span class="badge badge-info">{{ $item->title }}</span>
+                                        </td>
+                                        <td>
+                                            @if($user->img_user)
+                                                <a href="{{ $user->img_user->getUrl() }}" target="_blank">
+                                                    <img src="{{ $user->img_user->getUrl('thumb') }}" width="50px" height="50px">
+                                                </a>
+                                            @endif
+                                        </td>
+                                        <td>
+                                            {{ $user->name ?? '' }}
+                                        </td>
+                                        <td>
+                                            {{ $user->dob ?? '' }}
+                                        </td>
+                                        <td>
+                                            {{ App\User::GENDER_SELECT[$user->gender] ?? '' }}
+                                        </td>
+                                        <td>
+                                            {{ $user->workphone ?? '' }}
+                                        </td>
+                                        <td>
+                                            {{ $user->team->name ?? '' }}
+                                        </td>
+                                        <td>
+                                            {{ $user->jobtitle->name ?? '' }}
+                                        </td>
+                                        <td>
+                                            {{ $user->email ?? '' }}
+                                        </td>
+                                        <td>
+                                            {{ $user->email_verified_at ?? '' }}
+                                        </td>
+                                        <td>
+                                            @foreach($user->roles as $key => $item)
+                                                <span class="label label-info label-many">{{ $item->title }}</span>
+                                            @endforeach
+                                        </td>
+                                        <td>
+                                            @if($user->signature)
+                                                <a href="{{ $user->signature->getUrl() }}" target="_blank">
+                                                    <img src="{{ $user->signature->getUrl('thumb') }}" width="50px" height="50px">
+                                                </a>
+                                            @endif
+                                        </td>
+                                        <td>
+                                            <span style="display:none">{{ $user->approved ?? '' }}</span>
+                                            <input type="checkbox" disabled="disabled" {{ $user->approved ? 'checked' : '' }}>
+                                        </td>
+                                        <td>
+                                            @foreach($user->construction_contracts as $key => $item)
+                                                <span class="label label-info label-many">{{ $item->code }}</span>
+                                            @endforeach
+                                        </td>
+                                        <td>
+                                            @can('user_show')
+                                                <a class="btn btn-xs btn-primary" href="{{ route('admin.users.show', $user->id) }}">
+                                                    {{ trans('global.view') }}
+                                                </a>
+                                            @endcan
+
+                                            @can('user_edit')
+                                                <a class="btn btn-xs btn-info" href="{{ route('admin.users.edit', $user->id) }}">
+                                                    {{ trans('global.edit') }}
+                                                </a>
+                                            @endcan
+
+                                            @can('user_delete')
+                                                <form action="{{ route('admin.users.destroy', $user->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
+                                                    <input type="hidden" name="_method" value="DELETE">
+                                                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                                    <input type="submit" class="btn btn-xs btn-danger" value="{{ trans('global.delete') }}">
+                                                </form>
+                                            @endcan
+
+                                        </td>
+
+                                    </tr>
                                 @endforeach
-                            </td>
-                            <td>
-                                <span style="display:none">{{ $user->approved ?? '' }}</span>
-                                <input type="checkbox" disabled="disabled" {{ $user->approved ? 'checked' : '' }}>
-                            </td>
-                            <td>
-                                @foreach($user->construction_contracts as $key => $item)
-                                    <span class="badge badge-info">{{ $item->code }}</span>
-                                @endforeach
-                            </td>
-                            <td>
-                                @can('user_show')
-                                    <a class="btn btn-xs btn-primary" href="{{ route('admin.users.show', $user->id) }}">
-                                        {{ trans('global.view') }}
-                                    </a>
-                                @endcan
+                            </tbody>
+                        </table>
+                    </div>
 
-                                @can('user_edit')
-                                    <a class="btn btn-xs btn-info" href="{{ route('admin.users.edit', $user->id) }}">
-                                        {{ trans('global.edit') }}
-                                    </a>
-                                @endcan
+                </div>
+            </div>
 
-                                @can('user_delete')
-                                    <form action="{{ route('admin.users.destroy', $user->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
-                                        <input type="hidden" name="_method" value="DELETE">
-                                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                                        <input type="submit" class="btn btn-xs btn-danger" value="{{ trans('global.delete') }}">
-                                    </form>
-                                @endcan
-
-                            </td>
-
-                        </tr>
-                    @endforeach
-                </tbody>
-            </table>
         </div>
     </div>
 </div>
-
 @section('scripts')
 @parent
 <script>

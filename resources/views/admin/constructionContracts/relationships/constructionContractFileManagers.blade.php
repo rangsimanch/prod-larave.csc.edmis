@@ -1,98 +1,105 @@
-@can('file_manager_create')
-    <div style="margin-bottom: 10px;" class="row">
-        <div class="col-lg-12">
-            <a class="btn btn-success" href="{{ route("admin.file-managers.create") }}">
-                {{ trans('global.add') }} {{ trans('cruds.fileManager.title_singular') }}
-            </a>
+<div class="content">
+    @can('file_manager_create')
+        <div style="margin-bottom: 10px;" class="row">
+            <div class="col-lg-12">
+                <a class="btn btn-success" href="{{ route("admin.file-managers.create") }}">
+                    {{ trans('global.add') }} {{ trans('cruds.fileManager.title_singular') }}
+                </a>
+            </div>
         </div>
-    </div>
-@endcan
+    @endcan
+    <div class="row">
+        <div class="col-lg-12">
 
-<div class="card">
-    <div class="card-header">
-        {{ trans('cruds.fileManager.title_singular') }} {{ trans('global.list') }}
-    </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    {{ trans('cruds.fileManager.title_singular') }} {{ trans('global.list') }}
+                </div>
+                <div class="panel-body">
 
-    <div class="card-body">
-        <div class="table-responsive">
-            <table class=" table table-bordered table-striped table-hover datatable datatable-FileManager">
-                <thead>
-                    <tr>
-                        <th width="10">
+                    <div class="table-responsive">
+                        <table class=" table table-bordered table-striped table-hover datatable datatable-FileManager">
+                            <thead>
+                                <tr>
+                                    <th width="10">
 
-                        </th>
-                        <th>
-                            {{ trans('cruds.fileManager.fields.file_name') }}
-                        </th>
-                        <th>
-                            {{ trans('cruds.fileManager.fields.code') }}
-                        </th>
-                        <th>
-                            {{ trans('cruds.fileManager.fields.file_upload') }}
-                        </th>
-                        <th>
-                            {{ trans('cruds.fileManager.fields.construction_contract') }}
-                        </th>
-                        <th>
-                            &nbsp;
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach($fileManagers as $key => $fileManager)
-                        <tr data-entry-id="{{ $fileManager->id }}">
-                            <td>
+                                    </th>
+                                    <th>
+                                        {{ trans('cruds.fileManager.fields.file_name') }}
+                                    </th>
+                                    <th>
+                                        {{ trans('cruds.fileManager.fields.code') }}
+                                    </th>
+                                    <th>
+                                        {{ trans('cruds.fileManager.fields.file_upload') }}
+                                    </th>
+                                    <th>
+                                        {{ trans('cruds.fileManager.fields.construction_contract') }}
+                                    </th>
+                                    <th>
+                                        &nbsp;
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach($fileManagers as $key => $fileManager)
+                                    <tr data-entry-id="{{ $fileManager->id }}">
+                                        <td>
 
-                            </td>
-                            <td>
-                                {{ $fileManager->file_name ?? '' }}
-                            </td>
-                            <td>
-                                {{ $fileManager->code ?? '' }}
-                            </td>
-                            <td>
-                                @foreach($fileManager->file_upload as $key => $media)
-                                    <a href="{{ $media->getUrl() }}" target="_blank">
-                                        {{ trans('global.view_file') }}
-                                    </a>
+                                        </td>
+                                        <td>
+                                            {{ $fileManager->file_name ?? '' }}
+                                        </td>
+                                        <td>
+                                            {{ $fileManager->code ?? '' }}
+                                        </td>
+                                        <td>
+                                            @foreach($fileManager->file_upload as $key => $media)
+                                                <a href="{{ $media->getUrl() }}" target="_blank">
+                                                    {{ trans('global.view_file') }}
+                                                </a>
+                                            @endforeach
+                                        </td>
+                                        <td>
+                                            @foreach($fileManager->construction_contracts as $key => $item)
+                                                <span class="label label-info label-many">{{ $item->code }}</span>
+                                            @endforeach
+                                        </td>
+                                        <td>
+                                            @can('file_manager_show')
+                                                <a class="btn btn-xs btn-primary" href="{{ route('admin.file-managers.show', $fileManager->id) }}">
+                                                    {{ trans('global.view') }}
+                                                </a>
+                                            @endcan
+
+                                            @can('file_manager_edit')
+                                                <a class="btn btn-xs btn-info" href="{{ route('admin.file-managers.edit', $fileManager->id) }}">
+                                                    {{ trans('global.edit') }}
+                                                </a>
+                                            @endcan
+
+                                            @can('file_manager_delete')
+                                                <form action="{{ route('admin.file-managers.destroy', $fileManager->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
+                                                    <input type="hidden" name="_method" value="DELETE">
+                                                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                                    <input type="submit" class="btn btn-xs btn-danger" value="{{ trans('global.delete') }}">
+                                                </form>
+                                            @endcan
+
+                                        </td>
+
+                                    </tr>
                                 @endforeach
-                            </td>
-                            <td>
-                                @foreach($fileManager->construction_contracts as $key => $item)
-                                    <span class="badge badge-info">{{ $item->code }}</span>
-                                @endforeach
-                            </td>
-                            <td>
-                                @can('file_manager_show')
-                                    <a class="btn btn-xs btn-primary" href="{{ route('admin.file-managers.show', $fileManager->id) }}">
-                                        {{ trans('global.view') }}
-                                    </a>
-                                @endcan
+                            </tbody>
+                        </table>
+                    </div>
 
-                                @can('file_manager_edit')
-                                    <a class="btn btn-xs btn-info" href="{{ route('admin.file-managers.edit', $fileManager->id) }}">
-                                        {{ trans('global.edit') }}
-                                    </a>
-                                @endcan
+                </div>
+            </div>
 
-                                @can('file_manager_delete')
-                                    <form action="{{ route('admin.file-managers.destroy', $fileManager->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
-                                        <input type="hidden" name="_method" value="DELETE">
-                                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                                        <input type="submit" class="btn btn-xs btn-danger" value="{{ trans('global.delete') }}">
-                                    </form>
-                                @endcan
-
-                            </td>
-
-                        </tr>
-                    @endforeach
-                </tbody>
-            </table>
         </div>
     </div>
 </div>
-
 @section('scripts')
 @parent
 <script>

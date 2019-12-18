@@ -1,49 +1,54 @@
 @extends('layouts.admin')
 @section('content')
-@can('file_manager_create')
-    <div style="margin-bottom: 10px;" class="row">
+<div class="content">
+    @can('file_manager_create')
+        <div style="margin-bottom: 10px;" class="row">
+            <div class="col-lg-12">
+                <a class="btn btn-success" href="{{ route("admin.file-managers.create") }}">
+                    {{ trans('global.add') }} {{ trans('cruds.fileManager.title_singular') }}
+                </a>
+            </div>
+        </div>
+    @endcan
+    <div class="row">
         <div class="col-lg-12">
-            <a class="btn btn-success" href="{{ route("admin.file-managers.create") }}">
-                {{ trans('global.add') }} {{ trans('cruds.fileManager.title_singular') }}
-            </a>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    {{ trans('cruds.fileManager.title_singular') }} {{ trans('global.list') }}
+                </div>
+                <div class="panel-body">
+                    <table class=" table table-bordered table-striped table-hover ajaxTable datatable datatable-FileManager">
+                        <thead>
+                            <tr>
+                                <th width="10">
+
+                                </th>
+                                <th>
+                                    {{ trans('cruds.fileManager.fields.file_name') }}
+                                </th>
+                                <th>
+                                    {{ trans('cruds.fileManager.fields.code') }}
+                                </th>
+                                <th>
+                                    {{ trans('cruds.fileManager.fields.file_upload') }}
+                                </th>
+                                <th>
+                                    {{ trans('cruds.fileManager.fields.construction_contract') }}
+                                </th>
+                                <th>
+                                    &nbsp;
+                                </th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+
+
+
         </div>
     </div>
-@endcan
-<div class="card">
-    <div class="card-header">
-        {{ trans('cruds.fileManager.title_singular') }} {{ trans('global.list') }}
-    </div>
-
-    <div class="card-body">
-        <table class=" table table-bordered table-striped table-hover ajaxTable datatable datatable-FileManager">
-            <thead>
-                <tr>
-                    <th width="10">
-
-                    </th>
-                    <th>
-                        {{ trans('cruds.fileManager.fields.file_name') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.fileManager.fields.code') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.fileManager.fields.file_upload') }}
-                    </th>
-                    <th>
-                        {{ trans('cruds.fileManager.fields.construction_contract') }}
-                    </th>
-                    <th>
-                        &nbsp;
-                    </th>
-                </tr>
-            </thead>
-        </table>
-    </div>
 </div>
-
-
-
 @endsection
 @section('scripts')
 @parent
