@@ -124,7 +124,7 @@ class UsersController extends Controller
     {
         abort_if(Gate::denies('user_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $teams = Team::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $teams = Team::all()->pluck('code', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $jobtitles = Jobtitle::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 

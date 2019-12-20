@@ -4,6 +4,8 @@ namespace App\Traits;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
+
 
 trait MultiTenantModelTrait
 {
@@ -17,6 +19,7 @@ trait MultiTenantModelTrait
 // If required, remove the surrounding IF condition and admins will act as users
                 if (!$isAdmin) {
                     $model->team_id = auth()->user()->team_id;
+                    $model->construction_contract_id = session()->has('construction_contract_id');
                 }
             });
             if (!$isAdmin) {
@@ -25,6 +28,13 @@ trait MultiTenantModelTrait
 
                     $builder->where($field, auth()->user()->team_id)->orWhereNull($field);
                 });
+
+                //  static::addGlobalScope('construction_contract_id', function (Builder $builder) {
+                //      $field = sprintf('%s.%s', $builder->getQuery()->from, 'construction_contract_id');
+
+                //      $builder->where($field, session()->has('construction_contract_id'))->orWhereNull($field);
+                //  });
+                
             }
         }
     }

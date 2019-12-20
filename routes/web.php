@@ -8,6 +8,7 @@ Route::get('/home', function () {
     return redirect()->route('admin.home');
 });
 
+
 Auth::routes();
 // Admin
 
@@ -123,11 +124,13 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::post('messenger/{topic}/reply', 'MessengerController@replyToTopic')->name('messenger.reply');
     Route::get('messenger/{topic}/reply', 'MessengerController@showReply')->name('messenger.showReply');
 
-  
-   });
+    // Route::get('/constructioncontracts-select', 'Auth\ConstructionContractSelectController@select')->name('constructioncontracts-select.select');
+    // Route::post('/constructioncontracts-select', 'Auth\ConstructionContractSelectController@storeSelect')->name('constructioncontracts-select.select');
+
+    });
 
 Route::group(['middleware' => ['auth'], 'prefix' => 'admin', 'as' => 'admin.'], function () {
-    Route::get('/constructionContracts-select', 'Auth\ConstructionContractSelectController@select')->name('constructionContracts-select.select');
-    Route::post('/constructionContracts-select', 'Auth\ConstructionContractSelectController@storeSelect')->name('constructionContracts-select.select');
-
+    Route::get('/construction_contracts-select', ['uses' => 'Auth\ConstructionContractSelectController@select', 'as' => 'construction_contracts-select.select']);
+    Route::post('/construction_contracts-select', ['uses' => 'Auth\ConstructionContractSelectController@storeSelect', 'as' => 'construction_contracts-select.select']);
 });
+

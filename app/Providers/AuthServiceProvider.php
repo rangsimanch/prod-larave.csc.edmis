@@ -30,13 +30,13 @@ class AuthServiceProvider extends ServiceProvider
             Passport::routes();
         };
 
-        // Auth gates for: TeamSelect
+        // Auth gates for: construction_contract_select
         Gate::define('construction_contract_select', function ($user) {
-            return !$user->isAdmin() && ($user->construction_contracts->count() > 1);
+            return !$user->getIsAdminAttribute() && ($user->construction_contracts->count() > 1);
         });
 
-        Gate::define('assign_item_to_member', function ($user) {
-            return $user->isAdmin() || $user->isTeamAdmin();
-        });
+        // Gate::define('assign_item_to_member', function ($user) {
+        //     return $user->getIsAdminAttribute() || $user->isTeamAdmin();
+        // });
     }
 }
