@@ -18,7 +18,7 @@
         <div class="col-lg-12">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    {{ trans('cruds.task.title_singular') }} {{ trans('global.list') }}
+                    {{ trans('cruds.task.title_singular') }} {{ trans('global.list') }} 
                 </div>
                 <div class="panel-body">
                     <table class=" table table-bordered table-striped table-hover ajaxTable datatable datatable-Task">

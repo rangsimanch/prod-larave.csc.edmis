@@ -20,22 +20,40 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/admin-lte/2.4.3/css/skins/_all-skins.min.css" rel="stylesheet" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.5.1/min/dropzone.min.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/admin-lte/2.4.3/css/AdminLTE.min.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/iCheck/1.0.2/skins/all.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+    <!-- <link href="https://fonts.googleapis.com/css?family:Source+Sans+Pro0,300i,400,400i,600,600i,700&display=swap&subset=latin-ext" rel="stylesheet" /> -->
+    <link href="https://fonts.googleapis.com/css?family=Nunito&display=swap" rel="stylesheet"> 
     <link href="{{ asset('css/custom.css') }}" rel="stylesheet" />
     @yield('styles')
 </head>
 
-<body class="sidebar-mini skin-purple" style="height: auto; min-height: 100%;">
+<body class="sidebar-mini skin-red" style="height: auto; min-height: 100%;">
     <div class="wrapper" style="height: auto; min-height: 100%;">
         <header class="main-header">
             <a href="#" class="logo">
-                <span class="logo-mini"><b>{{ trans('panel.site_title') }}</b></span>
-                <span class="logo-lg">{{ trans('panel.site_title') }}</span>
+                <span class="logo-mini"><b>EDMIS</b></span>
+                <span class="logo-lg">EDMIS</span>
             </a>
 
             <nav class="navbar navbar-static-top">
                 <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
                     <span class="sr-only">{{ trans('global.toggleNavigation') }}</span>
                 </a>
+                <div class="navbar-form navbar-left">
+                        <ul class="nav navbar-nav">
+                            <div class="form-group">
+                @can('construction_contract_select')
+                        {!! Form::open(['method' => 'POST', 'url' => route('admin.construction_contracts-select.select'), 'id' => 'navbar__select-construction_contract-form']) !!}
+                        {!! Form::hidden('redirect', 'back') !!}
+                        {!! Form::select('construction_contract_id', Auth::user()->construction_contract->pluck('code', 'id'), session('construction_contract_id'), ['class' => 'select2 navbar-form navbar-right"', 'id' => 'navbar__select-construction_contract']) !!}
+                        {!! Form::close() !!}
+                @endif
+</div>
+</ul>
+</div>
 
                 @if(count(config('panel.available_languages', [])) > 1)
                     <div class="navbar-custom-menu">
@@ -158,6 +176,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/js/select2.full.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.5.1/min/dropzone.min.js"></script>
     <script src="{{ asset('js/main.js') }}"></script>
+    @include('partials.javascripts')
     <script>
         $(function() {
   let copyButtonTrans = '{{ trans('global.datatables.copy') }}'
