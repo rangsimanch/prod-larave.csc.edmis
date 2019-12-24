@@ -9,12 +9,6 @@ use Illuminate\Support\Facades\Auth;
 
 class ConstructionContractSelectController extends Controller
 {
-
-    function __construct()
-    {
-     $this->middleware('web');
-    }
-    
     public function select()
     {
         $construction_contracts = auth()->user()->construction_contracts->pluck('code' , 'id');

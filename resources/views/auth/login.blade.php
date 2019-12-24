@@ -1,21 +1,12 @@
 @extends('layouts.app')
 @section('content')
 <div class="login-box">
-
-
-
-
-<div class="login-box-body">
-        <div class="login-logo"> 
+    <div class="login-logo">
         <a href="{{ route('admin.home') }}">
-            <b>
-           EDMIS
-            </b>
+            {{ trans('panel.site_title') }}
         </a>
-        
-</div>
-                    
-
+    </div>
+    <div class="login-box-body">
         <p class="login-box-msg">
             {{ trans('global.login') }}
         </p>

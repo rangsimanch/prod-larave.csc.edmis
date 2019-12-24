@@ -31,7 +31,7 @@ class AuthServiceProvider extends ServiceProvider
         };
 
         // Auth gates for: construction_contract_select
-        Gate::define('construction_contract_selects', function ($user) {
+        Gate::define('construction_contract_select', function ($user) {
             return !$user->getIsAdminAttribute() && ($user->construction_contracts->count() > 1);
         });
 
