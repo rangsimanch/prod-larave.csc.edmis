@@ -16,17 +16,8 @@
                     @endif
 
                     You are logged in!
-<<<<<<< HEAD
-<<<<<<< HEAD
                    {{ session('construction_contract_id') }}
-<<<<<<< HEAD
 
-=======
->>>>>>> parent of 2c893c1... Constraction Contract Select
-=======
->>>>>>> parent of 2c893c1... Constraction Contract Select
-=======
->>>>>>> parent of 704dcee... Can't Select Constraction
                 </div>
             </div>
         </div>

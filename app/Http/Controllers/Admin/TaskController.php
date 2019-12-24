@@ -11,10 +11,12 @@ use App\Http\Requests\UpdateTaskRequest;
 use App\Task;
 use App\TaskStatus;
 use App\TaskTag;
+use App\ConstractionContract;
 use Gate;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Yajra\DataTables\Facades\DataTables;
+
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Input;
 
@@ -89,11 +91,6 @@ class TaskController extends Controller
         return view('admin.tasks.index');
     }
 
-     /**
-     * Show the form for creating new Product.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
         abort_if(Gate::denies('task_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
@@ -107,18 +104,10 @@ class TaskController extends Controller
 
     public function store(StoreTaskRequest $request)
     {
-<<<<<<< HEAD
-<<<<<<< HEAD
         $data = $request->all();
         $data['create_by_user_id'] = auth()->id();
-       // $data['construction_contract_id'] = ;
+        $data['construction_contract_id'] = session('construction_contract_id');
         $task = Task::create($data);
-=======
-        $task = Task::create($request->all());
->>>>>>> parent of 2c893c1... Constraction Contract Select
-=======
-        $task = Task::create($request->all());
->>>>>>> parent of 2c893c1... Constraction Contract Select
         $task->tags()->sync($request->input('tags', []));
 
         if ($request->input('attachment', false)) {
@@ -141,14 +130,7 @@ class TaskController extends Controller
         return view('admin.tasks.edit', compact('statuses', 'tags', 'task'));
     }
 
-    /**
-     * Update Product in storage.
-     *
-     * @param  \App\Http\Requests\UpdateProductsRequest  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(UpdateTaskRequest $request, $id)
+    public function update(UpdateTaskRequest $request, Task $task)
     {
         $task->update($request->all());
         $task->tags()->sync($request->input('tags', []));
@@ -163,7 +145,6 @@ class TaskController extends Controller
 
         return redirect()->route('admin.tasks.index');
     }
-
 
     public function show(Task $task)
     {

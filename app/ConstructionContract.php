@@ -58,5 +58,7 @@ class ConstructionContract extends Model
     public function constructionContractUsers()
     {
         return $this->belongsToMany(User::class);
+            // ->withPivot('construction_contract_user','construction_contract_id')
+            // ->withTimestamps();
     }
 }

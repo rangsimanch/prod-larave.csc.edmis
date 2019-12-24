@@ -1,12 +1,12 @@
 @extends('layouts.auth')
-
+@include('layouts.app')
 @section('content')
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-default">
                 <div class="panel-heading">Select</div>
                 <div class="panel-body">
-                    {!! Form::open(['method' => 'POST', 'url' => route('admin.constructionContracts-select.select'), 'class' => 'form-horizontal']) !!}
+                    {!! Form::open(['method' => 'POST', 'url' => route('admin.construction_contracts-select.select'), 'class' => 'form-horizontal']) !!}
                         <div class="form-group">
                             <label class="col-md-4 control-label">Construction Contracts</label>
 

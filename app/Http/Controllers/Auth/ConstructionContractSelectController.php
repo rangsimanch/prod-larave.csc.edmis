@@ -9,9 +9,15 @@ use Illuminate\Support\Facades\Auth;
 
 class ConstructionContractSelectController extends Controller
 {
+
+    function __construct()
+    {
+     $this->middleware('web');
+    }
+    
     public function select()
     {
-        $construction_contracts = Auth::user()->construction_contracts->pluck('code', 'name', 'id');
+        $construction_contracts = auth()->user()->construction_contracts->pluck('code' , 'id');
 
         return view('auth.selectConstructionContract', compact('construction_contracts'));
     }
@@ -29,5 +35,7 @@ class ConstructionContractSelectController extends Controller
         }
 
         return redirect()->to('/');
+
+        //return back();
     }
 }
