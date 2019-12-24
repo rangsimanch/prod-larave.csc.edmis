@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 
+use App\User;
 
 trait MultiTenantModelTrait
 {
@@ -13,29 +14,44 @@ trait MultiTenantModelTrait
     {
         if (!app()->runningInConsole() && auth()->check()) {
             $isAdmin = auth()->user()->roles->contains(1);
+            
             static::creating(function ($model) use ($isAdmin) {
 // Prevent admin from setting his own id - admin entries are global.
 
 // If required, remove the surrounding IF condition and admins will act as users
                 if (!$isAdmin) {
                     $model->team_id = auth()->user()->team_id;
-                    $model->construction_contract_id = session()->has('construction_contract_id');
+                    $model->construction_contract_id = session('construction_contract_id');
                 }
             });
             if (!$isAdmin) {
                 static::addGlobalScope('team_id', function (Builder $builder) {
                     $field = sprintf('%s.%s', $builder->getQuery()->from, 'team_id');
-
                     $builder->where($field, auth()->user()->team_id)->orWhereNull($field);
                 });
-
-                //  static::addGlobalScope('construction_contract_id', function (Builder $builder) {
-                //      $field = sprintf('%s.%s', $builder->getQuery()->from, 'construction_contract_id');
-
-                //      $builder->where($field, session()->has('construction_contract_id'))->orWhereNull($field);
-                //  });
-                
             }
+
+            if(!app()->runningInConsole()){
+                $currentUser = Auth::user();
+                if(!$currentUser){
+                    return;
+                }
+            }
+
+                // if(((new self)->getTable()) == 'construction_contracts'){
+                //     static::addGlobalScope('construction_contract_id', function (Builder $builder) use($currentUser){
+                //         $builder->whereHas('construction_contracts', function($q){
+                //             $q->where('id', session('construction_contract_id', null));
+                //         })->orWhereIn('id', $currentUser->construction_contracts->pluck('id'));
+                //     });
+                // }else{
+                //     static::addGlobalScope('construction_contract_id', function (Builder $builder) use($currentUser){
+                //         $builder->whereHas('construction_contracts', function($q){
+                //             $q->where('id', session('construction_contract_id', null));
+                //         });
+                //     });
+                // }
+             
         }
     }
 }

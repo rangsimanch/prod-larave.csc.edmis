@@ -165,8 +165,13 @@ class RfaController extends Controller
     }
 
     public function store(StoreRfaRequest $request)
-    {
-        $rfa = Rfa::create($request->all());
+    {   $data = $request->all();
+        $data['create_by_user_id'] = auth()->id();
+        $data['document_status_id'] = 2;
+        
+        
+
+        $rfa = Rfa::create($data);
 
         foreach ($request->input('file_upload_1', []) as $file) {
             $rfa->addMedia(storage_path('tmp/uploads/' . $file))->toMediaCollection('file_upload_1');
@@ -194,6 +199,7 @@ class RfaController extends Controller
         $comment_statuses = RfaCommentStatus::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $for_statuses = RfaCommentStatus::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        
 
         $rfa->load('type', 'construction_contract', 'issueby', 'assign', 'comment_by', 'information_by', 'comment_status', 'for_status', 'document_status', 'create_by_user', 'update_by_user', 'approve_by_user', 'team');
 
@@ -202,6 +208,19 @@ class RfaController extends Controller
 
     public function update(UpdateRfaRequest $request, Rfa $rfa)
     {
+        if($request->comment_status_id != null){
+            $rfa['document_status_id'] = 3;
+            $rfa['update_by_user_id'] = auth()->id();
+            
+            if($request->for_status_id != null){
+                $rfa['document_status_id'] = 4;
+                $rfa['approve_by_user_id'] = auth()->id();
+            }
+        }  
+
+        
+
+
         $rfa->update($request->all());
 
         if (count($rfa->file_upload_1) > 0) {
