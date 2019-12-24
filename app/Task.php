@@ -83,16 +83,6 @@ class Task extends Model implements HasMedia
         return $this->belongsToMany(TaskTag::class);
     }
 
-    
-    /**
-     * Set to null if empty
-     * @param $input
-     */
-    public function setConstractionContractIdAttribute($input)
-    {
-        $this->attributes['construction_contract_id'] = $input ? $input : null;
-    }
-
     public function getDueDateAttribute($value)
     {
         return $value ? Carbon::parse($value)->format(config('panel.date_format')) : null;

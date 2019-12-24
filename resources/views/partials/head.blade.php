@@ -40,9 +40,3 @@
 
 <link href="{{ url('adminlte/plugins/datetimepicker/bootstrap-datetimepicker.min.css') }}" rel="stylesheet"/>
 <link rel="stylesheet" href="{{ asset('css/custom/navbar.css') }}">
-
-
-
-
-
-  

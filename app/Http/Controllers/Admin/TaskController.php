@@ -111,7 +111,7 @@ class TaskController extends Controller
 <<<<<<< HEAD
         $data = $request->all();
         $data['create_by_user_id'] = auth()->id();
-        $data['construction_contract_id'] = session('construction_contract_id');
+       // $data['construction_contract_id'] = ;
         $task = Task::create($data);
 =======
         $task = Task::create($request->all());

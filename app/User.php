@@ -214,7 +214,5 @@ class User extends Authenticatable implements HasMedia
     public function construction_contracts()
     {
         return $this->belongsToMany(ConstructionContract::class);
-            //->withPivot('user_id','construction_contract_id');
-            // ->withTimestamps();
     }
 }

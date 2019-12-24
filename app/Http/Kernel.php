@@ -64,6 +64,7 @@ class Kernel extends HttpKernel
         'auth.basic'       => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
         'select' => \App\Http\Middleware\ConstructionContractSelect::class,
 =======
        // 'ConstructionContract.Select' => \App\Http\Middleware\ConstructionContractSelect::class,
@@ -71,6 +72,9 @@ class Kernel extends HttpKernel
 =======
        // 'ConstructionContract.Select' => \App\Http\Middleware\ConstructionContractSelect::class,
 >>>>>>> parent of 2c893c1... Constraction Contract Select
+=======
+        //'ConstructionContract.Select' => \App\Http\Middleware\ConstructionContractSelect::class,
+>>>>>>> parent of 704dcee... Can't Select Constraction
         
     ];
 }

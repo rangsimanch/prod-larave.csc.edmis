@@ -13,15 +13,9 @@ Auth::routes();
 
 
 
-Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth'], 'namespace' => 'Admin'], function () {
+Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'middleware' => ['auth']], function () {
 //Route::group(['middleware' => ['auth'], 'prefix' => 'admin', 'as' => 'admin.'], function () {
 
-    Route::get('/construction_contracts-select', '\App\Http\Controllers\Auth\ConstructionContractSelectController@select')->name('construction_contracts-select.select');
-    Route::post('/construction_contracts-select','\App\Http\Controllers\Auth\ConstructionContractSelectController@storeSelect')->name('construction_contracts-select.select');
-
-  //  Route::group(['namespace' => 'Admin'], function () {
-
-    
     Route::get('/', 'HomeController@index')->name('home');
     //->middleware('ConstructionContract.Select');
     Route::get('user-alerts/read', 'UserAlertsController@read');
@@ -131,14 +125,21 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth'], '
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 //    });
    
 });
+=======
+    // Route::get('/constructioncontracts-select', 'Auth\ConstructionContractSelectController@select')->name('constructioncontracts-select.select');
+    // Route::post('/constructioncontracts-select', 'Auth\ConstructionContractSelectController@storeSelect')->name('constructioncontracts-select.select');
+>>>>>>> parent of 704dcee... Can't Select Constraction
 
-// Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Auth', 'middleware' => ['auth' , 'select']], function () {
-//     Route::get('/construction_contracts-select', ['uses' => 'ConstructionContractSelectController@select', 'as' => 'construction_contracts-select.select']);
-//     Route::post('/construction_contracts-select', ['uses' => 'ConstructionContractSelectController@storeSelect', 'as' => 'construction_contracts-select.select']);
-// });
+    });
+
+Route::group(['middleware' => ['auth'], 'prefix' => 'admin', 'as' => 'admin.'], function () {
+    Route::get('/construction_contracts-select', ['uses' => 'Auth\ConstructionContractSelectController@select', 'as' => 'construction_contracts-select.select']);
+    Route::post('/construction_contracts-select', ['uses' => 'Auth\ConstructionContractSelectController@storeSelect', 'as' => 'construction_contracts-select.select']);
+});
 
 =======
 =======
