@@ -16,8 +16,11 @@
                     @endif
 
                     You are logged in!
+<<<<<<< HEAD
                    {{ session('construction_contract_id') }}
 
+=======
+>>>>>>> parent of 2c893c1... Constraction Contract Select
                 </div>
             </div>
         </div>

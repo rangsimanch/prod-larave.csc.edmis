@@ -18,19 +18,6 @@ use Spatie\MediaLibrary\HasMedia\HasMedia;
 use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
 use Spatie\MediaLibrary\Models\Media;
 
-/**
- * Class User
- *
- * @package App
- * @property string $name
- * @property string $email
- * @property string $password
- * @property string $role
- * @property string $remember_token
- * @property string $construction_contracts
-*/
-
-
 class User extends Authenticatable implements HasMedia
 {
     use SoftDeletes, MultiTenantModelTrait, Notifiable, HasApiTokens, HasMediaTrait, Auditable;
@@ -48,8 +35,8 @@ class User extends Authenticatable implements HasMedia
     ];
 
     const GENDER_SELECT = [
-        'Male'   => 'Male',
-        'Female' => 'Female',
+        'Male'   => 'male',
+        'Female' => 'female',
     ];
 
     protected $dates = [

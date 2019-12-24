@@ -87,6 +87,7 @@
                         </div>
                     </form>
                 </div>
+<<<<<<< HEAD
                 @if($errors->has('attachment'))
                     <div class="invalid-feedback">
                         {{ $errors->first('attachment') }}
@@ -94,10 +95,18 @@
                 @endif
                 <span class="help-block">{{ trans('cruds.task.fields.attachment_helper') }}</span>
             </div>
+          
+            <div class="form-group">
+                <button class="btn btn-danger" type="submit">
+                    {{ trans('global.save') }}
+                </button>
             </div>
         </form>
     </div>
 </div>
+=======
+            </div>
+>>>>>>> 6583fa6204f7846f680bc6147fc560b6bd156dcf
 
 
 

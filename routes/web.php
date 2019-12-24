@@ -8,7 +8,6 @@ Route::get('/home', function () {
     return redirect()->route('admin.home');
 });
 
-
 Auth::routes();
 // Admin
 
@@ -130,6 +129,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth'], '
     Route::post('messenger/{topic}/reply', 'MessengerController@replyToTopic')->name('messenger.reply');
     Route::get('messenger/{topic}/reply', 'MessengerController@showReply')->name('messenger.showReply');
 
+<<<<<<< HEAD
 //    });
    
 });
@@ -139,3 +139,13 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth'], '
 //     Route::post('/construction_contracts-select', ['uses' => 'ConstructionContractSelectController@storeSelect', 'as' => 'construction_contracts-select.select']);
 // });
 
+=======
+  
+   });
+
+Route::group(['middleware' => ['auth'], 'prefix' => 'admin', 'as' => 'admin.'], function () {
+    Route::get('/constructionContracts-select', 'Auth\ConstructionContractSelectController@select')->name('constructionContracts-select.select');
+    Route::post('/constructionContracts-select', 'Auth\ConstructionContractSelectController@storeSelect')->name('constructionContracts-select.select');
+
+});
+>>>>>>> parent of 2c893c1... Constraction Contract Select

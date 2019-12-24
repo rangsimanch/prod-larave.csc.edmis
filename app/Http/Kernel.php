@@ -20,8 +20,6 @@ class Kernel extends HttpKernel
         \Illuminate\Foundation\Http\Middleware\ValidatePostSize::class,
         \Illuminate\Foundation\Http\Middleware\CheckForMaintenanceMode::class,
         \Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull::class,
-        \Illuminate\Session\Middleware\StartSession::class,
-        \Illuminate\View\Middleware\ShareErrorsFromSession::class,
     ];
 /**
      * The application's route middleware groups.
@@ -35,6 +33,7 @@ class Kernel extends HttpKernel
             \App\Http\Middleware\AuthGates::class,
         ],
         'web' => [
+            \App\Http\Middleware\ConstructionContractSelect::class,
             \App\Http\Middleware\EncryptCookies::class,
             \Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse::class,
             \Illuminate\Session\Middleware\StartSession::class,
@@ -44,7 +43,6 @@ class Kernel extends HttpKernel
             \App\Http\Middleware\AuthGates::class,
             \App\Http\Middleware\SetLocale::class,
             \App\Http\Middleware\ApprovalMiddleware::class,
-            \App\Http\Middleware\ConstructionContractSelect::class,
         ],
     ];
  /**
@@ -64,7 +62,11 @@ class Kernel extends HttpKernel
         'bindings'         => \Illuminate\Routing\Middleware\SubstituteBindings::class,
         'password.confirm' => \Illuminate\Auth\Middleware\RequirePassword::class,
         'auth.basic'       => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
+<<<<<<< HEAD
         'select' => \App\Http\Middleware\ConstructionContractSelect::class,
+=======
+       // 'ConstructionContract.Select' => \App\Http\Middleware\ConstructionContractSelect::class,
+>>>>>>> parent of 2c893c1... Constraction Contract Select
         
     ];
 }

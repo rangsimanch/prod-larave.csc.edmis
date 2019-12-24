@@ -78,7 +78,6 @@
                     </div>
                 @endif
 
-
                 <div class="navbar-custom-menu">
                     <ul class="nav navbar-nav">
                         <li class="dropdown notifications-menu">
@@ -117,8 +116,7 @@
                         </li>
                     </ul>
                 </div>
-            
-            
+
             </nav>
         </header>
 
