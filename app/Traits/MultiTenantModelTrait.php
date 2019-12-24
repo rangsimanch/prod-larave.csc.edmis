@@ -5,9 +5,12 @@ namespace App\Traits;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 <<<<<<< HEAD
+<<<<<<< HEAD
 use Illuminate\Support\Facades\Auth;
 
 use App\User;
+=======
+>>>>>>> parent of 2c893c1... Constraction Contract Select
 =======
 >>>>>>> parent of 2c893c1... Constraction Contract Select
 
@@ -25,7 +28,10 @@ trait MultiTenantModelTrait
                 if (!$isAdmin) {
                     $model->team_id = auth()->user()->team_id;
 <<<<<<< HEAD
+<<<<<<< HEAD
                     $model->construction_contract_id = session('construction_contract_id');
+=======
+>>>>>>> parent of 2c893c1... Constraction Contract Select
 =======
 >>>>>>> parent of 2c893c1... Constraction Contract Select
                 }
@@ -36,7 +42,10 @@ trait MultiTenantModelTrait
                     $builder->where($field, auth()->user()->team_id)->orWhereNull($field);
                 });
 <<<<<<< HEAD
+<<<<<<< HEAD
                 
+=======
+>>>>>>> parent of 2c893c1... Constraction Contract Select
 =======
 >>>>>>> parent of 2c893c1... Constraction Contract Select
             }

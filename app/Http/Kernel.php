@@ -63,7 +63,11 @@ class Kernel extends HttpKernel
         'password.confirm' => \Illuminate\Auth\Middleware\RequirePassword::class,
         'auth.basic'       => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
 <<<<<<< HEAD
+<<<<<<< HEAD
         'select' => \App\Http\Middleware\ConstructionContractSelect::class,
+=======
+       // 'ConstructionContract.Select' => \App\Http\Middleware\ConstructionContractSelect::class,
+>>>>>>> parent of 2c893c1... Constraction Contract Select
 =======
        // 'ConstructionContract.Select' => \App\Http\Middleware\ConstructionContractSelect::class,
 >>>>>>> parent of 2c893c1... Constraction Contract Select

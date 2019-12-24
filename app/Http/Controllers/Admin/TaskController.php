@@ -108,10 +108,14 @@ class TaskController extends Controller
     public function store(StoreTaskRequest $request)
     {
 <<<<<<< HEAD
+<<<<<<< HEAD
         $data = $request->all();
         $data['create_by_user_id'] = auth()->id();
         $data['construction_contract_id'] = session('construction_contract_id');
         $task = Task::create($data);
+=======
+        $task = Task::create($request->all());
+>>>>>>> parent of 2c893c1... Constraction Contract Select
 =======
         $task = Task::create($request->all());
 >>>>>>> parent of 2c893c1... Constraction Contract Select

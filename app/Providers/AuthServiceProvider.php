@@ -31,9 +31,15 @@ class AuthServiceProvider extends ServiceProvider
         };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
         // Auth gates for: construction_contract_select
         Gate::define('construction_contract_selects', function ($user) {
             return !$user->getIsAdminAttribute() && ($user->construction_contracts->count() > 1);
+=======
+        // Auth gates for: TeamSelect
+        Gate::define('construction_contract_select', function ($user) {
+            return !$user->isAdmin() && ($user->construction_contracts->count() > 1);
+>>>>>>> parent of 2c893c1... Constraction Contract Select
 =======
         // Auth gates for: TeamSelect
         Gate::define('construction_contract_select', function ($user) {

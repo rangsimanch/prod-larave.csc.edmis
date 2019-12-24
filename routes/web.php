@@ -130,6 +130,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth'], '
     Route::get('messenger/{topic}/reply', 'MessengerController@showReply')->name('messenger.showReply');
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 //    });
    
 });
@@ -140,6 +141,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth'], '
 // });
 
 =======
+=======
+>>>>>>> parent of 2c893c1... Constraction Contract Select
   
    });
 
@@ -148,4 +151,7 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'admin', 'as' => 'admin.'], 
     Route::post('/constructionContracts-select', 'Auth\ConstructionContractSelectController@storeSelect')->name('constructionContracts-select.select');
 
 });
+<<<<<<< HEAD
+>>>>>>> parent of 2c893c1... Constraction Contract Select
+=======
 >>>>>>> parent of 2c893c1... Constraction Contract Select
