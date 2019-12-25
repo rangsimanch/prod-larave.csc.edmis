@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.app-register')
 @section('content')
 <div class="login-box">
     <div class="login-logo">
@@ -24,7 +24,7 @@
                         </div>
                         <div class="form-group {{ $errors->has('name') ? 'has-error' : '' }}">
                             <label class="required" for="name">{{ trans('cruds.user.fields.name') }}</label>
-                            <input class="form-control" type="text" name="name" id="name" value="{{ old('name', '') }}" required>
+                            <input class="form-control" type="text" name="name" id="name" value="{{ old('name', '') }}" required placeholder="First name and Last name">
                             @if($errors->has('name'))
                                 <span class="help-block" role="alert">{{ $errors->first('name') }}</span>
                             @endif
@@ -32,12 +32,14 @@
                         </div>
 
                         <div class="form-group {{ $errors->has('dob') ? 'has-error' : '' }}">
+                        <div class="input-group">
                             <label class="required" for="dob">{{ trans('cruds.user.fields.dob') }}</label>
                             <input class="form-control date" type="text" name="dob" id="dob" value="{{ old('dob') }}" required>
                             @if($errors->has('dob'))
                                 <span class="help-block" role="alert">{{ $errors->first('dob') }}</span>
                             @endif
                             <span class="help-block">{{ trans('cruds.user.fields.dob_helper') }}</span>
+                        </div>
                         </div>
 
                         <div class="form-group {{ $errors->has('gender') ? 'has-error' : '' }}">
@@ -67,7 +69,7 @@
                             <label class="required" for="team_id">{{ trans('cruds.user.fields.team') }}</label>
                             <select class="form-control select2" name="team_id" id="team_id" required>
                                 @foreach($teams as $id => $team)
-                                    <option value="{{ $id }}" {{ old('team_id') == $id ? 'selected' : '' }}>{{ $team->name }}</option>
+                                    <option value="{{ $team->id }}" >{{ $team->name }}</option>
                                 @endforeach
                             </select>
                             @if($errors->has('team_id'))
@@ -79,7 +81,7 @@
                             <label for="jobtitle_id">{{ trans('cruds.user.fields.jobtitle') }}</label>
                             <select class="form-control select2" name="jobtitle_id" id="jobtitle_id">
                                 @foreach($jobtitles as $id => $jobtitle)
-                                    <option value="{{ $id }}" {{ old('jobtitle_id') == $id ? 'selected' : '' }}>{{ $jobtitle->name }}</option>
+                                    <option value="{{ $jobtitle->id }}" >{{ $jobtitle->name }}</option>
                                 @endforeach
                             </select>
                             @if($errors->has('jobtitle_id'))
@@ -88,7 +90,9 @@
                             <span class="help-block">{{ trans('cruds.user.fields.jobtitle_helper') }}</span>
                         </div>
                        
-                     
+
+                       
+
                         <div class="form-group {{ $errors->has('signature') ? 'has-error' : '' }}">
                             <label for="signature">{{ trans('cruds.user.fields.signature') }}</label>
                             <div class="needsclick dropzone" id="signature-dropzone">
@@ -125,15 +129,20 @@
                 </div>
                 <div class="row">
                     <div class="col-xs-8">
-
+                    <div class="checkbox icheck">
+                        <a href="{{ route('login') }}"> Back to Login </a>
                     </div>
+                    </div>
+
                     <div class="col-xs-4">
                         <button type="submit" class="btn btn-primary btn-block btn-flat">
                             {{ trans('global.register') }}
                         </button>
                     </div>
                 </div>
+                
             </div>
+           
         </form>
     </div>
 </div>

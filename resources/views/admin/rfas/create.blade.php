@@ -11,6 +11,8 @@
                 <div class="panel-body">
                     <form method="POST" action="{{ route("admin.rfas.store") }}" enctype="multipart/form-data">
                         @csrf
+
+                        @can('rfa_panel_a')
                         <div class="form-group {{ $errors->has('title') ? 'has-error' : '' }}">
                             <label for="title">{{ trans('cruds.rfa.fields.title') }}</label>
                             <input class="form-control" type="text" name="title" id="title" value="{{ old('title', '') }}">
@@ -108,6 +110,9 @@
                             @endif
                             <span class="help-block">{{ trans('cruds.rfa.fields.file_upload_1_helper') }}</span>
                         </div>
+                        @endcan
+
+                        @can('rfa_panel_b')
                         <div class="form-group {{ $errors->has('comment_by') ? 'has-error' : '' }}">
                             <label for="comment_by_id">{{ trans('cruds.rfa.fields.comment_by') }}</label>
                             <select class="form-control select2" name="comment_by_id" id="comment_by_id">
@@ -168,6 +173,9 @@
                             @endif
                             <span class="help-block">{{ trans('cruds.rfa.fields.note_3_helper') }}</span>
                         </div>
+                        @endcan
+                        
+                        @can('rfa_panel_c')
                         <div class="form-group {{ $errors->has('for_status') ? 'has-error' : '' }}">
                             <label for="for_status_id">{{ trans('cruds.rfa.fields.for_status') }}</label>
                             <select class="form-control select2" name="for_status_id" id="for_status_id">
@@ -180,6 +188,7 @@
                             @endif
                             <span class="help-block">{{ trans('cruds.rfa.fields.for_status_helper') }}</span>
                         </div>
+                        @endcan
                         <div class="form-group">
                             <button class="btn btn-danger" type="submit">
                                 {{ trans('global.save') }}

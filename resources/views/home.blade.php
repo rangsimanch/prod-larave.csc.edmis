@@ -15,9 +15,8 @@
                         </div>
                     @endif
 
-                    You are logged in!
-                   {{ session('construction_contract_id') }}
-
+                    You are logged in! 
+                        
                 </div>
             </div>
         </div>

@@ -61,13 +61,18 @@ class FileManager extends Model implements HasMedia
         return $this->getMedia('file_upload');
     }
 
-    public function construction_contract()
+    public function construction_contracts()
     {
-        return $this->belongsTo(ConstructionContract::class, 'construction_contract_id');
+        return $this->belongsToMany(ConstructionContract::class);
     }
 
     public function team()
     {
         return $this->belongsTo(Team::class, 'team_id');
+    }
+
+    public function create_by_construction_contract_id()
+    {
+        return $this->belongsToMany(ConstructionContract::class);
     }
 }

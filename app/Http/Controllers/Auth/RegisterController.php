@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\User;
 use App\Team;
-use App\ConstractionContract;
+use App\ConstructionContract;
 use App\Jobtitle;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
@@ -74,7 +74,6 @@ class RegisterController extends Controller
             'gender' => $data['gender'],
             'team_id' => $data['team_id'],
             'jobtitle_id' => $data['jobtitle_id'],
-            'constraction_contract_id' => $data['constraction_contract_id'],
             'dob' => $data['dob'],
         ]);
     }
@@ -82,7 +81,7 @@ class RegisterController extends Controller
     public function store(StoreUserRequest $request)
     {
         $user = User::create($request->all());
-
+       
         if ($request->input('img_user', false)) {
             $user->addMedia(storage_path('tmp/uploads/' . $request->input('img_user')))->toMediaCollection('img_user');
         }

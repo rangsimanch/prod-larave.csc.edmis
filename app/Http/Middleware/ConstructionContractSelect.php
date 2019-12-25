@@ -2,7 +2,6 @@
 
 namespace App\Http\Middleware;
 
-use App\User;
 use Closure;
 use Gate;
 use Illuminate\Support\Facades\Auth;
@@ -33,11 +32,11 @@ class ConstructionContractSelect
         } else 
         {
             // if user belongs only to one team store its id
-            if (Auth::user()->construction_contracts->count() === 1) 
-            {
-                session()->put('construction_contract_id', Auth::user()->construction_contracts->first()->id);
-                return $next($request);
-            }
+            // if (Auth::user()->construction_contracts->count() === 1) 
+            // {
+            //     session()->put('construction_contract_id', Auth::user()->construction_contracts->first()->id);
+            //     return $next($request);
+            // }
            // return $next($request);
        
             return redirect()->route('admin.construction_contracts-select.select');
