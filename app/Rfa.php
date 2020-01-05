@@ -51,6 +51,8 @@ class Rfa extends Model implements HasMedia
         'submit_date',
         'receive_date',
         'for_status_id',
+        'wbs_level_3_id',
+        'wbs_level_4_id',
         'comment_by_id',
         'document_number',
         'comment_status_id',
@@ -100,6 +102,16 @@ class Rfa extends Model implements HasMedia
     public function construction_contract()
     {
         return $this->belongsTo(ConstructionContract::class, 'construction_contract_id');
+    }
+
+    public function wbs_level_3()
+    {
+        return $this->belongsTo(WbsLevelThree::class, 'wbs_level_3_id');
+    }
+
+    public function wbs_level_4()
+    {
+        return $this->belongsTo(Wbslevelfour::class, 'wbs_level_4_id');
     }
 
     public function getSubmitDateAttribute($value)

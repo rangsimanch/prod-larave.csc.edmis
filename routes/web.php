@@ -118,6 +118,16 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['web'], 'n
     Route::delete('construction-contracts/destroy', 'ConstructionContractController@massDestroy')->name('construction-contracts.massDestroy');
     Route::resource('construction-contracts', 'ConstructionContractController');
 
+    // Wbs Level Threes
+    Route::delete('wbs-level-threes/destroy', 'WbsLevelThreeController@massDestroy')->name('wbs-level-threes.massDestroy');
+    Route::post('wbs-level-threes/parse-csv-import', 'WbsLevelThreeController@parseCsvImport')->name('wbs-level-threes.parseCsvImport');
+    Route::post('wbs-level-threes/process-csv-import', 'WbsLevelThreeController@processCsvImport')->name('wbs-level-threes.processCsvImport');
+    Route::resource('wbs-level-threes', 'WbsLevelThreeController');
+
+    // Wbslevelfours
+    Route::delete('wbslevelfours/destroy', 'WbslevelfourController@massDestroy')->name('wbslevelfours.massDestroy');
+    Route::resource('wbslevelfours', 'WbslevelfourController');
+
     Route::get('system-calendar', 'SystemCalendarController@index')->name('systemCalendar');
     Route::get('global-search', 'GlobalSearchController@search')->name('globalSearch');
     Route::get('messenger', 'MessengerController@index')->name('messenger.index');

@@ -48,6 +48,18 @@ class TaskController extends Controller
                 ));
             });
 
+            $table->editColumn('img_user', function ($row) {
+                if ($photo = $row->img_user) {
+                    return sprintf(
+                        '<a href="%s" target="_blank"><img src="%s" width="50px" height="50px"></a>',
+                        $photo->url,
+                        $photo->thumbnail
+                    );
+                }
+
+                return '';
+            });
+
             $table->editColumn('name', function ($row) {
                 return $row->name ? $row->name : "";
             });
@@ -83,7 +95,7 @@ class TaskController extends Controller
                 return $row->construction_contract ? (is_string($row->construction_contract) ? $row->construction_contract : $row->construction_contract->name) : '';
             });
 
-            $table->rawColumns(['actions', 'placeholder', 'status', 'tag', 'attachment', 'create_by_user', 'construction_contract']);
+            $table->rawColumns(['actions', 'placeholder', 'img_user', 'status', 'tag', 'attachment', 'create_by_user', 'construction_contract']);
 
             return $table->make(true);
         }
@@ -150,7 +162,7 @@ class TaskController extends Controller
     {
         abort_if(Gate::denies('task_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $task->load('status', 'tags', 'create_by_user', 'construction_contract', 'team');
+        $task->load('img_user','status', 'tags', 'create_by_user', 'construction_contract', 'team');
 
         return view('admin.tasks.show', compact('task'));
     }

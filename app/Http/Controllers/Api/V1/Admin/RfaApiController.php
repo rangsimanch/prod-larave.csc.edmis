@@ -20,7 +20,7 @@ class RfaApiController extends Controller
     {
         abort_if(Gate::denies('rfa_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new RfaResource(Rfa::with(['type', 'construction_contract', 'issueby', 'assign', 'comment_by', 'information_by', 'comment_status', 'for_status', 'document_status', 'create_by_user', 'update_by_user', 'approve_by_user', 'team'])->get());
+        return new RfaResource(Rfa::with(['type', 'construction_contract', 'wbs_level_3', 'wbs_level_4', 'issueby', 'assign', 'comment_by', 'information_by', 'comment_status', 'for_status', 'document_status', 'create_by_user', 'update_by_user', 'approve_by_user', 'team'])->get());
     }
 
     public function store(StoreRfaRequest $request)
@@ -40,7 +40,7 @@ class RfaApiController extends Controller
     {
         abort_if(Gate::denies('rfa_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new RfaResource($rfa->load(['type', 'construction_contract', 'issueby', 'assign', 'comment_by', 'information_by', 'comment_status', 'for_status', 'document_status', 'create_by_user', 'update_by_user', 'approve_by_user', 'team']));
+        return new RfaResource($rfa->load(['type', 'construction_contract', 'wbs_level_3', 'wbs_level_4', 'issueby', 'assign', 'comment_by', 'information_by', 'comment_status', 'for_status', 'document_status', 'create_by_user', 'update_by_user', 'approve_by_user', 'team']));
     }
 
     public function update(UpdateRfaRequest $request, Rfa $rfa)

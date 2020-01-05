@@ -57,6 +57,24 @@
                                         {{ $rfa->construction_contract->code ?? '' }}
                                     </td>
                                 </tr>
+
+                                <tr>
+                                    <th>
+                                        {{ trans('cruds.rfa.fields.wbs_level_3') }}
+                                    </th>
+                                    <td>
+                                        {{ $rfa->wbs_level_3->wbs_level_3_code ?? '' }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        {{ trans('cruds.rfa.fields.wbs_level_4') }}
+                                    </th>
+                                    <td>
+                                        {{ $rfa->wbs_level_4->wbs_level_4_code ?? '' }}
+                                    </td>
+                                </tr>
+                                
                                 <tr>
                                     <th>
                                         {{ trans('cruds.rfa.fields.submit_date') }}

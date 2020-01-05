@@ -12,6 +12,8 @@ class GlobalSearchController extends Controller
         'Rfa'                  => 'cruds.rfa.title',
         'FileManager'          => 'cruds.fileManager.title',
         'ConstructionContract' => 'cruds.constructionContract.title',
+        'WbsLevelThree'        => 'cruds.wbsLevelThree.title',
+        'Wbslevelfour'         => 'cruds.wbslevelfour.title',
     ];
 
     public function search(Request $request)

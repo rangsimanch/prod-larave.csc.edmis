@@ -31,13 +31,20 @@
             // page is now ready, initialize the calendar...
             $('#calendar').fullCalendar({
                 // put your options and callbacks here
+                header: {
+                        left: 'prev,next today',
+                        center: 'title',
+                        right: 'month,agendaWeek,agendaDay,listWeek'
+                        },
+                    eventLimit: true,
                 events : [
 @foreach($events as $event)
 @if($event->due_date)
                             {
                                 title : '{{ $event->name }}',
-                                start : '{{ \Carbon\Carbon::createFromFormat(config('panel.date_format'),$event->due_date)->format('Y-m-d') }}',
-                                url : '{{ url('admin/tasks').'/'.$event->id.'/edit' }}'
+                                start : '{{ \Carbon\Carbon::createFromFormat(config('panel.date_format'),$event->due_date)->format('Y-m-d')}}',
+                                
+                                // url : '{{ url('admin/tasks').'/'.$event->id.'/edit' }}'
                             },
 @endif
 @endforeach

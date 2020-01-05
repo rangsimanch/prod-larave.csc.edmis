@@ -46,7 +46,10 @@
                                     {{ trans('cruds.rfa.fields.construction_contract') }}
                                 </th>
                                 <th>
-                                    {{ trans('cruds.constructionContract.fields.name') }}
+                                    {{ trans('cruds.rfa.fields.wbs_level_3') }}
+                                </th>
+                                <th>
+                                    {{ trans('cruds.rfa.fields.wbs_level_4') }}
                                 </th>
                                 <th>
                                     {{ trans('cruds.rfa.fields.submit_date') }}
@@ -167,7 +170,8 @@
 { data: 'type_type_name', name: 'type.type_name' },
 { data: 'type.type_code', name: 'type.type_code' },
 { data: 'construction_contract_code', name: 'construction_contract.code' },
-{ data: 'construction_contract.name', name: 'construction_contract.name' },
+{ data: 'wbs_level_3_wbs_level_3_code', name: 'wbs_level_3.wbs_level_3_code' },
+{ data: 'wbs_level_4_wbs_level_4_code', name: 'wbs_level_4.wbs_level_4_code' },
 { data: 'submit_date', name: 'submit_date' },
 { data: 'issueby_name', name: 'issueby.name' },
 { data: 'assign_name', name: 'assign.name' },

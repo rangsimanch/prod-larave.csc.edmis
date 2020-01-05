@@ -61,6 +61,32 @@
                             @endif
                             <span class="help-block">{{ trans('cruds.rfa.fields.construction_contract_helper') }}</span>
                         </div>
+                       
+                        <div class="form-group {{ $errors->has('wbs_level_3') ? 'has-error' : '' }}">
+                            <label for="wbs_level_3_id">{{ trans('cruds.rfa.fields.wbs_level_3') }}</label>
+                            <select class="form-control select2" name="wbs_level_3_id" id="wbs_level_3_id">
+                                @foreach($wbs_level_3s as $id => $wbs_level_3)
+                                    <option value="{{ $id }}" {{ old('wbs_level_3_id') == $id ? 'selected' : '' }}>{{ $wbs_level_3 }}</option>
+                                @endforeach
+                            </select>
+                            @if($errors->has('wbs_level_3_id'))
+                                <span class="help-block" role="alert">{{ $errors->first('wbs_level_3_id') }}</span>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.rfa.fields.wbs_level_3_helper') }}</span>
+                        </div>
+                        <div class="form-group {{ $errors->has('wbs_level_4') ? 'has-error' : '' }}">
+                            <label for="wbs_level_4_id">{{ trans('cruds.rfa.fields.wbs_level_4') }}</label>
+                            <select class="form-control select2" name="wbs_level_4_id" id="wbs_level_4_id">
+                                @foreach($wbs_level_4s as $id => $wbs_level_4)
+                                    <option value="{{ $id }}" {{ old('wbs_level_4_id') == $id ? 'selected' : '' }}>{{ $wbs_level_4 }}</option>
+                                @endforeach
+                            </select>
+                            @if($errors->has('wbs_level_4_id'))
+                                <span class="help-block" role="alert">{{ $errors->first('wbs_level_4_id') }}</span>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.rfa.fields.wbs_level_4_helper') }}</span>
+                        </div>
+
                         <div class="form-group {{ $errors->has('submit_date') ? 'has-error' : '' }}">
                             <label for="submit_date">{{ trans('cruds.rfa.fields.submit_date') }}</label>
                             <input class="form-control date" type="text" name="submit_date" id="submit_date" value="{{ old('submit_date') }}">
@@ -69,6 +95,8 @@
                             @endif
                             <span class="help-block">{{ trans('cruds.rfa.fields.submit_date_helper') }}</span>
                         </div>
+
+
                         <div class="form-group {{ $errors->has('issueby') ? 'has-error' : '' }}">
                             <label for="issueby_id">{{ trans('cruds.rfa.fields.issueby') }}</label>
                             <select class="form-control select2" name="issueby_id" id="issueby_id">

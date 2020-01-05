@@ -9,6 +9,8 @@ use App\Http\Controllers\Traits\MediaUploadingTrait;
 use App\Http\Requests\MassDestroyRfaRequest;
 use App\Http\Requests\StoreRfaRequest;
 use App\Http\Requests\UpdateRfaRequest;
+use App\Wbslevelfour;
+use App\WbsLevelThree;
 use App\Rfa;
 use App\RfaCommentStatus;
 use App\Rfatype;
@@ -25,7 +27,7 @@ class RfaController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $query = Rfa::with(['type', 'construction_contract', 'issueby', 'assign', 'comment_by', 'information_by', 'comment_status', 'for_status', 'document_status', 'create_by_user', 'update_by_user', 'approve_by_user', 'team'])->select(sprintf('%s.*', (new Rfa)->table));
+            $query = Rfa::with(['type', 'construction_contract','wbs_level_3', 'wbs_level_4', 'issueby', 'assign', 'comment_by', 'information_by', 'comment_status', 'for_status', 'document_status', 'create_by_user', 'update_by_user', 'approve_by_user', 'team'])->select(sprintf('%s.*', (new Rfa)->table));
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
@@ -68,6 +70,21 @@ class RfaController extends Controller
 
             $table->editColumn('construction_contract.name', function ($row) {
                 return $row->construction_contract ? (is_string($row->construction_contract) ? $row->construction_contract : $row->construction_contract->name) : '';
+            });
+
+            $table->addColumn('wbs_level_3_wbs_level_3_code', function ($row) {
+                return $row->wbs_level_3 ? $row->wbs_level_3->wbs_level_3_code : '';
+            });
+
+            $table->editColumn('wbs_level_3.wbs_level_3_name', function ($row) {
+                return $row->wbs_level_3 ? (is_string($row->wbs_level_3) ? $row->wbs_level_3 : $row->wbs_level_3->wbs_level_3_name) : '';
+            });
+            $table->addColumn('wbs_level_4_wbs_level_4_code', function ($row) {
+                return $row->wbs_level_4 ? $row->wbs_level_4->wbs_level_4_code : '';
+            });
+
+            $table->editColumn('wbs_level_4.wbs_level_4_name', function ($row) {
+                return $row->wbs_level_4 ? (is_string($row->wbs_level_4) ? $row->wbs_level_4 : $row->wbs_level_4->wbs_level_4_name) : '';
             });
 
             $table->addColumn('issueby_name', function ($row) {
@@ -133,7 +150,7 @@ class RfaController extends Controller
                 return $row->team ? $row->team->name : '';
             });
 
-            $table->rawColumns(['actions', 'placeholder', 'type', 'construction_contract', 'issueby', 'assign', 'file_upload_1', 'comment_by', 'information_by', 'comment_status', 'for_status', 'document_status', 'create_by_user', 'update_by_user', 'approve_by_user', 'team']);
+            $table->rawColumns(['actions', 'placeholder', 'type', 'construction_contract', 'wbs_level_3', 'wbs_level_4', 'issueby', 'assign', 'file_upload_1', 'comment_by', 'information_by', 'comment_status', 'for_status', 'document_status', 'create_by_user', 'update_by_user', 'approve_by_user', 'team']);
 
             return $table->make(true);
         }
@@ -149,6 +166,11 @@ class RfaController extends Controller
 
         $construction_contracts = ConstructionContract::all()->pluck('code', 'id')->prepend(trans('global.pleaseSelect'), '');
 
+        $wbs_level_3s = WbsLevelThree::all()->pluck('wbs_level_3_code', 'id')->prepend(trans('global.pleaseSelect'), '');
+
+        $wbs_level_4s = Wbslevelfour::all()->pluck('wbs_level_4_code', 'id')->prepend(trans('global.pleaseSelect'), '');
+
+
         $issuebies = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $assigns = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
@@ -161,7 +183,7 @@ class RfaController extends Controller
 
         $for_statuses = RfaCommentStatus::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        return view('admin.rfas.create', compact('types', 'construction_contracts', 'issuebies', 'assigns', 'comment_bies', 'information_bies', 'comment_statuses', 'for_statuses'));
+        return view('admin.rfas.create', compact('types', 'construction_contracts', 'wbs_level_3s', 'wbs_level_4s', 'issuebies', 'assigns', 'comment_bies', 'information_bies', 'comment_statuses', 'for_statuses'));
     }
 
     public function store(StoreRfaRequest $request)
@@ -188,6 +210,10 @@ class RfaController extends Controller
 
         $construction_contracts = ConstructionContract::all()->pluck('code', 'id')->prepend(trans('global.pleaseSelect'), '');
 
+        $wbs_level_3s = WbsLevelThree::all()->pluck('wbs_level_3_code', 'id')->prepend(trans('global.pleaseSelect'), '');
+
+        $wbs_level_4s = Wbslevelfour::all()->pluck('wbs_level_4_code', 'id')->prepend(trans('global.pleaseSelect'), '');
+
         $issuebies = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $assigns = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
@@ -203,21 +229,30 @@ class RfaController extends Controller
 
         $rfa->load('type', 'construction_contract', 'issueby', 'assign', 'comment_by', 'information_by', 'comment_status', 'for_status', 'document_status', 'create_by_user', 'update_by_user', 'approve_by_user', 'team');
 
-        return view('admin.rfas.edit', compact('types', 'construction_contracts', 'issuebies', 'assigns', 'comment_bies', 'information_bies', 'comment_statuses', 'for_statuses', 'rfa'));
+        return view('admin.rfas.edit', compact('types', 'construction_contracts', 'wbs_level_3s', 'wbs_level_4s', 'issuebies', 'assigns', 'comment_bies', 'information_bies', 'comment_statuses', 'for_statuses', 'rfa'));
     }
 
     public function update(UpdateRfaRequest $request, Rfa $rfa)
     {
-        if($request->comment_status_id != null){
-            $rfa['document_status_id'] = 3;
-            $rfa['update_by_user_id'] = auth()->id();
-            
-            if($request->for_status_id != null){
-                $rfa['document_status_id'] = 4;
-                $rfa['approve_by_user_id'] = auth()->id();
+        if($rfa->document_status_id == 2 && $request->comment_status_id != null){
+            if($request->update_by_user_id != null){
+                $rfa['document_status_id'] = 3;
             }
-        }  
+            else{
+                $rfa['document_status_id'] = 3;
+                $rfa['update_by_user_id'] = auth()->id(); 
+            }
+        }
 
+        if($rfa->document_status_id == 3 && $request->for_status_id != null){
+            if($request->approve_by_user_id != null){
+                $rfa['document_status_id'] = 4;
+            }
+            else{
+                $rfa['document_status_id'] = 4;
+                $rfa['approve_by_user_id'] = auth()->id(); 
+            }
+        }
         
 
 
@@ -246,7 +281,7 @@ class RfaController extends Controller
     {
         abort_if(Gate::denies('rfa_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $rfa->load('type', 'construction_contract', 'issueby', 'assign', 'comment_by', 'information_by', 'comment_status', 'for_status', 'document_status', 'create_by_user', 'update_by_user', 'approve_by_user', 'team');
+        $rfa->load('type', 'construction_contract', 'wbs_level_3', 'wbs_level_4', 'issueby', 'assign', 'comment_by', 'information_by', 'comment_status', 'for_status', 'document_status', 'create_by_user', 'update_by_user', 'approve_by_user', 'team');
 
         return view('admin.rfas.show', compact('rfa'));
     }

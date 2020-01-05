@@ -13,15 +13,7 @@
         <form method="POST" action="{{ route('register') }}">
             {{ csrf_field() }}
             <div>
-               <div class="form-group {{ $errors->has('img_user') ? 'has-error' : '' }}">
-                            <label for="img_user">{{ trans('cruds.user.fields.img_user') }}</label>
-                            <div class="needsclick dropzone" id="img_user-dropzone">
-                            </div>
-                            @if($errors->has('img_user'))
-                                <span class="help-block" role="alert">{{ $errors->first('img_user') }}</span>
-                            @endif
-                            <span class="help-block">{{ trans('cruds.user.fields.img_user_helper') }}</span>
-                        </div>
+             
                         <div class="form-group {{ $errors->has('name') ? 'has-error' : '' }}">
                             <label class="required" for="name">{{ trans('cruds.user.fields.name') }}</label>
                             <input class="form-control" type="text" name="name" id="name" value="{{ old('name', '') }}" required placeholder="First name and Last name">
@@ -89,19 +81,26 @@
                             @endif
                             <span class="help-block">{{ trans('cruds.user.fields.jobtitle_helper') }}</span>
                         </div>
-                       
 
-                       
-
-                        <div class="form-group {{ $errors->has('signature') ? 'has-error' : '' }}">
-                            <label for="signature">{{ trans('cruds.user.fields.signature') }}</label>
-                            <div class="needsclick dropzone" id="signature-dropzone">
+                        <div class="form-group {{ $errors->has('construction_contracts') ? 'has-error' : '' }}">
+                            <label class="required" for="construction_contracts">{{ trans('cruds.user.fields.construction_contract') }}</label>
+                            <div style="padding-bottom: 4px">
+                                <span class="btn btn-info btn-xs select-all" style="border-radius: 0">{{ trans('global.select_all') }}</span>
+                                <span class="btn btn-info btn-xs deselect-all" style="border-radius: 0">{{ trans('global.deselect_all') }}</span>
                             </div>
-                            @if($errors->has('signature'))
-                                <span class="help-block" role="alert">{{ $errors->first('signature') }}</span>
+
+                            <select class="form-control select2" name="construction_contracts[]" id="construction_contracts" multiple>
+                                @foreach($construction_contracts as $id => $construction_contract)
+                                    <option value="{{ $construction_contract->id }}" {{ in_array($id, old('construction_contracts', [])) ? 'selected' : '' }}>{{ $construction_contract->code }}</option>
+                                @endforeach
+                            </select>
+                            @if($errors->has('construction_contracts'))
+                                <span class="help-block" role="alert">{{ $errors->first('construction_contracts') }}</span>
                             @endif
-                            <span class="help-block">{{ trans('cruds.user.fields.signature_helper') }}</span>
+                            <span class="help-block">{{ trans('cruds.user.fields.construction_contract_helper') }}</span>
                         </div>
+
+                    
                 
                         <div class="form-group {{ $errors->has('email') ? 'has-error' : '' }}">
                             <label class="required" for="email">{{ trans('cruds.user.fields.email') }}</label>
@@ -115,7 +114,7 @@
 
                 <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
                 <label class="required" for="password">Password</label>
-                    <input type="password" name="password" class="form-control" required placeholder="{{ trans('global.login_password') }}">
+                    <input type="password" name="password" class="form-control" required placeholder="{{ trans('global.login_password') }} (Use at least 8 characters)">
                     @if($errors->has('password'))
                         <p class="help-block">
                             {{ $errors->first('password') }}
@@ -147,7 +146,6 @@
     </div>
 </div>
 @endsection
-
 
 @section('scripts')
 <script>

@@ -77,12 +77,15 @@ class Task extends Model implements HasMedia
 
     public function getDueDateAttribute($value)
     {
-        return $value ? Carbon::parse($value)->format(config('panel.date_format')) : null;
+         return $value ? Carbon::parse($value)->format(config('panel.date_format')) : null;
+        //  return $value ? Carbon::createFromFormat('Y-m-d H:i:s', $value)->format(config('panel.date_format') . ' ' . config('panel.time_format')) : null;
+
     }
 
     public function setDueDateAttribute($value)
     {
-        $this->attributes['due_date'] = $value ? Carbon::createFromFormat(config('panel.date_format'), $value)->format('Y-m-d') : null;
+        $this->attributes['due_date'] = $value ? Carbon::createFromFormat(config('panel.date_format') . ' ' . config('panel.time_format'), $value)->format('Y-m-d H:i:s') : null;
+
     }
 
     public function getEndDateAttribute($value)

@@ -49,13 +49,13 @@
                                     {{ trans('cruds.task.fields.attachment') }}
                                 </th>
                                 <th>
+                                    {{ trans('cruds.user.fields.img_user') }}
+                                </th>
+                                <th>
                                     {{ trans('cruds.task.fields.create_by_user') }}
                                 </th>
                                 <th>
                                     {{ trans('cruds.task.fields.construction_contract') }}
-                                </th>
-                                <th>
-                                    {{ trans('cruds.constructionContract.fields.name') }}
                                 </th>
                                 <th>
                                     &nbsp;
@@ -123,9 +123,9 @@
 { data: 'due_date', name: 'due_date' },
 { data: 'end_date', name: 'end_date' },
 { data: 'attachment', name: 'attachment', sortable: false, searchable: false },
+{ data: 'img_user', name: 'img_user', sortable: false, searchable: false },
 { data: 'create_by_user_name', name: 'create_by_user.name' },
 { data: 'construction_contract_code', name: 'construction_contract.code' },
-{ data: 'construction_contract.name', name: 'construction_contract.name' },
 { data: 'actions', name: '{{ trans('global.actions') }}' }
     ],
     order: [[ 1, 'desc' ]],

@@ -64,9 +64,10 @@ class RegisterController extends Controller
      * @param  array  $data
      * @return \App\User
      */
-    protected function create(array $data)
+   
+     protected function create(array $data)
     {
-        return User::create([
+        $user = User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
@@ -76,24 +77,37 @@ class RegisterController extends Controller
             'jobtitle_id' => $data['jobtitle_id'],
             'dob' => $data['dob'],
         ]);
+        
+        $user->construction_contracts()->sync($data['construction_contracts']);
+        
+        return $user;
+        
     }
 
-    public function store(StoreUserRequest $request)
-    {
-        $user = User::create($request->all());
-       
-        if ($request->input('img_user', false)) {
-            $user->addMedia(storage_path('tmp/uploads/' . $request->input('img_user')))->toMediaCollection('img_user');
-        }
+    // public function store(StoreUserRequest $request)
+    // {
+    //     $user = User::create($request->all());
+    //     $user->construction_contracts()->sync($request->input('construction_contracts', []));
 
-        return redirect()->route('auth.login');
-    }
+    //     if ($request->input('img_user', false)) {
+    //         $user->addMedia(storage_path('tmp/uploads/' . $request->input('img_user')))->toMediaCollection('img_user');
+    //     }
+
+    //     if ($request->input('signature', false)) {
+    //         $user->addMedia(storage_path('tmp/uploads/' . $request->input('signature')))->toMediaCollection('signature');
+    //     }
+    //     return redirect()->route('auth.login');
+    // }
 
     public function showRegistrationForm()
     {
-        $teams = Team::all();
-        $jobtitles = Jobtitle::all();
-        return view('auth.register',compact('teams','jobtitles'));
+            $teams = Team::all();
+
+            $jobtitles = Jobtitle::all();
+
+            $construction_contracts = ConstructionContract::all();
+
+        return view('auth.register', compact('teams', 'jobtitles', 'construction_contracts'));
     }
 
 }
