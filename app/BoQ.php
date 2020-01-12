@@ -5,14 +5,14 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Wbslevelfour extends Model
+class BoQ extends Model
 {
     use SoftDeletes;
 
-    public $table = 'wbslevelfours';
+    public $table = 'bo_qs';
 
     public static $searchable = [
-        'wbs_level_4_code',
+        'name',
     ];
 
     protected $dates = [
@@ -22,21 +22,15 @@ class Wbslevelfour extends Model
     ];
 
     protected $fillable = [
-        'boq_id',
+        'name',
+        'code',
         'created_at',
         'updated_at',
         'deleted_at',
-        'wbs_level_4_name',
-        'wbs_level_4_code',
     ];
 
-    public function wbsLevel4Rfas()
+    public function boqWbslevelfours()
     {
-        return $this->hasMany(Rfa::class, 'wbs_level_4_id', 'id');
-    }
-
-    public function boq()
-    {
-        return $this->belongsTo(BoQ::class, 'boq_id');
+        return $this->hasMany(Wbslevelfour::class, 'boq_id', 'id');
     }
 }

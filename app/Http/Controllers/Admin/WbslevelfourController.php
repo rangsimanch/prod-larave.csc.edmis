@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\BoQ;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyWbslevelfourRequest;
 use App\Http\Requests\StoreWbslevelfourRequest;
@@ -26,7 +27,9 @@ class WbslevelfourController extends Controller
     {
         abort_if(Gate::denies('wbslevelfour_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return view('admin.wbslevelfours.create');
+        $boqs = BoQ::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+
+        return view('admin.wbslevelfours.create', compact('boqs'));
     }
 
     public function store(StoreWbslevelfourRequest $request)
@@ -40,7 +43,11 @@ class WbslevelfourController extends Controller
     {
         abort_if(Gate::denies('wbslevelfour_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return view('admin.wbslevelfours.edit', compact('wbslevelfour'));
+        $boqs = BoQ::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+
+        $wbslevelfour->load('boq');
+
+        return view('admin.wbslevelfours.edit', compact('boqs', 'wbslevelfour'));
     }
 
     public function update(UpdateWbslevelfourRequest $request, Wbslevelfour $wbslevelfour)
@@ -54,7 +61,7 @@ class WbslevelfourController extends Controller
     {
         abort_if(Gate::denies('wbslevelfour_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $wbslevelfour->load('wbsLevel4Rfas');
+        $wbslevelfour->load('boq', 'wbsLevel4Rfas');
 
         return view('admin.wbslevelfours.show', compact('wbslevelfour'));
     }

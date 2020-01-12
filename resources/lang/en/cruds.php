@@ -195,7 +195,7 @@ return [
         'fields'         => [
             'id'                           => 'ID',
             'id_helper'                    => '',
-            'title'                        => 'Title',
+            'title'                        => 'Title (TH)',
             'title_helper'                 => '',
             'document_number'              => 'Document Number',
             'document_number_helper'       => '',
@@ -249,6 +249,12 @@ return [
             'wbs_level_3_helper'           => '',
             'wbs_level_4'                  => 'WBS Level 4',
             'wbs_level_4_helper'           => '',   
+            'title_eng'                    => 'Title (EN)',
+            'title_eng_helper'             => '',
+            'title_cn'                     => 'Title (CN)',
+            'title_cn_helper'              => '',
+            'review_time'                  => 'Review',
+            'review_time_helper'           => '',
         ],
     ],
     'rfatype'                => [
@@ -475,6 +481,28 @@ return [
             'updated_at_helper'       => '',
             'deleted_at'              => 'Deleted at',
             'deleted_at_helper'       => '',
+            'boq'                     => 'BoQ',
+            'boq_helper'              => '',
         ],
     ],
+
+    'boQ'                    => [
+        'title'          => 'Bill of Quantities (BoQ)',
+        'title_singular' => 'Bill of Quantities (BoQ)',
+        'fields'         => [
+            'id'                => 'ID',
+            'id_helper'         => '',
+            'name'              => 'Name',
+            'name_helper'       => '',
+            'code'              => 'Code',
+            'code_helper'       => '',
+            'created_at'        => 'Created at',
+            'created_at_helper' => '',
+            'updated_at'        => 'Updated at',
+            'updated_at_helper' => '',
+            'deleted_at'        => 'Deleted at',
+            'deleted_at_helper' => '',
+        ],
+    ],
+
 ];

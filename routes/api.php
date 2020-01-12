@@ -52,4 +52,13 @@ Route::group(['prefix' => 'v1', 'as' => 'api.', 'namespace' => 'Api\V1\Admin', '
 
     // Construction Contracts
     Route::apiResource('construction-contracts', 'ConstructionContractApiController');
+
+    // Wbs Level Threes
+    Route::apiResource('wbs-level-threes', 'WbsLevelThreeApiController');
+
+    // Wbslevelfours
+    Route::apiResource('wbslevelfours', 'WbslevelfourApiController');
+
+    // Bo Qs
+    Route::apiResource('bo-qs', 'BoQApiController');
 });

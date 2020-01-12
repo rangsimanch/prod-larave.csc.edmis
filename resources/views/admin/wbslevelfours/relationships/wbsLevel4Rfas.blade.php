@@ -25,13 +25,22 @@
 
                                     </th>
                                     <th>
+                                        {{ trans('cruds.rfa.fields.title_eng') }}
+                                    </th>
+                                    <th>
                                         {{ trans('cruds.rfa.fields.title') }}
+                                    </th>
+                                    <th>
+                                        {{ trans('cruds.rfa.fields.title_cn') }}
                                     </th>
                                     <th>
                                         {{ trans('cruds.rfa.fields.document_number') }}
                                     </th>
                                     <th>
                                         {{ trans('cruds.rfa.fields.rfa_code') }}
+                                    </th>
+                                    <th>
+                                        {{ trans('cruds.rfa.fields.review_time') }}
                                     </th>
                                     <th>
                                         {{ trans('cruds.rfa.fields.type') }}
@@ -112,6 +121,9 @@
                                         {{ trans('cruds.rfa.fields.team') }}
                                     </th>
                                     <th>
+                                        {{ trans('cruds.team.fields.name') }}
+                                    </th>
+                                    <th>
                                         &nbsp;
                                     </th>
                                 </tr>
@@ -123,13 +135,22 @@
 
                                         </td>
                                         <td>
+                                            {{ $rfa->title_eng ?? '' }}
+                                        </td>
+                                        <td>
                                             {{ $rfa->title ?? '' }}
+                                        </td>
+                                        <td>
+                                            {{ $rfa->title_cn ?? '' }}
                                         </td>
                                         <td>
                                             {{ $rfa->document_number ?? '' }}
                                         </td>
                                         <td>
                                             {{ $rfa->rfa_code ?? '' }}
+                                        </td>
+                                        <td>
+                                            {{ $rfa->review_time ?? '' }}
                                         </td>
                                         <td>
                                             {{ $rfa->type->type_name ?? '' }}
@@ -211,6 +232,9 @@
                                             {{ $rfa->updated_at ?? '' }}
                                         </td>
                                         <td>
+                                            {{ $rfa->team->code ?? '' }}
+                                        </td>
+                                        <td>
                                             {{ $rfa->team->name ?? '' }}
                                         </td>
                                         <td>
@@ -284,7 +308,7 @@
 @endcan
 
   $.extend(true, $.fn.dataTable.defaults, {
-    order: [[ 1, 'desc' ]],
+    order: [[ 2, 'desc' ]],
     pageLength: 100,
   });
   $('.datatable-Rfa:not(.ajaxTable)').DataTable({ buttons: dtButtons })

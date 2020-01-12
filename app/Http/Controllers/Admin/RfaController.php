@@ -48,8 +48,14 @@ class RfaController extends Controller
                 ));
             });
 
+            $table->editColumn('title_eng', function ($row) {
+                return $row->title_eng ? $row->title_eng : "";
+            });
             $table->editColumn('title', function ($row) {
                 return $row->title ? $row->title : "";
+            });
+            $table->editColumn('title_cn', function ($row) {
+                return $row->title_cn ? $row->title_cn : "";
             });
             $table->editColumn('document_number', function ($row) {
                 return $row->document_number ? $row->document_number : "";
@@ -59,6 +65,9 @@ class RfaController extends Controller
             });
             $table->addColumn('type_type_name', function ($row) {
                 return $row->type ? $row->type->type_name : '';
+            });
+            $table->editColumn('review_time', function ($row) {
+                return $row->review_time ? $row->review_time : "";
             });
 
             $table->editColumn('type.type_code', function ($row) {

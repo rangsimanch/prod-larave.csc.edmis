@@ -128,6 +128,12 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['web'], 'n
     Route::delete('wbslevelfours/destroy', 'WbslevelfourController@massDestroy')->name('wbslevelfours.massDestroy');
     Route::resource('wbslevelfours', 'WbslevelfourController');
 
+     // Bo Qs
+     Route::delete('bo-qs/destroy', 'BoQController@massDestroy')->name('bo-qs.massDestroy');
+     Route::post('bo-qs/parse-csv-import', 'BoQController@parseCsvImport')->name('bo-qs.parseCsvImport');
+     Route::post('bo-qs/process-csv-import', 'BoQController@processCsvImport')->name('bo-qs.processCsvImport');
+     Route::resource('bo-qs', 'BoQController');
+
     Route::get('system-calendar', 'SystemCalendarController@index')->name('systemCalendar');
     Route::get('global-search', 'GlobalSearchController@search')->name('globalSearch');
     Route::get('messenger', 'MessengerController@index')->name('messenger.index');

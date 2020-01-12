@@ -6,12 +6,12 @@
         <div class="col-lg-12">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    {{ trans('global.show') }} {{ trans('cruds.wbslevelfour.title') }}
+                    {{ trans('global.show') }} {{ trans('cruds.boQ.title') }}
                 </div>
                 <div class="panel-body">
                     <div class="form-group">
                         <div class="form-group">
-                            <a class="btn btn-default" href="{{ route('admin.wbslevelfours.index') }}">
+                            <a class="btn btn-default" href="{{ route('admin.bo-qs.index') }}">
                                 {{ trans('global.back_to_list') }}
                             </a>
                         </div>
@@ -19,32 +19,24 @@
                             <tbody>
                                 <tr>
                                     <th>
-                                        {{ trans('cruds.wbslevelfour.fields.wbs_level_4_name') }}
+                                        {{ trans('cruds.boQ.fields.name') }}
                                     </th>
                                     <td>
-                                        {{ $wbslevelfour->wbs_level_4_name }}
+                                        {{ $boQ->name }}
                                     </td>
                                 </tr>
                                 <tr>
                                     <th>
-                                        {{ trans('cruds.wbslevelfour.fields.wbs_level_4_code') }}
+                                        {{ trans('cruds.boQ.fields.code') }}
                                     </th>
                                     <td>
-                                        {{ $wbslevelfour->wbs_level_4_code }}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th>
-                                        {{ trans('cruds.wbslevelfour.fields.boq') }}
-                                    </th>
-                                    <td>
-                                        {{ $wbslevelfour->boq->name ?? '' }}
+                                        {{ $boQ->code }}
                                     </td>
                                 </tr>
                             </tbody>
                         </table>
                         <div class="form-group">
-                            <a class="btn btn-default" href="{{ route('admin.wbslevelfours.index') }}">
+                            <a class="btn btn-default" href="{{ route('admin.bo-qs.index') }}">
                                 {{ trans('global.back_to_list') }}
                             </a>
                         </div>
@@ -58,14 +50,14 @@
                 </div>
                 <ul class="nav nav-tabs" role="tablist" id="relationship-tabs">
                     <li role="presentation">
-                        <a href="#wbs_level4_rfas" aria-controls="wbs_level4_rfas" role="tab" data-toggle="tab">
-                            {{ trans('cruds.rfa.title') }}
+                        <a href="#boq_wbslevelfours" aria-controls="boq_wbslevelfours" role="tab" data-toggle="tab">
+                            {{ trans('cruds.wbslevelfour.title') }}
                         </a>
                     </li>
                 </ul>
                 <div class="tab-content">
-                    <div class="tab-pane" role="tabpanel" id="wbs_level4_rfas">
-                        @includeIf('admin.wbslevelfours.relationships.wbsLevel4Rfas', ['rfas' => $wbslevelfour->wbsLevel4Rfas])
+                    <div class="tab-pane" role="tabpanel" id="boq_wbslevelfours">
+                        @includeIf('admin.boQs.relationships.boqWbslevelfours', ['wbslevelfours' => $boQ->boqWbslevelfours])
                     </div>
                 </div>
             </div>

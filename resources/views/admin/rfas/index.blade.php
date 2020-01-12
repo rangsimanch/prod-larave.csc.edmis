@@ -28,7 +28,13 @@
 
                                 </th>
                                 <th>
+                                    {{ trans('cruds.rfa.fields.title_eng') }}
+                                </th>
+                                <th>
                                     {{ trans('cruds.rfa.fields.title') }}
+                                </th>
+                                <th>
+                                    {{ trans('cruds.rfa.fields.title_cn') }}
                                 </th>
                                 <th>
                                     {{ trans('cruds.rfa.fields.document_number') }}
@@ -36,6 +42,9 @@
                                 <th>
                                     {{ trans('cruds.rfa.fields.rfa_code') }}
                                 </th>
+                                <th>
+                                    {{ trans('cruds.rfa.fields.review_time') }}
+                                </th>   
                                 <th>
                                     {{ trans('cruds.rfa.fields.type') }}
                                 </th>
@@ -164,9 +173,12 @@
     ajax: "{{ route('admin.rfas.index') }}",
     columns: [
       { data: 'placeholder', name: 'placeholder' },
+{ data: 'title_eng', name: 'title_eng' },
 { data: 'title', name: 'title' },
+{ data: 'title_cn', name: 'title_cn' },
 { data: 'document_number', name: 'document_number' },
 { data: 'rfa_code', name: 'rfa_code' },
+{ data: 'review_time', name: 'review_time' },
 { data: 'type_type_name', name: 'type.type_name' },
 { data: 'type.type_code', name: 'type.type_code' },
 { data: 'construction_contract_code', name: 'construction_contract.code' },

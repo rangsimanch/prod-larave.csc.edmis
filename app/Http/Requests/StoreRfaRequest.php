@@ -19,6 +19,12 @@ class StoreRfaRequest extends FormRequest
     public function rules()
     {
         return [
+            'review_time'  => [
+                'nullable',
+                'integer',
+                'min:-2147483648',
+                'max:2147483647',
+            ],
             'submit_date'  => [
                 'date_format:' . config('panel.date_format'),
                 'nullable',

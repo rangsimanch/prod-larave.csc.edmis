@@ -19,10 +19,26 @@
                             <tbody>
                                 <tr>
                                     <th>
+                                        {{ trans('cruds.rfa.fields.title_eng') }}
+                                    </th>
+                                    <td>
+                                        {{ $rfa->title_eng }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
                                         {{ trans('cruds.rfa.fields.title') }}
                                     </th>
                                     <td>
                                         {{ $rfa->title }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        {{ trans('cruds.rfa.fields.title_cn') }}
+                                    </th>
+                                    <td>
+                                        {{ $rfa->title_cn }}
                                     </td>
                                 </tr>
                                 <tr>
@@ -43,6 +59,14 @@
                                 </tr>
                                 <tr>
                                     <th>
+                                        {{ trans('cruds.rfa.fields.review_time') }}
+                                    </th>
+                                    <td>
+                                        {{ $rfa->review_time }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
                                         {{ trans('cruds.rfa.fields.type') }}
                                     </th>
                                     <td>
@@ -57,7 +81,6 @@
                                         {{ $rfa->construction_contract->code ?? '' }}
                                     </td>
                                 </tr>
-
                                 <tr>
                                     <th>
                                         {{ trans('cruds.rfa.fields.wbs_level_3') }}
@@ -74,7 +97,6 @@
                                         {{ $rfa->wbs_level_4->wbs_level_4_code ?? '' }}
                                     </td>
                                 </tr>
-                                
                                 <tr>
                                     <th>
                                         {{ trans('cruds.rfa.fields.submit_date') }}
@@ -212,7 +234,7 @@
                                         {{ trans('cruds.rfa.fields.team') }}
                                     </th>
                                     <td>
-                                        {{ $rfa->team->name ?? '' }}
+                                        {{ $rfa->team->code ?? '' }}
                                     </td>
                                 </tr>
                             </tbody>

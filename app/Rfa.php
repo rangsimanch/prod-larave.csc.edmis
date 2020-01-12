@@ -37,6 +37,9 @@ class Rfa extends Model implements HasMedia
 
     protected $fillable = [
         'title',
+        'title_cn',
+        'title_eng',
+        'review_time',
         'note_1',
         'note_3',
         'note_2',

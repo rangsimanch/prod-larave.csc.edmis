@@ -94,6 +94,16 @@
                                 </a>
                             </li>
                         @endcan
+                        @can('bo_q_access')
+                            <li class="{{ request()->is('admin/bo-qs') || request()->is('admin/bo-qs/*') ? 'active' : '' }}">
+                                <a href="{{ route("admin.bo-qs.index") }}">
+                                    <i class="fa-fw fas fa-file-invoice">
+
+                                    </i>
+                                    <span>{{ trans('cruds.boQ.title') }}</span>
+                                </a>
+                            </li>
+                        @endcan
                     </ul>
                 </li>
             @endcan

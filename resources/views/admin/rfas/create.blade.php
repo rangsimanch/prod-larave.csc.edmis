@@ -13,6 +13,14 @@
                         @csrf
 
                         @can('rfa_panel_a')
+                        <div class="form-group {{ $errors->has('title_eng') ? 'has-error' : '' }}">
+                            <label for="title_eng">{{ trans('cruds.rfa.fields.title_eng') }}</label>
+                            <input class="form-control" type="text" name="title_eng" id="title_eng" value="{{ old('title_eng', '') }}">
+                            @if($errors->has('title_eng'))
+                                <span class="help-block" role="alert">{{ $errors->first('title_eng') }}</span>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.rfa.fields.title_eng_helper') }}</span>
+                        </div>
                         <div class="form-group {{ $errors->has('title') ? 'has-error' : '' }}">
                             <label for="title">{{ trans('cruds.rfa.fields.title') }}</label>
                             <input class="form-control" type="text" name="title" id="title" value="{{ old('title', '') }}">
@@ -21,6 +29,15 @@
                             @endif
                             <span class="help-block">{{ trans('cruds.rfa.fields.title_helper') }}</span>
                         </div>
+                        <div class="form-group {{ $errors->has('title_cn') ? 'has-error' : '' }}">
+                            <label for="title_cn">{{ trans('cruds.rfa.fields.title_cn') }}</label>
+                            <input class="form-control" type="text" name="title_cn" id="title_cn" value="{{ old('title_cn', '') }}">
+                            @if($errors->has('title_cn'))
+                                <span class="help-block" role="alert">{{ $errors->first('title_cn') }}</span>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.rfa.fields.title_cn_helper') }}</span>
+                        </div>
+
                         <div class="form-group {{ $errors->has('document_number') ? 'has-error' : '' }}">
                             <label for="document_number">{{ trans('cruds.rfa.fields.document_number') }}</label>
                             <input class="form-control" type="text" name="document_number" id="document_number" value="{{ old('document_number', '') }}">
@@ -36,6 +53,14 @@
                                 <span class="help-block" role="alert">{{ $errors->first('rfa_code') }}</span>
                             @endif
                             <span class="help-block">{{ trans('cruds.rfa.fields.rfa_code_helper') }}</span>
+                        </div>
+                        <div class="form-group {{ $errors->has('review_time') ? 'has-error' : '' }}">
+                            <label for="review_time">{{ trans('cruds.rfa.fields.review_time') }}</label>
+                            <input class="form-control" type="number" name="review_time" id="review_time" value="{{ old('review_time') }}" step="1">
+                            @if($errors->has('review_time'))
+                                <span class="help-block" role="alert">{{ $errors->first('review_time') }}</span>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.rfa.fields.review_time_helper') }}</span>
                         </div>
                         <div class="form-group {{ $errors->has('type') ? 'has-error' : '' }}">
                             <label for="type_id">{{ trans('cruds.rfa.fields.type') }}</label>
@@ -217,11 +242,13 @@
                             <span class="help-block">{{ trans('cruds.rfa.fields.for_status_helper') }}</span>
                         </div>
                         @endcan
+                        
                         <div class="form-group">
                             <button class="btn btn-danger" type="submit">
                                 {{ trans('global.save') }}
                             </button>
                         </div>
+                        
                     </form>
                 </div>
             </div>
