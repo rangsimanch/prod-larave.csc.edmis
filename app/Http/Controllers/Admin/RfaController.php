@@ -175,9 +175,9 @@ class RfaController extends Controller
 
         $construction_contracts = ConstructionContract::all()->pluck('code', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $wbs_level_3s = WbsLevelThree::all()->pluck('wbs_level_3_code', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $wbs_level_3s = WbsLevelThree::all()->pluck('wbs_level_3_name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $wbs_level_4s = Wbslevelfour::all()->pluck('wbs_level_4_code', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $wbs_level_4s = Wbslevelfour::all()->pluck('wbs_level_4_name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
 
         $issuebies = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
