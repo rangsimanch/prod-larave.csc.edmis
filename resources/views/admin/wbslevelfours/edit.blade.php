@@ -40,6 +40,18 @@
                             @endif
                             <span class="help-block">{{ trans('cruds.wbslevelfour.fields.boq_helper') }}</span>
                         </div>
+                        <div class="form-group {{ $errors->has('wbs_level_three') ? 'has-error' : '' }}">
+                            <label for="wbs_level_three_id">{{ trans('cruds.wbslevelfour.fields.wbs_level_three') }}</label>
+                            <select class="form-control select2" name="wbs_level_three_id" id="wbs_level_three_id">
+                                @foreach($wbs_level_threes as $id => $wbs_level_three)
+                                    <option value="{{ $id }}" {{ ($wbslevelfour->wbs_level_three ? $wbslevelfour->wbs_level_three->id : old('wbs_level_three_id')) == $id ? 'selected' : '' }}>{{ $wbs_level_three }}</option>
+                                @endforeach
+                            </select>
+                            @if($errors->has('wbs_level_three_id'))
+                                <span class="help-block" role="alert">{{ $errors->first('wbs_level_three_id') }}</span>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.wbslevelfour.fields.wbs_level_three_helper') }}</span>
+                        </div>
                         <div class="form-group">
                             <button class="btn btn-danger" type="submit">
                                 {{ trans('global.save') }}

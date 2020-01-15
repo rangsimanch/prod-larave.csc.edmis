@@ -28,6 +28,7 @@ class Wbslevelfour extends Model
         'deleted_at',
         'wbs_level_4_name',
         'wbs_level_4_code',
+        'wbs_level_three_id',
     ];
 
     public function wbsLevel4Rfas()
@@ -38,5 +39,10 @@ class Wbslevelfour extends Model
     public function boq()
     {
         return $this->belongsTo(BoQ::class, 'boq_id');
+    }
+
+    public function wbs_level_three()
+    {
+        return $this->belongsTo(WbsLevelThree::class, 'wbs_level_three_id');
     }
 }

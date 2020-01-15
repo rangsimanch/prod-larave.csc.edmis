@@ -41,6 +41,14 @@
                                         {{ $wbslevelfour->boq->name ?? '' }}
                                     </td>
                                 </tr>
+                                <tr>
+                                    <th>
+                                        {{ trans('cruds.wbslevelfour.fields.wbs_level_three') }}
+                                    </th>
+                                    <td>
+                                        {{ $wbslevelfour->wbs_level_three->wbs_level_3_code ?? '' }}
+                                    </td>
+                                </tr>
                             </tbody>
                         </table>
                         <div class="form-group">

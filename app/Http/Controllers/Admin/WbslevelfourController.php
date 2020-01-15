@@ -8,6 +8,7 @@ use App\Http\Requests\MassDestroyWbslevelfourRequest;
 use App\Http\Requests\StoreWbslevelfourRequest;
 use App\Http\Requests\UpdateWbslevelfourRequest;
 use App\Wbslevelfour;
+use App\WbsLevelThree;
 use Gate;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -29,7 +30,9 @@ class WbslevelfourController extends Controller
 
         $boqs = BoQ::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        return view('admin.wbslevelfours.create', compact('boqs'));
+        $wbs_level_threes = WbsLevelThree::all()->pluck('wbs_level_3_code', 'id')->prepend(trans('global.pleaseSelect'), '');
+
+        return view('admin.wbslevelfours.create', compact('boqs', 'wbs_level_threes'));
     }
 
     public function store(StoreWbslevelfourRequest $request)
@@ -45,9 +48,11 @@ class WbslevelfourController extends Controller
 
         $boqs = BoQ::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $wbslevelfour->load('boq');
+        $wbs_level_threes = WbsLevelThree::all()->pluck('wbs_level_3_code', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        return view('admin.wbslevelfours.edit', compact('boqs', 'wbslevelfour'));
+        $wbslevelfour->load('boq', 'wbs_level_three');
+
+        return view('admin.wbslevelfours.edit', compact('boqs', 'wbs_level_threes', 'wbslevelfour'));
     }
 
     public function update(UpdateWbslevelfourRequest $request, Wbslevelfour $wbslevelfour)
@@ -61,7 +66,7 @@ class WbslevelfourController extends Controller
     {
         abort_if(Gate::denies('wbslevelfour_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $wbslevelfour->load('boq', 'wbsLevel4Rfas');
+        $wbslevelfour->load('boq', 'wbs_level_three', 'wbsLevel4Rfas');
 
         return view('admin.wbslevelfours.show', compact('wbslevelfour'));
     }

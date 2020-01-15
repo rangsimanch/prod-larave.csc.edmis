@@ -483,6 +483,8 @@ return [
             'deleted_at_helper'       => '',
             'boq'                     => 'BoQ',
             'boq_helper'              => '',
+            'wbs_level_three'         => 'WBS Level 3',
+            'wbs_level_three_helper'  => '',
         ],
     ],
 

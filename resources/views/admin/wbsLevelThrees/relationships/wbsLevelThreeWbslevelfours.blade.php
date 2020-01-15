@@ -1,5 +1,3 @@
-@extends('layouts.admin')
-@section('content')
 <div class="content">
     @can('wbslevelfour_create')
         <div style="margin-bottom: 10px;" class="row">
@@ -12,11 +10,13 @@
     @endcan
     <div class="row">
         <div class="col-lg-12">
+
             <div class="panel panel-default">
                 <div class="panel-heading">
                     {{ trans('cruds.wbslevelfour.title_singular') }} {{ trans('global.list') }}
                 </div>
                 <div class="panel-body">
+
                     <div class="table-responsive">
                         <table class=" table table-bordered table-striped table-hover datatable datatable-Wbslevelfour">
                             <thead>
@@ -99,15 +99,13 @@
                             </tbody>
                         </table>
                     </div>
+
                 </div>
             </div>
-
-
 
         </div>
     </div>
 </div>
-@endsection
 @section('scripts')
 @parent
 <script>
