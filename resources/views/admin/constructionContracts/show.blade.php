@@ -35,6 +35,14 @@
                                 </tr>
                                 <tr>
                                     <th>
+                                        {{ trans('cruds.constructionContract.fields.works_code') }}
+                                    </th>
+                                    <td>
+                                        {{ $constructionContract->works_code->code ?? '' }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
                                         {{ trans('cruds.constructionContract.fields.dk_start_1') }}
                                     </th>
                                     <td>

@@ -27,6 +27,7 @@
     <!-- <link href="https://fonts.googleapis.com/css?family:Source+Sans+Pro0,300i,400,400i,600,600i,700&display=swap&subset=latin-ext" rel="stylesheet" /> -->
     <link href="https://fonts.googleapis.com/css?family=Nunito&display=swap" rel="stylesheet"> 
     <link href="{{ asset('css/custom.css') }}" rel="stylesheet" />
+    <link href="https://unpkg.com/bootstrap-table@1.15.5/dist/bootstrap-table.min.css" rel="stylesheet">
     @yield('styles')
 </head>
 
@@ -176,6 +177,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/js/select2.full.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.5.1/min/dropzone.min.js"></script>
     <script src="{{ asset('js/main.js') }}"></script>
+    <script src="https://unpkg.com/bootstrap-table@1.15.5/dist/bootstrap-table.min.js"></script>
+    <script src="https://unpkg.com/bootstrap-table@1.15.5/dist/extensions/filter-control/bootstrap-table-filter-control.min.js"></script>
+
     @include('partials.javascripts')
     <script>
         $(function() {

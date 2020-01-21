@@ -28,6 +28,18 @@
                             @endif
                             <span class="help-block">{{ trans('cruds.constructionContract.fields.code_helper') }}</span>
                         </div>
+                        <div class="form-group {{ $errors->has('works_code') ? 'has-error' : '' }}">
+                            <label for="works_code_id">{{ trans('cruds.constructionContract.fields.works_code') }}</label>
+                            <select class="form-control select2" name="works_code_id" id="works_code_id">
+                                @foreach($works_codes as $id => $works_code)
+                                    <option value="{{ $id }}" {{ ($constructionContract->works_code ? $constructionContract->works_code->id : old('works_code_id')) == $id ? 'selected' : '' }}>{{ $works_code }}</option>
+                                @endforeach
+                            </select>
+                            @if($errors->has('works_code_id'))
+                                <span class="help-block" role="alert">{{ $errors->first('works_code_id') }}</span>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.constructionContract.fields.works_code_helper') }}</span>
+                        </div>
                         <div class="form-group {{ $errors->has('dk_start_1') ? 'has-error' : '' }}">
                             <label for="dk_start_1">{{ trans('cruds.constructionContract.fields.dk_start_1') }}</label>
                             <input class="form-control" type="text" name="dk_start_1" id="dk_start_1" value="{{ old('dk_start_1', $constructionContract->dk_start_1) }}">

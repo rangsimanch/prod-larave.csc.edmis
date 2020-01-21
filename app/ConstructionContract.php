@@ -37,6 +37,7 @@ class ConstructionContract extends Model
         'created_at',
         'updated_at',
         'deleted_at',
+        'works_code_id',
         'total_distance_km',
     ];
 
@@ -58,7 +59,10 @@ class ConstructionContract extends Model
     public function constructionContractUsers()
     {
         return $this->belongsToMany(User::class);
-            // ->withPivot('construction_contract_user','construction_contract_id')
-            // ->withTimestamps();
+    }
+
+    public function works_code()
+    {
+        return $this->belongsTo(WorksCode::class, 'works_code_id');
     }
 }

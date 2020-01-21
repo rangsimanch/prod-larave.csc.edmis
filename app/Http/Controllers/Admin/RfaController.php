@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers\Admin;
 
+use Illuminate\Support\Facades\Auth;
+use DB;
+use App\WorksCode;
 use App\ConstructionContract;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Traits\CsvImportTrait;
@@ -13,8 +16,11 @@ use App\Wbslevelfour;
 use App\WbsLevelThree;
 use App\Rfa;
 use App\RfaCommentStatus;
+use App\RfaDocumentStatus;
 use App\Rfatype;
 use App\User;
+use App\UserAlert;
+use App\Team;
 use Gate;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -35,17 +41,64 @@ class RfaController extends Controller
 
             $table->editColumn('actions', function ($row) {
                 $viewGate      = 'rfa_show';
-                $editGate      = 'rfa_edit';
-                $deleteGate    = 'rfa_delete';
                 $crudRoutePart = 'rfas';
+                    //Contructor Action
+               if(!strcmp($row->issueby ? $row->issueby->name : '',Auth::user()->name)){
+                    if(!strcmp($row->assign ? $row->assign->name : '',Auth::user()->name) || 
+                        !strcmp($row->comment_by ? $row->comment_by->name : '',Auth::user()->name) ||
+                        !strcmp($row->information_by ? $row->information_by->name : '' ,Auth::user()->name)
+                        ){
+                            $editGate      = 'rfa_edit';
+                            $deleteGate    = 'rfa_delete';
+                            return view('partials.datatablesActions', compact(
+                                'viewGate',
+                                'editGate',
+                                'deleteGate',
+                                'crudRoutePart',
+                                'row'
+                            ));
+                        }
+                    else{
+                        $editGate      = 'rfa_edit';
+                        $deleteGate    = 'rfa_delete';
+                        return view('partials.datatablesActions', compact(
+                            'viewGate',
+                            'editGate',
+                            'deleteGate',
+                            'crudRoutePart',
+                            'row'
+                        ));
+                    }
+                }
+               else{
+                    if(!strcmp($row->assign ? $row->assign->name : '',Auth::user()->name) || 
+                            !strcmp($row->comment_by ? $row->comment_by->name : '',Auth::user()->name) ||
+                            !strcmp($row->information_by ? $row->information_by->name : '' ,Auth::user()->name)
+                            ){
+                                $editGate      = 'rfa_edit';
+                                $deleteGate    = 'rfa_delete';
+                                return view('partials.datatablesActions', compact(
+                                    'viewGate',
+                                    'editGate',
+                                    'deleteGate',
+                                    'crudRoutePart',
+                                    'row'
+                                ));
+                            }
+                        else{
+                            $editGate      = 'rfa_not_edit';
+                            $deleteGate    = 'rfa_not_delete';
+                            return view('partials.datatablesActions', compact(
+                                'viewGate',
+                                'editGate',
+                                'deleteGate',
+                                'crudRoutePart',
+                                'row'
+                            ));
+                        }
+                }
 
-                return view('partials.datatablesActions', compact(
-                    'viewGate',
-                    'editGate',
-                    'deleteGate',
-                    'crudRoutePart',
-                    'row'
-                ));
+
             });
 
             $table->editColumn('title_eng', function ($row) {
@@ -73,12 +126,11 @@ class RfaController extends Controller
             $table->editColumn('type.type_code', function ($row) {
                 return $row->type ? (is_string($row->type) ? $row->type : $row->type->type_code) : '';
             });
+            $table->editColumn('worktype', function ($row) {
+                return $row->worktype ? Rfa::WORKTYPE_SELECT[$row->worktype] : '';
+            });
             $table->addColumn('construction_contract_code', function ($row) {
                 return $row->construction_contract ? $row->construction_contract->code : '';
-            });
-
-            $table->editColumn('construction_contract.name', function ($row) {
-                return $row->construction_contract ? (is_string($row->construction_contract) ? $row->construction_contract : $row->construction_contract->name) : '';
             });
 
             $table->addColumn('wbs_level_3_wbs_level_3_code', function ($row) {
@@ -155,8 +207,8 @@ class RfaController extends Controller
                 return $row->approve_by_user ? $row->approve_by_user->name : '';
             });
 
-            $table->addColumn('team_name', function ($row) {
-                return $row->team ? $row->team->name : '';
+            $table->addColumn('team_code', function ($row) {
+                return $row->team ? $row->team->code : '';
             });
 
             $table->rawColumns(['actions', 'placeholder', 'type', 'construction_contract', 'wbs_level_3', 'wbs_level_4', 'issueby', 'assign', 'file_upload_1', 'comment_by', 'information_by', 'comment_status', 'for_status', 'document_status', 'create_by_user', 'update_by_user', 'approve_by_user', 'team']);
@@ -164,7 +216,20 @@ class RfaController extends Controller
             return $table->make(true);
         }
 
-        return view('admin.rfas.index');
+        $document_status =  RfaDocumentStatus::all()->sortBy('status_name')->pluck('status_name')->unique();
+        $types = Rfatype::all()->sortBy('type_code')->pluck('type_code')->unique();
+        $work_types = Rfa::all()->sortBy('worktype')->pluck('worktype')->unique();
+        $construction_contracts = ConstructionContract::all()->sortBy('code')->pluck('code')->unique();
+        $wbs_level_3s = WbsLevelThree::all()->sortBy('wbs_level_3_code')->pluck('wbs_level_3_code')->unique();
+        $wbs_level_4s = Wbslevelfour::all()->sortBy('wbs_level_4_code')->pluck('wbs_level_4_code')->unique();
+        $submit_dates = Rfa::all()->sortBy('submit_date')->pluck('submit_date')->unique();
+        $receive_dates = Rfa::all()->sortBy('receive_date')->pluck('receive_date')->unique();
+        $comment_statuses = RfaCommentStatus::all()->sortBy('name')->pluck('name')->unique();
+        $for_statuses = RfaCommentStatus::all()->sortBy('name')->pluck('name')->unique();
+        $teams = Team::all()->sortBy('code')->pluck('code')->unique();
+
+
+        return view('admin.rfas.index',compact('document_status','types','work_types','construction_contracts','wbs_level_3s','wbs_level_4s','submit_dates','receive_dates','comment_statuses','for_statuses','teams'));
     }
 
     public function create()
@@ -179,7 +244,6 @@ class RfaController extends Controller
 
         $wbs_level_4s = Wbslevelfour::all()->pluck('wbs_level_4_name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-
         $issuebies = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $assigns = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
@@ -190,19 +254,60 @@ class RfaController extends Controller
 
         $comment_statuses = RfaCommentStatus::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $for_statuses = RfaCommentStatus::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $for_statuses = RfaCommentStatus::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');  
+          
 
         return view('admin.rfas.create', compact('types', 'construction_contracts', 'wbs_level_3s', 'wbs_level_4s', 'issuebies', 'assigns', 'comment_bies', 'information_bies', 'comment_statuses', 'for_statuses'));
+    }
+
+    function fetch(Request $request){
+        $id = $request->get('select');
+        $result = array();
+        $query = DB::table('wbs_level_threes')
+        ->join('wbslevelfours','wbs_level_threes.id','=','wbslevelfours.wbs_level_three_id')
+        ->select('wbslevelfours.wbs_level_4_code','wbslevelfours.id')
+        ->where('wbs_level_threes.id',$id)
+        ->groupBy('wbslevelfours.wbs_level_4_code','wbslevelfours.id')
+        ->orderBy('wbs_level_4_code')
+        ->get();
+        $output = '<option value="">' . trans('global.pleaseSelect') . '</option>';
+        foreach ($query as $row){
+            $output .= '<option value="'. $row->id .'">'. $row->wbs_level_4_code .'</option>';
+        }
+        echo $output;
     }
 
     public function store(StoreRfaRequest $request)
     {   $data = $request->all();
         $data['create_by_user_id'] = auth()->id();
         $data['document_status_id'] = 2;
+            //Works Code
+        $workcode_id = ConstructionContract::all()->pluck('works_code_id');
+        $workcode = WorksCode::where('id','=',$workcode_id)->value('code');
+            //WBS3,4 Code
+        $wbs3code = WbsLevelThree::where('id','=',$request->wbs_level_3_id)->value('wbs_level_3_code');
+        $wbs4code = Wbslevelfour::where('id','=',$request->wbs_level_4_id)->value('wbs_level_4_code');
+            //Type Doc. Code
+        $typecode = Rfatype::where('id','=',$request->type_id)->value('type_code');
+            //ConstructionContart
+        $const_code = ConstructionContract::where('id','=',$request->construction_contract_id)->value('code');
+            //Next Number
+        $nextId = DB::table('rfas')->max('id') + 1;
+        $str_length = 5;
+        $doc_number = substr("00000{$nextId}", -$str_length);
         
-        
+        // Document Number
+        $data['document_number'] = 'HSR1/' . $workcode  . '/' . $wbs3code . '/' . $wbs4code . '/' . $typecode . '/' . $doc_number; 
 
+        //RFA Code
+        $data['rfa_code'] = 'RFA' . '/' . $const_code . '/' . $doc_number;
         $rfa = Rfa::create($data);
+        
+        $data_alert['alert_text'] = 'New RFA assign to you.';
+        $data_alert['alert_link'] = route('admin.rfas.index');
+
+        $userAlert = UserAlert::create($data_alert);
+        $userAlert->users()->sync($data['assign_id']);
 
         foreach ($request->input('file_upload_1', []) as $file) {
             $rfa->addMedia(storage_path('tmp/uploads/' . $file))->toMediaCollection('file_upload_1');
@@ -243,29 +348,38 @@ class RfaController extends Controller
 
     public function update(UpdateRfaRequest $request, Rfa $rfa)
     {
-        if($rfa->document_status_id == 2 && $request->comment_status_id != null){
-            if($request->update_by_user_id != null){
-                $rfa['document_status_id'] = 3;
-            }
-            else{
-                $rfa['document_status_id'] = 3;
-                $rfa['update_by_user_id'] = auth()->id(); 
-            }
-        }
+        // if($rfa->document_status_id == 2 && $request->comment_status_id != null){
+        //     if($request->update_by_user_id != null){
+        //         $rfa['document_status_id'] = 3;
+        //     }
+        //     else{
+        //         $rfa['document_status_id'] = 3;
+        //         $rfa['update_by_user_id'] = auth()->id(); 
+        //     }
+        // }
 
-        if($rfa->document_status_id == 3 && $request->for_status_id != null){
-            if($request->approve_by_user_id != null){
-                $rfa['document_status_id'] = 4;
-            }
-            else{
-                $rfa['document_status_id'] = 4;
-                $rfa['approve_by_user_id'] = auth()->id(); 
-            }
-        }
+        // if($rfa->document_status_id == 3 && $request->for_status_id != null){
+        //     if($request->approve_by_user_id != null){
+        //         $rfa['document_status_id'] = 4;
+        //     }
+        //     else{
+        //         $rfa['document_status_id'] = 4;
+        //         $rfa['approve_by_user_id'] = auth()->id(); 
+        //     }
+        // }
         
 
 
         $rfa->update($request->all());
+
+
+        $data_alert['alert_text'] = 'Please Update RFA.';
+        $data_alert['alert_link'] = route('admin.rfas.index');
+        $data_user_id = array($request['comment_by_id'],$request['information_by_id']);
+        
+        $userAlert = UserAlert::create($data_alert);
+        $userAlert->users()->sync($data_user_id);
+
 
         if (count($rfa->file_upload_1) > 0) {
             foreach ($rfa->file_upload_1 as $media) {
@@ -310,4 +424,5 @@ class RfaController extends Controller
 
         return response(null, Response::HTTP_NO_CONTENT);
     }
+
 }

@@ -38,7 +38,7 @@
                             <span class="help-block">{{ trans('cruds.rfa.fields.title_cn_helper') }}</span>
                         </div>
 
-                        <div class="form-group {{ $errors->has('document_number') ? 'has-error' : '' }}">
+                        <!-- <div class="form-group {{ $errors->has('document_number') ? 'has-error' : '' }}">
                             <label for="document_number">{{ trans('cruds.rfa.fields.document_number') }}</label>
                             <input class="form-control" type="text" name="document_number" id="document_number" value="{{ old('document_number', '') }}">
                             @if($errors->has('document_number'))
@@ -53,7 +53,7 @@
                                 <span class="help-block" role="alert">{{ $errors->first('rfa_code') }}</span>
                             @endif
                             <span class="help-block">{{ trans('cruds.rfa.fields.rfa_code_helper') }}</span>
-                        </div>
+                        </div> -->
                         <div class="form-group {{ $errors->has('review_time') ? 'has-error' : '' }}">
                             <label for="review_time">{{ trans('cruds.rfa.fields.review_time') }}</label>
                             <input class="form-control" type="number" name="review_time" id="review_time" value="{{ old('review_time') }}" step="1">
@@ -74,6 +74,21 @@
                             @endif
                             <span class="help-block">{{ trans('cruds.rfa.fields.type_helper') }}</span>
                         </div>
+
+                        <div class="form-group {{ $errors->has('worktype') ? 'has-error' : '' }}">
+                            <label>{{ trans('cruds.rfa.fields.worktype') }}</label>
+                            <select class="form-control" name="worktype" id="worktype">
+                                <option value disabled {{ old('worktype', null) === null ? 'selected' : '' }}>{{ trans('global.pleaseSelect') }}</option>
+                                @foreach(App\Rfa::WORKTYPE_SELECT as $key => $label)
+                                    <option value="{{ $key }}" {{ old('worktype', '') === (string) $key ? 'selected' : '' }}>{{ $label }}</option>
+                                @endforeach
+                            </select>
+                            @if($errors->has('worktype'))
+                                <span class="help-block" role="alert">{{ $errors->first('worktype') }}</span>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.rfa.fields.worktype_helper') }}</span>
+                        </div>
+
                         <div class="form-group {{ $errors->has('construction_contract') ? 'has-error' : '' }}">
                             <label for="construction_contract_id">{{ trans('cruds.rfa.fields.construction_contract') }}</label>
                             <select class="form-control select2" name="construction_contract_id" id="construction_contract_id">
@@ -89,7 +104,7 @@
                        
                         <div class="form-group {{ $errors->has('wbs_level_3') ? 'has-error' : '' }}">
                             <label for="wbs_level_3_id">{{ trans('cruds.rfa.fields.wbs_level_3') }}</label>
-                            <select class="form-control select2" name="wbs_level_3_id" id="wbs_level_3_id">
+                            <select class="form-control select2 wbslv3" name="wbs_level_3_id" id="wbs_level_3_id">
                                 @foreach($wbs_level_3s as $id => $wbs_level_3)
                                     <option value="{{ $id }}" {{ old('wbs_level_3_id') == $id ? 'selected' : '' }}>{{ $wbs_level_3 }}</option>
                                 @endforeach
@@ -99,12 +114,11 @@
                             @endif
                             <span class="help-block">{{ trans('cruds.rfa.fields.wbs_level_3_helper') }}</span>
                         </div>
+                        
                         <div class="form-group {{ $errors->has('wbs_level_4') ? 'has-error' : '' }}">
                             <label for="wbs_level_4_id">{{ trans('cruds.rfa.fields.wbs_level_4') }}</label>
-                            <select class="form-control select2" name="wbs_level_4_id" id="wbs_level_4_id">
-                                @foreach($wbs_level_4s as $id => $wbs_level_4)
-                                    <option value="{{ $id }}" {{ old('wbs_level_4_id') == $id ? 'selected' : '' }}>{{ $wbs_level_4 }}</option>
-                                @endforeach
+                            <select class="form-control select2 wbslv4" name="wbs_level_4_id" id="wbs_level_4_id">
+                                <option value=""> {{ trans('global.pleaseSelect') }} </option>
                             </select>
                             @if($errors->has('wbs_level_4_id'))
                                 <span class="help-block" role="alert">{{ $errors->first('wbs_level_4_id') }}</span>
@@ -243,12 +257,15 @@
                         </div>
                         @endcan
                         
-                        <div class="form-group">
-                            <button class="btn btn-danger" type="submit">
+                        <div class="form-row">
+                            <button class="btn btn-success" type="submit">
                                 {{ trans('global.save') }}
                             </button>
+                            
+                            <a class="btn btn-default" href="{{ route('admin.rfas.index') }}">
+                                {{ trans('global.back_to_list') }}
+                            </a>
                         </div>
-                        
                     </form>
                 </div>
             </div>
@@ -316,5 +333,26 @@ Dropzone.options.fileUpload1Dropzone = {
          return _results
      }
 }
+</script>
+
+<script type="text/javascript">
+    $('.wbslv3').change(function(){
+        if($(this).val() != ''){
+            var select = $(this).val();
+            console.log(select);
+            var _token = $('input[name="_token"]').val();
+            $.ajax({
+                url:"{{ route('admin.rfas.fetch') }}",
+                method:"POST",
+                data:{select:select , _token:_token},
+                success:function(result){
+                    //Action
+
+                    $('.wbslv4').html(result);
+                    console.log(result);
+                }
+            })
+        }
+    });
 </script>
 @endsection

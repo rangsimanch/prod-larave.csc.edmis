@@ -74,6 +74,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['web'], 'n
     Route::post('rfas/media', 'RfaController@storeMedia')->name('rfas.storeMedia');
     Route::post('rfas/parse-csv-import', 'RfaController@parseCsvImport')->name('rfas.parseCsvImport');
     Route::post('rfas/process-csv-import', 'RfaController@processCsvImport')->name('rfas.processCsvImport');
+    Route::post('rfas/fetch','RfaController@fetch')->name('rfas.fetch');
     Route::resource('rfas', 'RfaController');
 
     // Rfatypes
@@ -133,7 +134,11 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['web'], 'n
      Route::post('bo-qs/parse-csv-import', 'BoQController@parseCsvImport')->name('bo-qs.parseCsvImport');
      Route::post('bo-qs/process-csv-import', 'BoQController@processCsvImport')->name('bo-qs.processCsvImport');
      Route::resource('bo-qs', 'BoQController');
-
+     
+     // Works Codes
+    Route::delete('works-codes/destroy', 'WorksCodeController@massDestroy')->name('works-codes.massDestroy');
+    Route::resource('works-codes', 'WorksCodeController');
+    
     Route::get('system-calendar', 'SystemCalendarController@index')->name('systemCalendar');
     Route::get('global-search', 'GlobalSearchController@search')->name('globalSearch');
     Route::get('messenger', 'MessengerController@index')->name('messenger.index');

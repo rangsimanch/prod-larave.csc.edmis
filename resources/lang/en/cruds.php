@@ -255,6 +255,9 @@ return [
             'title_cn_helper'              => '',
             'review_time'                  => 'Review',
             'review_time_helper'           => '',
+            'worktype'                     => 'Work type',
+            'worktype_helper'              => '',
+            'action'                       => 'Action',
         ],
     ],
     'rfatype'                => [
@@ -445,6 +448,8 @@ return [
             'updated_at_helper'        => '',
             'deleted_at'               => 'Deleted at',
             'deleted_at_helper'        => '',
+            'works_code'               => 'Works Code',
+            'works_code_helper'        => '',
         ],
     ],
     'wbsLevelThree'          => [
@@ -491,6 +496,28 @@ return [
     'boQ'                    => [
         'title'          => 'Bill of Quantities (BoQ)',
         'title_singular' => 'Bill of Quantities (BoQ)',
+        'fields'         => [
+            'id'                => 'ID',
+            'id_helper'         => '',
+            'name'              => 'Name',
+            'name_helper'       => '',
+            'code'              => 'Code',
+            'code_helper'       => '',
+            'created_at'        => 'Created at',
+            'created_at_helper' => '',
+            'updated_at'        => 'Updated at',
+            'updated_at_helper' => '',
+            'deleted_at'        => 'Deleted at',
+            'deleted_at_helper' => '',
+        ],
+    ],
+    'technicalDocument'      => [
+        'title'          => 'Technical Documents',
+        'title_singular' => 'Technical Document',
+    ],
+    'worksCode'              => [
+        'title'          => 'Works Code',
+        'title_singular' => 'Works Code',
         'fields'         => [
             'id'                => 'ID',
             'id_helper'         => '',

@@ -31,6 +31,9 @@
                                         {{ trans('cruds.constructionContract.fields.code') }}
                                     </th>
                                     <th>
+                                        {{ trans('cruds.constructionContract.fields.works_code') }}
+                                    </th>
+                                    <th>
                                         {{ trans('cruds.constructionContract.fields.dk_start_1') }}
                                     </th>
                                     <th>
@@ -76,6 +79,12 @@
                                         </td>
                                         <td>
                                             {{ $constructionContract->code ?? '' }}
+                                        </td>
+                                        <td>
+                                            {{ $constructionContract->works_code->code ?? '' }}
+                                        </td>
+                                        <td>
+                                            {{ $constructionContract->works_code->name ?? '' }}
                                         </td>
                                         <td>
                                             {{ $constructionContract->dk_start_1 ?? '' }}

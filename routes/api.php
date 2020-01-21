@@ -61,4 +61,7 @@ Route::group(['prefix' => 'v1', 'as' => 'api.', 'namespace' => 'Api\V1\Admin', '
 
     // Bo Qs
     Route::apiResource('bo-qs', 'BoQApiController');
+
+    // Works Codes
+    Route::apiResource('works-codes', 'WorksCodeApiController');
 });

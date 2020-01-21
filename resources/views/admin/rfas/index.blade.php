@@ -21,80 +21,163 @@
                     {{ trans('cruds.rfa.title_singular') }} {{ trans('global.list') }}
                 </div>
                 <div class="panel-body">
-                    <table class=" table table-bordered table-striped table-hover ajaxTable datatable datatable-Rfa">
+                    <table class=" table table-bordered table-striped table-hover ajaxTable datatable datatable-Rfa text-center" id="datatb">
                         <thead>
                             <tr>
                                 <th width="10">
 
                                 </th>
+                                
+                                <th>
+                                    {{ trans('cruds.rfa.fields.document_status') }}
+
+                                    <select class="form-control filter-select" data-column="1">
+                                        <option value=""> Select Status... </option>
+                                        @foreach ($document_status as $status)
+                                            <option value="{{ $status }}"> {{ $status }} </option>
+                                        @endforeach
+                                    </select>
+                                </th>
                                 <th>
                                     {{ trans('cruds.rfa.fields.title_eng') }}
+
+                                    <input type="text" class="form-control filter-input"
+                                    placeholder="Search for title..." data-column="2"/>
                                 </th>
                                 <th>
                                     {{ trans('cruds.rfa.fields.title') }}
+
+                                    <input type="text" class="form-control filter-input"
+                                    placeholder="Search for title..." data-column="3"/>
                                 </th>
                                 <th>
                                     {{ trans('cruds.rfa.fields.title_cn') }}
+
+                                    <input type="text" class="form-control filter-input"
+                                    placeholder="Search for title..." data-column="4"/>
                                 </th>
                                 <th>
                                     {{ trans('cruds.rfa.fields.document_number') }}
+
+                                    <input type="text" class="form-control filter-input"
+                                    placeholder="Search for title..." data-column="5"/>
                                 </th>
                                 <th>
                                     {{ trans('cruds.rfa.fields.rfa_code') }}
+
+                                    <input type="text" class="form-control filter-input"
+                                    placeholder="Search for title..." data-column="6"/>
                                 </th>
-                                <th>
-                                    {{ trans('cruds.rfa.fields.review_time') }}
-                                </th>   
                                 <th>
                                     {{ trans('cruds.rfa.fields.type') }}
+                                    
+                                    <select class="form-control filter-select" data-column="7">
+                                        <option value=""> Select Type... </option>
+                                        @foreach ($types as $type)
+                                            <option value="{{ $type }}"> {{ $type }} </option>
+                                        @endforeach
+                                    </select>
                                 </th>
                                 <th>
-                                    {{ trans('cruds.rfatype.fields.type_code') }}
+                                    {{ trans('cruds.rfa.fields.worktype') }}
+
+                                    <select class="form-control filter-select" data-column="8">
+                                        <option value=""> Select Type... </option>
+                                        @foreach ($work_types as $work_type)
+                                            <option value="{{ $work_type }}"> {{ $work_type }} </option>
+                                        @endforeach
+                                    </select>
                                 </th>
                                 <th>
                                     {{ trans('cruds.rfa.fields.construction_contract') }}
+
+                                     <select class="form-control filter-select" data-column="9">
+                                        <option value=""> Select Type... </option>
+                                        @foreach ($construction_contracts as $construction_contract)
+                                            <option value="{{ $construction_contract }}"> {{ $construction_contract }} </option>
+                                        @endforeach
+                                    </select>
                                 </th>
                                 <th>
                                     {{ trans('cruds.rfa.fields.wbs_level_3') }}
+
+                                    <select class="form-control filter-select" data-column="10">
+                                        <option value=""> Select Type... </option>
+                                        @foreach ($wbs_level_3s as $wbs_level_3)
+                                            <option value="{{ $wbs_level_3 }}"> {{ $wbs_level_3 }} </option>
+                                        @endforeach
+                                    </select>
                                 </th>
                                 <th>
                                     {{ trans('cruds.rfa.fields.wbs_level_4') }}
+
+                                    <select class="form-control filter-select" data-column="11">
+                                        <option value=""> Select Type... </option>
+                                        @foreach ($wbs_level_4s as $wbs_level_4)
+                                            <option value="{{ $wbs_level_4 }}"> {{ $wbs_level_4 }} </option>
+                                        @endforeach
+                                    </select>
                                 </th>
                                 <th>
                                     {{ trans('cruds.rfa.fields.submit_date') }}
+
                                 </th>
                                 <th>
                                     {{ trans('cruds.rfa.fields.issueby') }}
+
+                                    <input type="text" class="form-control filter-input"
+                                    placeholder="Search for title..." data-column="13"/>
                                 </th>
                                 <th>
                                     {{ trans('cruds.rfa.fields.assign') }}
+
+                                    <input type="text" class="form-control filter-input"
+                                    placeholder="Search for title..." data-column="14"/>
                                 </th>
                                 <th>
                                     {{ trans('cruds.rfa.fields.file_upload_1') }}
                                 </th>
                                 <th>
                                     {{ trans('cruds.rfa.fields.comment_by') }}
+
+                                    <input type="text" class="form-control filter-input"
+                                    placeholder="Search for title..." data-column="16"/>
                                 </th>
                                 <th>
                                     {{ trans('cruds.rfa.fields.information_by') }}
+
+                                    <input type="text" class="form-control filter-input"
+                                    placeholder="Search for title..." data-column="17"/>
                                 </th>
                                 <th>
                                     {{ trans('cruds.rfa.fields.receive_date') }}
+
                                 </th>
                                 <th>
                                     {{ trans('cruds.rfa.fields.note_2') }}
                                 </th>
                                 <th>
                                     {{ trans('cruds.rfa.fields.comment_status') }}
+
+                                    <select class="form-control filter-select" data-column="20">
+                                        <option value=""> Select Type... </option>
+                                        @foreach ($comment_statuses as $comment_statuse)
+                                            <option value="{{ $comment_statuse }}"> {{ $comment_statuse }} </option>
+                                        @endforeach
+                                    </select>
                                 </th>
                                 <th>
                                     {{ trans('cruds.rfa.fields.note_3') }}
                                 </th>
                                 <th>
                                     {{ trans('cruds.rfa.fields.for_status') }}
-                                </th>
-                                <th>
-                                    {{ trans('cruds.rfa.fields.document_status') }}
+                                   
+                                    <select class="form-control filter-select" data-column="22">
+                                        <option value=""> Select Type... </option>
+                                        @foreach ($for_statuses as $for_statuse)
+                                            <option value="{{ $for_statuse }}"> {{ $for_statuse }} </option>
+                                        @endforeach
+                                    </select>
                                 </th>
                                 <th>
                                     {{ trans('cruds.rfa.fields.created_at') }}
@@ -113,9 +196,16 @@
                                 </th>
                                 <th>
                                     {{ trans('cruds.rfa.fields.team') }}
+
+                                    <select class="form-control filter-select" data-column="28">
+                                        <option value=""> Select Type... </option>
+                                        @foreach ($teams as $team)
+                                            <option value="{{ $team }}"> {{ $team }} </option>
+                                        @endforeach
+                                    </select>
                                 </th>
                                 <th>
-                                    &nbsp;
+                                {{ trans('cruds.rfa.fields.action') }}
                                 </th>
                             </tr>
                         </thead>
@@ -172,15 +262,15 @@
     aaSorting: [],
     ajax: "{{ route('admin.rfas.index') }}",
     columns: [
-      { data: 'placeholder', name: 'placeholder' },
+      { data: 'placeholder', name: 'placeholder' },   
+{ data: 'document_status_status_name', name: 'document_status.status_name' },
 { data: 'title_eng', name: 'title_eng' },
 { data: 'title', name: 'title' },
 { data: 'title_cn', name: 'title_cn' },
 { data: 'document_number', name: 'document_number' },
 { data: 'rfa_code', name: 'rfa_code' },
-{ data: 'review_time', name: 'review_time' },
-{ data: 'type_type_name', name: 'type.type_name' },
 { data: 'type.type_code', name: 'type.type_code' },
+{ data: 'worktype', name: 'worktype' },
 { data: 'construction_contract_code', name: 'construction_contract.code' },
 { data: 'wbs_level_3_wbs_level_3_code', name: 'wbs_level_3.wbs_level_3_code' },
 { data: 'wbs_level_4_wbs_level_4_code', name: 'wbs_level_4.wbs_level_4_code' },
@@ -195,16 +285,15 @@
 { data: 'comment_status_name', name: 'comment_status.name' },
 { data: 'note_3', name: 'note_3' },
 { data: 'for_status_name', name: 'for_status.name' },
-{ data: 'document_status_status_name', name: 'document_status.status_name' },
 { data: 'created_at', name: 'created_at' },
 { data: 'create_by_user_name', name: 'create_by_user.name' },
 { data: 'update_by_user_name', name: 'update_by_user.name' },
 { data: 'approve_by_user_name', name: 'approve_by_user.name' },
 { data: 'updated_at', name: 'updated_at' },
-{ data: 'team_name', name: 'team.name' },
+{ data: 'team_code', name: 'team.code' },
 { data: 'actions', name: '{{ trans('global.actions') }}' }
     ],
-    order: [[ 1, 'desc' ]],
+    order: [[ 23, 'desc' ]],
     pageLength: 100,
   };
   $('.datatable-Rfa').DataTable(dtOverrideGlobals);
@@ -212,7 +301,19 @@
         $($.fn.dataTable.tables(true)).DataTable()
             .columns.adjust();
     });
-});
+    
+    // Filter Class
+       $('.filter-input').keyup(function(){
+        $($.fn.dataTable.tables(true)).DataTable().column( $(this).data('column'))
+            .search($(this).val())
+            .draw();
+        });
 
+        $('.filter-select').change(function(){
+            $($.fn.dataTable.tables(true)).DataTable().column( $(this).data('column'))
+            .search($(this).val())
+            .draw();
+        });
+});
 </script>
 @endsection

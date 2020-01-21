@@ -21,10 +21,9 @@ class Rfa extends Model implements HasMedia
         'file_upload_1',
     ];
 
-    public static $searchable = [
-        'title',
-        'rfa_code',
-        'document_number',
+    const WORKTYPE_SELECT = [
+        'Thai' => 'Thai',
+        'China' => 'China',
     ];
 
     protected $dates = [
@@ -35,33 +34,43 @@ class Rfa extends Model implements HasMedia
         'receive_date',
     ];
 
-    protected $fillable = [
+    public static $searchable = [
         'title',
         'title_cn',
+        'rfa_code',
+        'worktype',
         'title_eng',
-        'review_time',
-        'note_1',
+        'document_number',
+    ];
+
+    protected $fillable = [
+        'title',
         'note_3',
         'note_2',
+        'note_1',
         'team_id',
         'type_id',
+        'title_cn',
         'rfa_code',
+        'worktype',
         'assign_id',
+        'title_eng',
+        'issueby_id',
         'deleted_at',
         'updated_at',
         'created_at',
-        'issueby_id',
         'submit_date',
+        'review_time',
         'receive_date',
         'for_status_id',
-        'wbs_level_3_id',
-        'wbs_level_4_id',
         'comment_by_id',
+        'wbs_level_4_id',
+        'wbs_level_3_id',
         'document_number',
         'comment_status_id',
+        'information_by_id',
         'create_by_user_id',
         'update_by_user_id',
-        'information_by_id',
         'document_status_id',
         'approve_by_user_id',
         'construction_contract_id',
@@ -74,7 +83,7 @@ class Rfa extends Model implements HasMedia
         Rfa::observe(new \App\Observers\RfaActionObserver);
     }
 
-     /**
+    /**
      * Set to null if empty
      * @param $input
      */

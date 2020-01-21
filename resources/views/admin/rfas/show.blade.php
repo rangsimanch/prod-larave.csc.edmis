@@ -75,6 +75,14 @@
                                 </tr>
                                 <tr>
                                     <th>
+                                        {{ trans('cruds.rfa.fields.worktype') }}
+                                    </th>
+                                    <td>
+                                        {{ App\Rfa::WORKTYPE_SELECT[$rfa->worktype] ?? '' }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
                                         {{ trans('cruds.rfa.fields.construction_contract') }}
                                     </th>
                                     <td>

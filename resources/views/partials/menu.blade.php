@@ -263,14 +263,37 @@
                     </a>
                 </li>
             @endcan
-            @can('construction_contract_access')
-                <li class="{{ request()->is('admin/construction-contracts') || request()->is('admin/construction-contracts/*') ? 'active' : '' }}">
-                    <a href="{{ route("admin.construction-contracts.index") }}">
-                        <i class="fa-fw fas fa-book-open">
+            @can('technical_document_access')
+                <li class="treeview">
+                    <a href="#">
+                        <i class="fa-fw fas fa-passport">
 
                         </i>
-                        <span>{{ trans('cruds.constructionContract.title') }}</span>
+                        <span>{{ trans('cruds.technicalDocument.title') }}</span>
+                        <span class="pull-right-container"><i class="fa fa-fw fa-angle-left pull-right"></i></span>
                     </a>
+                    <ul class="treeview-menu">
+                        @can('construction_contract_access')
+                            <li class="{{ request()->is('admin/construction-contracts') || request()->is('admin/construction-contracts/*') ? 'active' : '' }}">
+                                <a href="{{ route("admin.construction-contracts.index") }}">
+                                    <i class="fa-fw fas fa-book-open">
+
+                                    </i>
+                                    <span>{{ trans('cruds.constructionContract.title') }}</span>
+                                </a>
+                            </li>
+                        @endcan
+                        @can('works_code_access')
+                            <li class="{{ request()->is('admin/works-codes') || request()->is('admin/works-codes/*') ? 'active' : '' }}">
+                                <a href="{{ route("admin.works-codes.index") }}">
+                                    <i class="fa-fw fas fa-cogs">
+
+                                    </i>
+                                    <span>{{ trans('cruds.worksCode.title') }}</span>
+                                </a>
+                            </li>
+                        @endcan
+                    </ul>
                 </li>
             @endcan
             <li class="{{ request()->is('admin/system-calendar') || request()->is('admin/system-calendar/*') ? 'active' : '' }}">

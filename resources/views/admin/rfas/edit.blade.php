@@ -74,6 +74,19 @@
                             @endif
                             <span class="help-block">{{ trans('cruds.rfa.fields.type_helper') }}</span>
                         </div>
+                        <div class="form-group {{ $errors->has('worktype') ? 'has-error' : '' }}">
+                            <label>{{ trans('cruds.rfa.fields.worktype') }}</label>
+                            <select class="form-control" name="worktype" id="worktype">
+                                <option value disabled {{ old('worktype', null) === null ? 'selected' : '' }}>{{ trans('global.pleaseSelect') }}</option>
+                                @foreach(App\Rfa::WORKTYPE_SELECT as $key => $label)
+                                    <option value="{{ $key }}" {{ old('worktype', $rfa->worktype) === (string) $key ? 'selected' : '' }}>{{ $label }}</option>
+                                @endforeach
+                            </select>
+                            @if($errors->has('worktype'))
+                                <span class="help-block" role="alert">{{ $errors->first('worktype') }}</span>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.rfa.fields.worktype_helper') }}</span>
+                        </div>
                         <div class="form-group {{ $errors->has('construction_contract') ? 'has-error' : '' }}">
                             <label for="construction_contract_id">{{ trans('cruds.rfa.fields.construction_contract') }}</label>
                             <select class="form-control select2" name="construction_contract_id" id="construction_contract_id">
@@ -241,9 +254,13 @@
                         </div>
                         @endcan
                         <div class="form-group">
-                            <button class="btn btn-danger" type="submit">
+                            <button class="btn btn-success" type="submit">
                                 {{ trans('global.save') }}
                             </button>
+
+                            <a class="btn btn-default" href="{{ route('admin.rfas.index') }}">
+                                {{ trans('global.back_to_list') }}
+                            </a>
                         </div>
                     </form>
                 </div>
