@@ -102,7 +102,7 @@
 
                         <div class="form-group {{ $errors->has('wbs_level_3') ? 'has-error' : '' }}">
                             <label for="wbs_level_3_id">{{ trans('cruds.rfa.fields.wbs_level_3') }}</label>
-                            <select class="form-control select2" name="wbs_level_3_id" id="wbs_level_3_id">
+                            <select class="form-control select2 wbslv3" name="wbs_level_3_id" id="wbs_level_3_id">
                                 @foreach($wbs_level_3s as $id => $wbs_level_3)
                                     <option value="{{ $id }}" {{ ($rfa->wbs_level_3 ? $rfa->wbs_level_3->id : old('wbs_level_3_id')) == $id ? 'selected' : '' }}>{{ $wbs_level_3 }}</option>
                                 @endforeach
@@ -112,12 +112,11 @@
                             @endif
                             <span class="help-block">{{ trans('cruds.rfa.fields.wbs_level_3_helper') }}</span>
                         </div>
+
                         <div class="form-group {{ $errors->has('wbs_level_4') ? 'has-error' : '' }}">
                             <label for="wbs_level_4_id">{{ trans('cruds.rfa.fields.wbs_level_4') }}</label>
-                            <select class="form-control select2" name="wbs_level_4_id" id="wbs_level_4_id">
-                                @foreach($wbs_level_4s as $id => $wbs_level_4)
-                                    <option value="{{ $id }}" {{ ($rfa->wbs_level_4 ? $rfa->wbs_level_4->id : old('wbs_level_4_id')) == $id ? 'selected' : '' }}>{{ $wbs_level_4 }}</option>
-                                @endforeach
+                            <select class="form-control select2 wbslv4" name="wbs_level_4_id" id="wbs_level_4_id">
+                                <option value=""> {{ trans('global.pleaseSelect') }} </option>
                             </select>
                             @if($errors->has('wbs_level_4_id'))
                                 <span class="help-block" role="alert">{{ $errors->first('wbs_level_4_id') }}</span>
@@ -329,5 +328,26 @@ Dropzone.options.fileUpload1Dropzone = {
          return _results
      }
 }
+</script>
+
+<script type="text/javascript">
+    $('.wbslv3').change(function(){
+        if($(this).val() != ''){
+            var select = $(this).val();
+            console.log(select);
+            var _token = $('input[name="_token"]').val();
+            $.ajax({
+                url:"{{ route('admin.rfas.fetch') }}",
+                method:"POST",
+                data:{select:select , _token:_token},
+                success:function(result){
+                    //Action
+
+                    $('.wbslv4').html(result);
+                    console.log(result);
+                }
+            })
+        }
+    });
 </script>
 @endsection
