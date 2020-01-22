@@ -54,14 +54,14 @@
                             @endif
                             <span class="help-block">{{ trans('cruds.rfa.fields.rfa_code_helper') }}</span>
                         </div>
-                        <div class="form-group {{ $errors->has('review_time') ? 'has-error' : '' }}">
+                        <!-- <div class="form-group {{ $errors->has('review_time') ? 'has-error' : '' }}">
                             <label for="review_time">{{ trans('cruds.rfa.fields.review_time') }}</label>
                             <input class="form-control" type="number" name="review_time" id="review_time" value="{{ old('review_time', $rfa->review_time) }}" step="1">
                             @if($errors->has('review_time'))
                                 <span class="help-block" role="alert">{{ $errors->first('review_time') }}</span>
                             @endif
                             <span class="help-block">{{ trans('cruds.rfa.fields.review_time_helper') }}</span>
-                        </div>
+                        </div> -->
                         <div class="form-group {{ $errors->has('type') ? 'has-error' : '' }}">
                             <label for="type_id" class="required">{{ trans('cruds.rfa.fields.type') }}</label>
                             <select class="form-control select2" name="type_id" id="type_id" required>
