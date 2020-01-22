@@ -265,14 +265,14 @@ class RfaController extends Controller
         $result = array();
         $query = DB::table('wbs_level_threes')
         ->join('wbslevelfours','wbs_level_threes.id','=','wbslevelfours.wbs_level_three_id')
-        ->select('wbslevelfours.wbs_level_4_code','wbslevelfours.id')
+        ->select('wbslevelfours.wbs_level_4_name','wbslevelfours.id')
         ->where('wbs_level_threes.id',$id)
-        ->groupBy('wbslevelfours.wbs_level_4_code','wbslevelfours.id')
-        ->orderBy('wbs_level_4_code')
+        ->groupBy('wbslevelfours.wbs_level_4_name','wbslevelfours.id')
+        ->orderBy('wbs_level_4_name')
         ->get();
         $output = '<option value="">' . trans('global.pleaseSelect') . '</option>';
         foreach ($query as $row){
-            $output .= '<option value="'. $row->id .'">'. $row->wbs_level_4_code .'</option>';
+            $output .= '<option value="'. $row->id .'">'. $row->wbs_level_4_name .'</option>';
         }
         echo $output;
     }
