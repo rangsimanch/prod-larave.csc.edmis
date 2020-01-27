@@ -42,61 +42,72 @@ class RfaController extends Controller
             $table->editColumn('actions', function ($row) {
                 $viewGate      = 'rfa_show';
                 $crudRoutePart = 'rfas';
+                //
+                $editGate      = 'rfa_edit';
+                $deleteGate    = 'rfa_delete';
+                return view('partials.datatablesActions', compact(
+                                'viewGate',
+                                'editGate',
+                                'deleteGate',
+                                'crudRoutePart',
+                                'row'
+                ));
+
                     //Contructor Action
-               if(!strcmp($row->issueby ? $row->issueby->name : '',Auth::user()->name)){
-                    if(!strcmp($row->assign ? $row->assign->name : '',Auth::user()->name) || 
-                        !strcmp($row->comment_by ? $row->comment_by->name : '',Auth::user()->name) ||
-                        !strcmp($row->information_by ? $row->information_by->name : '' ,Auth::user()->name)
-                        ){
-                            $editGate      = 'rfa_edit';
-                            $deleteGate    = 'rfa_delete';
-                            return view('partials.datatablesActions', compact(
-                                'viewGate',
-                                'editGate',
-                                'deleteGate',
-                                'crudRoutePart',
-                                'row'
-                            ));
-                        }
-                    else{
-                        $editGate      = 'rfa_edit';
-                        $deleteGate    = 'rfa_delete';
-                        return view('partials.datatablesActions', compact(
-                            'viewGate',
-                            'editGate',
-                            'deleteGate',
-                            'crudRoutePart',
-                            'row'
-                        ));
-                    }
-                }
-               else{
-                    if(!strcmp($row->assign ? $row->assign->name : '',Auth::user()->name) || 
-                            !strcmp($row->comment_by ? $row->comment_by->name : '',Auth::user()->name) ||
-                            !strcmp($row->information_by ? $row->information_by->name : '' ,Auth::user()->name)
-                            ){
-                                $editGate      = 'rfa_edit';
-                                $deleteGate    = 'rfa_delete';
-                                return view('partials.datatablesActions', compact(
-                                    'viewGate',
-                                    'editGate',
-                                    'deleteGate',
-                                    'crudRoutePart',
-                                    'row'
-                                ));
-                            }
-                        else{
-                            $editGate      = 'rfa_not_edit';
-                            $deleteGate    = 'rfa_not_delete';
-                            return view('partials.datatablesActions', compact(
-                                'viewGate',
-                                'editGate',
-                                'deleteGate',
-                                'crudRoutePart',
-                                'row'
-                            ));
-                        }
-                }
+            //    if(!strcmp($row->issueby ? $row->issueby->name : '',Auth::user()->name)){
+            //         if(!strcmp($row->assign ? $row->assign->name : '',Auth::user()->name) || 
+            //             !strcmp($row->comment_by ? $row->comment_by->name : '',Auth::user()->name) ||
+            //             !strcmp($row->information_by ? $row->information_by->name : '' ,Auth::user()->name)
+            //             ){
+            //                 $editGate      = 'rfa_edit';
+            //                 $deleteGate    = 'rfa_delete';
+            //                 return view('partials.datatablesActions', compact(
+            //                     'viewGate',
+            //                     'editGate',
+            //                     'deleteGate',
+            //                     'crudRoutePart',
+            //                     'row'
+            //                 ));
+            //             }
+            //         else{
+            //             $editGate      = 'rfa_edit';
+            //             $deleteGate    = 'rfa_delete';
+            //             return view('partials.datatablesActions', compact(
+            //                 'viewGate',
+            //                 'editGate',
+            //                 'deleteGate',
+            //                 'crudRoutePart',
+            //                 'row'
+            //             ));
+            //         }
+            //     }
+            //    else{
+            //         if(!strcmp($row->assign ? $row->assign->name : '',Auth::user()->name) || 
+            //                 !strcmp($row->comment_by ? $row->comment_by->name : '',Auth::user()->name) ||
+            //                 !strcmp($row->information_by ? $row->information_by->name : '' ,Auth::user()->name)
+            //                 ){
+            //                     $editGate      = 'rfa_edit';
+            //                     $deleteGate    = 'rfa_delete';
+            //                     return view('partials.datatablesActions', compact(
+            //                         'viewGate',
+            //                         'editGate',
+            //                         'deleteGate',
+            //                         'crudRoutePart',
+            //                         'row'
+            //                     ));
+            //                 }
+            //             else{
+            //                 $editGate      = 'rfa_not_edit';
+            //                 $deleteGate    = 'rfa_not_delete';
+            //                 return view('partials.datatablesActions', compact(
+            //                     'viewGate',
+            //                     'editGate',
+            //                     'deleteGate',
+            //                     'crudRoutePart',
+            //                     'row'
+            //                 ));
+            //             }
+            //     }
 
 
             });

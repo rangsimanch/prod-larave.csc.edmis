@@ -82,6 +82,10 @@ class User extends Authenticatable implements HasMedia
         return $this->roles()->where('id', 1)->exists();
     }
 
+    public function getIsTeamAttribute(){
+        return $this->team()->where('id', 1)->exists();
+    }
+
     public function __construct(array $attributes = [])
     {
         parent::__construct($attributes);

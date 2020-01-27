@@ -6,7 +6,6 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
-//use App\User;
 
 trait MultiTenantModelTrait
 {
@@ -14,21 +13,43 @@ trait MultiTenantModelTrait
     {
         if (!app()->runningInConsole() && auth()->check()) {
             $isAdmin = auth()->user()->roles->contains(1);
-            
-            static::creating(function ($model) use ($isAdmin) {
+
+            //Roles ID
+            $isTeamSRT = auth()->user()->roles->contains(4);
+            $isTeamPMC = auth()->user()->roles->contains(5);
+            $isTeamCSC = auth()->user()->roles->contains(6);
+            $isTeamCEC = auth()->user()->roles->contains(7);
+
+            static::creating(function ($model) use ($isAdmin, $isTeamSRT, $isTeamPMC,$isTeamCSC,$isTeamCEC) {
 // Prevent admin from setting his own id - admin entries are global.
 
 // If required, remove the surrounding IF condition and admins will act as users
                 if (!$isAdmin) {
-                    $model->team_id = auth()->user()->team_id;
-                    $model->construction_contract_id = session('construction_contract_id');
+                        $model->team_id = auth()->user()->team_id;
+                        $model->construction_contract_id = session('construction_contract_id');   
                 }
+
             });
-            if (!$isAdmin) {
-                static::addGlobalScope('team_id', function (Builder $builder) {
-                    $field = sprintf('%s.%s', $builder->getQuery()->from, 'team_id');
-                    $builder->where($field, auth()->user()->team_id)->orWhereNull($field);
-                });
+            if (!$isAdmin && !$isTeamSRT) {
+
+                if($isTeamPMC){
+                    static::addGlobalScope('team_id', function (Builder $builder) {
+                        //Team ID
+                        $field_pmc = "2,3,4";
+                        $field = sprintf('%s.%s', $builder->getQuery()->from, 'team_id');
+                        $builder->whereIn($field, explode(',',$field_pmc))
+                        ->orWhereNull($field);
+                    });
+                }
+                else{
+                    static::addGlobalScope('team_id', function (Builder $builder) {
+                        //Team ID
+                        $field_csc = "3,4";
+                        $field = sprintf('%s.%s', $builder->getQuery()->from, 'team_id');
+                        $builder->whereIn($field, explode(',',$field_csc))
+                        ->orWhereNull($field);
+                    });
+                }
 
                 $currentUser = Auth::user();
                 if(!$currentUser){

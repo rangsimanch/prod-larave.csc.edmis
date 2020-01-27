@@ -4,21 +4,15 @@
 
 
 
-
 <div class="login-box-body">
-        <div class="login-logo"> 
-        <a href="{{ route('admin.home') }}">
+        <div class="login-logo">
+        <legend>
             <b>
-           EDMIS
+           EDMIS LOGIN
             </b>
-        </a>
-        
+        </legend>
 </div>
                     
-
-        <p class="login-box-msg">
-            {{ trans('global.login') }}
-        </p>
 
         @if(session('message'))
             <p class="alert alert-info">
@@ -30,6 +24,7 @@
             @csrf
 
             <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
+            <label class="required" for="email">{{ trans('cruds.user.fields.email') }}</label>
                 <input id="email" type="email" name="email" class="form-control" required autocomplete="email" autofocus placeholder="{{ trans('global.login_email') }}" value="{{ old('email', null) }}">
 
                 @if($errors->has('email'))
@@ -39,6 +34,7 @@
                 @endif
             </div>
             <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
+            <label class="required" for="password">Password</label>
                 <input id="password" type="password" name="password" class="form-control" required placeholder="{{ trans('global.login_password') }}">
 
                 @if($errors->has('password'))
