@@ -314,6 +314,9 @@
             .search($(this).val())
             .draw();
         });
+
+        $.fn.dataTable.ext.errMode = 'throw';
+
 });
 </script>
 @endsection
