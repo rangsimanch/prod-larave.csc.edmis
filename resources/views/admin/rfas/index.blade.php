@@ -294,7 +294,7 @@
 { data: 'actions', name: '{{ trans('global.actions') }}' }
     ],
     order: [[ 23, 'desc' ]],
-    pageLength: 100,
+    pageLength: 10,
   };
   $('.datatable-Rfa').DataTable(dtOverrideGlobals);
     $('a[data-toggle="tab"]').on('shown.bs.tab', function(e){
