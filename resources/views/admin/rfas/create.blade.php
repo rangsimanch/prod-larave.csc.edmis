@@ -13,6 +13,7 @@
                         @csrf
 
                         @can('rfa_panel_a')
+                        <legend> CEC Outgoing </legend>
                         <div class="form-group {{ $errors->has('title_eng') ? 'has-error' : '' }}">
                             <label for="title_eng">{{ trans('cruds.rfa.fields.title_eng') }}</label>
                             <input class="form-control" type="text" name="title_eng" id="title_eng" value="{{ old('title_eng', '') }}">
@@ -62,6 +63,7 @@
                             @endif
                             <span class="help-block">{{ trans('cruds.rfa.fields.review_time_helper') }}</span>
                         </div> -->
+
                         <div class="form-group {{ $errors->has('type') ? 'has-error' : '' }}">
                             <label class="required" for="type_id">{{ trans('cruds.rfa.fields.type') }}</label>
                             <select class="form-control select2" name="type_id" id="type_id" required>
@@ -148,6 +150,7 @@
                             @endif
                             <span class="help-block">{{ trans('cruds.rfa.fields.issueby_helper') }}</span>
                         </div>
+
                         <div class="form-group {{ $errors->has('assign') ? 'has-error' : '' }}">
                             <label for="assign_id">{{ trans('cruds.rfa.fields.assign') }}</label>
                             <select class="form-control select2" name="assign_id" id="assign_id">
@@ -168,6 +171,7 @@
                             @endif
                             <span class="help-block">{{ trans('cruds.rfa.fields.note_1_helper') }}</span>
                         </div>
+
                         <div class="form-group {{ $errors->has('file_upload_1') ? 'has-error' : '' }}">
                             <label for="file_upload_1">{{ trans('cruds.rfa.fields.file_upload_1') }}</label>
                             <div class="needsclick dropzone" id="file_upload_1-dropzone">
@@ -180,6 +184,21 @@
                         @endcan
 
                         @can('rfa_panel_b')
+                        <legend> CSC Incoming </legend>
+
+                        <div class="form-group {{ $errors->has('action_by') ? 'has-error' : '' }}">
+                            <label for="action_by_id">{{ trans('cruds.rfa.fields.action_by') }}</label>
+                            <select class="form-control select2" name="action_by_id" id="action_by_id">
+                                @foreach($action_bies as $id => $action_by)
+                                    <option value="{{ $id }}" {{ old('action_by_id') == $id ? 'selected' : '' }}>{{ $action_by }}</option>
+                                @endforeach
+                            </select>
+                            @if($errors->has(''))
+                                <span class="help-block" role="alert">{{ $errors->first('') }}</span>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.rfa.fields.action_by_helper') }}</span>
+                        </div>
+
                         <div class="form-group {{ $errors->has('comment_by') ? 'has-error' : '' }}">
                             <label for="comment_by_id">{{ trans('cruds.rfa.fields.comment_by') }}</label>
                             <select class="form-control select2" name="comment_by_id" id="comment_by_id">
@@ -220,6 +239,10 @@
                             @endif
                             <span class="help-block">{{ trans('cruds.rfa.fields.note_2_helper') }}</span>
                         </div>
+                        @endcan
+
+                        @can('rfa_panel_c')
+                        <legend> CSC Outgoing (Specialist/Engineer) </legend>
                         <div class="form-group {{ $errors->has('comment_status') ? 'has-error' : '' }}">
                             <label for="comment_status_id">{{ trans('cruds.rfa.fields.comment_status') }}</label>
                             <select class="form-control select2" name="comment_status_id" id="comment_status_id">
@@ -232,6 +255,7 @@
                             @endif
                             <span class="help-block">{{ trans('cruds.rfa.fields.comment_status_helper') }}</span>
                         </div>
+
                         <div class="form-group {{ $errors->has('note_3') ? 'has-error' : '' }}">
                             <label for="note_3">{{ trans('cruds.rfa.fields.note_3') }}</label>
                             <textarea class="form-control" name="note_3" id="note_3">{{ old('note_3') }}</textarea>
@@ -242,7 +266,9 @@
                         </div>
                         @endcan
                         
-                        @can('rfa_panel_c')
+                        @can('rfa_panel_d')
+                        <legend> CSC Outgoing </legend>
+
                         <div class="form-group {{ $errors->has('for_status') ? 'has-error' : '' }}">
                             <label for="for_status_id">{{ trans('cruds.rfa.fields.for_status') }}</label>
                             <select class="form-control select2" name="for_status_id" id="for_status_id">
@@ -255,6 +281,16 @@
                             @endif
                             <span class="help-block">{{ trans('cruds.rfa.fields.for_status_helper') }}</span>
                         </div>
+
+                        <div class="form-group {{ $errors->has('note_4') ? 'has-error' : '' }}">
+                            <label for="note_4">{{ trans('cruds.rfa.fields.note_4') }}</label>
+                            <textarea class="form-control" name="note_4" id="note_4">{{ old('note_4') }}</textarea>
+                            @if($errors->has(''))
+                                <span class="help-block" role="alert">{{ $errors->first('') }}</span>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.rfa.fields.note_4_helper') }}</span>
+                        </div>
+
                         @endcan
                         
                         <div class="form-row">

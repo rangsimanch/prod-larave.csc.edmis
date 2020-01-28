@@ -16,9 +16,9 @@
                             </a>
                         </div>
                         <table class="table table-bordered table-striped">
-                            <tbody>
+                        <tbody>
                                 <tr>
-                                    <th id="title_eng">
+                                    <th>
                                         {{ trans('cruds.rfa.fields.title_eng') }}
                                     </th>
                                     <td>
@@ -45,7 +45,7 @@
                                     <th>
                                         {{ trans('cruds.rfa.fields.document_number') }}
                                     </th>
-                                    <td id="document_number">
+                                    <td>
                                         {{ $rfa->document_number }}
                                     </td>
                                 </tr>
@@ -151,6 +151,14 @@
                                 </tr>
                                 <tr>
                                     <th>
+                                        {{ trans('cruds.rfa.fields.action_by') }}
+                                    </th>
+                                    <td>
+                                        {{ $rfa->action_by->name ?? '' }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
                                         {{ trans('cruds.rfa.fields.comment_by') }}
                                     </th>
                                     <td>
@@ -223,18 +231,50 @@
                                 </tr>
                                 <tr>
                                     <th>
-                                        {{ trans('cruds.rfa.fields.update_by_user') }}
+                                        {{ trans('cruds.rfa.fields.incoming_number') }}
                                     </th>
                                     <td>
-                                        {{ $rfa->update_by_user->name ?? '' }}
+                                        {{ $rfa->incoming_number }}
                                     </td>
                                 </tr>
                                 <tr>
                                     <th>
-                                        {{ trans('cruds.rfa.fields.approve_by_user') }}
+                                        {{ trans('cruds.rfa.fields.outgoing_number') }}
                                     </th>
                                     <td>
-                                        {{ $rfa->approve_by_user->name ?? '' }}
+                                        {{ $rfa->outgoing_number }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        {{ trans('cruds.rfa.fields.distribute_date') }}
+                                    </th>
+                                    <td>
+                                        {{ $rfa->distribute_date }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        {{ trans('cruds.rfa.fields.process_date') }}
+                                    </th>
+                                    <td>
+                                        {{ $rfa->process_date }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        {{ trans('cruds.rfa.fields.outgoing_date') }}
+                                    </th>
+                                    <td>
+                                        {{ $rfa->outgoing_date }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        {{ trans('cruds.rfa.fields.note_4') }}
+                                    </th>
+                                    <td>
+                                        {{ $rfa->note_4 }}
                                     </td>
                                 </tr>
                                 <tr>

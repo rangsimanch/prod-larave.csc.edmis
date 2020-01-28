@@ -257,6 +257,8 @@ return [
             'review_time_helper'           => '',
             'worktype'                     => 'Work type',
             'worktype_helper'              => '',
+            'action_by'                    => 'Action By',
+            'action_by_helper'                    => '',
             'action'                       => 'Action',
         ],
     ],

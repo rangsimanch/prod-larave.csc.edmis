@@ -32,6 +32,9 @@ class Rfa extends Model implements HasMedia
         'deleted_at',
         'submit_date',
         'receive_date',
+        'process_date',
+        'outgoing_date',
+        'distribute_date',
     ];
 
     public static $searchable = [
@@ -45,6 +48,7 @@ class Rfa extends Model implements HasMedia
 
     protected $fillable = [
         'title',
+        'note_4',
         'note_3',
         'note_2',
         'note_1',
@@ -62,8 +66,11 @@ class Rfa extends Model implements HasMedia
         'submit_date',
         'review_time',
         'receive_date',
+        'action_by_id',
+        'process_date',
         'for_status_id',
         'comment_by_id',
+        'outgoing_date',
         'wbs_level_4_id',
         'wbs_level_3_id',
         'document_number',
@@ -71,6 +78,9 @@ class Rfa extends Model implements HasMedia
         'information_by_id',
         'create_by_user_id',
         'update_by_user_id',
+        'incoming_number',
+        'outgoing_number',
+        'distribute_date',
         'document_status_id',
         'approve_by_user_id',
         'construction_contract_id',
@@ -209,5 +219,40 @@ class Rfa extends Model implements HasMedia
     public function create_by_construction_contract_id()
     {
         return $this->belongsTo(ConstructionContract::class, 'construction_contract_id');
+    }
+
+    public function getDistributeDateAttribute($value)
+    {
+        return $value ? Carbon::parse($value)->format(config('panel.date_format')) : null;
+    }
+
+    public function setDistributeDateAttribute($value)
+    {
+        $this->attributes['distribute_date'] = $value ? Carbon::createFromFormat(config('panel.date_format'), $value)->format('Y-m-d') : null;
+    }
+
+    public function getProcessDateAttribute($value)
+    {
+        return $value ? Carbon::parse($value)->format(config('panel.date_format')) : null;
+    }
+
+    public function setProcessDateAttribute($value)
+    {
+        $this->attributes['process_date'] = $value ? Carbon::createFromFormat(config('panel.date_format'), $value)->format('Y-m-d') : null;
+    }
+
+    public function getOutgoingDateAttribute($value)
+    {
+        return $value ? Carbon::parse($value)->format(config('panel.date_format')) : null;
+    }
+
+    public function setOutgoingDateAttribute($value)
+    {
+        $this->attributes['outgoing_date'] = $value ? Carbon::createFromFormat(config('panel.date_format'), $value)->format('Y-m-d') : null;
+    }
+    
+    public function action_by()
+    {
+        return $this->belongsTo(User::class, 'action_by_id');
     }
 }

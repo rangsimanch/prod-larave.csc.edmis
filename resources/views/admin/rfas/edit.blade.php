@@ -14,6 +14,7 @@
                         @csrf
                         
                         @can('rfa_panel_a')
+                        <legend> CEC Outgoing </legend>
                         <div class="form-group {{ $errors->has('title_eng') ? 'has-error' : '' }}">
                             <label for="title_eng">{{ trans('cruds.rfa.fields.title_eng') }}</label>
                             <input class="form-control" type="text" name="title_eng" id="title_eng" value="{{ old('title_eng', $rfa->title_eng) }}">
@@ -38,22 +39,22 @@
                             @endif
                             <span class="help-block">{{ trans('cruds.rfa.fields.title_cn_helper') }}</span>
                         </div>
-                        <div class="form-group {{ $errors->has('document_number') ? 'has-error' : '' }}">
+                        <!-- <div class="form-group {{ $errors->has('document_number') ? 'has-error' : '' }}">
                             <label for="document_number">{{ trans('cruds.rfa.fields.document_number') }}</label>
                             <input class="form-control" type="text" name="document_number" id="document_number" value="{{ old('document_number', $rfa->document_number) }}">
                             @if($errors->has('document_number'))
                                 <span class="help-block" role="alert">{{ $errors->first('document_number') }}</span>
                             @endif
                             <span class="help-block">{{ trans('cruds.rfa.fields.document_number_helper') }}</span>
-                        </div>
-                        <div class="form-group {{ $errors->has('rfa_code') ? 'has-error' : '' }}">
+                        </div> -->
+                        <!-- <div class="form-group {{ $errors->has('rfa_code') ? 'has-error' : '' }}">
                             <label for="rfa_code">{{ trans('cruds.rfa.fields.rfa_code') }}</label>
                             <input class="form-control" type="text" name="rfa_code" id="rfa_code" value="{{ old('rfa_code', $rfa->rfa_code) }}">
                             @if($errors->has('rfa_code'))
                                 <span class="help-block" role="alert">{{ $errors->first('rfa_code') }}</span>
                             @endif
                             <span class="help-block">{{ trans('cruds.rfa.fields.rfa_code_helper') }}</span>
-                        </div>
+                        </div> -->
                         <!-- <div class="form-group {{ $errors->has('review_time') ? 'has-error' : '' }}">
                             <label for="review_time">{{ trans('cruds.rfa.fields.review_time') }}</label>
                             <input class="form-control" type="number" name="review_time" id="review_time" value="{{ old('review_time', $rfa->review_time) }}" step="1">
@@ -176,6 +177,21 @@
                         @endcan
 
                         @can('rfa_panel_b')
+                        <legend>CSC Incoming</legend>
+
+                        <div class="form-group {{ $errors->has('action_by') ? 'has-error' : '' }}">
+                            <label for="action_by_id">{{ trans('cruds.rfa.fields.action_by') }}</label>
+                            <select class="form-control select2" name="action_by_id" id="action_by_id">
+                                @foreach($action_bies as $id => $action_by)
+                                    <option value="{{ $id }}" {{ ($rfa->action_by ? $rfa->action_by->id : old('action_by_id')) == $id ? 'selected' : '' }}>{{ $action_by }}</option>
+                                @endforeach
+                            </select>
+                            @if($errors->has(''))
+                                <span class="help-block" role="alert">{{ $errors->first('') }}</span>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.rfa.fields.action_by_helper') }}</span>
+                        </div>
+                        
                         <div class="form-group {{ $errors->has('comment_by') ? 'has-error' : '' }}">
                             <label for="comment_by_id">{{ trans('cruds.rfa.fields.comment_by') }}</label>
                             <select class="form-control select2" name="comment_by_id" id="comment_by_id">
@@ -188,6 +204,7 @@
                             @endif
                             <span class="help-block">{{ trans('cruds.rfa.fields.comment_by_helper') }}</span>
                         </div>
+
                         <div class="form-group {{ $errors->has('information_by') ? 'has-error' : '' }}">
                             <label for="information_by_id">{{ trans('cruds.rfa.fields.information_by') }}</label>
                             <select class="form-control select2" name="information_by_id" id="information_by_id">
@@ -200,6 +217,7 @@
                             @endif
                             <span class="help-block">{{ trans('cruds.rfa.fields.information_by_helper') }}</span>
                         </div>
+
                         <div class="form-group {{ $errors->has('receive_date') ? 'has-error' : '' }}">
                             <label for="receive_date">{{ trans('cruds.rfa.fields.receive_date') }}</label>
                             <input class="form-control date" type="text" name="receive_date" id="receive_date" value="{{ old('receive_date', $rfa->receive_date) }}">
@@ -216,6 +234,10 @@
                             @endif
                             <span class="help-block">{{ trans('cruds.rfa.fields.note_2_helper') }}</span>
                         </div>
+                        @endcan
+
+                        @can('rfa_panel_c')
+                        <legend> CSC Outgoing (Specialist/Engineer) </legend>
                         <div class="form-group {{ $errors->has('comment_status') ? 'has-error' : '' }}">
                             <label for="comment_status_id">{{ trans('cruds.rfa.fields.comment_status') }}</label>
                             <select class="form-control select2" name="comment_status_id" id="comment_status_id">
@@ -238,7 +260,8 @@
                         </div>
                         @endcan
 
-                        @can('rfa_panel_c')
+                        @can('rfa_panel_d')
+                        <legend> CSC Outgoing </legend>
                         <div class="form-group {{ $errors->has('for_status') ? 'has-error' : '' }}">
                             <label for="for_status_id">{{ trans('cruds.rfa.fields.for_status') }}</label>
                             <select class="form-control select2" name="for_status_id" id="for_status_id">

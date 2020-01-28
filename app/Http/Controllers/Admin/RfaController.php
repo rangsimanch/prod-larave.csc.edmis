@@ -33,7 +33,7 @@ class RfaController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $query = Rfa::with(['type', 'construction_contract','wbs_level_3', 'wbs_level_4', 'issueby', 'assign', 'comment_by', 'information_by', 'comment_status', 'for_status', 'document_status', 'create_by_user', 'update_by_user', 'approve_by_user', 'team'])->select(sprintf('%s.*', (new Rfa)->table));
+            $query = Rfa::with(['type', 'construction_contract','wbs_level_3', 'wbs_level_4', 'issueby', 'assign',  'action_by', 'comment_by', 'information_by', 'comment_status', 'for_status', 'document_status', 'create_by_user', 'update_by_user', 'approve_by_user', 'team'])->select(sprintf('%s.*', (new Rfa)->table));
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
@@ -162,9 +162,14 @@ class RfaController extends Controller
             $table->addColumn('issueby_name', function ($row) {
                 return $row->issueby ? $row->issueby->name : '';
             });
+            
 
             $table->addColumn('assign_name', function ($row) {
                 return $row->assign ? $row->assign->name : '';
+            });
+
+            $table->addColumn('action_by_name', function ($row) {
+                return $row->action_by ? $row->action_by->name : '';
             });
 
             $table->editColumn('file_upload_1', function ($row) {
@@ -202,6 +207,11 @@ class RfaController extends Controller
                 return $row->for_status ? $row->for_status->name : '';
             });
 
+
+            $table->editColumn('note_4', function ($row) {
+                return $row->note_4 ? $row->note_4 : "";
+            });
+
             $table->addColumn('document_status_status_name', function ($row) {
                 return $row->document_status ? $row->document_status->status_name : '';
             });
@@ -222,7 +232,7 @@ class RfaController extends Controller
                 return $row->team ? $row->team->code : '';
             });
 
-            $table->rawColumns(['actions', 'placeholder', 'type', 'construction_contract', 'wbs_level_3', 'wbs_level_4', 'issueby', 'assign', 'file_upload_1', 'comment_by', 'information_by', 'comment_status', 'for_status', 'document_status', 'create_by_user', 'update_by_user', 'approve_by_user', 'team']);
+            $table->rawColumns(['actions', 'placeholder', 'type', 'construction_contract', 'wbs_level_3', 'wbs_level_4', 'issueby', 'assign', 'file_upload_1', 'comment_by', 'information_by', 'comment_status', 'for_status', 'document_status', 'action_by', 'create_by_user', 'update_by_user', 'approve_by_user', 'team']);
 
             return $table->make(true);
         }
@@ -259,6 +269,8 @@ class RfaController extends Controller
 
         $assigns = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
+        $action_bies = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        
         $comment_bies = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $information_bies = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
@@ -268,7 +280,7 @@ class RfaController extends Controller
         $for_statuses = RfaCommentStatus::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');  
           
 
-        return view('admin.rfas.create', compact('types', 'construction_contracts', 'wbs_level_3s', 'wbs_level_4s', 'issuebies', 'assigns', 'comment_bies', 'information_bies', 'comment_statuses', 'for_statuses'));
+        return view('admin.rfas.create', compact('types', 'construction_contracts', 'wbs_level_3s', 'wbs_level_4s', 'issuebies', 'assigns', 'action_bies', 'comment_bies', 'information_bies', 'comment_statuses', 'for_statuses'));
     }
 
     function fetch(Request $request){
@@ -291,7 +303,7 @@ class RfaController extends Controller
     public function store(StoreRfaRequest $request)
     {   $data = $request->all();
         $data['create_by_user_id'] = auth()->id();
-        $data['document_status_id'] = 2;
+        $data['document_status_id'] = 1;
             //Works Code
         $workcode_id = ConstructionContract::all()->pluck('works_code_id');
         $workcode = WorksCode::where('id','=',$workcode_id)->value('code');
@@ -343,6 +355,8 @@ class RfaController extends Controller
 
         $assigns = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
+        $action_bies = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+
         $comment_bies = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $information_bies = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
@@ -352,44 +366,40 @@ class RfaController extends Controller
         $for_statuses = RfaCommentStatus::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
         
 
-        $rfa->load('type', 'construction_contract', 'issueby', 'assign', 'comment_by', 'information_by', 'comment_status', 'for_status', 'document_status', 'create_by_user', 'update_by_user', 'approve_by_user', 'team');
+        $rfa->load('type', 'construction_contract', 'issueby', 'assign', 'action_by', 'comment_by', 'information_by', 'comment_status', 'for_status', 'document_status', 'create_by_user', 'update_by_user', 'approve_by_user', 'team');
 
-        return view('admin.rfas.edit', compact('types', 'construction_contracts', 'wbs_level_3s', 'wbs_level_4s', 'issuebies', 'assigns', 'comment_bies', 'information_bies', 'comment_statuses', 'for_statuses', 'rfa'));
+        return view('admin.rfas.edit', compact('types', 'construction_contracts', 'wbs_level_3s', 'wbs_level_4s', 'issuebies', 'assigns', 'action_bies', 'comment_bies', 'information_bies', 'comment_statuses', 'for_statuses', 'rfa'));
     }
 
     public function update(UpdateRfaRequest $request, Rfa $rfa)
     {
-        // if($rfa->document_status_id == 2 && $request->comment_status_id != null){
-        //     if($request->update_by_user_id != null){
-        //         $rfa['document_status_id'] = 3;
-        //     }
-        //     else{
-        //         $rfa['document_status_id'] = 3;
-        //         $rfa['update_by_user_id'] = auth()->id(); 
-        //     }
-        // }
-
-        // if($rfa->document_status_id == 3 && $request->for_status_id != null){
-        //     if($request->approve_by_user_id != null){
-        //         $rfa['document_status_id'] = 4;
-        //     }
-        //     else{
-        //         $rfa['document_status_id'] = 4;
-        //         $rfa['approve_by_user_id'] = auth()->id(); 
-        //     }
-        // }
+        if($rfa->document_status_id == 1){
+            if($request->action_by_id != null){
+                $rfa['document_status_id'] = 2;
+            }
+        }
+        else if($rfa->document_status_id == 2){
+            if($request->comment_status_id != null){
+                $rfa['document_status_id'] = 3;
+            }
+        }
+        else if($rfa->document_status_id == 3){
+            if($request->for_status_id != null){
+                $rfa['document_status_id'] = 4;
+            }
+        }
         
 
 
         $rfa->update($request->all());
 
 
-        $data_alert['alert_text'] = 'Please Update RFA.';
-        $data_alert['alert_link'] = route('admin.rfas.index');
-        $data_user_id = array($request['comment_by_id'],$request['information_by_id']);
+        // $data_alert['alert_text'] = 'Please Update RFA.';
+        // $data_alert['alert_link'] = route('admin.rfas.index');
+        // $data_user_id = array($request['comment_by_id'],$request['information_by_id']);
         
-        $userAlert = UserAlert::create($data_alert);
-        $userAlert->users()->sync($data_user_id);
+        // $userAlert = UserAlert::create($data_alert);
+        // $userAlert->users()->sync($data_user_id);
 
 
         if (count($rfa->file_upload_1) > 0) {
@@ -415,7 +425,7 @@ class RfaController extends Controller
     {
         abort_if(Gate::denies('rfa_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $rfa->load('type', 'construction_contract', 'wbs_level_3', 'wbs_level_4', 'issueby', 'assign', 'comment_by', 'information_by', 'comment_status', 'for_status', 'document_status', 'create_by_user', 'update_by_user', 'approve_by_user', 'team');
+        $rfa->load('type', 'construction_contract', 'wbs_level_3', 'wbs_level_4', 'issueby', 'assign', 'action_by', 'comment_by', 'information_by', 'comment_status', 'for_status', 'document_status', 'create_by_user', 'update_by_user', 'approve_by_user', 'team');
 
         return view('admin.rfas.show', compact('rfa'));
     }
