@@ -27,6 +27,7 @@ class Rfa extends Model implements HasMedia
     ];
 
     protected $dates = [
+        'final_date',
         'created_at',
         'updated_at',
         'deleted_at',
@@ -56,6 +57,7 @@ class Rfa extends Model implements HasMedia
         'type_id',
         'title_cn',
         'rfa_code',
+        'final_date',
         'worktype',
         'assign_id',
         'title_eng',
@@ -254,5 +256,15 @@ class Rfa extends Model implements HasMedia
     public function action_by()
     {
         return $this->belongsTo(User::class, 'action_by_id');
+    }
+
+    public function getFinalDateAttribute($value)
+    {
+        return $value ? Carbon::parse($value)->format(config('panel.date_format')) : null;
+    }
+
+    public function setFinalDateAttribute($value)
+    {
+        $this->attributes['final_date'] = $value ? Carbon::createFromFormat(config('panel.date_format'), $value)->format('Y-m-d') : null;
     }
 }

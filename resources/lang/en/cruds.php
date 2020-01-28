@@ -259,6 +259,13 @@ return [
             'worktype_helper'              => '',
             'action_by'                    => 'Action By',
             'action_by_helper'                    => '',
+            'incoming_number'                    => 'Incoming Number',
+            'outgoing_number'                    => 'Outgoing Number',
+            'distribute_date'                    => 'Distribute Date',
+            'process_date'                    => 'Process Date',
+            'outgoing_date'                    => 'Outgoing Date',
+            'note_4'                    => 'Note(4)',
+            
             'action'                       => 'Action',
         ],
     ],

@@ -376,6 +376,9 @@ class RfaController extends Controller
         if($rfa->document_status_id == 1){
             if($request->action_by_id != null){
                 $rfa['document_status_id'] = 2;
+                if($rfa->rfa_code != null){
+                    $rfa['incoming_number'] = "IN-" . $rfa->rfa_code ;
+                }
             }
         }
         else if($rfa->document_status_id == 2){
@@ -386,6 +389,9 @@ class RfaController extends Controller
         else if($rfa->document_status_id == 3){
             if($request->for_status_id != null){
                 $rfa['document_status_id'] = 4;
+                if($rfa->rfa_code != null){
+                    $rfa['incoming_number'] = "OUT-" . $rfa->rfa_code ;
+                }
             }
         }
         
