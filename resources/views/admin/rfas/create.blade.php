@@ -291,6 +291,21 @@
                             <span class="help-block">{{ trans('cruds.rfa.fields.note_4_helper') }}</span>
                         </div>
 
+                        @can('rfa_edit_all')
+                        <div class="form-group {{ $errors->has('document_status') ? 'has-error' : '' }}">
+                            <label for="document_status_id">{{ trans('cruds.rfa.fields.document_status') }}</label>
+                            <select class="form-control select2" name="document_status_id" id="document_status_id">
+                                @foreach($document_statuses as $id => $document_status)
+                                    <option value="{{ $id }}" {{ old('document_status_id') == $id ? 'selected' : '' }}>{{ $document_status }}</option>
+                                @endforeach
+                            </select>
+                            @if($errors->has(''))
+                                <span class="help-block" role="alert">{{ $errors->first('') }}</span>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.rfa.fields.document_status_helper') }}</span>
+                        </div>
+                        @endcan
+                        
                         @endcan
                         
                         <div class="form-row">

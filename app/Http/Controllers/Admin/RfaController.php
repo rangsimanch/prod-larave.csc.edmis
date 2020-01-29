@@ -419,15 +419,20 @@ class RfaController extends Controller
         $comment_statuses = RfaCommentStatus::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $for_statuses = RfaCommentStatus::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');  
-          
+        
+        $document_statuses = RfaDocumentStatus::all()->pluck('status_name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        return view('admin.rfas.create', compact('types', 'construction_contracts', 'wbs_level_3s', 'wbs_level_4s', 'issuebies', 'assigns', 'action_bies', 'comment_bies', 'information_bies', 'comment_statuses', 'for_statuses'));
+
+        return view('admin.rfas.create', compact('document_statuses', 'types', 'construction_contracts', 'wbs_level_3s', 'wbs_level_4s', 'issuebies', 'assigns', 'action_bies', 'comment_bies', 'information_bies', 'comment_statuses', 'for_statuses'));
     }
 
     public function store(StoreRfaRequest $request)
     {   $data = $request->all();
         $data['create_by_user_id'] = auth()->id();
+
+        if($request->document_status_id == null){
         $data['document_status_id'] = 1;
+        }
             //Works Code
         $workcode_id = ConstructionContract::all()->pluck('works_code_id');
         $workcode = WorksCode::where('id','=',$workcode_id)->value('code');

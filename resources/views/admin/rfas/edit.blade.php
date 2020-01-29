@@ -177,6 +177,7 @@
                         </div>
                         @endcan
 
+                        @if($rfa->document_status->id == 1)
                         @can('rfa_panel_b')
                         <legend>CSC Incoming</legend>
 
@@ -236,7 +237,9 @@
                             <span class="help-block">{{ trans('cruds.rfa.fields.note_2_helper') }}</span>
                         </div>
                         @endcan
+                        @endif
 
+                        @if($rfa->document_status->id == 2)
                         @can('rfa_panel_c')
                         <legend> CSC Outgoing (Specialist/Engineer) </legend>
                         <div class="form-group {{ $errors->has('comment_status') ? 'has-error' : '' }}">
@@ -260,7 +263,9 @@
                             <span class="help-block">{{ trans('cruds.rfa.fields.note_3_helper') }}</span>
                         </div>
                         @endcan
+                        @endif
 
+                        @if($rfa->document_status->id == 3)
                         @can('rfa_panel_d')
                         <legend> CSC Outgoing </legend>
                         <div class="form-group {{ $errors->has('for_status') ? 'has-error' : '' }}">
@@ -275,7 +280,17 @@
                             @endif
                             <span class="help-block">{{ trans('cruds.rfa.fields.for_status_helper') }}</span>
                         </div>
+
+                        <div class="form-group {{ $errors->has('note_4') ? 'has-error' : '' }}">
+                            <label for="note_4">{{ trans('cruds.rfa.fields.note_3') }}</label>
+                            <textarea class="form-control" name="note_4" id="note_4">{{ old('note_3', $rfa->note_4) }}</textarea>
+                            @if($errors->has('note_4'))
+                                <span class="help-block" role="alert">{{ $errors->first('note_4') }}</span>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.rfa.fields.note_4_helper') }}</span>
+                        </div>
                         @endcan
+                        @endif
                         <div class="form-group">
                             <button class="btn btn-success" type="submit">
                                 {{ trans('global.save') }}
