@@ -7,6 +7,7 @@ use App\Http\Controllers\Traits\MediaUploadingTrait;
 use App\Http\Requests\StoreRfaRequest;
 use App\Http\Requests\UpdateRfaRequest;
 use App\Http\Resources\Admin\RfaResource;
+use App\Http\Resoutces\RevisionRfaRequest;
 use App\Rfa;
 use Gate;
 use Illuminate\Http\Request;
@@ -46,6 +47,23 @@ class RfaApiController extends Controller
     public function update(UpdateRfaRequest $request, Rfa $rfa)
     {
         $rfa->update($request->all());
+
+        if ($request->input('file_upload_1', false)) {
+            if (!$rfa->file_upload_1 || $request->input('file_upload_1') !== $rfa->file_upload_1->file_name) {
+                $rfa->addMedia(storage_path('tmp/uploads/' . $request->input('file_upload_1')))->toMediaCollection('file_upload_1');
+            }
+        } elseif ($rfa->file_upload_1) {
+            $rfa->file_upload_1->delete();
+        }
+
+        return (new RfaResource($rfa))
+            ->response()
+            ->setStatusCode(Response::HTTP_ACCEPTED);
+    }
+
+    public function revision(RevisionRfaRequest $request, Rfa $rfa)
+    {
+        $rfa->create($request->all());
 
         if ($request->input('file_upload_1', false)) {
             if (!$rfa->file_upload_1 || $request->input('file_upload_1') !== $rfa->file_upload_1->file_name) {

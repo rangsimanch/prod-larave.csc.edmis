@@ -12,6 +12,7 @@ use App\Http\Controllers\Traits\MediaUploadingTrait;
 use App\Http\Requests\MassDestroyRfaRequest;
 use App\Http\Requests\StoreRfaRequest;
 use App\Http\Requests\UpdateRfaRequest;
+use App\Http\Requests\RevisionRfaRequest;
 use App\Wbslevelfour;
 use App\WbsLevelThree;
 use App\Rfa;
@@ -43,73 +44,87 @@ class RfaController extends Controller
                 $viewGate      = 'rfa_show';
                 $crudRoutePart = 'rfas';
                 //
-                $editGate      = 'rfa_edit';
-                $deleteGate    = 'rfa_delete';
-                return view('partials.datatablesActions', compact(
+
+                if(!strcmp( $row->check_revision ? $row->check_revision : '' ,"f") && 
+                !strcmp( $row->document_status ? $row->document_status->status_name : '' ,"Done")){
+                    $revisionGate  = 'rfa_revision';
+                }else{
+                    $revisionGate  = 'rfa_not_revision';
+                }
+
+        
+
+                //  Contructor Action
+                if(!Gate::denies('rfa_edit_all')){
+                    $editGate      = 'rfa_edit';
+                    $deleteGate    = 'rfa_delete';
+                            return view('partials.datatablesActions', compact(
                                 'viewGate',
                                 'editGate',
                                 'deleteGate',
+                                'revisionGate',
                                 'crudRoutePart',
                                 'row'
-                ));
-
-                    //Contructor Action
-            //    if(!strcmp($row->issueby ? $row->issueby->name : '',Auth::user()->name)){
-            //         if(!strcmp($row->assign ? $row->assign->name : '',Auth::user()->name) || 
-            //             !strcmp($row->comment_by ? $row->comment_by->name : '',Auth::user()->name) ||
-            //             !strcmp($row->information_by ? $row->information_by->name : '' ,Auth::user()->name)
-            //             ){
-            //                 $editGate      = 'rfa_edit';
-            //                 $deleteGate    = 'rfa_delete';
-            //                 return view('partials.datatablesActions', compact(
-            //                     'viewGate',
-            //                     'editGate',
-            //                     'deleteGate',
-            //                     'crudRoutePart',
-            //                     'row'
-            //                 ));
-            //             }
-            //         else{
-            //             $editGate      = 'rfa_edit';
-            //             $deleteGate    = 'rfa_delete';
-            //             return view('partials.datatablesActions', compact(
-            //                 'viewGate',
-            //                 'editGate',
-            //                 'deleteGate',
-            //                 'crudRoutePart',
-            //                 'row'
-            //             ));
-            //         }
-            //     }
-            //    else{
-            //         if(!strcmp($row->assign ? $row->assign->name : '',Auth::user()->name) || 
-            //                 !strcmp($row->comment_by ? $row->comment_by->name : '',Auth::user()->name) ||
-            //                 !strcmp($row->information_by ? $row->information_by->name : '' ,Auth::user()->name)
-            //                 ){
-            //                     $editGate      = 'rfa_edit';
-            //                     $deleteGate    = 'rfa_delete';
-            //                     return view('partials.datatablesActions', compact(
-            //                         'viewGate',
-            //                         'editGate',
-            //                         'deleteGate',
-            //                         'crudRoutePart',
-            //                         'row'
-            //                     ));
-            //                 }
-            //             else{
-            //                 $editGate      = 'rfa_not_edit';
-            //                 $deleteGate    = 'rfa_not_delete';
-            //                 return view('partials.datatablesActions', compact(
-            //                     'viewGate',
-            //                     'editGate',
-            //                     'deleteGate',
-            //                     'crudRoutePart',
-            //                     'row'
-            //                 ));
-            //             }
-            //     }
-
-
+                            ));
+                }
+                else{
+               if(!strcmp($row->issueby ? $row->issueby->name : '',Auth::user()->name)){
+                    if(!strcmp($row->assign ? $row->assign->name : '',Auth::user()->name) || 
+                        !strcmp($row->action_by ? $row->action_by->name : '',Auth::user()->name)
+                        ){
+                            $editGate      = 'rfa_edit';
+                            $deleteGate    = 'rfa_delete';
+                            return view('partials.datatablesActions', compact(
+                                'viewGate',
+                                'editGate',
+                                'deleteGate',
+                                'revisionGate',
+                                'crudRoutePart',
+                                'row'
+                            ));
+                        }
+                    else{
+                        $editGate      = 'rfa_edit';
+                        $deleteGate    = 'rfa_delete';
+                        return view('partials.datatablesActions', compact(
+                            'viewGate',
+                            'editGate',
+                            'deleteGate',
+                            'revisionGate',
+                            'crudRoutePart',
+                            'row'
+                        ));
+                    }
+                }
+               else{
+                    if(!strcmp($row->assign ? $row->assign->name : '',Auth::user()->name) || 
+                            !strcmp($row->action_by ? $row->action_by->name : '',Auth::user()->name)
+                            ){
+                                $editGate      = 'rfa_edit';
+                                $deleteGate    = 'rfa_delete';
+                                return view('partials.datatablesActions', compact(
+                                    'viewGate',
+                                    'editGate',
+                                    'deleteGate',
+                                    'revisionGate',
+                                    'crudRoutePart',
+                                    'row'
+                                ));
+                            }
+                        else{
+                            $editGate      = 'rfa_not_edit';
+                            $deleteGate    = 'rfa_delete';
+                            return view('partials.datatablesActions', compact(
+                                'viewGate',
+                                'editGate',
+                                'deleteGate',
+                                'revisionGate',
+                                'crudRoutePart',
+                                'row'
+                            ));
+                        }
+                }
+            }
             });
 
             $table->editColumn('title_eng', function ($row) {
@@ -213,7 +228,7 @@ class RfaController extends Controller
             });
 
             $table->addColumn('document_status_status_name', function ($row) {
-                return $row->document_status ? $row->document_status->status_name : '';
+                    return $row->document_status ? $row->document_status->status_name : '';
             });
 
             $table->addColumn('create_by_user_name', function ($row) {
@@ -232,7 +247,11 @@ class RfaController extends Controller
                 return $row->team ? $row->team->code : '';
             });
 
-            $table->rawColumns(['actions', 'placeholder', 'type', 'construction_contract', 'wbs_level_3', 'wbs_level_4', 'issueby', 'assign', 'file_upload_1', 'comment_by', 'information_by', 'comment_status', 'for_status', 'document_status', 'action_by', 'create_by_user', 'update_by_user', 'approve_by_user', 'team']);
+            $table->addColumn('check_revision', function ($row) {
+                return $row->check_revision ? $row->check_revision : '';
+            });
+
+            $table->rawColumns(['actions', 'placeholder', 'type', 'construction_contract', 'wbs_level_3', 'wbs_level_4', 'issueby', 'assign', 'file_upload_1', 'comment_by', 'information_by', 'comment_status', 'for_status', 'document_status', 'action_by', 'create_by_user', 'update_by_user', 'approve_by_user', 'team', 'check_revision']);
 
             return $table->make(true);
         }
@@ -252,6 +271,128 @@ class RfaController extends Controller
 
         return view('admin.rfas.index',compact('document_status','types','work_types','construction_contracts','wbs_level_3s','wbs_level_4s','submit_dates','receive_dates','comment_statuses','for_statuses','teams'));
     }
+
+    function fetch(Request $request){
+        $id = $request->get('select');
+        $result = array();
+        $query = DB::table('wbs_level_threes')
+        ->join('wbslevelfours','wbs_level_threes.id','=','wbslevelfours.wbs_level_three_id')
+        ->select('wbslevelfours.wbs_level_4_name','wbslevelfours.id')
+        ->where('wbs_level_threes.id',$id)
+        ->groupBy('wbslevelfours.wbs_level_4_name','wbslevelfours.id')
+        ->orderBy('wbs_level_4_name')
+        ->get();
+        $output = '<option value="">' . trans('global.pleaseSelect') . '</option>';
+        foreach ($query as $row){
+            $output .= '<option value="'. $row->id .'">'. $row->wbs_level_4_name .'</option>';
+        }
+        echo $output;
+    }
+    
+    public function revision(Rfa $rfa)
+    {
+        abort_if(Gate::denies('rfa_revision'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $types = Rfatype::all()->pluck('type_name', 'id')->prepend(trans('global.pleaseSelect'), '');
+
+        $construction_contracts = ConstructionContract::all()->pluck('code', 'id')->prepend(trans('global.pleaseSelect'), '');
+
+        $wbs_level_3s = WbsLevelThree::all()->pluck('wbs_level_3_code', 'id')->prepend(trans('global.pleaseSelect'), '');
+
+        $wbs_level_4s = Wbslevelfour::all()->pluck('wbs_level_4_code', 'id')->prepend(trans('global.pleaseSelect'), '');
+
+        $issuebies = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+
+        $assigns = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+
+        $action_bies = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+
+        $comment_bies = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+
+        $information_bies = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+
+        $comment_statuses = RfaCommentStatus::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+
+        $for_statuses = RfaCommentStatus::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+
+        $rfa->load('type', 'construction_contract', 'issueby', 'assign', 'action_by', 'comment_by', 'information_by', 'comment_status', 'for_status', 'document_status', 'create_by_user', 'update_by_user', 'approve_by_user', 'team');
+       // $rfa->load(all());
+        return view('admin.rfas.revision', compact('types', 'construction_contracts', 'wbs_level_3s', 'wbs_level_4s', 'issuebies', 'assigns', 'action_bies', 'comment_bies', 'information_bies', 'comment_statuses', 'for_statuses', 'rfa'));
+    }
+    
+    public function  storeRevision(RevisionRfaRequest $request, Rfa $rfa)
+    {   $data = $request->all();
+        $data['create_by_user_id'] = auth()->id();
+        $data['document_status_id'] = 1;
+        
+        $data['title_eng'] = $request->title_eng;
+        $data['title'] = $request->title;
+        $data['title_cn'] = $request->title_cn;
+        $data['type_id'] = $request->type_id;
+        $data['worktype'] = $request->worktype;
+        $data['wbs_level_3_id'] = $request->wbs_level_3_id;
+        $data['wbs_level_4_id'] = $request->wbs_level_4_id;
+
+
+
+        //Review Time
+        $rvs_length = 4;
+        $review_time = $request->review_time + 1;
+        $data['review_time'] = $review_time;
+        $revision_number = substr("0000{$review_time}", -$rvs_length);
+
+        //RFA Code
+        $rfa_code = $request->rfa_code;
+        if(strcmp($request->check_revision,"f")){
+            $data['rfa_code'] = $rfa_code . '_R' . $revision_number;
+        }else{
+            $rfa_code = substr($rfa_code,0,14);
+            $data['rfa_code'] = $rfa_code . '_R' . $revision_number;
+        }
+        //Document Number
+        $document_number = $request->document_number;
+        if(strcmp($request->check_revision,"f")){
+            $data['document_number'] = $document_number . "_R" . $revision_number;
+        }
+        else{
+            $document_number = substr($document_number,0,22);
+            $data['document_number'] = $document_number . "_R" . $revision_number;
+        }
+       
+
+        $data['check_revision'] = "f";
+        
+        Rfa::where('id', $request->id)->update(['check_revision' => "t"]);
+
+        $rfa = Rfa::create($data);
+        
+        
+        
+        $data_alert['alert_text'] = 'New RFA assign to you.';
+        $data_alert['alert_link'] = route('admin.rfas.index');
+
+        $userAlert = UserAlert::create($data_alert);
+        $userAlert->users()->sync($data['assign_id']);
+
+        if (count($rfa->file_upload_1) > 0) {
+            foreach ($rfa->file_upload_1 as $media) {
+                if (!in_array($media->file_name, $request->input('file_upload_1', []))) {
+                    $media->delete();
+                }
+            }
+        }
+
+        $media = $rfa->file_upload_1->pluck('file_name')->toArray();
+
+        foreach ($request->input('file_upload_1', []) as $file) {
+            if (count($media) === 0 || !in_array($file, $media)) {
+                $rfa->addMedia(storage_path('tmp/uploads/' . $file))->toMediaCollection('file_upload_1');
+            }
+        }
+
+        return redirect()->route('admin.rfas.index');
+    }
+
 
     public function create()
     {
@@ -283,23 +424,6 @@ class RfaController extends Controller
         return view('admin.rfas.create', compact('types', 'construction_contracts', 'wbs_level_3s', 'wbs_level_4s', 'issuebies', 'assigns', 'action_bies', 'comment_bies', 'information_bies', 'comment_statuses', 'for_statuses'));
     }
 
-    function fetch(Request $request){
-        $id = $request->get('select');
-        $result = array();
-        $query = DB::table('wbs_level_threes')
-        ->join('wbslevelfours','wbs_level_threes.id','=','wbslevelfours.wbs_level_three_id')
-        ->select('wbslevelfours.wbs_level_4_name','wbslevelfours.id')
-        ->where('wbs_level_threes.id',$id)
-        ->groupBy('wbslevelfours.wbs_level_4_name','wbslevelfours.id')
-        ->orderBy('wbs_level_4_name')
-        ->get();
-        $output = '<option value="">' . trans('global.pleaseSelect') . '</option>';
-        foreach ($query as $row){
-            $output .= '<option value="'. $row->id .'">'. $row->wbs_level_4_name .'</option>';
-        }
-        echo $output;
-    }
-
     public function store(StoreRfaRequest $request)
     {   $data = $request->all();
         $data['create_by_user_id'] = auth()->id();
@@ -324,7 +448,15 @@ class RfaController extends Controller
 
         //RFA Code
         $data['rfa_code'] = 'RFA' . '/' . $const_code . '/' . $doc_number;
+
+        //Review Time
+        $data['review_time'] = 0;
+        
+        $data['check_revision'] = "f";
+
         $rfa = Rfa::create($data);
+
+        
         
         $data_alert['alert_text'] = 'New RFA assign to you.';
         $data_alert['alert_link'] = route('admin.rfas.index');

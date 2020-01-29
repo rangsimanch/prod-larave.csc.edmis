@@ -209,6 +209,9 @@
                                         @endforeach
                                     </select>
                                 </th>
+                                <th type="hidden">
+                                    Check
+                                </th>
                                 <th>
                                 {{ trans('cruds.rfa.fields.action') }}
                                 </th>
@@ -297,9 +300,10 @@
 // { data: 'approve_by_user_name', name: 'approve_by_user.name' },
 { data: 'updated_at', name: 'updated_at' },
 { data: 'team_code', name: 'team.code' },
+{ data: 'check_revision', name: 'check_revision', visible: false,},
 { data: 'actions', name: '{{ trans('global.actions') }}' }
     ],
-    order: [[ 23, 'desc' ]],
+    order: [[ 1, 'desc' ]],
     pageLength: 10,
   };
   $('.datatable-Rfa').DataTable(dtOverrideGlobals);

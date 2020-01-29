@@ -75,6 +75,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['web'], 'n
     Route::post('rfas/parse-csv-import', 'RfaController@parseCsvImport')->name('rfas.parseCsvImport');
     Route::post('rfas/process-csv-import', 'RfaController@processCsvImport')->name('rfas.processCsvImport');
     Route::post('rfas/fetch','RfaController@fetch')->name('rfas.fetch');
+    Route::get('rfas/{rfa}/revision','RfaController@revision')->name('rfas.revision');
+    Route::post('rfas/storeRevision','RfaController@storeRevision')->name('rfas.storeRevision');
     Route::resource('rfas', 'RfaController');
 
     // Rfatypes

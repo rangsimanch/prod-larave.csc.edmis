@@ -6,18 +6,26 @@
         <div class="col-lg-12">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    {{ trans('global.edit') }} {{ trans('cruds.rfa.title_singular') }}
+                    {{ trans('global.revision') }} {{ trans('cruds.rfa.title_singular') }}
                 </div>
                 <div class="panel-body">
-                    <form method="POST" action="{{ route("admin.rfas.update", [$rfa->id]) }}" enctype="multipart/form-data">
-                        @method('PUT')
+                     <form method="POST" action="{{ route("admin.rfas.storeRevision") }}" enctype="multipart/form-data">
                         @csrf
                         
                         @can('rfa_panel_a')
                         <legend> CEC Outgoing </legend>
+
+                        <input class="form-control" type="hidden" name="id" id="id" value="{{ old('id', $rfa->id) }}">
+                        <input class="form-control" type="hidden" name="review_time" id="review_time" value="{{ old('review_time', $rfa->review_time) }}">
+                        <input class="form-control" type="hidden"  name="rfa_code" id="rfa_code" value="{{ old('rfa_code', $rfa->rfa_code) }}">
+                        <input class="form-control" type="hidden"  name="document_number" id="document_number" value="{{ old('document_number', $rfa->document_number) }}">
+                        <input class="form-control" type="hidden"  name="check_revision" id="check_revision" value="t">
+                        <input class="form-control" type="hidden"  name="check_revision" id="check_revision" value="{{ old('check_revision', $rfa->check_revision) }}">
+                        
+
                         <div class="form-group {{ $errors->has('title_eng') ? 'has-error' : '' }}">
                             <label for="title_eng">{{ trans('cruds.rfa.fields.title_eng') }}</label>
-                            <input class="form-control" type="text" name="title_eng" id="title_eng" value="{{ old('title_eng', $rfa->title_eng) }}">
+                            <input readonly class="form-control" type="text" name="title_eng" id="title_eng" value="{{ old('title_eng', $rfa->title_eng) }}">
                             @if($errors->has('title_eng'))
                                 <span class="help-block" role="alert">{{ $errors->first('title_eng') }}</span>
                             @endif
@@ -25,7 +33,7 @@
                         </div>
                         <div class="form-group {{ $errors->has('title') ? 'has-error' : '' }}">
                             <label for="title">{{ trans('cruds.rfa.fields.title') }}</label>
-                            <input class="form-control" type="text" name="title" id="title" value="{{ old('title', $rfa->title) }}">
+                            <input readonly class="form-control" type="text" name="title" id="title" value="{{ old('title', $rfa->title) }}">
                             @if($errors->has('title'))
                                 <span class="help-block" role="alert">{{ $errors->first('title') }}</span>
                             @endif
@@ -33,7 +41,7 @@
                         </div>
                         <div class="form-group {{ $errors->has('title_cn') ? 'has-error' : '' }}">
                             <label for="title_cn">{{ trans('cruds.rfa.fields.title_cn') }}</label>
-                            <input class="form-control" type="text" name="title_cn" id="title_cn" value="{{ old('title_cn', $rfa->title_cn) }}">
+                            <input readonly class="form-control" type="text" name="title_cn" id="title_cn" value="{{ old('title_cn', $rfa->title_cn) }}">
                             @if($errors->has('title_cn'))
                                 <span class="help-block" role="alert">{{ $errors->first('title_cn') }}</span>
                             @endif
@@ -65,7 +73,7 @@
                         </div> -->
                         <div class="form-group {{ $errors->has('type') ? 'has-error' : '' }}">
                             <label for="type_id" class="required">{{ trans('cruds.rfa.fields.type') }}</label>
-                            <select class="form-control select2" name="type_id" id="type_id" required>
+                            <select  class="form-control" name="type_id" id="type_id" required>
                                 @foreach($types as $id => $type)
                                     <option value="{{ $id }}" {{ ($rfa->type ? $rfa->type->id : old('type_id')) == $id ? 'selected' : '' }}>{{ $type }}</option>
                                 @endforeach
@@ -77,7 +85,7 @@
                         </div>
                         <div class="form-group {{ $errors->has('worktype') ? 'has-error' : '' }}">
                             <label class="required">{{ trans('cruds.rfa.fields.worktype') }}</label>
-                            <select class="form-control" name="worktype" id="worktype" required>
+                            <select  class="form-control select2" name="worktype" id="worktype" required>
                                 <option value disabled {{ old('worktype', null) === null ? 'selected' : '' }}>{{ trans('global.pleaseSelect') }}</option>
                                 @foreach(App\Rfa::WORKTYPE_SELECT as $key => $label)
                                     <option value="{{ $key }}" {{ old('worktype', $rfa->worktype) === (string) $key ? 'selected' : '' }}>{{ $label }}</option>
@@ -90,7 +98,7 @@
                         </div>
                         <div class="form-group {{ $errors->has('construction_contract') ? 'has-error' : '' }}">
                             <label class="required" for="construction_contract_id">{{ trans('cruds.rfa.fields.construction_contract') }}</label>
-                            <select class="form-control select2" name="construction_contract_id" id="construction_contract_id" required>
+                            <select  class="form-control" name="construction_contract_id" id="construction_contract_id" required>
                                 @foreach($construction_contracts as $id => $construction_contract)
                                     <option value="{{ $id }}" {{ ($rfa->construction_contract ? $rfa->construction_contract->id : old('construction_contract_id')) == $id ? 'selected' : '' }}>{{ $construction_contract }}</option>
                                 @endforeach
@@ -102,8 +110,8 @@
                         </div>
 
                         <div class="form-group {{ $errors->has('wbs_level_3') ? 'has-error' : '' }}">
-                            <label  class="required" for="wbs_level_3_id">{{ trans('cruds.rfa.fields.wbs_level_3') }}</label>
-                            <select class="form-control select2" name="wbs_level_3_id" id="wbs_level_3_id">
+                            <label class="required" for="wbs_level_3_id">{{ trans('cruds.rfa.fields.wbs_level_3') }}</label>
+                            <select   class="form-control" name="wbs_level_3_id" id="wbs_level_3_id">
                                 @foreach($wbs_level_3s as $id => $wbs_level_3)
                                     <option value="{{ $id }}" {{ ($rfa->wbs_level_3 ? $rfa->wbs_level_3->id : old('wbs_level_3_id')) == $id ? 'selected' : '' }}>{{ $wbs_level_3 }}</option>
                                 @endforeach
@@ -114,9 +122,9 @@
                             <span class="help-block">{{ trans('cruds.rfa.fields.wbs_level_3_helper') }}</span>
                         </div>
 
-                        <div class="form-group {{ $errors->has('wbs_level_4') ? 'has-error' : '' }}">
-                            <label  class="required" for="wbs_level_4_id">{{ trans('cruds.rfa.fields.wbs_level_4') }}</label>
-                            <select class="form-control select2" name="wbs_level_4_id" id="wbs_level_4_id">
+                       <div class="form-group {{ $errors->has('wbs_level_4') ? 'has-error' : '' }}">
+                            <label class="required" for="wbs_level_4_id">{{ trans('cruds.rfa.fields.wbs_level_4') }}</label>
+                            <select  class="form-control" name="wbs_level_4_id" id="wbs_level_4_id">
                                 @foreach($wbs_level_4s as $id => $wbs_level_4)
                                     <option value="{{ $id }}" {{ ($rfa->wbs_level_4 ? $rfa->wbs_level_4->id : old('wbs_level_4_id')) == $id ? 'selected' : '' }}>{{ $wbs_level_4 }}</option>
                                 @endforeach
@@ -126,6 +134,7 @@
                             @endif
                             <span class="help-block">{{ trans('cruds.rfa.fields.wbs_level_4_helper') }}</span>
                         </div>
+
                         <div class="form-group {{ $errors->has('submit_date') ? 'has-error' : '' }}">
                             <label for="submit_date">{{ trans('cruds.rfa.fields.submit_date') }}</label>
                             <input class="form-control date" type="text" name="submit_date" id="submit_date" value="{{ old('submit_date', $rfa->submit_date) }}">

@@ -85,6 +85,7 @@ class Rfa extends Model implements HasMedia
         'distribute_date',
         'document_status_id',
         'approve_by_user_id',
+        'check_revision',
         'construction_contract_id',
     ];
 

@@ -79,6 +79,7 @@ class RegisterController extends Controller
         ]);
         
         $user->construction_contracts()->sync($data['construction_contracts']);
+
         
         return $user;
         
