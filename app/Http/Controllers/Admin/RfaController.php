@@ -456,8 +456,31 @@ class RfaController extends Controller
 
         //Review Time
         $data['review_time'] = 0;
-        
+        //Revision Check
         $data['check_revision'] = "f";
+        
+        
+        // if($request->type_id == 1){
+        //     $final_date = $data['submit_date'];
+        //     for($count = 0; $count < 14; $count++){
+        //         $day = date("D",strtotime($final_date));
+        //         if($day != 'Sat' && $day != 'Sun'){
+        //             //$final_date = date_add($final_date,date_interval_create_from_date_string("1 days"));
+        //             $final_date = strtotime($final_date. '+1 days');
+        //         }
+        //     }
+        //     $data['final_date'] = $final_date;
+        // }else{
+        //     $final_date = $data['submit_date'];
+        //     $final_date = strtotime($final_date);
+        //     for($count = 0; $count < 7; $count++){
+        //         $day = date("D",strtotime($final_date));
+        //         if($day != 'Sat' && $day != 'Sun'){
+        //             date_add($final_date,date_interval_create_from_date_string("1 days"));
+        //         }
+        //     }
+        //     $data['final_date'] = $final_date;
+        // }
 
         $rfa = Rfa::create($data);
 

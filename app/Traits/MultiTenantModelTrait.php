@@ -15,16 +15,16 @@ trait MultiTenantModelTrait
             $isAdmin = auth()->user()->roles->contains(1);
 
             // //Roles ID Dev
-            // $isTeamSRT = auth()->user()->roles->contains(4);
-            // $isTeamPMC = auth()->user()->roles->contains(5);
-            // $isTeamCSC = auth()->user()->roles->contains(6);
-            // $isTeamCEC = auth()->user()->roles->contains(7);
+            $isTeamSRT = auth()->user()->roles->contains(4);
+            $isTeamPMC = auth()->user()->roles->contains(5);
+            $isTeamCSC = auth()->user()->roles->contains(6);
+            $isTeamCEC = auth()->user()->roles->contains(7);
 
             //Roles ID Prod
-            $isTeamSRT = auth()->user()->roles->contains(15);
-            $isTeamPMC = auth()->user()->roles->contains(16);
-            $isTeamCSC = auth()->user()->roles->contains(17);
-            $isTeamCEC = auth()->user()->roles->contains(18);
+            // $isTeamSRT = auth()->user()->roles->contains(15);
+            // $isTeamPMC = auth()->user()->roles->contains(16);
+            // $isTeamCSC = auth()->user()->roles->contains(17);
+            // $isTeamCEC = auth()->user()->roles->contains(18);
 
             static::creating(function ($model) use ($isAdmin, $isTeamSRT, $isTeamPMC,$isTeamCSC,$isTeamCEC) {
 // Prevent admin from setting his own id - admin entries are global.

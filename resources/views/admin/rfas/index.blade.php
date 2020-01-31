@@ -312,6 +312,7 @@
             .columns.adjust();
     });
     
+    
     // Filter Class
        $('.filter-input').keyup(function(){
         $($.fn.dataTable.tables(true)).DataTable().column( $(this).data('column'))
