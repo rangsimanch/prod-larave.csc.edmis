@@ -13,7 +13,7 @@
                         @csrf
                         
                         @can('rfa_panel_a')
-                        <legend> CEC Outgoing </legend>
+                        <legend> Constractor RFA Submittal </legend>
 
                         <input class="form-control" type="hidden" name="id" id="id" value="{{ old('id', $rfa->id) }}">
                         <input class="form-control" type="hidden" name="review_time" id="review_time" value="{{ old('review_time', $rfa->review_time) }}">
@@ -137,17 +137,19 @@
 
                         <div class="form-group {{ $errors->has('submit_date') ? 'has-error' : '' }}">
                             <label for="submit_date">{{ trans('cruds.rfa.fields.submit_date') }}</label>
-                            <input class="form-control date" type="text" name="submit_date" id="submit_date" value="{{ old('submit_date', $rfa->submit_date) }}">
+                            <input class="form-control date" type="text" name="submit_date" id="submit_date" value="{{ old('submit_date') }}">
                             @if($errors->has('submit_date'))
                                 <span class="help-block" role="alert">{{ $errors->first('submit_date') }}</span>
                             @endif
                             <span class="help-block">{{ trans('cruds.rfa.fields.submit_date_helper') }}</span>
                         </div>
+
+
                         <div class="form-group {{ $errors->has('issueby') ? 'has-error' : '' }}">
                             <label for="issueby_id">{{ trans('cruds.rfa.fields.issueby') }}</label>
                             <select class="form-control select2" name="issueby_id" id="issueby_id">
                                 @foreach($issuebies as $id => $issueby)
-                                    <option value="{{ $id }}" {{ ($rfa->issueby ? $rfa->issueby->id : old('issueby_id')) == $id ? 'selected' : '' }}>{{ $issueby }}</option>
+                                    <option value="{{ $id }}" {{ old('issueby_id') == $id ? 'selected' : '' }}>{{ $issueby }}</option>
                                 @endforeach
                             </select>
                             @if($errors->has('issueby_id'))
@@ -155,11 +157,12 @@
                             @endif
                             <span class="help-block">{{ trans('cruds.rfa.fields.issueby_helper') }}</span>
                         </div>
+
                         <div class="form-group {{ $errors->has('assign') ? 'has-error' : '' }}">
                             <label for="assign_id">{{ trans('cruds.rfa.fields.assign') }}</label>
                             <select class="form-control select2" name="assign_id" id="assign_id">
                                 @foreach($assigns as $id => $assign)
-                                    <option value="{{ $id }}" {{ ($rfa->assign ? $rfa->assign->id : old('assign_id')) == $id ? 'selected' : '' }}>{{ $assign }}</option>
+                                    <option value="{{ $id }}" {{ old('assign_id') == $id ? 'selected' : '' }}>{{ $assign }}</option>
                                 @endforeach
                             </select>
                             @if($errors->has('assign_id'))
@@ -169,12 +172,13 @@
                         </div>
                         <div class="form-group {{ $errors->has('note_1') ? 'has-error' : '' }}">
                             <label for="note_1">{{ trans('cruds.rfa.fields.note_1') }}</label>
-                            <textarea class="form-control ckeditor" name="note_1" id="note_1">{!! old('note_1', $rfa->note_1) !!}</textarea>
+                            <textarea class="form-control ckeditor" name="note_1" id="note_1">{!! old('note_1') !!}</textarea>
                             @if($errors->has('note_1'))
                                 <span class="help-block" role="alert">{{ $errors->first('note_1') }}</span>
                             @endif
                             <span class="help-block">{{ trans('cruds.rfa.fields.note_1_helper') }}</span>
                         </div>
+
                         <div class="form-group {{ $errors->has('file_upload_1') ? 'has-error' : '' }}">
                             <label for="file_upload_1">{{ trans('cruds.rfa.fields.file_upload_1') }}</label>
                             <div class="needsclick dropzone" id="file_upload_1-dropzone">
@@ -187,13 +191,13 @@
                         @endcan
 
                         @can('rfa_panel_b')
-                        <legend>CSC Incoming</legend>
+                        <legend> Incoming Distribution </legend>
 
                         <div class="form-group {{ $errors->has('action_by') ? 'has-error' : '' }}">
                             <label for="action_by_id">{{ trans('cruds.rfa.fields.action_by') }}</label>
                             <select class="form-control select2" name="action_by_id" id="action_by_id">
                                 @foreach($action_bies as $id => $action_by)
-                                    <option value="{{ $id }}" {{ ($rfa->action_by ? $rfa->action_by->id : old('action_by_id')) == $id ? 'selected' : '' }}>{{ $action_by }}</option>
+                                    <option value="{{ $id }}" {{ old('action_by_id') == $id ? 'selected' : '' }}>{{ $action_by }}</option>
                                 @endforeach
                             </select>
                             @if($errors->has(''))
@@ -201,12 +205,12 @@
                             @endif
                             <span class="help-block">{{ trans('cruds.rfa.fields.action_by_helper') }}</span>
                         </div>
-                        
+
                         <div class="form-group {{ $errors->has('comment_by') ? 'has-error' : '' }}">
                             <label for="comment_by_id">{{ trans('cruds.rfa.fields.comment_by') }}</label>
                             <select class="form-control select2" name="comment_by_id" id="comment_by_id">
                                 @foreach($comment_bies as $id => $comment_by)
-                                    <option value="{{ $id }}" {{ ($rfa->comment_by ? $rfa->comment_by->id : old('comment_by_id')) == $id ? 'selected' : '' }}>{{ $comment_by }}</option>
+                                    <option value="{{ $id }}" {{ old('comment_by_id') == $id ? 'selected' : '' }}>{{ $comment_by }}</option>
                                 @endforeach
                             </select>
                             @if($errors->has('comment_by_id'))
@@ -214,12 +218,11 @@
                             @endif
                             <span class="help-block">{{ trans('cruds.rfa.fields.comment_by_helper') }}</span>
                         </div>
-
                         <div class="form-group {{ $errors->has('information_by') ? 'has-error' : '' }}">
                             <label for="information_by_id">{{ trans('cruds.rfa.fields.information_by') }}</label>
                             <select class="form-control select2" name="information_by_id" id="information_by_id">
                                 @foreach($information_bies as $id => $information_by)
-                                    <option value="{{ $id }}" {{ ($rfa->information_by ? $rfa->information_by->id : old('information_by_id')) == $id ? 'selected' : '' }}>{{ $information_by }}</option>
+                                    <option value="{{ $id }}" {{ old('information_by_id') == $id ? 'selected' : '' }}>{{ $information_by }}</option>
                                 @endforeach
                             </select>
                             @if($errors->has('information_by_id'))
@@ -227,10 +230,9 @@
                             @endif
                             <span class="help-block">{{ trans('cruds.rfa.fields.information_by_helper') }}</span>
                         </div>
-
                         <div class="form-group {{ $errors->has('receive_date') ? 'has-error' : '' }}">
                             <label for="receive_date">{{ trans('cruds.rfa.fields.receive_date') }}</label>
-                            <input class="form-control date" type="text" name="receive_date" id="receive_date" value="{{ old('receive_date', $rfa->receive_date) }}">
+                            <input class="form-control date" type="text" name="receive_date" id="receive_date" value="{{ old('receive_date') }}">
                             @if($errors->has('receive_date'))
                                 <span class="help-block" role="alert">{{ $errors->first('receive_date') }}</span>
                             @endif
@@ -238,7 +240,7 @@
                         </div>
                         <div class="form-group {{ $errors->has('note_2') ? 'has-error' : '' }}">
                             <label for="note_2">{{ trans('cruds.rfa.fields.note_2') }}</label>
-                            <textarea class="form-control" name="note_2" id="note_2">{{ old('note_2', $rfa->note_2) }}</textarea>
+                            <textarea class="form-control" name="note_2" id="note_2">{{ old('note_2') }}</textarea>
                             @if($errors->has('note_2'))
                                 <span class="help-block" role="alert">{{ $errors->first('note_2') }}</span>
                             @endif
@@ -252,7 +254,7 @@
                             <label for="comment_status_id">{{ trans('cruds.rfa.fields.comment_status') }}</label>
                             <select class="form-control select2" name="comment_status_id" id="comment_status_id">
                                 @foreach($comment_statuses as $id => $comment_status)
-                                    <option value="{{ $id }}" {{ ($rfa->comment_status ? $rfa->comment_status->id : old('comment_status_id')) == $id ? 'selected' : '' }}>{{ $comment_status }}</option>
+                                    <option value="{{ $id }}" {{ old('comment_status_id') == $id ? 'selected' : '' }}>{{ $comment_status }}</option>
                                 @endforeach
                             </select>
                             @if($errors->has('comment_status_id'))
@@ -260,23 +262,25 @@
                             @endif
                             <span class="help-block">{{ trans('cruds.rfa.fields.comment_status_helper') }}</span>
                         </div>
+
                         <div class="form-group {{ $errors->has('note_3') ? 'has-error' : '' }}">
                             <label for="note_3">{{ trans('cruds.rfa.fields.note_3') }}</label>
-                            <textarea class="form-control" name="note_3" id="note_3">{{ old('note_3', $rfa->note_3) }}</textarea>
+                            <textarea class="form-control" name="note_3" id="note_3">{{ old('note_3') }}</textarea>
                             @if($errors->has('note_3'))
                                 <span class="help-block" role="alert">{{ $errors->first('note_3') }}</span>
                             @endif
                             <span class="help-block">{{ trans('cruds.rfa.fields.note_3_helper') }}</span>
                         </div>
                         @endcan
-
+                        
                         @can('rfa_panel_d')
                         <legend> CSC Outgoing </legend>
+
                         <div class="form-group {{ $errors->has('for_status') ? 'has-error' : '' }}">
                             <label for="for_status_id">{{ trans('cruds.rfa.fields.for_status') }}</label>
                             <select class="form-control select2" name="for_status_id" id="for_status_id">
                                 @foreach($for_statuses as $id => $for_status)
-                                    <option value="{{ $id }}" {{ ($rfa->for_status ? $rfa->for_status->id : old('for_status_id')) == $id ? 'selected' : '' }}>{{ $for_status }}</option>
+                                    <option value="{{ $id }}" {{ old('for_status_id') == $id ? 'selected' : '' }}>{{ $for_status }}</option>
                                 @endforeach
                             </select>
                             @if($errors->has('for_status_id'))
@@ -284,6 +288,17 @@
                             @endif
                             <span class="help-block">{{ trans('cruds.rfa.fields.for_status_helper') }}</span>
                         </div>
+
+                        <div class="form-group {{ $errors->has('note_4') ? 'has-error' : '' }}">
+                            <label for="note_4">{{ trans('cruds.rfa.fields.note_4') }}</label>
+                            <textarea class="form-control" name="note_4" id="note_4">{{ old('note_4') }}</textarea>
+                            @if($errors->has(''))
+                                <span class="help-block" role="alert">{{ $errors->first('') }}</span>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.rfa.fields.note_4_helper') }}</span>
+                        </div>
+
+                        
                         @endcan
                         <div class="form-group">
                             <button class="btn btn-success" type="submit">
@@ -310,7 +325,7 @@
     var uploadedFileUpload1Map = {}
 Dropzone.options.fileUpload1Dropzone = {
     url: '{{ route('admin.rfas.storeMedia') }}',
-    maxFilesize: 200, // MB
+    maxFilesize: 500, // MB
     addRemoveLinks: true,
     headers: {
       'X-CSRF-TOKEN': "{{ csrf_token() }}"
@@ -334,14 +349,14 @@ Dropzone.options.fileUpload1Dropzone = {
     },
     init: function () {
 @if(isset($rfa) && $rfa->file_upload_1)
-          var files =
-            {!! json_encode($rfa->file_upload_1) !!}
-              for (var i in files) {
-              var file = files[i]
-              this.options.addedfile.call(this, file)
-              file.previewElement.classList.add('dz-complete')
-              $('form').append('<input type="hidden" name="file_upload_1[]" value="' + file.file_name + '">')
-            }
+        //   var files =
+        //     {!! json_encode($rfa->file_upload_1) !!}
+        //       for (var i in files) {
+        //       var file = files[i]
+        //       this.options.addedfile.call(this, file)
+        //       file.previewElement.classList.add('dz-complete')
+        //       $('form').append('<input type="hidden" name="file_upload_1[]" value="' + file.file_name + '">')
+        //     }
 @endif
     },
      error: function (file, response) {

@@ -14,7 +14,7 @@
                         @csrf
                         
                         @can('rfa_panel_a')
-                        <legend> CEC Outgoing </legend>
+                        <legend> Constractor RFA Submittal </legend>
                         <div class="form-group {{ $errors->has('title_eng') ? 'has-error' : '' }}">
                             <label for="title_eng">{{ trans('cruds.rfa.fields.title_eng') }}</label>
                             <input class="form-control" type="text" name="title_eng" id="title_eng" value="{{ old('title_eng', $rfa->title_eng) }}">
@@ -179,7 +179,7 @@
 
                         @if($rfa->document_status->id == 1)
                         @can('rfa_panel_b')
-                        <legend>CSC Incoming</legend>
+                        <legend>Incoming Distribution</legend>
 
                         <div class="form-group {{ $errors->has('action_by') ? 'has-error' : '' }}">
                             <label for="action_by_id">{{ trans('cruds.rfa.fields.action_by') }}</label>
@@ -316,7 +316,7 @@
     var uploadedFileUpload1Map = {}
 Dropzone.options.fileUpload1Dropzone = {
     url: '{{ route('admin.rfas.storeMedia') }}',
-    maxFilesize: 200, // MB
+    maxFilesize: 500, // MB
     addRemoveLinks: true,
     headers: {
       'X-CSRF-TOKEN': "{{ csrf_token() }}"

@@ -45,8 +45,7 @@ class RfaController extends Controller
                 $crudRoutePart = 'rfas';
                 //
 
-                if(!strcmp( $row->check_revision ? $row->check_revision : '' ,"f") && 
-                !strcmp( $row->document_status ? $row->document_status->status_name : '' ,"Done")){
+                if(!strcmp( $row->check_revision ? $row->check_revision : '' ,"f")){
                     $revisionGate  = 'rfa_revision';
                 }else{
                     $revisionGate  = 'rfa_not_revision';
@@ -447,40 +446,22 @@ class RfaController extends Controller
         $nextId = DB::table('rfas')->max('id') + 1;
         $str_length = 5;
         $doc_number = substr("00000{$nextId}", -$str_length);
+        $cur_date = date("ymd");
+        $code_year = substr($cur_date,0,2);
+        $code_mouth = substr($cur_date,2,2);
+        $code_date = $code_year . "-" . $code_mouth;
+
         
         // Document Number
-        $data['document_number'] = 'HSR1/' . $workcode  . '/' . $wbs3code . '/' . $wbs4code . '/' . $typecode . '/' . $doc_number; 
+        $data['document_number'] = 'HSR1/' . $workcode  . '/' . $wbs3code . '/' . $wbs4code . '/' . $typecode . '/' . $code_date . '/' . $doc_number; 
 
         //RFA Code
-        $data['rfa_code'] = 'RFA' . '/' . $const_code . '/' . $doc_number;
+        $data['rfa_code'] = 'RFA' . '/' . $const_code . '/' .  $doc_number;
 
         //Review Time
         $data['review_time'] = 0;
         //Revision Check
         $data['check_revision'] = "f";
-        
-        
-        // if($request->type_id == 1){
-        //     $final_date = $data['submit_date'];
-        //     for($count = 0; $count < 14; $count++){
-        //         $day = date("D",strtotime($final_date));
-        //         if($day != 'Sat' && $day != 'Sun'){
-        //             //$final_date = date_add($final_date,date_interval_create_from_date_string("1 days"));
-        //             $final_date = strtotime($final_date. '+1 days');
-        //         }
-        //     }
-        //     $data['final_date'] = $final_date;
-        // }else{
-        //     $final_date = $data['submit_date'];
-        //     $final_date = strtotime($final_date);
-        //     for($count = 0; $count < 7; $count++){
-        //         $day = date("D",strtotime($final_date));
-        //         if($day != 'Sat' && $day != 'Sun'){
-        //             date_add($final_date,date_interval_create_from_date_string("1 days"));
-        //         }
-        //     }
-        //     $data['final_date'] = $final_date;
-        // }
 
         $rfa = Rfa::create($data);
 

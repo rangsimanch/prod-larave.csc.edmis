@@ -22,8 +22,8 @@ class Rfa extends Model implements HasMedia
     ];
 
     const WORKTYPE_SELECT = [
-        'Thai' => 'Thai',
-        'China' => 'China',
+        'Thai' => 'Part A',
+        'China' => 'Part B',
     ];
 
     protected $dates = [

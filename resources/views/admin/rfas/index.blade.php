@@ -303,7 +303,7 @@
 { data: 'check_revision', name: 'check_revision', visible: false,},
 { data: 'actions', name: '{{ trans('global.actions') }}' }
     ],
-    order: [[ 1, 'desc' ]],
+    order: [[ 24, 'desc' ]],
     pageLength: 10,
   };
   $('.datatable-Rfa').DataTable(dtOverrideGlobals);
@@ -311,8 +311,7 @@
         $($.fn.dataTable.tables(true)).DataTable()
             .columns.adjust();
     });
-    
-    
+        
     // Filter Class
        $('.filter-input').keyup(function(){
         $($.fn.dataTable.tables(true)).DataTable().column( $(this).data('column'))
