@@ -252,7 +252,7 @@
                         </div>
                         <div class="form-group {{ $errors->has('doc_count') ? 'has-error' : '' }}">
                             <label>{{ trans('cruds.rfa.fields.doc_count') }}</label>
-                            <select class="form-control doc_counter" id="doc_count_{{ $key }}" name="doc_count">
+                            <select class="form-control doc_counter" id="doc_count" name="doc_count">
                             <option value disabled {{ old('doc_count', null) === null ? 'selected' : '' }}>{{ trans('global.pleaseSelect') }}</option>
                             @foreach(App\Rfa::DOC_COUNT_RADIO as $key => $label)
                             <option value="{{ $key }}" {{ old('doc_count', '') === (string) $key ? 'selected' : '' }}>{{ $label . ' Days' }}</option>

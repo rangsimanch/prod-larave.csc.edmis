@@ -385,7 +385,7 @@ $('.jpdf').click(function() {
     doc.text(123,48.5,document_number);
     doc.text(172,48.5,rfa_code);
 
-    doc.text(25,57,title_en);
+    //doc.text(25,57,title_en);
     doc.text(123,57,submit_date);
     
     doc.text(25,66,assign_to);
