@@ -181,7 +181,7 @@
                         </div>
                         <div class="form-group {{ $errors->has('note_1') ? 'has-error' : '' }}">
                             <label for="note_1">{{ trans('cruds.rfa.fields.note_1') }}</label>
-                            <textarea class="form-control ckeditor" name="note_1" id="note_1">{!! old('note_1') !!}</textarea>
+                            <textarea class="form-control" name="note_1" id="note_1">{!! old('note_1') !!}</textarea>
                             @if($errors->has('note_1'))
                                 <span class="help-block" role="alert">{{ $errors->first('note_1') }}</span>
                             @endif

@@ -35,7 +35,7 @@
                                 <th>
                                     {{ trans('cruds.rfa.fields.document_status') }}
 
-                                    <select class="form-control filter-select" data-column="1">
+                                    <select class="form-control filter-select" data-column="2">
                                         <option value=""> Select Status... </option>
                                         @foreach ($document_status as $status)
                                             <option value="{{ $status }}"> {{ $status }} </option>
@@ -46,42 +46,42 @@
                                     {{ trans('cruds.rfa.fields.title_eng') }}
 
                                     <input type="text" class="form-control filter-input"
-                                    placeholder="Search for title(EN)..." data-column="2"/>
+                                    placeholder="Search for title(EN)..." data-column="3"/>
                                 </th>
                                 <th>
                                     {{ trans('cruds.rfa.fields.title') }}
 
                                     <input type="text" class="form-control filter-input"
-                                    placeholder="Search for title(TH)..." data-column="3"/>
+                                    placeholder="Search for title(TH)..." data-column="4"/>
                                 </th>
                                 <th>
                                     {{ trans('cruds.rfa.fields.title_cn') }}
 
                                     <input type="text" class="form-control filter-input"
-                                    placeholder="Search for title(CN)..." data-column="4"/>
+                                    placeholder="Search for title(CN)..." data-column="5"/>
                                 </th>
                                 <th>
                                     {{ trans('cruds.rfa.fields.origin_number') }}
 
                                     <input type="text" class="form-control filter-input"
-                                    placeholder="Search for Origin Number..." data-column="5"/>
+                                    placeholder="Search for Origin Number..." data-column="6"/>
                                 </th>
                                 <th>
                                     {{ trans('cruds.rfa.fields.document_number') }}
 
                                     <input type="text" class="form-control filter-input"
-                                    placeholder="Search for Document Number..." data-column="6"/>
+                                    placeholder="Search for Document Number..." data-column="7"/>
                                 </th>
                                 <th>
                                     {{ trans('cruds.rfa.fields.rfa_code') }}
 
                                     <input type="text" class="form-control filter-input"
-                                    placeholder="Search for RFA code..." data-column="7"/>
+                                    placeholder="Search for RFA code..." data-column="8"/>
                                 </th>
                                 <th>
                                     {{ trans('cruds.rfa.fields.type') }}
                                     
-                                    <select class="form-control filter-select" data-column="8">
+                                    <select class="form-control filter-select" data-column="9">
                                         <option value=""> Select Type... </option>
                                         @foreach ($types as $type)
                                             <option value="{{ $type }}"> {{ $type }} </option>
@@ -91,7 +91,7 @@
                                 <th>
                                     {{ trans('cruds.rfa.fields.worktype') }}
 
-                                    <select class="form-control filter-select" data-column="9">
+                                    <select class="form-control filter-select" data-column="10">
                                         <option value=""> Select Work type... </option>
                                         @foreach ($work_types as $work_type)
                                             <option value="{{ $work_type }}"> {{ $work_type }} </option>
@@ -101,7 +101,7 @@
                                 <th>
                                     {{ trans('cruds.rfa.fields.construction_contract') }}
 
-                                     <select class="form-control filter-select" data-column="10">
+                                     <select class="form-control filter-select" data-column="11">
                                         <option value=""> Select Contract... </option>
                                         @foreach ($construction_contracts as $construction_contract)
                                             <option value="{{ $construction_contract }}"> {{ $construction_contract }} </option>
@@ -111,7 +111,7 @@
                                 <th>
                                     {{ trans('cruds.rfa.fields.wbs_level_3') }}
 
-                                    <select class="form-control filter-select" data-column="11">
+                                    <select class="form-control filter-select" data-column="12">
                                         <option value=""> Select WBS Lv3... </option>
                                         @foreach ($wbs_level_3s as $wbs_level_3)
                                             <option value="{{ $wbs_level_3 }}"> {{ $wbs_level_3 }} </option>
@@ -121,7 +121,7 @@
                                 <th>
                                     {{ trans('cruds.rfa.fields.wbs_level_4') }}
 
-                                    <select class="form-control filter-select" data-column="12">
+                                    <select class="form-control filter-select" data-column="13">
                                         <option value=""> Select WBS Lv4... </option>
                                         @foreach ($wbs_level_4s as $wbs_level_4)
                                             <option value="{{ $wbs_level_4 }}"> {{ $wbs_level_4 }} </option>
@@ -136,13 +136,13 @@
                                     {{ trans('cruds.rfa.fields.issueby') }}
 
                                     <input type="text" class="form-control filter-input"
-                                    placeholder="Search for Issue by..." data-column="14"/>
+                                    placeholder="Search for Issue by..." data-column="15"/>
                                 </th>
                                 <th>
                                     {{ trans('cruds.rfa.fields.assign') }}
 
                                     <input type="text" class="form-control filter-input"
-                                    placeholder="Search for Assign to..." data-column="15"/>
+                                    placeholder="Search for Assign to..." data-column="16"/>
                                 </th>
                                 <th>
                                     {{ trans('cruds.rfa.fields.file_upload_1') }}
@@ -153,19 +153,19 @@
                                 <th>
                                     {{ trans('cruds.rfa.fields.action_by') }}
                                     <input type="text" class="form-control filter-input"
-                                    placeholder="Search for Action by..." data-column="18"/>
+                                    placeholder="Search for Action by..." data-column="19"/>
                                 </th>
                                 <th>
                                     {{ trans('cruds.rfa.fields.comment_by') }}
 
                                     <input type="text" class="form-control filter-input"
-                                    placeholder="Search for Comment by..." data-column="19"/>
+                                    placeholder="Search for Comment by..." data-column="20"/>
                                 </th>
                                 <th>
                                     {{ trans('cruds.rfa.fields.information_by') }}
 
                                     <input type="text" class="form-control filter-input"
-                                    placeholder="Search for Information by..." data-column="20"/>
+                                    placeholder="Search for Information by..." data-column="21"/>
                                 </th>
                                 <th>
                                     {{ trans('cruds.rfa.fields.receive_date') }}
@@ -180,7 +180,7 @@
                                 <th>
                                     {{ trans('cruds.rfa.fields.comment_status') }}
 
-                                    <select class="form-control filter-select" data-column="24">
+                                    <select class="form-control filter-select" data-column="25">
                                         <option value=""> Select Status... </option>
                                         @foreach ($comment_statuses as $comment_statuse)
                                             <option value="{{ $comment_statuse }}"> {{ $comment_statuse }} </option>
@@ -194,7 +194,7 @@
                                     {{ trans('cruds.rfa.fields.document_ref') }}
 
                                     <input type="text" class="form-control filter-input"
-                                    placeholder="Search for Information by..." data-column="26"/>
+                                    placeholder="Search for Information by..." data-column="27"/>
                                 </th>
                                 
                                 <th>
@@ -203,7 +203,7 @@
                                 <th>
                                     {{ trans('cruds.rfa.fields.for_status') }}
                                    
-                                    <select class="form-control filter-select" data-column="28">
+                                    <select class="form-control filter-select" data-column="29">
                                         <option value=""> Select Status... </option>
                                         @foreach ($for_statuses as $for_statuse)
                                             <option value="{{ $for_statuse }}"> {{ $for_statuse }} </option>
@@ -231,7 +231,7 @@
                                 <th>
                                     {{ trans('cruds.rfa.fields.team') }}
 
-                                    <select class="form-control filter-select" data-column="33">
+                                    <select class="form-control filter-select" data-column="34">
                                         <option value=""> Select Type... </option>
                                         @foreach ($teams as $team)
                                             <option value="{{ $team }}"> {{ $team }} </option>

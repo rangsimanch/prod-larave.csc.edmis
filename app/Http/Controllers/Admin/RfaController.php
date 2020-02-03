@@ -43,12 +43,22 @@ class RfaController extends Controller
 
             $table->addColumn('date_counter', '&nbsp;');
             $table->editColumn('date_counter', function ($row) {
-                $target_date = new DateTime($row->target_date ? $row->target_date : "");
+                $get_target_date = str_replace('/', '-', $row->target_date ? $row->target_date : "");
+                $str_to_date = strtotime($get_target_date);
+                $format_date = date('m/d/Y',$str_to_date);
+                $target_date = new DateTime($format_date);
                 
                 $cur_date = new DateTime();
 
-                $counter_date = $cur_date->diff($target_date)->format("%d");
-                return $counter_date;
+                $counter_date = $cur_date->diff($target_date)->format("%a");
+                if($counter_date < 1000){
+                    return $counter_date + 2 . ' Days';
+                }
+                else{
+                    return 'Time Out';
+                }
+               
+                //return $cur_date->format("d/m/Y");
 
             });
 
@@ -588,26 +598,32 @@ class RfaController extends Controller
 
     public function update(UpdateRfaRequest $request, Rfa $rfa)
     {
+        
         if($rfa->document_status_id == 1){
             if($request->action_by_id != null){
                 $rfa['document_status_id'] = 2;
-                if($rfa->rfa_code != null){
-                    $rfa['incoming_number'] = "IN-" . $rfa->rfa_code ;
-                }
+                $distribute_date = new DateTime();
+                $rfa['distribute_date'] = $distribute_date->format('d/m/Y');
             }
         }
-        else if($rfa->document_status_id == 2){
+        if($rfa->document_status_id == 2){
             if($request->comment_status_id != null){
                 $rfa['document_status_id'] = 3;
+                $process_date = new DateTime();
+                $rfa['process_date'] = $process_date->format('d/m/Y');
             }
         }
-        else if($rfa->document_status_id == 3){
+        if($rfa->document_status_id == 3){
             if($request->for_status_id != null){
                 $rfa['document_status_id'] = 4;
-                if($rfa->rfa_code != null){
-                    $rfa['incoming_number'] = "OUT-" . $rfa->rfa_code ;
-                }
+                $outgoing_date = new DateTime();
+                $rfa['outgoing_date'] = $outgoing_date->format('d/m/Y');
             }
+        }
+
+        if($rfa->rfa_code != null){
+            $rfa['incoming_number'] = "IN-" . $rfa->rfa_code ;
+            $rfa['outgoing_number'] = "OUT-" . $rfa->rfa_code ;
         }
         
 
