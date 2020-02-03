@@ -244,7 +244,7 @@
                         </div>
                         <div class="form-group {{ $errors->has('receive_date') ? 'has-error' : '' }}">
                             <label for="receive_date">{{ trans('cruds.rfa.fields.receive_date') }}</label>
-                            <input class="form-control date receive_date " type="text" name="receive_date" id="receive_date" value="{{ old('receive_date') }}">
+                            <input class="form-control date r_date" type="text" name="receive_date" id="receive_date" value="{{ old('receive_date') }}">
                             @if($errors->has('receive_date'))
                                 <span class="help-block" role="alert">{{ $errors->first('receive_date') }}</span>
                             @endif
@@ -661,34 +661,46 @@ Dropzone.options.documentFileUploadDropzone = {
 
 
     $('.doc_counter').change(function(){
-        if($('.receive_date') != ''){
+        if($('.r_date') != ''){
             var parts =  document.getElementById("receive_date").value.split('/');
             var start_date = new Date(parts[2], parts[1] - 1, parts[0]);
             var target_date = new Date(parts[2], parts[1] - 1, parts[0]);   
             var addDate = 0;
             if($(this).val() == '7'){
                 var toggle_date = new Date(parts[2], parts[1] - 1, parts[0]);  
-                for(var i = 0; i<7; i++){
-                    if(toggle_date.getDay() == 'Sunday' || toggle_date.getDay() == 'Saturday'){
-                        addDate = addDate + 2;
-                        toggle_date = new Date(parts[2], parts[1] - 1, parts[0]+2);  
-                         console.log(toggle_date);
-                    }else{
-                        addDate = addDate + 1;
-                        toggle_date = new Date(parts[2], parts[1] - 1, parts[0]+1);  
-                        console.log(toggle_date);
-
+                for(var i = 0; i < 6; i++){
+                    if(toggle_date.getDay() == '6'){
+                        i--;
+                        addDate ++;
                     }
+                    else if(toggle_date.getDay() == '0'){
+                        i--;
+                        addDate ++;
+                    }
+                    else{
+                        addDate++;
+                    }
+                    toggle_date.setDate(toggle_date.getDate()+1);
+                    console.log(toggle_date.getDay() + ' addDate[' + addDate +']');
                 }
                 target_date.setDate(start_date.getDate() + addDate);
             }
             else{
-                for(var i = 0; i<14; i++){
-                    if(target_date.getDay() == 'Sunday' || target_date.getDay() == 'Saturday'){
-                        addDate = addDate + 2;
-                    }else{
-                        addDate = addDate + 1;
+                var toggle_date = new Date(parts[2], parts[1] - 1, parts[0]);  
+                for(var i = 0; i < 13; i++){
+                    if(toggle_date.getDay() == '6'){
+                        i--;
+                        addDate ++;
                     }
+                    else if(toggle_date.getDay() == '0'){
+                        i--;
+                        addDate ++;
+                    }
+                    else{
+                        addDate++;
+                    }
+                    toggle_date.setDate(toggle_date.getDate()+1);
+                    console.log(toggle_date.getDay() + ' addDate[' + addDate +']');
                 }
                 target_date.setDate(start_date.getDate() + addDate);
             }
@@ -702,26 +714,14 @@ Dropzone.options.documentFileUploadDropzone = {
         }
     });
 
-    $('.receive_date').change(function(){
-        if($('.doc_counter') != ''){
-            var parts =  document.getElementById("receive_date").value.split('/');
-            var start_date = new Date(parts[2], parts[1] - 1, parts[0]);
-            var target_date = new Date(parts[2], parts[1] - 1, parts[0]);   
-            if($('.doc_counter').val() == '7'){
-                target_date.setDate(start_date.getDate() + 7);
-            }
-            else{
-                target_date.setDate(start_date.getDate() + 14);
-            }
-            var dd = target_date.getDate();
-            var mm = target_date.getMonth() + 1;
-            var y = target_date.getFullYear();
+    $('.r_date').click(function(){
+        document.getElementById("target_date").value = null;
+        document.getElementById("target_date").setText = null;
+        $('.doc_counter').prop('selectedIndex', 0);
 
-            var format_target_date = dd + '/' + mm + '/' + y;
-            document.getElementById("target_date").value = format_target_date;
-            console.log(start_date);
-        }
+//        console.log('click');
     });
+
 
 
 </script>

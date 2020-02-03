@@ -29,6 +29,10 @@
                                 </th>
                                 
                                 <th>
+                                    Date Counter
+                                </th>
+                                
+                                <th>
                                     {{ trans('cruds.rfa.fields.document_status') }}
 
                                     <select class="form-control filter-select" data-column="1">
@@ -296,45 +300,46 @@
     ajax: "{{ route('admin.rfas.index') }}",
     columns: [
       { data: 'placeholder', name: 'placeholder' },   
-{ data: 'document_status_status_name', name: 'document_status.status_name' }, // 1
-{ data: 'title_eng', name: 'title_eng' }, // 2
-{ data: 'title', name: 'title' }, // 3
-{ data: 'title_cn', name: 'title_cn' }, // 4
-{ data: 'origin_number', name: 'origin_number' }, // 5
-{ data: 'document_number', name: 'document_number' }, // 6
-{ data: 'rfa_code', name: 'rfa_code' }, // 7
-{ data: 'type.type_code', name: 'type.type_code' }, // 8
-{ data: 'worktype', name: 'worktype' }, // 9
-{ data: 'construction_contract_code', name: 'construction_contract.code' }, // 10
-{ data: 'wbs_level_3_wbs_level_3_code', name: 'wbs_level_3.wbs_level_3_code' }, // 11
-{ data: 'wbs_level_4_wbs_level_4_code', name: 'wbs_level_4.wbs_level_4_code' }, // 12
-{ data: 'submit_date', name: 'submit_date' }, // 13
-{ data: 'issueby_name', name: 'issueby.name' }, // 14
-{ data: 'assign_name', name: 'assign.name' }, // 15
-{ data: 'file_upload_1', name: 'file_upload_1', sortable: false, searchable: false }, // 16
-{ data: 'commercial_file_upload', name: 'commercial_file_upload', sortable: false, searchable: false }, // 17
-{ data: 'action_by_name', name: 'action_by.name' }, // 18
-{ data: 'comment_by_name', name: 'comment_by.name' }, // 19
-{ data: 'information_by_name', name: 'information_by.name' }, // 20
-{ data: 'receive_date', name: 'receive_date' }, // 21
-{ data: 'target_date', name: 'target_date' }, // 22
-{ data: 'note_2', name: 'note_2' }, // 23
-{ data: 'comment_status_name', name: 'comment_status.name' }, // 24
-{ data: 'note_3', name: 'note_3' }, // 25
-{ data: 'document_ref', name: 'document_ref' }, // 26
-{ data: 'document_file_upload', name: 'document_file_upload', sortable: false, searchable: false }, // 27
-{ data: 'for_status_name', name: 'for_status.name' }, // 28
-{ data: 'created_at', name: 'created_at' }, // 29
-{ data: 'create_by_user_name', name: 'create_by_user.name' }, // 30
+      { data: 'date_counter', name: 'date_counter' },// 1
+{ data: 'document_status_status_name', name: 'document_status.status_name' }, // 2
+{ data: 'title_eng', name: 'title_eng' }, // 3
+{ data: 'title', name: 'title' }, // 4
+{ data: 'title_cn', name: 'title_cn' }, // 5
+{ data: 'origin_number', name: 'origin_number' }, // 6
+{ data: 'document_number', name: 'document_number' }, // 7
+{ data: 'rfa_code', name: 'rfa_code' }, // 8
+{ data: 'type.type_code', name: 'type.type_code' }, // 9
+{ data: 'worktype', name: 'worktype' }, // 10
+{ data: 'construction_contract_code', name: 'construction_contract.code' }, // 11
+{ data: 'wbs_level_3_wbs_level_3_code', name: 'wbs_level_3.wbs_level_3_code' }, // 12
+{ data: 'wbs_level_4_wbs_level_4_code', name: 'wbs_level_4.wbs_level_4_code' }, // 13
+{ data: 'submit_date', name: 'submit_date' }, // 14
+{ data: 'issueby_name', name: 'issueby.name' }, // 15
+{ data: 'assign_name', name: 'assign.name' }, // 16
+{ data: 'file_upload_1', name: 'file_upload_1', sortable: false, searchable: false }, // 17
+{ data: 'commercial_file_upload', name: 'commercial_file_upload', sortable: false, searchable: false }, // 18
+{ data: 'action_by_name', name: 'action_by.name' }, // 19
+{ data: 'comment_by_name', name: 'comment_by.name' }, // 20
+{ data: 'information_by_name', name: 'information_by.name' }, // 21
+{ data: 'receive_date', name: 'receive_date' }, // 22
+{ data: 'target_date', name: 'target_date' }, // 23
+{ data: 'note_2', name: 'note_2' }, // 24
+{ data: 'comment_status_name', name: 'comment_status.name' }, // 25
+{ data: 'note_3', name: 'note_3' }, // 26
+{ data: 'document_ref', name: 'document_ref' }, // 27
+{ data: 'document_file_upload', name: 'document_file_upload', sortable: false, searchable: false }, // 28
+{ data: 'for_status_name', name: 'for_status.name' }, // 29
+{ data: 'created_at', name: 'created_at' }, // 30
+{ data: 'create_by_user_name', name: 'create_by_user.name' }, // 31
 // { data: 'update_by_user_name', name: 'update_by_user.name' },
 // { data: 'approve_by_user_name', name: 'approve_by_user.name' },
-{ data: 'updated_at', name: 'updated_at' }, // 31
-{ data: 'hardcopy_date', name: 'hardcopy_date' }, // 32
-{ data: 'team_code', name: 'team.code' }, // 33
-{ data: 'check_revision', name: 'check_revision', visible: false,}, // 34
-{ data: 'actions', name: '{{ trans('global.actions') }}' } // 35
+{ data: 'updated_at', name: 'updated_at' }, // 32
+{ data: 'hardcopy_date', name: 'hardcopy_date' }, // 33
+{ data: 'team_code', name: 'team.code' }, // 34
+{ data: 'check_revision', name: 'check_revision', visible: false,}, // 35
+{ data: 'actions', name: '{{ trans('global.actions') }}' } // 36
     ],
-    order: [[ 29, 'desc' ]],
+    order: [[ 30, 'desc' ]],
     pageLength: 10,
   };
   $('.datatable-Rfa').DataTable(dtOverrideGlobals);

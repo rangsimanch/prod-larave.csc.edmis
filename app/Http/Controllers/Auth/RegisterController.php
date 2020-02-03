@@ -75,7 +75,6 @@ class RegisterController extends Controller
             'gender' => $data['gender'],
             'team_id' => $data['team_id'],
             'jobtitle_id' => $data['jobtitle_id'],
-            'dob' => $data['dob'],
         ]);
         
         $user->construction_contracts()->sync($data['construction_contracts']);

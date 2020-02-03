@@ -227,7 +227,7 @@ return [
             'updated_at_helper'             => '',
             'deleted_at'                    => 'Deleted at',
             'deleted_at_helper'             => '',
-            'type'                          => 'Type',
+            'type'                          => 'Documnet Type',
             'type_helper'                   => '',
             'comment_status'                => 'Comment Status',
             'comment_status_helper'         => '',

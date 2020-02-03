@@ -22,6 +22,8 @@ use App\Rfatype;
 use App\User;
 use App\UserAlert;
 use App\Team;
+use Carbon\Carbon;
+use DateTime;
 use Gate;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -38,8 +40,19 @@ class RfaController extends Controller
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
-            $table->addColumn('actions', '&nbsp;');
 
+            $table->addColumn('date_counter', '&nbsp;');
+            $table->editColumn('date_counter', function ($row) {
+                $target_date = new DateTime($row->target_date ? $row->target_date : "");
+                
+                $cur_date = new DateTime();
+
+                $counter_date = $cur_date->diff($target_date)->format("%d");
+                return $counter_date;
+
+            });
+
+            $table->addColumn('actions', '&nbsp;');
             $table->editColumn('actions', function ($row) {
                 $viewGate      = 'rfa_show';
                 $crudRoutePart = 'rfas';
@@ -125,6 +138,7 @@ class RfaController extends Controller
                 }
             }
             });
+            
 
             $table->editColumn('title_eng', function ($row) {
                 return $row->title_eng ? $row->title_eng : "";
@@ -326,7 +340,7 @@ class RfaController extends Controller
     {
         abort_if(Gate::denies('rfa_revision'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $types = Rfatype::all()->pluck('type_name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $types = Rfatype::all()->pluck('type_code', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $construction_contracts = ConstructionContract::all()->pluck('code', 'id')->prepend(trans('global.pleaseSelect'), '');
 
@@ -444,7 +458,7 @@ class RfaController extends Controller
     {
         abort_if(Gate::denies('rfa_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $types = Rfatype::all()->pluck('type_name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $types = Rfatype::all()->pluck('type_code', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $construction_contracts = ConstructionContract::all()->pluck('code', 'id')->prepend(trans('global.pleaseSelect'), '');
 
@@ -544,7 +558,7 @@ class RfaController extends Controller
     {
         abort_if(Gate::denies('rfa_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $types = Rfatype::all()->pluck('type_name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $types = Rfatype::all()->pluck('type_code', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $construction_contracts = ConstructionContract::all()->pluck('code', 'id')->prepend(trans('global.pleaseSelect'), '');
 

@@ -343,6 +343,10 @@
                             <a class="btn btn-default" href="{{ route('admin.rfas.index') }}">
                                 {{ trans('global.back_to_list') }}
                             </a>
+
+                            <a class="btn btn-default jpdf" ">
+                                View
+                            </a>
                         </div>
                     </div>
                 </div>
