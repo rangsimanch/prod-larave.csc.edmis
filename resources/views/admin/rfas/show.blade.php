@@ -395,7 +395,7 @@ $('.jpdf').click(function() {
     var rfa_code = "{{ $rfa->rfa_code }}";
     var submit_date = "{{ $rfa->submit_date }}";
     var note_1 = "{{ $rfa->note_1 }}";
-    var issue_by = "{{  $rfa->issueby->name}}";
+    var issue_by = "{{  $rfa->issueby->name ?? '' }}";
     var assign_to = "{{ $rfa->assign->name ?? '' }}";
     var wbslv3 = "{{ $rfa->wbs_level_3->wbs_level_3_name }}";
     var wbslv4 = "{{ $rfa->wbs_level_4->wbs_level_4_name }}";
