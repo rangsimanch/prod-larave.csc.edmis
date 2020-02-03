@@ -135,6 +135,9 @@ class RfaController extends Controller
             $table->editColumn('title_cn', function ($row) {
                 return $row->title_cn ? $row->title_cn : "";
             });
+            $table->editColumn('origin_number', function ($row) {
+                return $row->origin_number ? $row->origin_number : "";
+            });
             $table->editColumn('document_number', function ($row) {
                 return $row->document_number ? $row->document_number : "";
             });
@@ -199,6 +202,21 @@ class RfaController extends Controller
 
                 return implode(', ', $links);
             });
+
+            $table->editColumn('commercial_file_upload', function ($row) {
+                if (!$row->commercial_file_upload) {
+                    return '';
+                }
+
+                $links = [];
+
+                foreach ($row->commercial_file_upload as $media) {
+                    $links[] = '<a href="' . $media->getUrl() . '" target="_blank">' . trans('global.downloadFile') . '</a>';
+                }
+
+                return implode(', ', $links);
+            });
+
             $table->addColumn('comment_by_name', function ($row) {
                 return $row->comment_by ? $row->comment_by->name : '';
             });
@@ -216,6 +234,22 @@ class RfaController extends Controller
 
             $table->editColumn('note_3', function ($row) {
                 return $row->note_3 ? $row->note_3 : "";
+            });
+            $table->editColumn('document_file_upload', function ($row) {
+                if (!$row->document_file_upload) {
+                    return '';
+                }
+
+                $links = [];
+
+                foreach ($row->document_file_upload as $media) {
+                    $links[] = '<a href="' . $media->getUrl() . '" target="_blank">' . trans('global.downloadFile') . '</a>';
+                }
+
+                return implode(', ', $links);
+            });
+            $table->editColumn('document_ref', function ($row) {
+                return $row->document_ref ? $row->document_ref : "";
             });
             $table->addColumn('for_status_name', function ($row) {
                 return $row->for_status ? $row->for_status->name : '';
@@ -250,7 +284,7 @@ class RfaController extends Controller
                 return $row->check_revision ? $row->check_revision : '';
             });
 
-            $table->rawColumns(['actions', 'placeholder', 'type', 'construction_contract', 'wbs_level_3', 'wbs_level_4', 'issueby', 'assign', 'file_upload_1', 'comment_by', 'information_by', 'comment_status', 'for_status', 'document_status', 'action_by', 'create_by_user', 'update_by_user', 'approve_by_user', 'team', 'check_revision']);
+            $table->rawColumns(['actions', 'placeholder', 'type', 'construction_contract', 'wbs_level_3', 'wbs_level_4', 'issueby', 'assign', 'file_upload_1', 'comment_by', 'information_by', 'comment_status', 'for_status', 'document_status', 'action_by', 'create_by_user', 'update_by_user', 'approve_by_user', 'commercial_file_upload', 'document_file_upload', 'team', 'check_revision']);
 
             return $table->make(true);
         }
@@ -389,6 +423,19 @@ class RfaController extends Controller
             }
         }
 
+        foreach ($request->input('commercial_file_upload', []) as $file) {
+            $rfa->addMedia(storage_path('tmp/uploads/' . $file))->toMediaCollection('commercial_file_upload');
+        }
+
+        foreach ($request->input('document_file_upload', []) as $file) {
+            $rfa->addMedia(storage_path('tmp/uploads/' . $file))->toMediaCollection('document_file_upload');
+        }
+
+        if ($media = $request->input('ck-media', false)) {
+            Media::whereIn('id', $media)->update(['model_id' => $rfa->id]);
+        }
+
+
         return redirect()->route('admin.rfas.index');
     }
 
@@ -476,6 +523,19 @@ class RfaController extends Controller
         foreach ($request->input('file_upload_1', []) as $file) {
             $rfa->addMedia(storage_path('tmp/uploads/' . $file))->toMediaCollection('file_upload_1');
         }
+
+        foreach ($request->input('commercial_file_upload', []) as $file) {
+            $rfa->addMedia(storage_path('tmp/uploads/' . $file))->toMediaCollection('commercial_file_upload');
+        }
+
+        foreach ($request->input('document_file_upload', []) as $file) {
+            $rfa->addMedia(storage_path('tmp/uploads/' . $file))->toMediaCollection('document_file_upload');
+        }
+
+        if ($media = $request->input('ck-media', false)) {
+            Media::whereIn('id', $media)->update(['model_id' => $rfa->id]);
+        }
+
 
         return redirect()->route('admin.rfas.index');
     }
@@ -565,6 +625,19 @@ class RfaController extends Controller
             }
         }
 
+        foreach ($request->input('commercial_file_upload', []) as $file) {
+            $rfa->addMedia(storage_path('tmp/uploads/' . $file))->toMediaCollection('commercial_file_upload');
+        }
+
+        foreach ($request->input('document_file_upload', []) as $file) {
+            $rfa->addMedia(storage_path('tmp/uploads/' . $file))->toMediaCollection('document_file_upload');
+        }
+
+        if ($media = $request->input('ck-media', false)) {
+            Media::whereIn('id', $media)->update(['model_id' => $rfa->id]);
+        }
+
+
         return redirect()->route('admin.rfas.index');
     }
 
@@ -572,7 +645,7 @@ class RfaController extends Controller
     {
         abort_if(Gate::denies('rfa_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $rfa->load('type', 'construction_contract', 'wbs_level_3', 'wbs_level_4', 'issueby', 'assign', 'action_by', 'comment_by', 'information_by', 'comment_status', 'for_status', 'document_status', 'create_by_user', 'update_by_user', 'approve_by_user', 'team');
+        $rfa->load('type', 'construction_contract', 'wbs_level_3', 'wbs_level_4', 'issueby', 'assign', 'action_by', 'comment_by', 'information_by', 'comment_status', 'for_status', 'document_status', 'create_by_user', 'team');
 
         return view('admin.rfas.show', compact('rfa'));
     }
@@ -593,4 +666,16 @@ class RfaController extends Controller
         return response(null, Response::HTTP_NO_CONTENT);
     }
 
+    public function storeCKEditorImages(Request $request)
+    {
+        abort_if(Gate::denies('rfa_create') && Gate::denies('rfa_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $model         = new Rfa();
+        $model->id     = $request->input('crud_id', 0);
+        $model->exists = true;
+        $media         = $model->addMediaFromRequest('upload')->toMediaCollection('ck-media', 'public');
+
+        return response()->json(['id' => $media->id, 'url' => $media->getUrl()], Response::HTTP_CREATED);
+    }
 }
+

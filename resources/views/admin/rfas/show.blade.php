@@ -16,7 +16,15 @@
                             </a>
                         </div>
                         <table class="table table-bordered table-striped">
-                        <tbody>
+                            <tbody>
+                            <tr>
+                                    <th>
+                                        {{ trans('cruds.rfa.fields.document_status') }}
+                                    </th>
+                                    <td>
+                                        {{ $rfa->document_status->status_name ?? '' }}
+                                    </td>
+                                </tr>
                                 <tr>
                                     <th>
                                         {{ trans('cruds.rfa.fields.title_eng') }}
@@ -43,6 +51,14 @@
                                 </tr>
                                 <tr>
                                     <th>
+                                        {{ trans('cruds.rfa.fields.origin_number') }}
+                                    </th>
+                                    <td>
+                                        {{ $rfa->origin_number }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
                                         {{ trans('cruds.rfa.fields.document_number') }}
                                     </th>
                                     <td>
@@ -55,14 +71,6 @@
                                     </th>
                                     <td>
                                         {{ $rfa->rfa_code }}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th>
-                                        {{ trans('cruds.rfa.fields.review_time') }}
-                                    </th>
-                                    <td>
-                                        {{ $rfa->review_time }}
                                     </td>
                                 </tr>
                                 <tr>
@@ -144,9 +152,29 @@
                                     <td>
                                         @foreach($rfa->file_upload_1 as $key => $media)
                                             <a href="{{ $media->getUrl() }}" target="_blank">
-                                                {{ trans('global.view_file') }}
+                                                {{ trans('global.downloadFile') }}
                                             </a>
                                         @endforeach
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        {{ trans('cruds.rfa.fields.commercial_file_upload') }}
+                                    </th>
+                                    <td>
+                                        @foreach($rfa->commercial_file_upload as $key => $media)
+                                            <a href="{{ $media->getUrl() }}" target="_blank">
+                                                {{ trans('global.downloadFile') }}
+                                            </a>
+                                        @endforeach
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        {{ trans('cruds.rfa.fields.incoming_number') }}
+                                    </th>
+                                    <td>
+                                        {{ $rfa->incoming_number }}
                                     </td>
                                 </tr>
                                 <tr>
@@ -183,6 +211,23 @@
                                 </tr>
                                 <tr>
                                     <th>
+                                        {{ trans('cruds.rfa.fields.target_date') }}
+                                    </th>
+                                    <td>
+                                        {{ $rfa->target_date }}
+                                    </td>
+                                </tr>
+                                
+                                <tr>
+                                    <th>
+                                        {{ trans('cruds.rfa.fields.distribute_date') }}
+                                    </th>
+                                    <td>
+                                        {{ $rfa->distribute_date }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
                                         {{ trans('cruds.rfa.fields.note_2') }}
                                     </th>
                                     <td>
@@ -205,52 +250,33 @@
                                         {{ $rfa->note_3 }}
                                     </td>
                                 </tr>
+                                
                                 <tr>
                                     <th>
-                                        {{ trans('cruds.rfa.fields.for_status') }}
+                                        {{ trans('cruds.rfa.fields.document_ref') }}
                                     </th>
                                     <td>
-                                        {{ $rfa->for_status->name ?? '' }}
+                                        {{ $rfa->document_ref }}
                                     </td>
                                 </tr>
                                 <tr>
                                     <th>
-                                        {{ trans('cruds.rfa.fields.document_status') }}
+                                        {{ trans('cruds.rfa.fields.document_file_upload') }}
                                     </th>
-                                    <td>
-                                        {{ $rfa->document_status->status_name ?? '' }}
+                                <td>
+                                        @foreach($rfa->document_file_upload as $key => $media)
+                                            <a href="{{ $media->getUrl() }}" target="_blank">
+                                                {{ trans('global.view_file') }}
+                                            </a>
+                                        @endforeach
                                     </td>
                                 </tr>
                                 <tr>
                                     <th>
-                                        {{ trans('cruds.rfa.fields.create_by_user') }}
+                                        {{ trans('cruds.rfa.fields.document_description') }}
                                     </th>
                                     <td>
-                                        {{ $rfa->create_by_user->name ?? '' }}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th>
-                                        {{ trans('cruds.rfa.fields.incoming_number') }}
-                                    </th>
-                                    <td>
-                                        {{ $rfa->incoming_number }}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th>
-                                        {{ trans('cruds.rfa.fields.outgoing_number') }}
-                                    </th>
-                                    <td>
-                                        {{ $rfa->outgoing_number }}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th>
-                                        {{ trans('cruds.rfa.fields.distribute_date') }}
-                                    </th>
-                                    <td>
-                                        {{ $rfa->distribute_date }}
+                                        {{ $rfa->document_description }}
                                     </td>
                                 </tr>
                                 <tr>
@@ -261,12 +287,21 @@
                                         {{ $rfa->process_date }}
                                     </td>
                                 </tr>
+
                                 <tr>
                                     <th>
-                                        {{ trans('cruds.rfa.fields.outgoing_date') }}
+                                        {{ trans('cruds.rfa.fields.outgoing_number') }}
                                     </th>
                                     <td>
-                                        {{ $rfa->outgoing_date }}
+                                        {{ $rfa->outgoing_number }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        {{ trans('cruds.rfa.fields.for_status') }}
+                                    </th>
+                                    <td>
+                                        {{ $rfa->for_status->name ?? '' }}
                                     </td>
                                 </tr>
                                 <tr>
@@ -275,6 +310,23 @@
                                     </th>
                                     <td>
                                         {{ $rfa->note_4 }}
+                                    </td>
+                                </tr>
+                              
+                                <tr>
+                                    <th>
+                                        {{ trans('cruds.rfa.fields.hardcopy_date') }}
+                                    </th>
+                                    <td>
+                                        {{ $rfa->hardcopy_date }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        {{ trans('cruds.rfa.fields.outgoing_date') }}
+                                    </th>
+                                    <td>
+                                        {{ $rfa->outgoing_date }}
                                     </td>
                                 </tr>
                                 <tr>
@@ -291,9 +343,6 @@
                             <a class="btn btn-default" href="{{ route('admin.rfas.index') }}">
                                 {{ trans('global.back_to_list') }}
                             </a>
-
-                            <input type="button" id="button" name="button" class="jpdf" value="Submit"/>
-                               
                         </div>
                     </div>
                 </div>

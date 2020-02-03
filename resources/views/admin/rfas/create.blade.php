@@ -39,6 +39,14 @@
                             <span class="help-block">{{ trans('cruds.rfa.fields.title_cn_helper') }}</span>
                         </div>
 
+                        <div class="form-group {{ $errors->has('origin_number') ? 'has-error' : '' }}">
+                            <label for="origin_number">{{ trans('cruds.rfa.fields.origin_number') }}</label>
+                            <input class="form-control" type="text" name="origin_number" id="origin_number" value="{{ old('origin_number', '') }}">
+                            @if($errors->has(''))
+                                <span class="help-block" role="alert">{{ $errors->first('') }}</span>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.rfa.fields.origin_number_helper') }}</span>
+                        </div>
                         <!-- <div class="form-group {{ $errors->has('document_number') ? 'has-error' : '' }}">
                             <label for="document_number">{{ trans('cruds.rfa.fields.document_number') }}</label>
                             <input class="form-control" type="text" name="document_number" id="document_number" value="{{ old('document_number', '') }}">
@@ -165,7 +173,7 @@
                         </div>
                         <div class="form-group {{ $errors->has('note_1') ? 'has-error' : '' }}">
                             <label for="note_1">{{ trans('cruds.rfa.fields.note_1') }}</label>
-                            <textarea class="form-control ckeditor" name="note_1" id="note_1">{!! old('note_1') !!}</textarea>
+                            <textarea class="form-control" name="note_1" id="note_1">{!! old('note_1') !!}</textarea>
                             @if($errors->has('note_1'))
                                 <span class="help-block" role="alert">{{ $errors->first('note_1') }}</span>
                             @endif
@@ -181,6 +189,17 @@
                             @endif
                             <span class="help-block">{{ trans('cruds.rfa.fields.file_upload_1_helper') }}</span>
                         </div>
+
+                        <div class="form-group {{ $errors->has('commercial_file_upload') ? 'has-error' : '' }}">
+                            <label for="commercial_file_upload">{{ trans('cruds.rfa.fields.commercial_file_upload') }}</label>
+                            <div class="needsclick dropzone" id="commercial_file_upload-dropzone">
+                            </div>
+                            @if($errors->has(''))
+                                <span class="help-block" role="alert">{{ $errors->first('') }}</span>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.rfa.fields.commercial_file_upload_helper') }}</span>
+                        </div>
+
                         @endcan
 
                         @can('rfa_panel_b')
@@ -225,11 +244,33 @@
                         </div>
                         <div class="form-group {{ $errors->has('receive_date') ? 'has-error' : '' }}">
                             <label for="receive_date">{{ trans('cruds.rfa.fields.receive_date') }}</label>
-                            <input class="form-control date" type="text" name="receive_date" id="receive_date" value="{{ old('receive_date') }}">
+                            <input class="form-control date receive_date " type="text" name="receive_date" id="receive_date" value="{{ old('receive_date') }}">
                             @if($errors->has('receive_date'))
                                 <span class="help-block" role="alert">{{ $errors->first('receive_date') }}</span>
                             @endif
                             <span class="help-block">{{ trans('cruds.rfa.fields.receive_date_helper') }}</span>
+                        </div>
+                        <div class="form-group {{ $errors->has('doc_count') ? 'has-error' : '' }}">
+                            <label>{{ trans('cruds.rfa.fields.doc_count') }}</label>
+                            <select class="form-control doc_counter" id="doc_count_{{ $key }}" name="doc_count">
+                            <option value disabled {{ old('doc_count', null) === null ? 'selected' : '' }}>{{ trans('global.pleaseSelect') }}</option>
+                            @foreach(App\Rfa::DOC_COUNT_RADIO as $key => $label)
+                            <option value="{{ $key }}" {{ old('doc_count', '') === (string) $key ? 'selected' : '' }}>{{ $label . ' Days' }}</option>
+                            @endforeach
+                            </select>
+                            @if($errors->has(''))
+                                <span class="help-block" role="alert">{{ $errors->first('') }}</span>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.rfa.fields.doc_count_helper') }}</span>
+                        </div>
+
+                        <div class="form-group {{ $errors->has('target_date') ? 'has-error' : '' }}">
+                            <label for="target_date">{{ trans('cruds.rfa.fields.target_date') }}</label>
+                            <input readonly class="form-control date" type="text" name="target_date" id="target_date" value="{{ old('target_date') }}">
+                            @if($errors->has(''))
+                                <span class="help-block" role="alert">{{ $errors->first('') }}</span>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.rfa.fields.target_date_helper') }}</span>
                         </div>
                         <div class="form-group {{ $errors->has('note_2') ? 'has-error' : '' }}">
                             <label for="note_2">{{ trans('cruds.rfa.fields.note_2') }}</label>
@@ -264,6 +305,32 @@
                             @endif
                             <span class="help-block">{{ trans('cruds.rfa.fields.note_3_helper') }}</span>
                         </div>
+
+                        <div class="form-group {{ $errors->has('document_ref') ? 'has-error' : '' }}">
+                            <label for="document_ref">{{ trans('cruds.rfa.fields.document_ref') }}</label>
+                            <input class="form-control" type="text" name="document_ref" id="document_ref" value="{{ old('document_ref', '') }}">
+                            @if($errors->has(''))
+                                <span class="help-block" role="alert">{{ $errors->first('') }}</span>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.rfa.fields.document_ref_helper') }}</span>
+                        </div>
+                        <div class="form-group {{ $errors->has('document_file_upload') ? 'has-error' : '' }}">
+                            <label for="document_file_upload">{{ trans('cruds.rfa.fields.document_file_upload') }}</label>
+                            <div class="needsclick dropzone" id="document_file_upload-dropzone">
+                            </div>
+                            @if($errors->has(''))
+                                <span class="help-block" role="alert">{{ $errors->first('') }}</span>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.rfa.fields.document_file_upload_helper') }}</span>
+                        </div>
+                        <div class="form-group {{ $errors->has('document_description') ? 'has-error' : '' }}">
+                            <label for="document_description">{{ trans('cruds.rfa.fields.document_description') }}</label>
+                            <textarea class="form-control" name="document_description" id="document_description">{{ old('document_description') }}</textarea>
+                            @if($errors->has(''))
+                                <span class="help-block" role="alert">{{ $errors->first('') }}</span>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.rfa.fields.document_description_helper') }}</span>
+                        </div>
                         @endcan
                         
                         @can('rfa_panel_d')
@@ -289,6 +356,15 @@
                                 <span class="help-block" role="alert">{{ $errors->first('') }}</span>
                             @endif
                             <span class="help-block">{{ trans('cruds.rfa.fields.note_4_helper') }}</span>
+                        </div>
+
+                        <div class="form-group {{ $errors->has('hardcopy_date') ? 'has-error' : '' }}">
+                            <label for="hardcopy_date">{{ trans('cruds.rfa.fields.hardcopy_date') }}</label>
+                            <input class="form-control date" type="text" name="hardcopy_date" id="hardcopy_date" value="{{ old('hardcopy_date') }}">
+                            @if($errors->has(''))
+                                <span class="help-block" role="alert">{{ $errors->first('') }}</span>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.rfa.fields.hardcopy_date_helper') }}</span>
                         </div>
 
                         @can('rfa_edit_all')
@@ -329,11 +405,76 @@
 @endsection
 
 @section('scripts')
+@section('scripts')
+<script>
+    $(document).ready(function () {
+  function SimpleUploadAdapter(editor) {
+    editor.plugins.get('FileRepository').createUploadAdapter = function(loader) {
+      return {
+        upload: function() {
+          return loader.file
+            .then(function (file) {
+              return new Promise(function(resolve, reject) {
+                // Init request
+                var xhr = new XMLHttpRequest();
+                xhr.open('POST', '/admin/rfas/ckmedia', true);
+                xhr.setRequestHeader('x-csrf-token', window._token);
+                xhr.setRequestHeader('Accept', 'application/json');
+                xhr.responseType = 'json';
+
+                // Init listeners
+                var genericErrorText = `Couldn't upload file: ${ file.name }.`;
+                xhr.addEventListener('error', function() { reject(genericErrorText) });
+                xhr.addEventListener('abort', function() { reject() });
+                xhr.addEventListener('load', function() {
+                  var response = xhr.response;
+
+                  if (!response || xhr.status !== 201) {
+                    return reject(response && response.message ? `${genericErrorText}\n${xhr.status} ${response.message}` : `${genericErrorText}\n ${xhr.status} ${xhr.statusText}`);
+                  }
+
+                  $('form').append('<input type="hidden" name="ck-media[]" value="' + response.id + '">');
+
+                  resolve({ default: response.url });
+                });
+
+                if (xhr.upload) {
+                  xhr.upload.addEventListener('progress', function(e) {
+                    if (e.lengthComputable) {
+                      loader.uploadTotal = e.total;
+                      loader.uploaded = e.loaded;
+                    }
+                  });
+                }
+
+                // Send request
+                var data = new FormData();
+                data.append('upload', file);
+                data.append('crud_id', {{ $rfa->id ?? 0 }});
+                xhr.send(data);
+              });
+            })
+        }
+      };
+    }
+  }
+
+  var allEditors = document.querySelectorAll('.ckeditor');
+  for (var i = 0; i < allEditors.length; ++i) {
+    ClassicEditor.create(
+      allEditors[i], {
+        extraPlugins: [SimpleUploadAdapter]
+      }
+    );
+  }
+});
+</script>
+
 <script>
     var uploadedFileUpload1Map = {}
 Dropzone.options.fileUpload1Dropzone = {
     url: '{{ route('admin.rfas.storeMedia') }}',
-    maxFilesize: 500, // MB
+    maxFilesize: 200, // MB
     addRemoveLinks: true,
     headers: {
       'X-CSRF-TOKEN': "{{ csrf_token() }}"
@@ -385,6 +526,118 @@ Dropzone.options.fileUpload1Dropzone = {
      }
 }
 </script>
+<script>
+    var uploadedCommercialFileUploadMap = {}
+Dropzone.options.commercialFileUploadDropzone = {
+    url: '{{ route('admin.rfas.storeMedia') }}',
+    maxFilesize: 500, // MB
+    addRemoveLinks: true,
+    headers: {
+      'X-CSRF-TOKEN': "{{ csrf_token() }}"
+    },
+    params: {
+      size: 500
+    },
+    success: function (file, response) {
+      $('form').append('<input type="hidden" name="commercial_file_upload[]" value="' + response.name + '">')
+      uploadedCommercialFileUploadMap[file.name] = response.name
+    },
+    removedfile: function (file) {
+      file.previewElement.remove()
+      var name = ''
+      if (typeof file.file_name !== 'undefined') {
+        name = file.file_name
+      } else {
+        name = uploadedCommercialFileUploadMap[file.name]
+      }
+      $('form').find('input[name="commercial_file_upload[]"][value="' + name + '"]').remove()
+    },
+    init: function () {
+@if(isset($rfa) && $rfa->commercial_file_upload)
+          var files =
+            {!! json_encode($rfa->commercial_file_upload) !!}
+              for (var i in files) {
+              var file = files[i]
+              this.options.addedfile.call(this, file)
+              file.previewElement.classList.add('dz-complete')
+              $('form').append('<input type="hidden" name="commercial_file_upload[]" value="' + file.file_name + '">')
+            }
+@endif
+    },
+     error: function (file, response) {
+         if ($.type(response) === 'string') {
+             var message = response //dropzone sends it's own error messages in string
+         } else {
+             var message = response.errors.file
+         }
+         file.previewElement.classList.add('dz-error')
+         _ref = file.previewElement.querySelectorAll('[data-dz-errormessage]')
+         _results = []
+         for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+             node = _ref[_i]
+             _results.push(node.textContent = message)
+         }
+
+         return _results
+     }
+}
+</script>
+<script>
+    var uploadedDocumentFileUploadMap = {}
+Dropzone.options.documentFileUploadDropzone = {
+    url: '{{ route('admin.rfas.storeMedia') }}',
+    maxFilesize: 500, // MB
+    addRemoveLinks: true,
+    headers: {
+      'X-CSRF-TOKEN': "{{ csrf_token() }}"
+    },
+    params: {
+      size: 500
+    },
+    success: function (file, response) {
+      $('form').append('<input type="hidden" name="document_file_upload[]" value="' + response.name + '">')
+      uploadedDocumentFileUploadMap[file.name] = response.name
+    },
+    removedfile: function (file) {
+      file.previewElement.remove()
+      var name = ''
+      if (typeof file.file_name !== 'undefined') {
+        name = file.file_name
+      } else {
+        name = uploadedDocumentFileUploadMap[file.name]
+      }
+      $('form').find('input[name="document_file_upload[]"][value="' + name + '"]').remove()
+    },
+    init: function () {
+@if(isset($rfa) && $rfa->document_file_upload)
+          var files =
+            {!! json_encode($rfa->document_file_upload) !!}
+              for (var i in files) {
+              var file = files[i]
+              this.options.addedfile.call(this, file)
+              file.previewElement.classList.add('dz-complete')
+              $('form').append('<input type="hidden" name="document_file_upload[]" value="' + file.file_name + '">')
+            }
+@endif
+    },
+     error: function (file, response) {
+         if ($.type(response) === 'string') {
+             var message = response //dropzone sends it's own error messages in string
+         } else {
+             var message = response.errors.file
+         }
+         file.previewElement.classList.add('dz-error')
+         _ref = file.previewElement.querySelectorAll('[data-dz-errormessage]')
+         _results = []
+         for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+             node = _ref[_i]
+             _results.push(node.textContent = message)
+         }
+
+         return _results
+     }
+}
+</script>
 
 <script type="text/javascript">
     $('.wbslv3').change(function(){
@@ -405,5 +658,71 @@ Dropzone.options.fileUpload1Dropzone = {
             })
         }
     });
+
+
+    $('.doc_counter').change(function(){
+        if($('.receive_date') != ''){
+            var parts =  document.getElementById("receive_date").value.split('/');
+            var start_date = new Date(parts[2], parts[1] - 1, parts[0]);
+            var target_date = new Date(parts[2], parts[1] - 1, parts[0]);   
+            var addDate = 0;
+            if($(this).val() == '7'){
+                var toggle_date = new Date(parts[2], parts[1] - 1, parts[0]);  
+                for(var i = 0; i<7; i++){
+                    if(toggle_date.getDay() == 'Sunday' || toggle_date.getDay() == 'Saturday'){
+                        addDate = addDate + 2;
+                        toggle_date = new Date(parts[2], parts[1] - 1, parts[0]+2);  
+                         console.log(toggle_date);
+                    }else{
+                        addDate = addDate + 1;
+                        toggle_date = new Date(parts[2], parts[1] - 1, parts[0]+1);  
+                        console.log(toggle_date);
+
+                    }
+                }
+                target_date.setDate(start_date.getDate() + addDate);
+            }
+            else{
+                for(var i = 0; i<14; i++){
+                    if(target_date.getDay() == 'Sunday' || target_date.getDay() == 'Saturday'){
+                        addDate = addDate + 2;
+                    }else{
+                        addDate = addDate + 1;
+                    }
+                }
+                target_date.setDate(start_date.getDate() + addDate);
+            }
+            var dd = target_date.getDate();
+            var mm = target_date.getMonth() + 1;
+            var y = target_date.getFullYear();
+
+            var format_target_date = dd + '/' + mm + '/' + y;
+            document.getElementById("target_date").value = format_target_date;
+           
+        }
+    });
+
+    $('.receive_date').change(function(){
+        if($('.doc_counter') != ''){
+            var parts =  document.getElementById("receive_date").value.split('/');
+            var start_date = new Date(parts[2], parts[1] - 1, parts[0]);
+            var target_date = new Date(parts[2], parts[1] - 1, parts[0]);   
+            if($('.doc_counter').val() == '7'){
+                target_date.setDate(start_date.getDate() + 7);
+            }
+            else{
+                target_date.setDate(start_date.getDate() + 14);
+            }
+            var dd = target_date.getDate();
+            var mm = target_date.getMonth() + 1;
+            var y = target_date.getFullYear();
+
+            var format_target_date = dd + '/' + mm + '/' + y;
+            document.getElementById("target_date").value = format_target_date;
+            console.log(start_date);
+        }
+    });
+
+
 </script>
 @endsection

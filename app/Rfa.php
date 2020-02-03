@@ -19,6 +19,13 @@ class Rfa extends Model implements HasMedia
 
     protected $appends = [
         'file_upload_1',
+        'document_file_upload',
+        'commercial_file_upload',
+    ];
+
+    const DOC_COUNT_RADIO = [
+        '7'  => '7',
+        '14' => '14',
     ];
 
     const WORKTYPE_SELECT = [
@@ -32,9 +39,11 @@ class Rfa extends Model implements HasMedia
         'updated_at',
         'deleted_at',
         'submit_date',
+        'target_date',
         'receive_date',
         'process_date',
         'outgoing_date',
+        'hardcopy_date',
         'distribute_date',
     ];
 
@@ -49,44 +58,48 @@ class Rfa extends Model implements HasMedia
 
     protected $fillable = [
         'title',
+        'note_2',
         'note_4',
         'note_3',
-        'note_2',
         'note_1',
-        'team_id',
         'type_id',
-        'title_cn',
+        'team_id',
         'rfa_code',
-        'final_date',
         'worktype',
-        'assign_id',
+        'title_cn',
         'title_eng',
-        'issueby_id',
+        'assign_id',
+        'doc_count',
         'deleted_at',
         'updated_at',
+        'final_date',
+        'issueby_id',
         'created_at',
-        'submit_date',
+        'target_date',
         'review_time',
+        'submit_date',
         'receive_date',
         'action_by_id',
+        'document_ref',
         'process_date',
         'for_status_id',
-        'comment_by_id',
         'outgoing_date',
+        'comment_by_id',
+        'origin_number',
+        'hardcopy_date',
         'wbs_level_4_id',
         'wbs_level_3_id',
-        'document_number',
-        'comment_status_id',
-        'information_by_id',
-        'create_by_user_id',
-        'update_by_user_id',
         'incoming_number',
         'outgoing_number',
         'distribute_date',
+        'document_number',
+        'information_by_id',
+        'create_by_user_id',
+        'comment_status_id',
         'document_status_id',
-        'approve_by_user_id',
-        'check_revision',
+        'document_description',
         'construction_contract_id',
+        'check_revision',
     ];
 
     public static function boot()
@@ -267,5 +280,34 @@ class Rfa extends Model implements HasMedia
     public function setFinalDateAttribute($value)
     {
         $this->attributes['final_date'] = $value ? Carbon::createFromFormat(config('panel.date_format'), $value)->format('Y-m-d') : null;
+    }
+    public function getCommercialFileUploadAttribute()
+    {
+        return $this->getMedia('commercial_file_upload');
+    }
+
+    public function getDocumentFileUploadAttribute()
+    {
+        return $this->getMedia('document_file_upload');
+    }
+
+    public function getTargetDateAttribute($value)
+    {
+        return $value ? Carbon::parse($value)->format(config('panel.date_format')) : null;
+    }
+
+    public function setTargetDateAttribute($value)
+    {
+        $this->attributes['target_date'] = $value ? Carbon::createFromFormat(config('panel.date_format'), $value)->format('Y-m-d') : null;
+    }
+
+    public function getHardcopyDateAttribute($value)
+    {
+        return $value ? Carbon::parse($value)->format(config('panel.date_format')) : null;
+    }
+
+    public function setHardcopyDateAttribute($value)
+    {
+        $this->attributes['hardcopy_date'] = $value ? Carbon::createFromFormat(config('panel.date_format'), $value)->format('Y-m-d') : null;
     }
 }
