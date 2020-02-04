@@ -82,6 +82,7 @@ class Rfa extends Model implements HasMedia
         'spec_ref_no',
         'review_time',
         'target_date',
+        'check_revision',
         'action_by_id',
         'receive_date',
         'document_ref',
