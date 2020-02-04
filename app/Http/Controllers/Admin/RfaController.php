@@ -308,6 +308,22 @@ class RfaController extends Controller
                 return $row->check_revision ? $row->check_revision : '';
             });
 
+            $table->editColumn('bill', function ($row) {
+                return $row->bill ? $row->bill : "";
+            });
+            $table->editColumn('qty_page', function ($row) {
+                return $row->qty_page ? $row->qty_page : "";
+            });
+            $table->editColumn('spec_ref_no', function ($row) {
+                return $row->spec_ref_no ? $row->spec_ref_no : "";
+            });
+            $table->editColumn('clause', function ($row) {
+                return $row->clause ? $row->clause : "";
+            });
+            $table->editColumn('contract_drawing_no', function ($row) {
+                return $row->contract_drawing_no ? $row->contract_drawing_no : "";
+            });
+
             $table->rawColumns(['actions', 'placeholder', 'type', 'construction_contract', 'wbs_level_3', 'wbs_level_4', 'issueby', 'assign', 'file_upload_1', 'comment_by', 'information_by', 'comment_status', 'for_status', 'document_status', 'action_by', 'create_by_user', 'update_by_user', 'approve_by_user', 'commercial_file_upload', 'document_file_upload', 'team', 'check_revision']);
 
             return $table->make(true);

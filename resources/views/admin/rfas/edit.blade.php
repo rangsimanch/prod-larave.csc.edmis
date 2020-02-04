@@ -15,6 +15,14 @@
                         
                         @can('rfa_panel_a')
                         <legend> Constractor RFA Submittal </legend>
+                        <div class="form-group {{ $errors->has('bill') ? 'has-error' : '' }}">
+                            <label for="bill">{{ trans('cruds.rfa.fields.bill') }}</label>
+                            <input class="form-control" type="text" name="bill" id="bill" value="{{ old('bill', $rfa->bill) }}">
+                            @if($errors->has(''))
+                                <span class="help-block" role="alert">{{ $errors->first('') }}</span>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.rfa.fields.bill_helper') }}</span>
+                        </div>
                         <div class="form-group {{ $errors->has('title_eng') ? 'has-error' : '' }}">
                             <label for="title_eng">{{ trans('cruds.rfa.fields.title_eng') }}</label>
                             <input class="form-control" type="text" name="title_eng" id="title_eng" value="{{ old('title_eng', $rfa->title_eng) }}">
@@ -184,6 +192,14 @@
                             @endif
                             <span class="help-block">{{ trans('cruds.rfa.fields.file_upload_1_helper') }}</span>
                         </div>
+                        <div class="form-group {{ $errors->has('qty_page') ? 'has-error' : '' }}">
+                            <label for="qty_page">{{ trans('cruds.rfa.fields.qty_page') }}</label>
+                            <input class="form-control" type="text" name="qty_page" id="qty_page" value="{{ old('qty_page', $rfa->qty_page) }}">
+                            @if($errors->has(''))
+                                <span class="help-block" role="alert">{{ $errors->first('') }}</span>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.rfa.fields.qty_page_helper') }}</span>
+                        </div>
                         <div class="form-group {{ $errors->has('commercial_file_upload') ? 'has-error' : '' }}">
                             <label for="commercial_file_upload">{{ trans('cruds.rfa.fields.commercial_file_upload') }}</label>
                             <div class="needsclick dropzone" id="commercial_file_upload-dropzone">
@@ -192,6 +208,31 @@
                                 <span class="help-block" role="alert">{{ $errors->first('') }}</span>
                             @endif
                             <span class="help-block">{{ trans('cruds.rfa.fields.commercial_file_upload_helper') }}</span>
+                        </div>
+
+                        <div class="form-group {{ $errors->has('spec_ref_no') ? 'has-error' : '' }}">
+                            <label for="spec_ref_no">{{ trans('cruds.rfa.fields.spec_ref_no') }}</label>
+                            <input class="form-control" type="text" name="spec_ref_no" id="spec_ref_no" value="{{ old('spec_ref_no', $rfa->spec_ref_no) }}">
+                            @if($errors->has(''))
+                                <span class="help-block" role="alert">{{ $errors->first('') }}</span>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.rfa.fields.spec_ref_no_helper') }}</span>
+                        </div>
+                        <div class="form-group {{ $errors->has('clause') ? 'has-error' : '' }}">
+                            <label for="clause">{{ trans('cruds.rfa.fields.clause') }}</label>
+                            <input class="form-control" type="text" name="clause" id="clause" value="{{ old('clause', $rfa->clause) }}">
+                            @if($errors->has(''))
+                                <span class="help-block" role="alert">{{ $errors->first('') }}</span>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.rfa.fields.clause_helper') }}</span>
+                        </div>
+                        <div class="form-group {{ $errors->has('contract_drawing_no') ? 'has-error' : '' }}">
+                            <label for="contract_drawing_no">{{ trans('cruds.rfa.fields.contract_drawing_no') }}</label>
+                            <input class="form-control" type="text" name="contract_drawing_no" id="contract_drawing_no" value="{{ old('contract_drawing_no', $rfa->contract_drawing_no) }}">
+                            @if($errors->has(''))
+                                <span class="help-block" role="alert">{{ $errors->first('') }}</span>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.rfa.fields.contract_drawing_no_helper') }}</span>
                         </div>
                         @endcan
 
