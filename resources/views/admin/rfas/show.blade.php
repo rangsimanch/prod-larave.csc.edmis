@@ -479,14 +479,14 @@ $('.jpdf').click(function() {
             'text/html');
         var wbs = dom.body.textContent;
     }
-    var bill = "{{ $rfa->bill }}";
+    var bill = "{{ $rfa->bill ?? '' }}";
     var parser = new DOMParser;
     var dom = parser.parseFromString(
             '<!doctype html><body>' + bill,
             'text/html');
     var bill = dom.body.textContent;
 
-    var qty_page = "{{ $rfa->qty_page }}";
+    var qty_page = "{{ $rfa->qty_page ?? '' }}";
 
     var document_name = "{{ $rfa->file_upload_1 }}";
     var parser = new DOMParser;
@@ -496,7 +496,7 @@ $('.jpdf').click(function() {
     var document_name = '';
     
 
-    var spec_ref_no = "{{ $rfa->spec_ref_no }}";
+    var spec_ref_no = "{{ $rfa->spec_ref_no ?? '' }}";
     var parser = new DOMParser;
     var dom = parser.parseFromString(
             '<!doctype html><body>' + spec_ref_no,
@@ -504,19 +504,19 @@ $('.jpdf').click(function() {
     var spec_ref_no = dom.body.textContent;
 
     var clause = "{{ $rfa->clause }}";
-    var contract_drawing_no = "{{ $rfa->contract_drawing_no }}";
+    var contract_drawing_no = "{{ $rfa->contract_drawing_no ?? '' }}";
     
-    var incoming_number = "{{ $rfa->incoming_number }}";
-    var receive_date = "{{ $rfa->receive_date }}";
+    var incoming_number = "{{ $rfa->incoming_number ?? '' }}";
+    var receive_date = "{{ $rfa->receive_date ?? '' }}";
     
-    var note_2 = "{{ $rfa->note_2 }}";
+    var note_2 = "{{ $rfa->note_2  }}";
     var parser = new DOMParser;
     var dom = parser.parseFromString(
             '<!doctype html><body>' + note_2,
             'text/html');
     var note_2 = dom.body.textContent;
 
-    var distribute_date = "{{ $rfa->distribute_date }}";
+    var distribute_date = "{{ $rfa->distribute_date ?? '' }}";
 
     var note_3 = "{{ $rfa->note_3 }}";
     var parser = new DOMParser;
@@ -526,10 +526,10 @@ $('.jpdf').click(function() {
     var note_3 = dom.body.textContent;
 
     var action_by = "{{ $rfa->action_by->name ?? '' }}";
-    var process_date = "{{ $rfa->process_date }}";
+    var process_date = "{{ $rfa->process_date ?? '' }}";
     
-    var outgoing_number = "{{ $rfa->outgoing_number }}";
-    var outgoing_date = "{{ $rfa->outgoing_date }}"
+    var outgoing_number = "{{ $rfa->outgoing_number ?? '' }}";
+    var outgoing_date = "{{ $rfa->outgoing_date ?? '' }}"
 
     var note_4 = "{{ $rfa->note_4 }}";
     var parser = new DOMParser;
@@ -538,8 +538,8 @@ $('.jpdf').click(function() {
             'text/html');
     var note_4 = dom.body.textContent;
 
-    var comment_status = "{{$rfa->comment_status->name }}";
-    var for_status = "{{ $rfa->for_status->name }}";
+    var comment_status = "{{$rfa->comment_status->name ?? '' }}";
+    var for_status = "{{ $rfa->for_status->name ?? '' }}";
 
 
     //////// Panel A ////////
