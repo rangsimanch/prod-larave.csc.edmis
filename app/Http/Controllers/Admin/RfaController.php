@@ -419,7 +419,7 @@ class RfaController extends Controller
         if(strcmp($request->check_revision,"f")){
             $data['rfa_code'] = $rfa_code . '_R' . $revision_number;
         }else{
-            $rfa_code = substr($rfa_code,0,14);
+            $rfa_code = substr($rfa_code,0,15);
             $data['rfa_code'] = $rfa_code . '_R' . $revision_number;
         }
         //Document Number
@@ -428,12 +428,13 @@ class RfaController extends Controller
             $data['document_number'] = $document_number . "_R" . $revision_number;
         }
         else{
-            $document_number = substr($document_number,0,22);
+            $document_number = substr($document_number,0,23);
             $data['document_number'] = $document_number . "_R" . $revision_number;
         }
        
 
         $data['check_revision'] = "f";
+        $data['rfa_count'] = $request->rfa_count;
         
         Rfa::where('id', $request->id)->update(['check_revision' => "t"]);
 
@@ -530,9 +531,11 @@ class RfaController extends Controller
             //ConstructionContart
         $const_code = ConstructionContract::where('id','=',$request->construction_contract_id)->value('code');
             //Next Number
-        $nextId = DB::table('rfas')->max('id') + 1;
-        $str_length = 5;
-        $doc_number = substr("00000{$nextId}", -$str_length);
+        $previousId = Rfa::orderBy('id', 'desc')->value('rfa_count');
+        $nextId = $previousId + 1;
+        $data['rfa_count'] = $nextId;
+        $str_length = 6;
+        $doc_number = substr("000000{$nextId}", -$str_length);
         $cur_date = date("ymd");
         $code_year = substr($cur_date,0,2);
         $code_mouth = substr($cur_date,2,2);

@@ -296,6 +296,10 @@ return [
             'clause_helper'                 => '',
             'contract_drawing_no'           => 'Contract Drawing No.',
             'contract_drawing_no_helper'    => '',
+            'attach_file_name'              => 'Attach File Name',
+            'attach_file_name_helper'       => '',
+            'rfa_count'                     => 'Rfa Count',
+            'rfa_count_helper'              => '',
 
             
         ],

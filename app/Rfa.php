@@ -105,6 +105,8 @@ class Rfa extends Model implements HasMedia
         'contract_drawing_no',
         'document_description',
         'construction_contract_id',
+        'attach_file_name',
+        'rfa_count',
     ];
 
     public static function boot()

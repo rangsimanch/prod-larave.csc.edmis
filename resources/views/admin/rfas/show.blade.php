@@ -383,10 +383,11 @@
                             <a class="btn btn-default" href="{{ route('admin.rfas.index') }}">
                                 {{ trans('global.back_to_list') }}
                             </a>
-
+                            @can('rfa_form')
                             <a class="btn btn-default jpdf" ">
-                                View
+                                View RFA Form
                             </a>
+                            @endcan
                         </div>
                     </div>
                 </div>

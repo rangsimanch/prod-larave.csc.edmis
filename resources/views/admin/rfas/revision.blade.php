@@ -21,6 +21,7 @@
                         <input class="form-control" type="hidden"  name="document_number" id="document_number" value="{{ old('document_number', $rfa->document_number) }}">
                         <input class="form-control" type="hidden"  name="check_revision" id="check_revision" value="t">
                         <input class="form-control" type="hidden"  name="check_revision" id="check_revision" value="{{ old('check_revision', $rfa->check_revision) }}">
+                        <input class="form-control" type="hidden"  name="rfa_count" id="rfa_count" value="{{ old('rfa_count', $rfa->rfa_count) }}">
                         
                         <div class="form-group {{ $errors->has('bill') ? 'has-error' : '' }}">
                             <label for="bill">{{ trans('cruds.rfa.fields.bill') }}</label>
@@ -193,6 +194,15 @@
                                 <span class="help-block" role="alert">{{ $errors->first('note_1') }}</span>
                             @endif
                             <span class="help-block">{{ trans('cruds.rfa.fields.note_1_helper') }}</span>
+                        </div>
+
+                        <div class="form-group {{ $errors->has('attach_file_name') ? 'has-error' : '' }}">
+                            <label for="attach_file_name">{{ trans('cruds.rfa.fields.attach_file_name') }}</label>
+                            <input class="form-control" type="text" name="attach_file_name" id="attach_file_name" value="{{ old('attach_file_name', '') }}">
+                            @if($errors->has(''))
+                                <span class="help-block" role="alert">{{ $errors->first('') }}</span>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.rfa.fields.attach_file_name_helper') }}</span>
                         </div>
 
                         <div class="form-group {{ $errors->has('file_upload_1') ? 'has-error' : '' }}">

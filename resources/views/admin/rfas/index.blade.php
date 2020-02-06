@@ -344,7 +344,7 @@
 { data: 'submit_date', name: 'submit_date' }, // 15
 { data: 'issueby_name', name: 'issueby.name' }, // 16
 { data: 'assign_name', name: 'assign.name' }, // 17
-{ data: 'file_upload_1', name: 'file_upload_1', sortable: false, searchable: false }, // 18
+{ data: 'file_upload_1', name: 'file_upload_1', sortable: false, searchable: false}, // 18
 { data: 'qty_page', name: 'qty_page' }, // 19
 { data: 'commercial_file_upload', name: 'commercial_file_upload', visible: false, sortable: false, searchable: false }, // 20
 { data: 'spec_ref_no', name: 'spec_ref_no' , visible: false }, // 21

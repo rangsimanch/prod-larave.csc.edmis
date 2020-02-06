@@ -188,6 +188,15 @@
                             <span class="help-block">{{ trans('cruds.rfa.fields.note_1_helper') }}</span>
                         </div>
 
+                        <div class="form-group {{ $errors->has('attach_file_name') ? 'has-error' : '' }}">
+                            <label for="attach_file_name">{{ trans('cruds.rfa.fields.attach_file_name') }}</label>
+                            <input class="form-control" type="text" name="attach_file_name" id="attach_file_name" value="{{ old('attach_file_name', '') }}">
+                            @if($errors->has(''))
+                                <span class="help-block" role="alert">{{ $errors->first('') }}</span>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.rfa.fields.attach_file_name_helper') }}</span>
+                        </div>
+
                         <div class="form-group {{ $errors->has('file_upload_1') ? 'has-error' : '' }}">
                             <label for="file_upload_1">{{ trans('cruds.rfa.fields.file_upload_1') }}</label>
                             <div class="needsclick dropzone" id="file_upload_1-dropzone">
