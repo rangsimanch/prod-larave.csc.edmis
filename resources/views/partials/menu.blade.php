@@ -104,8 +104,19 @@
                                 </a>
                             </li>
                         @endcan
+                        @can('submittals_rfa_access')
+                            <li class="{{ request()->is('admin/submittals-rfas') || request()->is('admin/submittals-rfas/*') ? 'active' : '' }}">
+                                <a href="{{ route("admin.submittals-rfas.index") }}">
+                                    <i class="fa-fw fas fa-cogs">
+
+                                    </i>
+                                    <span>{{ trans('cruds.submittalsRfa.title') }}</span>
+                                </a>
+                            </li>
+                        @endcan
                     </ul>
                 </li>
+                
             @endcan
             @can('user_management_access')
                 <li class="treeview">

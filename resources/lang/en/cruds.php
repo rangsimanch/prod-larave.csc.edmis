@@ -576,6 +576,37 @@ return [
             'deleted_at'        => 'Deleted at',
             'deleted_at_helper' => '',
         ],
+   ],
+  
+   'submittalsRfa'          => [
+    'title'          => 'Submittals RFA',
+    'title_singular' => 'Submittals RFA',
+    'fields'         => [
+        'id'                   => 'ID',
+        'id_helper'            => '',
+        'item_no'              => 'Item No.',
+        'item_no_helper'       => '',
+        'description'          => 'Description',
+        'description_helper'   => '',
+        'qty_sets'             => 'Qty Sets',
+        'qty_sets_helper'      => '',
+        'review_status'        => 'Review Status',
+        'review_status_helper' => '',
+        'date_returned'        => 'Date Returned',
+        'date_returned_helper' => '',
+        'remarks'              => 'Remarks',
+        'remarks_helper'       => '',
+        'on_rfa'               => 'On Rfa',
+        'on_rfa_helper'        => '',
+        'created_at'           => 'Created at',
+        'created_at_helper'    => '',
+        'updated_at'           => 'Updated at',
+        'updated_at_helper'    => '',
+        'deleted_at'           => 'Deleted at',
+        'deleted_at_helper'    => '',
     ],
+],
+
+    
 
 ];

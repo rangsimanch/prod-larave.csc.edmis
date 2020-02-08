@@ -256,6 +256,25 @@
                             @endif
                             <span class="help-block">{{ trans('cruds.rfa.fields.contract_drawing_no_helper') }}</span>
                         </div>
+
+                        <div class="table-responsive">
+                                <span id="result"> </span>
+                                <label> {{ trans('cruds.submittalsRfa.title')}} </label>
+                                <table class="table table-bordered table-striped" id="submittal_table">
+                                    <thead>
+                                        <tr>
+                                            <th width="25%"> {{ trans('cruds.submittalsRfa.fields.item_no') }} </th>
+                                            <th width="25%"> {{ trans('cruds.submittalsRfa.fields.description') }} </th>
+                                            <th width="25%"> {{ trans('cruds.submittalsRfa.fields.qty_sets') }} </th>
+                                            <th width="30%"> {{ trans('global.action') }} </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+
+                                    </tbody>
+                                </table>
+                        </div>
+
                         @endcan
 
                         @can('rfa_panel_b')
@@ -801,5 +820,41 @@ Dropzone.options.documentFileUploadDropzone = {
 
 //        console.log('click');
     });
+
+    
+ /// Dynamic Input
+ $(document).ready(function(){
+        var count = 1;
+
+        dynamic_field(count);
+
+        function dynamic_field(number){
+            var html = '<tr>';
+            html += '<td><input type="text" name="item[]" class="form-control" /></td>';
+            html += '<td><input type="text" name="des[]" class="form-control" /></td>';
+            html += '<td><input type="number" name="qty[]" class="form-control" /></td>';
+
+
+            if(number > 1){
+                html += '<td><a name="remove" id="remove" class="btn btn-danger">{{ trans('global.remove') }}</a></td></tr>';
+                $('tbody').append(html);
+            }
+            else{
+                html += '<td><a name="add" id="add" class="btn btn-success">{{ trans('global.add') }}</a></td></tr>';
+                $('tbody').html(html);
+            }
+        }
+
+        $('#add').click(function(){
+            count++;
+            dynamic_field(count);
+        });
+
+        $(document).on('click', '#remove', function(){
+            count--;
+            $(this).closest("tr").remove();
+        });
+
+ });
 </script>
 @endsection

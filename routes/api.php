@@ -64,4 +64,7 @@ Route::group(['prefix' => 'v1', 'as' => 'api.', 'namespace' => 'Api\V1\Admin', '
 
     // Works Codes
     Route::apiResource('works-codes', 'WorksCodeApiController');
+    
+    // Submittals Rfas
+    Route::apiResource('submittals-rfas', 'SubmittalsRfaApiController');
 });

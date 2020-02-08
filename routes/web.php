@@ -15,15 +15,9 @@ Auth::routes();
 
 
 
-Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['web'], 'namespace' => 'Admin'], function () {
-//Route::group(['middleware' => ['auth'], 'prefix' => 'admin', 'as' => 'admin.'], function () {
+Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth'], 'namespace' => 'Admin'], function () {
 
-    Route::get('/construction_contracts-select', '\App\Http\Controllers\Auth\ConstructionContractSelectController@select')->name('construction_contracts-select.select');
-    Route::post('/construction_contracts-select','\App\Http\Controllers\Auth\ConstructionContractSelectController@storeSelect')->name('construction_contracts-select.select');
-
-  //  Route::group(['namespace' => 'Admin'], function () {
-
-    
+    //Route::group(['middleware' => ['auth'], 'prefix' => 'admin', 'as' => 'admin.'], function () {
     Route::get('/', 'HomeController@index')->name('home');
     //->middleware('ConstructionContract.Select');
     Route::get('user-alerts/read', 'UserAlertsController@read');
@@ -31,6 +25,14 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['web'], 'n
     Route::delete('permissions/destroy', 'PermissionsController@massDestroy')->name('permissions.massDestroy');
     Route::resource('permissions', 'PermissionsController');
 
+
+    Route::get('/construction_contracts-select', '\App\Http\Controllers\Auth\ConstructionContractSelectController@select')->name('construction_contracts-select.select');
+    Route::post('/construction_contracts-select','\App\Http\Controllers\Auth\ConstructionContractSelectController@storeSelect')->name('construction_contracts-select.select');
+
+  //  Route::group(['namespace' => 'Admin'], function () {
+
+    
+   
     // Roles
     Route::delete('roles/destroy', 'RolesController@massDestroy')->name('roles.massDestroy');
     Route::resource('roles', 'RolesController');
@@ -141,6 +143,10 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['web'], 'n
      // Works Codes
     Route::delete('works-codes/destroy', 'WorksCodeController@massDestroy')->name('works-codes.massDestroy');
     Route::resource('works-codes', 'WorksCodeController');
+
+     // Submittals Rfas
+     Route::delete('submittals-rfas/destroy', 'SubmittalsRfaController@massDestroy')->name('submittals-rfas.massDestroy');
+     Route::resource('submittals-rfas', 'SubmittalsRfaController');
     
     Route::get('system-calendar', 'SystemCalendarController@index')->name('systemCalendar');
     Route::get('global-search', 'GlobalSearchController@search')->name('globalSearch');

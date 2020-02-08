@@ -244,6 +244,28 @@
                             @endif
                             <span class="help-block">{{ trans('cruds.rfa.fields.contract_drawing_no_helper') }}</span>
                         </div>
+
+                        <div class="table-responsive">
+                                <span id="result"> </span>
+                                <label> {{ trans('cruds.submittalsRfa.title')}} </label>
+                                <table class="table table-bordered table-striped" id="submittal_table">
+                                    <thead>
+                                        <tr>
+                                            <th width="15%"> {{ trans('cruds.submittalsRfa.fields.item_no') }} </th>
+                                            <th width="15%"> {{ trans('cruds.submittalsRfa.fields.description') }} </th>
+                                            <th width="15%"> {{ trans('cruds.submittalsRfa.fields.qty_sets') }} </th>
+                                            <th width="15%"> {{ trans('cruds.submittalsRfa.fields.review_status') }} </th>
+                                            <th width="15%"> {{ trans('cruds.submittalsRfa.fields.date_returned') }} </th>
+                                            <th width="15%"> {{ trans('cruds.submittalsRfa.fields.remarks') }} </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+
+                                    </tbody>
+                                </table>
+                        </div>
+
+
                         @endcan
 
                         @can('rfa_panel_b')

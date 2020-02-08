@@ -33,4 +33,9 @@ class RfaCommentStatus extends Model
     {
         return $this->hasMany(Rfa::class, 'for_status_id', 'id');
     }
+
+    public function reviewStatusSubmittalsRfas()
+    {
+        return $this->hasMany(SubmittalsRfa::class, 'review_status_id', 'id');
+    }
 }

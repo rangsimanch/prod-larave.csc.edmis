@@ -54,7 +54,7 @@ class RfaCommentStatusController extends Controller
     {
         abort_if(Gate::denies('rfa_comment_status_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $rfaCommentStatus->load('commentStatusRfas', 'forStatusRfas');
+        $rfaCommentStatus->load('commentStatusRfas', 'forStatusRfas','reviewStatusSubmittalsRfas');
 
         return view('admin.rfaCommentStatuses.show', compact('rfaCommentStatus'));
     }

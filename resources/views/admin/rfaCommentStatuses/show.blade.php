@@ -51,6 +51,11 @@
                             {{ trans('cruds.rfa.title') }}
                         </a>
                     </li>
+                    <li role="presentation">
+                        <a href="#review_status_submittals_rfas" aria-controls="review_status_submittals_rfas" role="tab" data-toggle="tab">
+                            {{ trans('cruds.submittalsRfa.title') }}
+                        </a>
+                    </li>
                 </ul>
                 <div class="tab-content">
                     <div class="tab-pane" role="tabpanel" id="comment_status_rfas">
@@ -58,6 +63,9 @@
                     </div>
                     <div class="tab-pane" role="tabpanel" id="for_status_rfas">
                         @includeIf('admin.rfaCommentStatuses.relationships.forStatusRfas', ['rfas' => $rfaCommentStatus->forStatusRfas])
+                    </div>
+                    <div class="tab-pane" role="tabpanel" id="review_status_submittals_rfas">
+                        @includeIf('admin.rfaCommentStatuses.relationships.reviewStatusSubmittalsRfas', ['submittalsRfas' => $rfaCommentStatus->reviewStatusSubmittalsRfas])
                     </div>
                 </div>
             </div>

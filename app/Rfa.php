@@ -317,4 +317,10 @@ class Rfa extends Model implements HasMedia
     {
         $this->attributes['hardcopy_date'] = $value ? Carbon::createFromFormat(config('panel.date_format'), $value)->format('Y-m-d') : null;
     }
+
+    
+    public function onRfaSubmittalsRfas()
+    {
+        return $this->hasMany(SubmittalsRfa::class, 'on_rfa_id', 'id');
+    }
 }
