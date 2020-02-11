@@ -257,7 +257,7 @@
                             <span class="help-block">{{ trans('cruds.rfa.fields.contract_drawing_no_helper') }}</span>
                         </div>
 
-                        <div class="table-responsive">
+                      {{--   <div class="table-responsive">
                                 <span id="result"> </span>
                                 <label> {{ trans('cruds.submittalsRfa.title')}} </label>
                                 <table class="table table-bordered table-striped" id="submittal_table">
@@ -274,7 +274,7 @@
                                     </tbody>
                                 </table>
                         </div>
-
+ --}}
                         @endcan
 
                         @can('rfa_panel_b')

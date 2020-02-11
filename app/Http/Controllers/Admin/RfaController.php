@@ -442,20 +442,21 @@ class RfaController extends Controller
         $rfa = Rfa::create($data);
         
          // Submittals
-         $item_no = $request->item;
-         $description = $request->des;
-         $qty_sets    = $request->qty;
-         $on_rfa_id = DB::table('rfas')->max('id');
-         for($count = 0; $count < count($item_no); $count++){
-             $dataSubmittals = array(
-                 'item_no' => $item_no[$count],
-                 'description' => $description[$count],
-                 'qty_sets' => $qty_sets[$count],
-                 'on_rfa_id' => $on_rfa_id
-             );
-             $insert_data[] = $dataSubmittals;
-         }
-     $submittalsRfa =  SubmittalsRfa::insert($insert_data);
+
+     //     $item_no = $request->item;
+     //     $description = $request->des;
+     //     $qty_sets    = $request->qty;
+     //     $on_rfa_id = DB::table('rfas')->max('id');
+     //     for($count = 0; $count < count($item_no); $count++){
+     //         $dataSubmittals = array(
+     //             'item_no' => $item_no[$count],
+     //             'description' => $description[$count],
+     //             'qty_sets' => $qty_sets[$count],
+     //             'on_rfa_id' => $on_rfa_id
+     //         );
+     //         $insert_data[] = $dataSubmittals;
+     //     }
+     // $submittalsRfa =  SubmittalsRfa::insert($insert_data);
         
         $data_alert['alert_text'] = 'New RFA assign to you.';
         $data_alert['alert_link'] = route('admin.rfas.index');
@@ -573,20 +574,20 @@ class RfaController extends Controller
         $rfa = Rfa::create($data);
         
         // Submittals
-            $item_no = $request->item;
-            $description = $request->des;
-            $qty_sets    = $request->qty;
-            $on_rfa_id = DB::table('rfas')->max('id');
-            for($count = 0; $count < count($item_no); $count++){
-                $dataSubmittals = array(
-                    'item_no' => $item_no[$count],
-                    'description' => $description[$count],
-                    'qty_sets' => $qty_sets[$count],
-                    'on_rfa_id' => $on_rfa_id
-                );
-                $insert_data[] = $dataSubmittals;
-            }
-        $submittalsRfa =  SubmittalsRfa::insert($insert_data);
+        //     $item_no = $request->item;
+        //     $description = $request->des;
+        //     $qty_sets    = $request->qty;
+        //     $on_rfa_id = DB::table('rfas')->max('id');
+        //     for($count = 0; $count < count($item_no); $count++){
+        //         $dataSubmittals = array(
+        //             'item_no' => $item_no[$count],
+        //             'description' => $description[$count],
+        //             'qty_sets' => $qty_sets[$count],
+        //             'on_rfa_id' => $on_rfa_id
+        //         );
+        //         $insert_data[] = $dataSubmittals;
+        //     }
+        // $submittalsRfa =  SubmittalsRfa::insert($insert_data);
         
         // Alert
         $data_alert['alert_text'] = 'New RFA assign to you.';
@@ -687,23 +688,24 @@ class RfaController extends Controller
 
 
         // Submittals
-            $id = $request->id_submittals;
-            $item_no = $request->item;
-            $review_status = $request->review_status;
-            $date_returned = $request->date_returned;
-            $remarks = $request->remarks;
+        // if(count(item_no)>1){
+        //     $id = $request->id_submittals;
+        //     $item_no = $request->item;
+        //     $review_status = $request->review_status;
+        //     $date_returned = $request->date_returned;
+        //     $remarks = $request->remarks;
 
-            for($count = 0; $count < count($item_no); $count++){
-                $dataSubmittals = array(
-                    'review_status_id' => $review_status[$count],
-                    'date_returned' => $date_returned[$count],
-                    'remarks' => $remarks[$count]
-                );
-                $id_update = $id[$count]; 
-                $update_data[] = $dataSubmittals;
-                SubmittalsRfa::where('id' , $id_update)->update($dataSubmittals);
-            }
-
+        //     for($count = 0; $count < count($item_no); $count++){
+        //         $dataSubmittals = array(
+        //             'review_status_id' => $review_status[$count],
+        //             'date_returned' => $date_returned[$count],
+        //             'remarks' => $remarks[$count]
+        //         );
+        //         $id_update = $id[$count]; 
+        //         $update_data[] = $dataSubmittals;
+        //         SubmittalsRfa::where('id' , $id_update)->update($dataSubmittals);
+        //     }
+        // }
 
         // $data_alert['alert_text'] = 'Please Update RFA.';
         // $data_alert['alert_link'] = route('admin.rfas.index');
