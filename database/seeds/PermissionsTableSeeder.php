@@ -356,6 +356,142 @@ class PermissionsTableSeeder extends Seeder
                 'id'    => '87',
                 'title' => 'construction_contract_access',
             ],
+
+            [
+                'id'    => '88',
+                'title' => 'wbs_level_three_create',
+            ],
+            [
+                'id'    => '89',
+                'title' => 'wbs_level_three_edit',
+            ],
+            [
+                'id'    => '90',
+                'title' => 'wbs_level_three_show',
+            ],
+            [
+                'id'    => '91',
+                'title' => 'wbs_level_three_delete',
+            ],
+            [
+                'id'    => '92',
+                'title' => 'wbs_level_three_access',
+            ],
+            [
+                'id'    => '93',
+                'title' => 'wbslevelfour_create',
+            ],
+            [
+                'id'    => '94',
+                'title' => 'wbslevelfour_edit',
+            ],
+            [
+                'id'    => '95',
+                'title' => 'wbslevelfour_show',
+            ],
+            [
+                'id'    => '96',
+                'title' => 'wbslevelfour_delete',
+            ],
+            [
+                'id'    => '97',
+                'title' => 'wbslevelfour_access',
+            ],
+            [
+                'id'    => '98',
+                'title' => 'bo_q_create',
+            ],
+            [
+                'id'    => '99',
+                'title' => 'bo_q_edit',
+            ],
+            [
+                'id'    => '100',
+                'title' => 'bo_q_show',
+            ],
+            [
+                'id'    => '101',
+                'title' => 'bo_q_delete',
+            ],
+            [
+                'id'    => '102',
+                'title' => 'bo_q_access',
+            ],
+            [
+                'id'    => '103',
+                'title' => 'technical_document_access',
+            ],
+            [
+                'id'    => '104',
+                'title' => 'works_code_create',
+            ],
+            [
+                'id'    => '105',
+                'title' => 'works_code_edit',
+            ],
+            [
+                'id'    => '106',
+                'title' => 'works_code_show',
+            ],
+            [
+                'id'    => '107',
+                'title' => 'works_code_delete',
+            ],
+            [
+                'id'    => '108',
+                'title' => 'works_code_access',
+            ],
+            [
+                'id'    => '109',
+                'title' => 'submittals_rfa_create',
+            ],
+            [
+                'id'    => '110',
+                'title' => 'submittals_rfa_edit',
+            ],
+            [
+                'id'    => '111',
+                'title' => 'submittals_rfa_show',
+            ],
+            [
+                'id'    => '112',
+                'title' => 'submittals_rfa_delete',
+            ],
+            [
+                'id'    => '113',
+                'title' => 'submittals_rfa_access',
+            ],
+            
+            // RFA Custom
+
+            [
+                'id'    => '114',
+                'title' => 'rfa_edit_all',
+            ],
+            [
+                'id'    => '115',
+                'title' => 'rfa_revision',
+            ],
+            [
+                'id'    => '116',
+                'title' => 'rfa_panel_a',
+            ],
+            [
+                'id'    => '117',
+                'title' => 'rfa_panel_b',
+            ],
+            [
+                'id'    => '118',
+                'title' => 'rfa_panel_c',
+            ],
+            [
+                'id'    => '119',
+                'title' => 'rfa_pannel_d',
+            ],
+            [
+                'id'    => '120',
+                'title' => 'rfa_form',
+            ],
         ];
 
         Permission::insert($permissions);

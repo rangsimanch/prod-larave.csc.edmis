@@ -323,4 +323,5 @@ class Rfa extends Model implements HasMedia
     {
         return $this->hasMany(SubmittalsRfa::class, 'on_rfa_id', 'id');
     }
+    
 }

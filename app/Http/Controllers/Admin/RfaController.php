@@ -641,12 +641,14 @@ class RfaController extends Controller
 
         $for_statuses = RfaCommentStatus::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $submittalsRfa = SubmittalsRfa::where('on_rfa_id', $rfa->id)->all();
-        
+        $submittalsRfa = SubmittalsRfa::all()->where('on_rfa_id' , $rfa->id);
 
-        $rfa->load('submittalsRfa', 'type', 'construction_contract', 'issueby', 'assign', 'action_by', 'comment_by', 'information_by', 'comment_status', 'for_status', 'document_status', 'create_by_user', 'update_by_user', 'approve_by_user', 'team');
+        $review_statuses = RfaCommentStatus::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        return view('admin.rfas.edit', compact('submittalsRfa', 'types', 'construction_contracts', 'wbs_level_3s', 'wbs_level_4s', 'issuebies', 'assigns', 'action_bies', 'comment_bies', 'information_bies', 'comment_statuses', 'for_statuses', 'rfa'));
+
+        $rfa->load('type', 'construction_contract', 'issueby', 'assign', 'action_by', 'comment_by', 'information_by', 'comment_status', 'for_status', 'document_status', 'create_by_user', 'update_by_user', 'approve_by_user', 'team');
+
+        return view('admin.rfas.edit', compact('review_statuses', 'submittalsRfa', 'types', 'construction_contracts', 'wbs_level_3s', 'wbs_level_4s', 'issuebies', 'assigns', 'action_bies', 'comment_bies', 'information_bies', 'comment_statuses', 'for_statuses', 'rfa'));
     }
 
     public function update(UpdateRfaRequest $request, Rfa $rfa)
@@ -682,6 +684,25 @@ class RfaController extends Controller
 
 
         $rfa->update($request->all());
+
+
+        // Submittals
+            $id = $request->id_submittals;
+            $item_no = $request->item;
+            $review_status = $request->review_status;
+            $date_returned = $request->date_returned;
+            $remarks = $request->remarks;
+
+            for($count = 0; $count < count($item_no); $count++){
+                $dataSubmittals = array(
+                    'review_status_id' => $review_status[$count],
+                    'date_returned' => $date_returned[$count],
+                    'remarks' => $remarks[$count]
+                );
+                $id_update = $id[$count]; 
+                $update_data[] = $dataSubmittals;
+                SubmittalsRfa::where('id' , $id_update)->update($dataSubmittals);
+            }
 
 
         // $data_alert['alert_text'] = 'Please Update RFA.';
@@ -724,13 +745,13 @@ class RfaController extends Controller
         return redirect()->route('admin.rfas.index');
     }
 
-    public function show(Rfa $rfa)
+    public function show(Rfa $rfa, SubmittalsRfa $submittalsRfa)
     {
         abort_if(Gate::denies('rfa_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $rfa->load('type', 'construction_contract', 'wbs_level_3', 'wbs_level_4', 'issueby', 'assign', 'action_by', 'comment_by', 'information_by', 'comment_status', 'for_status', 'document_status', 'create_by_user', 'team','onRfaSubmittalsRfas');
 
-        return view('admin.rfas.show', compact('rfa'));
+        return view('admin.rfas.show', compact('rfa','submittalsRfa'));
     }
 
     public function destroy(Rfa $rfa)

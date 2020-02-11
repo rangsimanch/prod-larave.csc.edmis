@@ -55,7 +55,9 @@
                                 <span class="help-block" role="alert">{{ $errors->first('') }}</span>
                             @endif
                             <span class="help-block">{{ trans('cruds.rfa.fields.origin_number_helper') }}</span>
-                        </div>
+
+
+                      {{--   </div>
                         <!-- <div class="form-group {{ $errors->has('document_number') ? 'has-error' : '' }}">
                             <label for="document_number">{{ trans('cruds.rfa.fields.document_number') }}</label>
                             <input class="form-control" type="text" name="document_number" id="document_number" value="{{ old('document_number', $rfa->document_number) }}">
@@ -79,7 +81,9 @@
                                 <span class="help-block" role="alert">{{ $errors->first('review_time') }}</span>
                             @endif
                             <span class="help-block">{{ trans('cruds.rfa.fields.review_time_helper') }}</span>
-                        </div> -->
+                        </div> --> --}}
+
+                        
                         <div class="form-group {{ $errors->has('type') ? 'has-error' : '' }}">
                             <label for="type_id" class="required">{{ trans('cruds.rfa.fields.type') }}</label>
                             <select class="form-control select2" name="type_id" id="type_id" required>
@@ -244,28 +248,6 @@
                             @endif
                             <span class="help-block">{{ trans('cruds.rfa.fields.contract_drawing_no_helper') }}</span>
                         </div>
-
-                        <div class="table-responsive">
-                                <span id="result"> </span>
-                                <label> {{ trans('cruds.submittalsRfa.title')}} </label>
-                                <table class="table table-bordered table-striped" id="submittal_table">
-                                    <thead>
-                                        <tr>
-                                            <th width="15%"> {{ trans('cruds.submittalsRfa.fields.item_no') }} </th>
-                                            <th width="15%"> {{ trans('cruds.submittalsRfa.fields.description') }} </th>
-                                            <th width="15%"> {{ trans('cruds.submittalsRfa.fields.qty_sets') }} </th>
-                                            <th width="15%"> {{ trans('cruds.submittalsRfa.fields.review_status') }} </th>
-                                            <th width="15%"> {{ trans('cruds.submittalsRfa.fields.date_returned') }} </th>
-                                            <th width="15%"> {{ trans('cruds.submittalsRfa.fields.remarks') }} </th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-
-                                    </tbody>
-                                </table>
-                        </div>
-
-
                         @endcan
 
                         @can('rfa_panel_b')
@@ -367,6 +349,9 @@
                             @endif
                             <span class="help-block">{{ trans('cruds.rfa.fields.comment_status_helper') }}</span>
                         </div>
+
+                        
+
                         <div class="form-group {{ $errors->has('note_3') ? 'has-error' : '' }}">
                             <label for="note_3">{{ trans('cruds.rfa.fields.note_3') }}</label>
                             <textarea class="form-control" name="note_3" id="note_3">{{ old('note_3', $rfa->note_3) }}</textarea>
@@ -375,6 +360,70 @@
                             @endif
                             <span class="help-block">{{ trans('cruds.rfa.fields.note_3_helper') }}</span>
                         </div>
+
+
+                         <div class="table-responsive">
+                                <span id="result"> </span>
+                                <label> {{ trans('cruds.submittalsRfa.title')}} </label>
+                                
+                                <div class="checkbox">
+                                    <label>
+                                        <input type="checkbox" class="check" id="ApproveAll"> Approve All </input>
+                                    </label>
+
+                                    <label>
+                                        <input type="checkbox" class="check" id="AsNoteAll"> Approve as Note All </input>
+                                    </label>
+
+                                    <label>
+                                        <input type="checkbox" class="check" id="ResubmitAll"> Re-Submit All </input>
+                                    </label>
+
+                                    <label>
+                                        <input type="checkbox" class="check" id="RejectAll"> Reject All </input>
+                                    </label>
+                                </div>
+                                <table class="table table-bordered table-striped" id="submittal_table">
+                                    <thead>
+                                        <tr>
+                                            <th width="15%"> {{ trans('cruds.submittalsRfa.fields.item_no') }} </th>
+                                            <th width="15%"> {{ trans('cruds.submittalsRfa.fields.description') }} </th>
+                                            <th width="15%"> {{ trans('cruds.submittalsRfa.fields.qty_sets') }} </th>
+                                            <th width="15%"> {{ trans('cruds.submittalsRfa.fields.review_status') }} </th>
+                                            <th width="15%"> {{ trans('cruds.submittalsRfa.fields.date_returned') }} </th>
+                                            <th width="15%"> {{ trans('cruds.submittalsRfa.fields.remarks') }} </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                            <div class="form-group">
+                                            @foreach($submittalsRfa as $id => $submittals )
+
+                                                <td><input type="hidden" class="form-control" name="id_submittals[]" value="{{ $submittals->id }}"></td>
+                                            <tr>
+                                                <td><input readonly type="text" class="form-control" name="item[]" value=" {{ $submittals->item_no }}"/></td>
+                                                <td><input readonly type="text" class="form-control" name="description[]" value=" {{ $submittals->description }}"/></td>
+                                                <td><input readonly type="text" class="form-control" name="qty_sets[]" value=" {{ $submittals->qty_sets }}"/></td>
+                                                <td>
+                                                    <select class="form-control select2 check review_status" name="review_status[]" id="review_status">
+                                                        @foreach($review_statuses as $id => $review_status)
+                                                        <option value="{{ $id }}" {{ ($submittals->review_status ? $submittals->review_status_id : old('review_status_id')) == $id ? 'selected' : '' }}>{{ $review_status }}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </td>
+                                                <td>
+                                                    <input class="form-control date_returned" type="date" name="date_returned[]" id="date_returned">
+                                                </td>
+                                                <td>
+                                                     <textarea class="form-control" name="remarks[]" id="remarks"></textarea>
+                                                </td>
+                                            </tr>
+                                            @endforeach
+                                            </div>
+                                    </tbody>
+                                </table>
+                        </div>
+
+
                         <div class="form-group {{ $errors->has('document_file_upload') ? 'has-error' : '' }}">
                             <label for="document_file_upload">{{ trans('cruds.rfa.fields.document_file_upload') }}</label>
                             <div class="needsclick dropzone" id="document_file_upload-dropzone">
@@ -772,5 +821,60 @@ Dropzone.options.documentFileUploadDropzone = {
 
 //        console.log('click');
     });
+
+$("#ApproveAll").click(function () {
+    var ident = '1';
+    $(".review_status").val(ident).prop("selected", true).change();
+    $("#AsNoteAll").prop("checked", false);
+    $("#ResubmitAll").prop("checked", false);
+    $("#RejectAll").prop("checked", false);
+});
+
+$("#AsNoteAll").click(function () {
+    var ident = '2';
+    $(".review_status").val(ident).prop("selected", true).change();
+    $("#ApproveAll").prop("checked", false);
+    $("#ResubmitAll").prop("checked", false);
+    $("#RejectAll").prop("checked", false);
+});
+
+$("#ResubmitAll").click(function () {
+    var ident = '3';
+    $(".review_status").val(ident).prop("selected", true).change();
+    $("#AsNoteAll").prop("checked", false);
+    $("#ApproveAll").prop("checked", false);
+    $("#RejectAll").prop("checked", false);
+});
+
+$("#RejectAll").click(function () {
+    var ident = '4';
+    $(".review_status").val(ident).prop("selected", true).change();
+    $("#AsNoteAll").prop("checked", false);
+    $("#ResubmitAll").prop("checked", false);
+    $("#ApproveAll").prop("checked", false);
+});
+
+const getTwoDigits = (value) => value < 10 ? `0${value}` : value;
+
+const formatDate = (date) => {
+  const day = getTwoDigits(date.getDate());
+  const month = getTwoDigits(date.getMonth() + 1); // add 1 since getMonth returns 0-11 for the months
+  const year = date.getFullYear();
+
+  return `${year}-${month}-${day}`;
+}
+
+const formatTime = (date) => {
+  const hours = getTwoDigits(date.getHours());
+  const mins = getTwoDigits(date.getMinutes());
+
+  return `${hours}:${mins}`;
+}
+
+const date = new Date();
+$(".date_returned").val(formatDate(date));
+
 </script>
+
+
 @endsection
