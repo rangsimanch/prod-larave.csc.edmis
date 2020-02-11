@@ -257,7 +257,7 @@
                             <span class="help-block">{{ trans('cruds.rfa.fields.contract_drawing_no_helper') }}</span>
                         </div>
 
-                      {{--   <div class="table-responsive">
+                        <div class="table-responsive">
                                 <span id="result"> </span>
                                 <label> {{ trans('cruds.submittalsRfa.title')}} </label>
                                 <table class="table table-bordered table-striped" id="submittal_table">
@@ -270,11 +270,13 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-
+                                         <td colspan="4" align="center">
+                                            <a name="add" id="add" class="btn btn-success">&nbsp&nbsp&nbsp&nbsp{{ trans('global.add') }}&nbsp&nbsp&nbsp&nbsp</a>
+                                        </td>
                                     </tbody>
                                 </table>
                         </div>
- --}}
+
                         @endcan
 
                         @can('rfa_panel_b')
@@ -824,24 +826,19 @@ Dropzone.options.documentFileUploadDropzone = {
     
  /// Dynamic Input
  $(document).ready(function(){
-        var count = 1;
+        var count = 0;
 
         dynamic_field(count);
 
         function dynamic_field(number){
             var html = '<tr>';
-            html += '<td><input type="text" name="item[]" class="form-control" /></td>';
-            html += '<td><input type="text" name="des[]" class="form-control" /></td>';
-            html += '<td><input type="number" name="qty[]" class="form-control" /></td>';
 
-
-            if(number > 1){
-                html += '<td><a name="remove" id="remove" class="btn btn-danger">{{ trans('global.remove') }}</a></td></tr>';
+            if(number > 0){
+                html += '<td><input type="text" name="item[]" class="form-control" /></td>';
+                html += '<td><input type="text" name="des[]" class="form-control" /></td>';
+                html += '<td><input type="number" name="qty[]" class="form-control" /></td>';   
+                html += '<td align="center"><a name="remove" id="remove" class="btn btn-danger">{{ trans('global.remove') }}</a></td></tr>';
                 $('tbody').append(html);
-            }
-            else{
-                html += '<td><a name="add" id="add" class="btn btn-success">{{ trans('global.add') }}</a></td></tr>';
-                $('tbody').html(html);
             }
         }
 

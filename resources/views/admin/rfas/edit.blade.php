@@ -362,7 +362,7 @@
                         </div>
 
 
-                        {{--  <div class="table-responsive">
+                         <div class="table-responsive">
                                 <span id="result"> </span>
                                 <label> {{ trans('cruds.submittalsRfa.title')}} </label>
                                 
@@ -422,7 +422,7 @@
                                     </tbody>
                                 </table>
                         </div>
- --}}
+
 
                         <div class="form-group {{ $errors->has('document_file_upload') ? 'has-error' : '' }}">
                             <label for="document_file_upload">{{ trans('cruds.rfa.fields.document_file_upload') }}</label>
@@ -821,7 +821,7 @@ Dropzone.options.documentFileUploadDropzone = {
 
 //        console.log('click');
     });
-
+    
 $("#ApproveAll").click(function () {
     var ident = '1';
     $(".review_status").val(ident).prop("selected", true).change();
