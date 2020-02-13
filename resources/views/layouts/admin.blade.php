@@ -43,18 +43,7 @@
                 <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
                     <span class="sr-only">{{ trans('global.toggleNavigation') }}</span>
                 </a>
-                <div class="navbar-form navbar-left">
-                        <ul class="nav navbar-nav">
-                            <div class="form-group">
-                @can('construction_contract_select')
-                        {!! Form::open(['method' => 'POST', 'url' => route('admin.construction_contracts-select.select'), 'id' => 'navbar__select-construction_contract-form']) !!}
-                        {!! Form::hidden('redirect', 'back') !!}
-                        {!! Form::select('construction_contract_id', Auth::user()->construction_contracts->pluck('code', 'id'), session('construction_contract_id'), ['class' => 'select2 navbar-form navbar-right"', 'id' => 'navbar__select-construction_contract']) !!}
-                        {!! Form::close() !!}
-                @endif
-</div>
-</ul>
-</div>
+            
 
                 @if(count(config('panel.available_languages', [])) > 1)
                     <div class="navbar-custom-menu">
@@ -119,7 +108,26 @@
                     </ul>
                 </div>
             
+                {{--  <div class="navbar-form navbar-left">
+                        <ul class="nav navbar-nav"> --}}
+            <div class="navbar-custom-menu">
+                <ul class="nav navbar-center">
+                            <li class="dropdown notifications-menu">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                    @can('construction_contract_select')
+                                            {!! Form::open(['method' => 'POST', 'url' => route('admin.construction_contracts-select.select'), 'id' => 'navbar__select-construction_contract-form']) !!}
+                                            {!! Form::hidden('redirect', 'back') !!}
+                                            {!! Form::select('construction_contract_id', Auth::user()->construction_contracts->pluck('code', 'id'), session('construction_contract_id'), ['class' => 'select3', 'id' => 'navbar__select-construction_contract']) !!}
+                                            {!! Form::close() !!}
+                                    @endif
+                                </a>
+                            </li>
+                </ul>
+            </div>
             
+      
+{{-- </ul>
+</div> --}}
             </nav>
         </header>
 

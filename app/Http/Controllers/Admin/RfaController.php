@@ -83,7 +83,7 @@ class RfaController extends Controller
 
         
 
-                //  Contructor Action
+                //  EDIT ALL PERMISSION
                 if(!Gate::denies('rfa_edit_all')){
                     $editGate      = 'rfa_edit';
                     $deleteGate    = 'rfa_delete';
@@ -127,7 +127,7 @@ class RfaController extends Controller
                 }
                else{
                     if(!strcmp($row->assign ? $row->assign->name : '',Auth::user()->name) || 
-                            !strcmp($row->action_by ? $row->action_by->name : '',Auth::user()->name)
+                            !strcmp($row->action_by ? $row->action_by->name : '',Auth::user()->name) 
                             ){
                                 $editGate      = 'rfa_edit';
                                 $deleteGate    = 'rfa_delete';
@@ -416,10 +416,10 @@ class RfaController extends Controller
 
 
         //Review Time
-        $rvs_length = 4;
+        $rvs_length = 2;
         $review_time = $request->review_time + 1;
         $data['review_time'] = $review_time;
-        $revision_number = substr("0000{$review_time}", -$rvs_length);
+        $revision_number = substr("00{$review_time}", -$rvs_length);
 
         //RFA Code
         $rfa_code = $request->rfa_code;
