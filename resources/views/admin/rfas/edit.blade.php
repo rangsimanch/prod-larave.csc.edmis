@@ -270,7 +270,7 @@
                             <label>{{ trans('cruds.rfa.fields.cec_sign') }}</label>
                             @foreach(App\Rfa::CEC_SIGN_RADIO as $key => $label)
                                 <div>
-                                    <input type="radio" id="cec_sign_{{ $key }}" name="cec_sign" value="{{ $key }}" {{ old('cec_sign', $rfa->cec_sign) === (string) $key ? 'checked' : '' }}>
+                                    <input type="radio" id="cec_sign_{{ $key }}" name="cec_sign" value="{{ $key }}" {{ old('cec_sign', $rfa->cec_sign) === (string) $key ? 'checked' : '' }} onclick="check_sign()">
                                     <label for="cec_sign_{{ $key }}" style="font-weight: 400">{{ $label }}</label>
                                 </div>
                             @endforeach
@@ -286,7 +286,7 @@
                             <label>{{ trans('cruds.rfa.fields.cec_stamp') }}</label>
                             @foreach(App\Rfa::CEC_STAMP_RADIO as $key => $label)
                                 <div>
-                                    <input type="radio" id="cec_stamp_{{ $key }}" name="cec_stamp" value="{{ $key }}" {{ old('cec_stamp', $rfa->cec_stamp) === (string) $key ? 'checked' : '' }}>
+                                    <input type="radio" id="cec_stamp_{{ $key }}" name="cec_stamp" value="{{ $key }}" {{ old('cec_stamp', $rfa->cec_stamp) === (string) $key ? 'checked' : '' }} onclick="check_stamp()">
                                     <label for="cec_stamp_{{ $key }}" style="font-weight: 400">{{ $label }}</label>
                                 </div>
                             @endforeach
@@ -940,6 +940,61 @@ const formatTime = (date) => {
 const date = new Date();
 $(".date_returned").val(formatDate(date));
 
+function check_stamp() {
+        
+         swal({
+              title: "Are you sure?",
+              text: "Stamp or Unstamp CEC seal to RFA form and Submittal form",
+              icon: "warning",
+              buttons: true,
+              dangerMode: true,
+            })
+            .then((willDelete) => {
+              if (willDelete) {
+                swal("Chage Success", {
+                  icon: "success",
+                });
+              } else {
+                swal("Don't change state");
+                if(document.getElementById("cec_stamp_2").checked == false){
+                    document.getElementById("cec_stamp_2").checked = true;
+                    document.getElementById("cec_stamp_1").checked = false;
+                }
+                else{
+                    document.getElementById("cec_stamp_1").checked = true;
+                    document.getElementById("cec_stamp_2").checked = false;
+                }
+              }
+              
+            });
+        }
+
+
+        function check_sign() {
+        
+         swal({
+              title: "Are you sure?",
+              text: "Sign or Unsign to RFA form and Submittal form",
+              icon: "warning",
+              buttons: true,
+              dangerMode: true,
+            })
+            .then((willDelete) => {
+              if (willDelete) {
+                swal("Chage Success", {
+                  icon: "success",
+                });
+              } else {
+                swal("Don't change state");
+                if(document.getElementById("cec_sign_2").checked == false){
+                    document.getElementById("cec_sign_2").checked = true;
+                    document.getElementById("cec_sign_1").checked = false;
+                }
+                else{
+                    document.getElementById("cec_sign_1").checked = true;
+                    document.getElementById("cec_sign_2").checked = false;
+                }
+              }
 
 
 </script>
