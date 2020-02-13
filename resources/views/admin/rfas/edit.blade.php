@@ -858,11 +858,7 @@ function addWaterMark(doc) {
             else{
                 var toggle_date = new Date(parts[2], parts[1] - 1, parts[0]);  
                 for(var i = 0; i < 13; i++){
-                    if(toggle_date.getDay() == '6'){
-                        i--;
-                        addDate ++;
-                    }
-                    else if(toggle_date.getDay() == '0'){
+                    if(toggle_date.getDay() == '0'){
                         i--;
                         addDate ++;
                     }

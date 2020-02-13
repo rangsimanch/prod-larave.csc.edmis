@@ -8,15 +8,16 @@
                 <div class="panel-body">
                     {!! Form::open(['method' => 'POST', 'url' => route('admin.construction_contracts-select.select'), 'class' => 'form-horizontal']) !!}
                         <div class="form-group">
+                            <legend>
                             <label class="col-md-4 control-label">Construction Contracts</label>
-
+                            </legend>
                             <div class="col-md-6">
                                 {!! Form::select('construction_contract_id', $construction_contracts, old('construction_contract_id'), ['class' => 'form-control select2']) !!}
                             </div>
                         </div>
                         <div class="form-group">
                             <div class="col-md-6 col-md-offset-4">
-                            {!! Form::submit( trans('global.save'), ['class' => 'btn btn-primary']) !!}
+                            {!! Form::submit( trans('global.save'), ['class' => 'btn btn-success']) !!}
                            </div>
                         </div>
                     {!! Form::close() !!}
