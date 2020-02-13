@@ -383,7 +383,7 @@
                         <p hidden="true">{{ $check_img = 0 }}</p>
 
                         @if(!empty($rfa->issueby->signature))
-                            <img style="display:none;" id="e_signature" src="{{ $rfa->issueby->signature->getUrl('thumb') }}" crossorigin/>
+                            <img style="display:none;" id="e_signature" src="{{ $rfa->issueby->signature->getUrl('thumb') }}"/>
                              <p hidden="true">{{ $check_img = 1 }}</p>
                         @else
                              <p hidden="true">{{ $check_img = 0 }}</p>
