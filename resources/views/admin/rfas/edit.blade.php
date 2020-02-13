@@ -940,6 +940,8 @@ const formatTime = (date) => {
 const date = new Date();
 $(".date_returned").val(formatDate(date));
 
+
+
 </script>
 
 
