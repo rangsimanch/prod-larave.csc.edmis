@@ -1,5 +1,9 @@
 @extends('layouts.admin')
 @section('content')
+
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+
 <div class="content">
 
     <div class="row">
@@ -969,12 +973,11 @@ function check_stamp() {
             });
         }
 
-
         function check_sign() {
         
          swal({
               title: "Are you sure?",
-              text: "Sign or Unsign to RFA form and Submittal form",
+              text: "Stamp or Unstamp CEC seal to RFA form and Submittal form",
               icon: "warning",
               buttons: true,
               dangerMode: true,
@@ -995,6 +998,10 @@ function check_stamp() {
                     document.getElementById("cec_sign_2").checked = false;
                 }
               }
+              
+            });
+        }
+
 
 
 </script>
