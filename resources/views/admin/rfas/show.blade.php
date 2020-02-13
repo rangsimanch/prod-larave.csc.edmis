@@ -443,10 +443,10 @@ jsPDFAPI.events.push(['addFonts', callAddFont])
 
 
 //Image e_Signature
-var signed = "{{ $rfa->issueby->signature ?? ''}}";
-if(signed != ''){
+//var signed = "{{!! json_encode($rfa->issueby->signature) !!}";
+//if(signed != ''){
     const e_signature  = getDataUrl(document.getElementById("e_signature"));
-}
+//}
 
 function getDataUrl(img) {
    // Create canvas
@@ -464,7 +464,7 @@ $('.jpdf').click(function() {
     console.log("Clicked");
     var doc = new jsPDF();
 
-    console.log(signed);
+    //console.log(signed);
 
     doc.addImage(imgData, 'JPEG',0,0,210,297);
     doc.setTextColor(0, 0, 0)
@@ -621,11 +621,11 @@ $('.jpdf').click(function() {
     }
 
     // Add Condition Signature HERE!!
-    if(signed != ''){
+   // if(signed != ''){
         if("{{ $rfa->cec_sign }}" == 1){
             doc.addImage(e_signature,'PNG',82,100,8,6);
         }
-    }
+    //}
     //console.log(b64);
 
 
@@ -828,7 +828,7 @@ $('.jspdf_submittals').click(function() {
         doc.setFontSize(9);
     }
     else{
-        
+
     }
 
     doc.text(175,27,rfa_code); // +30 , +8
@@ -876,11 +876,11 @@ $('.jspdf_submittals').click(function() {
         doc.addImage(imgCECStamp,'PNG',135,180,53,48.3);
     }   
     // Add Condition Signature HERE!!
-    if(signed != ''){
+    //if(signed != ''){
         if("{{ $rfa->cec_sign }}" == 1){
             doc.addImage(e_signature,'PNG',108,202,8,6);
         } 
-    }
+    //}
 
     var page = 1;
     var y_table = 116;
@@ -986,10 +986,10 @@ $('.jspdf_submittals').click(function() {
                     doc.addImage(imgCECStamp,'PNG',135,180,53,48.3);
                 }
                 
-                if(signed != ''){
+                //if(signed != ''){
                     if("{{ $rfa->csc_sign }}" == 1){
                         doc.addImage(e_signature,'PNG',108,202,8,6);
-                    }
+                 //   }
                 }
             }
             row++;
