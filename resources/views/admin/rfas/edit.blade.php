@@ -15,6 +15,26 @@
                         
                         @can('rfa_panel_a')
                         <legend> Constractor RFA Submittal </legend>
+
+                         <div class="form-group {{ $errors->has('purpose_for') ? 'has-error' : '' }}">
+                            <label>{{ trans('cruds.rfa.fields.purpose_for') }}</label>
+                            <select class="form-control" name="purpose_for" id="purpose_for">
+                                <option value disabled {{ old('purpose_for', null) === null ? 'selected' : '' }}>{{ trans('global.pleaseSelect') }}</option>
+                                @foreach(App\Rfa::PURPOSE_FOR_SELECT as $key => $label)
+                                    <option value="{{ $key }}" {{ old('purpose_for', $rfa->purpose_for) === (string) $key ? 'selected' : '' }}>{{ $label }}</option>
+                                @endforeach
+                            </select>
+                            @if($errors->has('purpose_for'))
+                                <span class="help-block" role="alert">{{ $errors->first('purpose_for') }}</span>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.rfa.fields.purpose_for_helper') }}</span>
+                        </div>
+                        <div class="form-group">
+                            <button class="btn btn-danger" type="submit">
+                                {{ trans('global.save') }}
+                            </button>
+                        </div>
+                        
                         <div class="form-group {{ $errors->has('bill') ? 'has-error' : '' }}">
                             <label for="bill">{{ trans('cruds.rfa.fields.bill') }}</label>
                             <input class="form-control" type="text" name="bill" id="bill" value="{{ old('bill', $rfa->bill) }}">
@@ -248,6 +268,40 @@
                             @endif
                             <span class="help-block">{{ trans('cruds.rfa.fields.contract_drawing_no_helper') }}</span>
                         </div>
+
+
+                        @can('rfa_cec_sign')
+                        <div class="form-group {{ $errors->has('cec_sign') ? 'has-error' : '' }}">
+                            <label>{{ trans('cruds.rfa.fields.cec_sign') }}</label>
+                            @foreach(App\Rfa::CEC_SIGN_RADIO as $key => $label)
+                                <div>
+                                    <input type="radio" id="cec_sign_{{ $key }}" name="cec_sign" value="{{ $key }}" {{ old('cec_sign', $rfa->cec_sign) === (string) $key ? 'checked' : '' }}>
+                                    <label for="cec_sign_{{ $key }}" style="font-weight: 400">{{ $label }}</label>
+                                </div>
+                            @endforeach
+                            @if($errors->has('cec_sign'))
+                                <span class="help-block" role="alert">{{ $errors->first('cec_sign') }}</span>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.rfa.fields.cec_sign_helper') }}</span>
+                        </div>
+                        @endcan
+
+                        @can('rfa_cec_stamp')
+                        <div class="form-group {{ $errors->has('cec_stamp') ? 'has-error' : '' }}">
+                            <label>{{ trans('cruds.rfa.fields.cec_stamp') }}</label>
+                            @foreach(App\Rfa::CEC_STAMP_RADIO as $key => $label)
+                                <div>
+                                    <input type="radio" id="cec_stamp_{{ $key }}" name="cec_stamp" value="{{ $key }}" {{ old('cec_stamp', $rfa->cec_stamp) === (string) $key ? 'checked' : '' }}>
+                                    <label for="cec_stamp_{{ $key }}" style="font-weight: 400">{{ $label }}</label>
+                                </div>
+                            @endforeach
+                            @if($errors->has('cec_stamp'))
+                                <span class="help-block" role="alert">{{ $errors->first('cec_stamp') }}</span>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.rfa.fields.cec_stamp_helper') }}</span>
+                        </div>
+                        @endcan
+
                         @endcan
 
                         @can('rfa_panel_b')
@@ -303,7 +357,7 @@
 
                         <div class="form-group {{ $errors->has('doc_count') ? 'has-error' : '' }}">
                             <label>{{ trans('cruds.rfa.fields.doc_count') }}</label>
-                            <select class="form-control doc_counter" id="doc_count_{{ $key }}" name="doc_count">
+                            <select class="form-control doc_counter" id="doc_count" name="doc_count">
                             <option value disabled {{ old('doc_count', null) === null ? 'selected' : '' }}>{{ trans('global.pleaseSelect') }}</option>
                             @foreach(App\Rfa::DOC_COUNT_RADIO as $key => $label)
                             <option value="{{ $key }}" {{ old('doc_count', $rfa->doc_count) === (string) $key ? 'selected' : '' }}>{{ $label . ' Days' }}</option>
@@ -386,12 +440,12 @@
                                 <table class="table table-bordered table-striped" id="submittal_table">
                                     <thead>
                                         <tr>
-                                            <th width="15%"> {{ trans('cruds.submittalsRfa.fields.item_no') }} </th>
-                                            <th width="15%"> {{ trans('cruds.submittalsRfa.fields.description') }} </th>
-                                            <th width="15%"> {{ trans('cruds.submittalsRfa.fields.qty_sets') }} </th>
-                                            <th width="15%"> {{ trans('cruds.submittalsRfa.fields.review_status') }} </th>
-                                            <th width="15%"> {{ trans('cruds.submittalsRfa.fields.date_returned') }} </th>
-                                            <th width="15%"> {{ trans('cruds.submittalsRfa.fields.remarks') }} </th>
+                                            <th width="15%"><center> {{ trans('cruds.submittalsRfa.fields.item_no') }} </center></th>
+                                            <th width="15%"><center> {{ trans('cruds.submittalsRfa.fields.description') }} </center></th>
+                                            <th width="15%"><center> {{ trans('cruds.submittalsRfa.fields.qty_sets') }} </center></th>
+                                            <th width="15%"><center> {{ trans('cruds.submittalsRfa.fields.review_status') }} </center></th>
+                                            <th width="15%"><center>{{ trans('cruds.submittalsRfa.fields.date_returned') }} </center></th>
+                                            <th width="15%"><center> {{ trans('cruds.submittalsRfa.fields.remarks') }} </center></th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -710,7 +764,7 @@ Dropzone.options.documentFileUploadDropzone = {
     },
     init: function () {
 @if(isset($rfa) && $rfa->document_file_upload)
-          var files =
+          var files = 
             {!! json_encode($rfa->document_file_upload) !!}
               for (var i in files) {
               var file = files[i]
@@ -737,6 +791,23 @@ Dropzone.options.documentFileUploadDropzone = {
          return _results
      }
 }
+
+function addWaterMark(doc) {
+
+  doc = JSON.stringify(doc);
+  console.log(doc); 
+  var totalPages = doc.internal.getNumberOfPages();
+
+  for (i = 1; i <= totalPages; i++) {
+    doc.setPage(i);
+    //doc.addImage(imgData, 'PNG', 40, 40, 75, 75);
+    doc.setTextColor(150);
+    doc.text(50, doc.internal.pageSize.height - 30, 'Watermark');
+  }
+
+  return doc;
+}
+
 </script>
 
 

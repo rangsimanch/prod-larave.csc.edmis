@@ -33,6 +33,24 @@ class Rfa extends Model implements HasMedia
         'China' => 'Part B',
     ];
 
+     const CEC_SIGN_RADIO = [
+        '1' => 'Yes',
+        '2' => 'No',
+    ];
+
+    const CEC_STAMP_RADIO = [
+        '1' => 'Yes',
+        '2' => 'No',
+    ];
+
+     const PURPOSE_FOR_SELECT = [
+        '1' => 'Review',
+        '2' => 'Approval',
+        '3' => 'Information',
+        '4' => 'Record',
+    ];
+
+
     protected $dates = [
         'final_date',
         'created_at',
@@ -57,6 +75,9 @@ class Rfa extends Model implements HasMedia
     ];
 
     protected $fillable = [
+        'cec_sign',
+        'cec_stamp',
+        'purpose_for',
         'bill',
         'title',
         'note_1',

@@ -1,5 +1,8 @@
 @extends('layouts.admin')
 @section('content')
+
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
 <div class="content">
 
     <div class="row">
@@ -14,6 +17,21 @@
 
                         @can('rfa_panel_a')
                         <legend> Constractor RFA Submittal </legend>
+
+                          <div class="form-group {{ $errors->has('purpose_for') ? 'has-error' : '' }}">
+                            <label>{{ trans('cruds.rfa.fields.purpose_for') }}</label>
+                            <select class="form-control" name="purpose_for" id="purpose_for">
+                                <option value disabled {{ old('purpose_for', null) === null ? 'selected' : '' }}>{{ trans('global.pleaseSelect') }}</option>
+                                @foreach(App\Rfa::PURPOSE_FOR_SELECT as $key => $label)
+                                    <option value="{{ $key }}" {{ old('purpose_for', '') === (string) $key ? 'selected' : '' }}>{{ $label }}</option>
+                                @endforeach
+                            </select>
+                            @if($errors->has('purpose_for'))
+                                <span class="help-block" role="alert">{{ $errors->first('purpose_for') }}</span>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.rfa.fields.purpose_for_helper') }}</span>
+                        </div>
+
                         <div class="form-group {{ $errors->has('bill') ? 'has-error' : '' }}">
                             <label for="bill">{{ trans('cruds.rfa.fields.bill') }}</label>
                             <input class="form-control" type="text" name="bill" id="bill" value="{{ old('bill', '') }}">
@@ -271,6 +289,38 @@
                                 </table>
                         </div>
 
+                        @can('rfa_cec_sign')
+                         <div class="form-group {{ $errors->has('cec_sign') ? 'has-error' : '' }}">
+                            <label>{{ trans('cruds.rfa.fields.cec_sign') }}</label>
+                            @foreach(App\Rfa::CEC_SIGN_RADIO as $key => $label)
+                                <div>
+                                    <input type="radio" id="cec_sign_{{ $key }}" name="cec_sign" value="{{ $key }}" {{ old('cec_sign', '2') === (string) $key ? 'checked' : '' }} onclick="check_sign()">
+                                    <label for="cec_sign_{{ $key }}" style="font-weight: 400">{{ $label }}</label>
+                                </div>
+                            @endforeach
+                            @if($errors->has('cec_sign'))
+                                <span class="help-block" role="alert">{{ $errors->first('cec_sign') }}</span>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.rfa.fields.cec_sign_helper') }}</span>
+                        </div>
+                        @endcan
+
+                        @can('rfa_cec_stamp')
+                        <div class="form-group {{ $errors->has('cec_stamp') ? 'has-error' : '' }}">
+                            <label>{{ trans('cruds.rfa.fields.cec_stamp') }}</label>
+                            @foreach(App\Rfa::CEC_STAMP_RADIO as $key => $label)
+                                <div>
+                                    <input type="radio" id="cec_stamp_{{ $key }}" name="cec_stamp" value="{{ $key }}" {{ old('cec_stamp', '2') === (string) $key ? 'checked' : ''  }} onclick="check_stamp()">
+                                    <label for="cec_stamp_{{ $key }}" style="font-weight: 400">{{ $label }}</label>
+                                </div>
+                            @endforeach
+                            @if($errors->has('cec_stamp'))
+                                <span class="help-block" role="alert">{{ $errors->first('cec_stamp') }}</span>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.rfa.fields.cec_stamp_helper') }}</span>
+                        </div>
+                        @endcan
+                        
                         @endcan
 
                         @can('rfa_panel_b')
@@ -822,6 +872,66 @@ Dropzone.options.documentFileUploadDropzone = {
             $(this).closest("tr").remove();
         });
     });
+
+     function check_stamp() {
+        
+         swal({
+              title: "Are you sure?",
+              text: "Stamp or Unstamp CEC seal to RFA form and Submittal form",
+              icon: "warning",
+              buttons: true,
+              dangerMode: true,
+            })
+            .then((willDelete) => {
+              if (willDelete) {
+                swal("Chage Success", {
+                  icon: "success",
+                });
+              } else {
+                swal("Don't change state");
+                if(document.getElementById("cec_stamp_2").checked == false){
+                    document.getElementById("cec_stamp_2").checked = true;
+                    document.getElementById("cec_stamp_1").checked = false;
+                }
+                else{
+                    document.getElementById("cec_stamp_1").checked = true;
+                    document.getElementById("cec_stamp_2").checked = false;
+                }
+              }
+              
+            });
+        }
+
+
+        function check_sign() {
+        
+         swal({
+              title: "Are you sure?",
+              text: "Sign or Unsign to RFA form and Submittal form",
+              icon: "warning",
+              buttons: true,
+              dangerMode: true,
+            })
+            .then((willDelete) => {
+              if (willDelete) {
+                swal("Chage Success", {
+                  icon: "success",
+                });
+              } else {
+                swal("Don't change state");
+                if(document.getElementById("cec_sign_2").checked == false){
+                    document.getElementById("cec_sign_2").checked = true;
+                    document.getElementById("cec_sign_1").checked = false;
+                }
+                else{
+                    document.getElementById("cec_sign_1").checked = true;
+                    document.getElementById("cec_sign_2").checked = false;
+                }
+              }
+              
+            });
+        }
+
 
 </script>
 @endsection

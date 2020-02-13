@@ -23,6 +23,21 @@
                         <input class="form-control" type="hidden"  name="check_revision" id="check_revision" value="{{ old('check_revision', $rfa->check_revision) }}">
                         <input class="form-control" type="hidden"  name="rfa_count" id="rfa_count" value="{{ old('rfa_count', $rfa->rfa_count) }}">
                         
+
+                          <div class="form-group {{ $errors->has('purpose_for') ? 'has-error' : '' }}">
+                            <label>{{ trans('cruds.rfa.fields.purpose_for') }}</label>
+                            <select class="form-control" name="purpose_for" id="purpose_for">
+                                <option value disabled {{ old('purpose_for', null) === null ? 'selected' : '' }}>{{ trans('global.pleaseSelect') }}</option>
+                                @foreach(App\Rfa::PURPOSE_FOR_SELECT as $key => $label)
+                                    <option value="{{ $key }}" {{ old('purpose_for', '') === (string) $key ? 'selected' : '' }}>{{ $label }}</option>
+                                @endforeach
+                            </select>
+                            @if($errors->has('purpose_for'))
+                                <span class="help-block" role="alert">{{ $errors->first('purpose_for') }}</span>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.rfa.fields.purpose_for_helper') }}</span>
+                        </div>
+                        
                         <div class="form-group {{ $errors->has('bill') ? 'has-error' : '' }}">
                             <label for="bill">{{ trans('cruds.rfa.fields.bill') }}</label>
                             <input readonly class="form-control" type="text" name="bill" id="bill" value="{{ old('bill', $rfa->bill) }}">
@@ -263,10 +278,10 @@
                                 <table class="table table-bordered table-striped" id="submittal_table">
                                     <thead>
                                         <tr>
-                                            <th width="25%"> {{ trans('cruds.submittalsRfa.fields.item_no') }} </th>
-                                            <th width="25%"> {{ trans('cruds.submittalsRfa.fields.description') }} </th>
-                                            <th width="25%"> {{ trans('cruds.submittalsRfa.fields.qty_sets') }} </th>
-                                            <th width="30%"> {{ trans('global.action') }} </th>
+                                            <th width="25%"><center> {{ trans('cruds.submittalsRfa.fields.item_no') }} </center></th>
+                                            <th width="25%"><center> {{ trans('cruds.submittalsRfa.fields.description') }} </center></th>
+                                            <th width="25%"><center> {{ trans('cruds.submittalsRfa.fields.qty_sets') }} </center></th>
+                                            <th width="30%"><center> {{ trans('global.action') }} </center></th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -276,6 +291,39 @@
                                     </tbody>
                                 </table>
                         </div>
+
+
+                        @can('rfa_cec_sign')
+                         <div class="form-group {{ $errors->has('cec_sign') ? 'has-error' : '' }}">
+                            <label>{{ trans('cruds.rfa.fields.cec_sign') }}</label>
+                            @foreach(App\Rfa::CEC_SIGN_RADIO as $key => $label)
+                                <div>
+                                    <input type="radio" id="cec_sign_{{ $key }}" name="cec_sign" value="{{ $key }}" {{ old('cec_sign', '2') === (string) $key ? 'checked' : '' }}>
+                                    <label for="cec_sign_{{ $key }}" style="font-weight: 400">{{ $label }}</label>
+                                </div>
+                            @endforeach
+                            @if($errors->has('cec_sign'))
+                                <span class="help-block" role="alert">{{ $errors->first('cec_sign') }}</span>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.rfa.fields.cec_sign_helper') }}</span>
+                        </div>
+                        @endcan
+
+                        @can('rfa_cec_stamp')
+                        <div class="form-group {{ $errors->has('cec_stamp') ? 'has-error' : '' }}">
+                            <label>{{ trans('cruds.rfa.fields.cec_stamp') }}</label>
+                            @foreach(App\Rfa::CEC_STAMP_RADIO as $key => $label)
+                                <div>
+                                    <input type="radio" id="cec_stamp_{{ $key }}" name="cec_stamp" value="{{ $key }}" {{ old('cec_stamp', '2') === (string) $key ? 'checked' : ''  }}>
+                                    <label for="cec_stamp_{{ $key }}" style="font-weight: 400">{{ $label }}</label>
+                                </div>
+                            @endforeach
+                            @if($errors->has('cec_stamp'))
+                                <span class="help-block" role="alert">{{ $errors->first('cec_stamp') }}</span>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.rfa.fields.cec_stamp_helper') }}</span>
+                        </div>
+                        @endcan
 
                         @endcan
 

@@ -56,7 +56,13 @@ class RfaController extends Controller
                     return $counter_date + 2 . ' Days';
                 }
                 else{
-                    return 'Time Out';
+                    $doc_status = $row->document_status ? $row->document_status->status_name : '';
+                    if(strcmp($doc_status,"New")){
+                        return '';
+                    }
+                    else{
+                       return 'Time Out';
+                    }
                 }
                
                 //return $cur_date->format("d/m/Y");
@@ -375,15 +381,15 @@ class RfaController extends Controller
 
         $wbs_level_4s = Wbslevelfour::all()->pluck('wbs_level_4_code', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $issuebies = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $issuebies = User::find(91)->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $assigns = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $assigns = User::find([61,39,62])->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), ''); //61->Li, 39->Paisan,  62->Liu 
 
-        $action_bies = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $action_bies = User::where('team_id',3)->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        
+        $comment_bies = User::where('team_id',3)->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $comment_bies = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
-
-        $information_bies = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $information_bies = User::where('team_id',3)->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $comment_statuses = RfaCommentStatus::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
@@ -510,15 +516,15 @@ class RfaController extends Controller
 
         $wbs_level_4s = Wbslevelfour::all()->pluck('wbs_level_4_name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $issuebies = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $issuebies = User::find([91])->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $assigns = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $assigns = User::find([61,39,62])->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), ''); //61->Li, 39->Paisan,  62->Liu 
 
-        $action_bies = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $action_bies = User::where('team_id',3)->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
         
-        $comment_bies = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $comment_bies = User::where('team_id',3)->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $information_bies = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $information_bies = User::where('team_id',3)->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $comment_statuses = RfaCommentStatus::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
@@ -548,7 +554,12 @@ class RfaController extends Controller
             //ConstructionContart
         $const_code = ConstructionContract::where('id','=',$request->construction_contract_id)->value('code');
             //Next Number
-        $previousId = Rfa::orderBy('id', 'desc')->value('rfa_count');
+        if(Rfa::orderBy('id', 'desc')->value('rfa_count') == 0){
+            $previousId = 1000;
+        }
+        else{
+            $previousId = Rfa::orderBy('id', 'desc')->value('rfa_count');
+        }   
         $nextId = $previousId + 1;
         $data['rfa_count'] = $nextId;
         $str_length = 6;
@@ -630,15 +641,15 @@ class RfaController extends Controller
 
         $wbs_level_4s = Wbslevelfour::all()->pluck('wbs_level_4_code', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $issuebies = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $issuebies = User::find(91)->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $assigns = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $assigns = User::find([61,39,62])->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), ''); //61->Li, 39->Paisan,  62->Liu 
 
-        $action_bies = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $action_bies = User::where('team_id',3)->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        
+        $comment_bies = User::where('team_id',3)->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $comment_bies = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
-
-        $information_bies = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $information_bies = User::where('team_id',3)->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $comment_statuses = RfaCommentStatus::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
@@ -735,7 +746,9 @@ class RfaController extends Controller
 
         foreach ($request->input('commercial_file_upload', []) as $file) {
             $rfa->addMedia(storage_path('tmp/uploads/' . $file))->toMediaCollection('commercial_file_upload');
+
         }
+
 
         foreach ($request->input('document_file_upload', []) as $file) {
             $rfa->addMedia(storage_path('tmp/uploads/' . $file))->toMediaCollection('document_file_upload');

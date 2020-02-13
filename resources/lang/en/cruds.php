@@ -229,7 +229,7 @@ return [
             'deleted_at_helper'             => '',
             'type'                          => 'Documnet Type',
             'type_helper'                   => '',
-            'comment_status'                => 'Comment Status',
+            'comment_status'                => 'Approval Status',
             'comment_status_helper'         => '',
             'for_status'                    => 'For',
             'for_status_helper'             => '',
@@ -300,7 +300,12 @@ return [
             'attach_file_name_helper'       => '',
             'rfa_count'                     => 'Rfa Count',
             'rfa_count_helper'              => '',
-
+            'cec_stamp'                     => 'Stamp to Form',
+            'cec_stamp_helper'              => '',
+            'cec_sign'                      => 'Sign to Form',
+            'cec_sign_helper'               => '',
+            'purpose_for'                   => 'Purpose For',
+            'purpose_for_helper'            => '',
             
         ],
     ],
