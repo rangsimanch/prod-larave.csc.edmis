@@ -128,6 +128,7 @@ class Rfa extends Model implements HasMedia
         'construction_contract_id',
         'attach_file_name',
         'rfa_count',
+        'distribute_by_id',
     ];
 
     public static function boot()
@@ -343,6 +344,11 @@ class Rfa extends Model implements HasMedia
     public function onRfaSubmittalsRfas()
     {
         return $this->hasMany(SubmittalsRfa::class, 'on_rfa_id', 'id');
+    }
+
+    public function distribute_by()
+    {
+        return $this->belongsTo(User::class, 'distribute_by_id');
     }
     
 }

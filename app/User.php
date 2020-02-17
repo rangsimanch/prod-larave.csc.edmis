@@ -237,4 +237,9 @@ class User extends Authenticatable implements HasMedia
     {
         return $this->belongsToMany(ConstructionContract::class);
     }
+
+    public function distributeByRfas()
+    {
+        return $this->hasMany(Rfa::class, 'distribute_by_id', 'id');
+    }
 }

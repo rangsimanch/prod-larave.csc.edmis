@@ -303,6 +303,7 @@
 
                         @endcan
 
+                        @if($rfa->document_status->id  == 1)
                         @can('rfa_panel_b')
                         <legend>Incoming Distribution</legend>
 
@@ -387,7 +388,9 @@
                             <span class="help-block">{{ trans('cruds.rfa.fields.note_2_helper') }}</span>
                         </div>
                         @endcan
-
+                        @endif
+                        
+                        @if($rfa->document_status->id  == 2)
                         @can('rfa_panel_c')
                         <legend> CSC Outgoing (Specialist/Engineer) </legend>
                         <div class="form-group {{ $errors->has('comment_status') ? 'has-error' : '' }}">
@@ -503,7 +506,10 @@
                             <span class="help-block">{{ trans('cruds.rfa.fields.document_description_helper') }}</span>
                         </div>
                         @endcan
+                        @endif
 
+
+                        @if($rfa->document_status->id  == 3)
                         @can('rfa_panel_d')
                         <legend> CSC Outgoing </legend>
                         <div class="form-group {{ $errors->has('for_status') ? 'has-error' : '' }}">
@@ -538,6 +544,7 @@
 
                         
                         @endcan
+                        @endif
                         <div class="form-group">
                             <button class="btn btn-success" type="submit">
                                 {{ trans('global.save') }}

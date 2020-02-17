@@ -294,7 +294,7 @@
 });
 
     </script>
-    <script>
+    <script >
         $(document).ready(function() {
     $('.searchable-field').select2({
         minimumInputLength: 3,
@@ -364,6 +364,8 @@
 });
 
     </script>
+
+
     @yield('scripts')
 </body>
 
