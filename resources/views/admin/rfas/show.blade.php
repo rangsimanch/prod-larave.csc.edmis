@@ -486,6 +486,7 @@ function getDataUrl(img) {
    const canvas = document.createElement('canvas');
    const ctx = canvas.getContext('2d');
    // Set width and height
+   img.crossOrigin = '*';
    canvas.width = img.width;
    canvas.height = img.height;
    // Draw the image
