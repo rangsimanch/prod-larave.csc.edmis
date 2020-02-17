@@ -386,7 +386,7 @@
 
 
                         @if(!empty($rfa->distribute_by->signature))
-                            <img style="display:none" id="distribute_sign" src="{{ $rfa->distribute_by->signature->getUrl() }}"/> 
+                            <img crossorigin="Anonymous" style="display:none" id="distribute_sign" src="{{ $rfa->distribute_by->signature->getUrl() }}"/> 
                              <p id="distribute_sign_base64" hidden="true">
                              </p> 
                              <p hidden="true">{{ $check_distribute = 1 }}</p>
@@ -396,7 +396,7 @@
 
                         @if(!empty($rfa->comment_status->id))
                             @if(!empty($rfa->action_by->signature))
-                                <img style="display:none" id="process_sign" src="{{ $rfa->action_by->signature->getUrl() }}"/> 
+                                <img crossorigin="Anonymous" style="display:none" id="process_sign" src="{{ $rfa->action_by->signature->getUrl() }}"/> 
                                  <p id="distribute_sign_base64" hidden="true">
                                  </p> 
                                  <p hidden="true">{{ $check_process = 1 }}</p>
@@ -489,7 +489,6 @@ function getDataUrl(img) {
    canvas.width = img.width;
    canvas.height = img.height;
    // Draw the image
-   ctx.crossOrigin = '*';
    ctx.drawImage(img, 0, 0);
    return canvas.toDataURL('image/png');
 }
