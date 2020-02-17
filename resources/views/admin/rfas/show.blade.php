@@ -484,9 +484,9 @@ var imgLiSign = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQEAAAB2CAYAAADIv
 function getDataUrl(img) {
    // Create canvas
    const canvas = document.createElement('canvas');
+   canvas.crossOrigin = '*';
    const ctx = canvas.getContext('2d');
    // Set width and height
-   img.crossOrigin = '*';
    canvas.width = img.width;
    canvas.height = img.height;
    // Draw the image
