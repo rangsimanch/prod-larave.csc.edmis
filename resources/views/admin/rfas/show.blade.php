@@ -484,12 +484,12 @@ var imgLiSign = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQEAAAB2CAYAAADIv
 function getDataUrl(img) {
    // Create canvas
    const canvas = document.createElement('canvas');
-   canvas.crossOrigin = '*';
    const ctx = canvas.getContext('2d');
    // Set width and height
    canvas.width = img.width;
    canvas.height = img.height;
    // Draw the image
+   ctx.crossOrigin = '*';
    ctx.drawImage(img, 0, 0);
    return canvas.toDataURL('image/png');
 }
