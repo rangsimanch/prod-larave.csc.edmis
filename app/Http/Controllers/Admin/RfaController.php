@@ -59,7 +59,7 @@ class RfaController extends Controller
 
                         $check = strcmp($doc_status_id, '2');
 
-                    return $counter_date + 2 . ' Days' . ' ' . $check;
+                    return $counter_date + 2 . ' Days';
                 }
                 else{
                     $doc_status = $row->document_status ? $row->document_status->status_name : '';
@@ -247,66 +247,6 @@ class RfaController extends Controller
 
                 }
 
-
-
-
-                   // Old Conditional         
-                   // if(!strcmp($row->issueby ? $row->issueby->name : '',Auth::user()->name)){
-               //      if(!strcmp($row->assign ? $row->assign->name : '',Auth::user()->name) || 
-               //          !strcmp($row->action_by ? $row->action_by->name : '',Auth::user()->name)
-               //          ){
-               //              $editGate      = 'rfa_edit';
-               //              $deleteGate    = 'rfa_delete';
-               //              return view('partials.datatablesActions', compact(
-               //                  'viewGate',
-               //                  'editGate',
-               //                  'deleteGate',
-               //                  'revisionGate',
-               //                  'crudRoutePart',
-               //                  'row'
-               //              ));
-               //          }
-               //      else{
-               //          $editGate      = 'rfa_edit';
-               //          $deleteGate    = 'rfa_delete';
-               //          return view('partials.datatablesActions', compact(
-               //              'viewGate',
-               //              'editGate',
-               //              'deleteGate',
-               //              'revisionGate',
-               //              'crudRoutePart',
-               //              'row'
-               //          ));
-               //      }
-               //  }
-               // else{
-               //      if(!strcmp($row->assign ? $row->assign->name : '',Auth::user()->name) || 
-               //              !strcmp($row->action_by ? $row->action_by->name : '',Auth::user()->name) 
-               //              ){
-               //                  $editGate      = 'rfa_edit';
-               //                  $deleteGate    = 'rfa_delete';
-               //                  return view('partials.datatablesActions', compact(
-               //                      'viewGate',
-               //                      'editGate',
-               //                      'deleteGate',
-               //                      'revisionGate',
-               //                      'crudRoutePart',
-               //                      'row'
-               //                  ));
-               //              }
-               //          else{
-               //              $editGate      = 'rfa_not_edit';
-               //              $deleteGate    = 'rfa_delete';
-               //              return view('partials.datatablesActions', compact(
-               //                  'viewGate',
-               //                  'editGate',
-               //                  'deleteGate',
-               //                  'revisionGate',
-               //                  'crudRoutePart',
-               //                  'row'
-               //              ));
-               //          }
-               //  }               
             });
             
 
@@ -618,11 +558,15 @@ class RfaController extends Controller
             $submittalsRfa =  SubmittalsRfa::insert($insert_data);
         }      
         
-        $data_alert['alert_text'] = 'New RFA assign to you.';
-        $data_alert['alert_link'] = route('admin.rfas.index');
+        $count_rfa = DB::table('rfas')->where([['cec_sign', '=', 1], ['cec_stamp', '=', 1], ['document_status_id', '=', 1]])->count();
+        if($request->cec_sign == 1 && $request->cec_stamp == 1){
+            //Alert Manager
+            $data_alert['alert_text'] = 'You have new RFA to Distribute.';
+            $data_alert['alert_link'] = route('admin.rfas.index');
 
-        $userAlert = UserAlert::create($data_alert);
-        $userAlert->users()->sync($data['assign_id']);
+            $userAlert = UserAlert::create($data_alert);
+            $userAlert->users()->sync($data['assign_id']);
+        }
 
         if (count($rfa->file_upload_1) > 0) {
             foreach ($rfa->file_upload_1 as $media) {
@@ -759,7 +703,7 @@ class RfaController extends Controller
         $count_rfa = DB::table('rfas')->where([['cec_sign', '=', 1], ['cec_stamp', '=', 1], ['document_status_id', '=', 1]])->count();
         if($request->cec_sign == 1 && $request->cec_stamp == 1){
             //Alert Manager
-            $data_alert['alert_text'] = 'You have ' . $count_rfa . ' new RFA to Distribute.';
+            $data_alert['alert_text'] = 'You have new RFA to Distribute.';
             $data_alert['alert_link'] = route('admin.rfas.index');
 
             $userAlert = UserAlert::create($data_alert);
@@ -879,22 +823,26 @@ class RfaController extends Controller
 
         //Alert
         if($rfa->document_status_id == 1 && ( $request->cec_sign == 1 && $request->cec_stamp == 1 ) ){
-            //Alert Manager
-            $count_rfa = DB::table('rfas')->where([['cec_sign', '=', 1], ['cec_stamp', '=', 1], ['document_status_id', '=', 1]])->count();
-            $data_alert['alert_text'] = 'You have ' . $count_rfa . ' new RFA to Distribute.';
-            $data_alert['alert_link'] = route('admin.rfas.index');
-            $data_user_id = array($request->assign_id);
+
+            if($request->assign_id != ''){
+              //Alert Manager
+              $count_rfa = DB::table('rfas')->where([['cec_sign', '=', 1], ['cec_stamp', '=', 1], ['document_status_id', '=', 1]])->count();
+              $data_alert['alert_text'] = 'You have new RFA to Distribute.';
+              $data_alert['alert_link'] = route('admin.rfas.index');
+              $data_user_id = array($request->assign_id);
 
 
-            $userAlert = UserAlert::create($data_alert);
-            $userAlert->users()->sync($data_user_id);
+              $userAlert = UserAlert::create($data_alert);
+              $userAlert->users()->sync($data_user_id);
+            }
         }
-        elseif($request->action_by_id != ''){
+        elseif($rfa->document_status_id == 2 && $request->action_by_id != '' && $request->information_by_id != '' && $request->comment_by_id){
+
             //Alert Engineer
             $count_rfa = RFA::where([['action_by_id', $request->action_by_id], ['document_status_id', 2]])->count();
             $data_alert['alert_text'] = 'You have ' . $count_rfa . ' new RFA for Review.';
             $data_alert['alert_link'] = route('admin.rfas.index');
-            $data_user_id = array($request['action_by_id'],$request['information_by_id'],$request['comment_by_id']);
+            $data_user_id = array($request->action_by_id,$request->information_by_id,$request->comment_by_id);
         
             $userAlert = UserAlert::create($data_alert);
             $userAlert->users()->sync($data_user_id);
@@ -902,7 +850,7 @@ class RfaController extends Controller
         elseif($request->comment_status_id !=  ''){
             //Alert Manager Appove
             $count_rfa = RFA::where('document_status_id', 3)->count();
-            $data_alert['alert_text'] = 'You have ' . $count_rfa . ' new RFA to Approve.';
+            $data_alert['alert_text'] = 'You have new RFA to Approve.';
             $data_alert['alert_link'] = route('admin.rfas.index');
             $data_user_id = array(62,1);
 
@@ -910,10 +858,10 @@ class RfaController extends Controller
             $userAlert->users()->sync($data_user_id);
 
         }
-        elseif($request->for_status_id != 1){
+        elseif($request->for_status_id != 1 && $request->for_status_id != ''){
           //Alert Manager Appove
             $count_rfa = RFA::where([['document_status_id', 4]])->count();
-            $data_alert['alert_text'] = 'You have ' . $count_rfa . ' RFA to Revision.';
+            $data_alert['alert_text'] = 'You have RFA to Revision.';
             $data_alert['alert_link'] = route('admin.rfas.index');
             $data_user_id = array(2,1);
 

@@ -386,7 +386,7 @@
 
 
                         @if(!empty($rfa->distribute_by->signature))
-                            <img crossorigin="Anonymous" style="display:none" id="distribute_sign" src="{{ $rfa->distribute_by->signature->getUrl() }}"/> 
+                            <img style="display:none" id="distribute_sign" src="{{ $rfa->distribute_by->signature->getUrl() }}"/> 
                              <p id="distribute_sign_base64" hidden="true">
                              </p> 
                              <p hidden="true">{{ $check_distribute = 1 }}</p>

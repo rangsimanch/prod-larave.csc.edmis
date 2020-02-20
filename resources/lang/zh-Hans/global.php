@@ -250,4 +250,33 @@ return [
     'no_alerts'                            => 'No alerts',
     'calendar'                             => 'Calendar',
     'messenger'                            => 'Messenger',
+     
+    'change_box'                          => 'Are you sure to change this?',
+    
+    'please_enter'                          => 'Please Enter ',
+    'to_confirm'                            => ' to confirm.',
+    
+    'invalid_box'                            => 'Invalid text to confirm.',
+    'please_try'                          => 'Please try again',
+
+    'confirm_success'                          => 'Confirm Success',
+    
+    'sign_to_form'                          => 'Sign to form',
+    'unsign_to_form'                          => 'Don՚t sign to form',
+
+    'stamp_to_form'                         => 'Stamp to form',
+    'unstamp_to_form'                         => 'Don՚t stamp to form',
+
+    'are_you_sure'                          => 'Are you sure ?',
+    'verify_form'                           => 'Confirm for adding new information.',
+
+    'add_success'                           => 'Successfully added data',
+    'add_fail'                              => 'Failed to add data',
+
+    'cancelled'                             => 'Cancelled',
+
+    'yes_add'                           => 'Yes, adding it!',
+    'yes_update'                        => 'Yes, Update it!',
+    'no_cancel'                         => 'No, cancel please!'
+
 ];

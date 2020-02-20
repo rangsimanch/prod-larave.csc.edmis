@@ -27,6 +27,25 @@
 </div>
 @endsection
 @section('scripts')
+{{-- <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script type="text/javascript">
+        $( document ).ready(function() {
+        if("{{ count($alerts = \Auth::user()->userUserAlerts()->withPivot('read')->limit(10)->orderBy('created_at', 'ASC')->get()->reverse()) }}" != 0){
+            var alert = "{{ $alerts = \Auth::user()->userUserAlerts()->orderBy('created_at', 'DESC')->first()}}";
+            var alert_text = "{{ $alerts->alert_text }}";
+            var parser = new DOMParser;
+            var dom = parser.parseFromString(
+                '<!doctype html><body>' + alert_text,
+                'text/html');
+            var alert_text = dom.body.textContent;
+            swal("New Message!", alert_text, "warning");
+        }
+        else{
+            console.log('TT')
+        }
+
+    });
+    </script> --}}
 
 @parent
 

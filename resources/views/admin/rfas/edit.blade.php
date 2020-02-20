@@ -1,8 +1,6 @@
 @extends('layouts.admin')
 @section('content')
 
-<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-
 
 <div class="content">
 
@@ -13,7 +11,7 @@
                     {{ trans('global.edit') }} {{ trans('cruds.rfa.title_singular') }}
                 </div>
                 <div class="panel-body">
-                    <form method="POST" action="{{ route("admin.rfas.update", [$rfa->id]) }}" enctype="multipart/form-data">
+                    <form method="POST" action="{{ route("admin.rfas.update", [$rfa->id]) }}"  class="swa-confirm" enctype="multipart/form-data">
                         @method('PUT')
                         @csrf
                         
@@ -546,13 +544,17 @@
                         @endcan
                         @endif
                         <div class="form-group">
-                            <button class="btn btn-success" type="submit">
-                                {{ trans('global.save') }}
-                            </button>
+
 
                             <a class="btn btn-default" href="{{ route('admin.rfas.index') }}">
                                 {{ trans('global.back_to_list') }}
                             </a>
+
+
+                            <button class="btn btn-success" type="submit" id="save_form">
+                                {{ trans('global.save') }}
+                            </button>
+
                         </div>
                     </form>
                 </div>
@@ -846,11 +848,7 @@ function addWaterMark(doc) {
             if($(this).val() == '7'){
                 var toggle_date = new Date(parts[2], parts[1] - 1, parts[0]);  
                 for(var i = 0; i < 6; i++){
-                    if(toggle_date.getDay() == '6'){
-                        i--;
-                        addDate ++;
-                    }
-                    else if(toggle_date.getDay() == '0'){
+                    if(toggle_date.getDay() == '0'){
                         i--;
                         addDate ++;
                     }
@@ -949,61 +947,126 @@ $(".date_returned").val(formatDate(date));
 
 function check_stamp() {
         
-         swal({
-              title: "Are you sure?",
-              text: "Stamp or Unstamp CEC seal to RFA form and Submittal form",
-              icon: "warning",
-              buttons: true,
-              dangerMode: true,
-            })
-            .then((willDelete) => {
-              if (willDelete) {
-                swal("Chage Success", {
-                  icon: "success",
+          var str = "\"CONFIRM\"";
+            swal({
+                title: "{{ trans('global.change_box') }}",
+                text: "{{ trans('global.please_enter') }}" + str + "{{ trans('global.to_confirm') }}",
+                  type: "input",
+                  showCancelButton: true,
+                  closeOnConfirm: false,
+                  inputPlaceholder: "CONFIRM"
+              },
+                  function (inputValue) {
+                    if (inputValue === false) return false;
+                    if (inputValue === "") {
+                        swal.showInputError("You need to write something!");
+                        return false
+                    }
+                    if (inputValue == "CONFIRM") {
+                        if(document.getElementById("cec_stamp_2").checked == false){
+                            swal({
+                                title: "{{ trans('global.confirm_success') }}",
+                                text: "{{ trans('global.stamp_to_form') }}",
+                                type : "success",
+                            });
+                        }
+                        else{
+                            swal({
+                                title: "{{ trans('global.confirm_success') }}",
+                                text: "{{ trans('global.unstamp_to_form') }}",
+                                type : "success",
+                            });
+                        }
+                    }
+                    else{
+                        swal.showInputError("{{ trans('global.invalid_box') }}");
+                        if(document.getElementById("cec_stamp_2").checked == false){
+                            document.getElementById("cec_stamp_2").checked = true;
+                            document.getElementById("cec_stamp_1").checked = false;
+                        }
+                    else{
+                        document.getElementById("cec_stamp_1").checked = true;
+                        document.getElementById("cec_stamp_2").checked = false;
+                    }
+                  }
+                    return false
                 });
-              } else {
-                swal("Don't change state");
-                if(document.getElementById("cec_stamp_2").checked == false){
-                    document.getElementById("cec_stamp_2").checked = true;
-                    document.getElementById("cec_stamp_1").checked = false;
-                }
-                else{
-                    document.getElementById("cec_stamp_1").checked = true;
-                    document.getElementById("cec_stamp_2").checked = false;
-                }
-              }
-              
-            });
         }
 
+
         function check_sign() {
-        
-         swal({
-              title: "Are you sure?",
-              text: "Stamp or Unstamp CEC seal to RFA form and Submittal form",
-              icon: "warning",
-              buttons: true,
-              dangerMode: true,
-            })
-            .then((willDelete) => {
-              if (willDelete) {
-                swal("Chage Success", {
-                  icon: "success",
-                });
-              } else {
-                swal("Don't change state");
-                if(document.getElementById("cec_sign_2").checked == false){
-                    document.getElementById("cec_sign_2").checked = true;
-                    document.getElementById("cec_sign_1").checked = false;
-                }
-                else{
-                    document.getElementById("cec_sign_1").checked = true;
-                    document.getElementById("cec_sign_2").checked = false;
-                }
-              }
-              
-            });
+            var str = "\"CONFIRM\"";
+            swal({
+                title: "{{ trans('global.change_box') }}",
+                text: "{{ trans('global.please_enter') }}" + str + "{{ trans('global.to_confirm') }}",
+                  type: "input",
+                  showCancelButton: true,
+                  closeOnConfirm: false,
+                  inputPlaceholder: "CONFIRM"
+              },
+                  function (inputValue) {
+                    if (inputValue === false) return false;
+                    if (inputValue === "") {
+                        swal.showInputError("You need to write something!");
+                        return false
+                    }
+                    if (inputValue == "CONFIRM") {
+                        if(document.getElementById("cec_sign_2").checked == false){
+                            swal({
+                                title: "{{ trans('global.confirm_success') }}",
+                                text: "{{ trans('global.sign_to_form') }}",
+                                type : "success",
+                            });
+                        }
+                        else{
+                            swal({
+                                title: "{{ trans('global.confirm_success') }}",
+                                text: "{{ trans('global.unsign_to_form') }}",
+                                type : "success",
+                            });
+                        }
+                    }
+                    else{
+                        swal.showInputError("{{ trans('global.invalid_box') }}");
+                        
+                        if(document.getElementById("cec_sign_2").checked == false){
+                                document.getElementById("cec_sign_2").checked = true;
+                                document.getElementById("cec_sign_1").checked = false;
+                            }
+                        else{
+                                document.getElementById("cec_sign_1").checked = true;
+                                document.getElementById("cec_sign_2").checked = false;
+                            }
+                      }
+                      return false
+                    });
         }
+
+
+        $("#save_form").on('click',function(e) {
+    
+                event.preventDefault();
+
+                swal({
+                  title: "{{ trans('global.are_you_sure') }}",
+                  text: "{{ trans('global.verify_form') }}",
+                  type: "warning",
+                  showCancelButton: true,
+                  confirmButtonColor: "#4BB543",
+                  confirmButtonText: "{{ trans('global.yes_add') }}",
+                  cancelButtonText: "{{ trans('global.no_cancel') }}",
+                  closeOnConfirm: false,
+                  closeOnCancel: false
+                },
+            function(isConfirm){
+              if (isConfirm) {
+                   // $('.swa-confirm').attr('data-flag', '1');
+                    $('.swa-confirm').submit();
+                  } else {
+                swal("{{ trans('global.cancelled') }}", "{{trans('global.add_fail')}}", "error");  
+              }
+            });
+        });
 
 
 
