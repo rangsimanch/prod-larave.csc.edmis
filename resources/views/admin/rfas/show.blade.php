@@ -396,7 +396,7 @@
 
                         @if(!empty($rfa->comment_status->id))
                             @if(!empty($rfa->action_by->signature))
-                                <img crossorigin="Anonymous" style="display:none" id="process_sign" src="{{ $rfa->action_by->signature->getUrl() }}"/> 
+                                <img style="display:none" id="process_sign" src="{{ $rfa->action_by->signature->getUrl() }}"/> 
                                  <p id="distribute_sign_base64" hidden="true">
                                  </p> 
                                  <p hidden="true">{{ $check_process = 1 }}</p>
