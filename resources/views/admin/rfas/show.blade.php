@@ -441,7 +441,7 @@
 
 @section('scripts')
 
-<script type="text/javascript">
+<script type="text/javascript" crossorigin='anonymous'>
     
 $( document ).ready(function() {
 (function (jsPDFAPI) {
@@ -486,6 +486,7 @@ function getDataUrl(img) {
    // Create canvas
    const canvas = document.createElement('canvas');
    const ctx = canvas.getContext('2d');
+
    // Set width and height
    canvas.width = img.width;
    canvas.height = img.height;
@@ -516,7 +517,7 @@ if ("{{ $check_distribute }}" == 1){
 var process_sign;
 if("{{ $check_process }}" == 1){
     process_sign = getBase64Image(document.getElementById('process_sign')); 
-    
+
 }
 
 
