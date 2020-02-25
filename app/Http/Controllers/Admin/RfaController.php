@@ -37,7 +37,7 @@ class RfaController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $query = Rfa::with(['type', 'construction_contract','wbs_level_3', 'wbs_level_4', 'issueby', 'assign',  'action_by', 'comment_by', 'information_by', 'comment_status', 'for_status', 'document_status', 'create_by_user', 'distribute_by', 'update_by_user', 'approve_by_user', 'team'])->select(sprintf('%s.*', (new Rfa)->table));
+            $query = Rfa::with(['type', 'construction_contract','wbs_level_3', 'wbs_level_4', 'issueby', 'assign',  'action_by', 'comment_by', 'information_by', 'comment_status', 'for_status', 'document_status', 'create_by_user', 'distribute_by', 'update_by_user', 'approve_by_user', 'reviewed_by', 'team'])->select(sprintf('%s.*', (new Rfa)->table));
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
@@ -146,7 +146,7 @@ class RfaController extends Controller
                     //After CEC Sign and Stamp
                         else {
                             //Check CSC Manager
-                            if ( strcmp(Auth::id(),'61') == 0 or strcmp(Auth::id(),'62') == 0 or strcmp(Auth::id(),'39') == 0 ){
+                            if ( strcmp(Auth::id(),'61') == 0){
                                 $editGate      = 'rfa_edit';
                                 $deleteGate    = 'rfa_delete';
                                 return view('partials.datatablesActions', compact(
@@ -205,7 +205,7 @@ class RfaController extends Controller
                     // /////////////// Reviewed Status ///////////////
                     else if(strcmp($document_status_id, '3') == 0){
                     //Check CSC Manager
-                       if ( strcmp(Auth::id(),'61') == 0 or strcmp(Auth::id(),'62') == 0 or strcmp(Auth::id(),'39') == 0 ){
+                       if ( strcmp(Auth::id(),'61') == 0){
                             $editGate      = 'rfa_edit';
                             $deleteGate    = 'rfa_delete';
                             return view('partials.datatablesActions', compact(
@@ -424,7 +424,11 @@ class RfaController extends Controller
                 return $row->contract_drawing_no ? $row->contract_drawing_no : "";
             });
 
-            $table->rawColumns(['actions', 'placeholder', 'type', 'construction_contract', 'wbs_level_3', 'wbs_level_4', 'issueby', 'assign', 'file_upload_1', 'comment_by', 'information_by', 'comment_status', 'for_status', 'document_status', 'action_by', 'create_by_user', 'update_by_user', 'approve_by_user', 'commercial_file_upload', 'document_file_upload', 'team', 'check_revision']);
+            $table->addColumn('reviewed_by_name', function ($row) {
+                return $row->reviewed_by ? $row->reviewed_by->name : '';
+            });
+
+            $table->rawColumns(['actions', 'placeholder', 'type', 'construction_contract', 'wbs_level_3', 'wbs_level_4', 'issueby', 'assign', 'file_upload_1', 'comment_by', 'information_by', 'comment_status', 'for_status', 'document_status', 'action_by', 'create_by_user', 'update_by_user', 'approve_by_user', 'commercial_file_upload', 'document_file_upload', 'team', 'check_revision','reviewed_by']);
 
             return $table->make(true);
         }
@@ -476,7 +480,7 @@ class RfaController extends Controller
 
         $issuebies = User::where('id',91)->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $assigns = User::find([61,39,62])->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), ''); //61->Li, 39->Paisan,  62->Liu 
+        $assigns = User::where('id',61)->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), ''); //61->Li, 39->Paisan,  62->Liu 
 
         $action_bies = User::where('team_id',3)->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
         
@@ -488,9 +492,12 @@ class RfaController extends Controller
 
         $for_statuses = RfaCommentStatus::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
+        $reviewed_bies = User::find([39,62])->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+
+
         $rfa->load('type', 'construction_contract', 'issueby', 'assign', 'action_by', 'comment_by', 'information_by', 'comment_status', 'for_status', 'document_status', 'create_by_user', 'update_by_user', 'approve_by_user', 'team', 'distribute_by');
        // $rfa->load(all());
-        return view('admin.rfas.revision', compact('types', 'construction_contracts', 'wbs_level_3s', 'wbs_level_4s', 'issuebies', 'assigns', 'action_bies', 'comment_bies', 'information_bies', 'comment_statuses', 'for_statuses', 'rfa'));
+        return view('admin.rfas.revision', compact('types', 'construction_contracts', 'wbs_level_3s', 'wbs_level_4s', 'issuebies', 'assigns', 'action_bies', 'comment_bies', 'information_bies', 'comment_statuses', 'for_statuses', 'reviewed_bies', 'rfa'));
     }
     
     public function  storeRevision(RevisionRfaRequest $request, Rfa $rfa)
@@ -615,7 +622,7 @@ class RfaController extends Controller
 
         $issuebies = User::where('id',91)->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $assigns = User::find([61,39,62])->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), ''); //61->Li, 39->Paisan,  62->Liu 
+        $assigns = User::where('id',61)->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), ''); //61->Li, 39->Paisan,  62->Liu 
 
         $action_bies = User::where('team_id',3)->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
         
@@ -629,8 +636,10 @@ class RfaController extends Controller
         
         $document_statuses = RfaDocumentStatus::all()->pluck('status_name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
+        $reviewed_bies = User::find([39,62])->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        return view('admin.rfas.create', compact('document_statuses', 'types', 'construction_contracts', 'wbs_level_3s', 'wbs_level_4s', 'issuebies', 'assigns', 'action_bies', 'comment_bies', 'information_bies', 'comment_statuses', 'for_statuses'));
+
+        return view('admin.rfas.create', compact('document_statuses', 'types', 'construction_contracts', 'wbs_level_3s', 'wbs_level_4s', 'issuebies', 'assigns', 'action_bies', 'comment_bies', 'information_bies', 'comment_statuses', 'for_statuses', 'reviewed_bies'));
     }
 
     public function store(StoreRfaRequest $request)
@@ -652,7 +661,7 @@ class RfaController extends Controller
         $const_code = ConstructionContract::where('id','=',$request->construction_contract_id)->value('code');
             //Next Number
         if(Rfa::orderBy('id', 'desc')->value('rfa_count') == 0){
-            $previousId = 1000;
+            $previousId = 1100;
         }
         else{
             $previousId = Rfa::orderBy('id', 'desc')->value('rfa_count');
@@ -745,7 +754,7 @@ class RfaController extends Controller
 
         $issuebies = User::where('id',91)->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $assigns = User::find([61,39,62])->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), ''); //61->Li, 39->Paisan,  62->Liu 
+        $assigns = User::where('id',61)->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), ''); //61->Li, 39->Paisan,  62->Liu 
 
         $action_bies = User::where('team_id',3)->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
         
@@ -761,10 +770,13 @@ class RfaController extends Controller
 
         $review_statuses = RfaCommentStatus::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
+        $reviewed_bies = User::find([39,62])->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        
 
-        $rfa->load('type', 'construction_contract', 'issueby', 'assign', 'action_by', 'comment_by', 'information_by', 'comment_status', 'for_status', 'document_status', 'create_by_user', 'update_by_user', 'approve_by_user', 'team');
 
-        return view('admin.rfas.edit', compact('review_statuses', 'submittalsRfa', 'types', 'construction_contracts', 'wbs_level_3s', 'wbs_level_4s', 'issuebies', 'assigns', 'action_bies', 'comment_bies', 'information_bies', 'comment_statuses', 'for_statuses', 'rfa'));
+        $rfa->load('type', 'construction_contract', 'issueby', 'assign', 'action_by', 'comment_by', 'information_by', 'comment_status', 'for_status', 'document_status', 'create_by_user', 'update_by_user', 'approve_by_user', 'reviewed_by', 'team');
+
+        return view('admin.rfas.edit', compact('review_statuses', 'submittalsRfa', 'types', 'construction_contracts', 'wbs_level_3s', 'wbs_level_4s', 'issuebies', 'assigns', 'action_bies', 'comment_bies', 'information_bies', 'comment_statuses', 'for_statuses', 'rfa', 'reviewed_bies'));
     }
 
     public function update(UpdateRfaRequest $request, Rfa $rfa)
@@ -910,7 +922,7 @@ class RfaController extends Controller
 
         $submittalsRfa = SubmittalsRfa::all()->where('on_rfa_id' , $rfa->id);
 
-        $rfa->load('type', 'construction_contract', 'wbs_level_3', 'wbs_level_4', 'issueby', 'assign', 'action_by', 'comment_by', 'information_by', 'comment_status', 'for_status', 'document_status', 'create_by_user', 'team','onRfaSubmittalsRfas', 'distribute_by');
+        $rfa->load('type', 'construction_contract', 'wbs_level_3', 'wbs_level_4', 'issueby', 'assign', 'action_by', 'comment_by', 'information_by', 'comment_status', 'for_status', 'document_status', 'create_by_user', 'team','onRfaSubmittalsRfas', 'reviewed_by','distribute_by');
 
         return view('admin.rfas.show', compact('rfa','submittalsRfa'));
     }

@@ -121,6 +121,7 @@ class Rfa extends Model implements HasMedia
         'document_number',
         'create_by_user_id',
         'comment_status_id',
+        'reviewed_by_id',
         'information_by_id',
         'document_status_id',
         'contract_drawing_no',
@@ -340,6 +341,10 @@ class Rfa extends Model implements HasMedia
         $this->attributes['hardcopy_date'] = $value ? Carbon::createFromFormat(config('panel.date_format'), $value)->format('Y-m-d') : null;
     }
 
+    public function reviewed_by()
+    {
+        return $this->belongsTo(User::class, 'reviewed_by_id');
+    }
     
     public function onRfaSubmittalsRfas()
     {

@@ -531,6 +531,20 @@
                             @endif
                             <span class="help-block">{{ trans('cruds.rfa.fields.note_4_helper') }}</span>
                         </div>
+
+                         <div class="form-group {{ $errors->has('reviewed_by') ? 'has-error' : '' }}">
+                            <label for="reviewed_by_id">{{ trans('cruds.rfa.fields.reviewed_by') }}</label>
+                            <select class="form-control select2" name="reviewed_by_id" id="reviewed_by_id">
+                                @foreach($reviewed_bies as $id => $reviewed_by)
+                                    <option value="{{ $id }}" {{ ($rfa->reviewed_by ? $rfa->reviewed_by->id : old('reviewed_by_id')) == $id ? 'selected' : '' }}>{{ $reviewed_by }}</option>
+                                @endforeach
+                            </select>
+                            @if($errors->has('reviewed_by'))
+                                <span class="help-block" role="alert">{{ $errors->first('reviewed_by') }}</span>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.rfa.fields.reviewed_by_helper') }}</span>
+                        </div>
+                        
                         <div class="form-group {{ $errors->has('hardcopy_date') ? 'has-error' : '' }}">
                             <label for="hardcopy_date">{{ trans('cruds.rfa.fields.hardcopy_date') }}</label>
                             <input class="form-control date" type="text" name="hardcopy_date" id="hardcopy_date" value="{{ old('hardcopy_date', $rfa->hardcopy_date) }}">
