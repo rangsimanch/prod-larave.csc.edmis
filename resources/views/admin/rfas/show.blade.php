@@ -751,9 +751,9 @@ $('.jpdf').click(function() {
 
     //Action
         //Sign Action
-    if("{{ $check_process }}" == 1){
-        doc.addImage(process_sign,83,210,8,6);
-    }
+    // if("{{ $check_process }}" == 1){
+    //     doc.addImage(process_sign,83,210,8,6);
+    // }
 
     //Note3
     doc.text(43,205,note_3);
@@ -976,13 +976,13 @@ $('.jspdf_submittals').click(function() {
     } 
 
          //Sign Action
-    if("{{ $check_process }}" == 1){
-        doc.addImage(process_sign,28,237,8,6);
-    }
+    // if("{{ $check_process }}" == 1){
+    //     doc.addImage(process_sign,28,237,8,6);
+    // }
 
-     if('{{ $check_reviewd }}' == 1){
-        doc.addImage(reviewed_sign,106,237,8,6);
-    }
+    //  if('{{ $check_reviewd }}' == 1){
+    //     doc.addImage(reviewed_sign,106,237,8,6);
+    // }
 
         //Sign Manager
     if("{{ $check_approve }}" == 1){
@@ -1099,13 +1099,13 @@ $('.jspdf_submittals').click(function() {
                 }
 
                          //Sign Action
-                if("{{ $check_process }}" == 1){
-                    doc.addImage(process_sign,28,237,8,6);
-                }
+                // if("{{ $check_process }}" == 1){
+                //     doc.addImage(process_sign,28,237,8,6);
+                // }
 
-                 if('{{ $check_reviewd }}' == 1){
-                    doc.addImage(reviewed_sign,106,237,8,6);
-                }
+                //  if('{{ $check_reviewd }}' == 1){
+                //     doc.addImage(reviewed_sign,106,237,8,6);
+                // }
 
                     //Sign Manager
                 if("{{ $check_approve }}" == 1){
