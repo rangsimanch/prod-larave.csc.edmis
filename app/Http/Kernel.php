@@ -22,6 +22,7 @@ class Kernel extends HttpKernel
         \Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull::class,
         \Illuminate\Session\Middleware\StartSession::class,
         \Illuminate\View\Middleware\ShareErrorsFromSession::class,
+        \Fruitcake\Cors\HandleCors::class,
     ];
 /**
      * The application's route middleware groups.
@@ -65,7 +66,6 @@ class Kernel extends HttpKernel
         'password.confirm' => \Illuminate\Auth\Middleware\RequirePassword::class,
         'auth.basic'       => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
         'select' => \App\Http\Middleware\ConstructionContractSelect::class,
-        'cors' => \App\Http\Middleware\Cors::class, 
         
     ];
 }
