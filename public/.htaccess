@@ -20,10 +20,18 @@
     RewriteRule ^ index.php [L]
 </IfModule>
 
+<IfModule mod_setenvif.c>
 
-<ifmodule mod_headers.c="">
-   SetEnvIf Origin "^(.*\.domain\.com)$" ORIGIN_SUB_DOMAIN=$1
-   Header set Access-Control-Allow-Origin "%{ORIGIN_SUB_DOMAIN}e" env=ORIGIN_SUB_DOMAIN
-   Header set Access-Control-Allow-Methods: "*"
-   Header set Access-Control-Allow-Headers: "Origin, X-Requested-With, Content-Type, Accept, Authorization"
-</ifmodule>
+    <IfModule mod_headers.c>
+
+        <FilesMatch "\.(cur|gif|ico|jpe?g|png|svgz?|webp)$">
+
+            SetEnvIf Origin ":" IS_CORS
+
+            Header set Access-Control-Allow-Origin "*" env=IS_CORS
+
+        </FilesMatch>
+
+    </IfModule>
+
+</IfModule>
