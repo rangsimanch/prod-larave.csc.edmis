@@ -506,6 +506,7 @@ function getDataUrl(img) {
    canvas.width = img.width;
    canvas.height = img.height;
    // Draw the image
+   img.setAttribute("crossOrigin",'Anonymous')
    ctx.drawImage(img, 0, 0);
    return canvas.toDataURL('image/png');
 }
@@ -532,7 +533,7 @@ if ("{{ $check_distribute }}" == 1){
 var process_sign;
 if("{{ $check_process }}" == 1){
     process_sign = getBase64Image(document.getElementById('process_sign')); 
-
+    console.log(process_sign);
 }
 
 var reviewed_sign;

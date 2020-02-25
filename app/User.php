@@ -75,6 +75,7 @@ class User extends Authenticatable implements HasMedia
         'jobtitle_id',
         'remember_token',
         'email_verified_at',
+        'signature_base_64',
     ];
 
     public function getIsAdminAttribute()
