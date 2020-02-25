@@ -513,7 +513,7 @@ function getDataUrl(img) {
 
 function getBase64Image(img) {
   var canvas = document.createElement("canvas");
-  img.crossOrigin = "Anonymous";
+    img.setAttribute("crossOrigin",'Anonymous')
   canvas.width = img.width;
   canvas.height = img.height;
   var ctx = canvas.getContext("2d");
