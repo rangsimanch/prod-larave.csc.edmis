@@ -335,42 +335,42 @@
 { data: 'bill', name: 'bill' }, // 3
 { data: 'title_eng', name: 'title_eng' }, // 4
 { data: 'title', name: 'title' }, // 5
-{ data: 'title_cn', name: 'title_cn' }, // 6
+{ data: 'title_cn', name: 'title_cn' ,visible: false }, // 6
 { data: 'origin_number', name: 'origin_number' }, // 7
 { data: 'document_number', name: 'document_number' }, // 8
 { data: 'rfa_code', name: 'rfa_code' }, // 9
-{ data: 'type.type_code', name: 'type.type_code' }, // 10
-{ data: 'worktype', name: 'worktype' }, // 11
-{ data: 'construction_contract_code', name: 'construction_contract.code' }, // 12
-{ data: 'wbs_level_3_wbs_level_3_code', name: 'wbs_level_3.wbs_level_3_code' }, // 13
-{ data: 'wbs_level_4_wbs_level_4_code', name: 'wbs_level_4.wbs_level_4_code' }, // 14
-{ data: 'submit_date', name: 'submit_date' }, // 15
-{ data: 'issueby_name', name: 'issueby.name' }, // 16
-{ data: 'assign_name', name: 'assign.name' }, // 17
-{ data: 'file_upload_1', name: 'file_upload_1', sortable: false, searchable: false}, // 18
-{ data: 'qty_page', name: 'qty_page' }, // 19
+{ data: 'type.type_code', name: 'type.type_code' , visible: false}, // 10
+{ data: 'worktype', name: 'worktype' , visible: false}, // 11
+{ data: 'construction_contract_code', name: 'construction_contract.code' ,visible: false }, // 12
+{ data: 'wbs_level_3_wbs_level_3_code', name: 'wbs_level_3.wbs_level_3_code' , visible: false}, // 13
+{ data: 'wbs_level_4_wbs_level_4_code', name: 'wbs_level_4.wbs_level_4_code' , visible: false }, // 14
+{ data: 'submit_date', name: 'submit_date' , visible: false }, // 15
+{ data: 'issueby_name', name: 'issueby.name' , visible: false}, // 16
+{ data: 'assign_name', name: 'assign.name' , visible: false}, // 17
+{ data: 'file_upload_1', name: 'file_upload_1', sortable: false, searchable: false }, // 18
+{ data: 'qty_page', name: 'qty_page' ,visible: false}, // 19
 { data: 'commercial_file_upload', name: 'commercial_file_upload', visible: false, sortable: false, searchable: false }, // 20
-{ data: 'spec_ref_no', name: 'spec_ref_no' , visible: false }, // 21
-{ data: 'clause', name: 'clause' , visible: false}, // 22
-{ data: 'contract_drawing_no', name: 'contract_drawing_no' , visible: false }, // 23
+{ data: 'spec_ref_no', name: 'spec_ref_no' , visible: false ,visible: false}, // 21
+{ data: 'clause', name: 'clause' , visible: false, visible: false}, // 22
+{ data: 'contract_drawing_no', name: 'contract_drawing_no' , visible: false , visible: false}, // 23
 { data: 'action_by_name', name: 'action_by.name' }, // 24
-{ data: 'comment_by_name', name: 'comment_by.name' }, // 25
-{ data: 'information_by_name', name: 'information_by.name' }, // 26
+{ data: 'comment_by_name', name: 'comment_by.name' ,visible: false}, // 25
+{ data: 'information_by_name', name: 'information_by.name' ,visible: false}, // 26
 { data: 'receive_date', name: 'receive_date' }, // 27
 { data: 'target_date', name: 'target_date' }, // 28
 { data: 'note_2', name: 'note_2' , visible: false }, // 29
 { data: 'comment_status_name', name: 'comment_status.name' }, // 30
 { data: 'note_3', name: 'note_3' , visible: false }, // 31
-{ data: 'document_ref', name: 'document_ref' }, // 32
+{ data: 'document_ref', name: 'document_ref' ,visible: false}, // 32
 { data: 'document_file_upload', name: 'document_file_upload', sortable: false, searchable: false }, // 33
 { data: 'for_status_name', name: 'for_status.name' }, // 34
-{ data: 'created_at', name: 'created_at' }, // 35
-{ data: 'create_by_user_name', name: 'create_by_user.name' }, // 36
+{ data: 'created_at', name: 'created_at' ,visible: false}, // 35
+{ data: 'create_by_user_name', name: 'create_by_user.name' ,visible: false}, // 36
 // { data: 'update_by_user_name', name: 'update_by_user.name' },
 // { data: 'approve_by_user_name', name: 'approve_by_user.name' },
-{ data: 'updated_at', name: 'updated_at' }, // 37
-{ data: 'hardcopy_date', name: 'hardcopy_date' }, // 38
-{ data: 'team_code', name: 'team.code' }, // 39
+{ data: 'updated_at', name: 'updated_at' ,visible: false}, // 37
+{ data: 'hardcopy_date', name: 'hardcopy_date' ,visible: false}, // 38
+{ data: 'team_code', name: 'team.code' ,visible: false}, // 39
 { data: 'check_revision', name: 'check_revision', visible: false,}, // 40
     ],
     order: [[ 36, 'desc' ]],
