@@ -10,10 +10,11 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\MediaLibrary\HasMedia\HasMedia;
 use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
 use Spatie\MediaLibrary\Models\Media;
+use NotificationChannels\WebPush\HasPushSubscriptions;
 
 class Rfa extends Model implements HasMedia
 {
-    use SoftDeletes, MultiTenantModelTrait, HasMediaTrait, Auditable;
+    use SoftDeletes, MultiTenantModelTrait, HasMediaTrait, Auditable, HasPushSubscriptions;
 
     public $table = 'rfas';
 

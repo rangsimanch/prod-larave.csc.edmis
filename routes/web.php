@@ -17,6 +17,8 @@ Auth::routes();
 
 Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth'], 'namespace' => 'Admin'], function () {
 
+    Route::get('/push','PushController@push')->name('push');
+
     //Route::group(['middleware' => ['auth'], 'prefix' => 'admin', 'as' => 'admin.'], function () {
     Route::get('/', 'HomeController@index')->name('home');
     //->middleware('ConstructionContract.Select');

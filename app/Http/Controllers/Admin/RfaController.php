@@ -29,6 +29,7 @@ use Gate;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Yajra\DataTables\Facades\DataTables;
+use App\Notifications\PushApp;
 
 class RfaController extends Controller
 {

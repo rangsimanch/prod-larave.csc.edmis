@@ -306,6 +306,8 @@ return [
             'cec_sign_helper'               => '',
             'purpose_for'                   => 'Purpose For',
             'purpose_for_helper'            => '',
+            'reviewed_by'                   => 'Reviewed By',
+            'reviewed_by_helper'            => '',
             
         ],
     ],

@@ -196,6 +196,11 @@
     <script src="https://unpkg.com/bootstrap-table@1.15.5/dist/extensions/filter-control/bootstrap-table-filter-control.min.js"></script>
     <script src="https://unpkg.com/jspdf@latest/dist/jspdf.min.js"></script>
 
+    <script src="{{ asset('js/enable-push.js') }}" defer></script>
+
+    {{-- Pusher --}}
+    <script src="https://js.pusher.com/5.1/pusher.min.js"></script>
+
     @include('partials.javascripts')
     <script>
         $(function() {
@@ -372,6 +377,23 @@
 
     </script>
 
+
+    {{-- Pusher Script --}}
+    <script>
+
+    // Enable pusher logging - don't include this in production
+    Pusher.logToConsole = true;
+
+    var pusher = new Pusher('64903d7d8dd736f56d53', {
+      cluster: 'ap1',
+      forceTLS: true
+    });
+
+    var channel = pusher.subscribe('my-channel');
+    channel.bind('my-event', function(data) {
+      alert(JSON.stringify(data));
+    });
+  </script>
 
     @yield('scripts')
 </body>

@@ -885,6 +885,7 @@ $('.jspdf_submittals').click(function() {
     var action_by = "{{ $rfa->action_by->name ?? '' }}";
     var process_date = "{{ $rfa->process_date ?? '' }}";
     
+    var reviewed_by = "{{ $rfa->reviewed_by->name ?? '' }}";
     var outgoing_number = "{{ $rfa->outgoing_number ?? '' }}";
     var outgoing_date = "{{ $rfa->outgoing_date ?? '' }}";
     
@@ -957,7 +958,7 @@ $('.jspdf_submittals').click(function() {
 
     doc.text(25,245.5,action_by);
     doc.text(20,260,process_date);
-    doc.text(106,245.5,assign_to);
+    doc.text(106,245.5,reviewed_by);
     doc.text(80,260,distribute_date);
     doc.text(170,245.5,'Li Guanghe');
     doc.text(163,260,done_date);
@@ -1080,7 +1081,7 @@ $('.jspdf_submittals').click(function() {
 
                 doc.text(25,245.5,action_by);
                 doc.text(20,260,process_date);
-                doc.text(106,245.5,assign_to);
+                doc.text(106,245.5,reviewed_by);
                 doc.text(80,260,distribute_date);
                 doc.text(170,245.5,'Li Guanghe');
                 doc.text(163,260,done_date);
