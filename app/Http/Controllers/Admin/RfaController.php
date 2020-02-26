@@ -646,9 +646,7 @@ class RfaController extends Controller
     {   $data = $request->all();
         $data['create_by_user_id'] = auth()->id();
 
-        if($request->document_status_id == null){
         $data['document_status_id'] = 1;
-        }
             //Works Code
         $workcode_id = ConstructionContract::all()->pluck('works_code_id');
         $workcode = WorksCode::where('id','=',$workcode_id)->value('code');
@@ -788,6 +786,9 @@ class RfaController extends Controller
                 $distribute_date = new DateTime();
                 $rfa['distribute_by_id'] = Auth::id();
                 $rfa['distribute_date'] = $distribute_date->format('d/m/Y');
+            }
+            else{
+                $rfa['document_status_id'] = 1;
             }
         }
 
