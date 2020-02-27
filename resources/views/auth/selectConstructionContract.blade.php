@@ -17,7 +17,7 @@
                         </div>
                         <div class="form-group">
                             <div class="col-md-6 col-md-offset-4">
-                            {!! Form::submit( trans('global.save'), ['class' => 'btn btn-success']) !!}
+                            {!! Form::submit( trans('global.next'), ['class' => 'btn btn-success']) !!}
                            </div>
                         </div>
                     {!! Form::close() !!}

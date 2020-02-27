@@ -278,7 +278,8 @@ return [
 
     'yes_add'                           => 'Yes, adding it!',
     'yes_update'                        => 'Yes, Update it!',
-    'no_cancel'                         => 'No, cancel please!'
+    'no_cancel'                         => 'No, cancel please!',
+    'next'                              => 'Next',
 
 
 

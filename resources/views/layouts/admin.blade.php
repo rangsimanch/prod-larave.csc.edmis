@@ -126,6 +126,9 @@
                                 </a>
                             </li>
                 </ul>
+
+                {{-- <a href="{{ route('admin.users.edit', Auth::user()->id) }}"> EDIT </a> --}}
+            
             </div>
             
       

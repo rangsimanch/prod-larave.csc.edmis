@@ -51,26 +51,22 @@ class RfaController extends Controller
                 
                 $cur_date = new DateTime();
 
-                $doc_status_id = $row->document_status ? $row->document_status->id : '';
+                $document_status_id = $row->document_status ? $row->document_status->id : '';
 
                 $counter_date = $cur_date->diff($target_date)->format("%a");
-                if($counter_date < 1000){
-                    $doc_status = $row->document_status ? $row->document_status->status_name : '';
 
-                        $check = strcmp($doc_status_id, '2');
-
-                    return $counter_date + 2 . ' Days';
+                if(!strcmp($document_status_id, '1')){
+                    return '';
+                }
+                else if(!strcmp($document_status_id, '4')){
+                    return '';
                 }
                 else{
-                    $doc_status = $row->document_status ? $row->document_status->status_name : '';
-                    if(strcmp($doc_status,"New")){
-                        return '';
+                    if($counter_date < 1000){
+                        return $counter_date + 2 . ' Days';
                     }
                     else{
-                        $sign_status = $row->cec_sign ? $row->cec_sign : '';
-                        $stamp_status = $row->cec_stamp ? $row->cec_stamp : '';
-                        $check = strcmp($doc_status_id, '2');
-                       return sprintf('Time Out');
+                        return sprintf('Time Out');
                     }
                 }
                 //return $cur_date->format("d/m/Y");
@@ -853,7 +849,7 @@ class RfaController extends Controller
 
             //Alert Engineer
             $count_rfa = RFA::where([['action_by_id', $request->action_by_id], ['document_status_id', 2]])->count();
-            $data_alert['alert_text'] = 'You have ' . $count_rfa . ' new RFA for Review.';
+            $data_alert['alert_text'] = 'You have new RFA for Review.';
             $data_alert['alert_link'] = route('admin.rfas.index');
             $data_user_id = array($request->action_by_id,$request->information_by_id,$request->comment_by_id);
         
@@ -899,19 +895,38 @@ class RfaController extends Controller
             }
         }
 
-        foreach ($request->input('commercial_file_upload', []) as $file) {
-            $rfa->addMedia(storage_path('tmp/uploads/' . $file))->toMediaCollection('commercial_file_upload');
-
+        if (count($rfa->commercial_file_upload) > 0) {
+            foreach ($rfa->commercial_file_upload as $media) {
+                if (!in_array($media->file_name, $request->input('commercial_file_upload', []))) {
+                    $media->delete();
+                }
+            }
         }
 
+        $media = $rfa->commercial_file_upload->pluck('file_name')->toArray();
+
+        foreach ($request->input('commercial_file_upload', []) as $file) {
+            if (count($media) === 0 || !in_array($file, $media)) {
+                $rfa->addMedia(storage_path('tmp/uploads/' . $file))->toMediaCollection('commercial_file_upload');
+            }
+        }
+
+        if (count($rfa->document_file_upload) > 0) {
+            foreach ($rfa->document_file_upload as $media) {
+                if (!in_array($media->file_name, $request->input('document_file_upload', []))) {
+                    $media->delete();
+                }
+            }
+        }
+
+        $media = $rfa->document_file_upload->pluck('file_name')->toArray();
 
         foreach ($request->input('document_file_upload', []) as $file) {
-            $rfa->addMedia(storage_path('tmp/uploads/' . $file))->toMediaCollection('document_file_upload');
+            if (count($media) === 0 || !in_array($file, $media)) {
+                $rfa->addMedia(storage_path('tmp/uploads/' . $file))->toMediaCollection('document_file_upload');
+            }
         }
 
-        if ($media = $request->input('ck-media', false)) {
-            Media::whereIn('id', $media)->update(['model_id' => $rfa->id]);
-        }
 
 
         return redirect()->route('admin.rfas.index');
