@@ -17,7 +17,7 @@
                         
                         @can('rfa_panel_a')
                         <legend> Constractor RFA Submittal </legend>
-
+                        
                          <div class="form-group {{ $errors->has('purpose_for') ? 'has-error' : '' }}">
                             <label>{{ trans('cruds.rfa.fields.purpose_for') }}</label>
                             <select class="form-control" name="purpose_for" id="purpose_for">
@@ -213,8 +213,34 @@
                             @endif
                             <span class="help-block">{{ trans('cruds.rfa.fields.attach_file_name_helper') }}</span>
                         </div>
-                        
-                        <div class="form-group {{ $errors->has('file_upload_1') ? 'has-error' : '' }}">
+                        @endcan
+
+
+                        {{-- Attach File --}}
+                        @if($rfa->document_status->id == 1)
+                            @if($rfa->cec_sign == 2 && $rfa->cec_stamp == 2)
+                                <div class="form-group {{ $errors->has('file_upload_1') ? 'has-error' : '' }}">
+                                    <label for="file_upload_1">{{ trans('cruds.rfa.fields.file_upload_1') }}</label>
+                                    <div class="needsclick dropzone" id="file_upload_1-dropzone">
+                                    </div>
+                                    @if($errors->has('file_upload_1'))
+                                        <span class="help-block" role="alert">{{ $errors->first('file_upload_1') }}</span>
+                                    @endif
+                                    <span class="help-block">{{ trans('cruds.rfa.fields.file_upload_1_helper') }}</span>
+                                </div>
+                            @else
+                                <div hidden="true" class="form-group {{ $errors->has('file_upload_1') ? 'has-error' : '' }}">
+                                    <label for="file_upload_1">{{ trans('cruds.rfa.fields.file_upload_1') }}</label>
+                                    <div class="needsclick dropzone" id="file_upload_1-dropzone">
+                                    </div>
+                                    @if($errors->has('file_upload_1'))
+                                        <span class="help-block" role="alert">{{ $errors->first('file_upload_1') }}</span>
+                                    @endif
+                                    <span class="help-block">{{ trans('cruds.rfa.fields.file_upload_1_helper') }}</span>
+                                </div>
+                            @endif
+                        @else
+                        <div hidden="true" class="form-group {{ $errors->has('file_upload_1') ? 'has-error' : '' }}">
                             <label for="file_upload_1">{{ trans('cruds.rfa.fields.file_upload_1') }}</label>
                             <div class="needsclick dropzone" id="file_upload_1-dropzone">
                             </div>
@@ -223,6 +249,9 @@
                             @endif
                             <span class="help-block">{{ trans('cruds.rfa.fields.file_upload_1_helper') }}</span>
                         </div>
+                        @endif
+
+                        @can('rfa_panel_a')
                         <div class="form-group {{ $errors->has('qty_page') ? 'has-error' : '' }}">
                             <label for="qty_page">{{ trans('cruds.rfa.fields.qty_page') }}</label>
                             <input class="form-control" type="text" name="qty_page" id="qty_page" value="{{ old('qty_page', $rfa->qty_page) }}">
@@ -231,16 +260,43 @@
                             @endif
                             <span class="help-block">{{ trans('cruds.rfa.fields.qty_page_helper') }}</span>
                         </div>
-                        <div class="form-group {{ $errors->has('commercial_file_upload') ? 'has-error' : '' }}">
-                            <label for="commercial_file_upload">{{ trans('cruds.rfa.fields.commercial_file_upload') }}</label>
-                            <div class="needsclick dropzone" id="commercial_file_upload-dropzone">
-                            </div>
-                            @if($errors->has(''))
-                                <span class="help-block" role="alert">{{ $errors->first('') }}</span>
-                            @endif
-                            <span class="help-block">{{ trans('cruds.rfa.fields.commercial_file_upload_helper') }}</span>
-                        </div>
+                        @endcan
 
+                         @if($rfa->document_status->id == 1)
+                            @if($rfa->cec_sign == 2 && $rfa->cec_stamp == 2)
+                                <div class="form-group {{ $errors->has('commercial_file_upload') ? 'has-error' : '' }}">
+                                    <label for="commercial_file_upload">{{ trans('cruds.rfa.fields.commercial_file_upload') }}</label>
+                                    <div class="needsclick dropzone" id="commercial_file_upload-dropzone">
+                                    </div>
+                                    @if($errors->has(''))
+                                        <span class="help-block" role="alert">{{ $errors->first('') }}</span>
+                                    @endif
+                                    <span class="help-block">{{ trans('cruds.rfa.fields.commercial_file_upload_helper') }}</span>
+                                </div>
+                            @else
+                                    <div hidden="true" class="form-group {{ $errors->has('commercial_file_upload') ? 'has-error' : '' }}">
+                                        <label for="commercial_file_upload">{{ trans('cruds.rfa.fields.commercial_file_upload') }}</label>
+                                        <div class="needsclick dropzone" id="commercial_file_upload-dropzone">
+                                        </div>
+                                        @if($errors->has(''))
+                                            <span class="help-block" role="alert">{{ $errors->first('') }}</span>
+                                        @endif
+                                        <span class="help-block">{{ trans('cruds.rfa.fields.commercial_file_upload_helper') }}</span>
+                                    </div>
+                            @endif
+                        @else
+                            <div hidden="true" class="form-group {{ $errors->has('commercial_file_upload') ? 'has-error' : '' }}">
+                                <label for="commercial_file_upload">{{ trans('cruds.rfa.fields.commercial_file_upload') }}</label>
+                                <div class="needsclick dropzone" id="commercial_file_upload-dropzone">
+                                </div>
+                                @if($errors->has(''))
+                                    <span class="help-block" role="alert">{{ $errors->first('') }}</span>
+                                @endif
+                                <span class="help-block">{{ trans('cruds.rfa.fields.commercial_file_upload_helper') }}</span>
+                             </div>
+                        @endif
+
+                        @can('rfa_panel_a')
                         <div class="form-group {{ $errors->has('spec_ref_no') ? 'has-error' : '' }}">
                             <label for="spec_ref_no">{{ trans('cruds.rfa.fields.spec_ref_no') }}</label>
                             <input class="form-control" type="text" name="spec_ref_no" id="spec_ref_no" value="{{ old('spec_ref_no', $rfa->spec_ref_no) }}">
@@ -300,6 +356,7 @@
                         @endcan
 
                         @endcan
+
 
                         @if($rfa->document_status->id  == 1)
                         @can('rfa_panel_b')
@@ -476,17 +533,31 @@
                                     </tbody>
                                 </table>
                         </div>
+                        @endcan
 
-
-                        <div class="form-group {{ $errors->has('document_file_upload') ? 'has-error' : '' }}">
-                            <label for="document_file_upload">{{ trans('cruds.rfa.fields.document_file_upload') }}</label>
-                            <div class="needsclick dropzone" id="document_file_upload-dropzone">
+                        @if($rfa->document_status->id == 2)
+                            <div class="form-group {{ $errors->has('document_file_upload') ? 'has-error' : '' }}">
+                                <label for="document_file_upload">{{ trans('cruds.rfa.fields.document_file_upload') }}</label>
+                                <div class="needsclick dropzone" id="document_file_upload-dropzone">
+                                </div>
+                                @if($errors->has(''))
+                                    <span class="help-block" role="alert">{{ $errors->first('') }}</span>
+                                @endif
+                                <span class="help-block">{{ trans('cruds.rfa.fields.document_file_upload_helper') }}</span>
                             </div>
-                            @if($errors->has(''))
-                                <span class="help-block" role="alert">{{ $errors->first('') }}</span>
-                            @endif
-                            <span class="help-block">{{ trans('cruds.rfa.fields.document_file_upload_helper') }}</span>
-                        </div>
+                        @else
+                            <div hidden="true" class="form-group {{ $errors->has('document_file_upload') ? 'has-error' : '' }}">
+                                <label for="document_file_upload">{{ trans('cruds.rfa.fields.document_file_upload') }}</label>
+                                <div class="needsclick dropzone" id="document_file_upload-dropzone">
+                                </div>
+                                @if($errors->has(''))
+                                    <span class="help-block" role="alert">{{ $errors->first('') }}</span>
+                                @endif
+                                <span class="help-block">{{ trans('cruds.rfa.fields.document_file_upload_helper') }}</span>
+                            </div>
+                        @endif
+
+                        @can('rfa_panel_c')
                         <div class="form-group {{ $errors->has('document_ref') ? 'has-error' : '' }}">
                             <label for="document_ref">{{ trans('cruds.rfa.fields.document_ref') }}</label>
                             <input class="form-control" type="text" name="document_ref" id="document_ref" value="{{ old('document_ref', $rfa->document_ref) }}">
@@ -786,7 +857,7 @@ Dropzone.options.documentFileUploadDropzone = {
     },
     init: function () {
 @if(isset($rfa) && $rfa->document_file_upload)
-          var files = 
+          var files =
             {!! json_encode($rfa->document_file_upload) !!}
               for (var i in files) {
               var file = files[i]
@@ -813,23 +884,6 @@ Dropzone.options.documentFileUploadDropzone = {
          return _results
      }
 }
-
-function addWaterMark(doc) {
-
-  doc = JSON.stringify(doc);
-  console.log(doc); 
-  var totalPages = doc.internal.getNumberOfPages();
-
-  for (i = 1; i <= totalPages; i++) {
-    doc.setPage(i);
-    //doc.addImage(imgData, 'PNG', 40, 40, 75, 75);
-    doc.setTextColor(150);
-    doc.text(50, doc.internal.pageSize.height - 30, 'Watermark');
-  }
-
-  return doc;
-}
-
 </script>
 
 

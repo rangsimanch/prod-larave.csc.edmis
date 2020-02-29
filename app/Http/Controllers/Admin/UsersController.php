@@ -192,7 +192,7 @@ class UsersController extends Controller
             $user->signature->delete();
         }
 
-        return redirect()->route('admin.users.index');
+        return redirect()->route('admin.home');
     }
 
     public function show(User $user)

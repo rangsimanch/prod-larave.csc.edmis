@@ -730,7 +730,6 @@ class RfaController extends Controller
             Media::whereIn('id', $media)->update(['model_id' => $rfa->id]);
         }
 
-
         return redirect()->route('admin.rfas.index');
     }
 
@@ -878,7 +877,6 @@ class RfaController extends Controller
             $userAlert->users()->sync($data_user_id);   
         }
 
-
         if (count($rfa->file_upload_1) > 0) {
             foreach ($rfa->file_upload_1 as $media) {
                 if (!in_array($media->file_name, $request->input('file_upload_1', []))) {
@@ -926,8 +924,6 @@ class RfaController extends Controller
                 $rfa->addMedia(storage_path('tmp/uploads/' . $file))->toMediaCollection('document_file_upload');
             }
         }
-
-
 
         return redirect()->route('admin.rfas.index');
     }

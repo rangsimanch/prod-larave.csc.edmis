@@ -89,6 +89,7 @@ return [
     'attachment'                           => 'Attachment',
     'axis'                                 => 'Axis',
     'back_to_list'                         => 'Back to list',
+    'back_to_home'                         => 'Back to home',
     'basic_crm'                            => 'Basic CRM',
     'budget'                               => 'Budget',
     'calendar_sources'                     => 'Calendar sources',

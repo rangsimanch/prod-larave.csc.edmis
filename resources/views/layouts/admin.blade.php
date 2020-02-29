@@ -1,6 +1,51 @@
 <!DOCTYPE html>
 <html>
 
+<style type="text/css">
+    .pic
+{
+     margin-top:50px; 
+     width:120px;
+     margin-left:50px;
+     margin-bottom:-60px;
+}
+
+.panel
+{
+    background-image:url("http://autoimagesize.com/wp-content/uploads/2014/01/rainbow-aurora-background-wallpaper-colour-images-rainbow-background.jpg"); 
+}
+
+.name
+{
+    position:absolute;
+    padding-left:200px;
+    font-size:30px;
+}
+
+.dropdown
+{
+    position:absolute;
+}
+
+.change
+{
+ position:relative; 
+ bottom:20px;
+ padding:1px;
+ color:white;
+ text-decoration:none;
+}
+
+
+.change:hover
+{
+ text-decoration:none;
+ background-color:black;
+ color:white;
+}
+
+</style>
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
@@ -46,31 +91,28 @@
                 <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
                     <span class="sr-only">{{ trans('global.toggleNavigation') }}</span>
                 </a>
-            
 
-                @if(count(config('panel.available_languages', [])) > 1)
-                    <div class="navbar-custom-menu">
-                        <ul class="nav navbar-nav">
-                            <li class="dropdown notifications-menu">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                                    {{ strtoupper(app()->getLocale()) }}
-                                </a>
-                                <ul class="dropdown-menu">
-                                    <li>
-                                        <ul class="menu">
-                                            @foreach(config('panel.available_languages') as $langLocale => $langName)
-                                                <li>
-                                                    <a href="{{ url()->current() }}?change_language={{ $langLocale }}">{{ strtoupper($langLocale) }} ({{ $langName }})</a>
-                                                </li>
-                                            @endforeach
-                                        </ul>
-                                    </li>
-                                </ul>
-                            </li>
-                        </ul>
-                    </div>
+                 <!-- Collect the nav links, forms, and other content for toggling -->
+                
+
+                 <div class="navbar-custom-menu">
+                <ul class="nav navbar-nav">
+          <li class="dropdown notifications-menu">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">Hi.. {{ \Auth::user()->name }} <b class="caret"></b></a>
+          <ul class="dropdown-menu">
+            <li align="center" class="well">
+                @if(Auth::user()->img_user != '')
+                <div align="center"><img class="img-responsive" style="padding:2%; width:90px; height:90px;" src="{{ \Auth::user()->img_user->getUrl('thumb') }}"/></div>
+                @else
+                <div align="center"><img class="img-responsive" style="padding:2%; width:90px; height:90px;" src="https://static.asianetnews.com/img/default-user-avatar.png"/></div>
                 @endif
-
+                <a href="{{ route('admin.users.edit', \Auth::id()) }}" class="btn btn-sm btn-default"><span class="glyphicon glyphicon-cog"></span> Settings</a>
+                <a href="#" onclick="event.preventDefault(); document.getElementById('logoutform').submit();"><span class="glyphicon glyphicon-log-out"></span> Logout</a>
+            </li>
+           </ul>
+        </li>
+      </ul>
+    </div>
 
                 <div class="navbar-custom-menu">
                     <ul class="nav navbar-nav">
@@ -110,9 +152,32 @@
                         </li>
                     </ul>
                 </div>
+
+
+                 @if(count(config('panel.available_languages', [])) > 1)
+                    <div class="navbar-custom-menu">
+                        <ul class="nav navbar-nav">
+                            <li class="dropdown notifications-menu">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                    {{ strtoupper(app()->getLocale()) }}
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        <ul class="menu">
+                                            @foreach(config('panel.available_languages') as $langLocale => $langName)
+                                                <li>
+                                                    <a href="{{ url()->current() }}?change_language={{ $langLocale }}">{{ strtoupper($langLocale) }} ({{ $langName }})</a>
+                                                </li>
+                                            @endforeach
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                @endif
             
-                {{--  <div class="navbar-form navbar-left">
-                        <ul class="nav navbar-nav"> --}}
+
             <div class="navbar-custom-menu">
                 <ul class="nav navbar-center">
                             <li class="dropdown notifications-menu">
@@ -126,14 +191,8 @@
                                 </a>
                             </li>
                 </ul>
-
-                {{-- <a href="{{ route('admin.users.edit', Auth::user()->id) }}"> EDIT </a> --}}
-            
             </div>
             
-      
-{{-- </ul>
-</div> --}}
             </nav>
         </header>
 
