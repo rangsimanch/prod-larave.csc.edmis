@@ -850,7 +850,7 @@ class RfaController extends Controller
             $count_rfa = RFA::where([['action_by_id', $request->action_by_id], ['document_status_id', 2]])->count();
             $data_alert['alert_text'] = 'You have new RFA for Review.';
             $data_alert['alert_link'] = route('admin.rfas.index');
-            $data_user_id = array($request->action_by_id,$request->information_by_id,$request->comment_by_id);
+            $data_user_id = $request->action_by_id;
         
             $userAlert = UserAlert::create($data_alert);
             $userAlert->users()->sync($data_user_id);
@@ -860,7 +860,7 @@ class RfaController extends Controller
             $count_rfa = RFA::where('document_status_id', 3)->count();
             $data_alert['alert_text'] = 'You have new RFA to Approve.';
             $data_alert['alert_link'] = route('admin.rfas.index');
-            $data_user_id = array(62,1);
+            $data_user_id = 61;
 
             $userAlert = UserAlert::create($data_alert);
             $userAlert->users()->sync($data_user_id);
@@ -871,7 +871,7 @@ class RfaController extends Controller
             $count_rfa = RFA::where([['document_status_id', 4]])->count();
             $data_alert['alert_text'] = 'You have RFA to Revision.';
             $data_alert['alert_link'] = route('admin.rfas.index');
-            $data_user_id = array(2,1);
+            $data_user_id = array(32,79,28,83,84,97);
 
             $userAlert = UserAlert::create($data_alert);
             $userAlert->users()->sync($data_user_id);   
