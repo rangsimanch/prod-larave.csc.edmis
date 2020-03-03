@@ -661,7 +661,9 @@ class RfaController extends Controller
             $previousId = Rfa::orderBy('id', 'desc')->value('rfa_count');
         }   
         $nextId = $previousId + 1;
-        $data['rfa_count'] = $nextId;
+        
+        
+
         $str_length = 6;
         $doc_number = substr("000000{$nextId}", -$str_length);
         $cur_date = date("ymd");
@@ -673,8 +675,14 @@ class RfaController extends Controller
         // Document Number
         $data['document_number'] = 'HSR1/' . $workcode  . '/' . $wbs3code . '/' . $wbs4code . '/' . $typecode . '/' . $code_date . '/' . $doc_number; 
 
-        //RFA Code
-        $data['rfa_code'] = 'RFA' . '/' . $const_code . '/' .  $doc_number;
+        if($request->origin_number == ''){
+            $data['rfa_count'] = $nextId;            
+            //RFA Code
+            $data['rfa_code'] = 'RFA' . '/' . $const_code . '/' .  $doc_number;
+        }
+        else{
+            $data['rfa_code'] = $request->origin_number;
+        }
 
         //Review Time
         $data['review_time'] = 0;
