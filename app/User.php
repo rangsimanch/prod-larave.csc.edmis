@@ -243,4 +243,17 @@ class User extends Authenticatable implements HasMedia
     {
         return $this->hasMany(Rfa::class, 'distribute_by_id', 'id');
     }
+
+    public function getStampSignatureAttribute()
+    {
+        $file = $this->getMedia('stamp_signature')->last();
+
+        if ($file) {
+            $file->url       = $file->getUrl();
+            $file->thumbnail = $file->getUrl('thumb');
+        }
+
+        return $file;
+
+    }
 }

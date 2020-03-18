@@ -203,6 +203,16 @@
                             <span class="help-block">{{ trans('cruds.user.fields.signature_helper') }}</span>
                         </div>
 
+                         <div class="form-group {{ $errors->has('stamp_signature') ? 'has-error' : '' }}">
+                            <label for="stamp_signature">{{ trans('cruds.user.fields.stamp_signature') }}</label>
+                            <div class="needsclick dropzone" id="stamp_signature-dropzone">
+                            </div>
+                            @if($errors->has('stamp_signature'))
+                                <span class="help-block" role="alert">{{ $errors->first('stamp_signature') }}</span>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.user.fields.stamp_signature_helper') }}</span>
+                        </div>
+
                         @if(auth()->user()->roles->contains(1))
                             <div class="form-group {{ $errors->has('approved') ? 'has-error' : '' }}">
                                 <div>
@@ -369,6 +379,60 @@
       this.options.thumbnail.call(this, file, '{{ $user->signature->getUrl('thumb') }}')
       file.previewElement.classList.add('dz-complete')
       $('form').append('<input type="hidden" name="signature" value="' + file.file_name + '">')
+      this.options.maxFiles = this.options.maxFiles - 1
+@endif
+    },
+    error: function (file, response) {
+        if ($.type(response) === 'string') {
+            var message = response //dropzone sends it's own error messages in string
+        } else {
+            var message = response.errors.file
+        }
+        file.previewElement.classList.add('dz-error')
+        _ref = file.previewElement.querySelectorAll('[data-dz-errormessage]')
+        _results = []
+        for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+            node = _ref[_i]
+            _results.push(node.textContent = message)
+        }
+
+        return _results
+    }
+}
+</script>
+<script>
+    Dropzone.options.stampSignatureDropzone = {
+    url: '{{ route('admin.users.storeMedia') }}',
+    maxFilesize: 10, // MB
+    acceptedFiles: '.jpeg,.jpg,.png,.gif',
+    maxFiles: 1,
+    addRemoveLinks: true,
+    headers: {
+      'X-CSRF-TOKEN': "{{ csrf_token() }}"
+    },
+    params: {
+      size: 10,
+      width: 4096,
+      height: 4096
+    },
+    success: function (file, response) {
+      $('form').find('input[name="stamp_signature"]').remove()
+      $('form').append('<input type="hidden" name="stamp_signature" value="' + response.name + '">')
+    },
+    removedfile: function (file) {
+      file.previewElement.remove()
+      if (file.status !== 'error') {
+        $('form').find('input[name="stamp_signature"]').remove()
+        this.options.maxFiles = this.options.maxFiles + 1
+      }
+    },
+    init: function () {
+@if(isset($user) && $user->stamp_signature)
+      var file = {!! json_encode($user->stamp_signature) !!}
+          this.options.addedfile.call(this, file)
+      this.options.thumbnail.call(this, file, '{{ $user->stamp_signature->getUrl('thumb') }}')
+      file.previewElement.classList.add('dz-complete')
+      $('form').append('<input type="hidden" name="stamp_signature" value="' + file.file_name + '">')
       this.options.maxFiles = this.options.maxFiles - 1
 @endif
     },

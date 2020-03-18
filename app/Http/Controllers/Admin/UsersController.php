@@ -150,6 +150,10 @@ class UsersController extends Controller
             $user->addMedia(storage_path('tmp/uploads/' . $request->input('signature')))->toMediaCollection('signature');
         }
 
+        if ($request->input('stamp_signature', false)) {
+            $user->addMedia(storage_path('tmp/uploads/' . $request->input('stamp_signature')))->toMediaCollection('stamp_signature');
+        }
+
         return redirect()->route('admin.users.index');
     }
 
@@ -190,6 +194,14 @@ class UsersController extends Controller
             }
         } elseif ($user->signature) {
             $user->signature->delete();
+        }
+
+        if ($request->input('stamp_signature', false)) {
+            if (!$user->stamp_signature || $request->input('stamp_signature') !== $user->stamp_signature->file_name) {
+                $user->addMedia(storage_path('tmp/uploads/' . $request->input('stamp_signature')))->toMediaCollection('stamp_signature');
+            }
+        } elseif ($user->stamp_signature) {
+            $user->stamp_signature->delete();
         }
 
         return redirect()->route('admin.home');
