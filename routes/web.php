@@ -149,6 +149,19 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth'], '
      // Submittals Rfas
      Route::delete('submittals-rfas/destroy', 'SubmittalsRfaController@massDestroy')->name('submittals-rfas.massDestroy');
      Route::resource('submittals-rfas', 'SubmittalsRfaController');
+
+    // Daily Requests
+    Route::delete('daily-requests/destroy', 'DailyRequestController@massDestroy')->name('daily-requests.massDestroy');
+    Route::post('daily-requests/media', 'DailyRequestController@storeMedia')->name('daily-requests.storeMedia');
+    Route::post('daily-requests/ckmedia', 'DailyRequestController@storeCKEditorImages')->name('daily-requests.storeCKEditorImages');
+    Route::resource('daily-requests', 'DailyRequestController');
+
+    // Daily Reports
+    Route::delete('daily-reports/destroy', 'DailyReportController@massDestroy')->name('daily-reports.massDestroy');
+    Route::post('daily-reports/media', 'DailyReportController@storeMedia')->name('daily-reports.storeMedia');
+    Route::post('daily-reports/ckmedia', 'DailyReportController@storeCKEditorImages')->name('daily-reports.storeCKEditorImages');
+    Route::resource('daily-reports', 'DailyReportController');
+
     
     Route::get('system-calendar', 'SystemCalendarController@index')->name('systemCalendar');
     Route::get('global-search', 'GlobalSearchController@search')->name('globalSearch');

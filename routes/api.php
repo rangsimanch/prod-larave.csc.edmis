@@ -67,4 +67,12 @@ Route::group(['prefix' => 'v1', 'as' => 'api.', 'namespace' => 'Api\V1\Admin', '
     
     // Submittals Rfas
     Route::apiResource('submittals-rfas', 'SubmittalsRfaApiController');
+
+     // Daily Requests
+     Route::post('daily-requests/media', 'DailyRequestApiController@storeMedia')->name('daily-requests.storeMedia');
+     Route::apiResource('daily-requests', 'DailyRequestApiController');
+ 
+     // Daily Reports
+     Route::post('daily-reports/media', 'DailyReportApiController@storeMedia')->name('daily-reports.storeMedia');
+     Route::apiResource('daily-reports', 'DailyReportApiController');
 });

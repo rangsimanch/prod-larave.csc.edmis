@@ -684,10 +684,14 @@ $('.jpdf').click(function() {
     //Assign / WBS
     doc.text(39,69,'ผู้จัดการโครงการ/Project Manager (CSC)');
     doc.text(69,83,wbs);
-
+    
+    doc.setFontSize(6);
     doc.text(64,73.5,document_name);
+    
+    doc.setFontSize(9);
     doc.text(157,73,qty_page);
 
+    
     doc.text(74,87,spec_ref_no);
     doc.text(147,87,clause);
 

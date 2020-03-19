@@ -307,6 +307,26 @@
                     </ul>
                 </li>
             @endcan
+            @can('daily_request_access')
+                <li class="{{ request()->is('admin/daily-requests') || request()->is('admin/daily-requests/*') ? 'active' : '' }}">
+                    <a href="{{ route("admin.daily-requests.index") }}">
+                        <i class="fa-fw fas fa-file-import">
+
+                        </i>
+                        <span>{{ trans('cruds.dailyRequest.title') }}</span>
+                    </a>
+                </li>
+            @endcan
+            @can('daily_report_access')
+                <li class="{{ request()->is('admin/daily-reports') || request()->is('admin/daily-reports/*') ? 'active' : '' }}">
+                    <a href="{{ route("admin.daily-reports.index") }}">
+                        <i class="fa-fw fas fa-file-export">
+
+                        </i>
+                        <span>{{ trans('cruds.dailyReport.title') }}</span>
+                    </a>
+                </li>
+            @endcan
             <li class="{{ request()->is('admin/system-calendar') || request()->is('admin/system-calendar/*') ? 'active' : '' }}">
                 <a href="{{ route("admin.systemCalendar") }}">
                     <i class="fas fa-fw fa-calendar">
