@@ -440,7 +440,7 @@
     </script>
 
 
-    {{-- Pusher Script --}}
+    <!-- {{-- Pusher Script --}}
     <script>
 
     // Enable pusher logging - don't include this in production
@@ -455,7 +455,7 @@
     channel.bind('my-event', function(data) {
       alert(JSON.stringify(data));
     });
-  </script>
+  </script> -->
 
     @yield('scripts')
 </body>
