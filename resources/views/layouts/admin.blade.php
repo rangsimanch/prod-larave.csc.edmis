@@ -258,7 +258,7 @@
     <script src="https://unpkg.com/bootstrap-table@1.15.5/dist/extensions/filter-control/bootstrap-table-filter-control.min.js"></script>
     <script src="https://unpkg.com/jspdf@latest/dist/jspdf.min.js"></script>
 
-    <script src="{{ asset('js/enable-push.js') }}" defer></script>
+    <!-- <script src="{{ asset('js/enable-push.js') }}" defer></script> -->
 
 
     @include('partials.javascripts')
