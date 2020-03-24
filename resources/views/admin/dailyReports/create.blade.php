@@ -28,6 +28,9 @@
                             @endif
                             <span class="help-block">{{ trans('cruds.dailyReport.fields.documents_helper') }}</span>
                         </div>
+
+                        @can('acknowledge')
+                        <legend>Acknowlege</legend>
                         <div class="form-group {{ $errors->has('acknowledge') ? 'has-error' : '' }}">
                             <div>
                                 <input type="hidden" name="acknowledge" value="0">
@@ -39,8 +42,14 @@
                             @endif
                             <span class="help-block">{{ trans('cruds.dailyReport.fields.acknowledge_helper') }}</span>
                         </div>
+                        @endcan
+
                         <div class="form-group">
-                            <button class="btn btn-danger" type="submit">
+
+                        <a class="btn btn-default" href="{{ route('admin.daily-reports.index') }}">
+                                {{ trans('global.back_to_list') }}
+                            </a>
+                            <button class="btn btn-success" type="submit">
                                 {{ trans('global.save') }}
                             </button>
                         </div>

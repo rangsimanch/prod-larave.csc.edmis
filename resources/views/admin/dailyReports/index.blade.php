@@ -24,24 +24,26 @@
                                     <th width="10">
 
                                     </th>
-                                    <th>
+                                    <!-- <th>
                                         {{ trans('cruds.dailyReport.fields.id') }}
-                                    </th>
+                                    </th> -->
                                     <th>
                                         {{ trans('cruds.dailyReport.fields.input_date') }}
                                     </th>
                                     <th>
                                         {{ trans('cruds.dailyReport.fields.documents') }}
                                     </th>
-                                    <th>
+                                    <!-- <th>
                                         {{ trans('cruds.dailyReport.fields.receive_by') }}
                                     </th>
                                     <th>
                                         {{ trans('cruds.dailyReport.fields.receive_date') }}
-                                    </th>
+                                    </th> -->
+                                    @can('daily_report_actions')
                                     <th>
-                                        &nbsp;
+                                        Actions
                                     </th>
+                                    @endcan
                                 </tr>
                             </thead>
                             <tbody>
@@ -50,9 +52,9 @@
                                         <td>
 
                                         </td>
-                                        <td>
+                                        <!-- <td>
                                             {{ $dailyReport->id ?? '' }}
-                                        </td>
+                                        </td> -->
                                         <td>
                                             {{ $dailyReport->input_date ?? '' }}
                                         </td>
@@ -63,12 +65,13 @@
                                                 </a>
                                             @endforeach
                                         </td>
-                                        <td>
+                                        <!-- <td>
                                             {{ $dailyReport->receive_by->name ?? '' }}
                                         </td>
                                         <td>
                                             {{ $dailyReport->receive_date ?? '' }}
-                                        </td>
+                                        </td> -->
+                                    @can('daily_report_actions')
                                         <td>
                                             @can('daily_report_show')
                                                 <a class="btn btn-xs btn-primary" href="{{ route('admin.daily-reports.show', $dailyReport->id) }}">
@@ -91,6 +94,7 @@
                                             @endcan
 
                                         </td>
+                                        @endcan
 
                                     </tr>
                                 @endforeach

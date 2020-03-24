@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use Illuminate\Support\Facades\Auth;
 use App\DailyReport;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Traits\MediaUploadingTrait;
@@ -21,9 +22,14 @@ class DailyReportController extends Controller
     {
         abort_if(Gate::denies('daily_report_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $dailyReports = DailyReport::all();
-
-        return view('admin.dailyReports.index', compact('dailyReports'));
+        if(strcmp(Auth::id(),'1') == 0){
+            $dailyReports = DailyReport::all();
+            return view('admin.dailyReports.index', compact('dailyReports'));
+        }
+        else{
+            $dailyReports = DailyReport::all()->where('acknowledge',1);
+            return view('admin.dailyReports.index', compact('dailyReports'));
+        }
     }
 
     public function create()

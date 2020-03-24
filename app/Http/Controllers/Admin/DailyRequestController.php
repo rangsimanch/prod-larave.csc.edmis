@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use Illuminate\Support\Facades\Auth;
 use App\DailyRequest;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Traits\MediaUploadingTrait;
@@ -21,9 +22,14 @@ class DailyRequestController extends Controller
     {
         abort_if(Gate::denies('daily_request_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $dailyRequests = DailyRequest::all();
-
-        return view('admin.dailyRequests.index', compact('dailyRequests'));
+        if(strcmp(Auth::id(),'1') == 0){
+            $dailyRequests = DailyRequest::all();
+            return view('admin.dailyRequests.index', compact('dailyRequests'));
+        }
+        else{
+            $dailyRequests = DailyRequest::all()->where('acknowledge',1);
+            return view('admin.dailyRequests.index', compact('dailyRequests'));
+        }
     }
 
     public function create()

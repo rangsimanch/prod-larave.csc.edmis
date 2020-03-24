@@ -661,8 +661,8 @@ class RfaController extends Controller
             //ConstructionContart
         $const_code = ConstructionContract::where('id','=',$request->construction_contract_id)->value('code');
             //Next Number
-        if(Rfa::orderBy('id', 'desc')->value('rfa_count') == 0){
-            $previousId = 1100;
+        if(Rfa::orderBy('id', 'desc')->value('rfa_count') < 1300){
+            $previousId = 1300;
         }
         else{
             $previousId = Rfa::orderBy('id', 'desc')->value('rfa_count');
@@ -679,16 +679,18 @@ class RfaController extends Controller
         $code_date = $code_year . "-" . $code_mouth;
 
         
-        // Document Number
-        $data['document_number'] = 'HSR1/' . $workcode  . '/' . $wbs3code . '/' . $wbs4code . '/' . $typecode . '/' . $code_date . '/' . $doc_number; 
-
+        
         if($request->origin_number == ''){
             $data['rfa_count'] = $nextId;            
             //RFA Code
             $data['rfa_code'] = 'RFA' . '/' . $const_code . '/' .  $doc_number;
+            // Document Number
+            $data['document_number'] = 'HSR1/' . $workcode  . '/' . $wbs3code . '/' . $wbs4code . '/' . $typecode . '/' . $code_date . '/' . $doc_number; 
+
         }
         else{
             $data['rfa_code'] = $request->origin_number;
+            $data['document_number'] = 'HSR1/' . $workcode  . '/' . $wbs3code . '/' . $wbs4code . '/' . $typecode . '/' . $code_date . '/' . substr($request->origin_number,4,4); 
         }
 
         //Review Time
@@ -723,9 +725,10 @@ class RfaController extends Controller
             //Alert Manager
             $data_alert['alert_text'] = 'You have new RFA to Distribute.';
             $data_alert['alert_link'] = route('admin.rfas.index');
+            $data_user_id = array($data['assign_id'],11);
 
             $userAlert = UserAlert::create($data_alert);
-            $userAlert->users()->sync($data['assign_id']);
+            $userAlert->users()->sync($data_user_id);
         }
         
 

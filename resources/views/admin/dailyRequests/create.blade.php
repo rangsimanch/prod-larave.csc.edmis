@@ -12,15 +12,15 @@
                     <form method="POST" action="{{ route("admin.daily-requests.store") }}" enctype="multipart/form-data">
                         @csrf
                         <div class="form-group {{ $errors->has('input_date') ? 'has-error' : '' }}">
-                            <label for="input_date">{{ trans('cruds.dailyRequest.fields.input_date') }}</label>
-                            <input class="form-control date" type="text" name="input_date" id="input_date" value="{{ old('input_date') }}">
+                            <label class="required" for="input_date">{{ trans('cruds.dailyRequest.fields.input_date') }}</label>
+                            <input class="form-control date" type="text" name="input_date" id="input_date" value="{{ old('input_date') }}" required>
                             @if($errors->has('input_date'))
                                 <span class="help-block" role="alert">{{ $errors->first('input_date') }}</span>
                             @endif
                             <span class="help-block">{{ trans('cruds.dailyRequest.fields.input_date_helper') }}</span>
                         </div>
                         <div class="form-group {{ $errors->has('documents') ? 'has-error' : '' }}">
-                            <label for="documents">{{ trans('cruds.dailyRequest.fields.documents') }}</label>
+                            <label  for="documents">{{ trans('cruds.dailyRequest.fields.documents') }}</label>
                             <div class="needsclick dropzone" id="documents-dropzone">
                             </div>
                             @if($errors->has('documents'))
@@ -28,6 +28,8 @@
                             @endif
                             <span class="help-block">{{ trans('cruds.dailyRequest.fields.documents_helper') }}</span>
                         </div>
+                        @can('acknowledge')
+                        <legend>Acknowledge</legend>
                         <div class="form-group {{ $errors->has('acknowledge') ? 'has-error' : '' }}">
                             <div>
                                 <input type="hidden" name="acknowledge" value="0">
@@ -39,8 +41,12 @@
                             @endif
                             <span class="help-block">{{ trans('cruds.dailyRequest.fields.acknowledge_helper') }}</span>
                         </div>
+                        @endcan
                         <div class="form-group">
-                            <button class="btn btn-danger" type="submit">
+                            <a class="btn btn-default" href="{{ route('admin.daily-requests.index') }}">
+                                {{ trans('global.back_to_list') }}
+                            </a>
+                            <button class="btn btn-success" type="submit">
                                 {{ trans('global.save') }}
                             </button>
                         </div>
