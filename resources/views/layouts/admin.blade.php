@@ -260,8 +260,6 @@
 
     <script src="{{ asset('js/enable-push.js') }}" defer></script>
 
-    {{-- Pusher --}}
-    <script src="https://js.pusher.com/5.1/pusher.min.js"></script>
 
     @include('partials.javascripts')
     <script>
@@ -440,22 +438,6 @@
     </script>
 
 
-    <!-- {{-- Pusher Script --}}
-    <script>
-
-    // Enable pusher logging - don't include this in production
-    Pusher.logToConsole = true;
-
-    var pusher = new Pusher('64903d7d8dd736f56d53', {
-      cluster: 'ap1',
-      forceTLS: true
-    });
-
-    var channel = pusher.subscribe('my-channel');
-    channel.bind('my-event', function(data) {
-      alert(JSON.stringify(data));
-    });
-  </script> -->
 
     @yield('scripts')
 </body>
