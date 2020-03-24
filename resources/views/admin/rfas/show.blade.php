@@ -688,7 +688,6 @@ $('.jpdf').click(function() {
         doc.setFontSize(6);
         doc.text(64,70.5,document_name.substr(0,20));
         doc.text(64,73.5,document_name.substr(20,document_name.length - 1));
-    }
     }else{
         doc.setFontSize(6);
         doc.text(64,73.5,document_name);
