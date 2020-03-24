@@ -684,10 +684,10 @@ $('.jpdf').click(function() {
     
 
 
-    if(document_name.length > 20){
+    if(document_name.length > 50){
         doc.setFontSize(6);
         doc.text(64,73.5,document_name.substr(0,20));
-        doc.text(64,75.5,document_name.substr(20,document_name.length - 1));
+        doc.text(64,76.5,document_name.substr(20,document_name.length - 1));
     }else{
         doc.setFontSize(6);
         doc.text(64,73.5,document_name);
