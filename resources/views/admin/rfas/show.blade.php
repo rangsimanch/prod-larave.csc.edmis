@@ -385,6 +385,11 @@
                         <p hidden="true">{{ $check_approve = 0 }}</p>
                         <p hidden="true">{{ $check_reviewd = 0 }}</p>
 
+                        <textarea style="display:none; class="form-control" name="note_1" id="note_1">{!! $rfa->note_1 !!}</textarea>
+                        <textarea style="display:none; class="form-control" name="note_2" id="note_2">{!! $rfa->note_2 !!}</textarea>
+                        <textarea style="display:none; class="form-control" name="note_3" id="note_3">{!! $rfa->note_3 !!}</textarea>
+                        <textarea style="display:none; class="form-control" name="note_4" id="note_4">{!! $rfa->note_4 !!}</textarea>
+
 
 
                         @if(!empty($rfa->distribute_by->signature))
@@ -571,8 +576,9 @@ $('.jpdf').click(function() {
     var document_number = "{{ $rfa->document_number }}";
     var rfa_code = "{{ $rfa->rfa_code }}";
     var submit_date = "{{ $rfa->submit_date ?? ''}}";
-
-    var note_1 = "{{ $rfa->note_1 }}";
+    
+    var arrayOfLines = $('#note_1').val().split('\n');
+    var note_1 = arrayOfLines;
     var parser = new DOMParser;
     var dom = parser.parseFromString(
         '<!doctype html><body>' + note_1,
@@ -631,7 +637,8 @@ $('.jpdf').click(function() {
     var incoming_number = "{{ $rfa->incoming_number ?? '' }}";
     var receive_date = "{{ $rfa->receive_date ?? '' }}";
     
-    var note_2 = "{{ $rfa->note_2  }}";
+    var arrayOfLines = $('#note_2').val().split('\n');
+    var note_2 = arrayOfLines;
     var parser = new DOMParser;
     var dom = parser.parseFromString(
             '<!doctype html><body>' + note_2,
@@ -640,7 +647,8 @@ $('.jpdf').click(function() {
 
     var distribute_date = "{{ $rfa->distribute_date ?? '' }}";
 
-    var note_3 = "{{ $rfa->note_3 }}";
+    var arrayOfLines = $('#note_3').val().split('\n');
+    var note_3 = arrayOfLines;
     var parser = new DOMParser;
     var dom = parser.parseFromString(
             '<!doctype html><body>' + note_3,
@@ -653,7 +661,8 @@ $('.jpdf').click(function() {
     var outgoing_number = "{{ $rfa->outgoing_number ?? '' }}";
     var outgoing_date = "{{ $rfa->outgoing_date ?? '' }}"
 
-    var note_4 = "{{ $rfa->note_4 }}";
+    var arrayOfLines = $('#note_4').val().split('\n');
+    var note_4 = arrayOfLines;
     var parser = new DOMParser;
     var dom = parser.parseFromString(
             '<!doctype html><body>' + note_4,
