@@ -728,7 +728,7 @@ class RfaController extends Controller
             $data_user_id = array($data['assign_id'],11);
 
             $userAlert = UserAlert::create($data_alert);
-            $userAlert->users()->sync($data_user_id);
+            $userAlert->users()->sync($data_user_id[]);
         }
         
 

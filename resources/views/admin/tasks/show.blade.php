@@ -35,20 +35,20 @@
                                 </tr>
                                 <tr>
                                     <th>
-                                        {{ trans('cruds.task.fields.status') }}
-                                    </th>
-                                    <td>
-                                        {{ $task->status->name ?? '' }}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th>
                                         {{ trans('cruds.task.fields.tag') }}
                                     </th>
                                     <td>
                                         @foreach($task->tags as $key => $tag)
                                             <span class="label label-info">{{ $tag->name }}</span>
                                         @endforeach
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        {{ trans('cruds.task.fields.location') }}
+                                    </th>
+                                    <td>
+                                        {{ $task->location }}
                                     </td>
                                 </tr>
                                 <tr>
@@ -65,6 +65,30 @@
                                     </th>
                                     <td>
                                         {{ $task->end_date }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        {{ trans('cruds.task.fields.weather') }}
+                                    </th>
+                                    <td>
+                                        {{ App\Task::WEATHER_SELECT[$task->weather] ?? '' }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        {{ trans('cruds.task.fields.temperature') }}
+                                    </th>
+                                    <td>
+                                        {{ $task->temperature }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        {{ trans('cruds.task.fields.status') }}
+                                    </th>
+                                    <td>
+                                        {{ $task->status->name ?? '' }}
                                     </td>
                                 </tr>
                                 <tr>

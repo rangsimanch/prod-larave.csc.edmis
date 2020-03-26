@@ -18,6 +18,7 @@ class TaskStatusApiController extends Controller
         abort_if(Gate::denies('task_status_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         return new TaskStatusResource(TaskStatus::all());
+
     }
 
     public function store(StoreTaskStatusRequest $request)
@@ -27,6 +28,7 @@ class TaskStatusApiController extends Controller
         return (new TaskStatusResource($taskStatus))
             ->response()
             ->setStatusCode(Response::HTTP_CREATED);
+
     }
 
     public function show(TaskStatus $taskStatus)
@@ -34,6 +36,7 @@ class TaskStatusApiController extends Controller
         abort_if(Gate::denies('task_status_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         return new TaskStatusResource($taskStatus);
+
     }
 
     public function update(UpdateTaskStatusRequest $request, TaskStatus $taskStatus)
@@ -43,6 +46,7 @@ class TaskStatusApiController extends Controller
         return (new TaskStatusResource($taskStatus))
             ->response()
             ->setStatusCode(Response::HTTP_ACCEPTED);
+
     }
 
     public function destroy(TaskStatus $taskStatus)
@@ -52,5 +56,6 @@ class TaskStatusApiController extends Controller
         $taskStatus->delete();
 
         return response(null, Response::HTTP_NO_CONTENT);
+
     }
 }

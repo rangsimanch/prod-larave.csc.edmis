@@ -20,7 +20,8 @@ class TaskApiController extends Controller
     {
         abort_if(Gate::denies('task_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new TaskResource(Task::with(['status', 'tags', 'create_by_user', 'construction_contract', 'team'])->get());
+        return new TaskResource(Task::with(['tags', 'status', 'create_by_user', 'construction_contract', 'team'])->get());
+
     }
 
     public function store(StoreTaskRequest $request)
@@ -35,13 +36,15 @@ class TaskApiController extends Controller
         return (new TaskResource($task))
             ->response()
             ->setStatusCode(Response::HTTP_CREATED);
+
     }
 
     public function show(Task $task)
     {
         abort_if(Gate::denies('task_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new TaskResource($task->load(['status', 'tags', 'create_by_user', 'construction_contract', 'team']));
+        return new TaskResource($task->load(['tags', 'status', 'create_by_user', 'construction_contract', 'team']));
+
     }
 
     public function update(UpdateTaskRequest $request, Task $task)
@@ -53,6 +56,7 @@ class TaskApiController extends Controller
             if (!$task->attachment || $request->input('attachment') !== $task->attachment->file_name) {
                 $task->addMedia(storage_path('tmp/uploads/' . $request->input('attachment')))->toMediaCollection('attachment');
             }
+
         } elseif ($task->attachment) {
             $task->attachment->delete();
         }
@@ -60,6 +64,7 @@ class TaskApiController extends Controller
         return (new TaskResource($task))
             ->response()
             ->setStatusCode(Response::HTTP_ACCEPTED);
+
     }
 
     public function destroy(Task $task)
@@ -69,5 +74,7 @@ class TaskApiController extends Controller
         $task->delete();
 
         return response(null, Response::HTTP_NO_CONTENT);
+
     }
+
 }

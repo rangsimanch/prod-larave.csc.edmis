@@ -11,14 +11,11 @@ use App\Http\Requests\UpdateTaskRequest;
 use App\Task;
 use App\TaskStatus;
 use App\TaskTag;
-use App\ConstractionContract;
 use Gate;
 use Illuminate\Http\Request;
+use Spatie\MediaLibrary\Models\Media;
 use Symfony\Component\HttpFoundation\Response;
 use Yajra\DataTables\Facades\DataTables;
-
-use Illuminate\Support\Facades\Session;
-use Illuminate\Support\Facades\Input;
 
 class TaskController extends Controller
 {
@@ -26,8 +23,10 @@ class TaskController extends Controller
 
     public function index(Request $request)
     {
+        abort_if(Gate::denies('task_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         if ($request->ajax()) {
-            $query = Task::with(['status', 'tags', 'create_by_user', 'construction_contract', 'team'])->select(sprintf('%s.*', (new Task)->table));
+            $query = Task::with(['tags', 'status', 'create_by_user', 'construction_contract', 'team'])->select(sprintf('%s.*', (new Task)->table));
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
@@ -48,28 +47,12 @@ class TaskController extends Controller
                 ));
             });
 
-            $table->editColumn('img_user', function ($row) {
-                if ($photo = $row->img_user) {
-                    return sprintf(
-                        '<a href="%s" target="_blank"><img src="%s" width="50px" height="50px"></a>',
-                        $photo->url,
-                        $photo->thumbnail
-                    );
-                }
-
-                return '';
-            });
-
             $table->editColumn('name', function ($row) {
                 return $row->name ? $row->name : "";
             });
             $table->editColumn('description', function ($row) {
                 return $row->description ? $row->description : "";
             });
-            $table->addColumn('status_name', function ($row) {
-                return $row->status ? $row->status->name : '';
-            });
-
             $table->editColumn('tag', function ($row) {
                 $labels = [];
 
@@ -78,6 +61,19 @@ class TaskController extends Controller
                 }
 
                 return implode(' ', $labels);
+            });
+            $table->editColumn('location', function ($row) {
+                return $row->location ? $row->location : "";
+            });
+
+            $table->editColumn('weather', function ($row) {
+                return $row->weather ? Task::WEATHER_SELECT[$row->weather] : '';
+            });
+            $table->editColumn('temperature', function ($row) {
+                return $row->temperature ? $row->temperature : "";
+            });
+            $table->addColumn('status_name', function ($row) {
+                return $row->status ? $row->status->name : '';
             });
 
             $table->editColumn('attachment', function ($row) {
@@ -95,7 +91,7 @@ class TaskController extends Controller
                 return $row->construction_contract ? (is_string($row->construction_contract) ? $row->construction_contract : $row->construction_contract->name) : '';
             });
 
-            $table->rawColumns(['actions', 'placeholder', 'img_user', 'status', 'tag', 'attachment', 'create_by_user', 'construction_contract']);
+            $table->rawColumns(['actions', 'placeholder', 'tag', 'status', 'attachment', 'create_by_user', 'construction_contract']);
 
             return $table->make(true);
         }
@@ -107,39 +103,41 @@ class TaskController extends Controller
     {
         abort_if(Gate::denies('task_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $statuses = TaskStatus::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
-
         $tags = TaskTag::all()->pluck('name', 'id');
 
-        return view('admin.tasks.create', compact('statuses', 'tags'));
+        $statuses = TaskStatus::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+
+        return view('admin.tasks.create', compact('tags', 'statuses'));
     }
 
     public function store(StoreTaskRequest $request)
     {
-        $data = $request->all();
-        $data['create_by_user_id'] = auth()->id();
-        $data['construction_contract_id'] = session('construction_contract_id');
-        $task = Task::create($data);
+        $task = Task::create($request->all());
         $task->tags()->sync($request->input('tags', []));
 
         if ($request->input('attachment', false)) {
             $task->addMedia(storage_path('tmp/uploads/' . $request->input('attachment')))->toMediaCollection('attachment');
         }
 
+        if ($media = $request->input('ck-media', false)) {
+            Media::whereIn('id', $media)->update(['model_id' => $task->id]);
+        }
+
         return redirect()->route('admin.tasks.index');
+
     }
 
     public function edit(Task $task)
     {
         abort_if(Gate::denies('task_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $statuses = TaskStatus::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
-
         $tags = TaskTag::all()->pluck('name', 'id');
 
-        $task->load('status', 'tags', 'create_by_user', 'construction_contract', 'team');
+        $statuses = TaskStatus::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        return view('admin.tasks.edit', compact('statuses', 'tags', 'task'));
+        $task->load('tags', 'status', 'create_by_user', 'construction_contract', 'team');
+
+        return view('admin.tasks.edit', compact('tags', 'statuses', 'task'));
     }
 
     public function update(UpdateTaskRequest $request, Task $task)
@@ -151,18 +149,20 @@ class TaskController extends Controller
             if (!$task->attachment || $request->input('attachment') !== $task->attachment->file_name) {
                 $task->addMedia(storage_path('tmp/uploads/' . $request->input('attachment')))->toMediaCollection('attachment');
             }
+
         } elseif ($task->attachment) {
             $task->attachment->delete();
         }
 
         return redirect()->route('admin.tasks.index');
+
     }
 
     public function show(Task $task)
     {
         abort_if(Gate::denies('task_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $task->load('img_user','status', 'tags', 'create_by_user', 'construction_contract', 'team');
+        $task->load('tags', 'status', 'create_by_user', 'construction_contract', 'team');
 
         return view('admin.tasks.show', compact('task'));
     }
@@ -174,6 +174,7 @@ class TaskController extends Controller
         $task->delete();
 
         return back();
+
     }
 
     public function massDestroy(MassDestroyTaskRequest $request)
@@ -181,5 +182,20 @@ class TaskController extends Controller
         Task::whereIn('id', request('ids'))->delete();
 
         return response(null, Response::HTTP_NO_CONTENT);
+
     }
+
+    public function storeCKEditorImages(Request $request)
+    {
+        abort_if(Gate::denies('task_create') && Gate::denies('task_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $model         = new Task();
+        $model->id     = $request->input('crud_id', 0);
+        $model->exists = true;
+        $media         = $model->addMediaFromRequest('upload')->toMediaCollection('ck-media', 'public');
+
+        return response()->json(['id' => $media->id, 'url' => $media->getUrl()], Response::HTTP_CREATED);
+
+    }
+
 }

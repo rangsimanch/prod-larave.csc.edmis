@@ -23,9 +23,4 @@ class TaskStatus extends Model
         'updated_at',
         'deleted_at',
     ];
-
-    public function statusTasks()
-    {
-        return $this->hasMany(Task::class, 'status_id', 'id');
-    }
 }

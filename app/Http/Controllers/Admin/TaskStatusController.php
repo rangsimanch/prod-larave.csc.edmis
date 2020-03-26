@@ -34,6 +34,7 @@ class TaskStatusController extends Controller
         $taskStatus = TaskStatus::create($request->all());
 
         return redirect()->route('admin.task-statuses.index');
+
     }
 
     public function edit(TaskStatus $taskStatus)
@@ -48,13 +49,12 @@ class TaskStatusController extends Controller
         $taskStatus->update($request->all());
 
         return redirect()->route('admin.task-statuses.index');
+
     }
 
     public function show(TaskStatus $taskStatus)
     {
         abort_if(Gate::denies('task_status_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
-        $taskStatus->load('statusTasks');
 
         return view('admin.taskStatuses.show', compact('taskStatus'));
     }
@@ -66,6 +66,7 @@ class TaskStatusController extends Controller
         $taskStatus->delete();
 
         return back();
+
     }
 
     public function massDestroy(MassDestroyTaskStatusRequest $request)
@@ -73,5 +74,6 @@ class TaskStatusController extends Controller
         TaskStatus::whereIn('id', request('ids'))->delete();
 
         return response(null, Response::HTTP_NO_CONTENT);
+
     }
 }

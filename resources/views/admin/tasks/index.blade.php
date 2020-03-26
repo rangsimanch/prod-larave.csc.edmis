@@ -18,7 +18,7 @@
         <div class="col-lg-12">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    {{ trans('cruds.task.title_singular') }} {{ trans('global.list') }} 
+                    {{ trans('cruds.task.title_singular') }} {{ trans('global.list') }}
                 </div>
                 <div class="panel-body">
                     <table class=" table table-bordered table-striped table-hover ajaxTable datatable datatable-Task">
@@ -34,10 +34,10 @@
                                     {{ trans('cruds.task.fields.description') }}
                                 </th>
                                 <th>
-                                    {{ trans('cruds.task.fields.status') }}
+                                    {{ trans('cruds.task.fields.tag') }}
                                 </th>
                                 <th>
-                                    {{ trans('cruds.task.fields.tag') }}
+                                    {{ trans('cruds.task.fields.location') }}
                                 </th>
                                 <th>
                                     {{ trans('cruds.task.fields.due_date') }}
@@ -46,16 +46,25 @@
                                     {{ trans('cruds.task.fields.end_date') }}
                                 </th>
                                 <th>
-                                    {{ trans('cruds.task.fields.attachment') }}
+                                    {{ trans('cruds.task.fields.weather') }}
                                 </th>
                                 <th>
-                                    {{ trans('cruds.user.fields.img_user') }}
+                                    {{ trans('cruds.task.fields.temperature') }}
+                                </th>
+                                <th>
+                                    {{ trans('cruds.task.fields.status') }}
+                                </th>
+                                <th>
+                                    {{ trans('cruds.task.fields.attachment') }}
                                 </th>
                                 <th>
                                     {{ trans('cruds.task.fields.create_by_user') }}
                                 </th>
                                 <th>
                                     {{ trans('cruds.task.fields.construction_contract') }}
+                                </th>
+                                <th>
+                                    {{ trans('cruds.constructionContract.fields.name') }}
                                 </th>
                                 <th>
                                     &nbsp;
@@ -118,14 +127,17 @@
       { data: 'placeholder', name: 'placeholder' },
 { data: 'name', name: 'name' },
 { data: 'description', name: 'description' },
-{ data: 'status_name', name: 'status.name' },
 { data: 'tag', name: 'tags.name' },
+{ data: 'location', name: 'location' },
 { data: 'due_date', name: 'due_date' },
 { data: 'end_date', name: 'end_date' },
+{ data: 'weather', name: 'weather' },
+{ data: 'temperature', name: 'temperature' },
+{ data: 'status_name', name: 'status.name' },
 { data: 'attachment', name: 'attachment', sortable: false, searchable: false },
-{ data: 'img_user', name: 'img_user', sortable: false, searchable: false },
 { data: 'create_by_user_name', name: 'create_by_user.name' },
 { data: 'construction_contract_code', name: 'construction_contract.code' },
+{ data: 'construction_contract.name', name: 'construction_contract.name' },
 { data: 'actions', name: '{{ trans('global.actions') }}' }
     ],
     order: [[ 1, 'desc' ]],

@@ -23,9 +23,4 @@ class TaskTag extends Model
         'updated_at',
         'deleted_at',
     ];
-
-    public function tasks()
-    {
-        return $this->belongsToMany(Task::class);
-    }
 }

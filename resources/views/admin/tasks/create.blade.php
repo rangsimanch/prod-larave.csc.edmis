@@ -27,18 +27,6 @@
                             @endif
                             <span class="help-block">{{ trans('cruds.task.fields.description_helper') }}</span>
                         </div>
-                        <div class="form-group {{ $errors->has('status') ? 'has-error' : '' }}">
-                            <label class="required" for="status_id">{{ trans('cruds.task.fields.status') }}</label>
-                            <select class="form-control select2" name="status_id" id="status_id" required>
-                                @foreach($statuses as $id => $status)
-                                    <option value="{{ $id }}" {{ old('status_id') == $id ? 'selected' : '' }}>{{ $status }}</option>
-                                @endforeach
-                            </select>
-                            @if($errors->has('status_id'))
-                                <span class="help-block" role="alert">{{ $errors->first('status_id') }}</span>
-                            @endif
-                            <span class="help-block">{{ trans('cruds.task.fields.status_helper') }}</span>
-                        </div>
                         <div class="form-group {{ $errors->has('tags') ? 'has-error' : '' }}">
                             <label for="tags">{{ trans('cruds.task.fields.tag') }}</label>
                             <div style="padding-bottom: 4px">
@@ -55,9 +43,17 @@
                             @endif
                             <span class="help-block">{{ trans('cruds.task.fields.tag_helper') }}</span>
                         </div>
+                        <div class="form-group {{ $errors->has('location') ? 'has-error' : '' }}">
+                            <label for="location">{{ trans('cruds.task.fields.location') }}</label>
+                            <input class="form-control" type="text" name="location" id="location" value="{{ old('location', '') }}">
+                            @if($errors->has('location'))
+                                <span class="help-block" role="alert">{{ $errors->first('location') }}</span>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.task.fields.location_helper') }}</span>
+                        </div>
                         <div class="form-group {{ $errors->has('due_date') ? 'has-error' : '' }}">
                             <label for="due_date">{{ trans('cruds.task.fields.due_date') }}</label>
-                            <input class="form-control datetime" type="text" name="due_date" id="due_date" value="{{ old('due_date') }}">
+                            <input class="form-control date" type="text" name="due_date" id="due_date" value="{{ old('due_date') }}">
                             @if($errors->has('due_date'))
                                 <span class="help-block" role="alert">{{ $errors->first('due_date') }}</span>
                             @endif
@@ -70,6 +66,39 @@
                                 <span class="help-block" role="alert">{{ $errors->first('end_date') }}</span>
                             @endif
                             <span class="help-block">{{ trans('cruds.task.fields.end_date_helper') }}</span>
+                        </div>
+                        <div class="form-group {{ $errors->has('weather') ? 'has-error' : '' }}">
+                            <label>{{ trans('cruds.task.fields.weather') }}</label>
+                            <select class="form-control" name="weather" id="weather">
+                                <option value disabled {{ old('weather', null) === null ? 'selected' : '' }}>{{ trans('global.pleaseSelect') }}</option>
+                                @foreach(App\Task::WEATHER_SELECT as $key => $label)
+                                    <option value="{{ $key }}" {{ old('weather', '') === (string) $key ? 'selected' : '' }}>{{ $label }}</option>
+                                @endforeach
+                            </select>
+                            @if($errors->has('weather'))
+                                <span class="help-block" role="alert">{{ $errors->first('weather') }}</span>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.task.fields.weather_helper') }}</span>
+                        </div>
+                        <div class="form-group {{ $errors->has('temperature') ? 'has-error' : '' }}">
+                            <label for="temperature">{{ trans('cruds.task.fields.temperature') }}</label>
+                            <input class="form-control" type="number" name="temperature" id="temperature" value="{{ old('temperature', '') }}" step="1">
+                            @if($errors->has('temperature'))
+                                <span class="help-block" role="alert">{{ $errors->first('temperature') }}</span>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.task.fields.temperature_helper') }}</span>
+                        </div>
+                        <div class="form-group {{ $errors->has('status') ? 'has-error' : '' }}">
+                            <label class="required" for="status_id">{{ trans('cruds.task.fields.status') }}</label>
+                            <select class="form-control select2" name="status_id" id="status_id" required>
+                                @foreach($statuses as $id => $status)
+                                    <option value="{{ $id }}" {{ old('status_id') == $id ? 'selected' : '' }}>{{ $status }}</option>
+                                @endforeach
+                            </select>
+                            @if($errors->has('status'))
+                                <span class="help-block" role="alert">{{ $errors->first('status') }}</span>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.task.fields.status_helper') }}</span>
                         </div>
                         <div class="form-group {{ $errors->has('attachment') ? 'has-error' : '' }}">
                             <label for="attachment">{{ trans('cruds.task.fields.attachment') }}</label>
@@ -87,17 +116,7 @@
                         </div>
                     </form>
                 </div>
-                @if($errors->has('attachment'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('attachment') }}
-                    </div>
-                @endif
-                <span class="help-block">{{ trans('cruds.task.fields.attachment_helper') }}</span>
             </div>
-            </div>
-        </form>
-    </div>
-</div>
 
 
 

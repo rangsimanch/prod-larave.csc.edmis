@@ -18,6 +18,7 @@ class TaskTagApiController extends Controller
         abort_if(Gate::denies('task_tag_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         return new TaskTagResource(TaskTag::all());
+
     }
 
     public function store(StoreTaskTagRequest $request)
@@ -27,6 +28,7 @@ class TaskTagApiController extends Controller
         return (new TaskTagResource($taskTag))
             ->response()
             ->setStatusCode(Response::HTTP_CREATED);
+
     }
 
     public function show(TaskTag $taskTag)
@@ -34,6 +36,7 @@ class TaskTagApiController extends Controller
         abort_if(Gate::denies('task_tag_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         return new TaskTagResource($taskTag);
+
     }
 
     public function update(UpdateTaskTagRequest $request, TaskTag $taskTag)
@@ -43,6 +46,7 @@ class TaskTagApiController extends Controller
         return (new TaskTagResource($taskTag))
             ->response()
             ->setStatusCode(Response::HTTP_ACCEPTED);
+
     }
 
     public function destroy(TaskTag $taskTag)
@@ -52,5 +56,6 @@ class TaskTagApiController extends Controller
         $taskTag->delete();
 
         return response(null, Response::HTTP_NO_CONTENT);
+
     }
 }

@@ -14,32 +14,33 @@ class StoreTaskRequest extends FormRequest
         abort_if(Gate::denies('task_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         return true;
+
     }
 
     public function rules()
     {
         return [
-            'name'      => [
-                'required',
-            ],
-            'status_id' => [
-                'required',
-                'integer',
-            ],
-            'tags.*'    => [
-                'integer',
-            ],
-            'tags'      => [
-                'array',
-            ],
-            'due_date'  => [
+            'name'        => [
+                'required'],
+            'tags.*'      => [
+                'integer'],
+            'tags'        => [
+                'array'],
+            'due_date'    => [
+                'date_format:' . config('panel.date_format'),
+                'nullable'],
+            'end_date'    => [
                 'date_format:' . config('panel.date_format') . ' ' . config('panel.time_format'),
+                'nullable'],
+            'temperature' => [
                 'nullable',
-            ],
-            'end_date'  => [
-                'date_format:' . config('panel.date_format') . ' ' . config('panel.time_format'),
-                'nullable',
-            ],
+                'integer',
+                'min:-2147483648',
+                'max:2147483647'],
+            'status_id'   => [
+                'required',
+                'integer'],
         ];
+
     }
 }

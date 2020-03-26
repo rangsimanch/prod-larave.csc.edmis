@@ -34,6 +34,7 @@ class TaskTagController extends Controller
         $taskTag = TaskTag::create($request->all());
 
         return redirect()->route('admin.task-tags.index');
+
     }
 
     public function edit(TaskTag $taskTag)
@@ -48,13 +49,12 @@ class TaskTagController extends Controller
         $taskTag->update($request->all());
 
         return redirect()->route('admin.task-tags.index');
+
     }
 
     public function show(TaskTag $taskTag)
     {
         abort_if(Gate::denies('task_tag_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
-        $taskTag->load('tagTasks');
 
         return view('admin.taskTags.show', compact('taskTag'));
     }
@@ -66,6 +66,7 @@ class TaskTagController extends Controller
         $taskTag->delete();
 
         return back();
+
     }
 
     public function massDestroy(MassDestroyTaskTagRequest $request)
@@ -73,5 +74,6 @@ class TaskTagController extends Controller
         TaskTag::whereIn('id', request('ids'))->delete();
 
         return response(null, Response::HTTP_NO_CONTENT);
+
     }
 }
