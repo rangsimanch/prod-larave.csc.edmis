@@ -28,6 +28,12 @@
 
                                 </th>
                                 <th>
+                                    {{ trans('cruds.task.fields.img_user') }}
+                                </th>
+                                <th>
+                                    {{ trans('cruds.task.fields.create_by_user') }}
+                                </th>
+                                <th>
                                     {{ trans('cruds.task.fields.name') }}
                                 </th>
                                 <th>
@@ -56,9 +62,6 @@
                                 </th>
                                 <th>
                                     {{ trans('cruds.task.fields.attachment') }}
-                                </th>
-                                <th>
-                                    {{ trans('cruds.task.fields.create_by_user') }}
                                 </th>
                                 <th>
                                     {{ trans('cruds.task.fields.construction_contract') }}
@@ -125,6 +128,8 @@
     ajax: "{{ route('admin.tasks.index') }}",
     columns: [
       { data: 'placeholder', name: 'placeholder' },
+{ data: 'img_user', name: 'img_user', sortable: false, searchable: false },
+{ data: 'create_by_user_name', name: 'create_by_user.name' },
 { data: 'name', name: 'name' },
 { data: 'description', name: 'description' },
 { data: 'tag', name: 'tags.name' },
@@ -135,7 +140,6 @@
 { data: 'temperature', name: 'temperature' },
 { data: 'status_name', name: 'status.name' },
 { data: 'attachment', name: 'attachment', sortable: false, searchable: false },
-{ data: 'create_by_user_name', name: 'create_by_user.name' },
 { data: 'construction_contract_code', name: 'construction_contract.code' },
 { data: 'construction_contract.name', name: 'construction_contract.name' },
 { data: 'actions', name: '{{ trans('global.actions') }}' }

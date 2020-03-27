@@ -82,6 +82,17 @@ class TaskController extends Controller
             $table->addColumn('create_by_user_name', function ($row) {
                 return $row->create_by_user ? $row->create_by_user->name : '';
             });
+            $table->editColumn('img_user', function ($row) {
+                if ($photo = $row->create_by_user->img_user) {
+                    return sprintf(
+                        '<img src="%s" width="50px" height="50px">',
+                        $photo->url,
+                        $photo->thumbnail
+                    );
+                }
+
+                return '';
+            });
 
             $table->addColumn('construction_contract_code', function ($row) {
                 return $row->construction_contract ? $row->construction_contract->code : '';
@@ -91,7 +102,7 @@ class TaskController extends Controller
                 return $row->construction_contract ? (is_string($row->construction_contract) ? $row->construction_contract : $row->construction_contract->name) : '';
             });
 
-            $table->rawColumns(['actions', 'placeholder', 'tag', 'status', 'attachment', 'create_by_user', 'construction_contract']);
+            $table->rawColumns(['actions', 'placeholder', 'tag', 'status', 'attachment', 'create_by_user', 'construction_contract','img_user']);
 
             return $table->make(true);
         }

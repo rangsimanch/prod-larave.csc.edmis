@@ -1011,6 +1011,7 @@ $('.jspdf_submittals').click(function() {
     var page = 1;
     var y_table = 116;
     var row = 1;
+    
     for(i = 0; i < Object.keys(obj).length; i++){
 
         if(obj[Object.keys(obj)[i]].item_no != null){
@@ -1023,15 +1024,21 @@ $('.jspdf_submittals').click(function() {
 
 
             if(item_no != null){
+                doc.setFontSize(7);
                 doc.text(7,y_table,item_no);
+                doc.setFontSize(9);
             }
 
             if(description != null){
+                doc.setFontSize(7);
                 doc.text(26,y_table,description);
+                doc.setFontSize(9);
             }
 
             if(qty_sets != null){
+                doc.setFontSize(7);
                 doc.text(94,y_table,qty_sets.toString());
+                doc.setFontSize(9);
             }
         
             if(review_status != null){
@@ -1057,7 +1064,9 @@ $('.jspdf_submittals').click(function() {
             }
 
             if(remarks != null){
+                doc.setFontSize(7);
                 doc.text(136,y_table,remarks);
+                doc.setFontSize(9);
             }
 
             y_table += 5.1;
