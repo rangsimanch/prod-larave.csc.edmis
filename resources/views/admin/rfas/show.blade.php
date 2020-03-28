@@ -713,9 +713,9 @@ $('.jpdf').click(function() {
 
     //Note1
     doc.setFontSize(6);
-    if(note_1.length > 100){
-        doc.text(46,96,note_1.substr(0,100));
-        doc.text(46,100,note_1.substr(100,note_1.length - 1));
+    if(note_1.length > 150){
+        doc.text(46,96,note_1.substr(0,150));
+        doc.text(46,100,note_1.substr(150,note_1.length - 1));
     }
     else{
         doc.text(46,96,note_1);
