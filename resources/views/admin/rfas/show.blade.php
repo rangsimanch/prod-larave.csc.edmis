@@ -693,9 +693,9 @@ $('.jpdf').click(function() {
     
 
 
-    if(document_name.length > 100){
-        doc.text(64,73.5,document_name.substr(0,100));
-        doc.text(64,77.5,document_name.substr(100,document_name.length - 1));
+    if(document_name.length > 80){
+        doc.text(64,73.5,document_name.substr(0,80));
+        doc.text(64,77.5,document_name.substr(80,document_name.length - 1));
     }else{
         doc.text(64,73.5,document_name);
     }
@@ -710,9 +710,9 @@ $('.jpdf').click(function() {
     doc.text(67,92,contract_drawing_no);
 
     //Note1
-    if(note_1.length > 100){
-        doc.text(46,96,note_1.substr(0,100));
-        doc.text(46,100,note_1.substr(100,note_1.length - 1));
+    if(note_1.length > 120){
+        doc.text(46,96,note_1.substr(0,120));
+        doc.text(46,100,note_1.substr(120,note_1.length - 1));
     }
     else{
         doc.text(46,96,note_1);
