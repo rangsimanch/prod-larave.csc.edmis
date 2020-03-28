@@ -1029,19 +1029,19 @@ $('.jspdf_submittals').click(function() {
 
 
             if(item_no != null){
-                doc.setFontSize(7);
+                doc.setFontSize(6);
                 doc.text(7,y_table,item_no);
                 doc.setFontSize(9);
             }
 
             if(description != null){
-                doc.setFontSize(7);
+                doc.setFontSize(6);
                 doc.text(26,y_table,description);
                 doc.setFontSize(9);
             }
 
             if(qty_sets != null){
-                doc.setFontSize(7);
+                doc.setFontSize(6);
                 doc.text(94,y_table,qty_sets.toString());
                 doc.setFontSize(9);
             }
