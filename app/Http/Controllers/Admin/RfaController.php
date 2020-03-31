@@ -652,7 +652,7 @@ class RfaController extends Controller
 
             //Works Code
         $workcode_id = ConstructionContract::all()->pluck('works_code_id');
-        $workcode = WorksCode::where('id','=',$workcode_id)->value('code');
+        $workcode = WorksCode::where('id','=',$workcode_id)->value('code');  
             //WBS3,4 Code
         $wbs3code = WbsLevelThree::where('id','=',$request->wbs_level_3_id)->value('wbs_level_3_code');
         $wbs4code = Wbslevelfour::where('id','=',$request->wbs_level_4_id)->value('wbs_level_4_code');
@@ -685,12 +685,12 @@ class RfaController extends Controller
             //RFA Code
             $data['rfa_code'] = 'RFA' . '/' . $const_code . '/' .  $doc_number;
             // Document Number
-            $data['document_number'] = 'HSR1/' . $workcode  . '/' . $wbs3code . '/' . $wbs4code . '/' . $typecode . '/' . $code_date . '/' . $doc_number; 
+            $data['document_number'] = 'HSR1/' . $const_code . $workcode  . '/' . $wbs3code . '/' . $wbs4code . '/' . $typecode . '/' . $code_date . '/' . $doc_number; 
 
         }
         else{
             $data['rfa_code'] = $request->origin_number;
-            $data['document_number'] = 'HSR1/' . $workcode  . '/' . $wbs3code . '/' . $wbs4code . '/' . $typecode . '/' . $code_date . '/' . substr($request->origin_number,4,4); 
+            $data['document_number'] = 'HSR1/' . $const_code . $workcode  . '/' . $wbs3code . '/' . $wbs4code . '/' . $typecode . '/' . $code_date . '/' . substr($request->origin_number,4,4); 
         }
 
         //Review Time
