@@ -925,24 +925,24 @@ $('.jspdf_submittals').click(function() {
 
     // First Page
 
-    if(purpose_for == 1){
+     if(purpose_for == 1){
         doc.setFontSize(10);
-        doc.text(117,50,check);
+        doc.text(135,42,"X"); //135 42
         doc.setFontSize(9);
-    }
+     }
     else if(purpose_for == 2){
         doc.setFontSize(10);
-        doc.text(139,50,check);
+        doc.text(149.5,50,check); // 149.5 42
         doc.setFontSize(9);
     }
      else if(purpose_for == 3){
         doc.setFontSize(10);
-        doc.text(161.5,50,check);
+        doc.text(164,50,check); // 164 42
         doc.setFontSize(9);
     }
     else if(purpose_for == 4){
         doc.setFontSize(10);
-        doc.text(189,50,check);
+        doc.text(180,50,check); // 180 42
         doc.setFontSize(9);
     }
     else{
