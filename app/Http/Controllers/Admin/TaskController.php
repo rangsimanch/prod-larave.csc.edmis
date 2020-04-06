@@ -16,6 +16,7 @@ use Illuminate\Http\Request;
 use Spatie\MediaLibrary\Models\Media;
 use Symfony\Component\HttpFoundation\Response;
 use Yajra\DataTables\Facades\DataTables;
+use App\User;
 
 class TaskController extends Controller
 {
@@ -82,6 +83,7 @@ class TaskController extends Controller
             $table->addColumn('create_by_user_name', function ($row) {
                 return $row->create_by_user ? $row->create_by_user->name : '';
             });
+
             $table->editColumn('img_user', function ($row) {
                 if ($photo = $row->create_by_user->img_user) {
                     return sprintf(
@@ -90,7 +92,6 @@ class TaskController extends Controller
                         $photo->thumbnail
                     );
                 }
-
                 return '';
             });
 
@@ -102,7 +103,7 @@ class TaskController extends Controller
                 return $row->construction_contract ? (is_string($row->construction_contract) ? $row->construction_contract : $row->construction_contract->name) : '';
             });
 
-            $table->rawColumns(['actions', 'placeholder', 'tag', 'status', 'attachment', 'create_by_user', 'construction_contract','img_user']);
+            $table->rawColumns(['actions', 'img_user' , 'placeholder', 'tag', 'status', 'attachment', 'create_by_user', 'construction_contract']);
 
             return $table->make(true);
         }
