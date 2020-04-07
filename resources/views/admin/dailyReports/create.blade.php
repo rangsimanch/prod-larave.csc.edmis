@@ -28,27 +28,32 @@
                             @endif
                             <span class="help-block">{{ trans('cruds.dailyReport.fields.documents_helper') }}</span>
                         </div>
-
-                        @can('acknowledge')
-                        <legend>Acknowlege</legend>
-                        <div class="form-group {{ $errors->has('acknowledge') ? 'has-error' : '' }}">
-                            <div>
-                                <input type="hidden" name="acknowledge" value="0">
-                                <input type="checkbox" name="acknowledge" id="acknowledge" value="1" {{ old('acknowledge', 0) == 1 ? 'checked' : '' }}>
-                                <label for="acknowledge" style="font-weight: 400">{{ trans('cruds.dailyReport.fields.acknowledge') }}</label>
-                            </div>
-                            @if($errors->has('acknowledge'))
-                                <span class="help-block" role="alert">{{ $errors->first('acknowledge') }}</span>
+                        <div class="form-group {{ $errors->has('document_code') ? 'has-error' : '' }}">
+                            <label for="document_code">{{ trans('cruds.dailyReport.fields.document_code') }}</label>
+                            <input class="form-control" type="text" name="document_code" id="document_code" value="{{ old('document_code', '') }}">
+                            @if($errors->has('document_code'))
+                                <span class="help-block" role="alert">{{ $errors->first('document_code') }}</span>
                             @endif
-                            <span class="help-block">{{ trans('cruds.dailyReport.fields.acknowledge_helper') }}</span>
+                            <span class="help-block">{{ trans('cruds.dailyReport.fields.document_code_helper') }}</span>
                         </div>
-                        @endcan
-
+                        <div class="form-group {{ $errors->has('construction_contract') ? 'has-error' : '' }}">
+                            <label for="construction_contract_id">{{ trans('cruds.dailyReport.fields.construction_contract') }}</label>
+                            <select class="form-control select2" name="construction_contract_id" id="construction_contract_id">
+                                @foreach($construction_contracts as $id => $construction_contract)
+                                    <option value="{{ $id }}" {{ old('construction_contract_id') == $id ? 'selected' : '' }}>{{ $construction_contract }}</option>
+                                @endforeach
+                            </select>
+                            @if($errors->has('construction_contract'))
+                                <span class="help-block" role="alert">{{ $errors->first('construction_contract') }}</span>
+                            @endif 
+                            <span class="help-block">{{ trans('cruds.dailyReport.fields.construction_contract_helper') }}</span>
+                        </div>
                         <div class="form-group">
 
-                        <a class="btn btn-default" href="{{ route('admin.daily-reports.index') }}">
+                            <a class="btn btn-default" href="{{ route('admin.daily-reports.index') }}">
                                 {{ trans('global.back_to_list') }}
                             </a>
+
                             <button class="btn btn-success" type="submit">
                                 {{ trans('global.save') }}
                             </button>

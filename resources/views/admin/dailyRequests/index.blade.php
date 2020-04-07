@@ -24,26 +24,27 @@
                                     <th width="10">
 
                                     </th>
-                                    <!-- <th>
-                                        {{ trans('cruds.dailyRequest.fields.id') }}
-                                    </th> -->
                                     <th>
                                         {{ trans('cruds.dailyRequest.fields.input_date') }}
                                     </th>
                                     <th>
                                         {{ trans('cruds.dailyRequest.fields.documents') }}
                                     </th>
-                                    <!-- <th>
+                                    <th>
+                                        {{ trans('cruds.dailyRequest.fields.document_code') }}
+                                    </th>
+                                    <th>
                                         {{ trans('cruds.dailyRequest.fields.receive_by') }}
                                     </th>
-                                    <th>
-                                        {{ trans('cruds.dailyRequest.fields.receive_date') }}
+                                    <!-- <th>
+                                        {{ trans('cruds.dailyRequest.fields.acknowledge_date') }}
                                     </th> -->
-                                    @can('daily_request_actions')
-                                    <th>
-                                        Actions
+                                    <th> 
+                                        {{ trans('cruds.dailyRequest.fields.constuction_contract') }}
                                     </th>
-                                    @endcan
+                                    <th>
+                                        &nbsp;
+                                    </th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -52,9 +53,6 @@
                                         <td>
 
                                         </td>
-                                        <!-- <td>
-                                            {{ $dailyRequest->id ?? '' }}
-                                        </td> -->
                                         <td>
                                             {{ $dailyRequest->input_date ?? '' }}
                                         </td>
@@ -65,13 +63,18 @@
                                                 </a>
                                             @endforeach
                                         </td>
-                                        <!-- <td>
+                                        <td>
+                                            {{ $dailyRequest->document_code ?? '' }}
+                                        </td> 
+                                        <td>
                                             {{ $dailyRequest->receive_by->name ?? '' }}
                                         </td>
-                                        <td>
-                                            {{ $dailyRequest->receive_date ?? '' }}
+                                        <!-- <td>
+                                            {{ $dailyRequest->acknowledge_date ?? '' }}
                                         </td> -->
-                                    @can('daily_request_actions')
+                                        <td>
+                                            {{ $dailyRequest->constuction_contract->code ?? '' }}
+                                        </td>
                                         <td>
                                             @can('daily_request_show')
                                                 <a class="btn btn-xs btn-primary" href="{{ route('admin.daily-requests.show', $dailyRequest->id) }}">
@@ -94,7 +97,6 @@
                                             @endcan
 
                                         </td>
-                                        @endcan
 
                                     </tr>
                                 @endforeach
@@ -146,7 +148,7 @@
 @endcan
 
   $.extend(true, $.fn.dataTable.defaults, {
-    order: [[ 2, 'desc' ]],
+    order: [[ 1, 'asc' ]],
     pageLength: 100,
   });
   $('.datatable-DailyRequest:not(.ajaxTable)').DataTable({ buttons: dtButtons })

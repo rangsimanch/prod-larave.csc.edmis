@@ -19,14 +19,6 @@
                             <tbody>
                                 <tr>
                                     <th>
-                                        {{ trans('cruds.dailyRequest.fields.id') }}
-                                    </th>
-                                    <td>
-                                        {{ $dailyRequest->id }}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th>
                                         {{ trans('cruds.dailyRequest.fields.input_date') }}
                                     </th>
                                     <td>
@@ -45,6 +37,14 @@
                                         @endforeach
                                     </td>
                                 </tr>
+                                <tr> 
+                                    <th>
+                                        {{ trans('cruds.dailyRequest.fields.document_code') }}
+                                    </th>
+                                    <td>
+                                        {{ $dailyRequest->document_code }}
+                                    </td>
+                                </tr>
                                 <tr>
                                     <th>
                                         {{ trans('cruds.dailyRequest.fields.receive_by') }}
@@ -53,20 +53,20 @@
                                         {{ $dailyRequest->receive_by->name ?? '' }}
                                     </td>
                                 </tr>
-                                <tr>
-                                    <th>
-                                        {{ trans('cruds.dailyRequest.fields.receive_date') }}
-                                    </th>
-                                    <td>
-                                        {{ $dailyRequest->receive_date }}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th>
+                                <!-- <tr>
+                                    <th> 
                                         {{ trans('cruds.dailyRequest.fields.acknowledge_date') }}
                                     </th>
                                     <td>
                                         {{ $dailyRequest->acknowledge_date }}
+                                    </td>
+                                </tr> -->
+                                <tr>
+                                    <th>
+                                        {{ trans('cruds.dailyRequest.fields.constuction_contract') }}
+                                    </th>
+                                    <td>
+                                        {{ $dailyRequest->constuction_contract->code ?? '' }}
                                     </td>
                                 </tr>
                             </tbody>

@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Illuminate\Support\Facades\Auth;
+use App\ConstructionContract;
 use App\DailyRequest;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Traits\MediaUploadingTrait;
@@ -22,26 +22,25 @@ class DailyRequestController extends Controller
     {
         abort_if(Gate::denies('daily_request_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        if(strcmp(Auth::id(),'1') == 0){
-            $dailyRequests = DailyRequest::all();
-            return view('admin.dailyRequests.index', compact('dailyRequests'));
-        }
-        else{
-            $dailyRequests = DailyRequest::all()->where('acknowledge',1);
-            return view('admin.dailyRequests.index', compact('dailyRequests'));
-        }
+        $dailyRequests = DailyRequest::all();
+
+        return view('admin.dailyRequests.index', compact('dailyRequests'));
     }
 
     public function create()
     {
         abort_if(Gate::denies('daily_request_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return view('admin.dailyRequests.create');
+        $constuction_contracts = ConstructionContract::all()->pluck('code', 'id')->prepend(trans('global.pleaseSelect'), '');
+
+        return view('admin.dailyRequests.create', compact('constuction_contracts'));
     }
 
     public function store(StoreDailyRequestRequest $request)
     {
-        $dailyRequest = DailyRequest::create($request->all());
+        $data = $request->all();
+        $data['receive_by_id'] = auth()->id();
+        $dailyRequest = DailyRequest::create($data);
 
         foreach ($request->input('documents', []) as $file) {
             $dailyRequest->addMedia(storage_path('tmp/uploads/' . $file))->toMediaCollection('documents');
@@ -59,9 +58,11 @@ class DailyRequestController extends Controller
     {
         abort_if(Gate::denies('daily_request_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $dailyRequest->load('receive_by');
+        $constuction_contracts = ConstructionContract::all()->pluck('code', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        return view('admin.dailyRequests.edit', compact('dailyRequest'));
+        $dailyRequest->load('receive_by', 'constuction_contract');
+
+        return view('admin.dailyRequests.edit', compact('constuction_contracts', 'dailyRequest'));
     }
 
     public function update(UpdateDailyRequestRequest $request, DailyRequest $dailyRequest)
@@ -95,7 +96,7 @@ class DailyRequestController extends Controller
     {
         abort_if(Gate::denies('daily_request_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $dailyRequest->load('receive_by');
+        $dailyRequest->load('receive_by', 'constuction_contract');
 
         return view('admin.dailyRequests.show', compact('dailyRequest'));
     }

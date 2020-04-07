@@ -27,7 +27,7 @@ class UpdateTaskRequest extends FormRequest
             'tags'        => [
                 'array'],
             'end_date'    => [
-                'date_format:' . config('panel.date_format') . ' ' . config('panel.time_format'),
+                'date_format:' . config('panel.date_format'),
                 'nullable'],
             'temperature' => [
                 'nullable',

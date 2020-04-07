@@ -1,5 +1,5 @@
 @extends('layouts.admin')
-@section('content')
+@section('content') 
 <div class="content">
 
     <div class="row">
@@ -17,14 +17,6 @@
                         </div>
                         <table class="table table-bordered table-striped">
                             <tbody>
-                                <tr>
-                                    <th>
-                                        {{ trans('cruds.dailyReport.fields.id') }}
-                                    </th>
-                                    <td>
-                                        {{ $dailyReport->id }}
-                                    </td>
-                                </tr>
                                 <tr>
                                     <th>
                                         {{ trans('cruds.dailyReport.fields.input_date') }}
@@ -47,26 +39,34 @@
                                 </tr>
                                 <tr>
                                     <th>
-                                        {{ trans('cruds.dailyReport.fields.receive_by') }}
+                                        {{ trans('cruds.dailyReport.fields.document_code') }}
                                     </th>
                                     <td>
-                                        {{ $dailyReport->receive_by->name ?? '' }}
+                                        {{ $dailyReport->document_code }}
                                     </td>
                                 </tr>
                                 <tr>
                                     <th>
-                                        {{ trans('cruds.dailyReport.fields.receive_date') }}
+                                        {{ trans('cruds.dailyRequest.fields.receive_by') }}
                                     </th>
                                     <td>
-                                        {{ $dailyReport->receive_date }}
+                                        {{ $dailyRequest->receive_by->name ?? '' }}
                                     </td>
                                 </tr>
-                                <tr>
+                                <!-- <tr>
                                     <th>
                                         {{ trans('cruds.dailyReport.fields.acknowledge_date') }}
                                     </th>
                                     <td>
                                         {{ $dailyReport->acknowledge_date }}
+                                    </td>
+                                </tr> -->
+                                <tr>
+                                    <th>
+                                        {{ trans('cruds.dailyReport.fields.construction_contract') }}
+                                    </th>
+                                    <td>
+                                        {{ $dailyReport->construction_contract->code ?? '' }}
                                     </td>
                                 </tr>
                             </tbody>

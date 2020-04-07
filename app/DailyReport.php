@@ -37,6 +37,8 @@ class DailyReport extends Model implements HasMedia
         'receive_date',
         'receive_by_id',
         'acknowledge_date',
+        'construction_contract_id',
+        'document_code',
     ];
 
     public function registerMediaConversions(Media $media = null)
@@ -90,6 +92,12 @@ class DailyReport extends Model implements HasMedia
     public function setAcknowledgeDateAttribute($value)
     {
         $this->attributes['acknowledge_date'] = $value ? Carbon::createFromFormat(config('panel.date_format'), $value)->format('Y-m-d') : null;
+
+    }
+
+    public function construction_contract()
+    {
+        return $this->belongsTo(ConstructionContract::class, 'construction_contract_id');
 
     }
 }

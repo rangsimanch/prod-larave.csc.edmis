@@ -642,6 +642,10 @@ return [
         'updated_at_helper'       => '',
         'deleted_at'              => 'Deleted at',
         'deleted_at_helper'       => '',
+        'document_code'           => 'Document Code',
+        'document_code_helper'    => '',
+        'constuction_contract'   =>   'Construction Contract',
+        'constuction_contract_helper' => '',
     ],
 ],
 'dailyReport'            => [
@@ -668,6 +672,11 @@ return [
         'updated_at_helper'       => '',
         'deleted_at'              => 'Deleted at',
         'deleted_at_helper'       => '',
+        'document_code'           => 'Document Code',
+        'document_code_helper'    => 'Document Code',
+        'construction_contract'   =>   'Construction Contract',
+        'construction_contract_helper' => ''
+
     ],
 ],
 
