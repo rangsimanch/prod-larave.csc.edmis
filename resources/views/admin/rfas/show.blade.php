@@ -932,17 +932,17 @@ $('.jspdf_submittals').click(function() {
      }
     else if(purpose_for == 2){
         doc.setFontSize(10);
-        doc.text(149.5,50,check); // 149.5 42
+        doc.text(149.5,42,check); // 149.5 42
         doc.setFontSize(9);
     }
      else if(purpose_for == 3){
         doc.setFontSize(10);
-        doc.text(164,50,check); // 164 42
+        doc.text(164,42,check); // 164 42
         doc.setFontSize(9);
     }
     else if(purpose_for == 4){
         doc.setFontSize(10);
-        doc.text(180,50,check); // 180 42
+        doc.text(180,42,check); // 180 42
         doc.setFontSize(9);
     }
     else{
@@ -1095,28 +1095,27 @@ $('.jspdf_submittals').click(function() {
                 // Ohter Page
                 if(purpose_for == 1){
                     doc.setFontSize(10);
-                    doc.text(117,50,check);
+                    doc.text(135,42,"X"); //135 42
                     doc.setFontSize(9);
                 }
                 else if(purpose_for == 2){
                     doc.setFontSize(10);
-                    doc.text(139,50,check);
+                    doc.text(149.5,42,check); // 149.5 42
                     doc.setFontSize(9);
                 }
                 else if(purpose_for == 3){
                     doc.setFontSize(10);
-                    doc.text(161.5,50,check);
+                    doc.text(164,42,check); // 164 42
                     doc.setFontSize(9);
                 }
                 else if(purpose_for == 4){
                     doc.setFontSize(10);
-                    doc.text(189,50,check);
+                    doc.text(180,42,check); // 180 42
                     doc.setFontSize(9);
                 }
                 else{
 
                 }
-
                 doc.text(178,17,rfa_code); // y = -10
                 doc.text(162.5,29,rfa_code); // x = +17 // y = +1
                 doc.text(135,37.5,wbs_1);
