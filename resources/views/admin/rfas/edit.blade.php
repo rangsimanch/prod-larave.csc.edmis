@@ -946,10 +946,7 @@ Dropzone.options.documentFileUploadDropzone = {
                 target_date.setDate(start_date.getDate() + addDate);
             }
             var dd = target_date.getDate();
-            var mm = target_date.getMonth() + 1;
-            if(mm.length < 2){
-                mm = 0 + mm;
-            }
+            var mm = ("0" + (target_date.getMonth() + 1)).slice(-2)
             var y = target_date.getFullYear();
 
             var format_target_date = dd + '/' + mm + '/' + y;
