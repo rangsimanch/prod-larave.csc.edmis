@@ -685,12 +685,13 @@ class RfaController extends Controller
             //RFA Code
             $data['rfa_code'] = 'RFA' . '/' . $const_code . '/' .  $doc_number;
             // Document Number
-            $data['document_number'] = 'HSR1/' . $const_code . $workcode  . '/' . $wbs3code . '/' . $wbs4code . '/' . $typecode . '/' . $code_date . '/' . $doc_number; 
+//            $data['document_number'] = 'HSR1/' . $const_code . $workcode  . '/' . $wbs3code . '/' . $wbs4code . '/' . $typecode . '/' . $code_date . '/' . $doc_number; 
+            $data['document_number'] = 'HSR1/' . $const_code . '/' . $wbs3code . '/' . $wbs4code . '/' . $typecode . '/' . $code_date . '/' . $doc_number; 
 
         }
         else{
             $data['rfa_code'] = $request->origin_number;
-            $data['document_number'] = 'HSR1/' . $const_code . $workcode  . '/' . $wbs3code . '/' . $wbs4code . '/' . $typecode . '/' . $code_date . '/' . substr($request->origin_number,4,4); 
+            $data['document_number'] = 'HSR1/' . $const_code . '/' . $wbs3code . '/' . $wbs4code . '/' . $typecode . '/' . $code_date . '/' . substr($request->origin_number,4,4); 
         }
 
         //Review Time
