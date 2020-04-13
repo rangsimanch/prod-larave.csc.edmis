@@ -711,23 +711,23 @@ $('.jpdf').click(function() {
     else if(document_name.length > 300 && document_name.length <= 400 ){
         doc.text(58,65,document_name.substr(0,85));
         doc.text(58,69,document_name.substr(85,100));
-        doc.text(58,73,document_name.substr(200,100));
-        doc.text(58,77,document_name.substr(300,document_name.length - 1));
+        doc.text(58,73,document_name.substr(185,100));
+        doc.text(58,77,document_name.substr(285,document_name.length - 1));
     }
     else if(document_name.length > 400 && document_name.length <= 500 ){
         doc.text(58,65,document_name.substr(0,85));
         doc.text(58,69,document_name.substr(85,100));
-        doc.text(58,73,document_name.substr(200,100));
-        doc.text(58,77,document_name.substr(300,100));
-        doc.text(58,81,document_name.substr(400,document_name.length - 1));
+        doc.text(58,73,document_name.substr(185,100));
+        doc.text(58,77,document_name.substr(285,100));
+        doc.text(58,81,document_name.substr(385,document_name.length - 1));
     }
-    else if(document_name.length > 600 ){
+    else if(document_name.length > 500 ){
         doc.text(58,65,document_name.substr(0,85));
         doc.text(58,69,document_name.substr(85,100));
-        doc.text(58,73,document_name.substr(200,100));
-        doc.text(58,77,document_name.substr(300,100));
-        doc.text(58,81,document_name.substr(400,100));
-        doc.text(58,85,document_name.substr(500,document_name.length - 1));
+        doc.text(58,73,document_name.substr(185,100));
+        doc.text(58,77,document_name.substr(285,100));
+        doc.text(58,81,document_name.substr(385,100));
+        doc.text(58,85,document_name.substr(485,document_name.length - 1));
     }
     else{
         doc.text(58,65,document_name);
