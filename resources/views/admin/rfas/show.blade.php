@@ -706,7 +706,7 @@ $('.jpdf').click(function() {
     else if(document_name.length > 200 && document_name.length <= 300 ){
         doc.text(58,65,document_name.substr(0,85));
         doc.text(58,69,document_name.substr(85,100));
-        doc.text(58,73,document_name.substr(200,document_name.length - 1));
+        doc.text(58,73,document_name.substr(185,document_name.length - 1));
     }
     else if(document_name.length > 300 && document_name.length <= 400 ){
         doc.text(58,65,document_name.substr(0,85));
