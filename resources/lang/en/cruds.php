@@ -271,7 +271,7 @@ return [
             'final_date_helper'             => '',
             'origin_number'                 => 'Origin Number',
             'origin_number_helper'          => '',
-            'commercial_file_upload'        => 'Commercial File Upload',
+            'commercial_file_upload'        => 'Complete File Upload',
             'commercial_file_upload_helper' => '',
             'document_file_upload'          => 'Document File Upload',
             'document_file_upload_helper'   => '',

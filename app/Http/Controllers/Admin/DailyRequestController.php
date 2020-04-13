@@ -13,6 +13,7 @@ use Gate;
 use Illuminate\Http\Request;
 use Spatie\MediaLibrary\Models\Media;
 use Symfony\Component\HttpFoundation\Response;
+use PDF;
 
 class DailyRequestController extends Controller
 {
@@ -43,6 +44,8 @@ class DailyRequestController extends Controller
         $dailyRequest = DailyRequest::create($data);
 
         foreach ($request->input('documents', []) as $file) {
+            // $pdf = PDF::loadHTML($file);
+            // $pdf->setWatermarkImage(auth()->id()->img_user->thumbnail);
             $dailyRequest->addMedia(storage_path('tmp/uploads/' . $file))->toMediaCollection('documents');
         }
 
@@ -83,14 +86,15 @@ class DailyRequestController extends Controller
 
         foreach ($request->input('documents', []) as $file) {
             if (count($media) === 0 || !in_array($file, $media)) {
-                $dailyRequest->addMedia(storage_path('tmp/uploads/' . $file))->toMediaCollection('documents');
+               $dailyRequest->addMedia(storage_path('tmp/uploads/' . $file))->toMediaCollection('documents');
             }
-
         }
 
         return redirect()->route('admin.daily-requests.index');
 
     }
+
+    
 
     public function show(DailyRequest $dailyRequest)
     {

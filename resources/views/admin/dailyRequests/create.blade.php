@@ -123,5 +123,7 @@ Dropzone.options.documentsDropzone = {
          return _results
      }
 }
+
+
 </script>
 @endsection

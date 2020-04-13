@@ -262,7 +262,7 @@
                         </div>
                         @endcan
 
-                         @if($rfa->document_status->id == 1)
+                         <!-- @if($rfa->document_status->id == 1)
                             @if($rfa->cec_sign == 2 && $rfa->cec_stamp == 2)
                                 <div class="form-group {{ $errors->has('commercial_file_upload') ? 'has-error' : '' }}">
                                     <label for="commercial_file_upload">{{ trans('cruds.rfa.fields.commercial_file_upload') }}</label>
@@ -294,7 +294,7 @@
                                 @endif
                                 <span class="help-block">{{ trans('cruds.rfa.fields.commercial_file_upload_helper') }}</span>
                              </div>
-                        @endif
+                        @endif -->
 
                         @can('rfa_panel_a')
                         <div class="form-group {{ $errors->has('spec_ref_no') ? 'has-error' : '' }}">
@@ -630,9 +630,20 @@
                         
                         @endcan
                         @endif
+
+                        @can(rfa_admin)
+                        <div class="form-group {{ $errors->has('commercial_file_upload') ? 'has-error' : '' }}">
+                                    <label for="commercial_file_upload">{{ trans('cruds.rfa.fields.commercial_file_upload') }}</label>
+                                    <div class="needsclick dropzone" id="commercial_file_upload-dropzone">
+                                    </div>
+                                    @if($errors->has(''))
+                                        <span class="help-block" role="alert">{{ $errors->first('') }}</span>
+                                    @endif
+                                        <span class="help-block">{{ trans('cruds.rfa.fields.commercial_file_upload_helper') }}</span>
+                        </div>
+                        @endcan
+
                         <div class="form-group">
-
-
                             <a class="btn btn-default" href="{{ route('admin.rfas.index') }}">
                                 {{ trans('global.back_to_list') }}
                             </a>
