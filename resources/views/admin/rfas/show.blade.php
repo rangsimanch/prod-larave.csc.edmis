@@ -700,30 +700,30 @@ $('.jpdf').click(function() {
     //     }
     // }
     if(document_name.length > 100 && document_name.length <= 200 ){
-        doc.text(58,65,document_name.substr(0,100));
-        doc.text(58,69,document_name.substr(100,document_name.length - 1));
+        doc.text(58,65,document_name.substr(0,90));
+        doc.text(58,69,document_name.substr(90,document_name.length - 1));
     }
     else if(document_name.length > 200 && document_name.length <= 300 ){
-        doc.text(58,65,document_name.substr(0,100));
-        doc.text(58,69,document_name.substr(100,100));
+        doc.text(58,65,document_name.substr(0,90));
+        doc.text(58,69,document_name.substr(90,100));
         doc.text(58,73,document_name.substr(200,document_name.length - 1));
     }
     else if(document_name.length > 300 && document_name.length <= 400 ){
-        doc.text(58,65,document_name.substr(0,100));
-        doc.text(58,69,document_name.substr(100,100));
+        doc.text(58,65,document_name.substr(0,90));
+        doc.text(58,69,document_name.substr(90,100));
         doc.text(58,73,document_name.substr(200,100));
         doc.text(58,77,document_name.substr(300,document_name.length - 1));
     }
     else if(document_name.length > 400 && document_name.length <= 500 ){
-        doc.text(58,65,document_name.substr(0,100));
-        doc.text(58,69,document_name.substr(100,100));
+        doc.text(58,65,document_name.substr(0,90));
+        doc.text(58,69,document_name.substr(90,100));
         doc.text(58,73,document_name.substr(200,100));
         doc.text(58,77,document_name.substr(300,100));
         doc.text(58,81,document_name.substr(400,document_name.length - 1));
     }
     else if(document_name.length > 600 ){
-        doc.text(58,65,document_name.substr(0,100));
-        doc.text(58,69,document_name.substr(100,100));
+        doc.text(58,65,document_name.substr(0,90));
+        doc.text(58,69,document_name.substr(90,100));
         doc.text(58,73,document_name.substr(200,100));
         doc.text(58,77,document_name.substr(300,100));
         doc.text(58,81,document_name.substr(400,100));
