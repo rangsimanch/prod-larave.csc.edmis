@@ -3,6 +3,8 @@
 
 <head>
     @include('partials.head')
+    <link rel="icon" href="https://image.flaticon.com/icons/svg/609/609354.svg">
+
 </head>
 
 <body class="page-header-fixed">
