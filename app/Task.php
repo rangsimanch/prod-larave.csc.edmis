@@ -121,6 +121,11 @@ class Task extends Model implements HasMedia
 
     }
 
+    public function create_by_construction_contract_id()
+    {
+        return $this->belongsTo(ConstructionContract::class, 'construction_contract_id');
+    }
+
     public function team()
     {
         return $this->belongsTo(Team::class, 'team_id');
