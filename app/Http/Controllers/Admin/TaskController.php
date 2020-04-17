@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Traits\CsvImportTrait;
 use App\Http\Controllers\Traits\MediaUploadingTrait;
@@ -27,7 +28,12 @@ class TaskController extends Controller
         abort_if(Gate::denies('task_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
-            $query = Task::with(['tags', 'status', 'create_by_user', 'construction_contract', 'team'])->select(sprintf('%s.*', (new Task)->table));
+            if(auth()->id() == 1 || auth()->id() == 61 || auth()->id() == 62 ){
+                $query = Task::with(['tags', 'status', 'create_by_user', 'construction_contract', 'team'])->select(sprintf('%s.*', (new Task)->table));
+            }
+            else{
+                $query = Task::with(['tags', 'status', 'create_by_user', 'construction_contract', 'team'])->select(sprintf('%s.*', (new Task)->table))->where('create_by_user_id',auth()->id());
+            }
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
@@ -87,9 +93,14 @@ class TaskController extends Controller
             $table->editColumn('img_user', function ($row) {
                 if ($photo = $row->create_by_user->img_user) {
                     return sprintf(
-                        '<img src="%s" width="50px" height="50px">',
+                        '<img src="%s" width="50px" height="50px" class="avatar">',
                         $photo->url,
                         $photo->thumbnail
+                    );
+                }
+                else{
+                    return sprintf(
+                        '<img src="https://i.webch7.com/images/theme2019/avatar.png" width="50px" height="50px" class="avatar">'
                     );
                 }
                 return '';
@@ -123,8 +134,11 @@ class TaskController extends Controller
     }
 
     public function store(StoreTaskRequest $request)
-    {
-        $task = Task::create($request->all());
+    {   
+        $data = $request->all();
+        $data['create_by_user_id'] = auth()->id();
+        $data['construction_contract_id'] = session()->get('construction_contract_id');
+        $task = Task::create($data);
         $task->tags()->sync($request->input('tags', []));
 
         if ($request->input('attachment', false)) {

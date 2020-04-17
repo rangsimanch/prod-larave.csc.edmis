@@ -511,7 +511,7 @@
                         
                         @endcan
 
-                        @can(rfa_admin)
+                        @can('rfa_admin')
                         <div class="form-group {{ $errors->has('commercial_file_upload') ? 'has-error' : '' }}">
                             <label for="commercial_file_upload">{{ trans('cruds.rfa.fields.commercial_file_upload') }}</label>
                             <div class="needsclick dropzone" id="commercial_file_upload-dropzone">

@@ -4,7 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "340ced86feeaf52b387612d57ae71308",
+
+    "content-hash": "d1928af81dfbfa48ed73428ff4042a6e",
     "packages": [
         {
             "name": "ajaxray/php-watermark",
