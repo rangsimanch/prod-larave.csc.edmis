@@ -331,7 +331,7 @@
     ajax: "{{ route('admin.rfas.index') }}",
     columns: [
       { data: 'placeholder', name: 'placeholder' },   
-{ data: 'actions', name: '{{ trans('global.actions') }}' }, // 41
+{ data: 'actions', name: '{{ trans('global.actions') }}', sortable: false, }, // 41
       { data: 'date_counter', name: 'date_counter' },// 1
 { data: 'document_status_status_name', name: 'document_status.status_name', sortable: false, }, // 2
 { data: 'bill', name: 'bill',sortable: false, }, // 3
