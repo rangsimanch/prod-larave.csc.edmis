@@ -84,7 +84,8 @@ class DailyReportController extends Controller
 
         foreach ($request->input('documents', []) as $file) {
             if (count($media) === 0 || !in_array($file, $media)) {
-                $dailyReport->addMedia(storage_path('tmp/uploads/' . $file))->toMediaCollection('documents');
+                $dailyReport->addMedia(storage_path('tmp/uploads/' . $file))
+               ->toMediaCollection('documents');
             }
 
         }

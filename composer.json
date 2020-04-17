@@ -20,10 +20,12 @@
         "laravel/tinker": "^1.0",
         "laravelcollective/html": "^6.0",
         "laraveldaily/laravel-charts": "^0.1.10",
-         "niklasravnsborg/laravel-pdf": "^4.0",
+        "mpdf/mpdf": "^8.0",
+        "niklasravnsborg/laravel-pdf": "^4.0",
         "nuovo/spreadsheet-reader": "^0.5.11",
         "pusher/pusher-php-server": "^4.1",
         "realrashid/sweet-alert": "^3.1",
+        "spatie/image": "^1.7",
         "spatie/laravel-medialibrary": "^7.12",
         "yajra/laravel-datatables-oracle": "^9.7"
     },

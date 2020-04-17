@@ -93,9 +93,14 @@ class TaskController extends Controller
             $table->editColumn('img_user', function ($row) {
                 if ($photo = $row->create_by_user->img_user) {
                     return sprintf(
-                        '<img src="%s" width="50px" height="50px">',
+                        '<img src="%s" width="50px" height="50px" class="avatar">',
                         $photo->url,
                         $photo->thumbnail
+                    );
+                }
+                else{
+                    return sprintf(
+                        '<img src="https://i.webch7.com/images/theme2019/avatar.png" width="50px" height="50px" class="avatar">'
                     );
                 }
                 return '';

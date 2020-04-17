@@ -44,9 +44,8 @@ class DailyRequestController extends Controller
         $dailyRequest = DailyRequest::create($data);
 
         foreach ($request->input('documents', []) as $file) {
-            // $pdf = PDF::loadHTML($file);
-            // $pdf->setWatermarkImage(auth()->id()->img_user->thumbnail);
-            $dailyRequest->addMedia(storage_path('tmp/uploads/' . $file))->toMediaCollection('documents');
+            $dailyRequest->addMedia(storage_path('tmp/uploads/' . $file))
+            ->toMediaCollection('documents');
         }
 
         if ($media = $request->input('ck-media', false)) {

@@ -10,9 +10,3 @@ return [
 	'display_mode'          => 'fullpage',
 	'tempDir'               => base_path('../temp/')
 ];
-
-
-$config = ['instanceConfigurator' => function($mpdf) {
-    $mpdf->SetWatermarkText('DRAFT');
-    $mpdf->showWatermarkText = true;
-}];

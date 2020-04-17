@@ -58,7 +58,7 @@
                                         </td>
                                         <td>
                                             @foreach($dailyRequest->documents as $key => $media)
-                                                <a href="{{ $media->getUrl() }}" target="_blank">
+                                                <a  target="_blank" href="{{ $media->getUrl() }}">
                                                     {{ trans('global.view_file') }}
                                                 </a>
                                             @endforeach
@@ -159,4 +159,6 @@
 })
 
 </script>
+
+
 @endsection
