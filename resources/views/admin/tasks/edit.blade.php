@@ -54,7 +54,7 @@
                         </div>
                         <div class="form-group {{ $errors->has('end_date') ? 'has-error' : '' }}">
                             <label for="end_date">{{ trans('cruds.task.fields.end_date') }}</label>
-                            <input class="form-control datetime" type="text" name="end_date" id="end_date" value="{{ old('end_date', $task->end_date) }}">
+                            <input class="form-control date" type="text" name="end_date" id="end_date" value="{{ old('end_date', $task->end_date) }}">
                             @if($errors->has('end_date'))
                                 <span class="help-block" role="alert">{{ $errors->first('end_date') }}</span>
                             @endif

@@ -28,7 +28,7 @@ class TaskController extends Controller
         abort_if(Gate::denies('task_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
-            if(auth()->id() == 1 || auth()->id() == 61 || auth()->id() == 62 ){
+            if(auth()->id() == 1){
                 $query = Task::with(['tags', 'status', 'create_by_user', 'construction_contract', 'team'])->select(sprintf('%s.*', (new Task)->table));
             }
             else{
