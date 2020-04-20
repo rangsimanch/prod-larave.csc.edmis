@@ -675,10 +675,23 @@ $('.jpdf').click(function() {
     doc.text(171,10,rfa_code);
     //Name
     doc.text(32,44,bill);
-    doc.text(32,48,title_th);
+
+    if(title_th.length > 100){
+        doc.text(32,48,title_th.substr(0,100));
+        doc.text(32,51,title_th.substr(100,title_th.length - 1));
+    }
+    else{
+        doc.text(32,48,title_th);
+    }
 
     //doc.text(34,60,bill);
-    doc.text(32,56,title_en);
+    if(title_en.length > 77){
+        doc.text(32,56,title_en.substr(0,77));
+        doc.text(32,59,title_en.substr(77,title_en.length - 1));
+    }
+    else{
+        doc.text(32,56,title_en);
+    }
     //Doc. code
     doc.setFontSize(7);
     doc.text(124,44,document_number);
