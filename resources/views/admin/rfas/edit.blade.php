@@ -357,7 +357,6 @@
 
                         @endcan
 
-
                         @if($rfa->document_status->id  == 1)
                         @can('rfa_panel_b')
                         <legend>Incoming Distribution</legend>
@@ -443,6 +442,92 @@
                             <span class="help-block">{{ trans('cruds.rfa.fields.note_2_helper') }}</span>
                         </div>
                         @endcan
+                        @else
+                        @can('rfa_admin')
+                        <legend>Incoming Distribution</legend>
+
+                        <div class="form-group {{ $errors->has('action_by') ? 'has-error' : '' }}">
+                            <label for="action_by_id">{{ trans('cruds.rfa.fields.action_by') }}</label>
+                            <select class="form-control select2" name="action_by_id" id="action_by_id">
+                                @foreach($action_bies as $id => $action_by)
+                                    <option value="{{ $id }}" {{ ($rfa->action_by ? $rfa->action_by->id : old('action_by_id')) == $id ? 'selected' : '' }}>{{ $action_by }}</option>
+                                @endforeach
+                            </select>
+                            @if($errors->has(''))
+                                <span class="help-block" role="alert">{{ $errors->first('') }}</span>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.rfa.fields.action_by_helper') }}</span>
+                        </div>
+                        
+                        <div class="form-group {{ $errors->has('comment_by') ? 'has-error' : '' }}">
+                            <label for="comment_by_id">{{ trans('cruds.rfa.fields.comment_by') }}</label>
+                            <select class="form-control select2" name="comment_by_id" id="comment_by_id">
+                                @foreach($comment_bies as $id => $comment_by)
+                                    <option value="{{ $id }}" {{ ($rfa->comment_by ? $rfa->comment_by->id : old('comment_by_id')) == $id ? 'selected' : '' }}>{{ $comment_by }}</option>
+                                @endforeach
+                            </select>
+                            @if($errors->has('comment_by_id'))
+                                <span class="help-block" role="alert">{{ $errors->first('comment_by_id') }}</span>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.rfa.fields.comment_by_helper') }}</span>
+                        </div>
+
+                        <div class="form-group {{ $errors->has('information_by') ? 'has-error' : '' }}">
+                            <label for="information_by_id">{{ trans('cruds.rfa.fields.information_by') }}</label>
+                            <select class="form-control select2" name="information_by_id" id="information_by_id">
+                                @foreach($information_bies as $id => $information_by)
+                                    <option value="{{ $id }}" {{ ($rfa->information_by ? $rfa->information_by->id : old('information_by_id')) == $id ? 'selected' : '' }}>{{ $information_by }}</option>
+                                @endforeach
+                            </select>
+                            @if($errors->has('information_by_id'))
+                                <span class="help-block" role="alert">{{ $errors->first('information_by_id') }}</span>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.rfa.fields.information_by_helper') }}</span>
+                        </div>
+
+                        <div class="form-group {{ $errors->has('receive_date') ? 'has-error' : '' }}">
+                            <label for="receive_date">{{ trans('cruds.rfa.fields.receive_date') }}</label>
+                            <input class="form-control date r_date" type="text" name="receive_date" id="receive_date" value="{{ old('receive_date', $rfa->receive_date) }}">
+                            @if($errors->has('receive_date'))
+                                <span class="help-block" role="alert">{{ $errors->first('receive_date') }}</span>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.rfa.fields.receive_date_helper') }}</span>
+                        </div>
+
+                        <div class="form-group {{ $errors->has('doc_count') ? 'has-error' : '' }}">
+                            <label>{{ trans('cruds.rfa.fields.doc_count') }}</label>
+                            <select class="form-control doc_counter" id="doc_count" name="doc_count">
+                            <option value disabled {{ old('doc_count', null) === null ? 'selected' : '' }}>{{ trans('global.pleaseSelect') }}</option>
+                            @foreach(App\Rfa::DOC_COUNT_RADIO as $key => $label)
+                            <option value="{{ $key }}" {{ old('doc_count', $rfa->doc_count) === (string) $key ? 'selected' : '' }}>{{ $label . ' Days' }}</option>
+                            @endforeach
+                            </select>
+                            @if($errors->has(''))
+                                <span class="help-block" role="alert">{{ $errors->first('') }}</span>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.rfa.fields.doc_count_helper') }}</span>
+                        </div>
+
+                        <div class="form-group {{ $errors->has('target_date') ? 'has-error' : '' }}">
+                            <label for="target_date">{{ trans('cruds.rfa.fields.target_date') }}</label>
+                            <input readonly class="form-control date" type="text" name="target_date" id="target_date" value="{{ old('target_date' , $rfa->target_date) }}">
+                            @if($errors->has(''))
+                                <span class="help-block" role="alert">{{ $errors->first('') }}</span>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.rfa.fields.target_date_helper') }}</span>
+                        </div>
+
+                        
+                        <div class="form-group {{ $errors->has('note_2') ? 'has-error' : '' }}">
+                            <label for="note_2">{{ trans('cruds.rfa.fields.note_2') }}</label>
+                            <textarea class="form-control" name="note_2" id="note_2">{{ old('note_2', $rfa->note_2) }}</textarea>
+                            @if($errors->has('note_2'))
+                                <span class="help-block" role="alert">{{ $errors->first('note_2') }}</span>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.rfa.fields.note_2_helper') }}</span>
+                        </div>
+                        @endcan
+                        
                         @endif
                         
                         @if($rfa->document_status->id  == 2)
