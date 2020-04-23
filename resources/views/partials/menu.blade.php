@@ -327,6 +327,18 @@
                     </a>
                 </li>
             @endcan
+
+            @can('request_for_inspection_access')
+                <li class="{{ request()->is('admin/request-for-inspections') || request()->is('admin/request-for-inspections/*') ? 'active' : '' }}">
+                    <a href="{{ route("admin.request-for-inspections.index") }}">
+                        <i class="fa-fw fas fa-clipboard-list">
+
+                        </i>
+                        <span>{{ trans('cruds.requestForInspection.title') }}</span>
+                    </a>
+                </li>
+            @endcan
+            
             <li class="{{ request()->is('admin/system-calendar') || request()->is('admin/system-calendar/*') ? 'active' : '' }}">
                 <a href="{{ route("admin.systemCalendar") }}">
                     <i class="fas fa-fw fa-calendar">

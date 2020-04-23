@@ -75,4 +75,9 @@ Route::group(['prefix' => 'v1', 'as' => 'api.', 'namespace' => 'Api\V1\Admin', '
      // Daily Reports
      Route::post('daily-reports/media', 'DailyReportApiController@storeMedia')->name('daily-reports.storeMedia');
      Route::apiResource('daily-reports', 'DailyReportApiController');
-});
+
+     // Request For Inspections
+     Route::post('request-for-inspections/media', 'RequestForInspectionApiController@storeMedia')->name('request-for-inspections.storeMedia');
+     Route::apiResource('request-for-inspections', 'RequestForInspectionApiController');
+ 
+    });

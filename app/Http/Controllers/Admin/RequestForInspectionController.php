@@ -1,0 +1,219 @@
+<?php
+
+namespace App\Http\Controllers\Admin;
+
+use App\ConstructionContract;
+use App\Http\Controllers\Controller;
+use App\Http\Controllers\Traits\MediaUploadingTrait;
+use App\Http\Requests\MassDestroyRequestForInspectionRequest;
+use App\Http\Requests\StoreRequestForInspectionRequest;
+use App\Http\Requests\UpdateRequestForInspectionRequest;
+use App\RequestForInspection;
+use App\User;
+use Gate;
+use Illuminate\Http\Request;
+use Spatie\MediaLibrary\Models\Media;
+use Symfony\Component\HttpFoundation\Response;
+use Yajra\DataTables\Facades\DataTables;
+
+class RequestForInspectionController extends Controller
+{
+    use MediaUploadingTrait;
+
+    public function index(Request $request)
+    {
+        abort_if(Gate::denies('request_for_inspection_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        if ($request->ajax()) {
+            $query = RequestForInspection::with(['contact_person', 'requested_by', 'construction_contract', 'team'])->select(sprintf('%s.*', (new RequestForInspection)->table));
+            $table = Datatables::of($query);
+
+            $table->addColumn('placeholder', '&nbsp;');
+            $table->addColumn('actions', '&nbsp;');
+
+            $table->editColumn('actions', function ($row) {
+                $viewGate      = 'request_for_inspection_show';
+                $editGate      = 'request_for_inspection_edit';
+                $deleteGate    = 'request_for_inspection_delete';
+                $crudRoutePart = 'request-for-inspections';
+
+                return view('partials.datatablesActions', compact(
+                    'viewGate',
+                    'editGate',
+                    'deleteGate',
+                    'crudRoutePart',
+                    'row'
+                ));
+            });
+
+            $table->editColumn('bill_no', function ($row) {
+                return $row->bill_no ? $row->bill_no : "";
+            });
+            $table->editColumn('subject', function ($row) {
+                return $row->subject ? $row->subject : "";
+            });
+            $table->editColumn('item_no', function ($row) {
+                return $row->item_no ? $row->item_no : "";
+            });
+            $table->editColumn('ref_no', function ($row) {
+                return $row->ref_no ? $row->ref_no : "";
+            });
+
+            $table->addColumn('contact_person_name', function ($row) {
+                return $row->contact_person ? $row->contact_person->name : '';
+            });
+
+            $table->editColumn('type_of_work', function ($row) {
+                return $row->type_of_work ? RequestForInspection::TYPE_OF_WORK_SELECT[$row->type_of_work] : '';
+            });
+            $table->editColumn('location', function ($row) {
+                return $row->location ? $row->location : "";
+            });
+            $table->editColumn('ref_specification', function ($row) {
+                return $row->ref_specification ? $row->ref_specification : "";
+            });
+            $table->addColumn('requested_by_name', function ($row) {
+                return $row->requested_by ? $row->requested_by->name : '';
+            });
+
+            $table->editColumn('result_of_inspection', function ($row) {
+                return $row->result_of_inspection ? RequestForInspection::RESULT_OF_INSPECTION_SELECT[$row->result_of_inspection] : '';
+            });
+            $table->editColumn('files_upload', function ($row) {
+                if (!$row->files_upload) {
+                    return '';
+                }
+
+                $links = [];
+
+                foreach ($row->files_upload as $media) {
+                    $links[] = '<a href="' . $media->getUrl() . '" target="_blank">' . trans('global.downloadFile') . '</a>';
+                }
+
+                return implode(', ', $links);
+            });
+
+            $table->addColumn('construction_contract_code', function ($row) {
+                return $row->construction_contract ? $row->construction_contract->code : '';
+            });
+
+            $table->rawColumns(['actions', 'placeholder', 'contact_person', 'requested_by', 'files_upload', 'construction_contract']);
+
+            return $table->make(true);
+        }
+
+        return view('admin.requestForInspections.index');
+    }
+
+    public function create()
+    {
+        abort_if(Gate::denies('request_for_inspection_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $contact_people = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+
+        $requested_bies = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+
+        $construction_contracts = ConstructionContract::all()->pluck('code', 'id')->prepend(trans('global.pleaseSelect'), '');
+
+        return view('admin.requestForInspections.create', compact('contact_people', 'requested_bies', 'construction_contracts'));
+    }
+
+    public function store(StoreRequestForInspectionRequest $request)
+    {
+        $requestForInspection = RequestForInspection::create($request->all());
+
+        foreach ($request->input('files_upload', []) as $file) {
+            $requestForInspection->addMedia(storage_path('tmp/uploads/' . $file))->toMediaCollection('files_upload');
+        }
+
+        if ($media = $request->input('ck-media', false)) {
+            Media::whereIn('id', $media)->update(['model_id' => $requestForInspection->id]);
+        }
+
+        return redirect()->route('admin.request-for-inspections.index');
+
+    }
+
+    public function edit(RequestForInspection $requestForInspection)
+    {
+        abort_if(Gate::denies('request_for_inspection_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $contact_people = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+
+        $requested_bies = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+
+        $construction_contracts = ConstructionContract::all()->pluck('code', 'id')->prepend(trans('global.pleaseSelect'), '');
+
+        $requestForInspection->load('contact_person', 'requested_by', 'construction_contract', 'team');
+
+        return view('admin.requestForInspections.edit', compact('contact_people', 'requested_bies', 'construction_contracts', 'requestForInspection'));
+    }
+
+    public function update(UpdateRequestForInspectionRequest $request, RequestForInspection $requestForInspection)
+    {
+        $requestForInspection->update($request->all());
+
+        if (count($requestForInspection->files_upload) > 0) {
+            foreach ($requestForInspection->files_upload as $media) {
+                if (!in_array($media->file_name, $request->input('files_upload', []))) {
+                    $media->delete();
+                }
+
+            }
+
+        }
+
+        $media = $requestForInspection->files_upload->pluck('file_name')->toArray();
+
+        foreach ($request->input('files_upload', []) as $file) {
+            if (count($media) === 0 || !in_array($file, $media)) {
+                $requestForInspection->addMedia(storage_path('tmp/uploads/' . $file))->toMediaCollection('files_upload');
+            }
+
+        }
+
+        return redirect()->route('admin.request-for-inspections.index');
+
+    }
+
+    public function show(RequestForInspection $requestForInspection)
+    {
+        abort_if(Gate::denies('request_for_inspection_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $requestForInspection->load('contact_person', 'requested_by', 'construction_contract', 'team');
+
+        return view('admin.requestForInspections.show', compact('requestForInspection'));
+    }
+
+    public function destroy(RequestForInspection $requestForInspection)
+    {
+        abort_if(Gate::denies('request_for_inspection_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $requestForInspection->delete();
+
+        return back();
+
+    }
+
+    public function massDestroy(MassDestroyRequestForInspectionRequest $request)
+    {
+        RequestForInspection::whereIn('id', request('ids'))->delete();
+
+        return response(null, Response::HTTP_NO_CONTENT);
+
+    }
+
+    public function storeCKEditorImages(Request $request)
+    {
+        abort_if(Gate::denies('request_for_inspection_create') && Gate::denies('request_for_inspection_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $model         = new RequestForInspection();
+        $model->id     = $request->input('crud_id', 0);
+        $model->exists = true;
+        $media         = $model->addMediaFromRequest('upload')->toMediaCollection('ck-media', 'public');
+
+        return response()->json(['id' => $media->id, 'url' => $media->getUrl()], Response::HTTP_CREATED);
+
+    }
+
+}

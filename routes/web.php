@@ -167,6 +167,12 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth'], '
     Route::post('daily-reports/ckmedia', 'DailyReportController@storeCKEditorImages')->name('daily-reports.storeCKEditorImages');
     Route::resource('daily-reports', 'DailyReportController');
 
+        // Request For Inspections
+        Route::delete('request-for-inspections/destroy', 'RequestForInspectionController@massDestroy')->name('request-for-inspections.massDestroy');
+        Route::post('request-for-inspections/media', 'RequestForInspectionController@storeMedia')->name('request-for-inspections.storeMedia');
+        Route::post('request-for-inspections/ckmedia', 'RequestForInspectionController@storeCKEditorImages')->name('request-for-inspections.storeCKEditorImages');
+        Route::resource('request-for-inspections', 'RequestForInspectionController');
+    
     
     Route::get('system-calendar', 'SystemCalendarController@index')->name('systemCalendar');
     Route::get('global-search', 'GlobalSearchController@search')->name('globalSearch');
@@ -183,9 +189,10 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth'], '
 //    });
    
 });
-
-// Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Auth', 'middleware' => ['auth' , 'select']], function () {
-//     Route::get('/construction_contracts-select', ['uses' => 'ConstructionContractSelectController@select', 'as' => 'construction_contracts-select.select']);
-//     Route::post('/construction_contracts-select', ['uses' => 'ConstructionContractSelectController@storeSelect', 'as' => 'construction_contracts-select.select']);
-// });
-
+Route::group(['prefix' => 'profile', 'as' => 'profile.', 'namespace' => 'Auth', 'middleware' => ['auth']], function () {
+    // Change password
+        if (file_exists(app_path('Http/Controllers/Auth/ChangePasswordController.php'))) {
+            Route::get('password', 'ChangePasswordController@edit')->name('password.edit');
+            Route::post('password', 'ChangePasswordController@update')->name('password.update');
+        }
+});

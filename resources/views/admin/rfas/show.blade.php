@@ -1084,6 +1084,7 @@ $('.jspdf_submittals').click(function() {
             var returned_date = obj[Object.keys(obj)[i]].date_returned;
             var remarks = obj[Object.keys(obj)[i]].remarks;
 
+            doc.setFontSize(8);
 
             if(item_no != null){
                //doc.setFontSize(6);
@@ -1107,9 +1108,9 @@ $('.jspdf_submittals').click(function() {
                }
                // doc.setFontSize(9);
             }
-
+            
             if(qty_sets != null){
-               // doc.setFontSize(6);
+                
                 doc.text(115,y_table,qty_sets.toString()); //115
                // doc.setFontSize(9);
             }
@@ -1174,6 +1175,7 @@ $('.jspdf_submittals').click(function() {
                 else{
 
                 }
+
                 doc.text(178,17,rfa_code); // y = -10
                 doc.text(162.5,29,rfa_code); // x = +17 // y = +1
                 doc.text(135,37.5,wbs_1);

@@ -365,7 +365,7 @@
 { data: 'document_ref', name: 'document_ref' ,visible: false, sortable: false,}, // 32
 { data: 'document_file_upload', name: 'document_file_upload', sortable: false, searchable: false }, // 33
 { data: 'for_status_name', name: 'for_status.name', sortable: false, }, // 34
-{ data: 'created_at', name: 'created_at' ,visible: false}, // 35
+{ data: 'created_at', name: 'created_at' ,visible: true}, // 35
 { data: 'create_by_user_name', name: 'create_by_user.name' ,visible: false}, // 36
 // { data: 'update_by_user_name', name: 'update_by_user.name' },
 // { data: 'approve_by_user_name', name: 'approve_by_user.name' },

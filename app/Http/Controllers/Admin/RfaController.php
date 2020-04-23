@@ -381,7 +381,23 @@ class RfaController extends Controller
             });
 
             $table->addColumn('document_status_status_name', function ($row) {
-                    return $row->document_status ? $row->document_status->status_name : '';
+                    if ($row->document_status->status_name == 'New'){
+                        return sprintf('<p style="color:#003399"><b>%s</b></p>',$row->document_status ? $row->document_status->status_name : '');
+                    }
+                    else if($row->document_status->status_name == 'Distributed'){
+                        return sprintf('<p style="color:#ff9900"><b>%s</b></p>',$row->document_status ? $row->document_status->status_name : '');
+                    }
+                    else if($row->document_status->status_name == 'Reviewed'){
+                        return sprintf('<p style="color:#6600cc"><b>%s</b></p>',$row->document_status ? $row->document_status->status_name : '');
+                    }
+                    else if($row->document_status->status_name == 'Done'){
+                        return sprintf('<p style="color:#009933"><b>%s</b></p>',$row->document_status ? $row->document_status->status_name : '');
+                    }
+                    else{
+                        return $row->document_status ? $row->document_status->status_name : '';
+                    }
+
+                
             });
 
             $table->addColumn('create_by_user_name', function ($row) {
@@ -424,7 +440,7 @@ class RfaController extends Controller
                 return $row->reviewed_by ? $row->reviewed_by->name : '';
             });
 
-            $table->rawColumns(['actions', 'placeholder', 'type', 'construction_contract', 'wbs_level_3', 'wbs_level_4', 'issueby', 'assign', 'file_upload_1', 'comment_by', 'information_by', 'comment_status', 'for_status', 'document_status', 'action_by', 'create_by_user', 'update_by_user', 'approve_by_user', 'commercial_file_upload', 'document_file_upload', 'team', 'check_revision','reviewed_by']);
+            $table->rawColumns(['actions', 'placeholder', 'type', 'construction_contract', 'wbs_level_3', 'wbs_level_4', 'issueby', 'assign', 'file_upload_1', 'comment_by', 'information_by', 'comment_status', 'for_status', 'document_status', 'action_by', 'create_by_user', 'update_by_user', 'approve_by_user', 'commercial_file_upload', 'document_file_upload', 'team', 'check_revision','reviewed_by','document_status_status_name']);
 
             return $table->make(true);
         }
@@ -493,7 +509,7 @@ class RfaController extends Controller
 
         $rfa->load('type', 'construction_contract', 'issueby', 'assign', 'action_by', 'comment_by', 'information_by', 'comment_status', 'for_status', 'document_status', 'create_by_user', 'update_by_user', 'approve_by_user', 'team', 'distribute_by');
        // $rfa->load(all());
-        return view('admin.rfas.revision', compact('types', 'construction_contracts', 'wbs_level_3s', 'wbs_level_4s', 'issuebies', 'assigns', 'action_bies', 'comment_bies', 'information_bies', 'comment_statuses', 'for_statuses', 'reviewed_bies', 'rfa'));
+        return view('admin.rfas.revision', compact('types', 'construction_contracts', 'wbs_level_3s', 'wbs_level_4s', 'issuebies', 'assigns', 'action_bies', 'comment_bies', 'information_bies', 'comment_statuses', 'for_statuses', 'reviewed_bies', 'rfa', 'date_counter'));
     }
     
     public function  storeRevision(RevisionRfaRequest $request, Rfa $rfa)
