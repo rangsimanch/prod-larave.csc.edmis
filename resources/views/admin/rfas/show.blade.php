@@ -979,8 +979,8 @@ $('.jspdf_submittals').click(function() {
     //         'text/html');
 
     // submittalsRfa = dom.body.textContent;
-    var fixedJSON = submittalsRfa.replace(/(['"])?([a-zA-Z0-9_]+)(['"])?:/g, '"$2": ');
-    var obj = JSON.parse(fixedJSON);
+   //var fixedJSON = submittalsRfa.replace(/(['"])?([a-zA-Z0-9_]+)(['"])?:/g, '"$2": ');
+    var obj = JSON.parse(submittalsRfa);
     console.log(Object.keys(obj).length);
 
     // First Page
