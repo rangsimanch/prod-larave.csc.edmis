@@ -976,7 +976,7 @@ $('.jspdf_submittals').click(function() {
     var parser = new DOMParser;
     var dom = parser.parseFromString(
             '<!doctype html><body>' + submittalsRfa,
-            'text/html');=
+            'text/html');
 
     submittalsRfa = dom.body.textContent;
     var obj = JSON.parse(submittalsRfa.replace('""', '"'));
