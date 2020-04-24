@@ -971,7 +971,7 @@ $('.jspdf_submittals').click(function() {
     
     var purpose_for = "{{ $rfa->purpose_for ??  ''}}";
 
-    var submittalsRfa = "{{ $submittalsRfa ?? '' }}".toString().replece('"','');
+    var submittalsRfa = "{{ $submittalsRfa ?? '' }}".toString().replace('"','');
     //submittalsRfa = submittalsRfa_str.toString().replace('"','');
     var parser = new DOMParser;
     var dom = parser.parseFromString(
