@@ -1084,6 +1084,7 @@ $('.jspdf_submittals').click(function() {
             var returned_date = obj[Object.keys(obj)[i]].date_returned;
             var remarks = obj[Object.keys(obj)[i]].remarks;
 
+            doc.setFontSize(8);
 
             if(item_no != null){
                //doc.setFontSize(6);
