@@ -933,7 +933,7 @@ $('.jspdf_submittals').click(function() {
     var wbs_4 = "{{ $rfa->wbs_level_4->wbs_level_4_code ?? ''}}";
     var type = "{{ $rfa->type->type_code ?? ''}}";
     var no_doc = rfa_code.substr(11,4);
-    console.log(rfa_code.length);
+    //console.log(rfa_code.length);
     var revision_count = '0';
     if(rfa_code.length > 14){
         revision_count = rfa_code.substr(17,2);
@@ -978,7 +978,7 @@ $('.jspdf_submittals').click(function() {
             'text/html');
 
     submittalsRfa = dom.body.textContent;
-    var obj = JSON.parse(submittalsRfa);
+    var obj = JSON.parse(submittalsRfa.toString());
     console.log(Object.keys(obj).length);
 
     // First Page
