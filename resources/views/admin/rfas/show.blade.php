@@ -972,12 +972,14 @@ $('.jspdf_submittals').click(function() {
     var purpose_for = "{{ $rfa->purpose_for ??  ''}}";
 
     var submittalsRfa = "{{ $submittalsRfa ?? ''}}";
+    console.log(submittalsRfa);
+    
     var parser = new DOMParser;
     var dom = parser.parseFromString(
             '<!doctype html><body>' + submittalsRfa,
             'text/html');
 
-   // submittalsRfa = dom.body.textContent;
+    submittalsRfa = dom.body.textContent;
     var obj = JSON.parse(submittalsRfa);
     console.log(Object.keys(obj).length);
 
