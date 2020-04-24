@@ -982,7 +982,7 @@ $('.jspdf_submittals').click(function() {
 
     submittalsRfa = dom.body.textContent;
     var obj = JSON.parse(JSON.stringify(submittalsRfa));
-    //console.log(Object.keys(obj).length);
+    console.log(Object.keys(obj).length);
 
     // First Page
 
@@ -1245,7 +1245,7 @@ $('.jspdf_submittals').click(function() {
         }
     }
 
-    console.log(doc);
+    //console.log(doc);
     //HTML PDF WINDOW
     var string = doc.output('datauristring');
     var embed = "<embed width='100%' height='100%' src='" + string + "'/>"
