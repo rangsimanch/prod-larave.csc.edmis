@@ -973,12 +973,12 @@ $('.jspdf_submittals').click(function() {
 
     var submittalsRfa = "{{ $submittalsRfa ?? '' }}";
     //submittalsRfa = submittalsRfa_str.toString().replace('"','');
-    var parser = new DOMParser;
-    var dom = parser.parseFromString(
-            '<!doctype html><body>' + submittalsRfa,
-            'text/html');
+    // var parser = new DOMParser;
+    // var dom = parser.parseFromString(
+    //         '<!doctype html><body>' + submittalsRfa,
+    //         'text/html');
 
-    submittalsRfa = dom.body.textContent;
+    // submittalsRfa = dom.body.textContent;
     var fixedJSON = submittalsRfa.replace(/(['"])?([a-zA-Z0-9_]+)(['"])?:/g, '"$2": ');
     var obj = JSON.parse(fixedJSON);
     console.log(Object.keys(obj).length);
