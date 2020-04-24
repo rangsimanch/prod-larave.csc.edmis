@@ -973,7 +973,7 @@ $('.jspdf_submittals').click(function() {
 
     var submittalsRfa = "{{ $submittalsRfa ?? ''}}";
     //submittalsRfa = submittalsRfa_str.toString().replace('"','');
-    console.log(submittalsRfa);
+    //console.log(submittalsRfa);
     
     var parser = new DOMParser;
     var dom = parser.parseFromString(
@@ -982,7 +982,7 @@ $('.jspdf_submittals').click(function() {
 
     submittalsRfa = dom.body.textContent;
     var obj = JSON.parse(JSON.stringify(submittalsRfa));
-    console.log(Object.keys(obj).length);
+    //console.log(Object.keys(obj).length);
 
     // First Page
 
