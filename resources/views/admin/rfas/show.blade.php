@@ -971,7 +971,7 @@ $('.jspdf_submittals').click(function() {
     
     var purpose_for = "{{ $rfa->purpose_for ??  ''}}";
 
-    var submittalsRfa = "{{ json_encode($submittalsRfa ?? '')}}";
+    var submittalsRfa = "{{ $submittalsRfa ?? ''}}";
     //submittalsRfa = submittalsRfa_str.toString().replace('"','');
     console.log(submittalsRfa);
     
@@ -981,7 +981,7 @@ $('.jspdf_submittals').click(function() {
             'text/html');
 
     submittalsRfa = dom.body.textContent;
-    var obj = JSON.parse(submittalsRfa);
+    var obj = JSON.parse(JSON.stringify(submittalsRfa));
     console.log(Object.keys(obj).length);
 
     // First Page
