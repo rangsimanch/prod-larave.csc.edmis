@@ -980,10 +980,10 @@ $('.jspdf_submittals').click(function() {
 
     var myObject = submittalsRfa;
     var myJson = JSON.stringify(myObject); // {"test":"test"}
-    var myEscapedJson = JSON.stringify(myJson); // "{\"test\":\"test\"}"
+    var obj = JSON.stringify(myJson); // "{\"test\":\"test\"}"
 
     submittalsRfa = dom.body.textContent;
-    var obj = JSON.parse(myEscapedJson);
+    //var obj = JSON.parse(myEscapedJson);
     console.log(Object.keys(obj).length);
 
     // First Page
