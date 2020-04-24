@@ -971,17 +971,15 @@ $('.jspdf_submittals').click(function() {
     
     var purpose_for = "{{ $rfa->purpose_for ??  ''}}";
 
-    const submittalsRfa = "{{ $submittalsRfa ?? '' }}";
-    const json = JSON.stringify(submittalsRfa);
-    const jsStringLiteral = JSON.stringify(json);
-    // var parser = new DOMParser;
-    // var dom = parser.parseFromString(
-    //         '<!doctype html><body>' + submittalsRfa,
-    //         'text/html');
+    var submittalsRfa = "{{ $submittalsRfa ?? '' }}";
+    //submittalsRfa = submittalsRfa_str.toString().replace('"','');
+    var parser = new DOMParser;
+    var dom = parser.parseFromString(
+            '<!doctype html><body>' + submittalsRfa,
+            'text/html');=
 
-    // submittalsRfa = dom.body.textContent;
-    const obj = `const data = JSON.parse(${ jsStringLiteral });`;
-    //var obj = JSON.parse(submittalsRfa);
+    submittalsRfa = dom.body.textContent;
+    var obj = JSON.parse(submittalsRfa.replace('""', '"'));
     console.log(Object.keys(obj).length);
 
     // First Page
