@@ -977,8 +977,8 @@ $('.jspdf_submittals').click(function() {
             '<!doctype html><body>' + submittalsRfa,
             'text/html');
 
-    submittalsRfa = dom.body.textContent;
-    var obj = JSON.parse(submittalsRfa.toString());
+   // submittalsRfa = dom.body.textContent;
+    var obj = JSON.parse(submittalsRfa);
     console.log(Object.keys(obj).length);
 
     // First Page
