@@ -971,17 +971,16 @@ $('.jspdf_submittals').click(function() {
     
     var purpose_for = "{{ $rfa->purpose_for ??  ''}}";
 
-    var submittalsRfa = "{{ $submittalsRfa ?? ''}}";
+    var submittalsRfa = "{{ json_encode($submittalsRfa ?? '',JSON_HEX_QUOT) }}";
     //submittalsRfa = submittalsRfa_str.toString().replace('"','');
-    //console.log(submittalsRfa);
-    
+
     var parser = new DOMParser;
     var dom = parser.parseFromString(
             '<!doctype html><body>' + submittalsRfa,
             'text/html');
 
     submittalsRfa = dom.body.textContent;
-    var obj = JSON.parse(JSON.stringify(submittalsRfa));
+    var obj = JSON.parse(submittalsRfa);
     console.log(Object.keys(obj).length);
 
     // First Page
