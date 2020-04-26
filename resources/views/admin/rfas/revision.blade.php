@@ -288,7 +288,7 @@
                                             <div class="form-group">
                                             @foreach($submittalsRfa as $id => $submittals )
 
-                                                <td><input type="hidden" class="form-control" name="id_submittals[]" value="{{ $submittals->id }}"></td>
+                                                <!-- <td><input type="hidden" class="form-control" name="id_submittals[]" value="{{ $submittals->id }}"></td> -->
                                             <tr>
                                                 <td><input  type="text" class="form-control" name="item[]" value=" {{ $submittals->item_no }}"/></td>
                                                 <td><input  type="text" class="form-control" name="description[]" value=" {{ $submittals->description }}"/></td>
@@ -917,7 +917,7 @@ Dropzone.options.documentFileUploadDropzone = {
  $(document).ready(function(){
         var count = "{{ $count_submittalsRfa }}";
         console.log(count);
-        dynamic_field(count);
+       // dynamic_field(count);
 
         function dynamic_field(number){
             var html = '<tr>';
