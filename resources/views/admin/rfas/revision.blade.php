@@ -286,9 +286,6 @@
                                     </thead>
                                     <tbody>
                                             <div class="form-group">
-                                            <td colspan="4" align="center">
-                                                <a name="add" id="add" class="btn btn-success">&nbsp&nbsp&nbsp&nbsp{{ trans('global.add') }}&nbsp&nbsp&nbsp&nbsp</a>
-                                            </td>
                                             @foreach($submittalsRfa as $id => $submittals )
 
                                                 <td><input type="hidden" class="form-control" name="id_submittals[]" value="{{ $submittals->id }}"></td>
@@ -313,6 +310,9 @@
                                             </tr>
                                             @endforeach
                                             </div>
+                                            <td colspan="4" align="center">
+                                                <a name="add" id="add" class="btn btn-success">&nbsp&nbsp&nbsp&nbsp{{ trans('global.add') }}&nbsp&nbsp&nbsp&nbsp</a>
+                                            </td>
                                     </tbody>
 
                                     <!-- <tbody>
@@ -922,7 +922,7 @@ Dropzone.options.documentFileUploadDropzone = {
         function dynamic_field(number){
             var html = '<tr>';
 
-            if(number > count){
+            if(number > 0){
                 html += '<td><input type="text" name="item[]" class="form-control" /></td>';
                 html += '<td><input type="text" name="des[]" class="form-control" /></td>';
                 html += '<td><input type="number" name="qty[]" class="form-control" /></td>';   
