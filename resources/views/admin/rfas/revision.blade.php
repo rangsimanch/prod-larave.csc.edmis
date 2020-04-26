@@ -285,10 +285,40 @@
                                         </tr>
                                     </thead>
                                     <tbody>
+                                            <div class="form-group">
+                                            @foreach($submittalsRfa as $id => $submittals )
+
+                                                <td><input type="hidden" class="form-control" name="id_submittals[]" value="{{ $submittals->id }}"></td>
+                                            <tr>
+                                                <td><input  type="text" class="form-control" name="item[]" value=" {{ $submittals->item_no }}"/></td>
+                                                <td><input  type="text" class="form-control" name="description[]" value=" {{ $submittals->description }}"/></td>
+                                                <td><input  type="text" class="form-control" name="qty_sets[]" value=" {{ $submittals->qty_sets }}"/></td>
+                                                <td>
+                                                    <select class="form-control select2 check review_status" name="review_status[]" id="review_status">
+                                                        @foreach($review_statuses as $id => $review_status)
+                                                        <option value="{{ $id }}" {{ ($submittals->review_status ? $submittals->review_status_id : old('review_status_id')) == $id ? 'selected' : '' }}>{{ $review_status }}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </td>
+                                                <td>
+                                                    <input class="form-control date_returned" type="date" name="date_returned[]" id="date_returned">
+                                                </td>
+                                                <td>
+                                                     <textarea class="form-control" name="remarks[]" id="remarks"></textarea>
+                                                </td>
+                                            </tr>
+                                            @endforeach
+                                            </div>
+                                            <td colspan="4" align="center">
+                                                <a name="add" id="add" class="btn btn-success">&nbsp&nbsp&nbsp&nbsp{{ trans('global.add') }}&nbsp&nbsp&nbsp&nbsp</a>
+                                            </td>
+                                    </tbody>
+
+                                    <!-- <tbody>
                                          <td colspan="4" align="center">
                                             <a name="add" id="add" class="btn btn-success">&nbsp&nbsp&nbsp&nbsp{{ trans('global.add') }}&nbsp&nbsp&nbsp&nbsp</a>
                                         </td>
-                                    </tbody>
+                                    </tbody> -->
                                 </table>
                         </div>
 
@@ -884,7 +914,7 @@ Dropzone.options.documentFileUploadDropzone = {
     
  /// Dynamic Input
  $(document).ready(function(){
-        var count = 0;
+        var count = "{{ $count_submittalsRfa }}";
 
         dynamic_field(count);
 

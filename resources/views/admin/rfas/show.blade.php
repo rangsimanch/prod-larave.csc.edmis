@@ -613,13 +613,13 @@ $('.jpdf').click(function() {
 
     var qty_page = "{{ $rfa->qty_page ?? '' }}";
 
-    var document_name = "{{ $rfa->attach_file_name ?? ''}}";
+    var document_name = "{{ $rfa->attach_file_name ?? '' }}";
     var parser = new DOMParser;
     var dom = parser.parseFromString(
             '<!doctype html><body>' + document_name,
             'text/html');
     var document_name = dom.body.textContent;
-    
+    console.log(document_name);
 
     var spec_ref_no = "{{ $rfa->spec_ref_no ?? '' }}";
     var parser = new DOMParser;

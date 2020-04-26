@@ -481,7 +481,6 @@ class RfaController extends Controller
     public function revision(Rfa $rfa)
     {
         abort_if(Gate::denies('rfa_revision'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
         $types = Rfatype::all()->pluck('type_code', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $construction_contracts = ConstructionContract::all()->pluck('code', 'id')->prepend(trans('global.pleaseSelect'), '');
@@ -504,12 +503,47 @@ class RfaController extends Controller
 
         $for_statuses = RfaCommentStatus::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
+        $submittalsRfa = SubmittalsRfa::all()->where('on_rfa_id' , $rfa->id);
+
+        $count_submittalsRfa = count($submittalsRfa);
+
+        $review_statuses = RfaCommentStatus::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+
         $reviewed_bies = User::find([39,62])->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        
 
 
-        $rfa->load('type', 'construction_contract', 'issueby', 'assign', 'action_by', 'comment_by', 'information_by', 'comment_status', 'for_status', 'document_status', 'create_by_user', 'update_by_user', 'approve_by_user', 'team', 'distribute_by');
-       // $rfa->load(all());
-        return view('admin.rfas.revision', compact('types', 'construction_contracts', 'wbs_level_3s', 'wbs_level_4s', 'issuebies', 'assigns', 'action_bies', 'comment_bies', 'information_bies', 'comment_statuses', 'for_statuses', 'reviewed_bies', 'rfa', 'date_counter'));
+        $rfa->load('type', 'construction_contract', 'issueby', 'assign', 'action_by', 'comment_by', 'information_by', 'comment_status', 'for_status', 'document_status', 'create_by_user', 'update_by_user', 'approve_by_user', 'reviewed_by', 'team');
+
+        return view('admin.rfas.revision', compact('review_statuses', 'submittalsRfa', 'types', 'construction_contracts', 'wbs_level_3s', 'wbs_level_4s', 'issuebies', 'assigns', 'action_bies', 'comment_bies', 'information_bies', 'comment_statuses', 'for_statuses', 'rfa', 'reviewed_bies','count_submittalsRfa'));
+    //     $types = Rfatype::all()->pluck('type_code', 'id')->prepend(trans('global.pleaseSelect'), '');
+
+    //     $construction_contracts = ConstructionContract::all()->pluck('code', 'id')->prepend(trans('global.pleaseSelect'), '');
+
+    //     $wbs_level_3s = WbsLevelThree::all()->pluck('wbs_level_3_code', 'id')->prepend(trans('global.pleaseSelect'), '');
+
+    //     $wbs_level_4s = Wbslevelfour::all()->pluck('wbs_level_4_code', 'id')->prepend(trans('global.pleaseSelect'), '');
+
+    //     $issuebies = User::where('id',91)->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+
+    //     $assigns = User::where('id',61)->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), ''); //61->Li, 39->Paisan,  62->Liu 
+
+    //     $action_bies = User::where('team_id',3)->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        
+    //     $comment_bies = User::where('team_id',3)->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+
+    //     $information_bies = User::where('team_id',3)->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+
+    //     $comment_statuses = RfaCommentStatus::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+
+    //     $for_statuses = RfaCommentStatus::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+
+    //     $reviewed_bies = User::find([39,62])->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+
+        
+    //     $rfa->load('type', 'construction_contract', 'issueby', 'assign', 'action_by', 'comment_by', 'information_by', 'comment_status', 'for_status', 'document_status', 'create_by_user', 'update_by_user', 'approve_by_user', 'team', 'distribute_by');
+    //    // $rfa->load(all());
+    //     return view('admin.rfas.revision', compact('types', 'construction_contracts', 'wbs_level_3s', 'wbs_level_4s', 'issuebies', 'assigns', 'action_bies', 'comment_bies', 'information_bies', 'comment_statuses', 'for_statuses', 'reviewed_bies', 'rfa', 'date_counter'));
     }
     
     public function  storeRevision(RevisionRfaRequest $request, Rfa $rfa)
