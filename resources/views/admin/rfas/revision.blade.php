@@ -915,14 +915,14 @@ Dropzone.options.documentFileUploadDropzone = {
     
  /// Dynamic Input
  $(document).ready(function(){
-        var count = "{{ $count_submittalsRfa }}";
+        var count = 0;
         console.log(count);
-       // dynamic_field(count);
+        dynamic_field(count);
 
         function dynamic_field(number){
             var html = '<tr>';
 
-            if(number > count){
+            if(number > 0){
                 html += '<td><input type="text" name="item[]" class="form-control" /></td>';
                 html += '<td><input type="text" name="des[]" class="form-control" /></td>';
                 html += '<td><input type="number" name="qty[]" class="form-control" /></td>';   
