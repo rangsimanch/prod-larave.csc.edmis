@@ -618,9 +618,10 @@ $('.jpdf').click(function() {
     var dom = parser.parseFromString(
             '<!doctype html><body>' + document_name,
             'text/html');
-    var document_name = dom.body.textContent;
-    console.log(document_name);
-
+    var document_name_str = dom.body.textContent;
+    var document_name = wrapThaiText(document_name_str.replace(/\^/g,'\n'),120,'<br />');
+    console.log(wrapThaiText(document_name_str.replace(/\^/g,'\n'),120,'<br />'));
+    
     var spec_ref_no = "{{ $rfa->spec_ref_no ?? '' }}";
     var parser = new DOMParser;
     var dom = parser.parseFromString(
@@ -712,32 +713,33 @@ $('.jpdf').click(function() {
     //         column = 58;
     //     }
     // }
+    doc.text(43,73,document_name);
     
-    if(document_name.length > 100 && document_name.length <= 200 ){
-        doc.text(43,73,document_name.substr(0,120));
-        doc.text(43,77,document_name.substr(120,document_name.length - 1));
-    }
-    else if(document_name.length > 200 && document_name.length <= 300 ){
-        doc.text(43,73,document_name.substr(0,120));
-        doc.text(43,77,document_name.substr(120,120));
-        doc.text(43,81,document_name.substr(240,document_name.length - 1));
-    }
-    else if(document_name.length > 300 && document_name.length <= 400 ){
-        doc.text(43,73,document_name.substr(0,120));
-        doc.text(43,77,document_name.substr(120,120));
-        doc.text(43,81,document_name.substr(240,120));
-        doc.text(43,85,document_name.substr(360,document_name.length - 1));
-    }
-    else if(document_name.length > 500){
-        doc.text(43,73,document_name.substr(0,120));
-        doc.text(43,77,document_name.substr(120,120));
-        doc.text(43,81,document_name.substr(240,120));
-        doc.text(43,85,document_name.substr(360,120));
-        doc.text(43,89,document_name.substr(480,document_name.length - 1));
-    }
-    else{
-        doc.text(43,73,document_name);
-    }
+    // if(document_name.length > 100 && document_name.length <= 200 ){
+    //     doc.text(43,73,document_name.substr(0,120));
+    //     doc.text(43,77,document_name.substr(120,document_name.length - 1));
+    // }
+    // else if(document_name.length > 200 && document_name.length <= 300 ){
+    //     doc.text(43,73,document_name.substr(0,120));
+    //     doc.text(43,77,document_name.substr(120,120));
+    //     doc.text(43,81,document_name.substr(240,document_name.length - 1));
+    // }
+    // else if(document_name.length > 300 && document_name.length <= 400 ){
+    //     doc.text(43,73,document_name.substr(0,120));
+    //     doc.text(43,77,document_name.substr(120,120));
+    //     doc.text(43,81,document_name.substr(240,120));
+    //     doc.text(43,85,document_name.substr(360,document_name.length - 1));
+    // }
+    // else if(document_name.length > 500){
+    //     doc.text(43,73,document_name.substr(0,120));
+    //     doc.text(43,77,document_name.substr(120,120));
+    //     doc.text(43,81,document_name.substr(240,120));
+    //     doc.text(43,85,document_name.substr(360,120));
+    //     doc.text(43,89,document_name.substr(480,document_name.length - 1));
+    // }
+    // else{
+    //     doc.text(43,73,document_name);
+    // }
     
     doc.setFontSize(9);
     doc.text(165,73,qty_page);
@@ -1255,5 +1257,54 @@ $('.jspdf_submittals').click(function() {
 
     });
 });
+
+
+function widthCharCount(txt){
+  if(!txt) return 0;
+  var thaiFullWidthCharRegex = /[^\u0E31\u0E34-\u0E3E\u0E47-\u0E4E]/g;
+  return txt.match(thaiFullWidthCharRegex).length;
+}
+function wrapThaiText(segThaiTxt,maxLength,linebreak){
+  linebreak = linebreak || '\n';
+  //thai word segmentation with '|'
+  var words = segThaiTxt.split('|');
+  var txt = '';
+  //loop from start words
+  for (var i = 0, line = '', linewlength = 0; i < words.length; i++){
+    var wlen = widthCharCount(words[i]);
+    if(linewlength + wlen <= maxLength){
+      line = line + words[i];
+      linewlength +=  wlen;
+      
+    } else { //word exceed line length
+      //add line to txt
+      txt = txt + (line+linebreak);
+      //move the word to new line
+      line = words[i];
+      linewlength = wlen;
+    }
+  }
+  if( linewlength > 0 ) {
+    txt = txt + line;
+  }
+  return txt;
+}
+
+
+function wrapText() {
+  var inlen = $("#in-len").val();
+  //replace new line with ^ before send to word segment
+  var thaiTxt = $("#in-txt").val().replace(/\n/g,'^');
+  $.ajax( "https://s2.adsstat.com/swath",
+         { crossDomain: true,
+          data: thaiTxt,
+          contentType: 'text/plain; charset=UTF-8',
+          type: 'POST',
+          success:function( data ) {//replace work segmentation new line with <wbr/>, <br/>
+                    $( "#out-txt-swath" ).html( wrapThaiText(data.replace(/\^/g,'\n'),inlen,'<br />'));
+                  }
+         });
+}
+
 </script>
 @endsection
