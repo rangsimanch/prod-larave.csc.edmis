@@ -286,9 +286,6 @@
                                     </thead>
                                     <tbody>
                                             <div class="form-group">
-                                            <td colspan="4" align="center">
-                                                <a name="add" id="add" class="btn btn-success">&nbsp&nbsp&nbsp&nbsp{{ trans('global.add') }}&nbsp&nbsp&nbsp&nbsp</a>
-                                            </td>
                                             @foreach($submittalsRfa as $id => $submittals )
 
                                                 <!-- <td><input type="hidden" class="form-control" name="id_submittals[]" value="{{ $submittals->id }}"></td> -->
@@ -312,8 +309,10 @@
                                                 </td> -->
                                             </tr>
                                             @endforeach
+                                            <td colspan="4" align="center">
+                                                <a name="add" id="add" class="btn btn-success">&nbsp&nbsp&nbsp&nbsp{{ trans('global.add') }}&nbsp&nbsp&nbsp&nbsp</a>
+                                            </td>
                                             </div>
-                                            
                                     </tbody>
 
                                     <!-- <tbody>
