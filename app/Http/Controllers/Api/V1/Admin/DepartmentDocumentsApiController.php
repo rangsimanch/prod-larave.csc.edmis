@@ -20,7 +20,7 @@ class DepartmentDocumentsApiController extends Controller
     {
         abort_if(Gate::denies('department_document_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new DepartmentDocumentResource(DepartmentDocument::with(['tags', 'team'])->get());
+        return new DepartmentDocumentResource(DepartmentDocument::with(['tags', 'construction_contract', 'team'])->get());
 
     }
 
@@ -47,7 +47,7 @@ class DepartmentDocumentsApiController extends Controller
     {
         abort_if(Gate::denies('department_document_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new DepartmentDocumentResource($departmentDocument->load(['tags', 'team']));
+        return new DepartmentDocumentResource($departmentDocument->load(['tags', 'construction_contract', 'team']));
 
     }
 

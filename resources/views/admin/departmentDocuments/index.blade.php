@@ -24,19 +24,19 @@
 
                                 </th>
                                 <th>
-                                    {{ trans('cruds.departmentDocument.fields.id') }}
+                                    {{ trans('cruds.departmentDocument.fields.document_name') }}
                                 </th>
                                 <th>
-                                    {{ trans('cruds.departmentDocument.fields.document_name') }}
+                                    {{ trans('cruds.departmentDocument.fields.tag') }}
+                                </th>
+                                <th>
+                                    {{ trans('cruds.departmentDocument.fields.construction_contract') }}
                                 </th>
                                 <th>
                                     {{ trans('cruds.departmentDocument.fields.download') }}
                                 </th>
                                 <th>
                                     {{ trans('cruds.departmentDocument.fields.example_file') }}
-                                </th>
-                                <th>
-                                    {{ trans('cruds.departmentDocument.fields.tag') }}
                                 </th>
                                 <th>
                                     &nbsp;
@@ -97,14 +97,14 @@
     ajax: "{{ route('admin.department-documents.index') }}",
     columns: [
       { data: 'placeholder', name: 'placeholder' },
-{ data: 'id', name: 'id' },
 { data: 'document_name', name: 'document_name' },
+{ data: 'tag', name: 'tags.tag_name' },
+{ data: 'construction_contract_code', name: 'construction_contract.code' },
 { data: 'download', name: 'download', sortable: false, searchable: false },
 { data: 'example_file', name: 'example_file', sortable: false, searchable: false },
-{ data: 'tag', name: 'tags.tag_name' },
 { data: 'actions', name: '{{ trans('global.actions') }}' }
     ],
-    order: [[ 2, 'asc' ]],
+    order: [[ 1, 'asc' ]],
     pageLength: 10,
   };
   $('.datatable-DepartmentDocument').DataTable(dtOverrideGlobals);

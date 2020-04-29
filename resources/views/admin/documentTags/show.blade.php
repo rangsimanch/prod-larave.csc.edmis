@@ -19,14 +19,6 @@
                             <tbody>
                                 <tr>
                                     <th>
-                                        {{ trans('cruds.documentTag.fields.id') }}
-                                    </th>
-                                    <td>
-                                        {{ $documentTag->id }}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th>
                                         {{ trans('cruds.documentTag.fields.tag_name') }}
                                     </th>
                                     <td>

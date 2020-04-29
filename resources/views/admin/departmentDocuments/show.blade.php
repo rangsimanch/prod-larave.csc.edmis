@@ -19,18 +19,28 @@
                             <tbody>
                                 <tr>
                                     <th>
-                                        {{ trans('cruds.departmentDocument.fields.id') }}
-                                    </th>
-                                    <td>
-                                        {{ $departmentDocument->id }}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th>
                                         {{ trans('cruds.departmentDocument.fields.document_name') }}
                                     </th>
                                     <td>
                                         {{ $departmentDocument->document_name }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        {{ trans('cruds.departmentDocument.fields.tag') }}
+                                    </th>
+                                    <td>
+                                        @foreach($departmentDocument->tags as $key => $tag)
+                                            <span class="label label-info">{{ $tag->tag_name }}</span>
+                                        @endforeach
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        {{ trans('cruds.departmentDocument.fields.construction_contract') }}
+                                    </th>
+                                    <td>
+                                        {{ $departmentDocument->construction_contract->code ?? '' }}
                                     </td>
                                 </tr>
                                 <tr>
@@ -54,16 +64,6 @@
                                             <a href="{{ $media->getUrl() }}" target="_blank">
                                                 {{ trans('global.view_file') }}
                                             </a>
-                                        @endforeach
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th>
-                                        {{ trans('cruds.departmentDocument.fields.tag') }}
-                                    </th>
-                                    <td>
-                                        @foreach($departmentDocument->tags as $key => $tag)
-                                            <span class="label label-info">{{ $tag->tag_name }}</span>
                                         @endforeach
                                     </td>
                                 </tr>

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\ConstructionContract;
 use App\DepartmentDocument;
 use App\DocumentTag;
 use App\Http\Controllers\Controller;
@@ -24,7 +25,7 @@ class DepartmentDocumentsController extends Controller
         abort_if(Gate::denies('department_document_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
-            $query = DepartmentDocument::with(['tags', 'team'])->select(sprintf('%s.*', (new DepartmentDocument)->table));
+            $query = DepartmentDocument::with(['tags', 'construction_contract', 'team'])->select(sprintf('%s.*', (new DepartmentDocument)->table));
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
@@ -45,12 +46,22 @@ class DepartmentDocumentsController extends Controller
                 ));
             });
 
-            $table->editColumn('id', function ($row) {
-                return $row->id ? $row->id : "";
-            });
             $table->editColumn('document_name', function ($row) {
                 return $row->document_name ? $row->document_name : "";
             });
+            $table->editColumn('tag', function ($row) {
+                $labels = [];
+
+                foreach ($row->tags as $tag) {
+                    $labels[] = sprintf('<span class="label label-info label-many">%s</span>', $tag->tag_name);
+                }
+
+                return implode(' ', $labels);
+            });
+            $table->addColumn('construction_contract_code', function ($row) {
+                return $row->construction_contract ? $row->construction_contract->code : '';
+            });
+
             $table->editColumn('download', function ($row) {
                 if (!$row->download) {
                     return '';
@@ -77,17 +88,8 @@ class DepartmentDocumentsController extends Controller
 
                 return implode(', ', $links);
             });
-            $table->editColumn('tag', function ($row) {
-                $labels = [];
 
-                foreach ($row->tags as $tag) {
-                    $labels[] = sprintf('<span class="label label-info label-many">%s</span>', $tag->tag_name);
-                }
-
-                return implode(' ', $labels);
-            });
-
-            $table->rawColumns(['actions', 'placeholder', 'download', 'example_file', 'tag']);
+            $table->rawColumns(['actions', 'placeholder', 'tag', 'construction_contract', 'download', 'example_file']);
 
             return $table->make(true);
         }
@@ -101,7 +103,9 @@ class DepartmentDocumentsController extends Controller
 
         $tags = DocumentTag::all()->pluck('tag_name', 'id');
 
-        return view('admin.departmentDocuments.create', compact('tags'));
+        $construction_contracts = ConstructionContract::all()->pluck('code', 'id')->prepend(trans('global.pleaseSelect'), '');
+
+        return view('admin.departmentDocuments.create', compact('tags', 'construction_contracts'));
     }
 
     public function store(StoreDepartmentDocumentRequest $request)
@@ -131,9 +135,11 @@ class DepartmentDocumentsController extends Controller
 
         $tags = DocumentTag::all()->pluck('tag_name', 'id');
 
-        $departmentDocument->load('tags', 'team');
+        $construction_contracts = ConstructionContract::all()->pluck('code', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        return view('admin.departmentDocuments.edit', compact('tags', 'departmentDocument'));
+        $departmentDocument->load('tags', 'construction_contract', 'team');
+
+        return view('admin.departmentDocuments.edit', compact('tags', 'construction_contracts', 'departmentDocument'));
     }
 
     public function update(UpdateDepartmentDocumentRequest $request, DepartmentDocument $departmentDocument)
@@ -187,7 +193,7 @@ class DepartmentDocumentsController extends Controller
     {
         abort_if(Gate::denies('department_document_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $departmentDocument->load('tags', 'team');
+        $departmentDocument->load('tags', 'construction_contract', 'team');
 
         return view('admin.departmentDocuments.show', compact('departmentDocument'));
     }

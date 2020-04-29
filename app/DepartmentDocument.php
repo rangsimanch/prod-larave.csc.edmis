@@ -33,6 +33,7 @@ class DepartmentDocument extends Model implements HasMedia
 
     protected $fillable = [
         'document_name',
+        'construction_contract_id',
         'created_at',
         'updated_at',
         'deleted_at',
@@ -42,6 +43,18 @@ class DepartmentDocument extends Model implements HasMedia
     public function registerMediaConversions(Media $media = null)
     {
         $this->addMediaConversion('thumb')->width(50)->height(50);
+
+    }
+
+    public function tags()
+    {
+        return $this->belongsToMany(DocumentTag::class);
+
+    }
+
+    public function construction_contract()
+    {
+        return $this->belongsTo(ConstructionContract::class, 'construction_contract_id');
 
     }
 
@@ -57,15 +70,14 @@ class DepartmentDocument extends Model implements HasMedia
 
     }
 
-    public function tags()
-    {
-        return $this->belongsToMany(DocumentTag::class);
-
-    }
-
     public function team()
     {
         return $this->belongsTo(Team::class, 'team_id');
 
+    }
+    
+    public function create_by_construction_contract_id()
+    {
+        return $this->belongsTo(ConstructionContract::class, 'construction_contract_id');
     }
 }

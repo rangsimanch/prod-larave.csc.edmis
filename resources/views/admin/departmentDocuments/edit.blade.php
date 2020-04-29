@@ -20,6 +20,34 @@
                             @endif
                             <span class="help-block">{{ trans('cruds.departmentDocument.fields.document_name_helper') }}</span>
                         </div>
+                        <div class="form-group {{ $errors->has('tags') ? 'has-error' : '' }}">
+                            <label for="tags">{{ trans('cruds.departmentDocument.fields.tag') }}</label>
+                            <div style="padding-bottom: 4px">
+                                <span class="btn btn-info btn-xs select-all" style="border-radius: 0">{{ trans('global.select_all') }}</span>
+                                <span class="btn btn-info btn-xs deselect-all" style="border-radius: 0">{{ trans('global.deselect_all') }}</span>
+                            </div>
+                            <select class="form-control select2" name="tags[]" id="tags" multiple>
+                                @foreach($tags as $id => $tag)
+                                    <option value="{{ $id }}" {{ (in_array($id, old('tags', [])) || $departmentDocument->tags->contains($id)) ? 'selected' : '' }}>{{ $tag }}</option>
+                                @endforeach
+                            </select>
+                            @if($errors->has('tags'))
+                                <span class="help-block" role="alert">{{ $errors->first('tags') }}</span>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.departmentDocument.fields.tag_helper') }}</span>
+                        </div>
+                        <div class="form-group {{ $errors->has('construction_contract') ? 'has-error' : '' }}">
+                            <label for="construction_contract_id">{{ trans('cruds.departmentDocument.fields.construction_contract') }}</label>
+                            <select class="form-control select2" name="construction_contract_id" id="construction_contract_id">
+                                @foreach($construction_contracts as $id => $construction_contract)
+                                    <option value="{{ $id }}" {{ ($departmentDocument->construction_contract ? $departmentDocument->construction_contract->id : old('construction_contract_id')) == $id ? 'selected' : '' }}>{{ $construction_contract }}</option>
+                                @endforeach
+                            </select>
+                            @if($errors->has('construction_contract'))
+                                <span class="help-block" role="alert">{{ $errors->first('construction_contract') }}</span>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.departmentDocument.fields.construction_contract_helper') }}</span>
+                        </div>
                         <div class="form-group {{ $errors->has('download') ? 'has-error' : '' }}">
                             <label for="download">{{ trans('cruds.departmentDocument.fields.download') }}</label>
                             <div class="needsclick dropzone" id="download-dropzone">
@@ -37,22 +65,6 @@
                                 <span class="help-block" role="alert">{{ $errors->first('example_file') }}</span>
                             @endif
                             <span class="help-block">{{ trans('cruds.departmentDocument.fields.example_file_helper') }}</span>
-                        </div>
-                        <div class="form-group {{ $errors->has('tags') ? 'has-error' : '' }}">
-                            <label for="tags">{{ trans('cruds.departmentDocument.fields.tag') }}</label>
-                            <div style="padding-bottom: 4px">
-                                <span class="btn btn-info btn-xs select-all" style="border-radius: 0">{{ trans('global.select_all') }}</span>
-                                <span class="btn btn-info btn-xs deselect-all" style="border-radius: 0">{{ trans('global.deselect_all') }}</span>
-                            </div>
-                            <select class="form-control select2" name="tags[]" id="tags" multiple>
-                                @foreach($tags as $id => $tag)
-                                    <option value="{{ $id }}" {{ (in_array($id, old('tags', [])) || $departmentDocument->tags->contains($id)) ? 'selected' : '' }}>{{ $tag }}</option>
-                                @endforeach
-                            </select>
-                            @if($errors->has('tags'))
-                                <span class="help-block" role="alert">{{ $errors->first('tags') }}</span>
-                            @endif
-                            <span class="help-block">{{ trans('cruds.departmentDocument.fields.tag_helper') }}</span>
                         </div>
                         <div class="form-group">
                             <button class="btn btn-danger" type="submit">

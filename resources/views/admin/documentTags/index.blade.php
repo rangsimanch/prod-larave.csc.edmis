@@ -25,9 +25,6 @@
 
                                     </th>
                                     <th>
-                                        {{ trans('cruds.documentTag.fields.id') }}
-                                    </th>
-                                    <th>
                                         {{ trans('cruds.documentTag.fields.tag_name') }}
                                     </th>
                                     <th>
@@ -40,9 +37,6 @@
                                     <tr data-entry-id="{{ $documentTag->id }}">
                                         <td>
 
-                                        </td>
-                                        <td>
-                                            {{ $documentTag->id ?? '' }}
                                         </td>
                                         <td>
                                             {{ $documentTag->tag_name ?? '' }}
@@ -120,7 +114,7 @@
 @endcan
 
   $.extend(true, $.fn.dataTable.defaults, {
-    order: [[ 2, 'asc' ]],
+    order: [[ 1, 'asc' ]],
     pageLength: 25,
   });
   $('.datatable-DocumentTag:not(.ajaxTable)').DataTable({ buttons: dtButtons })
