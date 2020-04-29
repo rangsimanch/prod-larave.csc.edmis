@@ -15,6 +15,7 @@ class GlobalSearchController extends Controller
         'WbsLevelThree'        => 'cruds.wbsLevelThree.title',
         'Wbslevelfour'         => 'cruds.wbslevelfour.title',
         'BoQ'                  => 'cruds.boQ.title',
+        'DepartmentDocument'   => 'cruds.departmentDocument.title',
     ];
 
     public function search(Request $request)

@@ -79,5 +79,12 @@ Route::group(['prefix' => 'v1', 'as' => 'api.', 'namespace' => 'Api\V1\Admin', '
      // Request For Inspections
      Route::post('request-for-inspections/media', 'RequestForInspectionApiController@storeMedia')->name('request-for-inspections.storeMedia');
      Route::apiResource('request-for-inspections', 'RequestForInspectionApiController');
+
+    // Department Documents
+    Route::post('department-documents/media', 'DepartmentDocumentsApiController@storeMedia')->name('department-documents.storeMedia');
+    Route::apiResource('department-documents', 'DepartmentDocumentsApiController');
+
+    // Document Tags
+    Route::apiResource('document-tags', 'DocumentTagApiController');
  
     });

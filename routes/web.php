@@ -167,11 +167,21 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth'], '
     Route::post('daily-reports/ckmedia', 'DailyReportController@storeCKEditorImages')->name('daily-reports.storeCKEditorImages');
     Route::resource('daily-reports', 'DailyReportController');
 
-        // Request For Inspections
-        Route::delete('request-for-inspections/destroy', 'RequestForInspectionController@massDestroy')->name('request-for-inspections.massDestroy');
-        Route::post('request-for-inspections/media', 'RequestForInspectionController@storeMedia')->name('request-for-inspections.storeMedia');
-        Route::post('request-for-inspections/ckmedia', 'RequestForInspectionController@storeCKEditorImages')->name('request-for-inspections.storeCKEditorImages');
-        Route::resource('request-for-inspections', 'RequestForInspectionController');
+    // Request For Inspections
+    Route::delete('request-for-inspections/destroy', 'RequestForInspectionController@massDestroy')->name('request-for-inspections.massDestroy');
+    Route::post('request-for-inspections/media', 'RequestForInspectionController@storeMedia')->name('request-for-inspections.storeMedia');
+    Route::post('request-for-inspections/ckmedia', 'RequestForInspectionController@storeCKEditorImages')->name('request-for-inspections.storeCKEditorImages');
+    Route::resource('request-for-inspections', 'RequestForInspectionController');
+
+    // Department Documents
+    Route::delete('department-documents/destroy', 'DepartmentDocumentsController@massDestroy')->name('department-documents.massDestroy');
+    Route::post('department-documents/media', 'DepartmentDocumentsController@storeMedia')->name('department-documents.storeMedia');
+    Route::post('department-documents/ckmedia', 'DepartmentDocumentsController@storeCKEditorImages')->name('department-documents.storeCKEditorImages');
+    Route::resource('department-documents', 'DepartmentDocumentsController');
+
+    // Document Tags
+    Route::delete('document-tags/destroy', 'DocumentTagController@massDestroy')->name('document-tags.massDestroy');
+    Route::resource('document-tags', 'DocumentTagController');
     
     
     Route::get('system-calendar', 'SystemCalendarController@index')->name('systemCalendar');

@@ -118,6 +118,73 @@
                 </li>
                 
             @endcan
+
+            @can('request_for_inspection_access')
+                <li class="{{ request()->is('admin/request-for-inspections') || request()->is('admin/request-for-inspections/*') ? 'active' : '' }}">
+                    <a href="{{ route("admin.request-for-inspections.index") }}">
+                        <i class="fa-fw fas fa-clipboard-list">
+
+                        </i>
+                        <span>{{ trans('cruds.requestForInspection.title') }}</span>
+                    </a>
+                </li>
+            @endcan
+
+            @can('daily_request_access')
+                <li class="{{ request()->is('admin/daily-requests') || request()->is('admin/daily-requests/*') ? 'active' : '' }}">
+                    <a href="{{ route("admin.daily-requests.index") }}">
+                        <i class="fa-fw fas fa-file-import">
+
+                        </i>
+                        <span>{{ trans('cruds.dailyRequest.title') }}</span>
+                    </a>
+                </li>
+            @endcan
+            @can('daily_report_access')
+                <li class="{{ request()->is('admin/daily-reports') || request()->is('admin/daily-reports/*') ? 'active' : '' }}">
+                    <a href="{{ route("admin.daily-reports.index") }}">
+                        <i class="fa-fw fas fa-file-export">
+
+                        </i>
+                        <span>{{ trans('cruds.dailyReport.title') }}</span>
+                    </a>
+                </li>
+            @endcan
+
+            @can('download_system_access')
+                <li class="treeview">
+                    <a href="#">
+                        <i class="fa-fw fas fa-cloud-download-alt">
+
+                        </i>
+                        <span>{{ trans('cruds.downloadSystem.title') }}</span>
+                        <span class="pull-right-container"><i class="fa fa-fw fa-angle-left pull-right"></i></span>
+                    </a>
+                    <ul class="treeview-menu">
+                        @can('department_document_access')
+                            <li class="{{ request()->is('admin/department-documents') || request()->is('admin/department-documents/*') ? 'active' : '' }}">
+                                <a href="{{ route("admin.department-documents.index") }}">
+                                    <i class="fa-fw far fa-building">
+
+                                    </i>
+                                    <span>{{ trans('cruds.departmentDocument.title') }}</span>
+                                </a>
+                            </li>
+                        @endcan
+                        @can('document_tag_access')
+                            <li class="{{ request()->is('admin/document-tags') || request()->is('admin/document-tags/*') ? 'active' : '' }}">
+                                <a href="{{ route("admin.document-tags.index") }}">
+                                    <i class="fa-fw fas fa-bookmark">
+
+                                    </i>
+                                    <span>{{ trans('cruds.documentTag.title') }}</span>
+                                </a>
+                            </li>
+                        @endcan
+                    </ul>
+                </li>
+            @endcan
+
             @can('user_management_access')
                 <li class="treeview">
                     <a href="#">
@@ -254,6 +321,7 @@
                     </ul>
                 </li>
             @endcan
+
             @can('user_alert_access')
                 <li class="{{ request()->is('admin/user-alerts') || request()->is('admin/user-alerts/*') ? 'active' : '' }}">
                     <a href="{{ route("admin.user-alerts.index") }}">
@@ -307,38 +375,7 @@
                     </ul>
                 </li>
             @endcan
-            @can('daily_request_access')
-                <li class="{{ request()->is('admin/daily-requests') || request()->is('admin/daily-requests/*') ? 'active' : '' }}">
-                    <a href="{{ route("admin.daily-requests.index") }}">
-                        <i class="fa-fw fas fa-file-import">
-
-                        </i>
-                        <span>{{ trans('cruds.dailyRequest.title') }}</span>
-                    </a>
-                </li>
-            @endcan
-            @can('daily_report_access')
-                <li class="{{ request()->is('admin/daily-reports') || request()->is('admin/daily-reports/*') ? 'active' : '' }}">
-                    <a href="{{ route("admin.daily-reports.index") }}">
-                        <i class="fa-fw fas fa-file-export">
-
-                        </i>
-                        <span>{{ trans('cruds.dailyReport.title') }}</span>
-                    </a>
-                </li>
-            @endcan
-
-            @can('request_for_inspection_access')
-                <li class="{{ request()->is('admin/request-for-inspections') || request()->is('admin/request-for-inspections/*') ? 'active' : '' }}">
-                    <a href="{{ route("admin.request-for-inspections.index") }}">
-                        <i class="fa-fw fas fa-clipboard-list">
-
-                        </i>
-                        <span>{{ trans('cruds.requestForInspection.title') }}</span>
-                    </a>
-                </li>
-            @endcan
-            
+                        
             <li class="{{ request()->is('admin/system-calendar') || request()->is('admin/system-calendar/*') ? 'active' : '' }}">
                 <a href="{{ route("admin.systemCalendar") }}">
                     <i class="fas fa-fw fa-calendar">
