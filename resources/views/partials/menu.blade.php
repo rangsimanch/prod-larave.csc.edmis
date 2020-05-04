@@ -151,6 +151,7 @@
                 </li>
             @endcan
 
+            <!-- Download Systems -->
             @can('download_system_access')
                 <li class="treeview">
                     <a href="#">
@@ -161,6 +162,16 @@
                         <span class="pull-right-container"><i class="fa fa-fw fa-angle-left pull-right"></i></span>
                     </a>
                     <ul class="treeview-menu">
+                        @can('contract_and_component_access')
+                            <li class="{{ request()->is('admin/contract-and-components') || request()->is('admin/contract-and-components/*') ? 'active' : '' }}">
+                                <a href="{{ route("admin.contract-and-components.index") }}">
+                                    <i class="fa-fw fas fa-book-open">
+
+                                    </i>
+                                    <span>{{ trans('cruds.contractAndComponent.title') }}</span>
+                                </a>
+                            </li>
+                        @endcan
                         @can('department_document_access')
                             <li class="{{ request()->is('admin/department-documents') || request()->is('admin/department-documents/*') ? 'active' : '' }}">
                                 <a href="{{ route("admin.department-documents.index") }}">
@@ -168,6 +179,59 @@
 
                                     </i>
                                     <span>{{ trans('cruds.departmentDocument.title') }}</span>
+                                </a>
+                            </li>
+                        @endcan
+                        @can('meeting_document_access')
+                            <li class="treeview">
+                                <a href="#">
+                                    <i class="fa-fw fas fa-chalkboard-teacher">
+
+                                    </i>
+                                    <span>{{ trans('cruds.meetingDocument.title') }}</span>
+                                    <span class="pull-right-container"><i class="fa fa-fw fa-angle-left pull-right"></i></span>
+                                </a>
+                                <ul class="treeview-menu">
+                                    @can('meeting_monthly_access')
+                                        <li class="{{ request()->is('admin/meeting-monthlies') || request()->is('admin/meeting-monthlies/*') ? 'active' : '' }}">
+                                            <a href="{{ route("admin.meeting-monthlies.index") }}">
+                                                <i class="fa-fw fas fa-file-invoice">
+
+                                                </i>
+                                                <span>{{ trans('cruds.meetingMonthly.title') }}</span>
+                                            </a>
+                                        </li>
+                                    @endcan
+                                    @can('meeting_weekly_access')
+                                        <li class="{{ request()->is('admin/meeting-weeklies') || request()->is('admin/meeting-weeklies/*') ? 'active' : '' }}">
+                                            <a href="{{ route("admin.meeting-weeklies.index") }}">
+                                                <i class="fa-fw fas fa-file-invoice">
+
+                                                </i>
+                                                <span>{{ trans('cruds.meetingWeekly.title') }}</span>
+                                            </a>
+                                        </li>
+                                    @endcan
+                                    @can('meeting_other_access')
+                                        <li class="{{ request()->is('admin/meeting-others') || request()->is('admin/meeting-others/*') ? 'active' : '' }}">
+                                            <a href="{{ route("admin.meeting-others.index") }}">
+                                                <i class="fa-fw far fa-clipboard">
+
+                                                </i>
+                                                <span>{{ trans('cruds.meetingOther.title') }}</span>
+                                            </a>
+                                        </li>
+                                    @endcan
+                                </ul>
+                            </li>
+                        @endcan
+                        @can('manual_access')
+                            <li class="{{ request()->is('admin/manuals') || request()->is('admin/manuals/*') ? 'active' : '' }}">
+                                <a href="{{ route("admin.manuals.index") }}">
+                                    <i class="fa-fw fas fa-book">
+
+                                    </i>
+                                    <span>{{ trans('cruds.manual.title') }}</span>
                                 </a>
                             </li>
                         @endcan
@@ -184,6 +248,7 @@
                     </ul>
                 </li>
             @endcan
+            <!-- Download Systems -->
 
             @can('user_management_access')
                 <li class="treeview">

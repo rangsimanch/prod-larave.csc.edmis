@@ -64,21 +64,21 @@ Route::group(['prefix' => 'v1', 'as' => 'api.', 'namespace' => 'Api\V1\Admin', '
 
     // Works Codes
     Route::apiResource('works-codes', 'WorksCodeApiController');
-    
+
     // Submittals Rfas
     Route::apiResource('submittals-rfas', 'SubmittalsRfaApiController');
 
-     // Daily Requests
-     Route::post('daily-requests/media', 'DailyRequestApiController@storeMedia')->name('daily-requests.storeMedia');
-     Route::apiResource('daily-requests', 'DailyRequestApiController');
- 
-     // Daily Reports
-     Route::post('daily-reports/media', 'DailyReportApiController@storeMedia')->name('daily-reports.storeMedia');
-     Route::apiResource('daily-reports', 'DailyReportApiController');
+    // Daily Requests
+    Route::post('daily-requests/media', 'DailyRequestApiController@storeMedia')->name('daily-requests.storeMedia');
+    Route::apiResource('daily-requests', 'DailyRequestApiController');
 
-     // Request For Inspections
-     Route::post('request-for-inspections/media', 'RequestForInspectionApiController@storeMedia')->name('request-for-inspections.storeMedia');
-     Route::apiResource('request-for-inspections', 'RequestForInspectionApiController');
+    // Daily Reports
+    Route::post('daily-reports/media', 'DailyReportApiController@storeMedia')->name('daily-reports.storeMedia');
+    Route::apiResource('daily-reports', 'DailyReportApiController');
+
+    // Request For Inspections
+    Route::post('request-for-inspections/media', 'RequestForInspectionApiController@storeMedia')->name('request-for-inspections.storeMedia');
+    Route::apiResource('request-for-inspections', 'RequestForInspectionApiController');
 
     // Department Documents
     Route::post('department-documents/media', 'DepartmentDocumentsApiController@storeMedia')->name('department-documents.storeMedia');
@@ -86,5 +86,25 @@ Route::group(['prefix' => 'v1', 'as' => 'api.', 'namespace' => 'Api\V1\Admin', '
 
     // Document Tags
     Route::apiResource('document-tags', 'DocumentTagApiController');
- 
-    });
+
+    // Contract And Components
+    Route::post('contract-and-components/media', 'ContractAndComponentsApiController@storeMedia')->name('contract-and-components.storeMedia');
+    Route::apiResource('contract-and-components', 'ContractAndComponentsApiController');
+
+    // Meeting Monthlies
+    Route::post('meeting-monthlies/media', 'MeetingMonthlyApiController@storeMedia')->name('meeting-monthlies.storeMedia');
+    Route::apiResource('meeting-monthlies', 'MeetingMonthlyApiController');
+
+    // Meeting Weeklies
+    Route::post('meeting-weeklies/media', 'MeetingWeeklyApiController@storeMedia')->name('meeting-weeklies.storeMedia');
+    Route::apiResource('meeting-weeklies', 'MeetingWeeklyApiController');
+
+    // Meeting Others
+    Route::post('meeting-others/media', 'MeetingOtherApiController@storeMedia')->name('meeting-others.storeMedia');
+    Route::apiResource('meeting-others', 'MeetingOtherApiController');
+
+    // Manuals
+    Route::post('manuals/media', 'ManualsApiController@storeMedia')->name('manuals.storeMedia');
+    Route::apiResource('manuals', 'ManualsApiController');
+
+});

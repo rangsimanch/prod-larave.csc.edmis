@@ -182,6 +182,36 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth'], '
     // Document Tags
     Route::delete('document-tags/destroy', 'DocumentTagController@massDestroy')->name('document-tags.massDestroy');
     Route::resource('document-tags', 'DocumentTagController');
+
+    // Contract And Components
+    Route::delete('contract-and-components/destroy', 'ContractAndComponentsController@massDestroy')->name('contract-and-components.massDestroy');
+    Route::post('contract-and-components/media', 'ContractAndComponentsController@storeMedia')->name('contract-and-components.storeMedia');
+    Route::post('contract-and-components/ckmedia', 'ContractAndComponentsController@storeCKEditorImages')->name('contract-and-components.storeCKEditorImages');
+    Route::resource('contract-and-components', 'ContractAndComponentsController');
+
+    // Meeting Monthlies
+    Route::delete('meeting-monthlies/destroy', 'MeetingMonthlyController@massDestroy')->name('meeting-monthlies.massDestroy');
+    Route::post('meeting-monthlies/media', 'MeetingMonthlyController@storeMedia')->name('meeting-monthlies.storeMedia');
+    Route::post('meeting-monthlies/ckmedia', 'MeetingMonthlyController@storeCKEditorImages')->name('meeting-monthlies.storeCKEditorImages');
+    Route::resource('meeting-monthlies', 'MeetingMonthlyController');
+
+    // Meeting Weeklies
+    Route::delete('meeting-weeklies/destroy', 'MeetingWeeklyController@massDestroy')->name('meeting-weeklies.massDestroy');
+    Route::post('meeting-weeklies/media', 'MeetingWeeklyController@storeMedia')->name('meeting-weeklies.storeMedia');
+    Route::post('meeting-weeklies/ckmedia', 'MeetingWeeklyController@storeCKEditorImages')->name('meeting-weeklies.storeCKEditorImages');
+    Route::resource('meeting-weeklies', 'MeetingWeeklyController');
+
+    // Meeting Others
+    Route::delete('meeting-others/destroy', 'MeetingOtherController@massDestroy')->name('meeting-others.massDestroy');
+    Route::post('meeting-others/media', 'MeetingOtherController@storeMedia')->name('meeting-others.storeMedia');
+    Route::post('meeting-others/ckmedia', 'MeetingOtherController@storeCKEditorImages')->name('meeting-others.storeCKEditorImages');
+    Route::resource('meeting-others', 'MeetingOtherController');
+
+    // Manuals
+    Route::delete('manuals/destroy', 'ManualsController@massDestroy')->name('manuals.massDestroy');
+    Route::post('manuals/media', 'ManualsController@storeMedia')->name('manuals.storeMedia');
+    Route::post('manuals/ckmedia', 'ManualsController@storeCKEditorImages')->name('manuals.storeCKEditorImages');
+    Route::resource('manuals', 'ManualsController');
     
     
     Route::get('system-calendar', 'SystemCalendarController@index')->name('systemCalendar');

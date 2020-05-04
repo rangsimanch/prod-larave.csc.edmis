@@ -1,4 +1,9 @@
 @extends('layouts.admin')
+<style type="text/css">
+.word-wrap {
+word-wrap: break-word;
+}
+</style>
 @section('content')
 <div class="content">
 
@@ -429,6 +434,12 @@
                             @endif
                         @endif
 
+                        
+                        <p class="form-control word-wrap" name="note_4" id="note_4">
+                        {{ $rfa->attach_file_name }}
+                        </p>
+
+
 
 
                           
@@ -613,7 +624,9 @@ $('.jpdf').click(function() {
 
     var qty_page = "{{ $rfa->qty_page ?? '' }}";
 
-    var document_name = "{{ $rfa->attach_file_name ?? '' }}";
+    // var document_name = "{{ $rfa->attach_file_name ?? '' }}";
+    var arrayOfLines = $('#attach_file_name').val().split('\n');
+    var document_name = arrayOfLines;
     var parser = new DOMParser;
     var dom = parser.parseFromString(
             '<!doctype html><body>' + document_name,
@@ -712,32 +725,33 @@ $('.jpdf').click(function() {
     //         column = 58;
     //     }
     // }
+    doc.text(43,73,document_name);
     
-    if(document_name.length > 100 && document_name.length <= 200 ){
-        doc.text(43,73,document_name.substr(0,120));
-        doc.text(43,77,document_name.substr(120,document_name.length - 1));
-    }
-    else if(document_name.length > 200 && document_name.length <= 300 ){
-        doc.text(43,73,document_name.substr(0,120));
-        doc.text(43,77,document_name.substr(120,120));
-        doc.text(43,81,document_name.substr(240,document_name.length - 1));
-    }
-    else if(document_name.length > 300 && document_name.length <= 400 ){
-        doc.text(43,73,document_name.substr(0,120));
-        doc.text(43,77,document_name.substr(120,120));
-        doc.text(43,81,document_name.substr(240,120));
-        doc.text(43,85,document_name.substr(360,document_name.length - 1));
-    }
-    else if(document_name.length > 500){
-        doc.text(43,73,document_name.substr(0,120));
-        doc.text(43,77,document_name.substr(120,120));
-        doc.text(43,81,document_name.substr(240,120));
-        doc.text(43,85,document_name.substr(360,120));
-        doc.text(43,89,document_name.substr(480,document_name.length - 1));
-    }
-    else{
-        doc.text(43,73,document_name);
-    }
+    // if(document_name.length > 100 && document_name.length <= 200 ){
+    //     doc.text(43,73,document_name.substr(0,120));
+    //     doc.text(43,77,document_name.substr(120,document_name.length - 1));
+    // }
+    // else if(document_name.length > 200 && document_name.length <= 300 ){
+    //     doc.text(43,73,document_name.substr(0,120));
+    //     doc.text(43,77,document_name.substr(120,120));
+    //     doc.text(43,81,document_name.substr(240,document_name.length - 1));
+    // }
+    // else if(document_name.length > 300 && document_name.length <= 400 ){
+    //     doc.text(43,73,document_name.substr(0,120));
+    //     doc.text(43,77,document_name.substr(120,120));
+    //     doc.text(43,81,document_name.substr(240,120));
+    //     doc.text(43,85,document_name.substr(360,document_name.length - 1));
+    // }
+    // else if(document_name.length > 500){
+    //     doc.text(43,73,document_name.substr(0,120));
+    //     doc.text(43,77,document_name.substr(120,120));
+    //     doc.text(43,81,document_name.substr(240,120));
+    //     doc.text(43,85,document_name.substr(360,120));
+    //     doc.text(43,89,document_name.substr(480,document_name.length - 1));
+    // }
+    // else{
+    //     doc.text(43,73,document_name);
+    // }
     
     doc.setFontSize(9);
     doc.text(165,73,qty_page);
@@ -832,7 +846,7 @@ $('.jpdf').click(function() {
     doc.text(69,221,action_by);
 
     //Process Date
-    doc.text(146,221,"process_date");
+    doc.text(146,221,process_date);
 
     //////// Panel D ////////
     if(for_status == 1){
