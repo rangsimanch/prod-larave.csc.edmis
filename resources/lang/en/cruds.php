@@ -728,8 +728,8 @@ return [
     ],
 ],
 'departmentDocument'     => [
-    'title'          => 'Department Documents',
-    'title_singular' => 'Department Document',
+    'title'          => 'Forms used for the Project',
+    'title_singular' => 'Form used for the Project',
     'fields'         => [
         'id'                           => 'ID',
         'id_helper'                    => '',

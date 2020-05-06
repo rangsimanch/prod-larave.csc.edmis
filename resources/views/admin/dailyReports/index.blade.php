@@ -148,7 +148,7 @@
 @endcan
 
   $.extend(true, $.fn.dataTable.defaults, {
-    order: [[ 1, 'asc' ]],
+    order: [[ 3, 'desc' ]],
     pageLength: 100,
   });
   $('.datatable-DailyReport:not(.ajaxTable)').DataTable({ buttons: dtButtons })

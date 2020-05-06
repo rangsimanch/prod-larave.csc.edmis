@@ -434,10 +434,11 @@ word-wrap: break-word;
                             @endif
                         @endif
 
+                        <img id="img_test" src="{{ $rfa->create_by_user->img_user->getUrl() }}"/> 
                         
-                        <p class="form-control word-wrap" name="note_4" id="note_4">
+                        <!-- <p class="form-control word-wrap" name="note_4" id="note_4">
                         {{ $rfa->attach_file_name }}
-                        </p>
+                        </p> -->
 
 
 
@@ -552,7 +553,7 @@ function getBase64Image(img) {
 //     reviewed_sign = getBase64Image(document.getElementById('reviewed_sign'));
 // }
 
-
+console.log(getDataUrl(document.getElementById('img_test')));
 
 $('.jpdf').click(function() {
     console.log("Clicked");
@@ -561,6 +562,8 @@ $('.jpdf').click(function() {
     //console.log(signed);
 
     doc.addImage(imgData, 'JPEG',0,0,210,297);
+    doc.addImage(getDataUrl(document.getElementById('img_test')), 'PNG',20,20);
+
     doc.setTextColor(0, 0, 0)
     doc.setFont('THSarabun');
     doc.setFontSize(9);
@@ -624,15 +627,15 @@ $('.jpdf').click(function() {
 
     var qty_page = "{{ $rfa->qty_page ?? '' }}";
 
-    // var document_name = "{{ $rfa->attach_file_name ?? '' }}";
-    var arrayOfLines = $('#attach_file_name').val().split('\n');
-    var document_name = arrayOfLines;
+    var document_name = "{{ $rfa->attach_file_name ?? '' }}";
+    // var arrayOfLines = $('#attach_file_name').val().split('\n');
+    // var document_name = arrayOfLines;
     var parser = new DOMParser;
     var dom = parser.parseFromString(
             '<!doctype html><body>' + document_name,
             'text/html');
     var document_name = dom.body.textContent;
-    console.log(document_name);
+    // console.log(document_name);
 
     var spec_ref_no = "{{ $rfa->spec_ref_no ?? '' }}";
     var parser = new DOMParser;
@@ -725,33 +728,33 @@ $('.jpdf').click(function() {
     //         column = 58;
     //     }
     // }
-    doc.text(43,73,document_name);
+    // doc.text(43,73,document_name);
     
-    // if(document_name.length > 100 && document_name.length <= 200 ){
-    //     doc.text(43,73,document_name.substr(0,120));
-    //     doc.text(43,77,document_name.substr(120,document_name.length - 1));
-    // }
-    // else if(document_name.length > 200 && document_name.length <= 300 ){
-    //     doc.text(43,73,document_name.substr(0,120));
-    //     doc.text(43,77,document_name.substr(120,120));
-    //     doc.text(43,81,document_name.substr(240,document_name.length - 1));
-    // }
-    // else if(document_name.length > 300 && document_name.length <= 400 ){
-    //     doc.text(43,73,document_name.substr(0,120));
-    //     doc.text(43,77,document_name.substr(120,120));
-    //     doc.text(43,81,document_name.substr(240,120));
-    //     doc.text(43,85,document_name.substr(360,document_name.length - 1));
-    // }
-    // else if(document_name.length > 500){
-    //     doc.text(43,73,document_name.substr(0,120));
-    //     doc.text(43,77,document_name.substr(120,120));
-    //     doc.text(43,81,document_name.substr(240,120));
-    //     doc.text(43,85,document_name.substr(360,120));
-    //     doc.text(43,89,document_name.substr(480,document_name.length - 1));
-    // }
-    // else{
-    //     doc.text(43,73,document_name);
-    // }
+    if(document_name.length > 100 && document_name.length <= 200 ){
+        doc.text(43,73,document_name.substr(0,120));
+        doc.text(43,77,document_name.substr(120,document_name.length - 1));
+    }
+    else if(document_name.length > 200 && document_name.length <= 300 ){
+        doc.text(43,73,document_name.substr(0,120));
+        doc.text(43,77,document_name.substr(120,120));
+        doc.text(43,81,document_name.substr(240,document_name.length - 1));
+    }
+    else if(document_name.length > 300 && document_name.length <= 400 ){
+        doc.text(43,73,document_name.substr(0,120));
+        doc.text(43,77,document_name.substr(120,120));
+        doc.text(43,81,document_name.substr(240,120));
+        doc.text(43,85,document_name.substr(360,document_name.length - 1));
+    }
+    else if(document_name.length > 500){
+        doc.text(43,73,document_name.substr(0,120));
+        doc.text(43,77,document_name.substr(120,120));
+        doc.text(43,81,document_name.substr(240,120));
+        doc.text(43,85,document_name.substr(360,120));
+        doc.text(43,89,document_name.substr(480,document_name.length - 1));
+    }
+    else{
+        doc.text(43,73,document_name);
+    }
     
     doc.setFontSize(9);
     doc.text(165,73,qty_page);

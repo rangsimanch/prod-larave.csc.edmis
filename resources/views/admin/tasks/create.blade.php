@@ -175,5 +175,31 @@
          return _results
      }
 }
+            var APIkey = '16f8160661de97305b36536356f49640';
+            var zipCode = "30000";
+            var req = new XMLHttpRequest();
+            req.open("GET", "http://api.openweathermap.org/data/2.5/weather?zip=30000,th&appid=" + APIkey, false);
+            req.send(null);
+            var weatherObj = JSON.parse(req.responseText);
+            var Weather = weatherObj.weather[0].main;
+            var TempK = weatherObj.main["temp"];
+            var TempC = TempK - 273.15;
+            var Wind = weatherObj.wind["speed"];
+            // console.log(JSON.parse(req.responseText));
+            // console.log(Wind);
+</script>
+
+<script src="node_modules/image-to-base64/image-to-base64.min.js">
+imageToBase64("https://www.prachachat.net/wp-content/uploads/2019/08/spider-man-far-from-home.jpg")
+    .then(
+        (response) => {
+            console.log(response); //iVBORw0KGgoAAAANSwCAIA...
+        }
+    )
+    .catch(
+        (error) => {
+            console.log(error); //Exepection error....
+        }
+    )
 </script>
 @endsection

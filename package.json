@@ -24,6 +24,7 @@
         "vue-template-compiler": "^2.6.10"
     },
     "dependencies": {
+        "image-to-base64": "^2.1.0",
         "image-watermark": "0.0.7",
         "watermarkjs": "^2.1.1"
     }
