@@ -553,7 +553,7 @@ function getBase64Image(img) {
 //     reviewed_sign = getBase64Image(document.getElementById('reviewed_sign'));
 // }
 
-console.log(getDataUrl(document.getElementById('img_test')));
+console.log(getBase64Image(document.getElementById('img_test')));
 
 $('.jpdf').click(function() {
     console.log("Clicked");
