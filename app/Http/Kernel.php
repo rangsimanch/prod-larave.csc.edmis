@@ -66,6 +66,6 @@ class Kernel extends HttpKernel
         'password.confirm' => \Illuminate\Auth\Middleware\RequirePassword::class,
         'auth.basic'       => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
         'select' => \App\Http\Middleware\ConstructionContractSelect::class,
-        
+        'cors' => \App\Http\Middleware\Cors::class,
     ];
 }
