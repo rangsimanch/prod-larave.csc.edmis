@@ -517,24 +517,19 @@ function getDataUrl(img) {
    canvas.width = img.width;
    canvas.height = img.height;
    // Draw the image
-   img.setAttribute("crossOrigin",'Use-Credentials')
+   img.setAttribute("crossOrigin",'Anonymous')
    ctx.drawImage(img, 0, 0);
    return canvas.toDataURL('image/png');
 }
 
 function getBase64Image(img) {
   var canvas = document.createElement("canvas");
-  img.setAttribute("crossOrigin",'Use-Credentials')
+  img.setAttribute("crossOrigin",'Anonymous')
   canvas.width = img.width;
   canvas.height = img.height;
   var ctx = canvas.getContext("2d");
   ctx.drawImage(img, 0, 0);
-  try {
-    var dataURL = canvas.toDataURL("image/png");
-    }
-  catch(err) {
-    console.log("Error: " + err);
-  }  
+  var dataURL = canvas.toDataURL("image/png");
   return dataURL.replace(/^data:image\/(png|jpg);base64,/, "");
 }
 
@@ -567,7 +562,7 @@ $('.jpdf').click(function() {
     //console.log(signed);
 
     doc.addImage(imgData, 'JPEG',0,0,210,297);
-    doc.addImage(getDataUrl(document.getElementById('img_test')), 'PNG',20,20);
+    doc.addImage(getBase64Image(document.getElementById('img_test')), 'PNG',20,20);
 
     doc.setTextColor(0, 0, 0)
     doc.setFont('THSarabun');
