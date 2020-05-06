@@ -434,7 +434,7 @@ word-wrap: break-word;
                             @endif
                         @endif
 
-                        <img id="img_test" src="{{ $rfa->create_by_user->img_user->getUrl() }}"/>
+                        <!-- <img id="img_test" src="{{ $rfa->create_by_user->img_user->getUrl() }}"/> -->
                         
                         <!-- <p class="form-control word-wrap" name="note_4" id="note_4">
                         {{ $rfa->attach_file_name }}
@@ -565,11 +565,11 @@ $('.jpdf').click(function() {
     //console.log(signed);
 
     doc.addImage(imgData, 'JPEG',0,0,210,297);
-    try{
-        doc.addImage(getDataUrl(), 'JPEG',20,20);
-    }catch{
-        doc.addImage(getDataUrl(), 'JPEG',20,20);
-    }
+    // try{
+    //     doc.addImage(getDataUrl(), 'JPEG',20,20);
+    // }catch{
+    //     doc.addImage(getDataUrl(), 'JPEG',20,20);
+    // }
     doc.setTextColor(0, 0, 0)
     doc.setFont('THSarabun');
     doc.setFontSize(9);
