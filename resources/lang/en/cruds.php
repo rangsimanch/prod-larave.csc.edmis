@@ -186,13 +186,13 @@ return [
         'title_singular' => 'Activity Report',
     ],
     'requestForApproval'     => [
-        'title'          => 'Request For Approval (RFA)',
-        'title_singular' => 'Request For Approval (RFA)',
+        'title'          => 'Request Document Setting',
+        'title_singular' => 'Request Document Setting',
     ],
 
     'rfa'                    => [
-        'title'          => 'RFA Documents',
-        'title_singular' => 'RFA Document',
+        'title'          => 'Request For Approval (RFA)',
+        'title_singular' => 'Request For Approval (RFA)',
         'fields'         => [
             'id'                            => 'ID',
             'id_helper'                     => '',
