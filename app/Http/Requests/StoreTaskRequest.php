@@ -20,26 +20,15 @@ class StoreTaskRequest extends FormRequest
     public function rules()
     {
         return [
-            'name'        => [
+            'name'     => [
                 'required'],
-            'tags.*'      => [
+            'tags.*'   => [
                 'integer'],
-            'tags'        => [
+            'tags'     => [
                 'array'],
-            'due_date'    => [
+            'due_date' => [
                 'date_format:' . config('panel.date_format'),
                 'nullable'],
-            'end_date'    => [
-                'date_format:' . config('panel.date_format'),
-                'nullable'],
-            'temperature' => [
-                'nullable',
-                'integer',
-                'min:-2147483648',
-                'max:2147483647'],
-            'status_id'   => [
-                'required',
-                'integer'],
         ];
 
     }

@@ -23,37 +23,26 @@ class Task extends Model implements HasMedia
 
     protected $dates = [
         'due_date',
-        'end_date',
         'created_at',
         'updated_at',
         'deleted_at',
-    ];
-
-    const WEATHER_SELECT = [
-        'Sunny'     => 'Sunny',
-        'Cloudy'    => 'Cloudy',
-        'Rainy'     => 'Rainy',
-        'Stormy'    => 'Stormy',
-        'Windy'     => 'Windy',
-        'Foggy'     => 'Foggy',
-        'Clear sky' => 'Clear sky',
     ];
 
     protected $fillable = [
         'name',
-        'weather',
-        'team_id',
+        'description',
         'location',
         'due_date',
-        'end_date',
         'status_id',
-        'created_at',
-        'updated_at',
-        'deleted_at',
-        'description',
+        'weather',
         'temperature',
+        'wind',
+        'created_at',
         'create_by_user_id',
         'construction_contract_id',
+        'updated_at',
+        'deleted_at',
+        'team_id',
     ];
 
     public static function boot()
@@ -87,16 +76,6 @@ class Task extends Model implements HasMedia
 
     }
 
-    public function getEndDateAttribute($value)
-    {
-        return $value ? Carbon::parse($value)->format(config('panel.date_format')) : null;
-    }
-
-    public function setEndDateAttribute($value)
-    {
-        $this->attributes['end_date'] = $value ? Carbon::createFromFormat(config('panel.date_format'), $value)->format('Y-m-d') : null;
-    }
-
     public function status()
     {
         return $this->belongsTo(TaskStatus::class, 'status_id');
@@ -105,7 +84,7 @@ class Task extends Model implements HasMedia
 
     public function getAttachmentAttribute()
     {
-        return $this->getMedia('attachment')->last();
+        return $this->getMedia('attachment');
 
     }
 
@@ -119,11 +98,6 @@ class Task extends Model implements HasMedia
     {
         return $this->belongsTo(ConstructionContract::class, 'construction_contract_id');
 
-    }
-
-    public function create_by_construction_contract_id()
-    {
-        return $this->belongsTo(ConstructionContract::class, 'construction_contract_id');
     }
 
     public function team()

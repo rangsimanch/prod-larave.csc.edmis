@@ -7,10 +7,6 @@
                 <a class="btn btn-success" href="{{ route("admin.tasks.create") }}">
                     {{ trans('global.add') }} {{ trans('cruds.task.title_singular') }}
                 </a>
-                <button class="btn btn-warning" data-toggle="modal" data-target="#csvImportModal">
-                    {{ trans('global.app_csvImport') }}
-                </button>
-                @include('csvImport.modal', ['model' => 'Task', 'route' => 'admin.tasks.parseCsvImport'])
             </div>
         </div>
     @endcan
@@ -47,15 +43,6 @@
                                 </th>
                                 <th>
                                     {{ trans('cruds.task.fields.due_date') }}
-                                </th>
-                                <th>
-                                    {{ trans('cruds.task.fields.end_date') }}
-                                </th>
-                                <th>
-                                    {{ trans('cruds.task.fields.weather') }}
-                                </th>
-                                <th>
-                                    {{ trans('cruds.task.fields.temperature') }}
                                 </th>
                                 <th>
                                     {{ trans('cruds.task.fields.status') }}
@@ -135,17 +122,14 @@
 { data: 'tag', name: 'tags.name' },
 { data: 'location', name: 'location' },
 { data: 'due_date', name: 'due_date' },
-{ data: 'end_date', name: 'end_date' },
-{ data: 'weather', name: 'weather' },
-{ data: 'temperature', name: 'temperature' },
 { data: 'status_name', name: 'status.name' },
 { data: 'attachment', name: 'attachment', sortable: false, searchable: false },
 { data: 'construction_contract_code', name: 'construction_contract.code' },
-{ data: 'construction_contract.name', name: 'construction_contract.name' },
+// { data: 'construction_contract.name', name: 'construction_contract.name' },
 { data: 'actions', name: '{{ trans('global.actions') }}' }
     ],
-    order: [[ 1, 'desc' ]],
-    pageLength: 100,
+    order: [[ 7, 'desc' ]],
+    pageLength: 10,
   };
   $('.datatable-Task').DataTable(dtOverrideGlobals);
     $('a[data-toggle="tab"]').on('shown.bs.tab', function(e){
@@ -155,13 +139,4 @@
 });
 
 </script>
-
-<style>
-.avatar {
-  vertical-align: middle;
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-}
-</style>
 @endsection

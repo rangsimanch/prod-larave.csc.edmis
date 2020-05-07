@@ -2,9 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
-use App\Http\Controllers\Traits\CsvImportTrait;
 use App\Http\Controllers\Traits\MediaUploadingTrait;
 use App\Http\Requests\MassDestroyTaskRequest;
 use App\Http\Requests\StoreTaskRequest;
@@ -17,11 +15,10 @@ use Illuminate\Http\Request;
 use Spatie\MediaLibrary\Models\Media;
 use Symfony\Component\HttpFoundation\Response;
 use Yajra\DataTables\Facades\DataTables;
-use App\User;
 
 class TaskController extends Controller
 {
-    use MediaUploadingTrait, CsvImportTrait;
+    use MediaUploadingTrait;
 
     public function index(Request $request)
     {
@@ -73,19 +70,24 @@ class TaskController extends Controller
                 return $row->location ? $row->location : "";
             });
 
-            $table->editColumn('weather', function ($row) {
-                return $row->weather ? Task::WEATHER_SELECT[$row->weather] : '';
-            });
-            $table->editColumn('temperature', function ($row) {
-                return $row->temperature ? $row->temperature : "";
-            });
             $table->addColumn('status_name', function ($row) {
                 return $row->status ? $row->status->name : '';
             });
 
             $table->editColumn('attachment', function ($row) {
-                return $row->attachment ? '<a href="' . $row->attachment->getUrl() . '" target="_blank">' . trans('global.downloadFile') . '</a>' : '';
+                if (!$row->attachment) {
+                    return '';
+                }
+
+                $links = [];
+
+                foreach ($row->attachment as $media) {
+                    $links[] = '<a href="' . $media->getUrl() . '" target="_blank">' . trans('global.downloadFile') . '</a>';
+                }
+
+                return implode(', ', $links);
             });
+
             $table->addColumn('create_by_user_name', function ($row) {
                 return $row->create_by_user ? $row->create_by_user->name : '';
             });
@@ -114,7 +116,7 @@ class TaskController extends Controller
                 return $row->construction_contract ? (is_string($row->construction_contract) ? $row->construction_contract : $row->construction_contract->name) : '';
             });
 
-            $table->rawColumns(['actions', 'img_user' , 'placeholder', 'tag', 'status', 'attachment', 'create_by_user', 'construction_contract']);
+            $table->rawColumns(['actions','img_user', 'placeholder', 'tag', 'status', 'attachment', 'create_by_user', 'construction_contract']);
 
             return $table->make(true);
         }
@@ -134,15 +136,15 @@ class TaskController extends Controller
     }
 
     public function store(StoreTaskRequest $request)
-    {   
+    {
         $data = $request->all();
         $data['create_by_user_id'] = auth()->id();
         $data['construction_contract_id'] = session()->get('construction_contract_id');
         $task = Task::create($data);
         $task->tags()->sync($request->input('tags', []));
 
-        if ($request->input('attachment', false)) {
-            $task->addMedia(storage_path('tmp/uploads/' . $request->input('attachment')))->toMediaCollection('attachment');
+        foreach ($request->input('attachment', []) as $file) {
+            $task->addMedia(storage_path('tmp/uploads/' . $file))->toMediaCollection('attachment');
         }
 
         if ($media = $request->input('ck-media', false)) {
@@ -171,13 +173,23 @@ class TaskController extends Controller
         $task->update($request->all());
         $task->tags()->sync($request->input('tags', []));
 
-        if ($request->input('attachment', false)) {
-            if (!$task->attachment || $request->input('attachment') !== $task->attachment->file_name) {
-                $task->addMedia(storage_path('tmp/uploads/' . $request->input('attachment')))->toMediaCollection('attachment');
+        if (count($task->attachment) > 0) {
+            foreach ($task->attachment as $media) {
+                if (!in_array($media->file_name, $request->input('attachment', []))) {
+                    $media->delete();
+                }
+
             }
 
-        } elseif ($task->attachment) {
-            $task->attachment->delete();
+        }
+
+        $media = $task->attachment->pluck('file_name')->toArray();
+
+        foreach ($request->input('attachment', []) as $file) {
+            if (count($media) === 0 || !in_array($file, $media)) {
+                $task->addMedia(storage_path('tmp/uploads/' . $file))->toMediaCollection('attachment');
+            }
+
         }
 
         return redirect()->route('admin.tasks.index');
@@ -218,7 +230,7 @@ class TaskController extends Controller
         $model         = new Task();
         $model->id     = $request->input('crud_id', 0);
         $model->exists = true;
-        $media         = $model->addMediaFromRequest('upload')->toMediaCollection('ck-media', 'public');
+        $media         = $model->addMediaFromRequest('upload')->toMediaCollection('ck-media');
 
         return response()->json(['id' => $media->id, 'url' => $media->getUrl()], Response::HTTP_CREATED);
 

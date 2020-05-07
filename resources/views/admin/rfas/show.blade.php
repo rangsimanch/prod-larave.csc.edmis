@@ -434,11 +434,6 @@ word-wrap: break-word;
                             @endif
                         @endif
 
-                        <!-- <img id="img_test" src="{{ $rfa->create_by_user->img_user->getUrl() }}"/> -->
-                        
-                        <!-- <p class="form-control word-wrap" name="note_4" id="note_4">
-                        {{ $rfa->attach_file_name }}
-                        </p> -->
 
 
                           

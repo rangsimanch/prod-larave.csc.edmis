@@ -52,38 +52,17 @@
                             @endif
                             <span class="help-block">{{ trans('cruds.task.fields.location_helper') }}</span>
                         </div>
-                        <div class="form-group {{ $errors->has('end_date') ? 'has-error' : '' }}">
-                            <label for="end_date">{{ trans('cruds.task.fields.end_date') }}</label>
-                            <input class="form-control date" type="text" name="end_date" id="end_date" value="{{ old('end_date', $task->end_date) }}">
-                            @if($errors->has('end_date'))
-                                <span class="help-block" role="alert">{{ $errors->first('end_date') }}</span>
+                        <div class="form-group {{ $errors->has('due_date') ? 'has-error' : '' }}">
+                            <label for="due_date">{{ trans('cruds.task.fields.due_date') }}</label>
+                            <input class="form-control date" type="text" name="due_date" id="due_date" value="{{ old('due_date', $task->due_date) }}">
+                            @if($errors->has('due_date'))
+                                <span class="help-block" role="alert">{{ $errors->first('due_date') }}</span>
                             @endif
-                            <span class="help-block">{{ trans('cruds.task.fields.end_date_helper') }}</span>
-                        </div>
-                        <div class="form-group {{ $errors->has('weather') ? 'has-error' : '' }}">
-                            <label>{{ trans('cruds.task.fields.weather') }}</label>
-                            <select class="form-control" name="weather" id="weather">
-                                <option value disabled {{ old('weather', null) === null ? 'selected' : '' }}>{{ trans('global.pleaseSelect') }}</option>
-                                @foreach(App\Task::WEATHER_SELECT as $key => $label)
-                                    <option value="{{ $key }}" {{ old('weather', $task->weather) === (string) $key ? 'selected' : '' }}>{{ $label }}</option>
-                                @endforeach
-                            </select>
-                            @if($errors->has('weather'))
-                                <span class="help-block" role="alert">{{ $errors->first('weather') }}</span>
-                            @endif
-                            <span class="help-block">{{ trans('cruds.task.fields.weather_helper') }}</span>
-                        </div>
-                        <div class="form-group {{ $errors->has('temperature') ? 'has-error' : '' }}">
-                            <label for="temperature">{{ trans('cruds.task.fields.temperature') }}</label>
-                            <input class="form-control" type="number" name="temperature" id="temperature" value="{{ old('temperature', $task->temperature) }}" step="1">
-                            @if($errors->has('temperature'))
-                                <span class="help-block" role="alert">{{ $errors->first('temperature') }}</span>
-                            @endif
-                            <span class="help-block">{{ trans('cruds.task.fields.temperature_helper') }}</span>
+                            <span class="help-block">{{ trans('cruds.task.fields.due_date_helper') }}</span>
                         </div>
                         <div class="form-group {{ $errors->has('status') ? 'has-error' : '' }}">
-                            <label class="required" for="status_id">{{ trans('cruds.task.fields.status') }}</label>
-                            <select class="form-control select2" name="status_id" id="status_id" required>
+                            <label for="status_id">{{ trans('cruds.task.fields.status') }}</label>
+                            <select class="form-control select2" name="status_id" id="status_id">
                                 @foreach($statuses as $id => $status)
                                     <option value="{{ $id }}" {{ ($task->status ? $task->status->id : old('status_id')) == $id ? 'selected' : '' }}>{{ $status }}</option>
                                 @endforeach
@@ -101,6 +80,30 @@
                                 <span class="help-block" role="alert">{{ $errors->first('attachment') }}</span>
                             @endif
                             <span class="help-block">{{ trans('cruds.task.fields.attachment_helper') }}</span>
+                        </div>
+                        <div class="form-group {{ $errors->has('weather') ? 'has-error' : '' }}">
+                            <label for="weather">{{ trans('cruds.task.fields.weather') }}</label>
+                            <input class="form-control" type="text" name="weather" id="weather" value="{{ old('weather', $task->weather) }}">
+                            @if($errors->has('weather'))
+                                <span class="help-block" role="alert">{{ $errors->first('weather') }}</span>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.task.fields.weather_helper') }}</span>
+                        </div>
+                        <div class="form-group {{ $errors->has('temperature') ? 'has-error' : '' }}">
+                            <label for="temperature">{{ trans('cruds.task.fields.temperature') }}</label>
+                            <input class="form-control" type="number" name="temperature" id="temperature" value="{{ old('temperature', $task->temperature) }}" step="0.01">
+                            @if($errors->has('temperature'))
+                                <span class="help-block" role="alert">{{ $errors->first('temperature') }}</span>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.task.fields.temperature_helper') }}</span>
+                        </div>
+                        <div class="form-group {{ $errors->has('wind') ? 'has-error' : '' }}">
+                            <label for="wind">{{ trans('cruds.task.fields.wind') }}</label>
+                            <input class="form-control" type="number" name="wind" id="wind" value="{{ old('wind', $task->wind) }}" step="0.01">
+                            @if($errors->has('wind'))
+                                <span class="help-block" role="alert">{{ $errors->first('wind') }}</span>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.task.fields.wind_helper') }}</span>
                         </div>
                         <div class="form-group">
                             <button class="btn btn-danger" type="submit">
@@ -120,35 +123,41 @@
 
 @section('scripts')
 <script>
-    Dropzone.options.attachmentDropzone = {
+    var uploadedAttachmentMap = {}
+Dropzone.options.attachmentDropzone = {
     url: '{{ route('admin.tasks.storeMedia') }}',
-    maxFilesize: 100, // MB
-    maxFiles: 5,
+    maxFilesize: 800, // MB
     addRemoveLinks: true,
     headers: {
       'X-CSRF-TOKEN': "{{ csrf_token() }}"
     },
     params: {
-      size: 2
+      size: 800
     },
     success: function (file, response) {
-      $('form').find('input[name="attachment"]').remove()
-      $('form').append('<input type="hidden" name="attachment" value="' + response.name + '">')
+      $('form').append('<input type="hidden" name="attachment[]" value="' + response.name + '">')
+      uploadedAttachmentMap[file.name] = response.name
     },
     removedfile: function (file) {
       file.previewElement.remove()
-      if (file.status !== 'error') {
-        $('form').find('input[name="attachment"]').remove()
-        this.options.maxFiles = this.options.maxFiles + 1
+      var name = ''
+      if (typeof file.file_name !== 'undefined') {
+        name = file.file_name
+      } else {
+        name = uploadedAttachmentMap[file.name]
       }
+      $('form').find('input[name="attachment[]"][value="' + name + '"]').remove()
     },
     init: function () {
 @if(isset($task) && $task->attachment)
-      var file = {!! json_encode($task->attachment) !!}
-          this.options.addedfile.call(this, file)
-      file.previewElement.classList.add('dz-complete')
-      $('form').append('<input type="hidden" name="attachment" value="' + file.file_name + '">')
-      this.options.maxFiles = this.options.maxFiles - 1
+          var files =
+            {!! json_encode($task->attachment) !!}
+              for (var i in files) {
+              var file = files[i]
+              this.options.addedfile.call(this, file)
+              file.previewElement.classList.add('dz-complete')
+              $('form').append('<input type="hidden" name="attachment[]" value="' + file.file_name + '">')
+            }
 @endif
     },
      error: function (file, response) {

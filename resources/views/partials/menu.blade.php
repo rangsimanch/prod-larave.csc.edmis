@@ -14,26 +14,36 @@
                     {{ trans('global.dashboard') }}
                 </a>
             </li>
-            @can('request_for_approval_access')
+            @can('rfa_access')
+                <li class="{{ request()->is('admin/rfas') || request()->is('admin/rfas/*') ? 'active' : '' }}">
+                    <a href="{{ route("admin.rfas.index") }}">
+                        <i class="fa-fw fas fa-book">
+
+                        </i>
+                        <span>{{ trans('cruds.rfa.title') }}</span>
+                    </a>
+                </li>
+            @endcan
+            @can('request_for_inspection_access')
+                <li class="{{ request()->is('admin/request-for-inspections') || request()->is('admin/request-for-inspections/*') ? 'active' : '' }}">
+                    <a href="{{ route("admin.request-for-inspections.index") }}">
+                        <i class="fa-fw fas fa-book">
+
+                        </i>
+                        <span>{{ trans('cruds.requestForInspection.title') }}</span>
+                    </a>
+                </li>
+            @endcan
+            @can('request_document_setting')
                 <li class="treeview">
                     <a href="#">
-                        <i class="fa-fw fas fa-file-signature">
+                        <i class="fa-fw fas fa-cog">
 
                         </i>
                         <span>{{ trans('cruds.requestForApproval.title') }}</span>
                         <span class="pull-right-container"><i class="fa fa-fw fa-angle-left pull-right"></i></span>
                     </a>
                     <ul class="treeview-menu">
-                        @can('rfa_access')
-                            <li class="{{ request()->is('admin/rfas') || request()->is('admin/rfas/*') ? 'active' : '' }}">
-                                <a href="{{ route("admin.rfas.index") }}">
-                                    <i class="fa-fw fas fa-book">
-
-                                    </i>
-                                    <span>{{ trans('cruds.rfa.title') }}</span>
-                                </a>
-                            </li>
-                        @endcan
                         @can('rfatype_access')
                             <li class="{{ request()->is('admin/rfatypes') || request()->is('admin/rfatypes/*') ? 'active' : '' }}">
                                 <a href="{{ route("admin.rfatypes.index") }}">
@@ -116,20 +126,60 @@
                         @endcan
                     </ul>
                 </li>
-                
             @endcan
-
-            @can('request_for_inspection_access')
-                <li class="{{ request()->is('admin/request-for-inspections') || request()->is('admin/request-for-inspections/*') ? 'active' : '' }}">
-                    <a href="{{ route("admin.request-for-inspections.index") }}">
-                        <i class="fa-fw fas fa-clipboard-list">
+            @can('task_access')
+                <li class="{{ request()->is('admin/tasks') || request()->is('admin/tasks/*') ? 'active' : '' }}">
+                    <a href="{{ route("admin.tasks.index") }}">
+                        <i class="fa-fw fas fa-marker">
 
                         </i>
-                        <span>{{ trans('cruds.requestForInspection.title') }}</span>
+                        <span>{{ trans('cruds.task.title') }}</span>
                     </a>
                 </li>
             @endcan
+            @can('task_management_access')
+                <li class="treeview">
+                    <a href="#">
+                        <i class="fa-fw fas fa-cog">
 
+                        </i>
+                        <span>{{ trans('cruds.taskManagement.title') }}</span>
+                        <span class="pull-right-container"><i class="fa fa-fw fa-angle-left pull-right"></i></span>
+                    </a>
+                    <ul class="treeview-menu">
+                        @can('task_status_access')
+                            <li class="{{ request()->is('admin/task-statuses') || request()->is('admin/task-statuses/*') ? 'active' : '' }}">
+                                <a href="{{ route("admin.task-statuses.index") }}">
+                                    <i class="fa-fw fas fa-server">
+
+                                    </i>
+                                    <span>{{ trans('cruds.taskStatus.title') }}</span>
+                                </a>
+                            </li>
+                        @endcan
+                        @can('task_tag_access')
+                            <li class="{{ request()->is('admin/task-tags') || request()->is('admin/task-tags/*') ? 'active' : '' }}">
+                                <a href="{{ route("admin.task-tags.index") }}">
+                                    <i class="fa-fw fas fa-server">
+
+                                    </i>
+                                    <span>{{ trans('cruds.taskTag.title') }}</span>
+                                </a>
+                            </li>
+                        @endcan
+                    </ul>
+                </li>
+            @endcan
+            @can('tasks_calendar_access')
+                <li class="{{ request()->is('admin/tasks-calendars') || request()->is('admin/tasks-calendars/*') ? 'active' : '' }}">
+                    <a href="{{ route("admin.tasks-calendars.index") }}">
+                        <i class="fa-fw fas fa-calendar">
+
+                        </i>
+                        <span>{{ trans('cruds.tasksCalendar.title') }}</span>
+                    </a>
+                </li>
+            @endcan
             @can('daily_request_access')
                 <li class="{{ request()->is('admin/daily-requests') || request()->is('admin/daily-requests/*') ? 'active' : '' }}">
                     <a href="{{ route("admin.daily-requests.index") }}">
@@ -150,8 +200,6 @@
                     </a>
                 </li>
             @endcan
-
-            <!-- Download Systems -->
             @can('download_system_access')
                 <li class="treeview">
                     <a href="#">
@@ -248,8 +296,6 @@
                     </ul>
                 </li>
             @endcan
-            <!-- Download Systems -->
-
             @can('user_management_access')
                 <li class="treeview">
                     <a href="#">
@@ -333,84 +379,10 @@
                     </ul>
                 </li>
             @endcan
-            @can('task_management_access')
-                <li class="treeview">
-                    <a href="#">
-                        <i class="fa-fw fas fa-list">
-
-                        </i>
-                        <span>{{ trans('cruds.taskManagement.title') }}</span>
-                        <span class="pull-right-container"><i class="fa fa-fw fa-angle-left pull-right"></i></span>
-                    </a>
-                    <ul class="treeview-menu">
-                        @can('task_status_access')
-                            <li class="{{ request()->is('admin/task-statuses') || request()->is('admin/task-statuses/*') ? 'active' : '' }}">
-                                <a href="{{ route("admin.task-statuses.index") }}">
-                                    <i class="fa-fw fas fa-server">
-
-                                    </i>
-                                    <span>{{ trans('cruds.taskStatus.title') }}</span>
-                                </a>
-                            </li>
-                        @endcan
-                        @can('task_tag_access')
-                            <li class="{{ request()->is('admin/task-tags') || request()->is('admin/task-tags/*') ? 'active' : '' }}">
-                                <a href="{{ route("admin.task-tags.index") }}">
-                                    <i class="fa-fw fas fa-server">
-
-                                    </i>
-                                    <span>{{ trans('cruds.taskTag.title') }}</span>
-                                </a>
-                            </li>
-                        @endcan
-                        @can('task_access')
-                            <li class="{{ request()->is('admin/tasks') || request()->is('admin/tasks/*') ? 'active' : '' }}">
-                                <a href="{{ route("admin.tasks.index") }}">
-                                    <i class="fa-fw fas fa-briefcase">
-
-                                    </i>
-                                    <span>{{ trans('cruds.task.title') }}</span>
-                                </a>
-                            </li>
-                        @endcan
-                        @can('tasks_calendar_access')
-                            <li class="{{ request()->is('admin/tasks-calendars') || request()->is('admin/tasks-calendars/*') ? 'active' : '' }}">
-                                <a href="{{ route("admin.tasks-calendars.index") }}">
-                                    <i class="fa-fw fas fa-calendar">
-
-                                    </i>
-                                    <span>{{ trans('cruds.tasksCalendar.title') }}</span>
-                                </a>
-                            </li>
-                        @endcan
-                    </ul>
-                </li>
-            @endcan
-
-            @can('user_alert_access')
-                <li class="{{ request()->is('admin/user-alerts') || request()->is('admin/user-alerts/*') ? 'active' : '' }}">
-                    <a href="{{ route("admin.user-alerts.index") }}">
-                        <i class="fa-fw fas fa-bell">
-
-                        </i>
-                        <span>{{ trans('cruds.userAlert.title') }}</span>
-                    </a>
-                </li>
-            @endcan
-            @can('file_manager_access')
-                <li class="{{ request()->is('admin/file-managers') || request()->is('admin/file-managers/*') ? 'active' : '' }}">
-                    <a href="{{ route("admin.file-managers.index") }}">
-                        <i class="fa-fw fas fa-file-pdf">
-
-                        </i>
-                        <span>{{ trans('cruds.fileManager.title') }}</span>
-                    </a>
-                </li>
-            @endcan
             @can('technical_document_access')
                 <li class="treeview">
                     <a href="#">
-                        <i class="fa-fw fas fa-passport">
+                        <i class="fa-fw fas fa-cog">
 
                         </i>
                         <span>{{ trans('cruds.technicalDocument.title') }}</span>
@@ -438,6 +410,26 @@
                             </li>
                         @endcan
                     </ul>
+                </li>
+            @endcan
+            @can('user_alert_access')
+                <li class="{{ request()->is('admin/user-alerts') || request()->is('admin/user-alerts/*') ? 'active' : '' }}">
+                    <a href="{{ route("admin.user-alerts.index") }}">
+                        <i class="fa-fw fas fa-bell">
+
+                        </i>
+                        <span>{{ trans('cruds.userAlert.title') }}</span>
+                    </a>
+                </li>
+            @endcan
+            @can('file_manager_access')
+                <li class="{{ request()->is('admin/file-managers') || request()->is('admin/file-managers/*') ? 'active' : '' }}">
+                    <a href="{{ route("admin.file-managers.index") }}">
+                        <i class="fa-fw fas fa-file-pdf">
+
+                        </i>
+                        <span>{{ trans('cruds.fileManager.title') }}</span>
+                    </a>
                 </li>
             @endcan
                         
