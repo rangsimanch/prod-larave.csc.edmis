@@ -79,6 +79,8 @@ return [
             'jobtitle_helper'              => '',
             'signature'                    => 'e-Signature',
             'signature_helper'             => '',
+            'stamp_signature'              => 'e-Stamp',
+            'stamp_signature_helper'       => '',
             'construction_contract'        => 'Construction Contract',
             'construction_contract_helper' => '',
         ],
@@ -402,6 +404,7 @@ return [
         'title'          => 'Daily Construction Activities',
         'title_singular' => 'Daily Construction Activity',
         'fields'         => [
+            'img_user'                     => 'Display',
             'id'                           => 'ID',
             'id_helper'                    => '',
             'name'                         => 'Task Name',

@@ -1,5 +1,11 @@
 @extends('layouts.admin')
 @section('content')
+<style>
+img {
+  border-radius: 50%;
+}
+</style>
+
 <div class="content">
     @can('task_create')
         <div style="margin-bottom: 10px;" class="row">
@@ -52,9 +58,6 @@
                                 </th>
                                 <th>
                                     {{ trans('cruds.task.fields.construction_contract') }}
-                                </th>
-                                <th>
-                                    {{ trans('cruds.constructionContract.fields.name') }}
                                 </th>
                                 <th>
                                     &nbsp;

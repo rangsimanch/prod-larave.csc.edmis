@@ -80,7 +80,7 @@
                             @endif
                             <span class="help-block">{{ trans('cruds.task.fields.attachment_helper') }}</span>
                         </div>
-                        <div class="form-group {{ $errors->has('weather') ? 'has-error' : '' }}">
+                        <div hidden class="form-group {{ $errors->has('weather') ? 'has-error' : '' }}">
                             <label for="weather">{{ trans('cruds.task.fields.weather') }}</label>
                             <input class="form-control" type="text" name="weather" id="weather" value="{{ old('weather', '') }}">
                             @if($errors->has('weather'))
@@ -88,7 +88,7 @@
                             @endif
                             <span class="help-block">{{ trans('cruds.task.fields.weather_helper') }}</span>
                         </div>
-                        <div class="form-group {{ $errors->has('temperature') ? 'has-error' : '' }}">
+                        <div hidden class="form-group {{ $errors->has('temperature') ? 'has-error' : '' }}">
                             <label for="temperature">{{ trans('cruds.task.fields.temperature') }}</label>
                             <input class="form-control" type="number" name="temperature" id="temperature" value="{{ old('temperature', '') }}" step="0.01">
                             @if($errors->has('temperature'))
@@ -96,7 +96,7 @@
                             @endif
                             <span class="help-block">{{ trans('cruds.task.fields.temperature_helper') }}</span>
                         </div>
-                        <div class="form-group {{ $errors->has('wind') ? 'has-error' : '' }}">
+                        <div hidden class="form-group {{ $errors->has('wind') ? 'has-error' : '' }}">
                             <label for="wind">{{ trans('cruds.task.fields.wind') }}</label>
                             <input class="form-control" type="number" name="wind" id="wind" value="{{ old('wind', '') }}" step="0.01">
                             @if($errors->has('wind'))
@@ -176,5 +176,21 @@ Dropzone.options.attachmentDropzone = {
          return _results
      }
 }
+
+            var APIkey = '16f8160661de97305b36536356f49640';
+            var zipCode = "30000";
+            var req = new XMLHttpRequest();
+            req.open("GET", "http://api.openweathermap.org/data/2.5/weather?zip=30000,th&appid=" + APIkey, false);
+            req.send(null);
+            var weatherObj = JSON.parse(req.responseText);
+            var Weather = weatherObj.weather[0].main;
+            var TempK = weatherObj.main["temp"];
+            var TempC = TempK - 273.15;
+            var Wind = weatherObj.wind["speed"];
+
+            document.getElementById('weather').value = Weather;
+            document.getElementById('temperature').value = TempC;
+            document.getElementById('wind').value = Wind;
+
 </script>
 @endsection
