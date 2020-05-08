@@ -27,10 +27,10 @@ class TaskController extends Controller
         if ($request->ajax()) {
             // if(auth()->user()->roles->contains(28)){
                 $query = Task::with(['tags', 'status', 'create_by_user', 'construction_contract', 'team'])->select(sprintf('%s.*', (new Task)->table));
-            // }
-            // else{
-            //     $query = Task::with(['tags', 'status', 'create_by_user', 'construction_contract', 'team'])->select(sprintf('%s.*', (new Task)->table))->where('create_by_user_id',auth()->id());
-            // }
+            }
+            else{
+                $query = Task::with(['tags', 'status', 'create_by_user', 'construction_contract', 'team'])->select(sprintf('%s.*', (new Task)->table))->where('create_by_user_id',auth()->id());
+            }
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
