@@ -248,11 +248,9 @@ $('.jpdf').click(function() {
     doc.text(130,44,temperature);
     
     doc.setFontSize(16);
-    doc.setFontType("bold");
     doc.text(45,65,taskName);
 
     doc.setFontSize(14);
-    doc.setFontType("normal");
     doc.text(45,75,taskDesc);
     
     doc.setFontSize(12);
