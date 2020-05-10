@@ -222,7 +222,7 @@ $('.jpdf').click(function() {
     doc.setFontSize(14);
 
     //Varrible
-    var taskName = "{{ $task->name }}";
+    var taskName = "Title : {{ $task->name }}";
 
     var arrayOfLines = $('#taskDesc').val().split('\n');
     var taskDescArr = arrayOfLines;
