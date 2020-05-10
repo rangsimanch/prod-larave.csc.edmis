@@ -107,4 +107,19 @@ Route::group(['prefix' => 'v1', 'as' => 'api.', 'namespace' => 'Api\V1\Admin', '
     Route::post('manuals/media', 'ManualsApiController@storeMedia')->name('manuals.storeMedia');
     Route::apiResource('manuals', 'ManualsApiController');
 
+    // Daily Construction Activities
+    Route::post('daily-construction-activities/media', 'DailyConstructionActivitiesApiController@storeMedia')->name('daily-construction-activities.storeMedia');
+    Route::apiResource('daily-construction-activities', 'DailyConstructionActivitiesApiController');
+
+    // Procedures
+    Route::post('procedures/media', 'ProceduresApiController@storeMedia')->name('procedures.storeMedia');
+    Route::apiResource('procedures', 'ProceduresApiController');
+
+    // Drone Vdo Recordeds
+    Route::post('drone-vdo-recordeds/media', 'DroneVdoRecordedApiController@storeMedia')->name('drone-vdo-recordeds.storeMedia');
+    Route::apiResource('drone-vdo-recordeds', 'DroneVdoRecordedApiController');
+
+    // Records Of Visitors
+    Route::post('records-of-visitors/media', 'RecordsOfVisitorsApiController@storeMedia')->name('records-of-visitors.storeMedia');
+    Route::apiResource('records-of-visitors', 'RecordsOfVisitorsApiController');
 });

@@ -212,6 +212,30 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth'], '
     Route::post('manuals/media', 'ManualsController@storeMedia')->name('manuals.storeMedia');
     Route::post('manuals/ckmedia', 'ManualsController@storeCKEditorImages')->name('manuals.storeCKEditorImages');
     Route::resource('manuals', 'ManualsController');
+
+    // Daily Construction Activities
+    Route::delete('daily-construction-activities/destroy', 'DailyConstructionActivitiesController@massDestroy')->name('daily-construction-activities.massDestroy');
+    Route::post('daily-construction-activities/media', 'DailyConstructionActivitiesController@storeMedia')->name('daily-construction-activities.storeMedia');
+    Route::post('daily-construction-activities/ckmedia', 'DailyConstructionActivitiesController@storeCKEditorImages')->name('daily-construction-activities.storeCKEditorImages');
+    Route::resource('daily-construction-activities', 'DailyConstructionActivitiesController');
+
+    // Procedures
+    Route::delete('procedures/destroy', 'ProceduresController@massDestroy')->name('procedures.massDestroy');
+    Route::post('procedures/media', 'ProceduresController@storeMedia')->name('procedures.storeMedia');
+    Route::post('procedures/ckmedia', 'ProceduresController@storeCKEditorImages')->name('procedures.storeCKEditorImages');
+    Route::resource('procedures', 'ProceduresController');
+
+    // Drone Vdo Recordeds
+    Route::delete('drone-vdo-recordeds/destroy', 'DroneVdoRecordedController@massDestroy')->name('drone-vdo-recordeds.massDestroy');
+    Route::post('drone-vdo-recordeds/media', 'DroneVdoRecordedController@storeMedia')->name('drone-vdo-recordeds.storeMedia');
+    Route::post('drone-vdo-recordeds/ckmedia', 'DroneVdoRecordedController@storeCKEditorImages')->name('drone-vdo-recordeds.storeCKEditorImages');
+    Route::resource('drone-vdo-recordeds', 'DroneVdoRecordedController');
+
+    // Records Of Visitors
+    Route::delete('records-of-visitors/destroy', 'RecordsOfVisitorsController@massDestroy')->name('records-of-visitors.massDestroy');
+    Route::post('records-of-visitors/media', 'RecordsOfVisitorsController@storeMedia')->name('records-of-visitors.storeMedia');
+    Route::post('records-of-visitors/ckmedia', 'RecordsOfVisitorsController@storeCKEditorImages')->name('records-of-visitors.storeCKEditorImages');
+    Route::resource('records-of-visitors', 'RecordsOfVisitorsController');
     
     
     Route::get('system-calendar', 'SystemCalendarController@index')->name('systemCalendar');

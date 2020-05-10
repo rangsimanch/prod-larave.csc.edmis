@@ -59,11 +59,8 @@ class GlobalSearchController extends Controller
 
                 $searchableData[] = $parsedData;
             }
-
         }
 
         return response()->json(['results' => $searchableData]);
-
     }
-
 }

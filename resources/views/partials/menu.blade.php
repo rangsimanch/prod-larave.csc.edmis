@@ -283,6 +283,46 @@
                                 </a>
                             </li>
                         @endcan
+                        @can('procedure_access')
+                            <li class="{{ request()->is('admin/procedures') || request()->is('admin/procedures/*') ? 'active' : '' }}">
+                                <a href="{{ route("admin.procedures.index") }}">
+                                    <i class="fa-fw fas fa-circle-notch">
+
+                                    </i>
+                                    <span>{{ trans('cruds.procedure.title') }}</span>
+                                </a>
+                            </li>
+                        @endcan
+                        @can('drone_vdo_recorded_access')
+                            <li class="{{ request()->is('admin/drone-vdo-recordeds') || request()->is('admin/drone-vdo-recordeds/*') ? 'active' : '' }}">
+                                <a href="{{ route("admin.drone-vdo-recordeds.index") }}">
+                                    <i class="fa-fw fas fa-cloud-upload-alt">
+
+                                    </i>
+                                    <span>{{ trans('cruds.droneVdoRecorded.title') }}</span>
+                                </a>
+                            </li>
+                        @endcan
+                        @can('daily_construction_activity_access')
+                            <li class="{{ request()->is('admin/daily-construction-activities') || request()->is('admin/daily-construction-activities/*') ? 'active' : '' }}">
+                                <a href="{{ route("admin.daily-construction-activities.index") }}">
+                                    <i class="fa-fw fas fa-camera">
+
+                                    </i>
+                                    <span>{{ trans('cruds.dailyConstructionActivity.title') }}</span>
+                                </a>
+                            </li>
+                        @endcan
+                        @can('records_of_visitor_access')
+                            <li class="{{ request()->is('admin/records-of-visitors') || request()->is('admin/records-of-visitors/*') ? 'active' : '' }}">
+                                <a href="{{ route("admin.records-of-visitors.index") }}">
+                                    <i class="fa-fw fas fa-male">
+
+                                    </i>
+                                    <span>{{ trans('cruds.recordsOfVisitor.title') }}</span>
+                                </a>
+                            </li>
+                        @endcan
                         @can('document_tag_access')
                             <li class="{{ request()->is('admin/document-tags') || request()->is('admin/document-tags/*') ? 'active' : '' }}">
                                 <a href="{{ route("admin.document-tags.index") }}">

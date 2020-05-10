@@ -57,13 +57,13 @@
     var uploadedFileUploadMap = {}
 Dropzone.options.fileUploadDropzone = {
     url: '{{ route('admin.contract-and-components.storeMedia') }}',
-    maxFilesize: 800, // MB
+    maxFilesize: 2000, // MB
     addRemoveLinks: true,
     headers: {
       'X-CSRF-TOKEN': "{{ csrf_token() }}"
     },
     params: {
-      size: 800
+      size: 2000
     },
     success: function (file, response) {
       $('form').append('<input type="hidden" name="file_upload[]" value="' + response.name + '">')
