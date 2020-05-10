@@ -38,9 +38,7 @@ img {
                                 <th>
                                     {{ trans('cruds.task.fields.name') }}
                                 </th>
-                                <th>
-                                    {{ trans('cruds.task.fields.description') }}
-                                </th>
+                                
                                 <th>
                                     {{ trans('cruds.task.fields.tag') }}
                                 </th>
@@ -121,7 +119,7 @@ img {
 { data: 'img_user', name: 'img_user', sortable: false, searchable: false },
 { data: 'create_by_user_name', name: 'create_by_user.name' },
 { data: 'name', name: 'name' },
-{ data: 'description', name: 'description' },
+// { data: 'description', name: 'description' },
 { data: 'tag', name: 'tags.name' },
 { data: 'location', name: 'location' },
 { data: 'due_date', name: 'due_date' },
@@ -131,7 +129,7 @@ img {
 // { data: 'construction_contract.name', name: 'construction_contract.name' },
 { data: 'actions', name: '{{ trans('global.actions') }}' }
     ],
-    order: [[ 7, 'desc' ]],
+    order: [[ 6, 'desc' ]],
     pageLength: 10,
   };
   $('.datatable-Task').DataTable(dtOverrideGlobals);
