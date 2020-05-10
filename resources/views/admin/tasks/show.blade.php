@@ -242,25 +242,7 @@ $('.jpdf').click(function() {
     var xOffset = (doc.internal.pageSize.width / 2) - (doc.getStringUnitWidth(taskName) * doc.internal.getFontSize() / 2); 
 
     //Add Img
-  
-    // var img_count = "{{ count($task->attachment) }}";
-    // if(img_count == 1){
-    //     getImgFromUrl("{{ $task->attachment[0]->getUrl() }}", function (img) {
-    //     generatePDF(img,doc);
-    //     });
-    // }
-    // else if(img_count > 1 && img_count <=2){
-    //     getImgFromUrl("{{ $task->attachment[0]->getUrl() }}", function (img) {
-    //     generatePDF(img,doc);
-    //     });
 
-    //     getImgFromUrl("{{ $task->attachment[1]->getUrl() }}", function (img) {
-    //     generatePDF(img,doc);
-    //     });
-    // }
-    // else{
-
-    // }
     
     doc.text(40,33,taskDate);
     doc.text(45,44,weather);
