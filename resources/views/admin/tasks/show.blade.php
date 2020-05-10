@@ -241,69 +241,31 @@ $('.jpdf').click(function() {
 
     var xOffset = (doc.internal.pageSize.width / 2) - (doc.getStringUnitWidth(taskName) * doc.internal.getFontSize() / 2); 
 
-    //Add Img
     
-     var img_count = "{{ count($task->attachment) }}";
-     if(img_count > 0){
-        getImgFromUrl("{{ $task->attachment[0]->getUrl() }}", function (img) {
-        
-        doc.text(40,33,taskDate);
-        doc.text(45,44,weather);
-        doc.text(95,44,wind);
-        doc.text(130,44,temperature);
-        
-        doc.setFontSize(16);
-        doc.setFontType("bold");
-        doc.text(45,65,taskName);
-
-        doc.setFontSize(14);
-        doc.setFontType("normal");
-        doc.text(45,75,taskDesc);
-        
-        doc.setFontSize(12);
-        doc.text(149,267,create_by);
-
-        doc.addImage(img,'JPEG',50,120,100,100)
-
-
-        var string = doc.output('datauristring');
-        var embed = "<embed width='100%' height='100%' src='" + string + "'/>"
-        var x = window.open();
-        x.document.open();
-        x.document.write('<title> {{$task->name ?? ''}}</title>');
-        x.document.write(embed);
-        x.document.close();
-        });
-     }
-
-     else{
-        doc.text(40,33,taskDate);
-        doc.text(45,44,weather);
-        doc.text(95,44,wind);
-        doc.text(130,44,temperature);
-        
-        doc.setFontSize(16);
-        doc.setFontType("bold");
-        doc.text(45,65,taskName);
-
-        doc.setFontSize(14);
-        doc.setFontType("normal");
-        doc.text(45,75,taskDesc);
-        
-        doc.setFontSize(12);
-        doc.text(149,267,create_by);
-
-
-        var string = doc.output('datauristring');
-        var embed = "<embed width='100%' height='100%' src='" + string + "'/>"
-        var x = window.open();
-        x.document.open();
-        x.document.write('<title> {{$task->name ?? ''}}</title>');
-        x.document.write(embed);
-        x.document.close();
-     }
+    doc.text(40,33,taskDate);
+    doc.text(45,44,weather);
+    doc.text(95,44,wind);
+    doc.text(130,44,temperature);
     
-   
+    doc.setFontSize(16);
+    doc.setFontType("bold");
+    doc.text(45,65,taskName);
+
+    doc.setFontSize(14);
+    doc.setFontType("normal");
+    doc.text(45,75,taskDesc);
+    
+    doc.setFontSize(12);
+    doc.text(149,267,create_by);
+
+
+    var string = doc.output('datauristring');
+    var embed = "<embed width='100%' height='100%' src='" + string + "'/>"
+    var x = window.open();
+    x.document.open();
+    x.document.write('<title> {{$task->name ?? ''}}</title>');
+    x.document.write(embed);
+    x.document.close();
 
 
     });
