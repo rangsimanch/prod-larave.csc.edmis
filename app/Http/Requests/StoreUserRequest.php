@@ -23,7 +23,6 @@ class StoreUserRequest extends FormRequest
             'name'                     => [
                 'required'],
             'dob'                      => [
-                'required',
                 'date_format:' . config('panel.date_format')],
             'gender'                   => [
                 'required'],

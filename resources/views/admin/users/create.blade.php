@@ -28,14 +28,7 @@
                             @endif
                             <span class="help-block">{{ trans('cruds.user.fields.name_helper') }}</span>
                         </div>
-                       {{--  <div class="form-group {{ $errors->has('dob') ? 'has-error' : '' }}">
-                            <label class="required" for="dob">{{ trans('cruds.user.fields.dob') }}</label>
-                            <input class="form-control date" type="text" name="dob" id="dob" value="{{ old('dob') }}" required>
-                            @if($errors->has('dob'))
-                                <span class="help-block" role="alert">{{ $errors->first('dob') }}</span>
-                            @endif
-                            <span class="help-block">{{ trans('cruds.user.fields.dob_helper') }}</span>
-                        </div> --}}
+                        
                         <div class="form-group {{ $errors->has('gender') ? 'has-error' : '' }}">
                             <label class="required">{{ trans('cruds.user.fields.gender') }}</label>
                             <select class="form-control" name="gender" id="gender" required>
