@@ -59,6 +59,7 @@
                                     <span class="help-block">{{ trans('cruds.user.fields.name_helper') }}</span>
                                 </div>
 
+                        
                                 <div hidden="true" class="form-group {{ $errors->has('gender') ? 'has-error' : '' }}">
                                     <label class="required">{{ trans('cruds.user.fields.gender') }}</label>
                                     <select class="form-control" name="gender" id="gender" required>
