@@ -227,7 +227,7 @@ class TaskController extends Controller
                 $temperature = $tasks[$i]->temperature ?? '';
                 $activity_name = $tasks[$i]->name ?? '';
                 $description = $tasks[$i]->description ?? '';
-                $descWordWrap =   wordwrap($description,250,"<br>\n");
+                $descWordWrap =   wordwrap($description,200,"<br>\n");
                 
 
                 $html = "<div style=\"text-decoration: underline;font-weight: bold; font-size: 18px; position:absolute;top:112px;left:140px;\">". $due_date ."</div>";
