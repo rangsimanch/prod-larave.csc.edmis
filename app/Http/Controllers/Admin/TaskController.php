@@ -375,7 +375,6 @@ class TaskController extends Controller
                     }
 
                 $mpdf->WriteHTML($html);
-                $mpdf->setFooter($i+1);
             }
             return $mpdf->Output();
         }
