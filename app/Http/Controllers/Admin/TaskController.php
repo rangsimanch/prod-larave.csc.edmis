@@ -228,6 +228,7 @@ class TaskController extends Controller
                 $activity_name = $tasks[$i]->name ?? '';
                 $description = $tasks[$i]->description ?? '';
                 $descWordWrap =   wordwrap($description,200,"<br>\n");
+                $contractNo = $tasks[$i]->construction_contract->code ?? '';
                 
 
                 $html = "<div style=\"text-decoration: underline;font-weight: bold; font-size: 18px; position:absolute;top:112px;left:140px;\">". $due_date ."</div>";
@@ -242,6 +243,8 @@ class TaskController extends Controller
                 $html .= "<div style=\"font-weight: bold; font-size: 20px; position:absolute;top:960;left:630px;\">
                          <img width=\"40%\" height=\"auto\" src=\"" . $tasks[$i]->create_by_user->signature->getPath() 
                          . "\"></div>";
+                $html .= "<div style=\"font-weight: bold; text-align:center; font-size: 20px; position:absolute;top:100;\">Construction Contract : ". $contractNo  ." </div>";
+                
 
 
                 // Add Image       
