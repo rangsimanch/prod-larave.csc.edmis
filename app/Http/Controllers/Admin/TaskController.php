@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
-use mPDF;
+use PDF;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Traits\MediaUploadingTrait;
 use App\Http\Requests\MassDestroyTaskRequest;
@@ -181,7 +181,7 @@ class TaskController extends Controller
             //PDF Setting
             try {
                 $mpdf = new \Mpdf\Mpdf([
-                    'tempDir' => __DIR__ . '../tmp',
+                    'tempDir' => __DIR__ . '../vendor/mpdf/mpdf/tmp',
                     'default_font' => 'sarabun'
                 ]);
               } catch (\Mpdf\MpdfException $e) {
