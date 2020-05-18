@@ -200,7 +200,8 @@ class TaskController extends Controller
                     $html .= "<div style=\"text-align: center; font-weight: bold; font-size: 30px;\">Supevision Unit : State Railway of Thailand</div>";        
                     $html .= "<br></br><div style=\"text-align: center; font-weight: bold; font-size: 30px;\">By ". $recordby ."</div>";        
                     $html .= "<div style=\"text-align: center; font-weight: bold; font-size: 25px;\">". $jobtitle ."</div>";        
-                    $html .= "<div style=\"text-align: center; font-weight: bold; font-size: 25px;\">". $team ."</div>";        
+                    $html .= "<div style=\"text-align: center; font-weight: bold; font-size: 25px;\">". $team ."</div>"; 
+                           
                     $mpdf->WriteHTML($html);
                     
                     $mpdf->AddPage();
@@ -226,11 +227,14 @@ class TaskController extends Controller
                 $html .= "<div style=\"font-weight: bold; font-size: 20px; position:absolute;top:155px;left:500px;\">Temperature : ". $tasks[$i]->temperature  ." °C</div>";
                 
                 $html .= "<br><br><br><br><br><br><br><br><div style=\"text-align: center;font-weight: bold; font-size: 26px;\">". $tasks[$i]->name  ."</div>";
-                $html .= "<div style=\"text-align: left;   margin-left:40px; font-size: 18px;\">". wordwrap($tasks[$i]->description,400,"<br>\n")  ."</div>";
+                $html .= "<div style=\"text-align: center; font-size: 18px;\">". wordwrap($tasks[$i]->description,350,"<br>\n")  ."</div>";
                 
                 $html .= "<div style=\"font-weight: bold; font-size: 20px; position:absolute;top:990;left:580px;\">(". $recordby  ." )</div>";
                 $html .= "<div style=\"font-weight: bold; font-size: 20px; position:absolute;top:960;left:630px;\">
                          <img width=\"40%\" height=\"auto\" src=\"" . public_path($tasks[$i]->create_by_user->signature->getUrl()) . "\"></div>";
+                
+                         $html .= "<div style=\"text-align: center; font-weight: bold; font-size: 25px;\">". $tasks[$i]->attachment[0]->getUrl() ."</div>";        
+
 
                 // Add Image       
                     $allowed = array('gif', 'png', 'jpg');
