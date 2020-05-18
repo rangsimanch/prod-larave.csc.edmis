@@ -227,7 +227,7 @@ class TaskController extends Controller
                 $html .= "<div style=\"font-weight: bold; font-size: 20px; position:absolute;top:155px;left:500px;\">Temperature : ". $tasks[$i]->temperature  ." °C</div>";
                 
                 $html .= "<br><br><br><br><br><br><br><br><div style=\"text-align: center;font-weight: bold; font-size: 26px;\">". $tasks[$i]->name  ."</div>";
-                $html .= "<div style=\"text-align: center; font-size: 18px;\">". wordwrap($tasks[$i]->description,350,"<br>\n")  ."</div>";
+                $html .= "<div style=\"text-align: center; font-size: 18px;\">". wordwrap($tasks[$i]->description,300,"<br>\n")  ."</div>";
                 
                 $html .= "<div style=\"font-weight: bold; font-size: 20px; position:absolute;top:990;left:580px;\">(". $recordby  ." )</div>";
                 $html .= "<div style=\"font-weight: bold; font-size: 20px; position:absolute;top:960;left:630px;\">
@@ -242,7 +242,7 @@ class TaskController extends Controller
                                 . public_path($tasks[$i]->attachment[0]->getUrl()) 
                                 . "\"></div>";
                         }
-                        $html .= "<div style=\"text-align: center; font-weight: bold; font-size: 25px;\">". $tasks[$i]->attachment[0]->getUrl() ."</div>";        
+                        $html .= "<div style=\"text-align: center; font-weight: bold; font-size: 25px;\">". public_path($tasks[$i]->attachment[0]->getUrl()) ."</div>";        
 
                     }
 
