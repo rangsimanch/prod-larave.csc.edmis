@@ -179,7 +179,7 @@ class TaskController extends Controller
 
             //PDF Setting
             $mpdf = new \Mpdf\Mpdf([
-                'default_font' => 'sarabun'
+                'default_font' => 'dejavusans'
             ]);
 
             // Cover Page
