@@ -178,9 +178,7 @@ class TaskController extends Controller
             }
 
             //PDF Setting
-            $mpdf = new \Mpdf\Mpdf([
-                'default_font' => 'dejavusans'
-            ]);
+            $mpdf = new \Mpdf\Mpdf();
 
             // Cover Page
                 if($reportType != 'Daily Report'){
