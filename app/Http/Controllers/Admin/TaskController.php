@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use mPDF;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Traits\MediaUploadingTrait;
 use App\Http\Requests\MassDestroyTaskRequest;
@@ -166,7 +167,7 @@ class TaskController extends Controller
             
             // Report Type
             if($reportType == 'Daily Report'){
-                $dateType = date("D, d F Y",$date);
+                $dateType = $date->format("D, d F Y");
             }
             else if($reportType == 'Weekly Report'){
                 $dateType = 'Weekly No. ' . $date->format("W");
@@ -178,7 +179,10 @@ class TaskController extends Controller
             }
 
             //PDF Setting
-            $mpdf = new \Mpdf\Mpdf();
+            $mpdf = new \Mpdf\Mpdf([
+                'tempDir' => __DIR__ . '/tmp',
+                'default_font' => 'sarabun'
+            ]);
 
             // Cover Page
                 if($reportType != 'Daily Report'){
