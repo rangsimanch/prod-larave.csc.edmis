@@ -220,18 +220,28 @@ class TaskController extends Controller
                 $tplId = $mpdf->ImportPage($pagecount);
                 $mpdf->UseTemplate($tplId);
 
-                $wind = $tasks[$i]->wind ?? '' . ' m/sec';
-                $html = "<div style=\"text-decoration: underline;font-weight: bold; font-size: 18px; position:absolute;top:112px;left:140px;\">". $tasks[$i]->due_date ."</div>";
-                $html .= "<div style=\"font-weight: bold; font-size: 20px; position:absolute;top:155px;left:95px;\">Weather : ". $tasks[$i]->weather ."</div>";
-                $html .= "<div style=\"font-weight: bold; font-size: 20px; position:absolute;top:155px;left:300px;\">Wind : ". $wind ."</div>";
-                $html .= "<div style=\"font-weight: bold; font-size: 20px; position:absolute;top:155px;left:500px;\">Temperature : ". $tasks[$i]->temperature  ." °C</div>";
+                $wind = $tasks[$i]->wind ?? '';
+                $wind .=   ' m/sec';
+                $due_date = $tasks[$i]->due_date ?? ''; 
+                $weather = $tasks[$i]->weather ?? '';
+                $temperature = $tasks[$i]->temperature ?? '';
+                $activity_name = $tasks[$i]->name ?? '';
+                $description = $tasks[$i]->description ?? '';
+                $descWordWrap =   wordwrap($description,250,"<br>\n");
                 
-                $html .= "<br><br><br><br><br><br><br><br><div style=\"text-align: center;font-weight: bold; font-size: 26px;\">". $tasks[$i]->name  ."</div>";
-                $html .= "<div style=\"text-align: center; font-size: 18px;\">". wordwrap($tasks[$i]->description,250,"<br>\n")  ."</div>";
+
+                $html = "<div style=\"text-decoration: underline;font-weight: bold; font-size: 18px; position:absolute;top:112px;left:140px;\">". $due_date ."</div>";
+                $html .= "<div style=\"font-weight: bold; font-size: 20px; position:absolute;top:155px;left:95px;\">Weather : ". $weather ."</div>";
+                $html .= "<div style=\"font-weight: bold; font-size: 20px; position:absolute;top:155px;left:300px;\">Wind : ". $wind ."</div>";
+                $html .= "<div style=\"font-weight: bold; font-size: 20px; position:absolute;top:155px;left:500px;\">Temperature : ". $temperature  ." °C</div>";
+                
+                $html .= "<br><br><br><br><br><br><br><br><div style=\"text-align: center;font-weight: bold; font-size: 26px;\">". $activity_name  ."</div>";
+                $html .= "<div style=\"text-align: center; font-size: 18px;\">". $descWordWrap ."</div>";
                 
                 $html .= "<div style=\"font-weight: bold; font-size: 20px; position:absolute;top:990;left:580px;\">(". $recordby  ." )</div>";
                 $html .= "<div style=\"font-weight: bold; font-size: 20px; position:absolute;top:960;left:630px;\">
-                         <img width=\"40%\" height=\"auto\" src=\"" . public_path($tasks[$i]->create_by_user->signature->getUrl()) . "\"></div>";
+                         <img width=\"40%\" height=\"auto\" src=\"" . public_path($tasks[$i]->create_by_user->signature->getUrl()) 
+                         . "\"></div>";
 
 
                 // Add Image       
@@ -239,17 +249,10 @@ class TaskController extends Controller
                     if(count($tasks[$i]->attachment)  == 1){
                         if(in_array(pathinfo(public_path($tasks[$i]->attachment[0]->getUrl()),PATHINFO_EXTENSION),$allowed)){
                             $html .= "<br><div style=\"text-align:center;\"> <img width=\"40%\" height=\"auto\" src=\"" 
-                                . public_path($tasks[$i]->attachment[0]->getUrl()) 
+                                . $tasks[$i]->attachment[0]->getPath() 
                                 . "\"></div>";
                         }
-                        if($photo = $tasks[$i]->attachment[0]){
-                            $html .= sprintf(
-                            '<img src="%s" width="50px" height="50px" class="avatar">',
-                            $photo->url,
-                            $photo->thumbnail
-                        );
-                        }
-                        $html .= "<div style=\"text-align: center; font-weight: bold; font-size: 25px;\">". public_path($tasks[$i]->attachment[0]->getUrl()) ."</div>";        
+                        $html .= "<div style=\"text-align: center; font-weight: bold; font-size: 25px;\">". $tasks[$i]->attachment[0]->getPath() ."</div>";        
 
                     }
 
