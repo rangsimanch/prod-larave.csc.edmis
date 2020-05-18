@@ -9,10 +9,11 @@ img {
 <div class="content">
     @can('task_create')
         <div style="margin-bottom: 10px;" class="row">
-            <div class="col-lg-12">
+            <div class="col col-lg-12">
                 <a class="btn btn-success" href="{{ route("admin.tasks.create") }}">
                     {{ trans('global.add') }} {{ trans('cruds.task.title_singular') }}
                 </a>
+                <a class="btn btn-warning" style="float: right;" href="{{ route("admin.tasks.createReport") }}"> Create Report </a>
             </div>
         </div>
     @endcan
@@ -20,36 +21,70 @@ img {
         <div class="col-lg-12">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    {{ trans('cruds.task.title_singular') }} {{ trans('global.list') }}
+                    <div class="container">
+                        <div class="pull-left">
+                            {{ trans('cruds.task.title_singular') }} {{ trans('global.list') }}
+                        </div>
+                    </div>
                 </div>
                 <div class="panel-body">
-                    <table class=" table table-bordered table-striped table-hover ajaxTable datatable datatable-Task">
+                    <table class=" table table-bordered table-striped table-hover ajaxTable datatable datatable-Task text-center" id="datatb">
                         <thead>
                             <tr>
                                 <th width="10">
-
+    
                                 </th>
                                 <th>
                                     {{ trans('cruds.task.fields.img_user') }}
                                 </th>
                                 <th>
                                     {{ trans('cruds.task.fields.create_by_user') }}
+
+                                    <select class="form-control filter-select" data-column="2">
+                                        <option value=""> Select Employee... </option>
+                                        @foreach ($create_by_user as $create_by_user)
+                                            <option value="{{ $create_by_user }}"> {{ $create_by_user }} </option>
+                                        @endforeach
+                                    </select>
                                 </th>
                                 <th>
                                     {{ trans('cruds.task.fields.name') }}
+
+                                    <input type="text" class="form-control filter-input"
+                                    placeholder="Search for Activity..." data-column="3"/>
                                 </th>
                                 
                                 <th>
                                     {{ trans('cruds.task.fields.tag') }}
+
+                                    <select class="form-control filter-select" data-column="4">
+                                        <option value=""> Select Work Type... </option>
+                                        @foreach ($work_type as $work_type)
+                                            <option value="{{ $work_type }}"> {{ $work_type }} </option>
+                                        @endforeach
+                                    </select>
                                 </th>
                                 <th>
                                     {{ trans('cruds.task.fields.location') }}
+
+                                    <input type="text" class="form-control filter-input"
+                                    placeholder="Search for Location..." data-column="5"/>
                                 </th>
                                 <th>
                                     {{ trans('cruds.task.fields.due_date') }}
+
+                                    <input type="date" class="form-control filter-input"
+                                    placeholder="Search for Activity..." data-column="6"/>
                                 </th>
                                 <th>
                                     {{ trans('cruds.task.fields.status') }}
+
+                                    <select class="form-control filter-select" data-column="7">
+                                        <option value=""> Select Status... </option>
+                                        @foreach ($status as $status)
+                                            <option value="{{ $status }}"> {{ $status }} </option>
+                                        @endforeach
+                                    </select>
                                 </th>
                                 <th>
                                     {{ trans('cruds.task.fields.attachment') }}
@@ -117,13 +152,13 @@ img {
     columns: [
       { data: 'placeholder', name: 'placeholder' },
 { data: 'img_user', name: 'img_user', sortable: false, searchable: false },
-{ data: 'create_by_user_name', name: 'create_by_user.name' },
-{ data: 'name', name: 'name' },
+{ data: 'create_by_user_name', name: 'create_by_user.name', sortable: false, },
+{ data: 'name', name: 'name', sortable: false, },
 // { data: 'description', name: 'description' },
-{ data: 'tag', name: 'tags.name' },
-{ data: 'location', name: 'location' },
-{ data: 'due_date', name: 'due_date' },
-{ data: 'status_name', name: 'status.name' },
+{ data: 'tag', name: 'tags.name', sortable: false, },
+{ data: 'location', name: 'location', sortable: false, },
+{ data: 'due_date', name: 'due_date', sortable: false, },
+{ data: 'status_name', name: 'status.name', sortable: false, },
 { data: 'attachment', name: 'attachment', sortable: false, searchable: false },
 { data: 'construction_contract_code', name: 'construction_contract.code' },
 // { data: 'construction_contract.name', name: 'construction_contract.name' },
@@ -137,6 +172,22 @@ img {
         $($.fn.dataTable.tables(true)).DataTable()
             .columns.adjust();
     });
+
+    // Filter Class
+    $('.filter-input').keyup(function(){
+        $($.fn.dataTable.tables(true)).DataTable().column( $(this).data('column'))
+            .search($(this).val())
+            .draw();
+        });
+
+        $('.filter-select').change(function(){
+            $($.fn.dataTable.tables(true)).DataTable().column( $(this).data('column'))
+            .search($(this).val())
+            .draw();
+        });
+
+        $.fn.dataTable.ext.errMode = 'throw';
+        
 });
 
 </script>

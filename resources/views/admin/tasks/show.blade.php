@@ -133,11 +133,6 @@
                             <a class="btn btn-default" href="{{ route('admin.tasks.index') }}">
                                 {{ trans('global.back_to_list') }}
                             </a>
-                            @can('rfa_form')
-                            <a class="btn btn-success jpdf">
-                                View Report
-                            </a>
-                            @endcan
                         </div>
                     </div>
                 </div>
@@ -146,7 +141,6 @@
     </div>
 </div>
 
-<textarea style="display:none;" class="form-control" name="taskDesc" id="taskDesc">{!! wordwrap($task->description,75,"\n",true) !!}</textarea>
 @endsection
 
 @section('scripts')
@@ -171,106 +165,5 @@ jsPDFAPI.events.push(['addFonts', callAddFont])
  })(jsPDF.API);
 });
 
-function getImgFromUrl(logo_url, callback) {
-    var img = new Image();
-    img.src = logo_url;
-    img.onload = function () {
-        callback(img);
-    };
-    }
-    
-function generatePDF(img,doc){
-    doc.addImage(img, 'JPEG', 0, 0, 100, 50);
-    doc.output('datauri');
-}
-
-
-function wordWrap(str, maxWidth) {
-    var newLineStr = "\n"; done = false; res = '';
-    while (str.length > maxWidth) {                 
-        found = false;
-        // Inserts new line at first whitespace of the line
-        for (i = maxWidth - 1; i >= 0; i--) {
-            if (testWhite(str.charAt(i))) {
-                res = res + [str.slice(0, i), newLineStr].join('');
-                str = str.slice(i + 1);
-                found = true;
-                break;
-            }
-        }
-        // Inserts new line at maxWidth position, the word is too long to wrap
-        if (!found) {
-            res += [str.slice(0, maxWidth), newLineStr].join('');
-            str = str.slice(maxWidth);
-        }
-
-    }
-
-    return res + str;
-}
-
-function testWhite(x) {
-    var white = new RegExp(/^\s$/);
-    return white.test(x.charAt(0));
-};
-
-$('.jpdf').click(function() {
-    var doc = new jsPDF();
-    doc.addImage(formReport,'JPEG',0,0,210,297);
-    doc.setTextColor(0, 0, 0)
-    doc.setFont('THSarabun');
-    doc.setFontSize(14);
-
-    //Varrible
-    var taskName = "Title : {{ $task->name }}";
-
-    var arrayOfLines = $('#taskDesc').val().split('\n');
-    var taskDescArr = arrayOfLines;
-    var parser = new DOMParser;
-    var dom = parser.parseFromString(
-        '<!doctype html><body>' + taskDescArr,
-        'text/html');
-    var taskDescDom = dom.body.textContent;
-    var taskDesc = wordWrap(taskDescDom,75);
-
-    var taskDate = "{{ $task->due_date }}";
-    var weather = "{{ $task->weather }}";
-    var temperature = "{{ $task->temperature }} °C";
-    var wind = "{{ $task->wind }}";
-    var create_by = "( {{$task->create_by_user->name ?? ''}} )";
-
-    var xOffset = (doc.internal.pageSize.width / 2) - (doc.getStringUnitWidth(taskName) * doc.internal.getFontSize() / 2); 
-
-    
-    doc.text(40,33,taskDate);
-    doc.text(45,44,weather);
-    doc.text(95,44,wind);
-    doc.text(130,44,temperature);
-    
-    doc.setFontSize(16);
-    doc.text(45,65,taskName);
-
-    doc.setFontSize(14);
-    doc.text(45,75,taskDesc);
-    
-    doc.setFontSize(12);
-    doc.text(149,267,create_by);
-
-
-    var string = doc.output('datauristring');
-    var embed = "<embed width='100%' height='100%' src='" + string + "'/>"
-    var x = window.open();
-    x.document.open();
-    x.document.write('<title> {{$task->name ?? ''}}</title>');
-    x.document.write(embed);
-    x.document.close();
-
-
-    });
-
-
-
-
-    
 </script>
 @endsection

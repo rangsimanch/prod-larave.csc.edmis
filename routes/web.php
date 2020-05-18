@@ -114,6 +114,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth'], '
     Route::post('tasks/media', 'TaskController@storeMedia')->name('tasks.storeMedia');
     Route::post('tasks/parse-csv-import', 'TaskController@parseCsvImport')->name('tasks.parseCsvImport');
     Route::post('tasks/process-csv-import', 'TaskController@processCsvImport')->name('tasks.processCsvImport');
+    Route::get('tasks/createReport','TaskController@createReport')->name('tasks.createReport');
+    Route::post('tasks/createReportTask','TaskController@createReportTask')->name('tasks.createReportTask');
     Route::resource('tasks', 'TaskController');
 
     // Tasks Calendars
