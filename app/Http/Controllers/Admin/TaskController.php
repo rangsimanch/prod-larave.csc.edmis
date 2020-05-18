@@ -219,10 +219,10 @@ class TaskController extends Controller
                 $tplId = $mpdf->ImportPage($pagecount);
                 $mpdf->UseTemplate($tplId);
 
-                $wind = $tasks[$i]->wind . ' m/sec';
+               // $wind = $tasks[$i]->wind . ' m/sec';
                 $html = "<div style=\"text-decoration: underline;font-weight: bold; font-size: 18px; position:absolute;top:112px;left:140px;\">". $tasks[$i]->due_date ."</div>";
                 $html .= "<div style=\"font-weight: bold; font-size: 20px; position:absolute;top:155px;left:95px;\">Weather : ". $tasks[$i]->weather ."</div>";
-                $html .= "<div style=\"font-weight: bold; font-size: 20px; position:absolute;top:155px;left:300px;\">Wind : ". $wind ."</div>";
+                //$html .= "<div style=\"font-weight: bold; font-size: 20px; position:absolute;top:155px;left:300px;\">Wind : ". $wind ."</div>";
                 $html .= "<div style=\"font-weight: bold; font-size: 20px; position:absolute;top:155px;left:500px;\">Temperature : ". $tasks[$i]->temperature  ." °C</div>";
                 
                 $html .= "<br><br><br><br><br><br><br><br><div style=\"text-align: center;font-weight: bold; font-size: 26px;\">". $tasks[$i]->name  ."</div>";
