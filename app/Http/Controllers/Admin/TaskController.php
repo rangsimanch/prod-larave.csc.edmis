@@ -179,10 +179,14 @@ class TaskController extends Controller
             }
 
             //PDF Setting
-            $mpdf = new \Mpdf\Mpdf([
-                'tempDir' => __DIR__ . '/tmp',
-                'default_font' => 'sarabun'
-            ]);
+            try {
+                $mpdf = new \Mpdf\Mpdf([
+                    'tempDir' => __DIR__ . '../tmp',
+                    'default_font' => 'sarabun'
+                ]);
+              } catch (\Mpdf\MpdfException $e) {
+                  print "Creating an mPDF object failed with" . $e->getMessage();
+              }
 
             // Cover Page
                 if($reportType != 'Daily Report'){
