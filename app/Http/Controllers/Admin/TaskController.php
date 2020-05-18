@@ -236,11 +236,11 @@ class TaskController extends Controller
                 $html .= "<div style=\"font-weight: bold; font-size: 20px; position:absolute;top:155px;left:500px;\">Temperature : ". $temperature  ." °C</div>";
                 
                 $html .= "<br><br><br><br><br><br><br><br><div style=\"text-align: center;font-weight: bold; font-size: 26px;\">". $activity_name  ."</div>";
-                $html .= "<div style=\"text-align: center; font-size: 18px;\">". $descWordWrap ."</div>";
+                $html .= "<div style=\"text-align: justify; font-size: 18px;\">". $descWordWrap ."</div>";
                 
                 $html .= "<div style=\"font-weight: bold; font-size: 20px; position:absolute;top:990;left:580px;\">(". $recordby  ." )</div>";
                 $html .= "<div style=\"font-weight: bold; font-size: 20px; position:absolute;top:960;left:630px;\">
-                         <img width=\"40%\" height=\"auto\" src=\"" . public_path($tasks[$i]->create_by_user->signature->getUrl()) 
+                         <img width=\"40%\" height=\"auto\" src=\"" . $tasks[$i]->create_by_user->signature->getPath() 
                          . "\"></div>";
 
 
@@ -251,37 +251,39 @@ class TaskController extends Controller
                             $html .= "<br><div style=\"text-align:center;\"> <img width=\"40%\" height=\"auto\" src=\"" 
                                 . $tasks[$i]->attachment[0]->getPath() 
                                 . "\"></div>";
-                        }
-                        $html .= "<div style=\"text-align: center; font-weight: bold; font-size: 25px;\">". $tasks[$i]->attachment[0]->getPath() ."</div>";        
 
+                                //Dev use public_path($tasks[$i]->attachment[0]->getUrl())
+                                //Prod use $tasks[$i]->attachment[0]->getPath() 
+                        }
+                       
                     }
 
                     else if(count($tasks[$i]->attachment) == 2){
                         if(in_array(pathinfo(public_path($tasks[$i]->attachment[0]->getUrl()),PATHINFO_EXTENSION),$allowed)){
                             $html .= "<br><div style=\"text-align:center;\"> <img width=\"25%\" height=\"auto\" src=\"" 
-                                . public_path($tasks[$i]->attachment[0]->getUrl()) 
+                                . $tasks[$i]->attachment[0]->getPath()  
                                 . "\">";
                         }
                         if(in_array(pathinfo(public_path($tasks[$i]->attachment[1]->getUrl()),PATHINFO_EXTENSION),$allowed)){
                             $html .= " <img width=\"25%\" height=\"auto\" src=\"" 
-                                . public_path($tasks[$i]->attachment[1]->getUrl()) 
+                                . $tasks[$i]->attachment[1]->getPath() 
                                 . "\"></div>";
                         }
                     }
                     else if(count($tasks[$i]->attachment) == 3){
                         if(in_array(pathinfo(public_path($tasks[$i]->attachment[0]->getUrl()),PATHINFO_EXTENSION),$allowed)){
                             $html .= "<br><div style=\"text-align:center;\"> <img width=\"25%\" height=\"auto\" src=\"" 
-                                . public_path($tasks[$i]->attachment[0]->getUrl()) 
+                                . $tasks[$i]->attachment[0]->getPath() 
                                 . "\">";
                         }
                         if(in_array(pathinfo(public_path($tasks[$i]->attachment[1]->getUrl()),PATHINFO_EXTENSION),$allowed)){
                             $html .= " <img width=\"25%\" height=\"auto\" src=\"" 
-                                . public_path($tasks[$i]->attachment[1]->getUrl()) 
+                                . $tasks[$i]->attachment[1]->getPath() 
                                 . "\"></div>";
                         }
                         if(in_array(pathinfo(public_path($tasks[$i]->attachment[2]->getUrl()),PATHINFO_EXTENSION),$allowed)){
                             $html .= "<div style=\"text-align:center;\"> <img width=\"25%\" height=\"auto\" src=\"" 
-                                . public_path($tasks[$i]->attachment[2]->getUrl()) 
+                                . $tasks[$i]->attachment[2]->getPath() 
                                 . "\"></div>";
                         }
 
@@ -289,22 +291,22 @@ class TaskController extends Controller
                     else if(count($tasks[$i]->attachment) == 4){
                         if(in_array(pathinfo(public_path($tasks[$i]->attachment[0]->getUrl()),PATHINFO_EXTENSION),$allowed)){
                             $html .= "<br><div style=\"text-align:center;\"> <img width=\"25%\" height=\"auto\" src=\"" 
-                                . public_path($tasks[$i]->attachment[0]->getUrl()) 
+                                . $tasks[$i]->attachment[0]->getPath() 
                                 . "\">";
                         }
                         if(in_array(pathinfo(public_path($tasks[$i]->attachment[1]->getUrl()),PATHINFO_EXTENSION),$allowed)){
                             $html .= " <img width=\"25%\" height=\"auto\" src=\"" 
-                                . public_path($tasks[$i]->attachment[1]->getUrl()) 
+                                . $tasks[$i]->attachment[1]->getPath() 
                                 . "\"></div>";
                         }
                         if(in_array(pathinfo(public_path($tasks[$i]->attachment[2]->getUrl()),PATHINFO_EXTENSION),$allowed)){
                             $html .= "<div style=\"text-align:center;\"> <img width=\"25%\" height=\"auto\" src=\"" 
-                                . public_path($tasks[$i]->attachment[2]->getUrl()) 
+                                . $tasks[$i]->attachment[2]->getPath() 
                                 . "\">";
                         }
                         if(in_array(pathinfo(public_path($tasks[$i]->attachment[3]->getUrl()),PATHINFO_EXTENSION),$allowed)){
                             $html .= " <img width=\"25%\" height=\"auto\" src=\"" 
-                                . public_path($tasks[$i]->attachment[3]->getUrl()) 
+                                . $tasks[$i]->attachment[3]->getPath()  
                                 . "\"></div>";
                         }
 
@@ -312,27 +314,27 @@ class TaskController extends Controller
                     else if(count($tasks[$i]->attachment) == 5){
                         if(in_array(pathinfo(public_path($tasks[$i]->attachment[0]->getUrl()),PATHINFO_EXTENSION),$allowed)){
                             $html .= "<br><div style=\"text-align:center;\"> <img width=\"20%\" height=\"auto\" src=\"" 
-                                . public_path($tasks[$i]->attachment[0]->getUrl()) 
+                                . $tasks[$i]->attachment[0]->getPath() 
                                 . "\">";
                         }
                         if(in_array(pathinfo(public_path($tasks[$i]->attachment[1]->getUrl()),PATHINFO_EXTENSION),$allowed)){
                             $html .= " <img width=\"20%\" height=\"auto\" src=\"" 
-                                . public_path($tasks[$i]->attachment[1]->getUrl()) 
+                                . $tasks[$i]->attachment[1]->getPath() 
                                 . "\"></div>";
                         }
                         if(in_array(pathinfo(public_path($tasks[$i]->attachment[2]->getUrl()),PATHINFO_EXTENSION),$allowed)){
                             $html .= "<div style=\"text-align:center;\"> <img width=\"20%\" height=\"auto\" src=\"" 
-                                . public_path($tasks[$i]->attachment[2]->getUrl()) 
+                                . $tasks[$i]->attachment[2]->getPath() 
                                 . "\">";
                         }
                         if(in_array(pathinfo(public_path($tasks[$i]->attachment[3]->getUrl()),PATHINFO_EXTENSION),$allowed)){
                             $html .= " <img width=\"20%\" height=\"auto\" src=\"" 
-                                . public_path($tasks[$i]->attachment[3]->getUrl()) 
+                                . $tasks[$i]->attachment[3]->getPath() 
                                 . "\">";
                         }
                         if(in_array(pathinfo(public_path($tasks[$i]->attachment[4]->getUrl()),PATHINFO_EXTENSION),$allowed)){
                             $html .= " <img width=\"20%\" height=\"auto\" src=\"" 
-                                . public_path($tasks[$i]->attachment[4]->getUrl()) 
+                                . $tasks[$i]->attachment[4]->getPath() 
                                 . "\"></div>";
                         }
 
@@ -340,32 +342,32 @@ class TaskController extends Controller
                     else if(count($tasks[$i]->attachment) == 6){
                         if(in_array(pathinfo(public_path($tasks[$i]->attachment[0]->getUrl()),PATHINFO_EXTENSION),$allowed)){
                             $html .= "<br><div style=\"text-align:center;\"> <img width=\"20%\" height=\"auto\" src=\"" 
-                                . public_path($tasks[$i]->attachment[0]->getUrl()) 
+                                . $tasks[$i]->attachment[0]->getPath() 
                                 . "\">";
                         }
                         if(in_array(pathinfo(public_path($tasks[$i]->attachment[1]->getUrl()),PATHINFO_EXTENSION),$allowed)){
                             $html .= " <img width=\"20%\" height=\"auto\" src=\"" 
-                                . public_path($tasks[$i]->attachment[1]->getUrl()) 
+                                . $tasks[$i]->attachment[1]->getPath() 
                                 . "\">";
                         }
                         if(in_array(pathinfo(public_path($tasks[$i]->attachment[2]->getUrl()),PATHINFO_EXTENSION),$allowed)){
                             $html .= " <img width=\"20%\" height=\"auto\" src=\"" 
-                                . public_path($tasks[$i]->attachment[2]->getUrl()) 
+                                . $tasks[$i]->attachment[2]->getPath() 
                                 . "\"></div>";
                         }
                         if(in_array(pathinfo(public_path($tasks[$i]->attachment[3]->getUrl()),PATHINFO_EXTENSION),$allowed)){
                             $html .= "<div style=\"text-align:center;\"><img width=\"20%\" height=\"auto\" src=\"" 
-                                . public_path($tasks[$i]->attachment[3]->getUrl()) 
+                                . $tasks[$i]->attachment[3]->getPath() 
                                 . "\">";
                         }
                         if(in_array(pathinfo(public_path($tasks[$i]->attachment[4]->getUrl()),PATHINFO_EXTENSION),$allowed)){
                             $html .= " <img width=\"20%\" height=\"auto\" src=\"" 
-                                . public_path($tasks[$i]->attachment[4]->getUrl()) 
+                                . $tasks[$i]->attachment[4]->getPath() 
                                 . "\">";
                         }
                         if(in_array(pathinfo(public_path($tasks[$i]->attachment[5]->getUrl()),PATHINFO_EXTENSION),$allowed)){
                             $html .= " <img width=\"20%\" height=\"auto\" src=\"" 
-                                . public_path($tasks[$i]->attachment[5]->getUrl()) 
+                                . $tasks[$i]->attachment[5]->getPath() 
                                 . "\"></div>";
                         }
                     }
