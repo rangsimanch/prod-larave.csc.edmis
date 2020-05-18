@@ -375,6 +375,7 @@ class TaskController extends Controller
                     }
 
                 $mpdf->WriteHTML($html);
+                $mpdf->setFooter('{PAGENO}');
             }
             return $mpdf->Output();
         }
