@@ -161,9 +161,9 @@ class TaskController extends Controller
             $date = \DateTime::createFromFormat('d/m/Y', $data['startDate']);
             //DATA PAGE
             $reportType = $data['reportType'];
-            $create_by = User::all()->where('id',$data['create_by_user_id']);
+            $create_by = json_encode(User::all()->where('id',$data['create_by_user_id']));
 
-            $recordby = $create_by;
+            $recordby = $create_by["name"];
             $jobtitle = $tasks[0]->create_by_user->jobtitle->name ?? '';
             $team = $tasks[0]->team->name ?? '';
             $contract_code = $tasks[0]->construction_contract->code ?? '';
