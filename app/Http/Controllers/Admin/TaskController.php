@@ -154,7 +154,7 @@ class TaskController extends Controller
         $data = $request->all();
         $tasks = Task::all()->wherebetween('due_date',[$data['startDate'],$data['endDate']])->where('create_by_user_id',$data['create_by_user_id'])->sortBy('due_date');
         $count_task = count($tasks);
-        $user_create = User::all()->where('id',$data['create_by_user_id']);
+        $user_create = User::where('id',$data['create_by_user_id']);
 
         if($count_task > 0){ 
             //Conver Date
@@ -163,7 +163,7 @@ class TaskController extends Controller
             //DATA PAGE
             $reportType = $data['reportType'];
 
-            $recordby = $user_create->name ; 
+            $recordby = $user_create->name; 
             $jobtitle = $tasks[0]->create_by_user->jobtitle->name ?? '';
             $team = $tasks[0]->team->name ?? '';
             $contract_code = $tasks[0]->construction_contract->code ?? '';
