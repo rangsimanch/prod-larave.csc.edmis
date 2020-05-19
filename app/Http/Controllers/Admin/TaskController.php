@@ -216,7 +216,8 @@ class TaskController extends Controller
                 }
 
             // Activity
-            for($i = 0; $i < $count_task; $i++){
+            // for($i = 0; $i < $count_task; $i++){
+            foreach($tasks as $task){
                 $mpdf->AddPage();
                 $pagecount = $mpdf->SetSourceFile(public_path('pdf-asset/activity.pdf'));
                
@@ -224,15 +225,15 @@ class TaskController extends Controller
                 $tplId = $mpdf->ImportPage($pagecount);
                 $mpdf->UseTemplate($tplId);
 
-                $wind = $tasks[$i]->wind ?? '';
+                $wind = $task->wind ?? '';
                 $wind .=   ' m/sec';
-                $due_date = $tasks[$i]->due_date ?? ''; 
-                $weather = $tasks[$i]->weather ?? '';
-                $temperature = $tasks[$i]->temperature ?? '';
-                $activity_name = $tasks[$i]->name ?? '';
-                $description = $tasks[$i]->description ?? '';
+                $due_date = $task->due_date ?? ''; 
+                $weather = $task->weather ?? '';
+                $temperature = $task->temperature ?? '';
+                $activity_name = $task->name ?? '';
+                $description = $task->description ?? '';
                 $descWordWrap =   wordwrap($description,200,"<br>\n");
-                $contractNo = $tasks[$i]->construction_contract->code ?? '';
+                $contractNo = $task->construction_contract->code ?? '';
                 
                 $html = "<div style=\"font-size: 18px; position:absolute;top:990;left:95px;\">Construction Contract : ". $contractNo  ." </div>";
                 $html .= "<div style=\"text-decoration: underline;font-weight: bold; font-size: 18px; position:absolute;top:112px;left:140px;\">". $due_date ."</div>";
@@ -245,138 +246,138 @@ class TaskController extends Controller
                 
                 $html .= "<div style=\"font-weight: bold; font-size: 20px; position:absolute;top:990;left:580px;\">(". $recordby  ." )</div>";
                 
-                // if(is_null($tasks[$i]->create_by_user->signature->getPath())){
-                //     $html .= "<div style=\"font-weight: bold; font-size: 20px; position:absolute;top:960;left:630px;\">
-                //             <img width=\"40%\" height=\"auto\" src=\"" . $tasks[$i]->create_by_user->signature->getPath()
-                //             . "\"></div>";
-                // }
+                if(is_null($task->create_by_user->signature->getPath())){
+                    $html .= "<div style=\"font-weight: bold; font-size: 20px; position:absolute;top:960;left:630px;\">
+                            <img width=\"40%\" height=\"auto\" src=\"" . $task->create_by_user->signature->getPath()
+                            . "\"></div>";
+                }
                 
 
 
                 // Add Image       
                     $allowed = array('gif', 'png', 'jpg');
-                    if(count($tasks[$i]->attachment)  == 1){
-                        if(in_array(pathinfo(public_path($tasks[$i]->attachment[0]->getUrl()),PATHINFO_EXTENSION),$allowed)){
+                    if(count($task->attachment)  == 1){
+                        if(in_array(pathinfo(public_path($task->attachment[0]->getUrl()),PATHINFO_EXTENSION),$allowed)){
                             $html .= "<br><div style=\"text-align:center;\"> <img width=\"40%\" height=\"auto\" src=\"" 
-                                . $tasks[$i]->attachment[0]->getPath() 
+                                . $task->attachment[0]->getPath() 
                                 . "\"></div>";
 
-                                //Dev use public_path($tasks[$i]->attachment[0]->getUrl())
-                                //Prod use $tasks[$i]->attachment[0]->getPath() 
+                                //Dev use public_path($task->attachment[0]->getUrl())
+                                //Prod use $task->attachment[0]->getPath() 
                         }
                        
                     }
 
-                    else if(count($tasks[$i]->attachment) == 2){
-                        if(in_array(pathinfo(public_path($tasks[$i]->attachment[0]->getUrl()),PATHINFO_EXTENSION),$allowed)){
+                    else if(count($task->attachment) == 2){
+                        if(in_array(pathinfo(public_path($task->attachment[0]->getUrl()),PATHINFO_EXTENSION),$allowed)){
                             $html .= "<br><div style=\"text-align:center;\"> <img width=\"25%\" height=\"auto\" src=\"" 
-                                . $tasks[$i]->attachment[0]->getPath()  
+                                . $task->attachment[0]->getPath()  
                                 . "\">";
                         }
-                        if(in_array(pathinfo(public_path($tasks[$i]->attachment[1]->getUrl()),PATHINFO_EXTENSION),$allowed)){
+                        if(in_array(pathinfo(public_path($task->attachment[1]->getUrl()),PATHINFO_EXTENSION),$allowed)){
                             $html .= " <img width=\"25%\" height=\"auto\" src=\"" 
-                                . $tasks[$i]->attachment[1]->getPath() 
+                                . $task->attachment[1]->getPath() 
                                 . "\"></div>";
                         }
                     }
-                    else if(count($tasks[$i]->attachment) == 3){
-                        if(in_array(pathinfo(public_path($tasks[$i]->attachment[0]->getUrl()),PATHINFO_EXTENSION),$allowed)){
+                    else if(count($task->attachment) == 3){
+                        if(in_array(pathinfo(public_path($task->attachment[0]->getUrl()),PATHINFO_EXTENSION),$allowed)){
                             $html .= "<br><div style=\"text-align:center;\"> <img width=\"25%\" height=\"auto\" src=\"" 
-                                . $tasks[$i]->attachment[0]->getPath() 
+                                . $task->attachment[0]->getPath() 
                                 . "\">";
                         }
-                        if(in_array(pathinfo(public_path($tasks[$i]->attachment[1]->getUrl()),PATHINFO_EXTENSION),$allowed)){
+                        if(in_array(pathinfo(public_path($task->attachment[1]->getUrl()),PATHINFO_EXTENSION),$allowed)){
                             $html .= " <img width=\"25%\" height=\"auto\" src=\"" 
-                                . $tasks[$i]->attachment[1]->getPath() 
+                                . $task->attachment[1]->getPath() 
                                 . "\"></div>";
                         }
-                        if(in_array(pathinfo(public_path($tasks[$i]->attachment[2]->getUrl()),PATHINFO_EXTENSION),$allowed)){
+                        if(in_array(pathinfo(public_path($task->attachment[2]->getUrl()),PATHINFO_EXTENSION),$allowed)){
                             $html .= "<div style=\"text-align:center;\"> <img width=\"25%\" height=\"auto\" src=\"" 
-                                . $tasks[$i]->attachment[2]->getPath() 
+                                . $task->attachment[2]->getPath() 
                                 . "\"></div>";
                         }
 
                     }
-                    else if(count($tasks[$i]->attachment) == 4){
-                        if(in_array(pathinfo(public_path($tasks[$i]->attachment[0]->getUrl()),PATHINFO_EXTENSION),$allowed)){
+                    else if(count($task->attachment) == 4){
+                        if(in_array(pathinfo(public_path($task->attachment[0]->getUrl()),PATHINFO_EXTENSION),$allowed)){
                             $html .= "<br><div style=\"text-align:center;\"> <img width=\"25%\" height=\"auto\" src=\"" 
-                                . $tasks[$i]->attachment[0]->getPath() 
+                                . $task->attachment[0]->getPath() 
                                 . "\">";
                         }
-                        if(in_array(pathinfo(public_path($tasks[$i]->attachment[1]->getUrl()),PATHINFO_EXTENSION),$allowed)){
+                        if(in_array(pathinfo(public_path($task->attachment[1]->getUrl()),PATHINFO_EXTENSION),$allowed)){
                             $html .= " <img width=\"25%\" height=\"auto\" src=\"" 
-                                . $tasks[$i]->attachment[1]->getPath() 
+                                . $task->attachment[1]->getPath() 
                                 . "\"></div>";
                         }
-                        if(in_array(pathinfo(public_path($tasks[$i]->attachment[2]->getUrl()),PATHINFO_EXTENSION),$allowed)){
+                        if(in_array(pathinfo(public_path($task->attachment[2]->getUrl()),PATHINFO_EXTENSION),$allowed)){
                             $html .= "<div style=\"text-align:center;\"> <img width=\"25%\" height=\"auto\" src=\"" 
-                                . $tasks[$i]->attachment[2]->getPath() 
+                                . $task->attachment[2]->getPath() 
                                 . "\">";
                         }
-                        if(in_array(pathinfo(public_path($tasks[$i]->attachment[3]->getUrl()),PATHINFO_EXTENSION),$allowed)){
+                        if(in_array(pathinfo(public_path($task->attachment[3]->getUrl()),PATHINFO_EXTENSION),$allowed)){
                             $html .= " <img width=\"25%\" height=\"auto\" src=\"" 
-                                . $tasks[$i]->attachment[3]->getPath()  
+                                . $task->attachment[3]->getPath()  
                                 . "\"></div>";
                         }
 
                     }
-                    else if(count($tasks[$i]->attachment) == 5){
-                        if(in_array(pathinfo(public_path($tasks[$i]->attachment[0]->getUrl()),PATHINFO_EXTENSION),$allowed)){
+                    else if(count($task->attachment) == 5){
+                        if(in_array(pathinfo(public_path($task->attachment[0]->getUrl()),PATHINFO_EXTENSION),$allowed)){
                             $html .= "<br><div style=\"text-align:center;\"> <img width=\"20%\" height=\"auto\" src=\"" 
-                                . $tasks[$i]->attachment[0]->getPath() 
+                                . $task->attachment[0]->getPath() 
                                 . "\">";
                         }
-                        if(in_array(pathinfo(public_path($tasks[$i]->attachment[1]->getUrl()),PATHINFO_EXTENSION),$allowed)){
+                        if(in_array(pathinfo(public_path($task->attachment[1]->getUrl()),PATHINFO_EXTENSION),$allowed)){
                             $html .= " <img width=\"20%\" height=\"auto\" src=\"" 
-                                . $tasks[$i]->attachment[1]->getPath() 
+                                . $task->attachment[1]->getPath() 
                                 . "\"></div>";
                         }
-                        if(in_array(pathinfo(public_path($tasks[$i]->attachment[2]->getUrl()),PATHINFO_EXTENSION),$allowed)){
+                        if(in_array(pathinfo(public_path($task->attachment[2]->getUrl()),PATHINFO_EXTENSION),$allowed)){
                             $html .= "<div style=\"text-align:center;\"> <img width=\"20%\" height=\"auto\" src=\"" 
-                                . $tasks[$i]->attachment[2]->getPath() 
+                                . $task->attachment[2]->getPath() 
                                 . "\">";
                         }
-                        if(in_array(pathinfo(public_path($tasks[$i]->attachment[3]->getUrl()),PATHINFO_EXTENSION),$allowed)){
+                        if(in_array(pathinfo(public_path($task->attachment[3]->getUrl()),PATHINFO_EXTENSION),$allowed)){
                             $html .= " <img width=\"20%\" height=\"auto\" src=\"" 
-                                . $tasks[$i]->attachment[3]->getPath() 
+                                . $task->attachment[3]->getPath() 
                                 . "\">";
                         }
-                        if(in_array(pathinfo(public_path($tasks[$i]->attachment[4]->getUrl()),PATHINFO_EXTENSION),$allowed)){
+                        if(in_array(pathinfo(public_path($task->attachment[4]->getUrl()),PATHINFO_EXTENSION),$allowed)){
                             $html .= " <img width=\"20%\" height=\"auto\" src=\"" 
-                                . $tasks[$i]->attachment[4]->getPath() 
+                                . $task->attachment[4]->getPath() 
                                 . "\"></div>";
                         }
 
                     }
-                    else if(count($tasks[$i]->attachment) == 6){
-                        if(in_array(pathinfo(public_path($tasks[$i]->attachment[0]->getUrl()),PATHINFO_EXTENSION),$allowed)){
+                    else if(count($task->attachment) == 6){
+                        if(in_array(pathinfo(public_path($task->attachment[0]->getUrl()),PATHINFO_EXTENSION),$allowed)){
                             $html .= "<br><div style=\"text-align:center;\"> <img width=\"20%\" height=\"auto\" src=\"" 
-                                . $tasks[$i]->attachment[0]->getPath() 
+                                . $task->attachment[0]->getPath() 
                                 . "\">";
                         }
-                        if(in_array(pathinfo(public_path($tasks[$i]->attachment[1]->getUrl()),PATHINFO_EXTENSION),$allowed)){
+                        if(in_array(pathinfo(public_path($task->attachment[1]->getUrl()),PATHINFO_EXTENSION),$allowed)){
                             $html .= " <img width=\"20%\" height=\"auto\" src=\"" 
-                                . $tasks[$i]->attachment[1]->getPath() 
+                                . $task->attachment[1]->getPath() 
                                 . "\">";
                         }
-                        if(in_array(pathinfo(public_path($tasks[$i]->attachment[2]->getUrl()),PATHINFO_EXTENSION),$allowed)){
+                        if(in_array(pathinfo(public_path($task->attachment[2]->getUrl()),PATHINFO_EXTENSION),$allowed)){
                             $html .= " <img width=\"20%\" height=\"auto\" src=\"" 
-                                . $tasks[$i]->attachment[2]->getPath() 
+                                . $task->attachment[2]->getPath() 
                                 . "\"></div>";
                         }
-                        if(in_array(pathinfo(public_path($tasks[$i]->attachment[3]->getUrl()),PATHINFO_EXTENSION),$allowed)){
+                        if(in_array(pathinfo(public_path($task->attachment[3]->getUrl()),PATHINFO_EXTENSION),$allowed)){
                             $html .= "<div style=\"text-align:center;\"><img width=\"20%\" height=\"auto\" src=\"" 
-                                . $tasks[$i]->attachment[3]->getPath() 
+                                . $task->attachment[3]->getPath() 
                                 . "\">";
                         }
-                        if(in_array(pathinfo(public_path($tasks[$i]->attachment[4]->getUrl()),PATHINFO_EXTENSION),$allowed)){
+                        if(in_array(pathinfo(public_path($task->attachment[4]->getUrl()),PATHINFO_EXTENSION),$allowed)){
                             $html .= " <img width=\"20%\" height=\"auto\" src=\"" 
-                                . $tasks[$i]->attachment[4]->getPath() 
+                                . $task->attachment[4]->getPath() 
                                 . "\">";
                         }
-                        if(in_array(pathinfo(public_path($tasks[$i]->attachment[5]->getUrl()),PATHINFO_EXTENSION),$allowed)){
+                        if(in_array(pathinfo(public_path($task->attachment[5]->getUrl()),PATHINFO_EXTENSION),$allowed)){
                             $html .= " <img width=\"20%\" height=\"auto\" src=\"" 
-                                . $tasks[$i]->attachment[5]->getPath() 
+                                . $task->attachment[5]->getPath() 
                                 . "\"></div>";
                         }
                     }
