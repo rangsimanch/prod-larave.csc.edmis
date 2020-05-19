@@ -161,7 +161,7 @@ class TaskController extends Controller
             $date = \DateTime::createFromFormat('d/m/Y', $data['startDate']);
             //DATA PAGE
             $reportType = $data['reportType'];
-            $recordby = $tasks[0]->create_by_user->name ?? '';
+            $recordby = $data['create_by_user_id'] ?? '';
             $jobtitle = $tasks[0]->create_by_user->jobtitle->name ?? '';
             $team = $tasks[0]->team->name ?? '';
             $contract_code = $tasks[0]->construction_contract->code ?? '';
@@ -232,7 +232,7 @@ class TaskController extends Controller
                 $temperature = $task->temperature ?? '';
                 $activity_name = $task->name ?? '';
                 $description = $task->description ?? '';
-                $descWordWrap =   wordwrap($description,200,"<br>\n");
+                $descWordWrap =   wordwrap($description,180,"<br>\n");
                 $contractNo = $task->construction_contract->code ?? '';
                 
                 $html = "<div style=\"font-size: 18px; position:absolute;top:990;left:95px;\">Construction Contract : ". $contractNo  ." </div>";
@@ -247,8 +247,8 @@ class TaskController extends Controller
                 $html .= "<div style=\"font-weight: bold; font-size: 20px; position:absolute;top:990;left:580px;\">(". $recordby  ." )</div>";
                 
                 if(!is_null($task->create_by_user->signature)){
-                    $html .= "<div style=\"font-weight: bold; font-size: 20px; position:absolute;top:960;left:630px;\">
-                            <img width=\"40%\" height=\"auto\" src=\"" . $task->create_by_user->signature->getPath()
+                    $html .= "<div style=\"font-weight: bold; font-size: 20px; position:absolute;top:950;left:630px;\">
+                            <img width=\"50%\" height=\"auto\" src=\"" . $task->create_by_user->signature->getPath()
                             . "\"></div>";
                 }
                 
