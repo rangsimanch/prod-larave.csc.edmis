@@ -161,7 +161,7 @@ class TaskController extends Controller
             $date = \DateTime::createFromFormat('d/m/Y', $data['startDate']);
             //DATA PAGE
             $reportType = $data['reportType'];
-            $recordby = $data['create_by_user_id'] ?? '';
+            $recordby = User::all()->select('name')->where('id',$data['create_by_user_id'])->get() ?? '';
             $jobtitle = $tasks[0]->create_by_user->jobtitle->name ?? '';
             $team = $tasks[0]->team->name ?? '';
             $contract_code = $tasks[0]->construction_contract->code ?? '';
@@ -244,7 +244,7 @@ class TaskController extends Controller
                 $html .= "<br><br><br><br><br><br><br><br><div style=\"text-align: center;font-weight: bold; font-size: 26px;\">". $activity_name  ."</div>";
                 $html .= "<br><div style=\"text-align: center; font-size: 18px;\">". $descWordWrap ."</div>";
                 
-                $html .= "<div style=\"font-weight: bold; font-size: 20px; position:absolute;top:990;left:580px;\">(". $recordby  ." )</div>";
+                $html .= "<div style=\"font-weight: bold; font-size: 20px; position:absolute;top:990;left:580px;\">(". $recordby  .")</div>";
                 
                 if(!is_null($task->create_by_user->signature)){
                     $html .= "<div style=\"font-weight: bold; font-size: 20px; position:absolute;top:950;left:630px;\">
