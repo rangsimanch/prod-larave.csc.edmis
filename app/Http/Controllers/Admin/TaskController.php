@@ -166,8 +166,8 @@ class TaskController extends Controller
             $recordby = $create_by->name;
             $jobtitle = $create_by->jobtitle->name ?? '';
             $team = $create_by->team->name ?? '';
-            $contract_code = $tasks[0]->construction_contract->code ?? '';
-            $contract_name = $tasks[0]->construction_contract->name ?? '';
+            $contract_code = $tasks->first()->construction_contract->code ?? '';
+            $contract_name = $tasks->first()->construction_contract->name ?? '';
 
             $dateType = '';
             
@@ -234,7 +234,7 @@ class TaskController extends Controller
                 $temperature = $task->temperature ?? '';
                 $activity_name = $task->name ?? '';
                 $description = $task->description ?? '';
-                $descWordWrap =   wordwrap($description,160,"<br>\n");
+                $descWordWrap =   wordwrap($description,150,"<br>\n");
                 $contractNo = $task->construction_contract->code ?? '';
                 
                 $html = "<div style=\"font-size: 18px; position:absolute;top:990;left:95px;\">Construction Contract : ". $contractNo  ." </div>";
