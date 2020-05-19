@@ -161,8 +161,9 @@ class TaskController extends Controller
             $date = \DateTime::createFromFormat('d/m/Y', $data['startDate']);
             //DATA PAGE
             $reportType = $data['reportType'];
+            $create_by = User::all()->where('id',$data['create_by_user_id']);
 
-            $recordby = $tasks[0]->create_by_user->name ?? '';
+            $recordby = $create_by[name];
             $jobtitle = $tasks[0]->create_by_user->jobtitle->name ?? '';
             $team = $tasks[0]->team->name ?? '';
             $contract_code = $tasks[0]->construction_contract->code ?? '';
@@ -233,7 +234,7 @@ class TaskController extends Controller
                 $temperature = $task->temperature ?? '';
                 $activity_name = $task->name ?? '';
                 $description = $task->description ?? '';
-                $descWordWrap =   wordwrap($description,180,"<br>\n");
+                $descWordWrap =   wordwrap($description,160,"<br>\n");
                 $contractNo = $task->construction_contract->code ?? '';
                 
                 $html = "<div style=\"font-size: 18px; position:absolute;top:990;left:95px;\">Construction Contract : ". $contractNo  ." </div>";
