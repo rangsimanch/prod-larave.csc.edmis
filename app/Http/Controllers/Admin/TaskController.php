@@ -150,7 +150,7 @@ class TaskController extends Controller
         
         $ebits = ini_get('error_reporting');
         error_reporting($ebits ^ E_NOTICE);
-        
+
         $data = $request->all();
         $tasks = Task::all()->wherebetween('due_date',[$data['startDate'],$data['endDate']])->where('create_by_user_id',$data['create_by_user_id'])->sortBy('due_date');
         $count_task = count($tasks);
@@ -233,7 +233,8 @@ class TaskController extends Controller
                 $description = $tasks[$i]->description ?? '';
                 $descWordWrap =   wordwrap($description,200,"<br>\n");
                 $contractNo = $tasks[$i]->construction_contract->code ?? '';
-                $signature = $tasks[$i]->create_by_user->signature->getPath() ?? '';
+
+                // $signature = $tasks[$i]->create_by_user->signature->getPath() ?? '';
                 
                 $html = "<div style=\"font-size: 18px; position:absolute;top:990;left:95px;\">Construction Contract : ". $contractNo  ." </div>";
                 $html .= "<div style=\"text-decoration: underline;font-weight: bold; font-size: 18px; position:absolute;top:112px;left:140px;\">". $due_date ."</div>";
@@ -245,9 +246,12 @@ class TaskController extends Controller
                 $html .= "<br><div style=\"text-align: center; font-size: 18px;\">". $descWordWrap ."</div>";
                 
                 $html .= "<div style=\"font-weight: bold; font-size: 20px; position:absolute;top:990;left:580px;\">(". $recordby  ." )</div>";
-                $html .= "<div style=\"font-weight: bold; font-size: 20px; position:absolute;top:960;left:630px;\">
-                         <img width=\"40%\" height=\"auto\" src=\"" . $signature
-                         . "\"></div>";
+                
+                if(!is_null($tasks[$i]->create_by_user->signature->getPath())){
+                    $html .= "<div style=\"font-weight: bold; font-size: 20px; position:absolute;top:960;left:630px;\">
+                            <img width=\"40%\" height=\"auto\" src=\"" . $tasks[$i]->create_by_user->signature->getPath()
+                            . "\"></div>";
+                }
                 
 
 
