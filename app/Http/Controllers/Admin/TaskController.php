@@ -164,8 +164,8 @@ class TaskController extends Controller
             $create_by = User::all()->where('id',$data['create_by_user_id'])->first();
 
             $recordby = $create_by->name;
-            $jobtitle = $tasks[0]->create_by_user->jobtitle->name ?? '';
-            $team = $tasks[0]->team->name ?? '';
+            $jobtitle = $create_by->jobtitle->name ?? '';
+            $team = $create_by->team->name ?? '';
             $contract_code = $tasks[0]->construction_contract->code ?? '';
             $contract_name = $tasks[0]->construction_contract->name ?? '';
 
