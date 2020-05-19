@@ -246,7 +246,7 @@ class TaskController extends Controller
                 
                 $html .= "<div style=\"font-weight: bold; font-size: 20px; position:absolute;top:990;left:580px;\">(". $recordby  ." )</div>";
                 
-                if(!is_null($task->create_by_user->signature->getPath())){
+                if(!is_null($task->create_by_user->signature)){
                     $html .= "<div style=\"font-weight: bold; font-size: 20px; position:absolute;top:960;left:630px;\">
                             <img width=\"40%\" height=\"auto\" src=\"" . $task->create_by_user->signature->getPath()
                             . "\"></div>";
@@ -258,12 +258,16 @@ class TaskController extends Controller
                     $allowed = array('gif', 'png', 'jpg');
                     if(count($task->attachment)  == 1){
                         if(in_array(pathinfo(public_path($task->attachment[0]->getUrl()),PATHINFO_EXTENSION),$allowed)){
+                            //Prod use $task->attachment[0]->getPath() 
                             $html .= "<br><div style=\"text-align:center;\"> <img width=\"40%\" height=\"auto\" src=\"" 
                                 . $task->attachment[0]->getPath() 
                                 . "\"></div>";
 
-                                //Dev use public_path($task->attachment[0]->getUrl())
-                                //Prod use $task->attachment[0]->getPath() 
+                            //Dev use public_path($task->attachment[0]->getUrl())
+                                // $html .= "<br><div style=\"text-align:center;\"> <img width=\"40%\" height=\"auto\" src=\"" 
+                                //     . public_path($task->attachment[0]->getUrl())
+                                //     . "\"></div>";
+                                
                         }
                        
                     }
