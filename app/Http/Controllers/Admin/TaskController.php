@@ -250,9 +250,9 @@ class TaskController extends Controller
                 $html .= "<div style=\"font-weight: bold; font-size: 20px; position:absolute;top:155px;left:300px;\">Wind : ". $wind ."</div>";
                 $html .= "<div style=\"font-weight: bold; font-size: 20px; position:absolute;top:155px;left:500px;\">Temperature : ". $temperature  ." °C</div>";
                 
-                $html .= "<br><br><br><br><br><br><br><br><br><div style=\"text-align: center;font-weight: bold; font-size: 26px;\">". $activity_name  ."</div>";
+                $html .= "<br><br><br><br><br><br><br><br><div style=\"text-align: center;font-weight: bold; font-size: 26px;\">". $activity_name  ."</div>";
                 $html .= "<div style=\"text-align: justify; padding-left: 80px; padding-right:80px; \">
-                            <div style=\"vertical-align: top; max-width: 50%; display: inline-block; font-size: 18px;\">".  str_replace(";","<br>",$description) ."</div>
+                            <div style=\"vertical-align: top; max-width: 50%; display: inline-block; font-size: 20px;\">".  str_replace(";","<br>",$description) ."</div>
                             </div>";
                 
                 $html .= "<div style=\"font-weight: bold; font-size: 20px; position:absolute;top:990;left:580px;\">(". $recordby  .")</div>";
