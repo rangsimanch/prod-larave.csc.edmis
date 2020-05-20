@@ -86,9 +86,9 @@ img {
                                         @endforeach
                                     </select>
                                 </th>
-                                <th>
+                                <!-- <th>
                                     {{ trans('cruds.task.fields.attachment') }}
-                                </th>
+                                </th> -->
                                 <th>
                                     {{ trans('cruds.task.fields.construction_contract') }}
                                 </th>
