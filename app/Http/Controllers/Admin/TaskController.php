@@ -241,7 +241,7 @@ class TaskController extends Controller
                 $temperature = $task->temperature ?? '';
                 $activity_name = $task->name ?? '';
                 $description = $task->description ?? '';
-                $descWordWrap =   wordwrap($description,150,"<br>\n");
+                $descWordWrap =   wordwrap($description,170,"<br>\n");
                 $contractNo = $task->construction_contract->code ?? '';
                 
                 $html = "<div style=\"font-size: 18px; position:absolute;top:990;left:95px;\">Construction Contract : ". $contractNo  ." </div>";
@@ -251,7 +251,7 @@ class TaskController extends Controller
                 $html .= "<div style=\"font-weight: bold; font-size: 20px; position:absolute;top:155px;left:500px;\">Temperature : ". $temperature  ." °C</div>";
                 
                 $html .= "<br><br><br><br><br><br><br><br><div style=\"text-align: center;font-weight: bold; font-size: 26px;\">". $activity_name  ."</div>";
-                $html .= "<br><center><div style=\"text-align: justify; font-size: 18px;\" width=\"200px\">". $descWordWrap ."</div></center";
+                $html .= "<br><div style=\"text-align: center;\"><div style=\"text-align: justify; font-size: 18px;\" width=\"800px\">". $descWordWrap ."</div></div>";
                 
                 $html .= "<div style=\"font-weight: bold; font-size: 20px; position:absolute;top:990;left:580px;\">(". $recordby  .")</div>";
                 
