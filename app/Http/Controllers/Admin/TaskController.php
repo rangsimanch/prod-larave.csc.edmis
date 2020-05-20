@@ -241,7 +241,7 @@ class TaskController extends Controller
                 $temperature = $task->temperature ?? '';
                 $activity_name = $task->name ?? '';
                 $description = $task->description ?? '';
-                $descWordWrap =   wordwrap($description,170,"<br>\n");
+                $descWordWrap =   wordwrap($description, 300,"<br>\n");
                 $contractNo = $task->construction_contract->code ?? '';
                 
                 $html = "<div style=\"font-size: 18px; position:absolute;top:990;left:95px;\">Construction Contract : ". $contractNo  ." </div>";
