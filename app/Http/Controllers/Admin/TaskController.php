@@ -266,7 +266,7 @@ class TaskController extends Controller
 
 
                 // Add Image       
-                    $allowed = array('gif', 'png', 'jpg');
+                    $allowed = array('gif', 'png', 'jpg', 'jpeg');
                     if(count($task->attachment)  == 1){
                         if(in_array(pathinfo(public_path($task->attachment[0]->getUrl()),PATHINFO_EXTENSION),$allowed)){
                             //Prod use $task->attachment[0]->getPath() 
