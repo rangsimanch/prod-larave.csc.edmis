@@ -86,9 +86,9 @@ img {
                                         @endforeach
                                     </select>
                                 </th>
-                                <th>
+                                <!-- <th>
                                     {{ trans('cruds.task.fields.attachment') }}
-                                </th>
+                                </th> -->
                                 <th>
                                     {{ trans('cruds.task.fields.construction_contract') }}
                                 </th>
@@ -158,7 +158,7 @@ img {
 { data: 'location', name: 'location', sortable: false, },
 { data: 'due_date', name: 'due_date', },
 { data: 'status_name', name: 'status.name', sortable: false, },
- { data: 'attachment', name: 'attachment', sortable: false, searchable: false },
+// { data: 'attachment', name: 'attachment', sortable: false, searchable: false },
 { data: 'construction_contract_code', name: 'construction_contract.code' },
 { data: 'actions', name: '{{ trans('global.actions') }}' }
     ],
