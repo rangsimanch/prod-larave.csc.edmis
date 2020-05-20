@@ -162,8 +162,15 @@ class TaskController extends Controller
             //DATA PAGE
             $reportType = $data['reportType'];
             $create_by = User::all()->where('id',$data['create_by_user_id'])->first();
+            $gender = '';
+            
+            if($create_by->gender == 'Male'){
+                $gender = 'Mr.';
+            }else{
+                $gender = 'Ms.';
+            }
 
-            $recordby = $create_by->name;
+            $recordby = $gender . ' ' . $create_by->name;
             $jobtitle = $create_by->jobtitle->name ?? '';
             $team = $create_by->team->name ?? '';
             $contract_code = $tasks->first()->construction_contract->code ?? '';
@@ -244,13 +251,13 @@ class TaskController extends Controller
                 $html .= "<div style=\"font-weight: bold; font-size: 20px; position:absolute;top:155px;left:500px;\">Temperature : ". $temperature  ." °C</div>";
                 
                 $html .= "<br><br><br><br><br><br><br><br><div style=\"text-align: center;font-weight: bold; font-size: 26px;\">". $activity_name  ."</div>";
-                $html .= "<br><div style=\"text-align: center; font-size: 18px;\">". $descWordWrap ."</div>";
+                $html .= "<br><center><div style=\"text-align: justify; font-size: 18px;\" width=\"200px\">". $descWordWrap ."</div></center";
                 
                 $html .= "<div style=\"font-weight: bold; font-size: 20px; position:absolute;top:990;left:580px;\">(". $recordby  .")</div>";
                 
                 if(!is_null($task->create_by_user->signature)){
-                    $html .= "<div style=\"font-weight: bold; font-size: 20px; position:absolute;top:950;left:630px;\">
-                            <img width=\"50%\" height=\"auto\" src=\"" . $task->create_by_user->signature->getPath()
+                    $html .= "<div style=\"font-weight: bold; position:absolute;top:950;left:630px;\">
+                            <img width=\"60%\" height=\"auto\" src=\"" . $task->create_by_user->signature->getPath()
                             . "\"></div>";
                 }
                 

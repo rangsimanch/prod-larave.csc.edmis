@@ -1,5 +1,6 @@
 @extends('layouts.admin')
 @section('content')
+
 <div class="content">
     @can('daily_construction_activity_create')
         <div style="margin-bottom: 10px;" class="row">
@@ -43,12 +44,10 @@
                     </table>
                 </div>
             </div>
-
-
-
         </div>
     </div>
 </div>
+
 @endsection
 @section('scripts')
 @parent

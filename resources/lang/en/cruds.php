@@ -401,8 +401,8 @@ return [
         ],
     ],
     'task'                   => [
-        'title'          => 'Activity Report',
-        'title_singular' => 'Activity Report',
+        'title'          => 'CSC Activity Report',
+        'title_singular' => 'CSC Activity Report',
         'fields'         => [
             'img_user'                     => 'Display',
             'id'                           => 'ID',
@@ -625,8 +625,8 @@ return [
 ],
 
 'dailyRequest'           => [
-    'title'          => 'Daily Request',
-    'title_singular' => 'Daily Request',
+    'title'          => 'CEC Daily Request',
+    'title_singular' => 'CEC Daily Request',
     'fields'         => [
         'id'                      => 'ID',
         'id_helper'               => '',
@@ -655,8 +655,8 @@ return [
     ],
 ],
 'dailyReport'            => [
-    'title'          => 'Daily Report',
-    'title_singular' => 'Daily Report',
+    'title'          => 'CEC Daily Report',
+    'title_singular' => 'CEC Daily Report',
     'fields'         => [
         'id'                      => 'ID',
         'id_helper'               => '',
