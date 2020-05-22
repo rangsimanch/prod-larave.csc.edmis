@@ -264,7 +264,7 @@ class TaskController extends Controller
                 }
                 
 
-
+                try{
                 // Add Image       
                     $allowed = array('gif', 'png', 'jpg', 'jpeg', 'JPG', 'JPEG', 'PNG');
                     if(count($task->attachment)  == 1){
@@ -396,6 +396,9 @@ class TaskController extends Controller
                                 . "\"></div>";
                         }
                     }
+                }catch(Exception $e){
+                    print "Creating an mPDF object failed with" . $e->getMessage();
+                }
 
                 $mpdf->WriteHTML($html);
             }
