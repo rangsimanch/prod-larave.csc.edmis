@@ -269,7 +269,7 @@ class TaskController extends Controller
                     if(in_array(pathinfo(public_path($media->getUrl()),PATHINFO_EXTENSION),$allowed)){
                         //Prod use $task->attachment[0]->getPath() 
                         $html .= "<img  width=\"30%\" height=\"auto\" src=\"" 
-                            . $media->getUrl() 
+                            . $media->getUrl('thumb')->resize(320,400) 
                             . "\">";
                     }
                 }
