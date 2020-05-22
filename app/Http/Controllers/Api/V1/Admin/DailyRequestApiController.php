@@ -20,8 +20,7 @@ class DailyRequestApiController extends Controller
     {
         abort_if(Gate::denies('daily_request_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new DailyRequestResource(DailyRequest::with(['receive_by'])->get());
-
+        return new DailyRequestResource(DailyRequest::with(['receive_by', 'constuction_contract'])->get());
     }
 
     public function store(StoreDailyRequestRequest $request)
@@ -35,15 +34,13 @@ class DailyRequestApiController extends Controller
         return (new DailyRequestResource($dailyRequest))
             ->response()
             ->setStatusCode(Response::HTTP_CREATED);
-
     }
 
     public function show(DailyRequest $dailyRequest)
     {
         abort_if(Gate::denies('daily_request_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new DailyRequestResource($dailyRequest->load(['receive_by']));
-
+        return new DailyRequestResource($dailyRequest->load(['receive_by', 'constuction_contract']));
     }
 
     public function update(UpdateDailyRequestRequest $request, DailyRequest $dailyRequest)
@@ -54,7 +51,6 @@ class DailyRequestApiController extends Controller
             if (!$dailyRequest->documents || $request->input('documents') !== $dailyRequest->documents->file_name) {
                 $dailyRequest->addMedia(storage_path('tmp/uploads/' . $request->input('documents')))->toMediaCollection('documents');
             }
-
         } elseif ($dailyRequest->documents) {
             $dailyRequest->documents->delete();
         }
@@ -62,7 +58,6 @@ class DailyRequestApiController extends Controller
         return (new DailyRequestResource($dailyRequest))
             ->response()
             ->setStatusCode(Response::HTTP_ACCEPTED);
-
     }
 
     public function destroy(DailyRequest $dailyRequest)
@@ -72,7 +67,5 @@ class DailyRequestApiController extends Controller
         $dailyRequest->delete();
 
         return response(null, Response::HTTP_NO_CONTENT);
-
     }
-
 }

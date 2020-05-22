@@ -17,92 +17,36 @@
                     {{ trans('cruds.dailyRequest.title_singular') }} {{ trans('global.list') }}
                 </div>
                 <div class="panel-body">
-                    <div class="table-responsive">
-                        <table class=" table table-bordered table-striped table-hover datatable datatable-DailyRequest">
-                            <thead>
-                                <tr>
-                                    <th width="10">
+                    <table class=" table table-bordered table-striped table-hover ajaxTable datatable datatable-DailyRequest">
+                        <thead>
+                            <tr>
+                                <th width="10">
 
-                                    </th>
-                                    <th>
-                                        {{ trans('cruds.dailyRequest.fields.input_date') }}
-                                    </th>
-                                    <th>
-                                        {{ trans('cruds.dailyRequest.fields.documents') }}
-                                    </th>
-                                    <th>
-                                        {{ trans('cruds.dailyRequest.fields.document_code') }}
-                                    </th>
-                                    <th>
-                                        {{ trans('cruds.dailyRequest.fields.receive_by') }}
-                                    </th>
-                                    <!-- <th>
-                                        {{ trans('cruds.dailyRequest.fields.acknowledge_date') }}
-                                    </th> -->
-                                    <th> 
-                                        {{ trans('cruds.dailyRequest.fields.constuction_contract') }}
-                                    </th>
-                                    <th>
-                                        &nbsp;
-                                    </th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach($dailyRequests as $key => $dailyRequest)
-                                    <tr data-entry-id="{{ $dailyRequest->id }}">
-                                        <td>
-
-                                        </td>
-                                        <td>
-                                            {{ $dailyRequest->input_date ?? '' }}
-                                        </td>
-                                        <td>
-                                            @foreach($dailyRequest->documents as $key => $media)
-                                                <a  target="_blank" href="{{ $media->getUrl() }}">
-                                                    {{ trans('global.view_file') }}
-                                                </a>
-                                            @endforeach
-                                        </td>
-                                        <td>
-                                            {{ $dailyRequest->document_code ?? '' }}
-                                        </td> 
-                                        <td>
-                                            {{ $dailyRequest->receive_by->name ?? '' }}
-                                        </td>
-                                        <!-- <td>
-                                            {{ $dailyRequest->acknowledge_date ?? '' }}
-                                        </td> -->
-                                        <td>
-                                            {{ $dailyRequest->constuction_contract->code ?? '' }}
-                                        </td>
-                                        <td>
-                                            @can('daily_request_show')
-                                                <a class="btn btn-xs btn-primary" href="{{ route('admin.daily-requests.show', $dailyRequest->id) }}">
-                                                    {{ trans('global.view') }}
-                                                </a>
-                                            @endcan
-
-                                            @can('daily_request_edit')
-                                                <a class="btn btn-xs btn-info" href="{{ route('admin.daily-requests.edit', $dailyRequest->id) }}">
-                                                    {{ trans('global.edit') }}
-                                                </a>
-                                            @endcan
-
-                                            @can('daily_request_delete')
-                                                <form action="{{ route('admin.daily-requests.destroy', $dailyRequest->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
-                                                    <input type="hidden" name="_method" value="DELETE">
-                                                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                                                    <input type="submit" class="btn btn-xs btn-danger" value="{{ trans('global.delete') }}">
-                                                </form>
-                                            @endcan
-
-                                        </td>
-
-                                    </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
-                    </div>
+                                </th>
+                                <th>
+                                    {{ trans('cruds.dailyRequest.fields.input_date') }}
+                                </th>
+                                <th>
+                                    {{ trans('cruds.dailyRequest.fields.documents') }}
+                                </th>
+                                <th>
+                                    {{ trans('cruds.dailyRequest.fields.document_code') }}
+                                </th>
+                                <th>
+                                    {{ trans('cruds.dailyRequest.fields.receive_by') }}
+                                </th>
+                                <th>
+                                    {{ trans('cruds.dailyRequest.fields.acknowledge_date') }}
+                                </th>
+                                <th>
+                                    {{ trans('cruds.dailyRequest.fields.constuction_contract') }}
+                                </th>
+                                <th>
+                                    &nbsp;
+                                </th>
+                            </tr>
+                        </thead>
+                    </table>
                 </div>
             </div>
 
@@ -118,14 +62,14 @@
     $(function () {
   let dtButtons = $.extend(true, [], $.fn.dataTable.defaults.buttons)
 @can('daily_request_delete')
-  let deleteButtonTrans = '{{ trans('global.datatables.delete') }}'
+  let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
   let deleteButton = {
     text: deleteButtonTrans,
     url: "{{ route('admin.daily-requests.massDestroy') }}",
     className: 'btn-danger',
     action: function (e, dt, node, config) {
-      var ids = $.map(dt.rows({ selected: true }).nodes(), function (entry) {
-          return $(entry).data('entry-id')
+      var ids = $.map(dt.rows({ selected: true }).data(), function (entry) {
+          return entry.id
       });
 
       if (ids.length === 0) {
@@ -147,18 +91,32 @@
   dtButtons.push(deleteButton)
 @endcan
 
-  $.extend(true, $.fn.dataTable.defaults, {
-    order: [[ 3, 'desc' ],[1, 'desc']],
+  let dtOverrideGlobals = {
+    buttons: dtButtons,
+    processing: true,
+    serverSide: true,
+    retrieve: true,
+    aaSorting: [],
+    ajax: "{{ route('admin.daily-requests.index') }}",
+    columns: [
+      { data: 'placeholder', name: 'placeholder' },
+{ data: 'input_date', name: 'input_date' },
+{ data: 'documents', name: 'documents', sortable: false, searchable: false },
+{ data: 'document_code', name: 'document_code' },
+{ data: 'receive_by_name', name: 'receive_by.name' },
+{ data: 'acknowledge_date', name: 'acknowledge_date' },
+{ data: 'constuction_contract_code', name: 'constuction_contract.code' },
+{ data: 'actions', name: '{{ trans('global.actions') }}' }
+    ],
+    order: [[ 1, 'desc' ]],
     pageLength: 100,
-  });
-  $('.datatable-DailyRequest:not(.ajaxTable)').DataTable({ buttons: dtButtons })
+  };
+  $('.datatable-DailyRequest').DataTable(dtOverrideGlobals);
     $('a[data-toggle="tab"]').on('shown.bs.tab', function(e){
         $($.fn.dataTable.tables(true)).DataTable()
             .columns.adjust();
     });
-})
+});
 
 </script>
-
-
 @endsection

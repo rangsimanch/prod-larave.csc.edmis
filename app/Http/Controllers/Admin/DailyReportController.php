@@ -13,18 +13,65 @@ use Gate;
 use Illuminate\Http\Request;
 use Spatie\MediaLibrary\Models\Media;
 use Symfony\Component\HttpFoundation\Response;
+use Yajra\DataTables\Facades\DataTables;
 
 class DailyReportController extends Controller
 {
     use MediaUploadingTrait;
 
-    public function index()
+    public function index(Request $request)
     {
         abort_if(Gate::denies('daily_report_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $dailyReports = DailyReport::all();
+        if ($request->ajax()) {
+            $query = DailyReport::with(['construction_contract'])->select(sprintf('%s.*', (new DailyReport)->table));
+            $table = Datatables::of($query);
 
-        return view('admin.dailyReports.index', compact('dailyReports'));
+            $table->addColumn('placeholder', '&nbsp;');
+            $table->addColumn('actions', '&nbsp;');
+
+            $table->editColumn('actions', function ($row) {
+                $viewGate      = 'daily_report_show';
+                $editGate      = 'daily_report_edit';
+                $deleteGate    = 'daily_report_delete';
+                $crudRoutePart = 'daily-reports';
+
+                return view('partials.datatablesActions', compact(
+                    'viewGate',
+                    'editGate',
+                    'deleteGate',
+                    'crudRoutePart',
+                    'row'
+                ));
+            });
+
+            $table->editColumn('documents', function ($row) {
+                if (!$row->documents) {
+                    return '';
+                }
+
+                $links = [];
+
+                foreach ($row->documents as $media) {
+                    $links[] = '<a href="' . $media->getUrl() . '" target="_blank">' . trans('global.downloadFile') . '</a>';
+                }
+
+                return implode(', ', $links);
+            });
+            $table->editColumn('document_code', function ($row) {
+                return $row->document_code ? $row->document_code : "";
+            });
+
+            $table->addColumn('construction_contract_code', function ($row) {
+                return $row->construction_contract ? $row->construction_contract->code : '';
+            });
+
+            $table->rawColumns(['actions', 'placeholder', 'documents', 'construction_contract']);
+
+            return $table->make(true);
+        }
+
+        return view('admin.dailyReports.index');
     }
 
     public function create()
@@ -38,10 +85,7 @@ class DailyReportController extends Controller
 
     public function store(StoreDailyReportRequest $request)
     {
-        
-        $data = $request->all();
-        $data['receive_by_id'] = auth()->id();
-        $dailyReport = DailyReport::create($data);
+        $dailyReport = DailyReport::create($request->all());
 
         foreach ($request->input('documents', []) as $file) {
             $dailyReport->addMedia(storage_path('tmp/uploads/' . $file))->toMediaCollection('documents');
@@ -52,7 +96,6 @@ class DailyReportController extends Controller
         }
 
         return redirect()->route('admin.daily-reports.index');
-
     }
 
     public function edit(DailyReport $dailyReport)
@@ -75,23 +118,18 @@ class DailyReportController extends Controller
                 if (!in_array($media->file_name, $request->input('documents', []))) {
                     $media->delete();
                 }
-
             }
-
         }
 
         $media = $dailyReport->documents->pluck('file_name')->toArray();
 
         foreach ($request->input('documents', []) as $file) {
             if (count($media) === 0 || !in_array($file, $media)) {
-                $dailyReport->addMedia(storage_path('tmp/uploads/' . $file))
-               ->toMediaCollection('documents');
+                $dailyReport->addMedia(storage_path('tmp/uploads/' . $file))->toMediaCollection('documents');
             }
-
         }
 
         return redirect()->route('admin.daily-reports.index');
-
     }
 
     public function show(DailyReport $dailyReport)
@@ -110,7 +148,6 @@ class DailyReportController extends Controller
         $dailyReport->delete();
 
         return back();
-
     }
 
     public function massDestroy(MassDestroyDailyReportRequest $request)
@@ -118,7 +155,6 @@ class DailyReportController extends Controller
         DailyReport::whereIn('id', request('ids'))->delete();
 
         return response(null, Response::HTTP_NO_CONTENT);
-
     }
 
     public function storeCKEditorImages(Request $request)
@@ -128,10 +164,8 @@ class DailyReportController extends Controller
         $model         = new DailyReport();
         $model->id     = $request->input('crud_id', 0);
         $model->exists = true;
-        $media         = $model->addMediaFromRequest('upload')->toMediaCollection('ck-media', 'public');
+        $media         = $model->addMediaFromRequest('upload')->toMediaCollection('ck-media');
 
         return response()->json(['id' => $media->id, 'url' => $media->getUrl()], Response::HTTP_CREATED);
-
     }
-
 }

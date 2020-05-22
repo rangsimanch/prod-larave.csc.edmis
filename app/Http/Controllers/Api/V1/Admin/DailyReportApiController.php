@@ -20,8 +20,7 @@ class DailyReportApiController extends Controller
     {
         abort_if(Gate::denies('daily_report_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new DailyReportResource(DailyReport::with(['receive_by'])->get());
-
+        return new DailyReportResource(DailyReport::with(['construction_contract'])->get());
     }
 
     public function store(StoreDailyReportRequest $request)
@@ -35,15 +34,13 @@ class DailyReportApiController extends Controller
         return (new DailyReportResource($dailyReport))
             ->response()
             ->setStatusCode(Response::HTTP_CREATED);
-
     }
 
     public function show(DailyReport $dailyReport)
     {
         abort_if(Gate::denies('daily_report_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new DailyReportResource($dailyReport->load(['receive_by']));
-
+        return new DailyReportResource($dailyReport->load(['construction_contract']));
     }
 
     public function update(UpdateDailyReportRequest $request, DailyReport $dailyReport)
@@ -54,7 +51,6 @@ class DailyReportApiController extends Controller
             if (!$dailyReport->documents || $request->input('documents') !== $dailyReport->documents->file_name) {
                 $dailyReport->addMedia(storage_path('tmp/uploads/' . $request->input('documents')))->toMediaCollection('documents');
             }
-
         } elseif ($dailyReport->documents) {
             $dailyReport->documents->delete();
         }
@@ -62,7 +58,6 @@ class DailyReportApiController extends Controller
         return (new DailyReportResource($dailyReport))
             ->response()
             ->setStatusCode(Response::HTTP_ACCEPTED);
-
     }
 
     public function destroy(DailyReport $dailyReport)
@@ -72,7 +67,5 @@ class DailyReportApiController extends Controller
         $dailyReport->delete();
 
         return response(null, Response::HTTP_NO_CONTENT);
-
     }
-
 }
