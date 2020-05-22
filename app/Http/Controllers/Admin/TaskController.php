@@ -264,167 +264,183 @@ class TaskController extends Controller
                 }
                 
 
-                try{
-                // Add Image       
+                foreach($task->attachment as $media){
                     $allowed = array('gif', 'png', 'jpg', 'jpeg', 'JPG', 'JPEG', 'PNG');
-                    if(count($task->attachment)  > 0){
-                    if(count($task->attachment)  == 1){
-                        if(in_array(pathinfo(public_path($task->attachment[0]->getUrl()),PATHINFO_EXTENSION),$allowed)){
-                            //Prod use $task->attachment[0]->getPath() 
-                            $html .= "<br><div style=\"text-align:center;\"> <img width=\"40%\" height=\"auto\" src=\"" 
-                                . $task->attachment[0]->getPath() 
-                                . "\"></div>";
+                    if(in_array(pathinfo(public_path($media->getUrl()),PATHINFO_EXTENSION),$allowed)){
+                        //Prod use $task->attachment[0]->getPath() 
+                        $html .= "<br><div style=\"text-align:center;\"> <img width=\"40%\" height=\"auto\" src=\"" 
+                            . $media->getUrl('thumb') 
+                            . "\"></div>";
 
-                            //Dev use public_path($task->attachment[0]->getUrl())
-                                // $html .= "<br><div style=\"text-align:center;\"> <img width=\"40%\" height=\"auto\" src=\"" 
-                                //     . public_path($task->attachment[0]->getUrl())
-                                //     . "\"></div>";
-                                
-                        }
-                       
+                        //Dev use public_path($task->attachment[0]->getUrl())
+                            // $html .= "<br><div style=\"text-align:center;\"> <img width=\"40%\" height=\"auto\" src=\"" 
+                            //     . public_path($task->attachment[0]->getUrl())
+                            //     . "\"></div>";
+                            
                     }
-
-                    else if(count($task->attachment) == 2){
-                        if(in_array(pathinfo(public_path($task->attachment[0]->getUrl()),PATHINFO_EXTENSION),$allowed)){
-                            $html .= "<br><div style=\"text-align:center;\"> <img width=\"25%\" height=\"auto\" src=\"" 
-                                . $task->attachment[0]->getPath()  
-                                . "\">";
-                        }
-                        if(in_array(pathinfo(public_path($task->attachment[1]->getUrl()),PATHINFO_EXTENSION),$allowed)){
-                            $html .= " <img width=\"25%\" height=\"auto\" src=\"" 
-                                . $task->attachment[1]->getPath() 
-                                . "\"></div>";
-                        }
-                    }
-                    else if(count($task->attachment) == 3){
-                        if(in_array(pathinfo(public_path($task->attachment[0]->getUrl()),PATHINFO_EXTENSION),$allowed)){
-                            $html .= "<br><div style=\"text-align:center;\"> <img width=\"25%\" height=\"auto\" src=\"" 
-                                . $task->attachment[0]->getPath() 
-                                . "\">";
-                        }
-                        if(in_array(pathinfo(public_path($task->attachment[1]->getUrl()),PATHINFO_EXTENSION),$allowed)){
-                            $html .= " <img width=\"25%\" height=\"auto\" src=\"" 
-                                . $task->attachment[1]->getPath() 
-                                . "\"></div>";
-                        }
-                        if(in_array(pathinfo(public_path($task->attachment[2]->getUrl()),PATHINFO_EXTENSION),$allowed)){
-                            $html .= "<div style=\"text-align:center;\"> <img width=\"25%\" height=\"auto\" src=\"" 
-                                . $task->attachment[2]->getPath() 
-                                . "\"></div>";
-                        }
-
-                    }
-                    else if(count($task->attachment) == 4){
-                        if(in_array(pathinfo(public_path($task->attachment[0]->getUrl()),PATHINFO_EXTENSION),$allowed)){
-                            $html .= "<br><div style=\"text-align:center;\"> <img width=\"25%\" height=\"auto\" src=\"" 
-                                . $task->attachment[0]->getPath() 
-                                . "\">";
-                        }
-                        if(in_array(pathinfo(public_path($task->attachment[1]->getUrl()),PATHINFO_EXTENSION),$allowed)){
-                            $html .= " <img width=\"25%\" height=\"auto\" src=\"" 
-                                . $task->attachment[1]->getPath() 
-                                . "\"></div>";
-                        }
-                        if(in_array(pathinfo(public_path($task->attachment[2]->getUrl()),PATHINFO_EXTENSION),$allowed)){
-                            $html .= "<div style=\"text-align:center;\"> <img width=\"25%\" height=\"auto\" src=\"" 
-                                . $task->attachment[2]->getPath() 
-                                . "\">";
-                        }
-                        if(in_array(pathinfo(public_path($task->attachment[3]->getUrl()),PATHINFO_EXTENSION),$allowed)){
-                            $html .= " <img width=\"25%\" height=\"auto\" src=\"" 
-                                . $task->attachment[3]->getPath()  
-                                . "\"></div>";
-                        }
-                    }
-
-                    else{
-                        if(in_array(pathinfo(public_path($task->attachment[0]->getUrl()),PATHINFO_EXTENSION),$allowed)){
-                            $html .= "<br><div style=\"text-align:center;\"> <img width=\"25%\" height=\"auto\" src=\"" 
-                                . $task->attachment[0]->getPath() 
-                                . "\">";
-                        }
-                        if(in_array(pathinfo(public_path($task->attachment[1]->getUrl()),PATHINFO_EXTENSION),$allowed)){
-                            $html .= " <img width=\"25%\" height=\"auto\" src=\"" 
-                                . $task->attachment[1]->getPath() 
-                                . "\"></div>";
-                        }
-                        if(in_array(pathinfo(public_path($task->attachment[2]->getUrl()),PATHINFO_EXTENSION),$allowed)){
-                            $html .= "<div style=\"text-align:center;\"> <img width=\"25%\" height=\"auto\" src=\"" 
-                                . $task->attachment[2]->getPath() 
-                                . "\">";
-                        }
-                        if(in_array(pathinfo(public_path($task->attachment[3]->getUrl()),PATHINFO_EXTENSION),$allowed)){
-                            $html .= " <img width=\"25%\" height=\"auto\" src=\"" 
-                                . $task->attachment[3]->getPath()  
-                                . "\"></div>";
-                        }
-                    }
-
-                    // }
-                    // else if(count($task->attachment) == 5){
-                    //     if(in_array(pathinfo(public_path($task->attachment[0]->getUrl()),PATHINFO_EXTENSION),$allowed)){
-                    //         $html .= "<br><div style=\"text-align:center;\"> <img width=\"20%\" height=\"auto\" src=\"" 
-                    //             . $task->attachment[0]->getPath() 
-                    //             . "\">";
-                    //     }
-                    //     if(in_array(pathinfo(public_path($task->attachment[1]->getUrl()),PATHINFO_EXTENSION),$allowed)){
-                    //         $html .= " <img width=\"20%\" height=\"auto\" src=\"" 
-                    //             . $task->attachment[1]->getPath() 
-                    //             . "\"></div>";
-                    //     }
-                    //     if(in_array(pathinfo(public_path($task->attachment[2]->getUrl()),PATHINFO_EXTENSION),$allowed)){
-                    //         $html .= "<div style=\"text-align:center;\"> <img width=\"20%\" height=\"auto\" src=\"" 
-                    //             . $task->attachment[2]->getPath() 
-                    //             . "\">";
-                    //     }
-                    //     if(in_array(pathinfo(public_path($task->attachment[3]->getUrl()),PATHINFO_EXTENSION),$allowed)){
-                    //         $html .= " <img width=\"20%\" height=\"auto\" src=\"" 
-                    //             . $task->attachment[3]->getPath() 
-                    //             . "\">";
-                    //     }
-                    //     if(in_array(pathinfo(public_path($task->attachment[4]->getUrl()),PATHINFO_EXTENSION),$allowed)){
-                    //         $html .= " <img width=\"20%\" height=\"auto\" src=\"" 
-                    //             . $task->attachment[4]->getPath() 
-                    //             . "\"></div>";
-                    //     }
-
-                    // }
-                    // else if(count($task->attachment) == 6){
-                    //     if(in_array(pathinfo(public_path($task->attachment[0]->getUrl()),PATHINFO_EXTENSION),$allowed)){
-                    //         $html .= "<br><div style=\"text-align:center;\"> <img width=\"20%\" height=\"auto\" src=\"" 
-                    //             . $task->attachment[0]->getPath() 
-                    //             . "\">";
-                    //     }
-                    //     if(in_array(pathinfo(public_path($task->attachment[1]->getUrl()),PATHINFO_EXTENSION),$allowed)){
-                    //         $html .= " <img width=\"20%\" height=\"auto\" src=\"" 
-                    //             . $task->attachment[1]->getPath() 
-                    //             . "\">";
-                    //     }
-                    //     if(in_array(pathinfo(public_path($task->attachment[2]->getUrl()),PATHINFO_EXTENSION),$allowed)){
-                    //         $html .= " <img width=\"20%\" height=\"auto\" src=\"" 
-                    //             . $task->attachment[2]->getPath() 
-                    //             . "\"></div>";
-                    //     }
-                    //     if(in_array(pathinfo(public_path($task->attachment[3]->getUrl()),PATHINFO_EXTENSION),$allowed)){
-                    //         $html .= "<div style=\"text-align:center;\"><img width=\"20%\" height=\"auto\" src=\"" 
-                    //             . $task->attachment[3]->getPath() 
-                    //             . "\">";
-                    //     }
-                    //     if(in_array(pathinfo(public_path($task->attachment[4]->getUrl()),PATHINFO_EXTENSION),$allowed)){
-                    //         $html .= " <img width=\"20%\" height=\"auto\" src=\"" 
-                    //             . $task->attachment[4]->getPath() 
-                    //             . "\">";
-                    //     }
-                    //     if(in_array(pathinfo(public_path($task->attachment[5]->getUrl()),PATHINFO_EXTENSION),$allowed)){
-                    //         $html .= " <img width=\"20%\" height=\"auto\" src=\"" 
-                    //             . $task->attachment[5]->getPath() 
-                    //             . "\"></div>";
-                    //     }
-                    // }
-                    }
-                }catch(Exception $e){
-                    print "Creating an mPDF object failed with" . $e->getMessage();
                 }
+
+                // try{
+                // // Add Image       
+                //     $allowed = array('gif', 'png', 'jpg', 'jpeg', 'JPG', 'JPEG', 'PNG');
+                //     if(count($task->attachment)  > 0){
+                //     if(count($task->attachment)  == 1){
+                //         if(in_array(pathinfo(public_path($task->attachment[0]->getUrl()),PATHINFO_EXTENSION),$allowed)){
+                //             //Prod use $task->attachment[0]->getPath() 
+                //             $html .= "<br><div style=\"text-align:center;\"> <img width=\"40%\" height=\"auto\" src=\"" 
+                //                 . $task->attachment[0]->getPath() 
+                //                 . "\"></div>";
+
+                //             //Dev use public_path($task->attachment[0]->getUrl())
+                //                 // $html .= "<br><div style=\"text-align:center;\"> <img width=\"40%\" height=\"auto\" src=\"" 
+                //                 //     . public_path($task->attachment[0]->getUrl())
+                //                 //     . "\"></div>";
+                                
+                //         }
+                       
+                //     }
+
+                //     else if(count($task->attachment) == 2){
+                //         if(in_array(pathinfo(public_path($task->attachment[0]->getUrl()),PATHINFO_EXTENSION),$allowed)){
+                //             $html .= "<br><div style=\"text-align:center;\"> <img width=\"25%\" height=\"auto\" src=\"" 
+                //                 . $task->attachment[0]->getPath()  
+                //                 . "\">";
+                //         }
+                //         if(in_array(pathinfo(public_path($task->attachment[1]->getUrl()),PATHINFO_EXTENSION),$allowed)){
+                //             $html .= " <img width=\"25%\" height=\"auto\" src=\"" 
+                //                 . $task->attachment[1]->getPath() 
+                //                 . "\"></div>";
+                //         }
+                //     }
+                //     else if(count($task->attachment) == 3){
+                //         if(in_array(pathinfo(public_path($task->attachment[0]->getUrl()),PATHINFO_EXTENSION),$allowed)){
+                //             $html .= "<br><div style=\"text-align:center;\"> <img width=\"25%\" height=\"auto\" src=\"" 
+                //                 . $task->attachment[0]->getPath() 
+                //                 . "\">";
+                //         }
+                //         if(in_array(pathinfo(public_path($task->attachment[1]->getUrl()),PATHINFO_EXTENSION),$allowed)){
+                //             $html .= " <img width=\"25%\" height=\"auto\" src=\"" 
+                //                 . $task->attachment[1]->getPath() 
+                //                 . "\"></div>";
+                //         }
+                //         if(in_array(pathinfo(public_path($task->attachment[2]->getUrl()),PATHINFO_EXTENSION),$allowed)){
+                //             $html .= "<div style=\"text-align:center;\"> <img width=\"25%\" height=\"auto\" src=\"" 
+                //                 . $task->attachment[2]->getPath() 
+                //                 . "\"></div>";
+                //         }
+
+                //     }
+                //     else if(count($task->attachment) == 4){
+                //         if(in_array(pathinfo(public_path($task->attachment[0]->getUrl()),PATHINFO_EXTENSION),$allowed)){
+                //             $html .= "<br><div style=\"text-align:center;\"> <img width=\"25%\" height=\"auto\" src=\"" 
+                //                 . $task->attachment[0]->getPath() 
+                //                 . "\">";
+                //         }
+                //         if(in_array(pathinfo(public_path($task->attachment[1]->getUrl()),PATHINFO_EXTENSION),$allowed)){
+                //             $html .= " <img width=\"25%\" height=\"auto\" src=\"" 
+                //                 . $task->attachment[1]->getPath() 
+                //                 . "\"></div>";
+                //         }
+                //         if(in_array(pathinfo(public_path($task->attachment[2]->getUrl()),PATHINFO_EXTENSION),$allowed)){
+                //             $html .= "<div style=\"text-align:center;\"> <img width=\"25%\" height=\"auto\" src=\"" 
+                //                 . $task->attachment[2]->getPath() 
+                //                 . "\">";
+                //         }
+                //         if(in_array(pathinfo(public_path($task->attachment[3]->getUrl()),PATHINFO_EXTENSION),$allowed)){
+                //             $html .= " <img width=\"25%\" height=\"auto\" src=\"" 
+                //                 . $task->attachment[3]->getPath()  
+                //                 . "\"></div>";
+                //         }
+                //     }
+
+                //     else{
+                //         if(in_array(pathinfo(public_path($task->attachment[0]->getUrl()),PATHINFO_EXTENSION),$allowed)){
+                //             $html .= "<br><div style=\"text-align:center;\"> <img width=\"25%\" height=\"auto\" src=\"" 
+                //                 . $task->attachment[0]->getPath() 
+                //                 . "\">";
+                //         }
+                //         if(in_array(pathinfo(public_path($task->attachment[1]->getUrl()),PATHINFO_EXTENSION),$allowed)){
+                //             $html .= " <img width=\"25%\" height=\"auto\" src=\"" 
+                //                 . $task->attachment[1]->getPath() 
+                //                 . "\"></div>";
+                //         }
+                //         if(in_array(pathinfo(public_path($task->attachment[2]->getUrl()),PATHINFO_EXTENSION),$allowed)){
+                //             $html .= "<div style=\"text-align:center;\"> <img width=\"25%\" height=\"auto\" src=\"" 
+                //                 . $task->attachment[2]->getPath() 
+                //                 . "\">";
+                //         }
+                //         if(in_array(pathinfo(public_path($task->attachment[3]->getUrl()),PATHINFO_EXTENSION),$allowed)){
+                //             $html .= " <img width=\"25%\" height=\"auto\" src=\"" 
+                //                 . $task->attachment[3]->getPath()  
+                //                 . "\"></div>";
+                //         }
+                //     }
+
+                //     // }
+                //     // else if(count($task->attachment) == 5){
+                //     //     if(in_array(pathinfo(public_path($task->attachment[0]->getUrl()),PATHINFO_EXTENSION),$allowed)){
+                //     //         $html .= "<br><div style=\"text-align:center;\"> <img width=\"20%\" height=\"auto\" src=\"" 
+                //     //             . $task->attachment[0]->getPath() 
+                //     //             . "\">";
+                //     //     }
+                //     //     if(in_array(pathinfo(public_path($task->attachment[1]->getUrl()),PATHINFO_EXTENSION),$allowed)){
+                //     //         $html .= " <img width=\"20%\" height=\"auto\" src=\"" 
+                //     //             . $task->attachment[1]->getPath() 
+                //     //             . "\"></div>";
+                //     //     }
+                //     //     if(in_array(pathinfo(public_path($task->attachment[2]->getUrl()),PATHINFO_EXTENSION),$allowed)){
+                //     //         $html .= "<div style=\"text-align:center;\"> <img width=\"20%\" height=\"auto\" src=\"" 
+                //     //             . $task->attachment[2]->getPath() 
+                //     //             . "\">";
+                //     //     }
+                //     //     if(in_array(pathinfo(public_path($task->attachment[3]->getUrl()),PATHINFO_EXTENSION),$allowed)){
+                //     //         $html .= " <img width=\"20%\" height=\"auto\" src=\"" 
+                //     //             . $task->attachment[3]->getPath() 
+                //     //             . "\">";
+                //     //     }
+                //     //     if(in_array(pathinfo(public_path($task->attachment[4]->getUrl()),PATHINFO_EXTENSION),$allowed)){
+                //     //         $html .= " <img width=\"20%\" height=\"auto\" src=\"" 
+                //     //             . $task->attachment[4]->getPath() 
+                //     //             . "\"></div>";
+                //     //     }
+
+                //     // }
+                //     // else if(count($task->attachment) == 6){
+                //     //     if(in_array(pathinfo(public_path($task->attachment[0]->getUrl()),PATHINFO_EXTENSION),$allowed)){
+                //     //         $html .= "<br><div style=\"text-align:center;\"> <img width=\"20%\" height=\"auto\" src=\"" 
+                //     //             . $task->attachment[0]->getPath() 
+                //     //             . "\">";
+                //     //     }
+                //     //     if(in_array(pathinfo(public_path($task->attachment[1]->getUrl()),PATHINFO_EXTENSION),$allowed)){
+                //     //         $html .= " <img width=\"20%\" height=\"auto\" src=\"" 
+                //     //             . $task->attachment[1]->getPath() 
+                //     //             . "\">";
+                //     //     }
+                //     //     if(in_array(pathinfo(public_path($task->attachment[2]->getUrl()),PATHINFO_EXTENSION),$allowed)){
+                //     //         $html .= " <img width=\"20%\" height=\"auto\" src=\"" 
+                //     //             . $task->attachment[2]->getPath() 
+                //     //             . "\"></div>";
+                //     //     }
+                //     //     if(in_array(pathinfo(public_path($task->attachment[3]->getUrl()),PATHINFO_EXTENSION),$allowed)){
+                //     //         $html .= "<div style=\"text-align:center;\"><img width=\"20%\" height=\"auto\" src=\"" 
+                //     //             . $task->attachment[3]->getPath() 
+                //     //             . "\">";
+                //     //     }
+                //     //     if(in_array(pathinfo(public_path($task->attachment[4]->getUrl()),PATHINFO_EXTENSION),$allowed)){
+                //     //         $html .= " <img width=\"20%\" height=\"auto\" src=\"" 
+                //     //             . $task->attachment[4]->getPath() 
+                //     //             . "\">";
+                //     //     }
+                //     //     if(in_array(pathinfo(public_path($task->attachment[5]->getUrl()),PATHINFO_EXTENSION),$allowed)){
+                //     //         $html .= " <img width=\"20%\" height=\"auto\" src=\"" 
+                //     //             . $task->attachment[5]->getPath() 
+                //     //             . "\"></div>";
+                //     //     }
+                //     // }
+                //     }
+                // }catch(Exception $e){
+                //     print "Creating an mPDF object failed with" . $e->getMessage();
+                // }
 
                 $mpdf->WriteHTML($html);
             }
