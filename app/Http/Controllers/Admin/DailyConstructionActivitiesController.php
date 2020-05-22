@@ -59,14 +59,14 @@ class DailyConstructionActivitiesController extends Controller
                 }
 
                 $links = [];
-
+                
                  foreach ($row->image_upload as $media) {
-                       $links[] = '<a href="' . $media->getUrl() . '" target="_blank"><img src="' . $media->getUrl('thumb') . '" width="50px" height="50px"></a>';      
-                      
-                    }
+                        $links[] = '<a href="' . $media->getUrl() . '" target="_blank"><img src="' . $media->getUrl('thumb') . '" width="50px" height="50px"></a>';      
+                 }
                     
 
-                return implode(' ', $links);
+                  return implode(' ', $links);
+                //  return $links;
             });
 
             $table->rawColumns(['actions', 'placeholder', 'construction_contract', 'image_upload']);
