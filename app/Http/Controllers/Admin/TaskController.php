@@ -268,8 +268,8 @@ class TaskController extends Controller
                     $allowed = array('gif', 'png', 'jpg', 'jpeg', 'JPG', 'JPEG', 'PNG');
                     if(in_array(pathinfo(public_path($media->getUrl()),PATHINFO_EXTENSION),$allowed)){
                         //Prod use $task->attachment[0]->getPath() 
-                        $html .= "<img  src=\"" 
-                            . $media->getUrl('thumb') 
+                        $html .= "<img  width=\"30%\" height=\"auto\" src=\"" 
+                            . $media->getUrl() 
                             . "\">";
                     }
                 }
