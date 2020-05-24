@@ -59,17 +59,17 @@ class DailyConstructionActivitiesController extends Controller
                 }
 
                 $links = [];
-                $links[] = '';
-                $links[] = '<div id="gallery" data-toggle="modal" data-target="#exampleModal">';
+                $links[] = '<div id="gallery'. $row->id .'" data-toggle="modal" data-target="#exampleModal'. $row->id .'">';
+                // $links[] = '<div id="gallery" data-toggle="modal" data-target="#exampleModal"><a class="btn-xs btn-info">View</a>';
                 
                 foreach ($row->image_upload as $index => $media) {
                         // $links[] = '<a href="' . $media->getUrl() . '" target="_blank"><img src="' . $media->getUrl('thumb') . '" width="50px" height="50px"></a>';      
                         $links[] = '<img class="w-100" src="' . $media->getUrl('thumb') . '" width="50px" height="50px"
-                        data-target="#carouselExample" data-slide-to="'. $index .'">';      
+                        data-target="#carouselExample'. $row->id .'" data-slide-to="'. $index .'">';      
                     }
                 $links[] = '</div>';
                     
-                $links[] = '<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-hidden="true">
+                $links[] = '<div class="modal fade" id="exampleModal'. $row->id .'" tabindex="-1" role="dialog" aria-hidden="true">
                 <div class="modal-dialog" role="document">
                   <div class="modal-content">
                     <div class="modal-header">
@@ -79,15 +79,15 @@ class DailyConstructionActivitiesController extends Controller
                       </button>
                     </div>
                     <div class="modal-body">
-                      <div id="carouselExample" class="carousel slide" data-ride="carousel">
+                      <div id="carouselExample'. $row->id .'" class="carousel slide" data-ride="carousel">
                         <ol class="carousel-indicators">';
                 
                 foreach ($row->image_upload as $index => $media) {
                     if($index == 0){
-                        $links[] = '<li data-target="#carouselExample" data-slide-to="'. $index .'" class="active"></li>';
+                        $links[] = '<li data-target="#carouselExample'. $row->id .'" data-slide-to="'. $index .'" class="active"></li>';
                     }
                     else{
-                        $links[] = '<li data-target="#carouselExample" data-slide-to="'. $index .'"></li>';
+                        $links[] = '<li data-target="#carouselExample'. $row->id .'" data-slide-to="'. $index .'"></li>';
                     }
                 }
 
@@ -111,11 +111,11 @@ class DailyConstructionActivitiesController extends Controller
                 }
                 
                 $links[] = '</div>
-                <a class="left carousel-control" href="#carouselExample" role="button" data-slide="prev">
+                <a class="left carousel-control" href="#carouselExample'. $row->id .'" role="button" data-slide="prev">
                   <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
                   <span class="sr-only">Previous</span>
                 </a>
-                <a class="right carousel-control" href="#carouselExample" role="button" data-slide="next">
+                <a class="right carousel-control" href="#carouselExample'. $row->id .'" role="button" data-slide="next">
                   <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
                   <span class="sr-only">Next</span>
                 </a>
@@ -127,14 +127,16 @@ class DailyConstructionActivitiesController extends Controller
           </div>
         </div>
       </div>';
-
-                return implode(' ', $links);
-                  //return $links;
+                
+                    return implode(' ', $links);
+                
+                //   return $links;
             });
 
             $table->rawColumns(['actions', 'placeholder', 'construction_contract', 'image_upload']);
-
+            
             return $table->make(true);
+            
         }
 
         return view('admin.dailyConstructionActivities.index');
