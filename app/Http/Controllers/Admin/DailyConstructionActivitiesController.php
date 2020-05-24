@@ -54,82 +54,93 @@ class DailyConstructionActivitiesController extends Controller
             });
 
             $table->editColumn('image_upload', function ($row) {
-                if (!$row->image_upload) {
-                    return '';
-                }
+    //             if (!$row->image_upload) {
+    //                 return '';
+    //             }
 
-                $links = [];
-                $links[] = '<div id="gallery'. $row->id .'" data-toggle="modal" data-target="#exampleModal'. $row->id .'">';
-                // $links[] = '<div id="gallery" data-toggle="modal" data-target="#exampleModal"><a class="btn-xs btn-info">View</a>';
+    //             $links = [];
+    //             $links[] = '<div id="gallery'. $row->id .'" data-toggle="modal" data-target="#exampleModal'. $row->id .'">';
+    //             // $links[] = '<div id="gallery" data-toggle="modal" data-target="#exampleModal"><a class="btn-xs btn-info">View</a>';
                 
-                foreach ($row->image_upload as $index => $media) {
-                        // $links[] = '<a href="' . $media->getUrl() . '" target="_blank"><img src="' . $media->getUrl('thumb') . '" width="50px" height="50px"></a>';      
-                        $links[] = '<img class="w-100" src="' . $media->getUrl('thumb') . '" width="50px" height="50px"
-                        data-target="#carouselExample'. $row->id .'" data-slide-to="'. $index .'">';      
-                    }
-                $links[] = '</div>';
+    //             foreach ($row->image_upload as $index => $media) {
+    //                     // $links[] = '<a href="' . $media->getUrl() . '" target="_blank"><img src="' . $media->getUrl('thumb') . '" width="50px" height="50px"></a>';      
+    //                     $links[] = '<img class="w-100" src="' . $media->getUrl('thumb') . '" width="50px" height="50px"
+    //                     data-target="#carouselExample'. $row->id .'" data-slide-to="'. $index .'">';      
+    //                 }
+    //             $links[] = '</div>';
                     
-                $links[] = '<div class="modal fade" id="exampleModal'. $row->id .'" tabindex="-1" role="dialog" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      ' . $row->work_title .  '
-                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                      </button>
-                    </div>
-                    <div class="modal-body">
-                      <div id="carouselExample'. $row->id .'" class="carousel slide" data-ride="carousel">
-                        <ol class="carousel-indicators">';
+    //             $links[] = '<div class="modal fade" id="exampleModal'. $row->id .'" tabindex="-1" role="dialog" aria-hidden="true">
+    //             <div class="modal-dialog" role="document">
+    //               <div class="modal-content">
+    //                 <div class="modal-header">
+    //                   ' . $row->work_title .  '
+    //                   <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+    //                     <span aria-hidden="true">&times;</span>
+    //                   </button>
+    //                 </div>
+    //                 <div class="modal-body">
+    //                   <div id="carouselExample'. $row->id .'" class="carousel slide" data-ride="carousel">
+    //                     <ol class="carousel-indicators">';
                 
-                foreach ($row->image_upload as $index => $media) {
-                    if($index == 0){
-                        $links[] = '<li data-target="#carouselExample'. $row->id .'" data-slide-to="'. $index .'" class="active"></li>';
-                    }
-                    else{
-                        $links[] = '<li data-target="#carouselExample'. $row->id .'" data-slide-to="'. $index .'"></li>';
-                    }
-                }
+    //             foreach ($row->image_upload as $index => $media) {
+    //                 if($index == 0){
+    //                     $links[] = '<li data-target="#carouselExample'. $row->id .'" data-slide-to="'. $index .'" class="active"></li>';
+    //                 }
+    //                 else{
+    //                     $links[] = '<li data-target="#carouselExample'. $row->id .'" data-slide-to="'. $index .'"></li>';
+    //                 }
+    //             }
 
-                $links[] = '</ol>
-                <div class="carousel-inner">';
+    //             $links[] = '</ol>
+    //             <div class="carousel-inner">';
 
-                foreach ($row->image_upload as $index => $media) {
-                    if($index == 0){
-                        $links[] = '<div class="item active">
-                        <div class="desc">' . ($index+1) .' of '. count($row->image_upload) .'</div>
-                        <img class="d-block w-100" src="'. $media->getUrl() .'">
-                        </div
-                        </div>';
-                    }
-                    else{
-                        $links[] = '<div class="item">
-                        <div class="desc">' . ($index+1) .' of '. count($row->image_upload) .'</div>
-                        <img class="d-block w-100" src="'. $media->getUrl() .'">
-                        </div>';
-                    }
-                }
+    //             foreach ($row->image_upload as $index => $media) {
+    //                 if($index == 0){
+    //                     $links[] = '<div class="item active">
+    //                     <div class="desc">' . ($index+1) .' of '. count($row->image_upload) .'</div>
+    //                     <img class="d-block w-100" src="'. $media->getUrl() .'">
+    //                     </div
+    //                     </div>';
+    //                 }
+    //                 else{
+    //                     $links[] = '<div class="item">
+    //                     <div class="desc">' . ($index+1) .' of '. count($row->image_upload) .'</div>
+    //                     <img class="d-block w-100" src="'. $media->getUrl() .'">
+    //                     </div>';
+    //                 }
+    //             }
                 
-                $links[] = '</div>
-                <a class="left carousel-control" href="#carouselExample'. $row->id .'" role="button" data-slide="prev">
-                  <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-                  <span class="sr-only">Previous</span>
-                </a>
-                <a class="right carousel-control" href="#carouselExample'. $row->id .'" role="button" data-slide="next">
-                  <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-                  <span class="sr-only">Next</span>
-                </a>
-              </div>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            </div>
-          </div>
-        </div>
-      </div>';
+    //             $links[] = '</div>
+    //             <a class="left carousel-control" href="#carouselExample'. $row->id .'" role="button" data-slide="prev">
+    //               <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+    //               <span class="sr-only">Previous</span>
+    //             </a>
+    //             <a class="right carousel-control" href="#carouselExample'. $row->id .'" role="button" data-slide="next">
+    //               <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+    //               <span class="sr-only">Next</span>
+    //             </a>
+    //           </div>
+    //         </div>
+    //         <div class="modal-footer">
+    //           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+    //         </div>
+    //       </div>
+    //     </div>
+    //   </div>';
                 
-                    return implode(' ', $links);
+    //                 return implode(' ', $links);
                 
+    if (!$row->image_upload) {
+        return '';
+    }
+
+    $links = [];
+
+    foreach ($row->image_upload as $media) {
+        $links[] = '<a href="' . $media->getUrl() . '" target="_blank"><img src="' . $media->getUrl('thumb') . '" width="50px" height="50px"></a>';
+    }
+
+    return implode(' ', $links);
                 //   return $links;
             });
 
