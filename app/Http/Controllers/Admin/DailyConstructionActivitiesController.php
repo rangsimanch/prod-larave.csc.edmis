@@ -59,14 +59,76 @@ class DailyConstructionActivitiesController extends Controller
                 }
 
                 $links = [];
+                $links[] = '<div id="gallery" data-toggle="modal" data-target="#exampleModal">';
                 
-                 foreach ($row->image_upload as $media) {
-                        $links[] = '<a href="' . $media->getUrl() . '" target="_blank"><img src="' . $media->getUrl('thumb') . '" width="50px" height="50px"></a>';      
-                 }
+                foreach ($row->image_upload as $index => $media) {
+                        // $links[] = '<a href="' . $media->getUrl() . '" target="_blank"><img src="' . $media->getUrl('thumb') . '" width="50px" height="50px"></a>';      
+                        $links[] = '<img class="w-100" src="' . $media->getUrl('thumb') . '" width="50px" height="50px"
+                        data-target="#carouselExample" data-slide-to="'. $index .'">';      
+                    }
+                $links[] = '</div>';
                     
+                $links[] = '<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      ' . $row->work_title .  '
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                      <div id="carouselExample" class="carousel slide" data-ride="carousel">
+                        <ol class="carousel-indicators">';
+                
+                foreach ($row->image_upload as $index => $media) {
+                    if($index == 0){
+                        $links[] = '<li data-target="#carouselExample" data-slide-to="'. $index .'" class="active"></li>';
+                    }
+                    else{
+                        $links[] = '<li data-target="#carouselExample" data-slide-to="'. $index .'"></li>';
+                    }
+                }
 
-                  return implode(' ', $links);
-                //  return $links;
+                $links[] = '</ol>
+                <div class="carousel-inner">';
+
+                foreach ($row->image_upload as $index => $media) {
+                    if($index == 0){
+                        $links[] = '<div class="item active">
+                        <div class="desc">' . ($index+1) .' of '. count($row->image_upload) .'</div>
+                        <img class="d-block w-100" src="'. $media->getUrl() .'">
+                        </div
+                        </div>';
+                    }
+                    else{
+                        $links[] = '<div class="item">
+                        <div class="desc">' . ($index+1) .' of '. count($row->image_upload) .'</div>
+                        <img class="d-block w-100" src="'. $media->getUrl() .'">
+                        </div>';
+                    }
+                }
+                
+                $links[] = '</div>
+                <a class="left carousel-control" href="#carouselExample" role="button" data-slide="prev">
+                  <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                  <span class="sr-only">Previous</span>
+                </a>
+                <a class="right carousel-control" href="#carouselExample" role="button" data-slide="next">
+                  <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                  <span class="sr-only">Next</span>
+                </a>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>';
+
+                return implode(' ', $links);
+                  //return $links;
             });
 
             $table->rawColumns(['actions', 'placeholder', 'construction_contract', 'image_upload']);

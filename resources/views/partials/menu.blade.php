@@ -170,7 +170,7 @@
                     </ul>
                 </li>
             @endcan
-            @can('tasks_calendar_access')
+            <!-- @can('tasks_calendar_access')
                 <li class="{{ request()->is('admin/tasks-calendars') || request()->is('admin/tasks-calendars/*') ? 'active' : '' }}">
                     <a href="{{ route("admin.tasks-calendars.index") }}">
                         <i class="fa-fw fas fa-calendar">
@@ -179,6 +179,16 @@
                         <span>{{ trans('cruds.tasksCalendar.title') }}</span>
                     </a>
                 </li>
+            @endcan -->
+            @can('daily_construction_activity_access')
+                            <li class="{{ request()->is('admin/daily-construction-activities') || request()->is('admin/daily-construction-activities/*') ? 'active' : '' }}">
+                                <a href="{{ route("admin.daily-construction-activities.index") }}">
+                                    <i class="fa-fw fas fa-camera">
+
+                                    </i>
+                                    <span>{{ trans('cruds.dailyConstructionActivity.title') }}</span>
+                                </a>
+                            </li>
             @endcan
             @can('daily_request_access')
                 <li class="{{ request()->is('admin/daily-requests') || request()->is('admin/daily-requests/*') ? 'active' : '' }}">
@@ -303,7 +313,7 @@
                                 </a>
                             </li>
                         @endcan
-                        @can('daily_construction_activity_access')
+                        <!-- @can('daily_construction_activity_access')
                             <li class="{{ request()->is('admin/daily-construction-activities') || request()->is('admin/daily-construction-activities/*') ? 'active' : '' }}">
                                 <a href="{{ route("admin.daily-construction-activities.index") }}">
                                     <i class="fa-fw fas fa-camera">
@@ -312,7 +322,7 @@
                                     <span>{{ trans('cruds.dailyConstructionActivity.title') }}</span>
                                 </a>
                             </li>
-                        @endcan
+                        @endcan -->
                         @can('records_of_visitor_access')
                             <li class="{{ request()->is('admin/records-of-visitors') || request()->is('admin/records-of-visitors/*') ? 'active' : '' }}">
                                 <a href="{{ route("admin.records-of-visitors.index") }}">
