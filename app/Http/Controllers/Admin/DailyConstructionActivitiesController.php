@@ -59,6 +59,7 @@ class DailyConstructionActivitiesController extends Controller
                 }
 
                 $links = [];
+                $links[] = '';
                 $links[] = '<div id="gallery" data-toggle="modal" data-target="#exampleModal">';
                 
                 foreach ($row->image_upload as $index => $media) {
