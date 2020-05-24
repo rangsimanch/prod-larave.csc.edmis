@@ -8,7 +8,7 @@
     .desc {
         position: absolute;
         background-color: black;
-        bottom: 60px;
+        top: 20px;
         right:10px;
         color: white;
         padding-left: 20%;
