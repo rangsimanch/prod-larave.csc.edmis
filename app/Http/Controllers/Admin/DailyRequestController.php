@@ -88,8 +88,9 @@ class DailyRequestController extends Controller
 
     public function store(StoreDailyRequestRequest $request)
     {
-        $dailyRequest = DailyRequest::create($request->all());
-
+        $data = $request->all();
+        $data['receive_by_id'] = auth()->id();
+        $dailyRequest = DailyRequest::create($data);
         foreach ($request->input('documents', []) as $file) {
             $dailyRequest->addMedia(storage_path('tmp/uploads/' . $file))->toMediaCollection('documents');
         }
