@@ -99,7 +99,6 @@ class DailyConstructionActivitiesController extends Controller
                         $links[] = '<div class="item active">
                         <div class="desc">' . ($index+1) .' of '. count($row->image_upload) .'</div>
                         <img class="d-block w-100" src="'. $media->getUrl() .'">
-                        </div
                         </div>';
                     }
                     else{
