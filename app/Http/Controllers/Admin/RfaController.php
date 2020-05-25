@@ -782,14 +782,14 @@ class RfaController extends Controller
             $userAlert->users()->sync($data_user_id);
 
             //Alert Admin Pook
-            $data_alert['alert_text'] = 'You have new RFA to Distribute.';
+            $data_alert['alert_text'] = 'You have new RFA.';
             $data_alert['alert_link'] = route('admin.rfas.index');
     
             $userAlert = UserAlert::create($data_alert);
             $userAlert->users()->sync(11);
 
             //Alert Admin 
-            $data_alert['alert_text'] = 'You have new RFA to Distribute.';
+            $data_alert['alert_text'] = 'You have new RFA.';
             $data_alert['alert_link'] = route('admin.rfas.index');
     
             $userAlert = UserAlert::create($data_alert);
