@@ -460,7 +460,7 @@ class RfaController extends Controller
 
         return view('admin.rfas.index',compact('document_status','types','work_types','construction_contracts','wbs_level_3s','wbs_level_4s','submit_dates','receive_dates','comment_statuses','for_statuses','teams'));
     }
-
+    
     function fetch(Request $request){
         $id = $request->get('select');
         $result = array();

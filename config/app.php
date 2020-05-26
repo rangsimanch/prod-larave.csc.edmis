@@ -168,6 +168,7 @@ return [
          */
         Bugsnag\BugsnagLaravel\BugsnagServiceProvider::class,
         Collective\Html\HtmlServiceProvider::class,
+        Intervention\Image\ImageServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -235,6 +236,8 @@ return [
         'Html'         => Collective\Html\HtmlFacade::class,
 
         'PDF' => niklasravnsborg\LaravelPdf\Facades\Pdf::class,
+
+        'Image' => Intervention\Image\Facades\Image::class,
 
     ],
 

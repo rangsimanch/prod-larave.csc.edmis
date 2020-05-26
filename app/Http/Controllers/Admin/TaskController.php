@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use Image;
 use PDF;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Traits\MediaUploadingTrait;
@@ -280,52 +281,73 @@ class TaskController extends Controller
                 try{
                 // Add Image       
                     $allowed = array('gif', 'png', 'jpg', 'jpeg', 'JPG', 'JPEG', 'PNG');
+                    
                     if(count($task->attachment)  > 0){
                         if(count($task->attachment)  == 1){
+                            
                             if(in_array(pathinfo(public_path($task->attachment[0]->getUrl()),PATHINFO_EXTENSION),$allowed)){
-                                //Prod use $task->attachment[0]->getPath() 
-                                $html .= "<br><div style=\"text-align:center;\"> <img width=\"40%\" height=\"auto\" src=\"" 
-                                    . $task->attachment[0]->getPath() 
-                                    . "\"></div>";
+                            
+                                $img = (string) Image::make($task->attachment[0]->getPath())->resize(null, 200, function ($constraint) {
+                                    $constraint->aspectRatio();
+                                })->encode('data-url');
 
-                                //Dev use public_path($task->attachment[0]->getUrl())
-                                    // $html .= "<br><div style=\"text-align:center;\"> <img width=\"40%\" height=\"auto\" src=\"" 
-                                    //     . public_path($task->attachment[0]->getUrl())
-                                    //     . "\"></div>";
-                                    
+                                $html .= "<br><div style=\"text-align:center;\"> <img width=\"30%\" height=\"auto\" src=\"" 
+                                    . $img
+                                    . "\"></div>";
                             }
                         
                         }
 
                         else if(count($task->attachment) == 2){
+
                             if(in_array(pathinfo(public_path($task->attachment[0]->getUrl()),PATHINFO_EXTENSION),$allowed)){
+                                $img = (string) Image::make($task->attachment[0]->getPath())->resize(null, 200, function ($constraint) {
+                                    $constraint->aspectRatio();
+                                })
+                                ->encode('data-url');
+
                                 $html .= "<br><div style=\"text-align:center;\"> <img width=\"25%\" height=\"auto\" src=\"" 
-                                    . $task->attachment[0]->getPath()  
+                                    . $img
                                     . "\">";
                             }
                             if(in_array(pathinfo(public_path($task->attachment[1]->getUrl()),PATHINFO_EXTENSION),$allowed)){
+                                $img = (string) Image::make($task->attachment[1]->getPath())->resize(null, 200, function ($constraint) {
+                                    $constraint->aspectRatio();
+                                })->encode('data-url');
+                                
                                 $html .= " <img width=\"25%\" height=\"auto\" src=\"" 
-                                    . $task->attachment[1]->getPath() 
+                                    . $img
                                     . "\"></div>";
                             }
                         }
                         else if(count($task->attachment) == 3){
                             if(in_array(pathinfo(public_path($task->attachment[0]->getUrl()),PATHINFO_EXTENSION),$allowed)){
+                                $img = (string) Image::make($task->attachment[0]->getPath())->resize(null, 200, function ($constraint) {
+                                    $constraint->aspectRatio();
+                                })->encode('data-url');
+                                
                                 $html .= "<br><div style=\"text-align:center;\"> <img width=\"20%\" height=\"auto\" src=\"" 
-                                    . $task->attachment[0]->getPath() 
+                                    . $img
                                     . "\">";
                             }
                             if(in_array(pathinfo(public_path($task->attachment[1]->getUrl()),PATHINFO_EXTENSION),$allowed)){
+                                $img = (string) Image::make($task->attachment[1]->getPath())->resize(null, 200, function ($constraint) {
+                                    $constraint->aspectRatio();
+                                })->encode('data-url');
+                                
                                 $html .= " <img width=\"20%\" height=\"auto\" src=\"" 
-                                    . $task->attachment[1]->getPath() 
+                                    . $img
                                     . "\">";
                             }
                             if(in_array(pathinfo(public_path($task->attachment[2]->getUrl()),PATHINFO_EXTENSION),$allowed)){
+                                $img = (string) Image::make($task->attachment[2]->getPath())->resize(null, 200, function ($constraint) {
+                                    $constraint->aspectRatio();
+                                })->encode('data-url');
+
                                 $html .= "<img width=\"20%\" height=\"auto\" src=\"" 
-                                    . $task->attachment[2]->getPath() 
+                                    . $img 
                                     . "\"></div>";
                             }
-
                         }
                         // else if(count($task->attachment) == 4){
                         //     if(in_array(pathinfo(public_path($task->attachment[0]->getUrl()),PATHINFO_EXTENSION),$allowed)){
@@ -352,23 +374,33 @@ class TaskController extends Controller
 
                         else{
                             if(in_array(pathinfo(public_path($task->attachment[0]->getUrl()),PATHINFO_EXTENSION),$allowed)){
+                                $img = (string) Image::make($task->attachment[0]->getPath())->resize(null, 200, function ($constraint) {
+                                    $constraint->aspectRatio();
+                                })->encode('data-url');
+                                
                                 $html .= "<br><div style=\"text-align:center;\"> <img width=\"20%\" height=\"auto\" src=\"" 
-                                    . $task->attachment[0]->getPath() 
+                                    . $img
                                     . "\">";
                             }
                             if(in_array(pathinfo(public_path($task->attachment[1]->getUrl()),PATHINFO_EXTENSION),$allowed)){
+                                $img = (string) Image::make($task->attachment[1]->getPath())->resize(null, 200, function ($constraint) {
+                                    $constraint->aspectRatio();
+                                })->encode('data-url');
+                                
                                 $html .= " <img width=\"20%\" height=\"auto\" src=\"" 
-                                    . $task->attachment[1]->getPath() 
+                                    . $img
                                     . "\">";
                             }
                             if(in_array(pathinfo(public_path($task->attachment[2]->getUrl()),PATHINFO_EXTENSION),$allowed)){
+                                $img = (string) Image::make($task->attachment[2]->getPath())->resize(null, 200, function ($constraint) {
+                                    $constraint->aspectRatio();
+                                })->encode('data-url');
+
                                 $html .= "<img width=\"20%\" height=\"auto\" src=\"" 
-                                    . $task->attachment[2]->getPath() 
+                                    . $img 
                                     . "\"></div>";
                             }
                         }
-                    }else{
-                        
                     }
 
                         // }
@@ -458,6 +490,8 @@ class TaskController extends Controller
         return view('admin.tasks.create', compact('tags', 'statuses'));
     }
 
+
+    
     public function store(StoreTaskRequest $request)
     {
         $data = $request->all();
