@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use PDF;
 use Illuminate\Support\Facades\Auth;
 use DB;
 use App\WorksCode;
@@ -315,7 +316,6 @@ class RfaController extends Controller
                 }
 
                 $links = [];
-
                 foreach ($row->file_upload_1 as $media) {
                     $links[] = '<a href="' . $media->getUrl() . '" target="_blank">' . trans('global.downloadFile') . '</a>';
                 }
@@ -645,6 +645,10 @@ class RfaController extends Controller
             $rfa->addMedia(storage_path('tmp/uploads/' . $file))->toMediaCollection('document_file_upload');
         }
 
+        if ($request->input('submittals_file', false)) {
+            $rfa->addMedia(storage_path('tmp/uploads/' . $request->input('submittals_file')))->toMediaCollection('submittals_file');
+        }
+
         if ($media = $request->input('ck-media', false)) {
             Media::whereIn('id', $media)->update(['model_id' => $rfa->id]);
         }
@@ -810,9 +814,14 @@ class RfaController extends Controller
             $rfa->addMedia(storage_path('tmp/uploads/' . $file))->toMediaCollection('document_file_upload');
         }
 
+        if ($request->input('submittals_file', false)) {
+            $rfa->addMedia(storage_path('tmp/uploads/' . $request->input('submittals_file')))->toMediaCollection('submittals_file');
+        }
+
         if ($media = $request->input('ck-media', false)) {
             Media::whereIn('id', $media)->update(['model_id' => $rfa->id]);
         }
+        
 
         return redirect()->route('admin.rfas.index');
     }
@@ -890,6 +899,15 @@ class RfaController extends Controller
             $rfa['incoming_number'] = "IN-" . $rfa->rfa_code ;
             $rfa['outgoing_number'] = "OUT-" . $rfa->rfa_code ;
         }
+
+        if ($request->input('submittals_file', false)) {
+            if (!$rfa->submittals_file || $request->input('submittals_file') !== $rfa->submittals_file->file_name) {
+                $rfa->addMedia(storage_path('tmp/uploads/' . $request->input('submittals_file')))->toMediaCollection('submittals_file');
+            }
+        } elseif ($rfa->submittals_file) {
+            $rfa->submittals_file->delete();
+        }
+
         
         $rfa->update($request->all());
 
@@ -1050,5 +1068,119 @@ class RfaController extends Controller
 
         return response()->json(['id' => $media->id, 'url' => $media->getUrl()], Response::HTTP_CREATED);
     }
+
+    public function createReportRFA(Rfa $rfa)
+    {
+        $submittalsRfa = SubmittalsRfa::all()->where('on_rfa_id' , $rfa->id);
+
+        $rfa->load('type', 'construction_contract', 'wbs_level_3', 'wbs_level_4', 'issueby', 'assign', 'action_by', 'comment_by', 'information_by', 'comment_status', 'for_status', 'document_status', 'create_by_user', 'team','onRfaSubmittalsRfas', 'reviewed_by','distribute_by');
+
+        //Varible setting
+        $bill = $rfa->bill ?? '';
+        $title_th = $rfa->title ?? '';
+        $title_en = $rfa->title_eng ?? '';
+        $document_number = '';
+        if(isset($rfa->origin_number)){
+            $document_number = $rfa->origin_number ?? '';
+        }
+        else{
+            $document_number = $rfa->document_number ?? '';
+        }
+        $rfa_code = $rfa->rfa_code;
+        $incoming_no = $rfa->incoming_number ?? '';
+        $receive_date = $rfa->receive_date ?? '';
+        $spec_ref_no = $rfa->spec_ref_no ?? '';
+        $clause = $rfa->clause ?? '';
+        $contract_drawing_no = $rfa->contract_drawing_no ?? '';
+        $qty_page = $rfa->qty_page ?? '';
+
+        $issue_by = 'Sitthichai Pimsawat';
+        $submit_date = $rfa->submit_date ?? '';
+        
+        $assign_to = $rfa->assign->name ?? '';
+        $distribute_date = $rfa->distribute_date ?? '';
+        $done_date = $rfa->outgoing_date ?? '';
+    
+    
+        $action_by = $rfa->action_by->name ?? '';
+        $process_date = $rfa->process_date ?? '';
+        
+        $reviewed_by = $rfa->reviewed_by->name ?? '';
+        $outgoing_number = $rfa->outgoing_number ?? '';
+        $outgoing_date = $rfa->outgoing_date ?? '';
+        
+        $purpose_for = $rfa->purpose_for ??  '';
+    
+        $submittalsRfa = $submittalsRfa ?? '';
+        
+        $document_name = wordwrap($rfa->attach_file_name ?? '',300,"<br>\n");
+        $note_1 = wordwrap($rfa->note_1 ?? '',300,"<br>\n");
+        $note_2 = wordwrap($rfa->note_2 ?? '',300,"<br>\n");
+        $note_3 = wordwrap($rfa->note_3 ?? '',300,"<br>\n");
+        $note_4 = wordwrap($rfa->note_4 ?? '',300,"<br>\n");
+
+
+        $wbslv3 = $rfa->wbs_level_3->wbs_level_3_name ?? '';
+        $wbslv4 = $rfa->wbs_level_4->wbs_level_4_name ?? '';
+        $wbs = '';
+        if(isset($wbslv4)){
+            $wbs = '1.' . $wbslv3 . ' 2.' . $wbslv4;
+        }else{
+            $wbs = '1.' . $wbslv3;
+        }
+        
+        //PDF Setting
+        try {
+            $mpdf = new \Mpdf\Mpdf([
+                'tempDir' => '../vendor/mpdf/mpdf/tmp',
+                'default_font' => 'sarabun'
+            ]);
+          } catch (\Mpdf\MpdfException $e) {
+              print "Creating an mPDF object failed with" . $e->getMessage();
+          }
+        //RFA Page
+        $pagecount = $mpdf->SetSourceFile(public_path('pdf-asset/RFA-Form.pdf'));
+        $tplId = $mpdf->ImportPage($pagecount);
+        $mpdf->UseTemplate($tplId);        
+          //Title
+        $html = "<div style=\"font-size: 14px; position:absolute;top:168px;left:80px;\">" . $bill . "</div>";
+        $html .= "<div style=\"font-size: 14px; position:absolute;top:184px;left:80px;\">" . $title_en . "</div>";
+        $html .= "<div style=\"font-size: 14px; position:absolute;top:217px;left:80px;\">" . $title_th . "</div>";
+          //No. Code.
+        $html .= "<div style=\"font-size: 14px; position:absolute;top:30px;left:650px;\">" . $rfa_code . "</div>";
+        $html .= "<div style=\"font-size: 11px; position:absolute;top:170px;left:477px;\">" . $document_number . "</div>";
+        $html .= "<div style=\"font-size: 11px; position:absolute;top:170px;left:660px;\">" . $rfa_code . "</div>";
+          //Date
+        $html .= "<div style=\"font-size: 14px; position:absolute;top:217px;left:630px;\">" . $receive_date . "</div>";
+          //Document Name
+        $html .= "<div style=\"font-size: 14px; padding-right:180px; position:absolute;top:269px;left:160px;LINE-HEIGHT:15px;\">" . $document_name . "</div>";
+        $html .= "<div style=\"font-size: 14px; position:absolute;top:265;left:630;\">" . $qty_page . "</div>";
+        
+          //WBS Spec.Ref Clase. Contract No.
+        $html .= "<div style=\"font-size: 14px; position:absolute;top:328px;left:225px;\">" . $wbs . "</div>";
+        $html .= "<div style=\"font-size: 14px; position:absolute;top:344px;left:250px;\">" . $spec_ref_no . "</div>";
+        $html .= "<div style=\"font-size: 14px; position:absolute;top:344px;left:630px;\">" . $clause . "</div>";
+        $html .= "<div style=\"font-size: 14px; position:absolute;top:360px;left:210px;\">" . $contract_drawing_no . "</div>";
+          //Note
+        $html .= "<div style=\"font-size: 14px; position:absolute;top:380px;left:120px;LINE-HEIGHT:15px;\">" . $note_1 . "</div>";
+        
+        $mpdf->WriteHTML($html);
+        
+        //Add Document
+        $allowed = array('pdf','PDF','Pdf');
+        foreach($rfa->file_upload_1 as $media){
+          if(in_array(pathinfo($media->getUrl(),PATHINFO_EXTENSION),$allowed)){
+              $pagecount = $mpdf->SetSourceFile(public_path($media->getUrl()));
+              for ($i=1; $i<=($pagecount); $i++) {
+                  $mpdf->AddPage();
+                  $import_page = $mpdf->ImportPage($i);
+                  $mpdf->UseTemplate($import_page);
+              }
+          }
+        }
+
+        return $mpdf->Output();
+    }
+
 }
 

@@ -311,6 +311,8 @@ return [
             'purpose_for_helper'            => '',
             'reviewed_by'                   => 'Reviewed By',
             'reviewed_by_helper'            => '',
+            'submittals_file'               =>  'Submittals File',
+            'submittals_file_helper'        =>  '',
             
         ],
     ],

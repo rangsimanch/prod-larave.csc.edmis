@@ -21,6 +21,7 @@ class Rfa extends Model implements HasMedia
         'file_upload_1',
         'document_file_upload',
         'commercial_file_upload',
+        'submittals_file',
     ];
 
     const DOC_COUNT_RADIO = [
@@ -354,6 +355,11 @@ class Rfa extends Model implements HasMedia
     public function distribute_by()
     {
         return $this->belongsTo(User::class, 'distribute_by_id');
+    }
+
+    public function getSubmittalsFileAttribute()
+    {
+        return $this->getMedia('submittals_file')->last();
     }
     
 }

@@ -87,6 +87,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth'], '
     Route::post('rfas/fetch','RfaController@fetch')->name('rfas.fetch');
     Route::get('rfas/{rfa}/revision','RfaController@revision')->name('rfas.revision');
     Route::post('rfas/storeRevision','RfaController@storeRevision')->name('rfas.storeRevision');
+    Route::get('rfas/{rfa}/createReportRFA','RfaController@createReportRFA')->name('rfas.createReportRFA');
     Route::resource('rfas', 'RfaController');
 
     // Rfatypes
