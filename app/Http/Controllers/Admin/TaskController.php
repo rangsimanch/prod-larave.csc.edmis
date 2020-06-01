@@ -476,7 +476,7 @@ class TaskController extends Controller
                             }
 
                         }
-                        else if(count($task->attachment) == 6){
+                        else if(count($task->attachment) > 6){
                             if(in_array(pathinfo(public_path($task->attachment[0]->getUrl()),PATHINFO_EXTENSION),$allowed)){
 
                                 $img = (string) Image::make($task->attachment[0]->getPath())->resize(null, 200, function ($constraint) {
