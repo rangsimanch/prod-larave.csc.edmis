@@ -378,7 +378,7 @@
 { data: 'check_revision', name: 'check_revision', visible: false,}, // 42
 
     ],
-    order: [[ 35, 'desc' ]],
+    order: [[ 2, 'desc' ]],
     pageLength: 10,
   };
   $('.datatable-Rfa').DataTable(dtOverrideGlobals);
