@@ -323,6 +323,19 @@ class RfaController extends Controller
                 return implode(', ', $links);
             });
 
+            $table->editColumn('submittals_file', function ($row) {
+                if (!$row->submittals_file) {
+                    return '';
+                }
+
+                $links = [];
+                foreach ($row->submittals_file as $media) {
+                    $links[] = '<a href="' . $media->getUrl() . '" target="_blank">' . trans('global.downloadFile') . '</a>';
+                }
+
+                return implode(', ', $links);
+            });
+
             $table->editColumn('commercial_file_upload', function ($row) {
                 if (!$row->commercial_file_upload) {
                     return '';
@@ -440,7 +453,7 @@ class RfaController extends Controller
                 return $row->reviewed_by ? $row->reviewed_by->name : '';
             });
 
-            $table->rawColumns(['actions', 'placeholder', 'type', 'construction_contract', 'wbs_level_3', 'wbs_level_4', 'issueby', 'assign', 'file_upload_1', 'comment_by', 'information_by', 'comment_status', 'for_status', 'document_status', 'action_by', 'create_by_user', 'update_by_user', 'approve_by_user', 'commercial_file_upload', 'document_file_upload', 'team', 'check_revision','reviewed_by','document_status_status_name']);
+            $table->rawColumns(['actions', 'placeholder', 'type', 'construction_contract', 'wbs_level_3', 'wbs_level_4', 'issueby', 'assign', 'file_upload_1', 'comment_by', 'information_by', 'comment_status', 'for_status', 'document_status', 'action_by', 'create_by_user', 'update_by_user', 'approve_by_user', 'commercial_file_upload', 'document_file_upload', 'team', 'check_revision','reviewed_by','document_status_status_name','submittals_file']);
 
             return $table->make(true);
         }
