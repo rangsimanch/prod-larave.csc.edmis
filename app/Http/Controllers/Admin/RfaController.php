@@ -1260,7 +1260,7 @@ class RfaController extends Controller
 
             $top = 425;
             foreach($submittalsRfa as $key => $submittal){
-                if($key%8 != 0){
+                if($key < 9){
                     $html .= "<div style=\"font-size: 12px; position:absolute;top:". $top ."px;left:50px;\">". 
                     $submittal['item_no'] ."</div>";
 
