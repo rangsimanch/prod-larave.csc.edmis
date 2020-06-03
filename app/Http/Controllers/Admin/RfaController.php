@@ -1281,7 +1281,7 @@ class RfaController extends Controller
         foreach($rfa->file_upload_1 as $media){
           $path = $media->getUrl();
           if(in_array(pathinfo($path,PATHINFO_EXTENSION),$allowed)){
-              $pagecount = $mpdf->SetSourceFile(public_path($media->getUrl()));
+              $pagecount = $mpdf->SetSourceFile(public_path($media->getPath()));
               for ($i=1; $i<=($pagecount); $i++) {
                   $mpdf->AddPage();
                   $import_page = $mpdf->ImportPage($i);
