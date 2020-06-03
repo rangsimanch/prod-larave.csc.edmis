@@ -356,10 +356,10 @@ class Rfa extends Model implements HasMedia
     {
         return $this->belongsTo(User::class, 'distribute_by_id');
     }
-
+    
     public function getSubmittalsFileAttribute()
     {
-        return $this->getMedia('submittals_file')->last();
+        return $this->getMedia('submittals_file');
     }
     
 }

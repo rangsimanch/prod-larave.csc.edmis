@@ -164,13 +164,17 @@
                                 </th>
 
                                 <th>
+                                    {{ trans('cruds.rfa.fields.submittals_file') }}
+                                </th>
+
+                                <th>
                                     {{ trans('cruds.rfa.fields.qty_page') }}
                                 </th>
 
                                 <th>
                                     {{ trans('cruds.rfa.fields.spec_ref_no') }}
                                     <input type="text" class="form-control filter-input"
-                                    placeholder="Search for Spec. Ref.No. ..." data-column="21"/>
+                                    placeholder="Search for Spec. Ref.No. ..." data-column="22"/>
                                 </th>
                                 <th>
                                     {{ trans('cruds.rfa.fields.clause') }}
@@ -178,26 +182,26 @@
                                 <th>
                                     {{ trans('cruds.rfa.fields.contract_drawing_no') }}
                                     <input type="text" class="form-control filter-input"
-                                    placeholder="Search for Contract Drawing No. ..." data-column="24"/>
+                                    placeholder="Search for Contract Drawing No. ..." data-column="25"/>
                                 </th>
 
                                 <th>
                                     {{ trans('cruds.rfa.fields.action_by') }}
                                     <input type="text" class="form-control filter-input"
-                                    placeholder="Search for Action by..." data-column="25"/>
+                                    placeholder="Search for Action by..." data-column="26"/>
                                 </th>
                                 
                                 <th>
                                     {{ trans('cruds.rfa.fields.comment_by') }}
 
                                     <input type="text" class="form-control filter-input"
-                                    placeholder="Search for Comment by..." data-column="26"/>
+                                    placeholder="Search for Comment by..." data-column="27"/>
                                 </th>
                                 <th>
                                     {{ trans('cruds.rfa.fields.information_by') }}
 
                                     <input type="text" class="form-control filter-input"
-                                    placeholder="Search for Information by..." data-column="27"/>
+                                    placeholder="Search for Information by..." data-column="28"/>
                                 </th>
                                 <th>
                                     {{ trans('cruds.rfa.fields.receive_date') }}
@@ -212,7 +216,7 @@
                                 <th>
                                     {{ trans('cruds.rfa.fields.comment_status') }}
 
-                                    <select class="form-control filter-select" data-column="31">
+                                    <select class="form-control filter-select" data-column="32">
                                         <option value=""> Select Status... </option>
                                         @foreach ($comment_statuses as $comment_statuse)
                                             <option value="{{ $comment_statuse }}"> {{ $comment_statuse }} </option>
@@ -226,7 +230,7 @@
                                     {{ trans('cruds.rfa.fields.document_ref') }}
 
                                     <input type="text" class="form-control filter-input"
-                                    placeholder="Search for Information by..." data-column="33"/>
+                                    placeholder="Search for Information by..." data-column="34"/>
                                 </th>
                                 
                                 <th>
@@ -235,7 +239,7 @@
                                 <th>
                                     {{ trans('cruds.rfa.fields.for_status') }}
                                    
-                                    <select class="form-control filter-select" data-column="35">
+                                    <select class="form-control filter-select" data-column="36">
                                         <option value=""> Select Status... </option>
                                         @foreach ($for_statuses as $for_statuse)
                                             <option value="{{ $for_statuse }}"> {{ $for_statuse }} </option>
@@ -261,7 +265,7 @@
                                 <th>
                                     {{ trans('cruds.rfa.fields.team') }}
 
-                                    <select class="form-control filter-select" data-column="40">
+                                    <select class="form-control filter-select" data-column="41">
                                         <option value=""> Select Type... </option>
                                         @foreach ($teams as $team)
                                             <option value="{{ $team }}"> {{ $team }} </option>
@@ -351,31 +355,32 @@
 { data: 'submit_date', name: 'submit_date' , visible: false, sortable: false, }, // 17
 { data: 'issueby_name', name: 'issueby.name' , visible: false, sortable: false,}, // 18
 { data: 'assign_name', name: 'assign.name' , visible: false, sortable: false,}, // 19
-{ data: 'file_upload_1', name: 'file_upload_1', sortable: false, searchable: false }, // 20\
-{ data: 'qty_page', name: 'qty_page' ,visible: false, sortable: false,}, // 21
-{ data: 'spec_ref_no', name: 'spec_ref_no' , visible: false ,visible: false, sortable: false,}, // 22
-{ data: 'clause', name: 'clause' , visible: false, visible: false, sortable: false,}, // 23
-{ data: 'contract_drawing_no', name: 'contract_drawing_no' , visible: false , visible: false, sortable: false,}, // 24
-{ data: 'action_by_name', name: 'action_by.name' , sortable: false,}, // 25
-{ data: 'comment_by_name', name: 'comment_by.name' ,visible: false, sortable: false,}, // 26
-{ data: 'information_by_name', name: 'information_by.name' ,visible: false, sortable: false,}, // 27
-{ data: 'receive_date', name: 'receive_date' }, // 28
-{ data: 'target_date', name: 'target_date' }, // 29
-{ data: 'note_2', name: 'note_2' , visible: false , sortable: false,}, // 30
-{ data: 'comment_status_name', name: 'comment_status.name' , sortable: false, sortable: false,}, // 31
-{ data: 'note_3', name: 'note_3' , visible: false, sortable: false, }, // 32
-{ data: 'document_ref', name: 'document_ref' ,visible: false, sortable: false,}, // 33
-{ data: 'document_file_upload', name: 'document_file_upload', sortable: false, searchable: false }, // 34
-{ data: 'for_status_name', name: 'for_status.name', sortable: false, }, // 35
-{ data: 'created_at', name: 'created_at' ,visible: true}, // 36
-{ data: 'create_by_user_name', name: 'create_by_user.name' ,visible: false}, // 37
+{ data: 'file_upload_1', name: 'file_upload_1', sortable: false, searchable: false }, // 20
+{ data: 'submittals_file', name: 'submittals_file', sortable: false, searchable: false }, //21
+{ data: 'qty_page', name: 'qty_page' ,visible: false, sortable: false,}, // 22
+{ data: 'spec_ref_no', name: 'spec_ref_no' , visible: false ,visible: false, sortable: false,}, // 23
+{ data: 'clause', name: 'clause' , visible: false, visible: false, sortable: false,}, // 24
+{ data: 'contract_drawing_no', name: 'contract_drawing_no' , visible: false , visible: false, sortable: false,}, // 25
+{ data: 'action_by_name', name: 'action_by.name' , sortable: false,}, // 26
+{ data: 'comment_by_name', name: 'comment_by.name' ,visible: false, sortable: false,}, // 27
+{ data: 'information_by_name', name: 'information_by.name' ,visible: false, sortable: false,}, // 28
+{ data: 'receive_date', name: 'receive_date' }, // 29
+{ data: 'target_date', name: 'target_date' }, // 30
+{ data: 'note_2', name: 'note_2' , visible: false , sortable: false,}, // 31
+{ data: 'comment_status_name', name: 'comment_status.name' , sortable: false, sortable: false,}, // 32
+{ data: 'note_3', name: 'note_3' , visible: false, sortable: false, }, // 33
+{ data: 'document_ref', name: 'document_ref' ,visible: false, sortable: false,}, // 34
+{ data: 'document_file_upload', name: 'document_file_upload', sortable: false, searchable: false }, // 35
+{ data: 'for_status_name', name: 'for_status.name', sortable: false, }, // 36
+{ data: 'created_at', name: 'created_at' ,visible: true}, // 37
+{ data: 'create_by_user_name', name: 'create_by_user.name' ,visible: false}, // 38
 // { data: 'update_by_user_name', name: 'update_by_user.name' },
 // { data: 'approve_by_user_name', name: 'approve_by_user.name' },
-{ data: 'updated_at', name: 'updated_at' ,visible: false}, // 38
-{ data: 'hardcopy_date', name: 'hardcopy_date' ,visible: false}, // 39
-{ data: 'team_code', name: 'team.code' ,visible: false}, // 40
-{ data: 'commercial_file_upload', name: 'commercial_file_upload', sortable: false, searchable: false }, // 41
-{ data: 'check_revision', name: 'check_revision', visible: false,}, // 42
+{ data: 'updated_at', name: 'updated_at' ,visible: false}, // 39
+{ data: 'hardcopy_date', name: 'hardcopy_date' ,visible: false}, // 40
+{ data: 'team_code', name: 'team.code' ,visible: false}, // 41
+{ data: 'commercial_file_upload', name: 'commercial_file_upload', sortable: false, searchable: false }, // 42
+{ data: 'check_revision', name: 'check_revision', visible: false,}, // 43
 
     ],
     order: [[ 2, 'desc' ]],

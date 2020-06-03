@@ -122,4 +122,85 @@ Route::group(['prefix' => 'v1', 'as' => 'api.', 'namespace' => 'Api\V1\Admin', '
     // Records Of Visitors
     Route::post('records-of-visitors/media', 'RecordsOfVisitorsApiController@storeMedia')->name('records-of-visitors.storeMedia');
     Route::apiResource('records-of-visitors', 'RecordsOfVisitorsApiController');
+
+    // Letter Types
+    Route::apiResource('letter-types', 'LetterTypeApiController');
+
+    // Add Letters
+    Route::post('add-letters/media', 'AddLetterApiController@storeMedia')->name('add-letters.storeMedia');
+    Route::apiResource('add-letters', 'AddLetterApiController');
+
+    // Letter Incoming Srts
+    Route::apiResource('letter-incoming-srts', 'LetterIncomingSrtApiController');
+
+    // Letter Incoming Pmcs
+    Route::apiResource('letter-incoming-pmcs', 'LetterIncomingPmcApiController');
+
+    // Letter Incoming Cecs
+    Route::apiResource('letter-incoming-cecs', 'LetterIncomingCecApiController');
+
+    // Letter Incoming Cscs
+    Route::apiResource('letter-incoming-cscs', 'LetterIncomingCscApiController');
+
+    // Letter Outgoing Srts
+    Route::apiResource('letter-outgoing-srts', 'LetterOutgoingSrtApiController');
+
+    // Letter Outgoing Pmcs
+    Route::apiResource('letter-outgoing-pmcs', 'LetterOutgoingPmcApiController');
+
+    // Letter Outgoing Cecs
+    Route::apiResource('letter-outgoing-cecs', 'LetterOutgoingCecApiController');
+
+    // Letter Outgoing Cscs
+    Route::apiResource('letter-outgoing-cscs', 'LetterOutgoingCscApiController');
+
+    // Check Sheets
+    Route::post('check-sheets/media', 'CheckSheetApiController@storeMedia')->name('check-sheets.storeMedia');
+    Route::apiResource('check-sheets', 'CheckSheetApiController');
+
+    // Check Lists
+    Route::post('check-lists/media', 'CheckListApiController@storeMedia')->name('check-lists.storeMedia');
+    Route::apiResource('check-lists', 'CheckListApiController');
+
+    // Download System Activities
+    Route::apiResource('download-system-activities', 'DownloadSystemActivityApiController');
+
+    // Download System Works
+    Route::apiResource('download-system-works', 'DownloadSystemWorkApiController');
+
+    // Add Drawings
+    Route::post('add-drawings/media', 'AddDrawingApiController@storeMedia')->name('add-drawings.storeMedia');
+    Route::apiResource('add-drawings', 'AddDrawingApiController');
+
+    // Shop Drawings
+    Route::post('shop-drawings/media', 'ShopDrawingApiController@storeMedia')->name('shop-drawings.storeMedia');
+    Route::apiResource('shop-drawings', 'ShopDrawingApiController');
+
+    // As Build Plans
+    Route::post('as-build-plans/media', 'AsBuildPlanApiController@storeMedia')->name('as-build-plans.storeMedia');
+    Route::apiResource('as-build-plans', 'AsBuildPlanApiController');
+
+    // Variation Orders
+    Route::post('variation-orders/media', 'VariationOrderApiController@storeMedia')->name('variation-orders.storeMedia');
+    Route::apiResource('variation-orders', 'VariationOrderApiController');
+
+    // Provisional Sums
+    Route::post('provisional-sums/media', 'ProvisionalSumApiController@storeMedia')->name('provisional-sums.storeMedia');
+    Route::apiResource('provisional-sums', 'ProvisionalSumApiController');
+
+    // Interim Payments
+    Route::post('interim-payments/media', 'InterimPaymentApiController@storeMedia')->name('interim-payments.storeMedia');
+    Route::apiResource('interim-payments', 'InterimPaymentApiController');
+
+    // Monthly Report Cscs
+    Route::post('monthly-report-cscs/media', 'MonthlyReportCscApiController@storeMedia')->name('monthly-report-cscs.storeMedia');
+    Route::apiResource('monthly-report-cscs', 'MonthlyReportCscApiController');
+
+    // Monthly Report Constructors
+    Route::post('monthly-report-constructors/media', 'MonthlyReportConstructorApiController@storeMedia')->name('monthly-report-constructors.storeMedia');
+    Route::apiResource('monthly-report-constructors', 'MonthlyReportConstructorApiController');
+
+    // Documents And Assignments
+    Route::post('documents-and-assignments/media', 'DocumentsAndAssignmentsApiController@storeMedia')->name('documents-and-assignments.storeMedia');
+    Route::apiResource('documents-and-assignments', 'DocumentsAndAssignmentsApiController');
 });

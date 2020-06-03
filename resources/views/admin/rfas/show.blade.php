@@ -19,9 +19,6 @@ word-wrap: break-word;
                             <a class="btn btn-default" href="{{ route('admin.rfas.index') }}">
                                 {{ trans('global.back_to_list') }}
                             </a>
-                            <!-- <a class="btn btn-warning" href="{{ route('admin.rfas.createReportRFA',$rfa->id) }}">
-                                Show Report
-                            </a> -->
                         </div>
                         <table class="table table-bordered table-striped">
                             <tbody>
@@ -445,13 +442,16 @@ word-wrap: break-word;
                                 {{ trans('global.back_to_list') }}
                             </a>
                             @can('rfa_form')
-                            <a class="btn btn-success jpdf">
+                            <!-- <a class="btn btn-success jpdf">
                                 View RFA Form
+                            </a> -->
+    
+                            <a class="btn btn-success" href="{{ route('admin.rfas.createReportRFA',$rfa->id) }}">
+                                View RFA & Submittals Report
                             </a>
-
-                             <a class="btn btn-success jspdf_submittals">
+                                 <!-- <a class="btn btn-success jspdf_submittals">
                                 View Submittals Form
-                            </a>
+                            </a> -->
                             @endcan
                         </div>
                     </div>

@@ -240,6 +240,122 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth'], '
     Route::post('records-of-visitors/ckmedia', 'RecordsOfVisitorsController@storeCKEditorImages')->name('records-of-visitors.storeCKEditorImages');
     Route::resource('records-of-visitors', 'RecordsOfVisitorsController');
     
+    // Letter Types
+    Route::delete('letter-types/destroy', 'LetterTypeController@massDestroy')->name('letter-types.massDestroy');
+    Route::resource('letter-types', 'LetterTypeController');
+
+    // Add Letters
+    Route::delete('add-letters/destroy', 'AddLetterController@massDestroy')->name('add-letters.massDestroy');
+    Route::post('add-letters/media', 'AddLetterController@storeMedia')->name('add-letters.storeMedia');
+    Route::post('add-letters/ckmedia', 'AddLetterController@storeCKEditorImages')->name('add-letters.storeCKEditorImages');
+    Route::resource('add-letters', 'AddLetterController');
+
+    // Letter Incoming Srts
+    Route::delete('letter-incoming-srts/destroy', 'LetterIncomingSrtController@massDestroy')->name('letter-incoming-srts.massDestroy');
+    Route::resource('letter-incoming-srts', 'LetterIncomingSrtController');
+
+    // Letter Incoming Pmcs
+    Route::delete('letter-incoming-pmcs/destroy', 'LetterIncomingPmcController@massDestroy')->name('letter-incoming-pmcs.massDestroy');
+    Route::resource('letter-incoming-pmcs', 'LetterIncomingPmcController');
+
+    // Letter Incoming Cecs
+    Route::delete('letter-incoming-cecs/destroy', 'LetterIncomingCecController@massDestroy')->name('letter-incoming-cecs.massDestroy');
+    Route::resource('letter-incoming-cecs', 'LetterIncomingCecController');
+
+    // Letter Incoming Cscs
+    Route::delete('letter-incoming-cscs/destroy', 'LetterIncomingCscController@massDestroy')->name('letter-incoming-cscs.massDestroy');
+    Route::resource('letter-incoming-cscs', 'LetterIncomingCscController');
+
+    // Letter Outgoing Srts
+    Route::delete('letter-outgoing-srts/destroy', 'LetterOutgoingSrtController@massDestroy')->name('letter-outgoing-srts.massDestroy');
+    Route::resource('letter-outgoing-srts', 'LetterOutgoingSrtController');
+
+    // Letter Outgoing Pmcs
+    Route::delete('letter-outgoing-pmcs/destroy', 'LetterOutgoingPmcController@massDestroy')->name('letter-outgoing-pmcs.massDestroy');
+    Route::resource('letter-outgoing-pmcs', 'LetterOutgoingPmcController');
+
+    // Letter Outgoing Cecs
+    Route::delete('letter-outgoing-cecs/destroy', 'LetterOutgoingCecController@massDestroy')->name('letter-outgoing-cecs.massDestroy');
+    Route::resource('letter-outgoing-cecs', 'LetterOutgoingCecController');
+
+    // Letter Outgoing Cscs
+    Route::delete('letter-outgoing-cscs/destroy', 'LetterOutgoingCscController@massDestroy')->name('letter-outgoing-cscs.massDestroy');
+    Route::resource('letter-outgoing-cscs', 'LetterOutgoingCscController');
+
+    // Check Sheets
+    Route::delete('check-sheets/destroy', 'CheckSheetController@massDestroy')->name('check-sheets.massDestroy');
+    Route::post('check-sheets/media', 'CheckSheetController@storeMedia')->name('check-sheets.storeMedia');
+    Route::post('check-sheets/ckmedia', 'CheckSheetController@storeCKEditorImages')->name('check-sheets.storeCKEditorImages');
+    Route::resource('check-sheets', 'CheckSheetController');
+
+    // Check Lists
+    Route::delete('check-lists/destroy', 'CheckListController@massDestroy')->name('check-lists.massDestroy');
+    Route::post('check-lists/media', 'CheckListController@storeMedia')->name('check-lists.storeMedia');
+    Route::post('check-lists/ckmedia', 'CheckListController@storeCKEditorImages')->name('check-lists.storeCKEditorImages');
+    Route::resource('check-lists', 'CheckListController');
+
+    // Download System Activities
+    Route::delete('download-system-activities/destroy', 'DownloadSystemActivityController@massDestroy')->name('download-system-activities.massDestroy');
+    Route::resource('download-system-activities', 'DownloadSystemActivityController');
+
+    // Download System Works
+    Route::delete('download-system-works/destroy', 'DownloadSystemWorkController@massDestroy')->name('download-system-works.massDestroy');
+    Route::resource('download-system-works', 'DownloadSystemWorkController');
+
+    // Add Drawings
+    Route::delete('add-drawings/destroy', 'AddDrawingController@massDestroy')->name('add-drawings.massDestroy');
+    Route::post('add-drawings/media', 'AddDrawingController@storeMedia')->name('add-drawings.storeMedia');
+    Route::post('add-drawings/ckmedia', 'AddDrawingController@storeCKEditorImages')->name('add-drawings.storeCKEditorImages');
+    Route::resource('add-drawings', 'AddDrawingController');
+
+    // Shop Drawings
+    Route::delete('shop-drawings/destroy', 'ShopDrawingController@massDestroy')->name('shop-drawings.massDestroy');
+    Route::post('shop-drawings/media', 'ShopDrawingController@storeMedia')->name('shop-drawings.storeMedia');
+    Route::post('shop-drawings/ckmedia', 'ShopDrawingController@storeCKEditorImages')->name('shop-drawings.storeCKEditorImages');
+    Route::resource('shop-drawings', 'ShopDrawingController');
+
+    // As Build Plans
+    Route::delete('as-build-plans/destroy', 'AsBuildPlanController@massDestroy')->name('as-build-plans.massDestroy');
+    Route::post('as-build-plans/media', 'AsBuildPlanController@storeMedia')->name('as-build-plans.storeMedia');
+    Route::post('as-build-plans/ckmedia', 'AsBuildPlanController@storeCKEditorImages')->name('as-build-plans.storeCKEditorImages');
+    Route::resource('as-build-plans', 'AsBuildPlanController');
+
+    // Variation Orders
+    Route::delete('variation-orders/destroy', 'VariationOrderController@massDestroy')->name('variation-orders.massDestroy');
+    Route::post('variation-orders/media', 'VariationOrderController@storeMedia')->name('variation-orders.storeMedia');
+    Route::post('variation-orders/ckmedia', 'VariationOrderController@storeCKEditorImages')->name('variation-orders.storeCKEditorImages');
+    Route::resource('variation-orders', 'VariationOrderController');
+
+    // Provisional Sums
+    Route::delete('provisional-sums/destroy', 'ProvisionalSumController@massDestroy')->name('provisional-sums.massDestroy');
+    Route::post('provisional-sums/media', 'ProvisionalSumController@storeMedia')->name('provisional-sums.storeMedia');
+    Route::post('provisional-sums/ckmedia', 'ProvisionalSumController@storeCKEditorImages')->name('provisional-sums.storeCKEditorImages');
+    Route::resource('provisional-sums', 'ProvisionalSumController');
+
+    // Interim Payments
+    Route::delete('interim-payments/destroy', 'InterimPaymentController@massDestroy')->name('interim-payments.massDestroy');
+    Route::post('interim-payments/media', 'InterimPaymentController@storeMedia')->name('interim-payments.storeMedia');
+    Route::post('interim-payments/ckmedia', 'InterimPaymentController@storeCKEditorImages')->name('interim-payments.storeCKEditorImages');
+    Route::resource('interim-payments', 'InterimPaymentController');
+
+    // Monthly Report Cscs
+    Route::delete('monthly-report-cscs/destroy', 'MonthlyReportCscController@massDestroy')->name('monthly-report-cscs.massDestroy');
+    Route::post('monthly-report-cscs/media', 'MonthlyReportCscController@storeMedia')->name('monthly-report-cscs.storeMedia');
+    Route::post('monthly-report-cscs/ckmedia', 'MonthlyReportCscController@storeCKEditorImages')->name('monthly-report-cscs.storeCKEditorImages');
+    Route::resource('monthly-report-cscs', 'MonthlyReportCscController');
+
+    // Monthly Report Constructors
+    Route::delete('monthly-report-constructors/destroy', 'MonthlyReportConstructorController@massDestroy')->name('monthly-report-constructors.massDestroy');
+    Route::post('monthly-report-constructors/media', 'MonthlyReportConstructorController@storeMedia')->name('monthly-report-constructors.storeMedia');
+    Route::post('monthly-report-constructors/ckmedia', 'MonthlyReportConstructorController@storeCKEditorImages')->name('monthly-report-constructors.storeCKEditorImages');
+    Route::resource('monthly-report-constructors', 'MonthlyReportConstructorController');
+
+    // Documents And Assignments
+    Route::delete('documents-and-assignments/destroy', 'DocumentsAndAssignmentsController@massDestroy')->name('documents-and-assignments.massDestroy');
+    Route::post('documents-and-assignments/media', 'DocumentsAndAssignmentsController@storeMedia')->name('documents-and-assignments.storeMedia');
+    Route::post('documents-and-assignments/ckmedia', 'DocumentsAndAssignmentsController@storeCKEditorImages')->name('documents-and-assignments.storeCKEditorImages');
+    Route::resource('documents-and-assignments', 'DocumentsAndAssignmentsController');
+
     
     Route::get('system-calendar', 'SystemCalendarController@index')->name('systemCalendar');
     Route::get('global-search', 'GlobalSearchController@search')->name('globalSearch');

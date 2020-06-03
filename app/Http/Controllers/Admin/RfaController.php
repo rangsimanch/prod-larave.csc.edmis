@@ -323,6 +323,19 @@ class RfaController extends Controller
                 return implode(', ', $links);
             });
 
+            $table->editColumn('submittals_file', function ($row) {
+                if (!$row->submittals_file) {
+                    return '';
+                }
+
+                $links = [];
+
+                foreach ($row->submittals_file as $media) {
+                    $links[] = '<a href="' . $media->getUrl() . '" target="_blank">' . trans('global.downloadFile') . '</a>';
+                }
+
+                return implode(', ', $links);
+            });
 
             $table->editColumn('commercial_file_upload', function ($row) {
                 if (!$row->commercial_file_upload) {
@@ -441,7 +454,7 @@ class RfaController extends Controller
                 return $row->reviewed_by ? $row->reviewed_by->name : '';
             });
 
-            $table->rawColumns(['actions', 'placeholder', 'type', 'construction_contract', 'wbs_level_3', 'wbs_level_4', 'issueby', 'assign', 'file_upload_1', 'comment_by', 'information_by', 'comment_status', 'for_status', 'document_status', 'action_by', 'create_by_user', 'update_by_user', 'approve_by_user', 'commercial_file_upload', 'document_file_upload', 'team', 'check_revision','reviewed_by','document_status_status_name']);
+            $table->rawColumns(['actions', 'placeholder', 'type', 'construction_contract', 'wbs_level_3', 'wbs_level_4', 'issueby', 'assign', 'file_upload_1', 'comment_by', 'information_by', 'comment_status', 'for_status', 'document_status', 'action_by', 'create_by_user', 'update_by_user', 'approve_by_user', 'commercial_file_upload', 'document_file_upload', 'team', 'check_revision','reviewed_by','document_status_status_name','submittals_file']);
 
             return $table->make(true);
         }
@@ -618,8 +631,8 @@ class RfaController extends Controller
             $rfa->addMedia(storage_path('tmp/uploads/' . $file))->toMediaCollection('document_file_upload');
         }
 
-        if ($request->input('submittals_file', false)) {
-            $rfa->addMedia(storage_path('tmp/uploads/' . $request->input('submittals_file')))->toMediaCollection('submittals_file');
+        foreach ($request->input('submittals_file', []) as $file) {
+            $rfa->addMedia(storage_path('tmp/uploads/' . $file))->toMediaCollection('submittals_file');
         }
 
         if ($media = $request->input('ck-media', false)) {
@@ -787,8 +800,8 @@ class RfaController extends Controller
             $rfa->addMedia(storage_path('tmp/uploads/' . $file))->toMediaCollection('document_file_upload');
         }
 
-        if ($request->input('submittals_file', false)) {
-            $rfa->addMedia(storage_path('tmp/uploads/' . $request->input('submittals_file')))->toMediaCollection('submittals_file');
+        foreach ($request->input('submittals_file', []) as $file) {
+            $rfa->addMedia(storage_path('tmp/uploads/' . $file))->toMediaCollection('submittals_file');
         }
 
         if ($media = $request->input('ck-media', false)) {
@@ -872,15 +885,6 @@ class RfaController extends Controller
             $rfa['incoming_number'] = "IN-" . $rfa->rfa_code ;
             $rfa['outgoing_number'] = "OUT-" . $rfa->rfa_code ;
         }
-
-        if ($request->input('submittals_file', false)) {
-            if (!$rfa->submittals_file || $request->input('submittals_file') !== $rfa->submittals_file->file_name) {
-                $rfa->addMedia(storage_path('tmp/uploads/' . $request->input('submittals_file')))->toMediaCollection('submittals_file');
-            }
-        } elseif ($rfa->submittals_file) {
-            $rfa->submittals_file->delete();
-        }
-
         
         $rfa->update($request->all());
 
@@ -1000,6 +1004,23 @@ class RfaController extends Controller
             }
         }
 
+
+        if (count($rfa->submittals_file) > 0) {
+            foreach ($rfa->submittals_file as $media) {
+                if (!in_array($media->file_name, $request->input('submittals_file', []))) {
+                    $media->delete();
+                }
+            }
+        }
+
+        $media = $rfa->submittals_file->pluck('file_name')->toArray();
+
+        foreach ($request->input('submittals_file', []) as $file) {
+            if (count($media) === 0 || !in_array($file, $media)) {
+                $rfa->addMedia(storage_path('tmp/uploads/' . $file))->toMediaCollection('submittals_file');
+            }
+        }
+
         return redirect()->route('admin.rfas.index');
     }
 
@@ -1044,7 +1065,7 @@ class RfaController extends Controller
 
     public function createReportRFA(Rfa $rfa)
     {
-        $submittalsRfa = SubmittalsRfa::all()->where('on_rfa_id' , $rfa->id);
+       $submittalsRfa = SubmittalsRfa::all()->where('on_rfa_id' , $rfa->id);
 
         $rfa->load('type', 'construction_contract', 'wbs_level_3', 'wbs_level_4', 'issueby', 'assign', 'action_by', 'comment_by', 'information_by', 'comment_status', 'for_status', 'document_status', 'create_by_user', 'team','onRfaSubmittalsRfas', 'reviewed_by','distribute_by');
 
@@ -1053,6 +1074,7 @@ class RfaController extends Controller
         $title_th = $rfa->title ?? '';
         $title_en = $rfa->title_eng ?? '';
         $document_number = '';
+        $check_box = "X";
         if(isset($rfa->origin_number)){
             $document_number = $rfa->origin_number ?? '';
         }
@@ -1092,7 +1114,8 @@ class RfaController extends Controller
         $note_3 = wordwrap($rfa->note_3 ?? '',300,"<br>\n");
         $note_4 = wordwrap($rfa->note_4 ?? '',300,"<br>\n");
 
-
+        $wbslv1 = "HSR1";
+        $wbslv2 = $rfa->construction_contract->code ?? '';
         $wbslv3 = $rfa->wbs_level_3->wbs_level_3_name ?? '';
         $wbslv4 = $rfa->wbs_level_4->wbs_level_4_name ?? '';
         $wbs = '';
@@ -1101,7 +1124,25 @@ class RfaController extends Controller
         }else{
             $wbs = '1.' . $wbslv3;
         }
-        
+        $type = $rfa->type->type_code ?? '';
+        $num_doc = substr($rfa_code,11,4);
+        $revision_count = "0";
+        if(strlen($rfa_code) > 14){
+            $revision_count = substr($rfa_code,17,2);
+        }
+        $receive_date = $rfa->receive_date ?? '';
+
+        $distribute_date = $rfa->distribute_date ?? '' ;
+        $done_date = $rfa->outgoing_date ?? '' ;
+
+        $action_by = $rfa->action_by->name ?? '' ;
+        $process_date = $rfa->process_date ?? '' ;
+    
+        $reviewed_by = $rfa->reviewed_by->name ?? '' ;
+        $outgoing_number = $rfa->outgoing_number ?? '' ;
+        $outgoing_date = $rfa->outgoing_date ?? '' ;
+    
+        $purpose_for = $rfa->purpose_for ??  '';
         //PDF Setting
         try {
             $mpdf = new \Mpdf\Mpdf([
@@ -1126,7 +1167,7 @@ class RfaController extends Controller
           //Date
         $html .= "<div style=\"font-size: 14px; position:absolute;top:217px;left:630px;\">" . $receive_date . "</div>";
           //Document Name
-        $html .= "<div style=\"font-size: 14px; padding-right:180px; position:absolute;top:269px;left:160px;LINE-HEIGHT:15px;\">" . $document_name . "</div>";
+        $html .= "<div style=\"font-size: 14px; padding-right:240px; position:absolute;top:269px;left:160px;LINE-HEIGHT:15px;\">" . $document_name . "</div>";
         $html .= "<div style=\"font-size: 14px; position:absolute;top:265;left:630;\">" . $qty_page . "</div>";
         
           //WBS Spec.Ref Clase. Contract No.
@@ -1137,12 +1178,109 @@ class RfaController extends Controller
           //Note
         $html .= "<div style=\"font-size: 14px; position:absolute;top:380px;left:120px;LINE-HEIGHT:15px;\">" . $note_1 . "</div>";
         
-        $mpdf->WriteHTML($html);
+          //Signature
+        if($rfa->cec_stamp == 1){
+            $html .= "<div style=\"font-size: 14px; position:absolute;top:410px;left:280px;\">
+                <img src=\"". public_path('png-asset/Signature_CEC.png') ."\" width=\"40px\" higth=\"40px\"> </div>";
+        }
         
-        //Add Document
-        $allowed = array('pdf','PDF','Pdf');
+        if($rfa->cec_sign == 1){
+            $html .= "<div style=\"font-size: 14px; position:absolute;top:300px;left:400px;\">
+            <img src=\"". public_path('png-asset/Stamp_CEC.png') ."\" width=\"200px\" higth=\"200px\"> </div>";
+        }
+
+        $mpdf->WriteHTML($html);
+         //Add Document
+         $allowed = array('pdf','PDF','Pdf');
+        
+         //Submittals Page
+        if(count($rfa->submittals_file) > 0 ){
+            foreach($rfa->submittals_file as $submittal){
+                $path = $submittal->getUrl();
+                if(in_array(pathinfo($path,PATHINFO_EXTENSION),$allowed)){
+                    $pagecount = $mpdf->SetSourceFile(public_path($submittal->getUrl()));
+                    for ($i=1; $i<=($pagecount); $i++) {
+                        $mpdf->AddPage();
+                        $import_page = $mpdf->ImportPage($i);
+                        $mpdf->UseTemplate($import_page);
+                    }
+                }
+              }
+        }
+        //Submittals Manual
+        else{
+            $mpdf->AddPage();
+            $pagecount = $mpdf->SetSourceFile(public_path('pdf-asset/Submittals_Form.pdf'));
+            $tplId = $mpdf->ImportPage($pagecount);
+            $mpdf->UseTemplate($tplId);    
+
+            $html = "<div style=\"font-size: 14px; position:absolute;top:55px;left:678px;\">". $rfa_code ."</div>";
+            $html .= "<div style=\"font-size: 10px; position:absolute;top:138px;left:520px;\">". $wbslv1 ."</div>";
+            $html .= "<div style=\"font-size: 10px; position:absolute;top:138px;left:546px;\">". $wbslv2 ."</div>";
+            $html .= "<div style=\"font-size: 10px; position:absolute;top:138px;left:576px;\">". $wbslv3 ."</div>";
+            $html .= "<div style=\"font-size: 10px; position:absolute;top:138px;left:608px;\">". $wbslv4 ."</div>";
+            $html .= "<div style=\"font-size: 10px; position:absolute;top:138px;left:648px;\">". $type ."</div>";
+            $html .= "<div style=\"font-size: 10px; position:absolute;top:138px;left:678px;\">". $num_doc ."</div>";
+            $html .= "<div style=\"font-size: 10px; position:absolute;top:138px;left:700px;\">". $revision_count ."</div>";
+
+            $html .= "<div style=\"font-size: 10px; position:absolute;top:138px;left:722px;\">". $receive_date ."</div>";
+
+
+            if($purpose_for == 1){
+                 $html .= "<div style=\"font-size: 14px; position:absolute;top:153px;left:512px;\">X</div>";
+             }
+            else if($purpose_for == 2){
+                 $html .= "<div style=\"font-size: 14px; position:absolute;top:153px;left:562px;\">X</div>";
+            }
+             else if($purpose_for == 3){
+                  $html .= "<div style=\"font-size: 14px; position:absolute;top:153px;left:622px;\">X</div>";
+            }
+            else if($purpose_for == 4){
+                  $html .= "<div style=\"font-size: 14px; position:absolute;top:153px;left:695px;\">X</div>";
+            }
+
+            $html .= "<div style=\"font-size: 14px; position:absolute;top:191px;left:118px;\">". $bill ."</div>";
+            $html .= "<div style=\"font-size: 14px; position:absolute;top:205px;left:118px;\">". $title_th ."</div>";
+            $html .= "<div style=\"font-size: 14px; position:absolute;top:191px;left:608px;\">". $assign_to ."</div>";
+            $html .= "<div style=\"font-size: 14px; position:absolute;top:241px;left:230px;\">". $spec_ref_no ."</div>";
+            $html .= "<div style=\"font-size: 14px; position:absolute;top:241px;left:690px;\">". $incoming_no ."</div>";
+            $html .= "<div style=\"font-size: 14px; position:absolute;top:257px;left:118px;\">". $clause ."</div>";
+            $html .= "<div style=\"font-size: 14px; position:absolute;top:275px;left:216px;\">". $contract_drawing_no ."</div>";
+            $html .= "<div style=\"font-size: 14px; position:absolute;top:310px;left:130px;\">". $qty_page ."</div>";
+
+            if($rfa->cec_stamp == 1){
+                $html .= "<div style=\"font-size: 14px; position:absolute;top:750px;left:500px;\">
+                    <img src=\"". public_path('png-asset/Signature_CEC.png') ."\" width=\"40px\" higth=\"40px\"> </div>";
+            }
+            
+            if($rfa->cec_sign == 1){
+                $html .= "<div style=\"font-size: 14px; position:absolute;top:500px;left:560px;\">
+                <img src=\"". public_path('png-asset/Stamp_CEC.png') ."\" width=\"200px\" higth=\"200px\"> </div>";
+            }
+
+            $top = 425;
+            foreach($submittalsRfa as $key => $submittal){
+                if($key%8 != 0){
+                    $html .= "<div style=\"font-size: 12px; position:absolute;top:". $top ."px;left:50px;\">". 
+                    $submittal['item_no'] ."</div>";
+
+                    $html .= "<div style=\"font-size: 12px; position:absolute;top:". $top ."px;left:138px;\">". 
+                    wordwrap($submittal['description'],300,"<br>\n") ."</div>";  
+                    
+                    $html .= "<div style=\"font-size: 12px; position:absolute;top:". $top ."px;left:445px;\">". 
+                    $submittal['qty_sets'] ."</div>";
+
+                    //purpose for HERE!!
+                    $top += 35;
+                }
+            }
+    
+            $mpdf->WriteHTML($html);
+        }
+
         foreach($rfa->file_upload_1 as $media){
-          if(in_array(pathinfo($media->getUrl(),PATHINFO_EXTENSION),$allowed)){
+          $path = $media->getUrl();
+          if(in_array(pathinfo($path,PATHINFO_EXTENSION),$allowed)){
               $pagecount = $mpdf->SetSourceFile(public_path($media->getUrl()));
               for ($i=1; $i<=($pagecount); $i++) {
                   $mpdf->AddPage();
