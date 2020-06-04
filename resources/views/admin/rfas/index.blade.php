@@ -146,6 +146,8 @@
                                 <th>
                                     {{ trans('cruds.rfa.fields.submit_date') }}
 
+                                    <input type="date" class="form-control filter-input"
+                                    placeholder="Search for summit date..." data-column="17"/>
                                 </th>
                                 <th>
                                     {{ trans('cruds.rfa.fields.issueby') }}
@@ -352,7 +354,7 @@
 { data: 'construction_contract_code', name: 'construction_contract.code' ,visible: false , sortable: false,}, // 14
 { data: 'wbs_level_3_wbs_level_3_code', name: 'wbs_level_3.wbs_level_3_code' , visible: false, sortable: false,}, // 15
 { data: 'wbs_level_4_wbs_level_4_code', name: 'wbs_level_4.wbs_level_4_code' , visible: false, sortable: false, }, // 16
-{ data: 'submit_date', name: 'submit_date' , visible: false, sortable: false, }, // 17
+{ data: 'submit_date', name: 'submit_date' ,  sortable: false, }, // 17
 { data: 'issueby_name', name: 'issueby.name' , visible: false, sortable: false,}, // 18
 { data: 'assign_name', name: 'assign.name' , visible: false, sortable: false,}, // 19
 { data: 'file_upload_1', name: 'file_upload_1', sortable: false, searchable: false }, // 20
@@ -372,7 +374,7 @@
 { data: 'document_ref', name: 'document_ref' ,visible: false, sortable: false,}, // 34
 { data: 'document_file_upload', name: 'document_file_upload', sortable: false, searchable: false }, // 35
 { data: 'for_status_name', name: 'for_status.name', sortable: false, }, // 36
-{ data: 'created_at', name: 'created_at' ,visible: true}, // 37
+//{ data: 'created_at', name: 'created_at' ,visible: true}, // 37
 { data: 'create_by_user_name', name: 'create_by_user.name' ,visible: false}, // 38
 // { data: 'update_by_user_name', name: 'update_by_user.name' },
 // { data: 'approve_by_user_name', name: 'approve_by_user.name' },

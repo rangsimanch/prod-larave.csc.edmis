@@ -1073,15 +1073,15 @@ class RfaController extends Controller
         $bill = $rfa->bill ?? '';
         $title_th = $rfa->title ?? '';
         $title_en = $rfa->title_eng ?? '';
-        $document_number = '';
+        $document_number = $rfa->document_number ?? '';
         $check_box = "X";
+        $rfa_code = '';
         if(isset($rfa->origin_number)){
-            $document_number = $rfa->origin_number ?? '';
+            $rfa_code = $rfa->origin_number ?? '';
         }
         else{
-            $document_number = $rfa->document_number ?? '';
+            $rfa_code = $rfa->rfa_code ?? '';  
         }
-        $rfa_code = $rfa->rfa_code;
         $incoming_no = $rfa->incoming_number ?? '';
         $receive_date = $rfa->receive_date ?? '';
         $spec_ref_no = $rfa->spec_ref_no ?? '';
@@ -1165,7 +1165,7 @@ class RfaController extends Controller
         $html .= "<div style=\"font-size: 11px; position:absolute;top:170px;left:477px;\">" . $document_number . "</div>";
         $html .= "<div style=\"font-size: 11px; position:absolute;top:170px;left:660px;\">" . $rfa_code . "</div>";
           //Date
-        $html .= "<div style=\"font-size: 14px; position:absolute;top:217px;left:630px;\">" . $receive_date . "</div>";
+        $html .= "<div style=\"font-size: 14px; position:absolute;top:217px;left:630px;\">" . $submit_date . "</div>";
           //Document Name
         $html .= "<div style=\"font-size: 14px; padding-right:240px; position:absolute;top:269px;left:160px;LINE-HEIGHT:15px;\">" . $document_name . "</div>";
         $html .= "<div style=\"font-size: 14px; position:absolute;top:265;left:630;\">" . $qty_page . "</div>";
