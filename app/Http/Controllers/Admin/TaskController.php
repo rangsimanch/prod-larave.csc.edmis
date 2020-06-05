@@ -153,7 +153,10 @@ class TaskController extends Controller
         error_reporting($ebits ^ E_NOTICE);
 
         $data = $request->all();
-        $tasks = Task::all()->wherebetween('due_date',[$data['startDate'],$data['endDate']])->where('create_by_user_id',$data['create_by_user_id'])->sortBy('due_date');
+        $Startdate = \DateTime::createFromFormat('d/m/Y', $data['startDate']);
+        $Enddate = \DateTime::createFromFormat('d/m/Y', $data['endDate']);
+
+        $tasks = Task::all()->wherebetween('due_date',[$Startdate,$Enddate])->where('create_by_user_id',$data['create_by_user_id'])->sortBy('due_date');
         $count_task = count($tasks);
         
         if($count_task > 0){ 
