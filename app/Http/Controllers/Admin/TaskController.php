@@ -156,7 +156,7 @@ class TaskController extends Controller
         $Startdate = \DateTime::createFromFormat('d/m/Y', $data['startDate']);
         $Enddate = \DateTime::createFromFormat('d/m/Y', $data['endDate']);
 
-        $tasks = Task::all()->wherebetween('due_date',[$Startdate->format("Y-m-d"),$Enddate->format("Y-m-d")])->where('create_by_user_id',$data['create_by_user_id'])->sortBy('due_date');
+        $tasks = Task::all()->wherebetween('due_date',[$data['startDate'],$data['endDate']])->where('create_by_user_id',$data['create_by_user_id'])->sortBy('due_date');
         $count_task = count($tasks);
         
         if($count_task > 0){ 
