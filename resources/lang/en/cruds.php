@@ -1509,8 +1509,8 @@ return [
     ],
 ],
 'monthlyReportConstructor'  => [
-    'title'          => 'Constructor',
-    'title_singular' => 'Constructor',
+    'title'          => 'Contractor',
+    'title_singular' => 'Contractor',
     'fields'         => [
         'id'                 => 'ID',
         'id_helper'          => '',
