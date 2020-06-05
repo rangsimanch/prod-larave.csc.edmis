@@ -290,7 +290,7 @@ class TaskController extends Controller
                             
                             if(in_array(pathinfo(public_path($task->attachment[0]->getUrl()),PATHINFO_EXTENSION),$allowed)){
                             
-                                $img = (string) Image::make($task->attachment[0]->getPath())->resize(null, 200, function ($constraint) {
+                                $img = (string) Image::make($task->attachment[0]->getPath())->resize(null, 180, function ($constraint) {
                                     $constraint->aspectRatio();
                                 })->encode('data-url');
 
@@ -304,7 +304,7 @@ class TaskController extends Controller
                         else if(count($task->attachment) == 2){
 
                             if(in_array(pathinfo(public_path($task->attachment[0]->getUrl()),PATHINFO_EXTENSION),$allowed)){
-                                $img = (string) Image::make($task->attachment[0]->getPath())->resize(null, 200, function ($constraint) {
+                                $img = (string) Image::make($task->attachment[0]->getPath())->resize(null, 180, function ($constraint) {
                                     $constraint->aspectRatio();
                                 })
                                 ->encode('data-url');
@@ -314,7 +314,7 @@ class TaskController extends Controller
                                     . "\">";
                             }
                             if(in_array(pathinfo(public_path($task->attachment[1]->getUrl()),PATHINFO_EXTENSION),$allowed)){
-                                $img = (string) Image::make($task->attachment[1]->getPath())->resize(null, 200, function ($constraint) {
+                                $img = (string) Image::make($task->attachment[1]->getPath())->resize(null, 180, function ($constraint) {
                                     $constraint->aspectRatio();
                                 })->encode('data-url');
                                 
@@ -325,7 +325,7 @@ class TaskController extends Controller
                         }
                         else if(count($task->attachment) == 3){
                             if(in_array(pathinfo(public_path($task->attachment[0]->getUrl()),PATHINFO_EXTENSION),$allowed)){
-                                $img = (string) Image::make($task->attachment[0]->getPath())->resize(null, 200, function ($constraint) {
+                                $img = (string) Image::make($task->attachment[0]->getPath())->resize(null, 180, function ($constraint) {
                                     $constraint->aspectRatio();
                                 })->encode('data-url');
                                 
@@ -334,7 +334,7 @@ class TaskController extends Controller
                                     . "\">";
                             }
                             if(in_array(pathinfo(public_path($task->attachment[1]->getUrl()),PATHINFO_EXTENSION),$allowed)){
-                                $img = (string) Image::make($task->attachment[1]->getPath())->resize(null, 200, function ($constraint) {
+                                $img = (string) Image::make($task->attachment[1]->getPath())->resize(null, 180, function ($constraint) {
                                     $constraint->aspectRatio();
                                 })->encode('data-url');
                                 
@@ -343,7 +343,7 @@ class TaskController extends Controller
                                     . "\">";
                             }
                             if(in_array(pathinfo(public_path($task->attachment[2]->getUrl()),PATHINFO_EXTENSION),$allowed)){
-                                $img = (string) Image::make($task->attachment[2]->getPath())->resize(null, 200, function ($constraint) {
+                                $img = (string) Image::make($task->attachment[2]->getPath())->resize(null, 180, function ($constraint) {
                                     $constraint->aspectRatio();
                                 })->encode('data-url');
 
@@ -355,7 +355,7 @@ class TaskController extends Controller
                         else if(count($task->attachment) == 4){
                             if(in_array(pathinfo(public_path($task->attachment[0]->getUrl()),PATHINFO_EXTENSION),$allowed)){
                                 
-                                $img = (string) Image::make($task->attachment[0]->getPath())->resize(null, 200, function ($constraint) {
+                                $img = (string) Image::make($task->attachment[0]->getPath())->resize(null, 180, function ($constraint) {
                                     $constraint->aspectRatio();
                                 })->encode('data-url');
 
@@ -365,7 +365,7 @@ class TaskController extends Controller
                             }
                             if(in_array(pathinfo(public_path($task->attachment[1]->getUrl()),PATHINFO_EXTENSION),$allowed)){
 
-                                $img = (string) Image::make($task->attachment[1]->getPath())->resize(null, 200, function ($constraint) {
+                                $img = (string) Image::make($task->attachment[1]->getPath())->resize(null, 180, function ($constraint) {
                                     $constraint->aspectRatio();
                                 })->encode('data-url');
                                 
@@ -375,7 +375,7 @@ class TaskController extends Controller
                             }
                             if(in_array(pathinfo(public_path($task->attachment[2]->getUrl()),PATHINFO_EXTENSION),$allowed)){
 
-                                $img = (string) Image::make($task->attachment[2]->getPath())->resize(null, 200, function ($constraint) {
+                                $img = (string) Image::make($task->attachment[2]->getPath())->resize(null, 180, function ($constraint) {
                                     $constraint->aspectRatio();
                                 })->encode('data-url');
 
@@ -385,7 +385,7 @@ class TaskController extends Controller
                             }
                             if(in_array(pathinfo(public_path($task->attachment[3]->getUrl()),PATHINFO_EXTENSION),$allowed)){
 
-                                $img = (string) Image::make($task->attachment[3]->getPath())->resize(null, 200, function ($constraint) {
+                                $img = (string) Image::make($task->attachment[3]->getPath())->resize(null, 180, function ($constraint) {
                                     $constraint->aspectRatio();
                                 })->encode('data-url');
 
@@ -429,7 +429,7 @@ class TaskController extends Controller
                         else if(count($task->attachment) == 5){
                             if(in_array(pathinfo(public_path($task->attachment[0]->getUrl()),PATHINFO_EXTENSION),$allowed)){
 
-                                $img = (string) Image::make($task->attachment[0]->getPath())->resize(null, 200, function ($constraint) {
+                                $img = (string) Image::make($task->attachment[0]->getPath())->resize(null, 180, function ($constraint) {
                                     $constraint->aspectRatio();
                                 })->encode('data-url');
 
@@ -439,7 +439,7 @@ class TaskController extends Controller
                             }
                             if(in_array(pathinfo(public_path($task->attachment[1]->getUrl()),PATHINFO_EXTENSION),$allowed)){
 
-                                $img = (string) Image::make($task->attachment[1]->getPath())->resize(null, 200, function ($constraint) {
+                                $img = (string) Image::make($task->attachment[1]->getPath())->resize(null, 180, function ($constraint) {
                                     $constraint->aspectRatio();
                                 })->encode('data-url');
 
@@ -449,7 +449,7 @@ class TaskController extends Controller
                             }
                             if(in_array(pathinfo(public_path($task->attachment[2]->getUrl()),PATHINFO_EXTENSION),$allowed)){
 
-                                $img = (string) Image::make($task->attachment[2]->getPath())->resize(null, 200, function ($constraint) {
+                                $img = (string) Image::make($task->attachment[2]->getPath())->resize(null, 180, function ($constraint) {
                                     $constraint->aspectRatio();
                                 })->encode('data-url');
 
@@ -459,7 +459,7 @@ class TaskController extends Controller
                             }
                             if(in_array(pathinfo(public_path($task->attachment[3]->getUrl()),PATHINFO_EXTENSION),$allowed)){
 
-                                $img = (string) Image::make($task->attachment[3]->getPath())->resize(null, 200, function ($constraint) {
+                                $img = (string) Image::make($task->attachment[3]->getPath())->resize(null, 180, function ($constraint) {
                                     $constraint->aspectRatio();
                                 })->encode('data-url');
 
@@ -469,7 +469,7 @@ class TaskController extends Controller
                             }
                             if(in_array(pathinfo(public_path($task->attachment[4]->getUrl()),PATHINFO_EXTENSION),$allowed)){
 
-                                $img = (string) Image::make($task->attachment[4]->getPath())->resize(null, 200, function ($constraint) {
+                                $img = (string) Image::make($task->attachment[4]->getPath())->resize(null, 180, function ($constraint) {
                                     $constraint->aspectRatio();
                                 })->encode('data-url');
 
@@ -482,7 +482,7 @@ class TaskController extends Controller
                         else if(count($task->attachment) >= 6){
                             if(in_array(pathinfo(public_path($task->attachment[0]->getUrl()),PATHINFO_EXTENSION),$allowed)){
 
-                                $img = (string) Image::make($task->attachment[0]->getPath())->resize(null, 200, function ($constraint) {
+                                $img = (string) Image::make($task->attachment[0]->getPath())->resize(null, 180, function ($constraint) {
                                     $constraint->aspectRatio();
                                 })->encode('data-url');
 
@@ -492,7 +492,7 @@ class TaskController extends Controller
                             }
                             if(in_array(pathinfo(public_path($task->attachment[1]->getUrl()),PATHINFO_EXTENSION),$allowed)){
 
-                                $img = (string) Image::make($task->attachment[1]->getPath())->resize(null, 200, function ($constraint) {
+                                $img = (string) Image::make($task->attachment[1]->getPath())->resize(null, 180, function ($constraint) {
                                     $constraint->aspectRatio();
                                 })->encode('data-url');
 
@@ -502,7 +502,7 @@ class TaskController extends Controller
                             }
                             if(in_array(pathinfo(public_path($task->attachment[2]->getUrl()),PATHINFO_EXTENSION),$allowed)){
 
-                                $img = (string) Image::make($task->attachment[2]->getPath())->resize(null, 200, function ($constraint) {
+                                $img = (string) Image::make($task->attachment[2]->getPath())->resize(null, 180, function ($constraint) {
                                     $constraint->aspectRatio();
                                 })->encode('data-url');
 
@@ -512,7 +512,7 @@ class TaskController extends Controller
                             }
                             if(in_array(pathinfo(public_path($task->attachment[3]->getUrl()),PATHINFO_EXTENSION),$allowed)){
 
-                                $img = (string) Image::make($task->attachment[3]->getPath())->resize(null, 200, function ($constraint) {
+                                $img = (string) Image::make($task->attachment[3]->getPath())->resize(null, 180, function ($constraint) {
                                     $constraint->aspectRatio();
                                 })->encode('data-url');
                                 
@@ -522,7 +522,7 @@ class TaskController extends Controller
                             }
                             if(in_array(pathinfo(public_path($task->attachment[4]->getUrl()),PATHINFO_EXTENSION),$allowed)){
 
-                                $img = (string) Image::make($task->attachment[4]->getPath())->resize(null, 200, function ($constraint) {
+                                $img = (string) Image::make($task->attachment[4]->getPath())->resize(null, 180, function ($constraint) {
                                     $constraint->aspectRatio();
                                 })->encode('data-url');
 
@@ -532,7 +532,7 @@ class TaskController extends Controller
                             }
                             if(in_array(pathinfo(public_path($task->attachment[5]->getUrl()),PATHINFO_EXTENSION),$allowed)){
 
-                                $img = (string) Image::make($task->attachment[5]->getPath())->resize(null, 200, function ($constraint) {
+                                $img = (string) Image::make($task->attachment[5]->getPath())->resize(null, 180, function ($constraint) {
                                     $constraint->aspectRatio();
                                 })->encode('data-url');
 
