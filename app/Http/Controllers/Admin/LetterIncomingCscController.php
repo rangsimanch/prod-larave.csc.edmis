@@ -20,7 +20,11 @@ class LetterIncomingCscController extends Controller
         abort_if(Gate::denies('letter_incoming_csc_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
-            $query = AddLetter::with(['letter_type', 'sender', 'receiver', 'construction_contract', 'team'])->select(sprintf('%s.*', (new AddLetter)->table))->where('receiver_id',3);
+            $query = AddLetter::with(['letter_type', 'sender', 'receiver', 'construction_contract', 'team'])->select(sprintf('%s.*', (new AddLetter)->table))
+            ->where([
+                ['receiver_id',3],
+                ['cc_csc',1]
+                ]);
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');

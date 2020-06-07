@@ -44,6 +44,26 @@
                             @endif
                             <span class="help-block">{{ trans('cruds.documentsAndAssignment.fields.date_of_receipt_helper') }}</span>
                         </div>
+                        <div class="form-group {{ $errors->has('received_from') ? 'has-error' : '' }}">
+                            <label for="received_from">{{ trans('cruds.documentsAndAssignment.fields.received_from') }}</label>
+                            <input class="form-control" type="text" name="received_from" id="received_from" value="{{ old('received_from', $documentsAndAssignment->received_from) }}">
+                            @if($errors->has('received_from'))
+                                <span class="help-block" role="alert">{{ $errors->first('received_from') }}</span>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.documentsAndAssignment.fields.received_from_helper') }}</span>
+                        </div>
+                        <div class="form-group {{ $errors->has('construction_contract') ? 'has-error' : '' }}">
+                            <label for="construction_contract_id">{{ trans('cruds.documentsAndAssignment.fields.construction_contract') }}</label>
+                            <select class="form-control select2" name="construction_contract_id" id="construction_contract_id">
+                                @foreach($construction_contracts as $id => $construction_contract)
+                                    <option value="{{ $id }}" {{ ($documentsAndAssignment->construction_contract ? $documentsAndAssignment->construction_contract->id : old('construction_contract_id')) == $id ? 'selected' : '' }}>{{ $construction_contract }}</option>
+                                @endforeach
+                            </select>
+                            @if($errors->has('construction_contract'))
+                                <span class="help-block" role="alert">{{ $errors->first('construction_contract') }}</span>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.documentsAndAssignment.fields.construction_contract_helper') }}</span>
+                        </div>
                         <div class="form-group {{ $errors->has('file_upload') ? 'has-error' : '' }}">
                             <label for="file_upload">{{ trans('cruds.documentsAndAssignment.fields.file_upload') }}</label>
                             <div class="needsclick dropzone" id="file_upload-dropzone">

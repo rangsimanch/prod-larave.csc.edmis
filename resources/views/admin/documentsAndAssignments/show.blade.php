@@ -51,6 +51,22 @@
                                 </tr>
                                 <tr>
                                     <th>
+                                        {{ trans('cruds.documentsAndAssignment.fields.received_from') }}
+                                    </th>
+                                    <td>
+                                        {{ $documentsAndAssignment->received_from }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        {{ trans('cruds.documentsAndAssignment.fields.construction_contract') }}
+                                    </th>
+                                    <td>
+                                        {{ $documentsAndAssignment->construction_contract->code ?? '' }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
                                         {{ trans('cruds.documentsAndAssignment.fields.file_upload') }}
                                     </th>
                                     <td>

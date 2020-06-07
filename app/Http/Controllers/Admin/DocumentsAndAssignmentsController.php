@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\ConstructionContract;
 use App\DocumentsAndAssignment;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Traits\MediaUploadingTrait;
@@ -23,7 +24,7 @@ class DocumentsAndAssignmentsController extends Controller
         abort_if(Gate::denies('documents_and_assignment_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
-            $query = DocumentsAndAssignment::query()->select(sprintf('%s.*', (new DocumentsAndAssignment)->table));
+            $query = DocumentsAndAssignment::with(['construction_contract'])->select(sprintf('%s.*', (new DocumentsAndAssignment)->table));
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
@@ -54,6 +55,13 @@ class DocumentsAndAssignmentsController extends Controller
                 return $row->receipt_no ? $row->receipt_no : "";
             });
 
+            $table->editColumn('received_from', function ($row) {
+                return $row->received_from ? $row->received_from : "";
+            });
+            $table->addColumn('construction_contract_code', function ($row) {
+                return $row->construction_contract ? $row->construction_contract->code : '';
+            });
+
             $table->editColumn('file_upload', function ($row) {
                 if (!$row->file_upload) {
                     return '';
@@ -68,19 +76,23 @@ class DocumentsAndAssignmentsController extends Controller
                 return implode(', ', $links);
             });
 
-            $table->rawColumns(['actions', 'placeholder', 'file_upload']);
+            $table->rawColumns(['actions', 'placeholder', 'construction_contract', 'file_upload']);
 
             return $table->make(true);
         }
 
-        return view('admin.documentsAndAssignments.index');
+        $construction_contracts = ConstructionContract::get()->pluck('code')->toArray();
+
+        return view('admin.documentsAndAssignments.index', compact('construction_contracts'));
     }
 
     public function create()
     {
         abort_if(Gate::denies('documents_and_assignment_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return view('admin.documentsAndAssignments.create');
+        $construction_contracts = ConstructionContract::all()->pluck('code', 'id')->prepend(trans('global.pleaseSelect'), '');
+
+        return view('admin.documentsAndAssignments.create', compact('construction_contracts'));
     }
 
     public function store(StoreDocumentsAndAssignmentRequest $request)
@@ -102,7 +114,11 @@ class DocumentsAndAssignmentsController extends Controller
     {
         abort_if(Gate::denies('documents_and_assignment_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return view('admin.documentsAndAssignments.edit', compact('documentsAndAssignment'));
+        $construction_contracts = ConstructionContract::all()->pluck('code', 'id')->prepend(trans('global.pleaseSelect'), '');
+
+        $documentsAndAssignment->load('construction_contract');
+
+        return view('admin.documentsAndAssignments.edit', compact('construction_contracts', 'documentsAndAssignment'));
     }
 
     public function update(UpdateDocumentsAndAssignmentRequest $request, DocumentsAndAssignment $documentsAndAssignment)
@@ -131,6 +147,8 @@ class DocumentsAndAssignmentsController extends Controller
     public function show(DocumentsAndAssignment $documentsAndAssignment)
     {
         abort_if(Gate::denies('documents_and_assignment_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $documentsAndAssignment->load('construction_contract');
 
         return view('admin.documentsAndAssignments.show', compact('documentsAndAssignment'));
     }

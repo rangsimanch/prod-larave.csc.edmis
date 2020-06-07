@@ -65,6 +65,18 @@ class AddLetterController extends Controller
                 return $row->receiver ? $row->receiver->code : '';
             });
 
+            $table->editColumn('cc_srt', function ($row) {
+                return '<input type="checkbox" disabled ' . ($row->cc_srt ? 'checked' : null) . '>';
+            });
+            $table->editColumn('cc_pmc', function ($row) {
+                return '<input type="checkbox" disabled ' . ($row->cc_pmc ? 'checked' : null) . '>';
+            });
+            $table->editColumn('cc_csc', function ($row) {
+                return '<input type="checkbox" disabled ' . ($row->cc_csc ? 'checked' : null) . '>';
+            });
+            $table->editColumn('cc_cec', function ($row) {
+                return '<input type="checkbox" disabled ' . ($row->cc_cec ? 'checked' : null) . '>';
+            });
             $table->addColumn('construction_contract_code', function ($row) {
                 return $row->construction_contract ? $row->construction_contract->code : '';
             });
@@ -83,12 +95,18 @@ class AddLetterController extends Controller
                 return implode(', ', $links);
             });
 
-            $table->rawColumns(['actions', 'placeholder', 'letter_type', 'sender', 'receiver', 'construction_contract', 'letter_upload']);
+            $table->rawColumns(['actions', 'placeholder', 'letter_type', 'sender', 'receiver', 'cc_srt', 'cc_pmc', 'cc_csc', 'cc_cec', 'construction_contract', 'letter_upload']);
 
             return $table->make(true);
         }
 
-        return view('admin.addLetters.index');
+        $letter_types           = LetterType::get()->pluck('type_title')->toArray();
+        $teams                  = Team::get()->pluck('code')->toArray();
+        $teams                  = Team::get()->pluck('code')->toArray();
+        $construction_contracts = ConstructionContract::get()->pluck('code')->toArray();
+        $teams                  = Team::get()->pluck('name')->toArray();
+
+        return view('admin.addLetters.index', compact('letter_types', 'teams', 'teams', 'construction_contracts', 'teams'));
     }
 
     public function create()

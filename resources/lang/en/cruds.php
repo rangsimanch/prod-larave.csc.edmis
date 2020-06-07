@@ -1017,8 +1017,8 @@ return [
     ],
 ],
 'addLetter'                 => [
-    'title'          => 'Add Letter',
-    'title_singular' => 'Add Letter',
+    'title'          => 'Letter',
+    'title_singular' => 'Letter',
     'fields'         => [
         'id'                           => 'ID',
         'id_helper'                    => '',
@@ -1048,6 +1048,14 @@ return [
         'team_helper'                  => '',
         'construction_contract'        => 'Construction Contract',
         'construction_contract_helper' => '',
+        'cc_srt'                       => 'CC SRT',
+        'cc_srt_helper'                => '',
+        'cc_pmc'                       => 'CC PMC',
+        'cc_pmc_helper'                => '',
+        'cc_csc'                       => 'CC CSC',
+        'cc_csc_helper'                => '',
+        'cc_cec'                       => 'CC CEC',
+        'cc_cec_helper'                => '',
     ],
 ],
 'letterCsc'                 => [
@@ -1548,6 +1556,8 @@ return [
         'updated_at_helper'      => '',
         'deleted_at'             => 'Deleted at',
         'deleted_at_helper'      => '',
+        'construction_contract'        => 'Construction Contract',
+        'construction_contract_helper' => '',
     ],
 ],
 ];

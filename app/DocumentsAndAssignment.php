@@ -32,6 +32,8 @@ class DocumentsAndAssignment extends Model implements HasMedia
         'original_no',
         'receipt_no',
         'date_of_receipt',
+        'received_from',
+        'construction_contract_id',
         'created_at',
         'updated_at',
         'deleted_at',
@@ -52,8 +54,18 @@ class DocumentsAndAssignment extends Model implements HasMedia
         $this->attributes['date_of_receipt'] = $value ? Carbon::createFromFormat(config('panel.date_format'), $value)->format('Y-m-d') : null;
     }
 
+    public function construction_contract()
+    {
+        return $this->belongsTo(ConstructionContract::class, 'construction_contract_id');
+    }
+
     public function getFileUploadAttribute()
     {
         return $this->getMedia('file_upload');
+    }
+
+    public function create_by_construction_contract_id()
+    {
+        return $this->belongsTo(ConstructionContract::class, 'construction_contract_id');
     }
 }

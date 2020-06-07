@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use Carbon\Carbon;
 use Image;
 use PDF;
 use App\Http\Controllers\Controller;
@@ -153,10 +154,14 @@ class TaskController extends Controller
         error_reporting($ebits ^ E_NOTICE);
 
         $data = $request->all();
-        $Startdate = \DateTime::createFromFormat('d/m/Y', $data['startDate']);
-        $Enddate = \DateTime::createFromFormat('d/m/Y', $data['endDate']);
 
-        $tasks = Task::all()->wherebetween('due_date',[$data['startDate'],$data['endDate']])->where('create_by_user_id',$data['create_by_user_id'])->sortBy('due_date');
+        $StartDate = \DateTime::createFromFormat('d/m/Y', $data['startDate'])->format("d/m/Y");
+        $EndDate =  \DateTime::createFromFormat('d/m/Y', $data['endDate'])->format("d/m/Y");
+        
+
+        $tasks = Task::all()->whereBetween('due_date',[$StartDate,$EndDate])
+        ->where('create_by_user_id',$data['create_by_user_id'])->sortBy('due_date');
+
         $count_task = count($tasks);
         
         if($count_task > 0){ 
@@ -183,10 +188,10 @@ class TaskController extends Controller
             $dateType = '';
             
             // Report Type
-            if($reportType == 'Daily Report'){
-                $dateType = $date->format("D, d F Y");
-            }
-            else if($reportType == 'Weekly Report'){
+            // if($reportType == 'Daily Report'){
+            //     $dateType = $date->format("d-m-Y");
+            // }
+            if($reportType == 'Weekly Report'){
                 $dateType = 'Weekly No. ' . $date->format("W");
             }
             else{
@@ -552,7 +557,7 @@ class TaskController extends Controller
             return $mpdf->Output();
         }
         else{
-            return redirect()->back() ->with('alert', 'No Activity in date range!');
+            return redirect()->back() ->with('alert', $StartDate . ' ' . $EndDate);
         }
     }
 

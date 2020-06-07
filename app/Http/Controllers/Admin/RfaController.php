@@ -1191,104 +1191,108 @@ class RfaController extends Controller
 
         $mpdf->WriteHTML($html);
          //Add Document
-        //  $allowed = array('pdf','PDF','Pdf');
+        $allowed = array('pdf','PDF','Pdf');
         
-        //  //Submittals Page
-        // if(count($rfa->submittals_file) > 0 ){
-        //     foreach($rfa->submittals_file as $submittal){
-        //         $path = $submittal->getUrl();
-        //         if(in_array(pathinfo($path,PATHINFO_EXTENSION),$allowed)){
-        //             $pagecount = $mpdf->SetSourceFile(public_path($submittal->getUrl()));
-        //             for ($i=1; $i<=($pagecount); $i++) {
-        //                 $mpdf->AddPage();
-        //                 $import_page = $mpdf->ImportPage($i);
-        //                 $mpdf->UseTemplate($import_page);
-        //             }
-        //         }
-        //       }
-        // }
+         //Submittals Page
+        if(count($rfa->submittals_file) > 0 ){
+            foreach($rfa->submittals_file as $submittal){
+                $path = $submittal->getUrl();
+                if(in_array(pathinfo($path,PATHINFO_EXTENSION),$allowed)){
+                    $pagecount = $mpdf->SetSourceFile(public_path($submittal->getUrl()));
+                    for ($i=1; $i<=($pagecount); $i++) {
+                        $mpdf->AddPage();
+                        $import_page = $mpdf->ImportPage($i);
+                        $mpdf->UseTemplate($import_page);
+                    }
+                }
+              }
+        }
         // //Submittals Manual
-        // else{
-        //     $mpdf->AddPage();
-        //     $pagecount = $mpdf->SetSourceFile(public_path('pdf-asset/Submittals_Form.pdf'));
-        //     $tplId = $mpdf->ImportPage($pagecount);
-        //     $mpdf->UseTemplate($tplId);    
+        else{
+            $mpdf->AddPage();
+            $pagecount = $mpdf->SetSourceFile(public_path('pdf-asset/Submittals_Form.pdf'));
+            $tplId = $mpdf->ImportPage($pagecount);
+            $mpdf->UseTemplate($tplId);    
 
-        //     $html = "<div style=\"font-size: 14px; position:absolute;top:55px;left:678px;\">". $rfa_code ."</div>";
-        //     $html .= "<div style=\"font-size: 10px; position:absolute;top:138px;left:520px;\">". $wbslv1 ."</div>";
-        //     $html .= "<div style=\"font-size: 10px; position:absolute;top:138px;left:546px;\">". $wbslv2 ."</div>";
-        //     $html .= "<div style=\"font-size: 10px; position:absolute;top:138px;left:576px;\">". $wbslv3 ."</div>";
-        //     $html .= "<div style=\"font-size: 10px; position:absolute;top:138px;left:608px;\">". $wbslv4 ."</div>";
-        //     $html .= "<div style=\"font-size: 10px; position:absolute;top:138px;left:648px;\">". $type ."</div>";
-        //     $html .= "<div style=\"font-size: 10px; position:absolute;top:138px;left:678px;\">". $num_doc ."</div>";
-        //     $html .= "<div style=\"font-size: 10px; position:absolute;top:138px;left:700px;\">". $revision_count ."</div>";
+            $html = "<div style=\"font-size: 14px; position:absolute;top:55px;left:678px;\">". $rfa_code ."</div>";
+            $html .= "<div style=\"font-size: 10px; position:absolute;top:138px;left:520px;\">". $wbslv1 ."</div>";
+            $html .= "<div style=\"font-size: 10px; position:absolute;top:138px;left:546px;\">". $wbslv2 ."</div>";
+            $html .= "<div style=\"font-size: 10px; position:absolute;top:138px;left:576px;\">". $wbslv3 ."</div>";
+            $html .= "<div style=\"font-size: 10px; position:absolute;top:138px;left:608px;\">". $wbslv4 ."</div>";
+            $html .= "<div style=\"font-size: 10px; position:absolute;top:138px;left:648px;\">". $type ."</div>";
+            $html .= "<div style=\"font-size: 10px; position:absolute;top:138px;left:678px;\">". $num_doc ."</div>";
+            $html .= "<div style=\"font-size: 10px; position:absolute;top:138px;left:700px;\">". $revision_count ."</div>";
 
-        //     $html .= "<div style=\"font-size: 10px; position:absolute;top:138px;left:722px;\">". $receive_date ."</div>";
+            $html .= "<div style=\"font-size: 10px; position:absolute;top:138px;left:722px;\">". $receive_date ."</div>";
 
 
-        //     if($purpose_for == 1){
-        //          $html .= "<div style=\"font-size: 14px; position:absolute;top:153px;left:512px;\">X</div>";
-        //      }
-        //     else if($purpose_for == 2){
-        //          $html .= "<div style=\"font-size: 14px; position:absolute;top:153px;left:562px;\">X</div>";
-        //     }
-        //      else if($purpose_for == 3){
-        //           $html .= "<div style=\"font-size: 14px; position:absolute;top:153px;left:622px;\">X</div>";
-        //     }
-        //     else if($purpose_for == 4){
-        //           $html .= "<div style=\"font-size: 14px; position:absolute;top:153px;left:695px;\">X</div>";
-        //     }
+            if($purpose_for == 1){
+                 $html .= "<div style=\"font-size: 14px; position:absolute;top:153px;left:512px;\">X</div>";
+             }
+            else if($purpose_for == 2){
+                 $html .= "<div style=\"font-size: 14px; position:absolute;top:153px;left:562px;\">X</div>";
+            }
+             else if($purpose_for == 3){
+                  $html .= "<div style=\"font-size: 14px; position:absolute;top:153px;left:622px;\">X</div>";
+            }
+            else if($purpose_for == 4){
+                  $html .= "<div style=\"font-size: 14px; position:absolute;top:153px;left:695px;\">X</div>";
+            }
 
-        //     $html .= "<div style=\"font-size: 14px; position:absolute;top:191px;left:118px;\">". $bill ."</div>";
-        //     $html .= "<div style=\"font-size: 14px; position:absolute;top:205px;left:118px;\">". $title_th ."</div>";
-        //     $html .= "<div style=\"font-size: 14px; position:absolute;top:191px;left:608px;\">". $assign_to ."</div>";
-        //     $html .= "<div style=\"font-size: 14px; position:absolute;top:241px;left:230px;\">". $spec_ref_no ."</div>";
-        //     $html .= "<div style=\"font-size: 14px; position:absolute;top:241px;left:690px;\">". $incoming_no ."</div>";
-        //     $html .= "<div style=\"font-size: 14px; position:absolute;top:257px;left:118px;\">". $clause ."</div>";
-        //     $html .= "<div style=\"font-size: 14px; position:absolute;top:275px;left:216px;\">". $contract_drawing_no ."</div>";
-        //     $html .= "<div style=\"font-size: 14px; position:absolute;top:310px;left:130px;\">". $qty_page ."</div>";
+            $html .= "<div style=\"font-size: 14px; position:absolute;top:191px;left:118px;\">". $bill ."</div>";
+            $html .= "<div style=\"font-size: 14px; position:absolute;top:205px;left:118px;\">". $title_th ."</div>";
+            $html .= "<div style=\"font-size: 14px; position:absolute;top:191px;left:608px;\">". $assign_to ."</div>";
+            $html .= "<div style=\"font-size: 14px; position:absolute;top:241px;left:230px;\">". $spec_ref_no ."</div>";
+            $html .= "<div style=\"font-size: 14px; position:absolute;top:241px;left:690px;\">". $incoming_no ."</div>";
+            $html .= "<div style=\"font-size: 14px; position:absolute;top:257px;left:118px;\">". $clause ."</div>";
+            $html .= "<div style=\"font-size: 14px; position:absolute;top:275px;left:216px;\">". $contract_drawing_no ."</div>";
+            $html .= "<div style=\"font-size: 14px; position:absolute;top:310px;left:130px;\">". $qty_page ."</div>";
 
-        //     if($rfa->cec_stamp == 1){
-        //         $html .= "<div style=\"font-size: 14px; position:absolute;top:750px;left:500px;\">
-        //             <img src=\"". public_path('png-asset/Signature_CEC.png') ."\" width=\"40px\" higth=\"40px\"> </div>";
-        //     }
+            if($rfa->cec_stamp == 1){
+                $html .= "<div style=\"font-size: 14px; position:absolute;top:750px;left:500px;\">
+                    <img src=\"". public_path('png-asset/Signature_CEC.png') ."\" width=\"40px\" higth=\"40px\"> </div>";
+            }
             
-        //     if($rfa->cec_sign == 1){
-        //         $html .= "<div style=\"font-size: 14px; position:absolute;top:500px;left:560px;\">
-        //         <img src=\"". public_path('png-asset/Stamp_CEC.png') ."\" width=\"200px\" higth=\"200px\"> </div>";
-        //     }
+            if($rfa->cec_sign == 1){
+                $html .= "<div style=\"font-size: 14px; position:absolute;top:500px;left:560px;\">
+                <img src=\"". public_path('png-asset/Stamp_CEC.png') ."\" width=\"200px\" higth=\"200px\"> </div>";
+            }
 
-        //     $top = 425;
-        //     foreach($submittalsRfa as $key => $submittal){
-        //         if($key < 9){
-        //             $html .= "<div style=\"font-size: 12px; position:absolute;top:". $top ."px;left:50px;\">". 
-        //             $submittal['item_no'] ."</div>";
 
-        //             $html .= "<div style=\"font-size: 12px; position:absolute;top:". $top ."px;left:138px;\">". 
-        //             wordwrap($submittal['description'],300,"<br>\n") ."</div>";  
-                    
-        //             $html .= "<div style=\"font-size: 12px; position:absolute;top:". $top ."px;left:445px;\">". 
-        //             $submittal['qty_sets'] ."</div>";
+            $top = 425;
+            $index = 1;
+            $mpdf->WriteHTML($html);
 
-        //             //purpose for HERE!!
-        //             $top += 35;
-        //         }
-        //     }
     
-        //     $mpdf->WriteHTML($html);
-        // }
 
-        // foreach($rfa->file_upload_1 as $media){
-        //   $path = $media->getUrl();
-        //   if(in_array(pathinfo($path,PATHINFO_EXTENSION),$allowed)){
-        //       $pagecount = $mpdf->SetSourceFile($media->getPath());
-        //       for ($i=1; $i<=($pagecount); $i++) {
-        //           $mpdf->AddPage();
-        //           $import_page = $mpdf->ImportPage($i);
-        //           $mpdf->UseTemplate($import_page);
-        //       }
-        //   }
-        // }
+            foreach($submittalsRfa as $submittal){
+                //purpose for HERE!!
+                if($index%9 == 0){ 
+                    $top = 425;       
+                    $mpdf->AddPage();
+                    $pagecount = $mpdf->SetSourceFile(public_path('pdf-asset/Submittals_Form.pdf'));
+                    $tplId = $mpdf->ImportPage($pagecount);
+                    $mpdf->UseTemplate($tplId);
+                    $mpdf->WriteHTML($html);
+
+                }
+                $htmlsub = "<div style=\"font-size: 12px; position:absolute;top:". $top ."px;left:50px;\">". 
+                $submittal['item_no'] . '  ' . $index ."</div>";
+
+                $htmlsub .= "<div style=\"font-size: 12px; position:absolute;top:". $top ."px;left:138px;\">". 
+                wordwrap($submittal['description'],300,"<br>\n") ."</div>";  
+                
+                $htmlsub .= "<div style=\"font-size: 12px; position:absolute;top:". $top ."px;left:445px;\">". 
+                $submittal['qty_sets'] ."</div>";
+
+                $top += 35;
+                $index++;
+                $mpdf->WriteHTML($htmlsub);
+
+            }
+            
+        }
+        
 
         return $mpdf->Output();
     }

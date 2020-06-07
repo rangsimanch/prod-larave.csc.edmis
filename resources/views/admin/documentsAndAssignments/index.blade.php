@@ -36,6 +36,12 @@
                                     {{ trans('cruds.documentsAndAssignment.fields.date_of_receipt') }}
                                 </th>
                                 <th>
+                                    {{ trans('cruds.documentsAndAssignment.fields.received_from') }}
+                                </th>
+                                <th>
+                                    {{ trans('cruds.documentsAndAssignment.fields.construction_contract') }}
+                                </th>
+                                <th>
                                     {{ trans('cruds.documentsAndAssignment.fields.file_upload') }}
                                 </th>
                                 <th>
@@ -55,6 +61,17 @@
                                     <input class="search" type="text" placeholder="{{ trans('global.search') }}">
                                 </td>
                                 <td>
+                                </td>
+                                <td>
+                                    <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                                </td>
+                                <td>
+                                    <select class="search">
+                                        <option value>{{ trans('global.all') }}</option>
+                                        @foreach($construction_contracts as $key => $item)
+                                            <option value="{{ $item }}">{{ $item }}</option>
+                                        @endforeach
+                                    </select>
                                 </td>
                                 <td>
                                 </td>
@@ -120,6 +137,8 @@
 { data: 'original_no', name: 'original_no' },
 { data: 'receipt_no', name: 'receipt_no' },
 { data: 'date_of_receipt', name: 'date_of_receipt' },
+{ data: 'received_from', name: 'received_from' },
+{ data: 'construction_contract_code', name: 'construction_contract.code' },
 { data: 'file_upload', name: 'file_upload', sortable: false, searchable: false },
 { data: 'actions', name: '{{ trans('global.actions') }}' }
     ],

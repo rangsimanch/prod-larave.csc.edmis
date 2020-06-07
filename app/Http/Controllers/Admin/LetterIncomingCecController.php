@@ -21,7 +21,10 @@ class LetterIncomingCecController extends Controller
 
         if ($request->ajax()) {
             $query = AddLetter::with(['letter_type', 'sender', 'receiver', 'construction_contract', 'team'])
-            ->select(sprintf('%s.*', (new AddLetter)->table))->where('receiver_id',4);
+            ->select(sprintf('%s.*', (new AddLetter)->table))->where([
+                ['receiver_id',4]],
+                ['cc_cec',1]
+                );
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');

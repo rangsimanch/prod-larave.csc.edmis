@@ -79,6 +79,53 @@
                             @endif
                             <span class="help-block">{{ trans('cruds.addLetter.fields.received_date_helper') }}</span>
                         </div>
+
+
+                        <div class="form-group {{ $errors->has('cc_srt') ? 'has-error' : '' }}">
+                            <div>
+                                <input type="hidden" name="cc_srt" value="0">
+                                <input type="checkbox" name="cc_srt" id="cc_srt" value="1" {{ old('cc_srt', 0) == 1 || old('cc_srt') === null ? 'checked' : '' }}>
+                                <label for="cc_srt" style="font-weight: 400">{{ trans('cruds.addLetter.fields.cc_srt') }}</label>
+                            </div>
+                            @if($errors->has('cc_srt'))
+                                <span class="help-block" role="alert">{{ $errors->first('cc_srt') }}</span>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.addLetter.fields.cc_srt_helper') }}</span>
+                        </div>
+                        <div class="form-group {{ $errors->has('cc_pmc') ? 'has-error' : '' }}">
+                            <div>
+                                <input type="hidden" name="cc_pmc" value="0">
+                                <input type="checkbox" name="cc_pmc" id="cc_pmc" value="1" {{ old('cc_pmc', 0) == 1 || old('cc_pmc') === null ? 'checked' : '' }}>
+                                <label for="cc_pmc" style="font-weight: 400">{{ trans('cruds.addLetter.fields.cc_pmc') }}</label>
+                            </div>
+                            @if($errors->has('cc_pmc'))
+                                <span class="help-block" role="alert">{{ $errors->first('cc_pmc') }}</span>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.addLetter.fields.cc_pmc_helper') }}</span>
+                        </div>
+                        <div class="form-group {{ $errors->has('cc_csc') ? 'has-error' : '' }}">
+                            <div>
+                                <input type="hidden" name="cc_csc" value="0">
+                                <input type="checkbox" name="cc_csc" id="cc_csc" value="1" {{ old('cc_csc', 0) == 1 || old('cc_csc') === null ? 'checked' : '' }}>
+                                <label for="cc_csc" style="font-weight: 400">{{ trans('cruds.addLetter.fields.cc_csc') }}</label>
+                            </div>
+                            @if($errors->has('cc_csc'))
+                                <span class="help-block" role="alert">{{ $errors->first('cc_csc') }}</span>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.addLetter.fields.cc_csc_helper') }}</span>
+                        </div>
+                        <div class="form-group {{ $errors->has('cc_cec') ? 'has-error' : '' }}">
+                            <div>
+                                <input type="hidden" name="cc_cec" value="0">
+                                <input type="checkbox" name="cc_cec" id="cc_cec" value="1" {{ old('cc_cec', 0) == 1 || old('cc_cec') === null ? 'checked' : '' }}>
+                                <label for="cc_cec" style="font-weight: 400">{{ trans('cruds.addLetter.fields.cc_cec') }}</label>
+                            </div>
+                            @if($errors->has('cc_cec'))
+                                <span class="help-block" role="alert">{{ $errors->first('cc_cec') }}</span>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.addLetter.fields.cc_cec_helper') }}</span>
+                        </div>
+
                         <div class="form-group {{ $errors->has('construction_contract') ? 'has-error' : '' }}">
                             <label for="construction_contract_id">{{ trans('cruds.addLetter.fields.construction_contract') }}</label>
                             <select class="form-control select2" name="construction_contract_id" id="construction_contract_id">
