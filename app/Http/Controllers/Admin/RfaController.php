@@ -1078,9 +1078,21 @@ class RfaController extends Controller
         $rfa_code = '';
         if(isset($rfa->origin_number)){
             $rfa_code = $rfa->origin_number ?? '';
+            if(strlen($rfa_code) > 8){
+                $revision_count = substr($rfa_code,11,1);
+            }
+            else{
+                $revision_count = "0";
+            }
         }
         else{
             $rfa_code = $rfa->rfa_code ?? '';  
+            if(strlen($rfa_code) > 14){
+                $revision_count = substr($rfa_code,17,2);
+            }
+            else{
+                $revision_count = "0";
+            }
         }
         $incoming_no = $rfa->incoming_number ?? '';
         $receive_date = $rfa->receive_date ?? '';
@@ -1129,10 +1141,8 @@ class RfaController extends Controller
         }
         $type = $rfa->type->type_code ?? '';
         $num_doc = substr($rfa_code,11,4);
-        $revision_count = "0";
-        if(strlen($rfa_code) > 14){
-            $revision_count = substr($rfa_code,17,2);
-        }
+
+        
         $receive_date = $rfa->receive_date ?? '';
 
         $distribute_date = $rfa->distribute_date ?? '' ;
@@ -1220,8 +1230,8 @@ class RfaController extends Controller
             $html = "<div style=\"font-size: 14px; position:absolute;top:55px;left:678px;\">". $rfa_code ."</div>";
             $html .= "<div style=\"font-size: 10px; position:absolute;top:138px;left:520px;\">". $wbslv1 ."</div>";
             $html .= "<div style=\"font-size: 10px; position:absolute;top:138px;left:546px;\">". $wbslv2 ."</div>";
-            $html .= "<div style=\"font-size: 10px; position:absolute;top:138px;left:576px;\">". $wbslv3_code . ' ' ."</div>";
-            $html .= "<div style=\"font-size: 10px; position:absolute;top:138px;left:608px;\">". $wbslv4_code . ' ' ."</div>";
+            $html .= "<div style=\"font-size: 10px; position:absolute;top:138px;left:576px;\">". $wbslv3_code . '.' ."</div>";
+            $html .= "<div style=\"font-size: 10px; position:absolute;top:138px;left:608px;\">". $wbslv4_code . '.' ."</div>";
             $html .= "<div style=\"font-size: 10px; position:absolute;top:138px;left:648px;\">". $type ."</div>";
             $html .= "<div style=\"font-size: 10px; position:absolute;top:138px;left:678px;\">". $num_doc ."</div>";
             $html .= "<div style=\"font-size: 10px; position:absolute;top:138px;left:700px;\">". $revision_count ."</div>";

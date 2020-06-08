@@ -23,6 +23,7 @@
         "laravelcollective/html": "^6.0",
         "laraveldaily/laravel-charts": "^0.1.10",
         "mpdf/mpdf": "^8.0",
+        "nesbot/carbon": "^2.35",
         "niklasravnsborg/laravel-pdf": "^4.0",
         "nuovo/spreadsheet-reader": "^0.5.11",
         "pusher/pusher-php-server": "^4.1",

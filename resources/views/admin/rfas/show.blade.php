@@ -442,16 +442,16 @@ word-wrap: break-word;
                                 {{ trans('global.back_to_list') }}
                             </a>
                             @can('rfa_form')
-                            <!-- <a class="btn btn-success jpdf">
+                            <a class="btn btn-success jpdf">
                                 View RFA Form
-                            </a> -->
-    
-                            <a class="btn btn-success" href="{{ route('admin.rfas.createReportRFA',$rfa->id) }}">
-                                View RFA & Submittals Form
                             </a>
-                                 <!-- <a class="btn btn-success jspdf_submittals">
-                                View Submittals Form
+    
+                            <!-- <a class="btn btn-success" href="{{ route('admin.rfas.createReportRFA',$rfa->id) }}">
+                                View RFA & Submittals Form
                             </a> -->
+                                 <a class="btn btn-success jspdf_submittals">
+                                View Submittals Form
+                            </a>
                             @endcan
                         </div>
                     </div>

@@ -155,9 +155,8 @@ class TaskController extends Controller
 
         $data = $request->all();
 
-        $StartDate = \DateTime::createFromFormat('d/m/Y', $data['startDate'])->format("d/m/Y");
-        $EndDate =  \DateTime::createFromFormat('d/m/Y', $data['endDate'])->format("d/m/Y");
-        
+        // $StartDate = Carbon::createFromFormat('d/m/Y', $data['startDate'])->format('Y-m-d');
+        // $EndDate = Carbon::createFromFormat('d/m/Y', $data['endDate'])->format('Y-m-d');
 
         $tasks = Task::all()->whereBetween('due_date',[$StartDate,$EndDate])
         ->where('create_by_user_id',$data['create_by_user_id'])->sortBy('due_date');
@@ -557,7 +556,7 @@ class TaskController extends Controller
             return $mpdf->Output();
         }
         else{
-            return redirect()->back() ->with('alert', $StartDate . ' ' . $EndDate);
+            return redirect()->back() ->with('alert', "No activity on date range");
         }
     }
 
