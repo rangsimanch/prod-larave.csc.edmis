@@ -16,10 +16,11 @@ use App\TaskStatus;
 use App\TaskTag;
 use App\User;
 use Gate;
-use Illuminate\Http\Request;
+//use Illuminate\Http\Request;
 use Spatie\MediaLibrary\Models\Media;
 use Symfony\Component\HttpFoundation\Response;
 use Yajra\DataTables\Facades\DataTables;
+use Request;
 
 class TaskController extends Controller
 {
@@ -155,13 +156,19 @@ class TaskController extends Controller
 
         $data = $request->all();
 
-        // $StartDate = Carbon::createFromFormat('d/m/Y', $data['startDate'])->format('Y-m-d');
-        // $EndDate = Carbon::createFromFormat('d/m/Y', $data['endDate'])->format('Y-m-d');
+         $StartDate = $request->startDate;
+         $EndDate =  $request->endDate;
 
-        $tasks = Task::all()->whereBetween('due_date',[$StartDate,$EndDate])
+        $tasks = Task::all()->whereBetween('due_date',[$StartDate, $EndDate])
         ->where('create_by_user_id',$data['create_by_user_id'])->sortBy('due_date');
 
+        // $tasks = \DB::table('tasks')->whereBetween('due_date',[$StartDate,$EndDate])
+        // ->where('create_by_user_id',$data['create_by_user_id'])->orderBy('due_date')->get();
+
         $count_task = count($tasks);
+
+        // $count_task = $tasks->count();
+
         
         if($count_task > 0){ 
             //Conver Date

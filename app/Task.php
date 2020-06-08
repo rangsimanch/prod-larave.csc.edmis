@@ -70,6 +70,7 @@ class Task extends Model implements HasMedia
 
     }
 
+
     public function setDueDateAttribute($value)
     {
         $this->attributes['due_date'] = $value ? Carbon::createFromFormat(config('panel.date_format'), $value)->format('Y-m-d') : null;

@@ -23,12 +23,12 @@
                                     @endif
                         </div>
                         
-                        <div class="form-row">
+                        <div class="form-group">
                             <div class="form-group col">
                                 <label for="starttDate" class="required">Start Date</label>
                                 <input type="text" class="form-control date" id="startDate" name="startDate" value="{{ old('startDate') }}">
                             </div>
-                            <div class="form-group col">
+                            <div class="form-group">
                                 <label for="endDate" class="required">End Date</label>
                                 <input type="text" class="form-control date" id="endDate" name="endDate" value="{{ old('endDate') }}">
                             </div>
