@@ -1118,8 +1118,8 @@ class RfaController extends Controller
         $wbslv2 = $rfa->construction_contract->code ?? '';
         $wbslv3 = $rfa->wbs_level_3->wbs_level_3_name ?? '';
         $wbslv4 = $rfa->wbs_level_4->wbs_level_4_name ?? '';
-        $wbslv3_code = $rfa->wbs_level_3->wbs_level_3_code ?? '';
-        $wbslv4_code = $rfa->wbs_level_4->wbs_level_4_code ?? '';
+        $wbslv3_code = strip_tags($rfa->wbs_level_3->wbs_level_3_code ?? '');
+        $wbslv4_code = strip_tags($rfa->wbs_level_4->wbs_level_4_code ?? '');
 
         $wbs = '';
         if(isset($wbslv4)){
