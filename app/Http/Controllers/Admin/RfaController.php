@@ -1118,6 +1118,9 @@ class RfaController extends Controller
         $wbslv2 = $rfa->construction_contract->code ?? '';
         $wbslv3 = $rfa->wbs_level_3->wbs_level_3_name ?? '';
         $wbslv4 = $rfa->wbs_level_4->wbs_level_4_name ?? '';
+        $wbslv3_code = $rfa->wbs_level_3->wbs_level_3_code ?? '';
+        $wbslv4_code = $rfa->wbs_level_4->wbs_level_4_code ?? '';
+
         $wbs = '';
         if(isset($wbslv4)){
             $wbs = '1.' . $wbslv3 . ' 2.' . $wbslv4;
@@ -1217,8 +1220,8 @@ class RfaController extends Controller
             $html = "<div style=\"font-size: 14px; position:absolute;top:55px;left:678px;\">". $rfa_code ."</div>";
             $html .= "<div style=\"font-size: 10px; position:absolute;top:138px;left:520px;\">". $wbslv1 ."</div>";
             $html .= "<div style=\"font-size: 10px; position:absolute;top:138px;left:546px;\">". $wbslv2 ."</div>";
-            $html .= "<div style=\"font-size: 10px; position:absolute;top:138px;left:576px;\">". $wbslv3 ."</div>";
-            $html .= "<div style=\"font-size: 10px; position:absolute;top:138px;left:608px;\">". $wbslv4 ."</div>";
+            $html .= "<div style=\"font-size: 10px; position:absolute;top:138px;left:576px;\">". $wbslv3_code ."</div>";
+            $html .= "<div style=\"font-size: 10px; position:absolute;top:138px;left:608px;\">". $wbslv4_code ."</div>";
             $html .= "<div style=\"font-size: 10px; position:absolute;top:138px;left:648px;\">". $type ."</div>";
             $html .= "<div style=\"font-size: 10px; position:absolute;top:138px;left:678px;\">". $num_doc ."</div>";
             $html .= "<div style=\"font-size: 10px; position:absolute;top:138px;left:700px;\">". $revision_count ."</div>";
