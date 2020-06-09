@@ -269,6 +269,16 @@
                             @endif
                             <span class="help-block">{{ trans('cruds.rfa.fields.file_upload_1_helper') }}</span>
                         </div>
+
+                        <div hidden="true" class="form-group {{ $errors->has('submittals_file') ? 'has-error' : '' }}">
+                                    <label for="submittals_file">{{ trans('cruds.rfa.fields.submittals_file') }}</label>
+                                    <div class="needsclick dropzone" id="submittals_file-dropzone">
+                                    </div>
+                                    @if($errors->has('submittals_file'))
+                                        <span class="help-block" role="alert">{{ $errors->first('submittals_file') }}</span>
+                                    @endif
+                                    <span class="help-block">{{ trans('cruds.rfa.fields.submittals_file_helper') }}</span>
+                                </div>
                         @endif
 
                         @can('rfa_panel_a')
@@ -892,6 +902,7 @@
                             @endif
                             <span class="help-block">{{ trans('cruds.rfa.fields.hardcopy_date_helper') }}</span>
                         </div>
+
                         @endcan
                         @endif
 
@@ -906,6 +917,16 @@
                                         <span class="help-block">{{ trans('cruds.rfa.fields.commercial_file_upload_helper') }}</span>
                         </div>
                         @endcan
+
+                        <div hidden="true" class="form-group {{ $errors->has('commercial_file_upload') ? 'has-error' : '' }}">
+                                    <label for="commercial_file_upload">{{ trans('cruds.rfa.fields.commercial_file_upload') }}</label>
+                                    <div class="needsclick dropzone" id="commercial_file_upload-dropzone">
+                                    </div>
+                                    @if($errors->has(''))
+                                        <span class="help-block" role="alert">{{ $errors->first('') }}</span>
+                                    @endif
+                                        <span class="help-block">{{ trans('cruds.rfa.fields.commercial_file_upload_helper') }}</span>
+                        </div>
 
                         <div class="form-group">
                             <a class="btn btn-default" href="{{ route('admin.rfas.index') }}">
