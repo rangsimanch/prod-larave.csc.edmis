@@ -156,17 +156,16 @@ class TaskController extends Controller
 
         $data = $request->all();
 
-         $StartDate = $request->startDate;
-         $EndDate =  $request->endDate;
+         $StartDate = Carbon::createFromFormat('d/m/Y', $request->startDate)->format('Y-m-d');
+         $EndDate =  Carbon::createFromFormat('d/m/Y', $request->endDate)->format('Y-m-d');
          
-        $tasks = Task::all()
-        ->whereBetween('due_date',[$StartDate, $EndDate])
-        ->where('create_by_user_id',$data['create_by_user_id'])->sortBy('due_date');
+        // $tasks = Task::all()
+        // ->whereBetween('due_date', array('01/06/2020', '05/06/2020'))
+        // ->where('create_by_user_id',$data['create_by_user_id'])->sortBy('due_date');
 
-        // $tasks = Task::with(['tags', 'status', 'create_by_user', 'construction_contract', 'team'])
-        // ->select(sprintf('%s.*', (new Task)->table))
-        // ->whereBetween('due_date',[$StartDate, $EndDate])
-        // ->where('create_by_user_id',$data['create_by_user_id'])->orderBy('due_date');
+        $tasks = Task::with(['tags', 'status', 'create_by_user', 'construction_contract', 'team'])
+        ->whereBetween('due_date',[$StartDate, $EndDate])
+        ->where('create_by_user_id',$data['create_by_user_id'])->orderBy('due_date')->get();
 
 
         $count_task = count($tasks);
@@ -300,8 +299,8 @@ class TaskController extends Controller
                 // Add Image       
                     $allowed = array('gif', 'png', 'jpg', 'jpeg', 'JPG', 'JPEG', 'PNG');
                     
-                    if(count($task->attachment)  > 0){
-                        if(count($task->attachment)  == 1){
+                    if(count($task['attachment'])  > 0){
+                        if(count($task['attachment'])  == 1){
                             
                             if(in_array(pathinfo(public_path($task->attachment[0]->getUrl()),PATHINFO_EXTENSION),$allowed)){
                             
@@ -316,7 +315,7 @@ class TaskController extends Controller
                         
                         }
 
-                        else if(count($task->attachment) == 2){
+                        else if(count($task['attachment'])  == 2){
 
                             if(in_array(pathinfo(public_path($task->attachment[0]->getUrl()),PATHINFO_EXTENSION),$allowed)){
                                 $img = (string) Image::make($task->attachment[0]->getPath())->resize(null, 180, function ($constraint) {
@@ -338,7 +337,7 @@ class TaskController extends Controller
                                     . "\"></div>";
                             }
                         }
-                        else if(count($task->attachment) == 3){
+                        else if(count($task['attachment'])  == 3){
                             if(in_array(pathinfo(public_path($task->attachment[0]->getUrl()),PATHINFO_EXTENSION),$allowed)){
                                 $img = (string) Image::make($task->attachment[0]->getPath())->resize(null, 180, function ($constraint) {
                                     $constraint->aspectRatio();
@@ -367,7 +366,7 @@ class TaskController extends Controller
                                     . "\"></div>";
                             }
                         }
-                        else if(count($task->attachment) == 4){
+                        else if(count($task['attachment'])  == 4){
                             if(in_array(pathinfo(public_path($task->attachment[0]->getUrl()),PATHINFO_EXTENSION),$allowed)){
                                 
                                 $img = (string) Image::make($task->attachment[0]->getPath())->resize(null, 180, function ($constraint) {
@@ -441,7 +440,7 @@ class TaskController extends Controller
                     //     }
                     // }
 
-                        else if(count($task->attachment) == 5){
+                        else if(count($task['attachment'])  == 5){
                             if(in_array(pathinfo(public_path($task->attachment[0]->getUrl()),PATHINFO_EXTENSION),$allowed)){
 
                                 $img = (string) Image::make($task->attachment[0]->getPath())->resize(null, 180, function ($constraint) {
@@ -494,7 +493,7 @@ class TaskController extends Controller
                             }
 
                         }
-                        else if(count($task->attachment) >= 6){
+                        else if(count($task['attachment'])  >= 6){
                             if(in_array(pathinfo(public_path($task->attachment[0]->getUrl()),PATHINFO_EXTENSION),$allowed)){
 
                                 $img = (string) Image::make($task->attachment[0]->getPath())->resize(null, 180, function ($constraint) {
@@ -565,6 +564,7 @@ class TaskController extends Controller
                 $mpdf->WriteHTML($html);
             }
             return $mpdf->Output();
+            // return redirect()->back() ->with('alert', $tasks);
         }
         else{
             return redirect()->back() ->with('alert', "No activity on date range");

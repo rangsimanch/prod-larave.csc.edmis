@@ -31,10 +31,10 @@ class CreateReportTaskRequest extends FormRequest
                 'create_by_user_id'     => [
                     'required'],
                 'startDate'   => [
-                    'date_format:' . 'd/m/Y',
+                    'date_format:' . config('panel.date_format'),
                     'required'],
                 'endDate'     => [
-                    'date_format:' . 'd/m/Y',
+                    'date_format:' . config('panel.date_format'),
                     'required'],
                 'reportType' => [
                     'required'],
