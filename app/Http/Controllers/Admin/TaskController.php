@@ -16,11 +16,11 @@ use App\TaskStatus;
 use App\TaskTag;
 use App\User;
 use Gate;
-//use Illuminate\Http\Request;
+use Illuminate\Http\Request;
 use Spatie\MediaLibrary\Models\Media;
 use Symfony\Component\HttpFoundation\Response;
 use Yajra\DataTables\Facades\DataTables;
-use Request;
+//use Request;
 
 class TaskController extends Controller
 {
@@ -158,12 +158,16 @@ class TaskController extends Controller
 
          $StartDate = $request->startDate;
          $EndDate =  $request->endDate;
-
-        $tasks = Task::all()->whereBetween('due_date',[$StartDate, $EndDate])
+         
+        $tasks = Task::all()
+        ->whereBetween('due_date',[$StartDate, $EndDate])
         ->where('create_by_user_id',$data['create_by_user_id'])->sortBy('due_date');
 
-        // $tasks = \DB::table('tasks')->whereBetween('due_date',[$StartDate,$EndDate])
-        // ->where('create_by_user_id',$data['create_by_user_id'])->orderBy('due_date')->get();
+        // $tasks = Task::with(['tags', 'status', 'create_by_user', 'construction_contract', 'team'])
+        // ->select(sprintf('%s.*', (new Task)->table))
+        // ->whereBetween('due_date',[$StartDate, $EndDate])
+        // ->where('create_by_user_id',$data['create_by_user_id'])->orderBy('due_date');
+
 
         $count_task = count($tasks);
 
