@@ -1536,7 +1536,7 @@ return [
 ],
 'documentsAndAssignment'    => [
     'title'          => 'Documents And Assignments',
-    'title_singular' => 'Documents And Assignment',
+    'title_singular' => 'Review of Documents And Assignment',
     'fields'         => [
         'id'                     => 'ID',
         'id_helper'              => '',
