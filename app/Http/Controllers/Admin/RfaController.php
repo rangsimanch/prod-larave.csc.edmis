@@ -1154,8 +1154,9 @@ class RfaController extends Controller
         $reviewed_by = $rfa->reviewed_by->name ?? '' ;
         $outgoing_number = $rfa->outgoing_number ?? '' ;
         $outgoing_date = $rfa->outgoing_date ?? '' ;
-    
-        $purpose_for = $rfa->purpose_for ??  '';
+
+        $for_statuses = $rfa->for_status->id ?? '';
+        $comment_status = $$rfa->comment_status->id ?? '';
         //PDF Setting
         try {
             $mpdf = new \Mpdf\Mpdf([
@@ -1191,7 +1192,8 @@ class RfaController extends Controller
         $html .= "<div style=\"font-size: 14px; position:absolute;top:344px;left:630px;\">" . $clause . "</div>";
         $html .= "<div style=\"font-size: 14px; position:absolute;top:360px;left:210px;\">" . $contract_drawing_no . "</div>";
           //Note
-        $html .= "<div style=\"font-size: 14px; padding-right:180px; position:absolute;top:380px;left:120px;LINE-HEIGHT:15px;\">" . $note_1 . "</div>";
+        $html .= "<div style=\"font-size: 14px; padding-right:180px; position:absolute;top:380px;left:120px;LINE-HEIGHT:15px;\">" 
+        . $note_1 . "</div>";
         
           //Signature
         if($rfa->cec_stamp == 1){
@@ -1203,6 +1205,59 @@ class RfaController extends Controller
             $html .= "<div style=\"font-size: 14px; position:absolute;top:300px;left:400px;\">
             <img src=\"". public_path('png-asset/Stamp_CEC.png') ."\" width=\"200px\" higth=\"200px\"> </div>";
         }
+
+        //CSC Incoming 
+        $html .= "<div style=\"font-size: 14px; position:absolute;top:485px;left:477;\">" . $incoming_no . "</div>";
+        $html .= "<div style=\"font-size: 14px; position:absolute;top:500px;left:477;\">" . $receive_date . "</div>";
+        $html .= "<div style=\"font-size: 14px; padding-right:180px; position:absolute;top:610;left:120px;LINE-HEIGHT:15px;\">" 
+        . $note_2 . "</div>";
+        $html .= "<div style=\"font-size: 14px; position:absolute;top:675x;left:530;\">" . $receive_date . "</div>";
+
+        //CSC Outgoing (1)
+        if($comment_status == 1){
+            $html .= "<div style=\"font-size: 16px; position:absolute;top:747;left:215;\">" . 'X' . "</div>";
+        }
+        else if($comment_status == 2){
+            $html .= "<div style=\"font-size: 16px; position:absolute;top:747;left:307;\">" . 'X' . "</div>";
+        }
+        else if($comment_status == 3){
+            $html .= "<div style=\"font-size: 16px; position:absolute;top:747;left:417;\">" . 'X' . "</div>";
+        }
+        else if($comment_status == 4){
+            $html .= "<div style=\"font-size: 16px; position:absolute;top:747;left:514;\">" . 'X' . "</div>";
+        }
+        else{
+
+        }
+        $html .= "<div style=\"font-size: 14px; padding-right:180px; position:absolute;top:778;left:120px;LINE-HEIGHT:15px;\">" 
+        . $note_3 . "</div>";
+
+        $html .= "<div style=\"font-size: 13px; position:absolute;top:825;left:235;\">" . $action_by . "</div>";
+        $html .= "<div style=\"font-size: 13px; position:absolute;top:825;left:530;\">" . $distribute_date . "</div>";
+
+        //CSC Outgoing (2)
+        $html .= "<div style=\"font-size: 14px; position:absolute;top:870px;left:477;\">" . $outgoing_number . "</div>";
+        $html .= "<div style=\"font-size: 14px; position:absolute;top:885px;left:477;\">" . $outgoing_date . "</div>";
+
+       if($for_statuses == 1){
+            $html .= "<div style=\"font-size: 16px; position:absolute;top:912;left:215;\">" . 'X' . "</div>";
+        }
+        else if($for_statuses == 2){
+            $html .= "<div style=\"font-size: 16px; position:absolute;top:912;left:307;\">" . 'X' . "</div>";
+        }
+        else if($for_statuses == 3){
+            $html .= "<div style=\"font-size: 16px; position:absolute;top:912;left:417;\">" . 'X' . "</div>";
+        }
+        else if($for_statuses == 4){
+            $html .= "<div style=\"font-size: 16px; position:absolute;top:912;left:514;\">" . 'X' . "</div>";
+        }
+        else{
+
+        }
+        $html .= "<div style=\"font-size: 14px; padding-right:180px; position:absolute;top:942;left:120px;LINE-HEIGHT:15px;\">" 
+        . '$note_4' . "</div>";
+
+        $html .= "<div style=\"font-size: 14px; position:absolute;top:990px;left:530;\">" . $outgoing_date . "</div>";
 
         $mpdf->WriteHTML($html);
          //Add Document
