@@ -1255,7 +1255,7 @@ class RfaController extends Controller
 
         }
         $html .= "<div style=\"font-size: 14px; padding-right:180px; position:absolute;top:942;left:120px;LINE-HEIGHT:15px;\">" 
-        . '$note_4' . "</div>";
+        . $note_4 . "</div>";
 
         $html .= "<div style=\"font-size: 14px; position:absolute;top:990px;left:530;\">" . $outgoing_date . "</div>";
 
@@ -1309,14 +1309,15 @@ class RfaController extends Controller
                   $html .= "<div style=\"font-size: 14px; position:absolute;top:153px;left:695px;\">X</div>";
             }
 
-            $html .= "<div style=\"font-size: 14px; position:absolute;top:191px;left:118px;\">". $bill ."</div>";
-            $html .= "<div style=\"font-size: 14px; position:absolute;top:205px;left:118px;\">". $title_th ."</div>";
-            $html .= "<div style=\"font-size: 14px; position:absolute;top:191px;left:608px;\">". $assign_to ."</div>";
-            $html .= "<div style=\"font-size: 14px; position:absolute;top:241px;left:230px;\">". $spec_ref_no ."</div>";
-            $html .= "<div style=\"font-size: 14px; position:absolute;top:241px;left:690px;\">". $incoming_no ."</div>";
-            $html .= "<div style=\"font-size: 14px; position:absolute;top:257px;left:118px;\">". $clause ."</div>";
-            $html .= "<div style=\"font-size: 14px; position:absolute;top:275px;left:216px;\">". $contract_drawing_no ."</div>";
-            $html .= "<div style=\"font-size: 14px; position:absolute;top:310px;left:130px;\">". $qty_page ."</div>";
+            $html .= "<div style=\"font-size: 10px; position:absolute;top:194px;left:118px;\">". $bill . '.'."</div>";
+            $html .= "<div style=\"font-size: 10px; position:absolute;top:208px;left:118px;\">". $title_th ."</div>";
+            $html .= "<div style=\"font-size: 10px; position:absolute;top:195px;left:608px;\">". $assign_to ."</div>";
+            $html .= "<div style=\"font-size: 10px; position:absolute;top:245px;left:230px;\">". $spec_ref_no ."</div>";
+            $html .= "<div style=\"font-size: 10px; position:absolute;top:245px;left:685px;\">". $incoming_no ."</div>";
+            $html .= "<div style=\"font-size: 10px; position:absolute;top:260px;left:670;\">". $receive_date ."</div>";
+            $html .= "<div style=\"font-size: 10px; position:absolute;top:260px;left:118px;\">". $clause ."</div>";
+            $html .= "<div style=\"font-size: 10px; position:absolute;top:280px;left:216px;\">". $contract_drawing_no ."</div>";
+            $html .= "<div style=\"font-size: 10px; position:absolute;top:315px;left:130px;\">". $qty_page  . '.' ."</div>";
 
             if($rfa->cec_stamp == 1){
                 $html .= "<div style=\"font-size: 14px; position:absolute;top:750px;left:500px;\">
@@ -1327,6 +1328,12 @@ class RfaController extends Controller
                 $html .= "<div style=\"font-size: 14px; position:absolute;top:500px;left:560px;\">
                 <img src=\"". public_path('png-asset/Stamp_CEC.png') ."\" width=\"200px\" higth=\"200px\"> </div>";
             }
+
+            $html .= "<div style=\"font-size: 10px; position:absolute;top:930px;left:695px;\">". $outgoing_number  ."</div>";
+            $html .= "<div style=\"font-size: 10px; position:absolute;top:950px;left:680px;\">". $outgoing_date  ."</div>";
+            $html .= "<div style=\"font-size: 10px; position:absolute;top:930;left:130px;\">". $qty_page  . '.' ."</div>";
+
+
 
 
             $top = 425;
@@ -1346,10 +1353,10 @@ class RfaController extends Controller
                     $mpdf->WriteHTML($html);
 
                 }
-                $htmlsub = "<div style=\"font-size: 12px; position:absolute;top:". $top ."px;left:50px;\">". 
+                $htmlsub = "<div style=\"font-size: 12px; padding-right:400px; position:absolute;top:". $top ."px;left:50px;\">". 
                 $submittal['item_no'] . '  ' . $index ."</div>";
 
-                $htmlsub .= "<div style=\"font-size: 12px; position:absolute;top:". $top ."px;left:138px;\">". 
+                $htmlsub .= "<div style=\"font-size: 12px; padding-right:270px; position:absolute;top:". $top ."px;left:138px;\">". 
                 wordwrap($submittal['description'],300,"<br>\n") ."</div>";  
                 
                 $htmlsub .= "<div style=\"font-size: 12px; position:absolute;top:". $top ."px;left:445px;\">". 

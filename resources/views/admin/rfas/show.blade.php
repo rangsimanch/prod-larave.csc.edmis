@@ -447,11 +447,11 @@ word-wrap: break-word;
                             </a> -->
     
                             <a class="btn btn-success" href="{{ route('admin.rfas.createReportRFA',$rfa->id) }}">
-                                View RFA Form
+                                View RFA & Submittals Form
                             </a>
-                                 <a class="btn btn-success jspdf_submittals">
+                                 <!-- <a class="btn btn-success jspdf_submittals">
                                 View Submittals Form
-                            </a>
+                            </a> -->
                             @endcan
                         </div>
                     </div>
