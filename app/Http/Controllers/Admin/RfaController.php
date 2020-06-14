@@ -1170,9 +1170,11 @@ class RfaController extends Controller
         $tplId = $mpdf->ImportPage($pagecount);
         $mpdf->UseTemplate($tplId);        
           //Title
-        $html = "<div style=\"font-size: 14px; position:absolute;top:168px;left:80px;\">" . $bill . "</div>";
-        $html .= "<div style=\"font-size: 14px; position:absolute;top:184px;left:80px;\">" . $title_en . "</div>";
-        $html .= "<div style=\"font-size: 14px; position:absolute;top:217px;left:80px;\">" . $title_th . "</div>";
+        $html = "<div style=\"font-size: 14px; position:absolute;top:168px;left:80px;\">" . $bill . '.' . "</div>";
+        $html .= "<div style=\"font-size: 14px; padding-right:220px; position:absolute;top:184px;left:80px; LINE-HEIGHT:15px;\">" 
+        . $title_en . "</div>";
+        $html .= "<div style=\"font-size: 14px; padding-right:220px; position:absolute;top:217px;left:80px; LINE-HEIGHT:15px;\">" 
+        . $title_th . "</div>";
           //No. Code.
         $html .= "<div style=\"font-size: 14px; position:absolute;top:30px;left:650px;\">" . $rfa_code . "</div>";
         $html .= "<div style=\"font-size: 11px; position:absolute;top:170px;left:477px;\">" . $document_number . "</div>";
@@ -1181,7 +1183,7 @@ class RfaController extends Controller
         $html .= "<div style=\"font-size: 14px; position:absolute;top:217px;left:630px;\">" . $submit_date . "</div>";
           //Document Name
         $html .= "<div style=\"font-size: 14px; padding-right:240px; position:absolute;top:269px;left:160px;LINE-HEIGHT:15px;\">" . $document_name . "</div>";
-        $html .= "<div style=\"font-size: 14px; position:absolute;top:265;left:630;\">" . $qty_page . "</div>";
+        $html .= "<div style=\"font-size: 14px; position:absolute;top:265;left:630;\">" . $qty_page . '.' . "</div>";
         
           //WBS Spec.Ref Clase. Contract No.
         $html .= "<div style=\"font-size: 14px; position:absolute;top:328px;left:225px;\">" . $wbs . "</div>";
