@@ -1191,7 +1191,7 @@ class RfaController extends Controller
         $html .= "<div style=\"font-size: 14px; position:absolute;top:344px;left:630px;\">" . $clause . "</div>";
         $html .= "<div style=\"font-size: 14px; position:absolute;top:360px;left:210px;\">" . $contract_drawing_no . "</div>";
           //Note
-        $html .= "<div style=\"font-size: 14px; position:absolute;top:380px;left:120px;LINE-HEIGHT:15px;\">" . $note_1 . "</div>";
+        $html .= "<div style=\"font-size: 14px; padding-right:180px; position:absolute;top:380px;left:120px;LINE-HEIGHT:15px;\">" . $note_1 . "</div>";
         
           //Signature
         if($rfa->cec_stamp == 1){
