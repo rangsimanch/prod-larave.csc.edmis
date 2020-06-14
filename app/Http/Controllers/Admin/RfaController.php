@@ -1071,8 +1071,8 @@ class RfaController extends Controller
 
         //Varible setting
         $bill = $rfa->bill ?? '';
-        $title_th = $rfa->title ?? '';
-        $title_en = $rfa->title_eng ?? '';
+        $title_th = wordwrap($rfa->title ?? '',300,"<br>\n");
+        $title_en = wordwrap($rfa->title_eng ?? '',300,"<br>\n");
         $document_number = $rfa->document_number ?? '';
         $check_box = "X";
         $rfa_code = '';
