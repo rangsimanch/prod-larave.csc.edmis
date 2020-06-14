@@ -1171,9 +1171,9 @@ class RfaController extends Controller
         $mpdf->UseTemplate($tplId);        
           //Title
         $html = "<div style=\"font-size: 14px; position:absolute;top:168px;left:80px;\">" . $bill . '.' . "</div>";
-        $html .= "<div style=\"font-size: 14px; padding-right:220px; position:absolute;top:184px;left:80px; LINE-HEIGHT:15px;\">" 
+        $html .= "<div style=\"font-size: 14px; padding-right:240px; position:absolute;top:184px;left:80px; LINE-HEIGHT:16px;\">" 
         . $title_en . "</div>";
-        $html .= "<div style=\"font-size: 14px; padding-right:220px; position:absolute;top:217px;left:80px; LINE-HEIGHT:15px;\">" 
+        $html .= "<div style=\"font-size: 14px; padding-right:240px; position:absolute;top:217px;left:80px; LINE-HEIGHT:16px;\">" 
         . $title_th . "</div>";
           //No. Code.
         $html .= "<div style=\"font-size: 14px; position:absolute;top:30px;left:650px;\">" . $rfa_code . "</div>";
