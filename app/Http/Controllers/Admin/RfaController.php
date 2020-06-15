@@ -1344,7 +1344,7 @@ class RfaController extends Controller
 
             foreach($submittalsRfa as $submittal){
                 //purpose for HERE!!
-                if($index%9 == 0){ 
+                if($index%8 == 0){ 
                     $top = 425;       
                     $mpdf->AddPage();
                     $pagecount = $mpdf->SetSourceFile(public_path('pdf-asset/Submittals_Form.pdf'));
