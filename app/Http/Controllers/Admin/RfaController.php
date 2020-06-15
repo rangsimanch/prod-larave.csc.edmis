@@ -1353,7 +1353,7 @@ class RfaController extends Controller
                     $mpdf->WriteHTML($html);
 
                 }
-                $htmlsub = "<div style=\"font-size: 12px; padding-right:450px; position:absolute;top:". $top ."px;left:50px;LINE-HEIGHT:15px;\">". 
+                $htmlsub = "<div style=\"font-size: 12px; padding-right:600px; position:absolute;top:". $top ."px;left:50px;LINE-HEIGHT:15px;\">". 
                 $submittal['item_no'] . '  ' . $index ."</div>";
 
                 $htmlsub .= "<div style=\"font-size: 12px; padding-right:270px; position:absolute;top:". $top ."px;left:138px;LINE-HEIGHT:15px;\">". 
