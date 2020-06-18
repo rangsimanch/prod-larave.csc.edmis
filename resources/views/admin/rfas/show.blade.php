@@ -1,9 +1,5 @@
 @extends('layouts.admin')
-<style type="text/css">
-.word-wrap {
-word-wrap: break-word;
-}
-</style>
+
 @section('content')
 <div class="content">
 
@@ -467,7 +463,7 @@ word-wrap: break-word;
 
 @section('scripts')
 
-<script type="text/javascript">
+<!-- <script type="text/javascript">
     
 $( document ).ready(function() {
 (function (jsPDFAPI) {
@@ -1322,5 +1318,5 @@ function wrapText() {
          });
 }
 
-</script>
+</script> -->
 @endsection
