@@ -387,8 +387,10 @@
     ],
     order: [[ 2, 'desc' ]],
     pageLength: 10,
+    lengthMenu: [[10, 25, 50, -1], [10, 25, 50, "All"]]
   };
   $('.datatable-Rfa').DataTable(dtOverrideGlobals);
+    
     $('a[data-toggle="tab"]').on('shown.bs.tab', function(e){
         $($.fn.dataTable.tables(true)).DataTable()
             .columns.adjust();

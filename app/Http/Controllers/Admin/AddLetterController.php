@@ -104,7 +104,7 @@ class AddLetterController extends Controller
         $teams                  = Team::get()->pluck('code')->toArray();
         $teams                  = Team::get()->pluck('code')->toArray();
         $construction_contracts = ConstructionContract::get()->pluck('code')->toArray();
-        $teams                  = Team::get()->pluck('name')->toArray();
+        $teams                  = Team::get()->pluck('code')->toArray();
 
         return view('admin.addLetters.index', compact('letter_types', 'teams', 'teams', 'construction_contracts', 'teams'));
     }
