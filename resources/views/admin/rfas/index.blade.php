@@ -387,7 +387,7 @@
     ],
     order: [[ 2, 'desc' ]],
     pageLength: 10,
-    lengthMenu: [[10, 25, 50, -1], [10, 25, 50, "All"]]
+    lengthMenu: [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]]
   };
   $('.datatable-Rfa').DataTable(dtOverrideGlobals);
     
