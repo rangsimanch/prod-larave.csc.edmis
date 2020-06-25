@@ -1268,7 +1268,7 @@ class RfaController extends Controller
             foreach($rfa->submittals_file as $submittal){
                 $path = urlencode($submittal->getUrl());
                 if(in_array(pathinfo($path,PATHINFO_EXTENSION),$allowed)){
-                    $fileContent = file_get_contents(public_path($submittal->getUrl()),'rb');
+                    $fileContent = file_get_contents($submittal->getUrl(),'rb');
                     $pagecount = $mpdf->SetSourceFile(StreamReader::createByString($fileContent));
                     for ($i=1; $i<=($pagecount); $i++) {
                         $mpdf->AddPage();
