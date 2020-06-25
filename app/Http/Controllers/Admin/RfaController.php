@@ -1269,7 +1269,7 @@ class RfaController extends Controller
                 $path = $submittal->getUrl();
                 $fileContent = file_get_contents($submittal->getUrl(),'rb');
                 if(in_array(pathinfo($path,PATHINFO_EXTENSION),$allowed)){
-                    $pagecount = $mpdf->SetSourceFile(StreamReader::createByString($fileContent));
+                    $pagecount = $mpdf->SetSourceFile(\StreamReader::createByString($fileContent));
                     for ($i=1; $i<=($pagecount); $i++) {
                         $mpdf->AddPage();
                         $import_page = $mpdf->ImportPage($i);
