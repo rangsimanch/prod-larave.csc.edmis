@@ -1266,7 +1266,7 @@ class RfaController extends Controller
          //Submittals Page
         if(count($rfa->submittals_file) > 0 ){
             foreach($rfa->submittals_file as $submittal){
-                $path = $submittal->getUrl();
+                $path = get_file_content($submittal->getUrl());
                 if(in_array(pathinfo($path,PATHINFO_EXTENSION),$allowed)){
                     $pagecount = $mpdf->SetSourceFile($path);
                     for ($i=1; $i<=($pagecount); $i++) {
