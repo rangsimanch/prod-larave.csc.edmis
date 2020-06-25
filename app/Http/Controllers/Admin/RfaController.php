@@ -1264,21 +1264,21 @@ class RfaController extends Controller
         $allowed = array('pdf','PDF','Pdf');
         
          //Submittals Page
-        if(count($rfa->submittals_file) > 0 ){
-            foreach($rfa->submittals_file as $submittal){
-                $path = $submittal->getUrl();
-                if(in_array(pathinfo($path,PATHINFO_EXTENSION),$allowed)){
-                    $pagecount = $mpdf->SetSourceFile($submittal->getUrl());
-                    for ($i=1; $i<=($pagecount); $i++) {
-                        $mpdf->AddPage();
-                        $import_page = $mpdf->ImportPage($i);
-                        $mpdf->UseTemplate($import_page);
-                    }
-                }
-              }
-        }
-        // //Submittals Manual
-        else{
+        // if(count($rfa->submittals_file) > 0 ){
+        //     foreach($rfa->submittals_file as $submittal){
+        //         $path = $submittal->getUrl();
+        //         if(in_array(pathinfo($path,PATHINFO_EXTENSION),$allowed)){
+        //             $pagecount = $mpdf->SetSourceFile($submittal->getUrl());
+        //             for ($i=1; $i<=($pagecount); $i++) {
+        //                 $mpdf->AddPage();
+        //                 $import_page = $mpdf->ImportPage($i);
+        //                 $mpdf->UseTemplate($import_page);
+        //             }
+        //         }
+        //       }
+        // }
+        // // //Submittals Manual
+        // else{
             $mpdf->AddPage();
             $pagecount = $mpdf->SetSourceFile(public_path('pdf-asset/Submittals_Form.pdf'));
             $tplId = $mpdf->ImportPage($pagecount);
@@ -1368,7 +1368,7 @@ class RfaController extends Controller
 
             }
             
-        }
+        // }
         
 
         return $mpdf->Output();
