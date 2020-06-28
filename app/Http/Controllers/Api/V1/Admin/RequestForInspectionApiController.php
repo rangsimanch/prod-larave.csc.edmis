@@ -20,8 +20,7 @@ class RequestForInspectionApiController extends Controller
     {
         abort_if(Gate::denies('request_for_inspection_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new RequestForInspectionResource(RequestForInspection::with(['contact_person', 'requested_by', 'construction_contract', 'team'])->get());
-
+        return new RequestForInspectionResource(RequestForInspection::with(['bill', 'wbs_level_1', 'wbs_level_2', 'wbs_level_3', 'wbs_level_4', 'contact_person', 'requested_by', 'construction_contract', 'team'])->get());
     }
 
     public function store(StoreRequestForInspectionRequest $request)
@@ -35,15 +34,13 @@ class RequestForInspectionApiController extends Controller
         return (new RequestForInspectionResource($requestForInspection))
             ->response()
             ->setStatusCode(Response::HTTP_CREATED);
-
     }
 
     public function show(RequestForInspection $requestForInspection)
     {
         abort_if(Gate::denies('request_for_inspection_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new RequestForInspectionResource($requestForInspection->load(['contact_person', 'requested_by', 'construction_contract', 'team']));
-
+        return new RequestForInspectionResource($requestForInspection->load(['bill', 'wbs_level_1', 'wbs_level_2', 'wbs_level_3', 'wbs_level_4', 'contact_person', 'requested_by', 'construction_contract', 'team']));
     }
 
     public function update(UpdateRequestForInspectionRequest $request, RequestForInspection $requestForInspection)
@@ -54,7 +51,6 @@ class RequestForInspectionApiController extends Controller
             if (!$requestForInspection->files_upload || $request->input('files_upload') !== $requestForInspection->files_upload->file_name) {
                 $requestForInspection->addMedia(storage_path('tmp/uploads/' . $request->input('files_upload')))->toMediaCollection('files_upload');
             }
-
         } elseif ($requestForInspection->files_upload) {
             $requestForInspection->files_upload->delete();
         }
@@ -62,7 +58,6 @@ class RequestForInspectionApiController extends Controller
         return (new RequestForInspectionResource($requestForInspection))
             ->response()
             ->setStatusCode(Response::HTTP_ACCEPTED);
-
     }
 
     public function destroy(RequestForInspection $requestForInspection)
@@ -72,7 +67,5 @@ class RequestForInspectionApiController extends Controller
         $requestForInspection->delete();
 
         return response(null, Response::HTTP_NO_CONTENT);
-
     }
-
 }

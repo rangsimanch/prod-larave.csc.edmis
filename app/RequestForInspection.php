@@ -42,7 +42,11 @@ class RequestForInspection extends Model implements HasMedia
     ];
 
     protected $fillable = [
-        'bill_no',
+        'bill_id',
+        'wbs_level_1_id',
+        'wbs_level_2_id',
+        'wbs_level_3_id',
+        'wbs_level_4_id',
         'subject',
         'item_no',
         'ref_no',
@@ -65,46 +69,59 @@ class RequestForInspection extends Model implements HasMedia
     public function registerMediaConversions(Media $media = null)
     {
         $this->addMediaConversion('thumb')->width(50)->height(50);
+    }
 
+    public function bill()
+    {
+        return $this->belongsTo(BoQ::class, 'bill_id');
+    }
+
+    public function wbs_level_1()
+    {
+        return $this->belongsTo(WbsLevelOne::class, 'wbs_level_1_id');
+    }
+
+    public function wbs_level_2()
+    {
+        return $this->belongsTo(WbsLevelTwo::class, 'wbs_level_2_id');
+    }
+
+    public function wbs_level_3()
+    {
+        return $this->belongsTo(WbsLevelThree::class, 'wbs_level_3_id');
+    }
+
+    public function wbs_level_4()
+    {
+        return $this->belongsTo(Wbslevelfour::class, 'wbs_level_4_id');
     }
 
     public function getInspectionDateTimeAttribute($value)
     {
         return $value ? Carbon::createFromFormat('Y-m-d H:i:s', $value)->format(config('panel.date_format') . ' ' . config('panel.time_format')) : null;
-
     }
 
     public function setInspectionDateTimeAttribute($value)
     {
         $this->attributes['inspection_date_time'] = $value ? Carbon::createFromFormat(config('panel.date_format') . ' ' . config('panel.time_format'), $value)->format('Y-m-d H:i:s') : null;
-
     }
 
     public function contact_person()
     {
         return $this->belongsTo(User::class, 'contact_person_id');
-
     }
 
     public function requested_by()
     {
         return $this->belongsTo(User::class, 'requested_by_id');
-
     }
 
     public function getFilesUploadAttribute()
     {
         return $this->getMedia('files_upload');
-
     }
 
     public function construction_contract()
-    {
-        return $this->belongsTo(ConstructionContract::class, 'construction_contract_id');
-
-    }
-
-    public function create_by_construction_contract_id()
     {
         return $this->belongsTo(ConstructionContract::class, 'construction_contract_id');
     }
@@ -112,6 +129,5 @@ class RequestForInspection extends Model implements HasMedia
     public function team()
     {
         return $this->belongsTo(Team::class, 'team_id');
-
     }
 }

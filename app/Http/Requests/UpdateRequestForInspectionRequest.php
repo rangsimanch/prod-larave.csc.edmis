@@ -14,7 +14,6 @@ class UpdateRequestForInspectionRequest extends FormRequest
         abort_if(Gate::denies('request_for_inspection_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         return true;
-
     }
 
     public function rules()
@@ -22,8 +21,8 @@ class UpdateRequestForInspectionRequest extends FormRequest
         return [
             'inspection_date_time' => [
                 'date_format:' . config('panel.date_format') . ' ' . config('panel.time_format'),
-                'nullable'],
+                'nullable',
+            ],
         ];
-
     }
 }

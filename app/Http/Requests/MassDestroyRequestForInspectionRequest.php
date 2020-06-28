@@ -14,7 +14,6 @@ class MassDestroyRequestForInspectionRequest extends FormRequest
         abort_if(Gate::denies('request_for_inspection_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         return true;
-
     }
 
     public function rules()
@@ -23,6 +22,5 @@ class MassDestroyRequestForInspectionRequest extends FormRequest
             'ids'   => 'required|array',
             'ids.*' => 'exists:request_for_inspections,id',
         ];
-
     }
 }

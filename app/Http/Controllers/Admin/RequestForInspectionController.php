@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\BoQ;
 use App\ConstructionContract;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Traits\MediaUploadingTrait;
@@ -9,7 +10,12 @@ use App\Http\Requests\MassDestroyRequestForInspectionRequest;
 use App\Http\Requests\StoreRequestForInspectionRequest;
 use App\Http\Requests\UpdateRequestForInspectionRequest;
 use App\RequestForInspection;
+use App\Team;
 use App\User;
+use App\Wbslevelfour;
+use App\WbsLevelOne;
+use App\WbsLevelThree;
+use App\WbsLevelTwo;
 use Gate;
 use Illuminate\Http\Request;
 use Spatie\MediaLibrary\Models\Media;
@@ -25,7 +31,7 @@ class RequestForInspectionController extends Controller
         abort_if(Gate::denies('request_for_inspection_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
-            $query = RequestForInspection::with(['contact_person', 'requested_by', 'construction_contract', 'team'])->select(sprintf('%s.*', (new RequestForInspection)->table));
+            $query = RequestForInspection::with(['bill', 'wbs_level_1', 'wbs_level_2', 'wbs_level_3', 'wbs_level_4', 'contact_person', 'requested_by', 'construction_contract', 'team'])->select(sprintf('%s.*', (new RequestForInspection)->table));
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
@@ -46,9 +52,26 @@ class RequestForInspectionController extends Controller
                 ));
             });
 
-            $table->editColumn('bill_no', function ($row) {
-                return $row->bill_no ? $row->bill_no : "";
+            $table->addColumn('bill_name', function ($row) {
+                return $row->bill ? $row->bill->name : '';
             });
+
+            $table->addColumn('wbs_level_1_name', function ($row) {
+                return $row->wbs_level_1 ? $row->wbs_level_1->name : '';
+            });
+
+            $table->addColumn('wbs_level_2_name', function ($row) {
+                return $row->wbs_level_2 ? $row->wbs_level_2->name : '';
+            });
+
+            $table->addColumn('wbs_level_3_wbs_level_3_name', function ($row) {
+                return $row->wbs_level_3 ? $row->wbs_level_3->wbs_level_3_name : '';
+            });
+
+            $table->addColumn('wbs_level_4_wbs_level_4_name', function ($row) {
+                return $row->wbs_level_4 ? $row->wbs_level_4->wbs_level_4_name : '';
+            });
+
             $table->editColumn('subject', function ($row) {
                 return $row->subject ? $row->subject : "";
             });
@@ -97,17 +120,37 @@ class RequestForInspectionController extends Controller
                 return $row->construction_contract ? $row->construction_contract->code : '';
             });
 
-            $table->rawColumns(['actions', 'placeholder', 'contact_person', 'requested_by', 'files_upload', 'construction_contract']);
+            $table->rawColumns(['actions', 'placeholder', 'bill', 'wbs_level_1', 'wbs_level_2', 'wbs_level_3', 'wbs_level_4', 'contact_person', 'requested_by', 'files_upload', 'construction_contract']);
 
             return $table->make(true);
         }
 
-        return view('admin.requestForInspections.index');
+        $bo_qs                  = BoQ::get()->pluck('name')->toArray();
+        $wbs_level_ones         = WbsLevelOne::get()->pluck('name')->toArray();
+        $wbs_level_twos         = WbsLevelTwo::get()->pluck('name')->toArray();
+        $wbs_level_threes       = WbsLevelThree::get()->pluck('wbs_level_3_name')->toArray();
+        $wbslevelfours          = Wbslevelfour::get()->pluck('wbs_level_4_name')->toArray();
+        $users                  = User::get()->pluck('name')->toArray();
+        $users                  = User::get()->pluck('name')->toArray();
+        $construction_contracts = ConstructionContract::get()->pluck('code')->toArray();
+        $teams                  = Team::get()->pluck('name')->toArray();
+
+        return view('admin.requestForInspections.index', compact('bo_qs', 'wbs_level_ones', 'wbs_level_twos', 'wbs_level_threes', 'wbslevelfours', 'users', 'users', 'construction_contracts', 'teams'));
     }
 
     public function create()
     {
         abort_if(Gate::denies('request_for_inspection_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $bills = BoQ::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+
+        $wbs_level_1s = WbsLevelOne::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+
+        $wbs_level_2s = WbsLevelTwo::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+
+        $wbs_level_3s = WbsLevelThree::all()->pluck('wbs_level_3_name', 'id')->prepend(trans('global.pleaseSelect'), '');
+
+        $wbs_level_4s = Wbslevelfour::all()->pluck('wbs_level_4_name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $contact_people = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
@@ -115,7 +158,7 @@ class RequestForInspectionController extends Controller
 
         $construction_contracts = ConstructionContract::all()->pluck('code', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        return view('admin.requestForInspections.create', compact('contact_people', 'requested_bies', 'construction_contracts'));
+        return view('admin.requestForInspections.create', compact('bills', 'wbs_level_1s', 'wbs_level_2s', 'wbs_level_3s', 'wbs_level_4s', 'contact_people', 'requested_bies', 'construction_contracts'));
     }
 
     public function store(StoreRequestForInspectionRequest $request)
@@ -131,12 +174,21 @@ class RequestForInspectionController extends Controller
         }
 
         return redirect()->route('admin.request-for-inspections.index');
-
     }
 
     public function edit(RequestForInspection $requestForInspection)
     {
         abort_if(Gate::denies('request_for_inspection_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $bills = BoQ::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+
+        $wbs_level_1s = WbsLevelOne::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+
+        $wbs_level_2s = WbsLevelTwo::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+
+        $wbs_level_3s = WbsLevelThree::all()->pluck('wbs_level_3_name', 'id')->prepend(trans('global.pleaseSelect'), '');
+
+        $wbs_level_4s = Wbslevelfour::all()->pluck('wbs_level_4_name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $contact_people = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
@@ -144,9 +196,9 @@ class RequestForInspectionController extends Controller
 
         $construction_contracts = ConstructionContract::all()->pluck('code', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $requestForInspection->load('contact_person', 'requested_by', 'construction_contract', 'team');
+        $requestForInspection->load('bill', 'wbs_level_1', 'wbs_level_2', 'wbs_level_3', 'wbs_level_4', 'contact_person', 'requested_by', 'construction_contract', 'team');
 
-        return view('admin.requestForInspections.edit', compact('contact_people', 'requested_bies', 'construction_contracts', 'requestForInspection'));
+        return view('admin.requestForInspections.edit', compact('bills', 'wbs_level_1s', 'wbs_level_2s', 'wbs_level_3s', 'wbs_level_4s', 'contact_people', 'requested_bies', 'construction_contracts', 'requestForInspection'));
     }
 
     public function update(UpdateRequestForInspectionRequest $request, RequestForInspection $requestForInspection)
@@ -158,9 +210,7 @@ class RequestForInspectionController extends Controller
                 if (!in_array($media->file_name, $request->input('files_upload', []))) {
                     $media->delete();
                 }
-
             }
-
         }
 
         $media = $requestForInspection->files_upload->pluck('file_name')->toArray();
@@ -169,18 +219,16 @@ class RequestForInspectionController extends Controller
             if (count($media) === 0 || !in_array($file, $media)) {
                 $requestForInspection->addMedia(storage_path('tmp/uploads/' . $file))->toMediaCollection('files_upload');
             }
-
         }
 
         return redirect()->route('admin.request-for-inspections.index');
-
     }
 
     public function show(RequestForInspection $requestForInspection)
     {
         abort_if(Gate::denies('request_for_inspection_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $requestForInspection->load('contact_person', 'requested_by', 'construction_contract', 'team');
+        $requestForInspection->load('bill', 'wbs_level_1', 'wbs_level_2', 'wbs_level_3', 'wbs_level_4', 'contact_person', 'requested_by', 'construction_contract', 'team');
 
         return view('admin.requestForInspections.show', compact('requestForInspection'));
     }
@@ -192,7 +240,6 @@ class RequestForInspectionController extends Controller
         $requestForInspection->delete();
 
         return back();
-
     }
 
     public function massDestroy(MassDestroyRequestForInspectionRequest $request)
@@ -200,7 +247,6 @@ class RequestForInspectionController extends Controller
         RequestForInspection::whereIn('id', request('ids'))->delete();
 
         return response(null, Response::HTTP_NO_CONTENT);
-
     }
 
     public function storeCKEditorImages(Request $request)
@@ -210,10 +256,8 @@ class RequestForInspectionController extends Controller
         $model         = new RequestForInspection();
         $model->id     = $request->input('crud_id', 0);
         $model->exists = true;
-        $media         = $model->addMediaFromRequest('upload')->toMediaCollection('ck-media', 'public');
+        $media         = $model->addMediaFromRequest('upload')->toMediaCollection('ck-media');
 
         return response()->json(['id' => $media->id, 'url' => $media->getUrl()], Response::HTTP_CREATED);
-
     }
-
 }

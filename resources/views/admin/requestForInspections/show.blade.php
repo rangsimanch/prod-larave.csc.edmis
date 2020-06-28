@@ -19,10 +19,42 @@
                             <tbody>
                                 <tr>
                                     <th>
-                                        {{ trans('cruds.requestForInspection.fields.bill_no') }}
+                                        {{ trans('cruds.requestForInspection.fields.bill') }}
                                     </th>
                                     <td>
-                                        {{ $requestForInspection->bill_no }}
+                                        {{ $requestForInspection->bill->name ?? '' }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        {{ trans('cruds.requestForInspection.fields.wbs_level_1') }}
+                                    </th>
+                                    <td>
+                                        {{ $requestForInspection->wbs_level_1->name ?? '' }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        {{ trans('cruds.requestForInspection.fields.wbs_level_2') }}
+                                    </th>
+                                    <td>
+                                        {{ $requestForInspection->wbs_level_2->name ?? '' }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        {{ trans('cruds.requestForInspection.fields.wbs_level_3') }}
+                                    </th>
+                                    <td>
+                                        {{ $requestForInspection->wbs_level_3->wbs_level_3_name ?? '' }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        {{ trans('cruds.requestForInspection.fields.wbs_level_4') }}
+                                    </th>
+                                    <td>
+                                        {{ $requestForInspection->wbs_level_4->wbs_level_4_name ?? '' }}
                                     </td>
                                 </tr>
                                 <tr>

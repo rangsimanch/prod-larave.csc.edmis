@@ -34,6 +34,26 @@
                     </a>
                 </li>
             @endcan
+            @can('request_for_information_access')
+                <li class="{{ request()->is('admin/request-for-informations') || request()->is('admin/request-for-informations/*') ? 'active' : '' }}">
+                    <a href="{{ route("admin.request-for-informations.index") }}">
+                        <i class="fa-fw fas fa-book">
+
+                        </i>
+                        <span>{{ trans('cruds.requestForInformation.title') }}</span>
+                    </a>
+                </li>
+            @endcan
+            @can('site_warning_notice_access')
+                <li class="{{ request()->is('admin/site-warning-notices') || request()->is('admin/site-warning-notices/*') ? 'active' : '' }}">
+                    <a href="{{ route("admin.site-warning-notices.index") }}">
+                        <i class="fa-fw fas fa-exclamation-triangle">
+
+                        </i>
+                        <span>{{ trans('cruds.siteWarningNotice.title') }}</span>
+                    </a>
+                </li>
+            @endcan
             @can('request_document_setting')
                 <li class="treeview">
                     <a href="#">
@@ -84,6 +104,26 @@
                                 </a>
                             </li>
                         @endcan
+                        @can('wbs_level_one_access')
+                            <li class="{{ request()->is('admin/wbs-level-ones') || request()->is('admin/wbs-level-ones/*') ? 'active' : '' }}">
+                                <a href="{{ route("admin.wbs-level-ones.index") }}">
+                                    <i class="fa-fw fas fa-cogs">
+
+                                    </i>
+                                    <span>{{ trans('cruds.wbsLevelOne.title') }}</span>
+                                </a>
+                            </li>
+                        @endcan
+                        @can('wbs_level_two_access')
+                            <li class="{{ request()->is('admin/wbs-level-twos') || request()->is('admin/wbs-level-twos/*') ? 'active' : '' }}">
+                                <a href="{{ route("admin.wbs-level-twos.index") }}">
+                                    <i class="fa-fw fas fa-cogs">
+
+                                    </i>
+                                    <span>{{ trans('cruds.wbsLevelTwo.title') }}</span>
+                                </a>
+                            </li>
+                        @endcan
                         @can('wbs_level_three_access')
                             <li class="{{ request()->is('admin/wbs-level-threes') || request()->is('admin/wbs-level-threes/*') ? 'active' : '' }}">
                                 <a href="{{ route("admin.wbs-level-threes.index") }}">
@@ -101,6 +141,16 @@
 
                                     </i>
                                     <span>{{ trans('cruds.wbslevelfour.title') }}</span>
+                                </a>
+                            </li>
+                        @endcan
+                        @can('wbs_level_five_access')
+                            <li class="{{ request()->is('admin/wbs-level-fives') || request()->is('admin/wbs-level-fives/*') ? 'active' : '' }}">
+                                <a href="{{ route("admin.wbs-level-fives.index") }}">
+                                    <i class="fa-fw fas fa-cogs">
+
+                                    </i>
+                                    <span>{{ trans('cruds.wbsLevelFive.title') }}</span>
                                 </a>
                             </li>
                         @endcan

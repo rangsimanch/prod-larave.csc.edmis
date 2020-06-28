@@ -356,6 +356,29 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth'], '
     Route::post('documents-and-assignments/ckmedia', 'DocumentsAndAssignmentsController@storeCKEditorImages')->name('documents-and-assignments.storeCKEditorImages');
     Route::resource('documents-and-assignments', 'DocumentsAndAssignmentsController');
 
+    // Wbs Level Ones
+    Route::delete('wbs-level-ones/destroy', 'WbsLevelOneController@massDestroy')->name('wbs-level-ones.massDestroy');
+    Route::resource('wbs-level-ones', 'WbsLevelOneController');
+
+    // Wbs Level Twos
+    Route::delete('wbs-level-twos/destroy', 'WbsLevelTwoController@massDestroy')->name('wbs-level-twos.massDestroy');
+    Route::resource('wbs-level-twos', 'WbsLevelTwoController');
+
+    // Wbs Level Fives
+    Route::delete('wbs-level-fives/destroy', 'WbsLevelFiveController@massDestroy')->name('wbs-level-fives.massDestroy');
+    Route::resource('wbs-level-fives', 'WbsLevelFiveController');
+
+    // Request For Informations
+    Route::delete('request-for-informations/destroy', 'RequestForInformationController@massDestroy')->name('request-for-informations.massDestroy');
+    Route::post('request-for-informations/media', 'RequestForInformationController@storeMedia')->name('request-for-informations.storeMedia');
+    Route::post('request-for-informations/ckmedia', 'RequestForInformationController@storeCKEditorImages')->name('request-for-informations.storeCKEditorImages');
+    Route::resource('request-for-informations', 'RequestForInformationController');
+
+    // Site Warning Notices
+    Route::delete('site-warning-notices/destroy', 'SiteWarningNoticeController@massDestroy')->name('site-warning-notices.massDestroy');
+    Route::post('site-warning-notices/media', 'SiteWarningNoticeController@storeMedia')->name('site-warning-notices.storeMedia');
+    Route::post('site-warning-notices/ckmedia', 'SiteWarningNoticeController@storeCKEditorImages')->name('site-warning-notices.storeCKEditorImages');
+    Route::resource('site-warning-notices', 'SiteWarningNoticeController');
     
     Route::get('system-calendar', 'SystemCalendarController@index')->name('systemCalendar');
     Route::get('global-search', 'GlobalSearchController@search')->name('globalSearch');

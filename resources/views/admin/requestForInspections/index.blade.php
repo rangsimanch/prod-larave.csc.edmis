@@ -4,7 +4,7 @@
     @can('request_for_inspection_create')
         <div style="margin-bottom: 10px;" class="row">
             <div class="col-lg-12">
-                <a class="btn btn-success" href="{{ route("admin.request-for-inspections.create") }}">
+                <a class="btn btn-success" href="{{ route('admin.request-for-inspections.create') }}">
                     {{ trans('global.add') }} {{ trans('cruds.requestForInspection.title_singular') }}
                 </a>
             </div>
@@ -24,7 +24,19 @@
 
                                 </th>
                                 <th>
-                                    {{ trans('cruds.requestForInspection.fields.bill_no') }}
+                                    {{ trans('cruds.requestForInspection.fields.bill') }}
+                                </th>
+                                <th>
+                                    {{ trans('cruds.requestForInspection.fields.wbs_level_1') }}
+                                </th>
+                                <th>
+                                    {{ trans('cruds.requestForInspection.fields.wbs_level_2') }}
+                                </th>
+                                <th>
+                                    {{ trans('cruds.requestForInspection.fields.wbs_level_3') }}
+                                </th>
+                                <th>
+                                    {{ trans('cruds.requestForInspection.fields.wbs_level_4') }}
                                 </th>
                                 <th>
                                     {{ trans('cruds.requestForInspection.fields.subject') }}
@@ -68,6 +80,113 @@
                                 <th>
                                     &nbsp;
                                 </th>
+                            </tr>
+                            <tr>
+                                <td>
+                                </td>
+                                <td>
+                                    <select class="search">
+                                        <option value>{{ trans('global.all') }}</option>
+                                        @foreach($bo_qs as $key => $item)
+                                            <option value="{{ $item }}">{{ $item }}</option>
+                                        @endforeach
+                                    </select>
+                                </td>
+                                <td>
+                                    <select class="search">
+                                        <option value>{{ trans('global.all') }}</option>
+                                        @foreach($wbs_level_ones as $key => $item)
+                                            <option value="{{ $item }}">{{ $item }}</option>
+                                        @endforeach
+                                    </select>
+                                </td>
+                                <td>
+                                    <select class="search">
+                                        <option value>{{ trans('global.all') }}</option>
+                                        @foreach($wbs_level_twos as $key => $item)
+                                            <option value="{{ $item }}">{{ $item }}</option>
+                                        @endforeach
+                                    </select>
+                                </td>
+                                <td>
+                                    <select class="search">
+                                        <option value>{{ trans('global.all') }}</option>
+                                        @foreach($wbs_level_threes as $key => $item)
+                                            <option value="{{ $item }}">{{ $item }}</option>
+                                        @endforeach
+                                    </select>
+                                </td>
+                                <td>
+                                    <select class="search">
+                                        <option value>{{ trans('global.all') }}</option>
+                                        @foreach($wbslevelfours as $key => $item)
+                                            <option value="{{ $item }}">{{ $item }}</option>
+                                        @endforeach
+                                    </select>
+                                </td>
+                                <td>
+                                    <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                                </td>
+                                <td>
+                                    <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                                </td>
+                                <td>
+                                    <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                                </td>
+                                <td>
+                                </td>
+                                <td>
+                                    <select class="search">
+                                        <option value>{{ trans('global.all') }}</option>
+                                        @foreach($users as $key => $item)
+                                            <option value="{{ $item }}">{{ $item }}</option>
+                                        @endforeach
+                                    </select>
+                                </td>
+                                <td>
+                                    <select class="search" strict="true">
+                                        <option value>{{ trans('global.all') }}</option>
+                                        @foreach(App\RequestForInspection::TYPE_OF_WORK_SELECT as $key => $item)
+                                            <option value="{{ $item }}">{{ $item }}</option>
+                                        @endforeach
+                                    </select>
+                                </td>
+                                <td>
+                                    <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                                </td>
+                                <td>
+                                    <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                                </td>
+                                <td>
+                                    <select class="search">
+                                        <option value>{{ trans('global.all') }}</option>
+                                        @foreach($users as $key => $item)
+                                            <option value="{{ $item }}">{{ $item }}</option>
+                                        @endforeach
+                                    </select>
+                                </td>
+                                <td>
+                                    <select class="search" strict="true">
+                                        <option value>{{ trans('global.all') }}</option>
+                                        @foreach(App\RequestForInspection::RESULT_OF_INSPECTION_SELECT as $key => $item)
+                                            <option value="{{ $item }}">{{ $item }}</option>
+                                        @endforeach
+                                    </select>
+                                </td>
+                                <td>
+                                </td>
+                                <td>
+                                </td>
+                                <td>
+                                    <select class="search">
+                                        <option value>{{ trans('global.all') }}</option>
+                                        @foreach($construction_contracts as $key => $item)
+                                            <option value="{{ $item }}">{{ $item }}</option>
+                                        @endforeach
+                                    </select>
+                                </td>
+                                <td>
+                                </td>
                             </tr>
                         </thead>
                     </table>
@@ -124,7 +243,11 @@
     ajax: "{{ route('admin.request-for-inspections.index') }}",
     columns: [
       { data: 'placeholder', name: 'placeholder' },
-{ data: 'bill_no', name: 'bill_no' },
+{ data: 'bill_name', name: 'bill.name' },
+{ data: 'wbs_level_1_name', name: 'wbs_level_1.name' },
+{ data: 'wbs_level_2_name', name: 'wbs_level_2.name' },
+{ data: 'wbs_level_3_wbs_level_3_name', name: 'wbs_level_3.wbs_level_3_name' },
+{ data: 'wbs_level_4_wbs_level_4_name', name: 'wbs_level_4.wbs_level_4_name' },
 { data: 'subject', name: 'subject' },
 { data: 'item_no', name: 'item_no' },
 { data: 'ref_no', name: 'ref_no' },
@@ -140,14 +263,23 @@
 { data: 'construction_contract_code', name: 'construction_contract.code' },
 { data: 'actions', name: '{{ trans('global.actions') }}' }
     ],
-    order: [[ 13, 'desc' ]],
-    pageLength: 100,
+    orderCellsTop: true,
+    order: [[ 17, 'desc' ]],
+    pageLength: 10,
   };
-  $('.datatable-RequestForInspection').DataTable(dtOverrideGlobals);
-    $('a[data-toggle="tab"]').on('shown.bs.tab', function(e){
-        $($.fn.dataTable.tables(true)).DataTable()
-            .columns.adjust();
-    });
+  let table = $('.datatable-RequestForInspection').DataTable(dtOverrideGlobals);
+  $('a[data-toggle="tab"]').on('shown.bs.tab', function(e){
+      $($.fn.dataTable.tables(true)).DataTable()
+          .columns.adjust();
+  });
+  $('.datatable thead').on('input', '.search', function () {
+      let strict = $(this).attr('strict') || false
+      let value = strict && this.value ? "^" + this.value + "$" : this.value
+      table
+        .column($(this).parent().index())
+        .search(value, strict)
+        .draw()
+  });
 });
 
 </script>
