@@ -132,23 +132,37 @@ class SiteWarningNoticeController extends Controller
                 return $row->csc_pm ? $row->csc_pm->name : '';
             });
 
-            $table->rawColumns(['actions', 'placeholder', 'to_team', 'construction_contract', 'issue_by', 'reviewed_by', 'attachment', 'containment_responsible', 'corrective_responsible', 'section_2_reviewed_by', 'section_2_approved_by', 'csc_issuer', 'csc_qa', 'csc_pm']);
+            $table->editColumn('file_upload', function ($row) {
+                if (!$row->file_upload) {
+                    return '';
+                }
+
+                $links = [];
+
+                foreach ($row->file_upload as $media) {
+                    $links[] = '<a href="' . $media->getUrl() . '" target="_blank">' . trans('global.downloadFile') . '</a>';
+                }
+
+                return implode(', ', $links);
+            });
+
+            $table->rawColumns(['actions', 'placeholder', 'to_team', 'construction_contract', 'issue_by', 'reviewed_by', 'attachment', 'containment_responsible', 'corrective_responsible', 'section_2_reviewed_by', 'section_2_approved_by', 'csc_issuer', 'csc_qa', 'csc_pm', 'file_upload']);
 
             return $table->make(true);
         }
 
-        $teams                  = Team::get()->pluck('code')->toArray();
-        $construction_contracts = ConstructionContract::get()->pluck('code')->toArray();
-        $users                  = User::get()->pluck('name')->toArray();
-        $users                  = User::get()->pluck('name')->toArray();
-        $users                  = User::get()->pluck('name')->toArray();
-        $users                  = User::get()->pluck('name')->toArray();
-        $users                  = User::get()->pluck('name')->toArray();
-        $users                  = User::get()->pluck('name')->toArray();
-        $users                  = User::get()->pluck('name')->toArray();
-        $users                  = User::get()->pluck('name')->toArray();
-        $users                  = User::get()->pluck('name')->toArray();
-        $teams                  = Team::get()->pluck('name')->toArray();
+        $teams                  = Team::get();
+        $construction_contracts = ConstructionContract::get();
+        $users                  = User::get();
+        $users                  = User::get();
+        $users                  = User::get();
+        $users                  = User::get();
+        $users                  = User::get();
+        $users                  = User::get();
+        $users                  = User::get();
+        $users                  = User::get();
+        $users                  = User::get();
+        $teams                  = Team::get();
 
         return view('admin.siteWarningNotices.index', compact('teams', 'construction_contracts', 'users', 'users', 'users', 'users', 'users', 'users', 'users', 'users', 'users', 'teams'));
     }
@@ -188,6 +202,10 @@ class SiteWarningNoticeController extends Controller
 
         foreach ($request->input('attachment', []) as $file) {
             $siteWarningNotice->addMedia(storage_path('tmp/uploads/' . $file))->toMediaCollection('attachment');
+        }
+
+        foreach ($request->input('file_upload', []) as $file) {
+            $siteWarningNotice->addMedia(storage_path('tmp/uploads/' . $file))->toMediaCollection('file_upload');
         }
 
         if ($media = $request->input('ck-media', false)) {
@@ -245,6 +263,22 @@ class SiteWarningNoticeController extends Controller
         foreach ($request->input('attachment', []) as $file) {
             if (count($media) === 0 || !in_array($file, $media)) {
                 $siteWarningNotice->addMedia(storage_path('tmp/uploads/' . $file))->toMediaCollection('attachment');
+            }
+        }
+
+        if (count($siteWarningNotice->file_upload) > 0) {
+            foreach ($siteWarningNotice->file_upload as $media) {
+                if (!in_array($media->file_name, $request->input('file_upload', []))) {
+                    $media->delete();
+                }
+            }
+        }
+
+        $media = $siteWarningNotice->file_upload->pluck('file_name')->toArray();
+
+        foreach ($request->input('file_upload', []) as $file) {
+            if (count($media) === 0 || !in_array($file, $media)) {
+                $siteWarningNotice->addMedia(storage_path('tmp/uploads/' . $file))->toMediaCollection('file_upload');
             }
         }
 

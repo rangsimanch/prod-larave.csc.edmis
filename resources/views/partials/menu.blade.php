@@ -54,6 +54,26 @@
                     </a>
                 </li>
             @endcan
+            @can('non_conformance_notice_access')
+                <li class="{{ request()->is('admin/non-conformance-notices') || request()->is('admin/non-conformance-notices/*') ? 'active' : '' }}">
+                    <a href="{{ route("admin.non-conformance-notices.index") }}">
+                        <i class="fa-fw fas fa-file-signature">
+
+                        </i>
+                        <span>{{ trans('cruds.nonConformanceNotice.title') }}</span>
+                    </a>
+                </li>
+            @endcan
+            @can('non_conformance_report_access')
+                <li class="{{ request()->is('admin/non-conformance-reports') || request()->is('admin/non-conformance-reports/*') ? 'active' : '' }}">
+                    <a href="{{ route("admin.non-conformance-reports.index") }}">
+                        <i class="fa-fw fas fa-file-signature">
+
+                        </i>
+                        <span>{{ trans('cruds.nonConformanceReport.title') }}</span>
+                    </a>
+                </li>
+            @endcan
             @can('request_document_setting')
                 <li class="treeview">
                     <a href="#">

@@ -126,14 +126,14 @@ class RequestForInspectionController extends Controller
         }
 
         $bo_qs                  = BoQ::get()->pluck('name')->toArray();
-        $wbs_level_ones         = WbsLevelOne::get()->pluck('name')->toArray();
-        $wbs_level_twos         = WbsLevelTwo::get()->pluck('name')->toArray();
-        $wbs_level_threes       = WbsLevelThree::get()->pluck('wbs_level_3_name')->toArray();
-        $wbslevelfours          = Wbslevelfour::get()->pluck('wbs_level_4_name')->toArray();
+        $wbs_level_ones         = WbsLevelOne::get()->pluck('code')->toArray();
+        $wbs_level_twos         = WbsLevelTwo::get()->pluck('code')->toArray();
+        $wbs_level_threes       = WbsLevelThree::get()->pluck('wbs_level_3_code')->toArray();
+        $wbslevelfours          = Wbslevelfour::get()->pluck('wbs_level_4_code')->toArray();
         $users                  = User::get()->pluck('name')->toArray();
         $users                  = User::get()->pluck('name')->toArray();
         $construction_contracts = ConstructionContract::get()->pluck('code')->toArray();
-        $teams                  = Team::get()->pluck('name')->toArray();
+        $teams                  = Team::get()->pluck('code')->toArray();
 
         return view('admin.requestForInspections.index', compact('bo_qs', 'wbs_level_ones', 'wbs_level_twos', 'wbs_level_threes', 'wbslevelfours', 'users', 'users', 'construction_contracts', 'teams'));
     }
@@ -159,6 +159,23 @@ class RequestForInspectionController extends Controller
         $construction_contracts = ConstructionContract::all()->pluck('code', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         return view('admin.requestForInspections.create', compact('bills', 'wbs_level_1s', 'wbs_level_2s', 'wbs_level_3s', 'wbs_level_4s', 'contact_people', 'requested_bies', 'construction_contracts'));
+    }
+
+    function fetch(Request $request){
+        $id = $request->get('select');
+        $result = array();
+        $query = DB::table('wbs_level_threes')
+        ->join('wbslevelfours','wbs_level_threes.id','=','wbslevelfours.wbs_level_three_id')
+        ->select('wbslevelfours.wbs_level_4_name','wbslevelfours.id')
+        ->where('wbs_level_threes.id',$id)
+        ->groupBy('wbslevelfours.wbs_level_4_name','wbslevelfours.id')
+        ->orderBy('wbs_level_4_name')
+        ->get();
+        $output = '<option value="">' . trans('global.pleaseSelect') . '</option>';
+        foreach ($query as $row){
+            $output .= '<option value="'. $row->id .'">'. $row->wbs_level_4_name .'</option>';
+        }
+        echo $output;
     }
 
     public function store(StoreRequestForInspectionRequest $request)

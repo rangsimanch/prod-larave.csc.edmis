@@ -96,6 +96,9 @@
                                     {{ trans('cruds.siteWarningNotice.fields.csc_pm') }}
                                 </th>
                                 <th>
+                                    {{ trans('cruds.siteWarningNotice.fields.file_upload') }}
+                                </th>
+                                <th>
                                     &nbsp;
                                 </th>
                             </tr>
@@ -125,7 +128,7 @@
                                     <select class="search">
                                         <option value>{{ trans('global.all') }}</option>
                                         @foreach($teams as $key => $item)
-                                            <option value="{{ $item }}">{{ $item }}</option>
+                                            <option value="{{ $item->code }}">{{ $item->code }}</option>
                                         @endforeach
                                     </select>
                                 </td>
@@ -133,7 +136,7 @@
                                     <select class="search">
                                         <option value>{{ trans('global.all') }}</option>
                                         @foreach($construction_contracts as $key => $item)
-                                            <option value="{{ $item }}">{{ $item }}</option>
+                                            <option value="{{ $item->code }}">{{ $item->code }}</option>
                                         @endforeach
                                     </select>
                                 </td>
@@ -144,7 +147,7 @@
                                     <select class="search">
                                         <option value>{{ trans('global.all') }}</option>
                                         @foreach($users as $key => $item)
-                                            <option value="{{ $item }}">{{ $item }}</option>
+                                            <option value="{{ $item->name }}">{{ $item->name }}</option>
                                         @endforeach
                                     </select>
                                 </td>
@@ -152,7 +155,7 @@
                                     <select class="search">
                                         <option value>{{ trans('global.all') }}</option>
                                         @foreach($users as $key => $item)
-                                            <option value="{{ $item }}">{{ $item }}</option>
+                                            <option value="{{ $item->name }}">{{ $item->name }}</option>
                                         @endforeach
                                     </select>
                                 </td>
@@ -165,7 +168,7 @@
                                     <select class="search">
                                         <option value>{{ trans('global.all') }}</option>
                                         @foreach($users as $key => $item)
-                                            <option value="{{ $item }}">{{ $item }}</option>
+                                            <option value="{{ $item->name }}">{{ $item->name }}</option>
                                         @endforeach
                                     </select>
                                 </td>
@@ -175,7 +178,7 @@
                                     <select class="search">
                                         <option value>{{ trans('global.all') }}</option>
                                         @foreach($users as $key => $item)
-                                            <option value="{{ $item }}">{{ $item }}</option>
+                                            <option value="{{ $item->name }}">{{ $item->name }}</option>
                                         @endforeach
                                     </select>
                                 </td>
@@ -185,7 +188,7 @@
                                     <select class="search">
                                         <option value>{{ trans('global.all') }}</option>
                                         @foreach($users as $key => $item)
-                                            <option value="{{ $item }}">{{ $item }}</option>
+                                            <option value="{{ $item->name }}">{{ $item->name }}</option>
                                         @endforeach
                                     </select>
                                 </td>
@@ -193,7 +196,7 @@
                                     <select class="search">
                                         <option value>{{ trans('global.all') }}</option>
                                         @foreach($users as $key => $item)
-                                            <option value="{{ $item }}">{{ $item }}</option>
+                                            <option value="{{ $item->name }}">{{ $item->name }}</option>
                                         @endforeach
                                     </select>
                                 </td>
@@ -212,7 +215,7 @@
                                     <select class="search">
                                         <option value>{{ trans('global.all') }}</option>
                                         @foreach($users as $key => $item)
-                                            <option value="{{ $item }}">{{ $item }}</option>
+                                            <option value="{{ $item->name }}">{{ $item->name }}</option>
                                         @endforeach
                                     </select>
                                 </td>
@@ -220,7 +223,7 @@
                                     <select class="search">
                                         <option value>{{ trans('global.all') }}</option>
                                         @foreach($users as $key => $item)
-                                            <option value="{{ $item }}">{{ $item }}</option>
+                                            <option value="{{ $item->name }}">{{ $item->name }}</option>
                                         @endforeach
                                     </select>
                                 </td>
@@ -236,9 +239,11 @@
                                     <select class="search">
                                         <option value>{{ trans('global.all') }}</option>
                                         @foreach($users as $key => $item)
-                                            <option value="{{ $item }}">{{ $item }}</option>
+                                            <option value="{{ $item->name }}">{{ $item->name }}</option>
                                         @endforeach
                                     </select>
+                                </td>
+                                <td>
                                 </td>
                                 <td>
                                 </td>
@@ -322,6 +327,7 @@
 { data: 'csc_qa_name', name: 'csc_qa.name' },
 { data: 'disposition_status', name: 'disposition_status' },
 { data: 'csc_pm_name', name: 'csc_pm.name' },
+{ data: 'file_upload', name: 'file_upload', sortable: false, searchable: false },
 { data: 'actions', name: '{{ trans('global.actions') }}' }
     ],
     orderCellsTop: true,

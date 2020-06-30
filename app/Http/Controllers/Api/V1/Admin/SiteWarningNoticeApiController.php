@@ -31,6 +31,10 @@ class SiteWarningNoticeApiController extends Controller
             $siteWarningNotice->addMedia(storage_path('tmp/uploads/' . $request->input('attachment')))->toMediaCollection('attachment');
         }
 
+        if ($request->input('file_upload', false)) {
+            $siteWarningNotice->addMedia(storage_path('tmp/uploads/' . $request->input('file_upload')))->toMediaCollection('file_upload');
+        }
+
         return (new SiteWarningNoticeResource($siteWarningNotice))
             ->response()
             ->setStatusCode(Response::HTTP_CREATED);
@@ -53,6 +57,14 @@ class SiteWarningNoticeApiController extends Controller
             }
         } elseif ($siteWarningNotice->attachment) {
             $siteWarningNotice->attachment->delete();
+        }
+
+        if ($request->input('file_upload', false)) {
+            if (!$siteWarningNotice->file_upload || $request->input('file_upload') !== $siteWarningNotice->file_upload->file_name) {
+                $siteWarningNotice->addMedia(storage_path('tmp/uploads/' . $request->input('file_upload')))->toMediaCollection('file_upload');
+            }
+        } elseif ($siteWarningNotice->file_upload) {
+            $siteWarningNotice->file_upload->delete();
         }
 
         return (new SiteWarningNoticeResource($siteWarningNotice))

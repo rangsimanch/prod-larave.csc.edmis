@@ -24,9 +24,6 @@
 
                                 </th>
                                 <th>
-                                    {{ trans('cruds.requestForInformation.fields.id') }}
-                                </th>
-                                <th>
                                     {{ trans('cruds.requestForInformation.fields.to_organization') }}
                                 </th>
                                 <th>
@@ -93,6 +90,9 @@
                                     {{ trans('cruds.requestForInformation.fields.response_date') }}
                                 </th>
                                 <th>
+                                    {{ trans('cruds.requestForInformation.fields.file_upload') }}
+                                </th>
+                                <th>
                                     {{ trans('cruds.requestForInformation.fields.record') }}
                                 </th>
                                 <th>
@@ -112,13 +112,10 @@
                                     <input class="search" type="text" placeholder="{{ trans('global.search') }}">
                                 </td>
                                 <td>
-                                    <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                                </td>
-                                <td>
                                     <select class="search">
                                         <option value>{{ trans('global.all') }}</option>
                                         @foreach($construction_contracts as $key => $item)
-                                            <option value="{{ $item }}">{{ $item }}</option>
+                                            <option value="{{ $item->code }}">{{ $item->code }}</option>
                                         @endforeach
                                     </select>
                                 </td>
@@ -131,7 +128,7 @@
                                     <select class="search">
                                         <option value>{{ trans('global.all') }}</option>
                                         @foreach($teams as $key => $item)
-                                            <option value="{{ $item }}">{{ $item }}</option>
+                                            <option value="{{ $item->code }}">{{ $item->code }}</option>
                                         @endforeach
                                     </select>
                                 </td>
@@ -161,7 +158,7 @@
                                     <select class="search">
                                         <option value>{{ trans('global.all') }}</option>
                                         @foreach($users as $key => $item)
-                                            <option value="{{ $item }}">{{ $item }}</option>
+                                            <option value="{{ $item->name }}">{{ $item->name }}</option>
                                         @endforeach
                                     </select>
                                 </td>
@@ -177,7 +174,7 @@
                                     <select class="search">
                                         <option value>{{ trans('global.all') }}</option>
                                         @foreach($users as $key => $item)
-                                            <option value="{{ $item }}">{{ $item }}</option>
+                                            <option value="{{ $item->name }}">{{ $item->name }}</option>
                                         @endforeach
                                     </select>
                                 </td>
@@ -185,12 +182,14 @@
                                     <select class="search">
                                         <option value>{{ trans('global.all') }}</option>
                                         @foreach($teams as $key => $item)
-                                            <option value="{{ $item }}">{{ $item }}</option>
+                                            <option value="{{ $item->code }}">{{ $item->code }}</option>
                                         @endforeach
                                     </select>
                                 </td>
                                 <td>
                                     <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                                </td>
+                                <td>
                                 </td>
                                 <td>
                                     <input class="search" type="text" placeholder="{{ trans('global.search') }}">
@@ -253,7 +252,6 @@
     ajax: "{{ route('admin.request-for-informations.index') }}",
     columns: [
       { data: 'placeholder', name: 'placeholder' },
-{ data: 'id', name: 'id' },
 { data: 'to_organization', name: 'to_organization' },
 { data: 'attention_name', name: 'attention_name' },
 { data: 'document_no', name: 'document_no' },
@@ -276,11 +274,12 @@
 { data: 'authorised_rep_name', name: 'authorised_rep.name' },
 { data: 'response_organization_code', name: 'response_organization.code' },
 { data: 'response_date', name: 'response_date' },
+{ data: 'file_upload', name: 'file_upload', sortable: false, searchable: false },
 { data: 'record', name: 'record' },
 { data: 'actions', name: '{{ trans('global.actions') }}' }
     ],
     orderCellsTop: true,
-    order: [[ 6, 'desc' ]],
+    order: [[ 5, 'desc' ]],
     pageLength: 10,
   };
   let table = $('.datatable-RequestForInformation').DataTable(dtOverrideGlobals);

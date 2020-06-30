@@ -52,51 +52,59 @@
                                 </th>
 
                                 <th>
+                                    {{ trans('cruds.rfa.fields.file_upload_1') }}
+                                </th>
+
+                                <th>
+                                    {{ trans('cruds.rfa.fields.submittals_file') }}
+                                </th>
+                                
+                                <th>
                                     {{ trans('cruds.rfa.fields.bill') }}
                                     <input type="text" class="form-control filter-input"
-                                    placeholder="Search for Bill..." data-column="5"/>
+                                    placeholder="Search for Bill..." data-column="7"/>
                                 </th>
 
                                 <th>
                                     {{ trans('cruds.rfa.fields.title_eng') }}
 
                                     <input type="text" class="form-control filter-input"
-                                    placeholder="Search for title(EN)..." data-column="6"/>
+                                    placeholder="Search for title(EN)..." data-column="8"/>
                                 </th>
                                 <th>
                                     {{ trans('cruds.rfa.fields.title') }}
 
                                     <input type="text" class="form-control filter-input"
-                                    placeholder="Search for title(TH)..." data-column="7"/>
+                                    placeholder="Search for title(TH)..." data-column="9"/>
                                 </th>
                                 <th>
                                     {{ trans('cruds.rfa.fields.title_cn') }}
 
                                     <input type="text" class="form-control filter-input"
-                                    placeholder="Search for title(CN)..." data-column="8"/>
+                                    placeholder="Search for title(CN)..." data-column="10"/>
                                 </th>
                                 <th>
                                     {{ trans('cruds.rfa.fields.origin_number') }}
 
                                     <input type="text" class="form-control filter-input"
-                                    placeholder="Search for Origin Number..." data-column="9"/>
+                                    placeholder="Search for Origin Number..." data-column="11"/>
                                 </th>
                                 <th>
                                     {{ trans('cruds.rfa.fields.document_number') }}
 
                                     <input type="text" class="form-control filter-input"
-                                    placeholder="Search for Document Number..." data-column="10"/>
+                                    placeholder="Search for Document Number..." data-column="12"/>
                                 </th>
                                 <th>
                                     {{ trans('cruds.rfa.fields.rfa_code') }}
 
                                     <input type="text" class="form-control filter-input"
-                                    placeholder="Search for RFA code..." data-column="11"/>
+                                    placeholder="Search for RFA code..." data-column="13"/>
                                 </th>
                                 <th>
                                     {{ trans('cruds.rfa.fields.type') }}
                                     
-                                    <select class="form-control filter-select" data-column="12">
+                                    <select class="form-control filter-select" data-column="14">
                                         <option value=""> Select Type... </option>
                                         @foreach ($types as $type)
                                             <option value="{{ $type }}"> {{ $type }} </option>
@@ -106,7 +114,7 @@
                                 <th>
                                     {{ trans('cruds.rfa.fields.worktype') }}
 
-                                    <select class="form-control filter-select" data-column="13">
+                                    <select class="form-control filter-select" data-column="15">
                                         <option value=""> Select Work type... </option>
                                         @foreach ($work_types as $work_type)
                                             <option value="{{ $work_type }}"> {{ $work_type }} </option>
@@ -116,7 +124,7 @@
                                 <th>
                                     {{ trans('cruds.rfa.fields.construction_contract') }}
 
-                                     <select class="form-control filter-select" data-column="14">
+                                     <select class="form-control filter-select" data-column="16">
                                         <option value=""> Select Contract... </option>
                                         @foreach ($construction_contracts as $construction_contract)
                                             <option value="{{ $construction_contract }}"> {{ $construction_contract }} </option>
@@ -126,7 +134,7 @@
                                 <th>
                                     {{ trans('cruds.rfa.fields.wbs_level_3') }}
 
-                                    <select class="form-control filter-select" data-column="15">
+                                    <select class="form-control filter-select" data-column="17">
                                         <option value=""> Select WBS Lv3... </option>
                                         @foreach ($wbs_level_3s as $wbs_level_3)
                                             <option value="{{ $wbs_level_3 }}"> {{ $wbs_level_3 }} </option>
@@ -136,7 +144,7 @@
                                 <th>
                                     {{ trans('cruds.rfa.fields.wbs_level_4') }}
 
-                                    <select class="form-control filter-select" data-column="16">
+                                    <select class="form-control filter-select" data-column="18">
                                         <option value=""> Select WBS Lv4... </option>
                                         @foreach ($wbs_level_4s as $wbs_level_4)
                                             <option value="{{ $wbs_level_4 }}"> {{ $wbs_level_4 }} </option>
@@ -147,27 +155,21 @@
                                     {{ trans('cruds.rfa.fields.submit_date') }}
 
                                     <input type="date" class="form-control filter-input"
-                                    placeholder="Search for summit date..." data-column="17"/>
+                                    placeholder="Search for summit date..." data-column="19"/>
                                 </th>
                                 <th>
                                     {{ trans('cruds.rfa.fields.issueby') }}
 
                                     <input type="text" class="form-control filter-input"
-                                    placeholder="Search for Issue by..." data-column="18"/>
+                                    placeholder="Search for Issue by..." data-column="20"/>
                                 </th>
                                 <th>
                                     {{ trans('cruds.rfa.fields.assign') }}
 
                                     <input type="text" class="form-control filter-input"
-                                    placeholder="Search for Assign to..." data-column="19"/>
+                                    placeholder="Search for Assign to..." data-column="21"/>
                                 </th>
-                                <th>
-                                    {{ trans('cruds.rfa.fields.file_upload_1') }}
-                                </th>
-
-                                <th>
-                                    {{ trans('cruds.rfa.fields.submittals_file') }}
-                                </th>
+                               
 
                                 <th>
                                     {{ trans('cruds.rfa.fields.qty_page') }}
@@ -342,23 +344,24 @@
 { data: 'created_at', name: 'created_at' ,visible: true}, // 2
 { data: 'date_counter', name: 'date_counter',visible: false },// 3
 { data: 'document_status_status_name', name: 'document_status.status_name', sortable: false, }, // 4
-{ data: 'bill', name: 'bill',sortable: false, }, // 5
-{ data: 'title_eng', name: 'title_eng',sortable: false, }, // 6
-{ data: 'title', name: 'title' ,sortable: false,}, // 7
-{ data: 'title_cn', name: 'title_cn' ,visible: false, sortable: false, }, // 8
-{ data: 'origin_number', name: 'origin_number', sortable: false, }, // 9
-{ data: 'document_number', name: 'document_number',sortable: false, }, // 10
-{ data: 'rfa_code', name: 'rfa_code' }, // 11
-{ data: 'type.type_code', name: 'type.type_code' , visible: false}, // 12
-{ data: 'worktype', name: 'worktype' , visible: false}, // 13
-{ data: 'construction_contract_code', name: 'construction_contract.code' ,visible: false , sortable: false,}, // 14
-{ data: 'wbs_level_3_wbs_level_3_code', name: 'wbs_level_3.wbs_level_3_code' , visible: false, sortable: false,}, // 15
-{ data: 'wbs_level_4_wbs_level_4_code', name: 'wbs_level_4.wbs_level_4_code' , visible: false, sortable: false, }, // 16
-{ data: 'submit_date', name: 'submit_date' ,  sortable: false, }, // 17
-{ data: 'issueby_name', name: 'issueby.name' , visible: false, sortable: false,}, // 18
-{ data: 'assign_name', name: 'assign.name' , visible: false, sortable: false,}, // 19
-{ data: 'file_upload_1', name: 'file_upload_1', sortable: false, searchable: false }, // 20
-{ data: 'submittals_file', name: 'submittals_file', sortable: false, searchable: false }, //21
+{ data: 'file_upload_1', name: 'file_upload_1', sortable: false, searchable: false }, // 5
+{ data: 'submittals_file', name: 'submittals_file', sortable: false, searchable: false }, // 6
+{ data: 'bill', name: 'bill',sortable: false, }, // 7
+{ data: 'title_eng', name: 'title_eng',sortable: false, }, // 8
+{ data: 'title', name: 'title' ,sortable: false,}, // 9
+{ data: 'title_cn', name: 'title_cn' ,visible: false, sortable: false, }, // 10
+{ data: 'origin_number', name: 'origin_number', sortable: false, }, // 11
+{ data: 'document_number', name: 'document_number',sortable: false, }, // 12
+{ data: 'rfa_code', name: 'rfa_code' }, // 13
+{ data: 'type.type_code', name: 'type.type_code' , visible: false}, // 14
+{ data: 'worktype', name: 'worktype' , visible: false}, // 15
+{ data: 'construction_contract_code', name: 'construction_contract.code' ,visible: false , sortable: false,}, // 16
+{ data: 'wbs_level_3_wbs_level_3_code', name: 'wbs_level_3.wbs_level_3_code' , visible: false, sortable: false,}, // 17
+{ data: 'wbs_level_4_wbs_level_4_code', name: 'wbs_level_4.wbs_level_4_code' , visible: false, sortable: false, }, // 18
+{ data: 'submit_date', name: 'submit_date' ,  sortable: false, }, // 19
+{ data: 'issueby_name', name: 'issueby.name' , visible: false, sortable: false,}, // 20
+{ data: 'assign_name', name: 'assign.name' , visible: false, sortable: false,}, // 21
+
 { data: 'qty_page', name: 'qty_page' ,visible: false, sortable: false,}, // 22
 { data: 'spec_ref_no', name: 'spec_ref_no' , visible: false ,visible: false, sortable: false,}, // 23
 { data: 'clause', name: 'clause' , visible: false, visible: false, sortable: false,}, // 24

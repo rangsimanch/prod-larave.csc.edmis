@@ -175,6 +175,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth'], '
     Route::post('request-for-inspections/media', 'RequestForInspectionController@storeMedia')->name('request-for-inspections.storeMedia');
     Route::post('request-for-inspections/ckmedia', 'RequestForInspectionController@storeCKEditorImages')->name('request-for-inspections.storeCKEditorImages');
     Route::resource('request-for-inspections', 'RequestForInspectionController');
+    Route::post('rfas/fetch','RfaController@fetch')->name('rfas.fetch');
+
 
     // Department Documents
     Route::delete('department-documents/destroy', 'DepartmentDocumentsController@massDestroy')->name('department-documents.massDestroy');
@@ -380,6 +382,19 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth'], '
     Route::post('site-warning-notices/ckmedia', 'SiteWarningNoticeController@storeCKEditorImages')->name('site-warning-notices.storeCKEditorImages');
     Route::resource('site-warning-notices', 'SiteWarningNoticeController');
     
+    // Non Conformance Notices
+    Route::delete('non-conformance-notices/destroy', 'NonConformanceNoticeController@massDestroy')->name('non-conformance-notices.massDestroy');
+    Route::post('non-conformance-notices/media', 'NonConformanceNoticeController@storeMedia')->name('non-conformance-notices.storeMedia');
+    Route::post('non-conformance-notices/ckmedia', 'NonConformanceNoticeController@storeCKEditorImages')->name('non-conformance-notices.storeCKEditorImages');
+    Route::resource('non-conformance-notices', 'NonConformanceNoticeController');
+
+    // Non Conformance Reports
+    Route::delete('non-conformance-reports/destroy', 'NonConformanceReportController@massDestroy')->name('non-conformance-reports.massDestroy');
+    Route::post('non-conformance-reports/media', 'NonConformanceReportController@storeMedia')->name('non-conformance-reports.storeMedia');
+    Route::post('non-conformance-reports/ckmedia', 'NonConformanceReportController@storeCKEditorImages')->name('non-conformance-reports.storeCKEditorImages');
+    Route::resource('non-conformance-reports', 'NonConformanceReportController');
+
+
     Route::get('system-calendar', 'SystemCalendarController@index')->name('systemCalendar');
     Route::get('global-search', 'GlobalSearchController@search')->name('globalSearch');
     Route::get('messenger', 'MessengerController@index')->name('messenger.index');

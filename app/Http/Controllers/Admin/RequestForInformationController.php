@@ -47,9 +47,6 @@ class RequestForInformationController extends Controller
                 ));
             });
 
-            $table->editColumn('id', function ($row) {
-                return $row->id ? $row->id : "";
-            });
             $table->editColumn('to_organization', function ($row) {
                 return $row->to_organization ? $row->to_organization : "";
             });
@@ -124,21 +121,34 @@ class RequestForInformationController extends Controller
             $table->editColumn('response_date', function ($row) {
                 return $row->response_date ? $row->response_date : "";
             });
+            $table->editColumn('file_upload', function ($row) {
+                if (!$row->file_upload) {
+                    return '';
+                }
+
+                $links = [];
+
+                foreach ($row->file_upload as $media) {
+                    $links[] = '<a href="' . $media->getUrl() . '" target="_blank">' . trans('global.downloadFile') . '</a>';
+                }
+
+                return implode(', ', $links);
+            });
             $table->editColumn('record', function ($row) {
                 return $row->record ? $row->record : "";
             });
 
-            $table->rawColumns(['actions', 'placeholder', 'construction_contract', 'to', 'attachment_files', 'request_by', 'authorised_rep', 'response_organization']);
+            $table->rawColumns(['actions', 'placeholder', 'construction_contract', 'to', 'attachment_files', 'request_by', 'authorised_rep', 'response_organization', 'file_upload']);
 
             return $table->make(true);
         }
 
-        $construction_contracts = ConstructionContract::get()->pluck('code')->toArray();
-        $teams                  = Team::get()->pluck('code')->toArray();
-        $users                  = User::get()->pluck('name')->toArray();
-        $users                  = User::get()->pluck('name')->toArray();
-        $teams                  = Team::get()->pluck('code')->toArray();
-        $teams                  = Team::get()->pluck('name')->toArray();
+        $construction_contracts = ConstructionContract::get();
+        $teams                  = Team::get();
+        $users                  = User::get();
+        $users                  = User::get();
+        $teams                  = Team::get();
+        $teams                  = Team::get();
 
         return view('admin.requestForInformations.index', compact('construction_contracts', 'teams', 'users', 'users', 'teams', 'teams'));
     }
@@ -166,6 +176,10 @@ class RequestForInformationController extends Controller
 
         foreach ($request->input('attachment_files', []) as $file) {
             $requestForInformation->addMedia(storage_path('tmp/uploads/' . $file))->toMediaCollection('attachment_files');
+        }
+
+        foreach ($request->input('file_upload', []) as $file) {
+            $requestForInformation->addMedia(storage_path('tmp/uploads/' . $file))->toMediaCollection('file_upload');
         }
 
         if ($media = $request->input('ck-media', false)) {
@@ -211,6 +225,22 @@ class RequestForInformationController extends Controller
         foreach ($request->input('attachment_files', []) as $file) {
             if (count($media) === 0 || !in_array($file, $media)) {
                 $requestForInformation->addMedia(storage_path('tmp/uploads/' . $file))->toMediaCollection('attachment_files');
+            }
+        }
+
+        if (count($requestForInformation->file_upload) > 0) {
+            foreach ($requestForInformation->file_upload as $media) {
+                if (!in_array($media->file_name, $request->input('file_upload', []))) {
+                    $media->delete();
+                }
+            }
+        }
+
+        $media = $requestForInformation->file_upload->pluck('file_name')->toArray();
+
+        foreach ($request->input('file_upload', []) as $file) {
+            if (count($media) === 0 || !in_array($file, $media)) {
+                $requestForInformation->addMedia(storage_path('tmp/uploads/' . $file))->toMediaCollection('file_upload');
             }
         }
 

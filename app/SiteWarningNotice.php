@@ -19,6 +19,7 @@ class SiteWarningNotice extends Model implements HasMedia
 
     protected $appends = [
         'attachment',
+        'file_upload',
     ];
 
     const REPLY_BY_NCR_SELECT = [
@@ -171,6 +172,11 @@ class SiteWarningNotice extends Model implements HasMedia
     public function csc_pm()
     {
         return $this->belongsTo(User::class, 'csc_pm_id');
+    }
+
+    public function getFileUploadAttribute()
+    {
+        return $this->getMedia('file_upload');
     }
 
     public function team()

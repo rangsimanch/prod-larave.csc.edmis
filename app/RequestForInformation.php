@@ -19,6 +19,7 @@ class RequestForInformation extends Model implements HasMedia
 
     protected $appends = [
         'attachment_files',
+        'file_upload',
     ];
 
     protected $dates = [
@@ -122,6 +123,11 @@ class RequestForInformation extends Model implements HasMedia
     public function response_organization()
     {
         return $this->belongsTo(Team::class, 'response_organization_id');
+    }
+
+    public function getFileUploadAttribute()
+    {
+        return $this->getMedia('file_upload');
     }
 
     public function team()

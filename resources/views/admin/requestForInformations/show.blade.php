@@ -19,14 +19,6 @@
                             <tbody>
                                 <tr>
                                     <th>
-                                        {{ trans('cruds.requestForInformation.fields.id') }}
-                                    </th>
-                                    <td>
-                                        {{ $requestForInformation->id }}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th>
                                         {{ trans('cruds.requestForInformation.fields.to_organization') }}
                                     </th>
                                     <td>
@@ -203,6 +195,18 @@
                                     </th>
                                     <td>
                                         {{ $requestForInformation->response_date }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        {{ trans('cruds.requestForInformation.fields.file_upload') }}
+                                    </th>
+                                    <td>
+                                        @foreach($requestForInformation->file_upload as $key => $media)
+                                            <a href="{{ $media->getUrl() }}" target="_blank">
+                                                {{ trans('global.view_file') }}
+                                            </a>
+                                        @endforeach
                                     </td>
                                 </tr>
                                 <tr>

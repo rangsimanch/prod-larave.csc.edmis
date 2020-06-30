@@ -203,4 +203,29 @@ Route::group(['prefix' => 'v1', 'as' => 'api.', 'namespace' => 'Api\V1\Admin', '
     // Documents And Assignments
     Route::post('documents-and-assignments/media', 'DocumentsAndAssignmentsApiController@storeMedia')->name('documents-and-assignments.storeMedia');
     Route::apiResource('documents-and-assignments', 'DocumentsAndAssignmentsApiController');
+
+    // Wbs Level Ones
+    Route::apiResource('wbs-level-ones', 'WbsLevelOneApiController');
+
+    // Wbs Level Twos
+    Route::apiResource('wbs-level-twos', 'WbsLevelTwoApiController');
+
+    // Wbs Level Fives
+    Route::apiResource('wbs-level-fives', 'WbsLevelFiveApiController');
+
+    // Request For Informations
+    Route::post('request-for-informations/media', 'RequestForInformationApiController@storeMedia')->name('request-for-informations.storeMedia');
+    Route::apiResource('request-for-informations', 'RequestForInformationApiController');
+
+    // Site Warning Notices
+    Route::post('site-warning-notices/media', 'SiteWarningNoticeApiController@storeMedia')->name('site-warning-notices.storeMedia');
+    Route::apiResource('site-warning-notices', 'SiteWarningNoticeApiController');
+
+    // Non Conformance Notices
+    Route::post('non-conformance-notices/media', 'NonConformanceNoticeApiController@storeMedia')->name('non-conformance-notices.storeMedia');
+    Route::apiResource('non-conformance-notices', 'NonConformanceNoticeApiController');
+
+    // Non Conformance Reports
+    Route::post('non-conformance-reports/media', 'NonConformanceReportApiController@storeMedia')->name('non-conformance-reports.storeMedia');
+    Route::apiResource('non-conformance-reports', 'NonConformanceReportApiController');
 });

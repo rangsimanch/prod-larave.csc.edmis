@@ -31,6 +31,10 @@ class RequestForInformationApiController extends Controller
             $requestForInformation->addMedia(storage_path('tmp/uploads/' . $request->input('attachment_files')))->toMediaCollection('attachment_files');
         }
 
+        if ($request->input('file_upload', false)) {
+            $requestForInformation->addMedia(storage_path('tmp/uploads/' . $request->input('file_upload')))->toMediaCollection('file_upload');
+        }
+
         return (new RequestForInformationResource($requestForInformation))
             ->response()
             ->setStatusCode(Response::HTTP_CREATED);
@@ -53,6 +57,14 @@ class RequestForInformationApiController extends Controller
             }
         } elseif ($requestForInformation->attachment_files) {
             $requestForInformation->attachment_files->delete();
+        }
+
+        if ($request->input('file_upload', false)) {
+            if (!$requestForInformation->file_upload || $request->input('file_upload') !== $requestForInformation->file_upload->file_name) {
+                $requestForInformation->addMedia(storage_path('tmp/uploads/' . $request->input('file_upload')))->toMediaCollection('file_upload');
+            }
+        } elseif ($requestForInformation->file_upload) {
+            $requestForInformation->file_upload->delete();
         }
 
         return (new RequestForInformationResource($requestForInformation))
