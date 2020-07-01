@@ -1757,7 +1757,7 @@ return [
     ],
 ],
 'nonConformanceNotice'      => [
-    'title'          => 'Non Conformance Notice (NCN)',
+    'title'          => 'NCN',
     'title_singular' => 'Non Conformance Notice (NCN)',
     'fields'         => [
         'id'                            => 'ID',
@@ -1791,12 +1791,12 @@ return [
     ],
 ],
 'nonConformanceReport'      => [
-    'title'          => 'Non Conformance Report (NCR)',
+    'title'          => 'NCR',
     'title_singular' => 'Non Conformance Report (NCR)',
     'fields'         => [
         'id'                              => 'ID',
         'id_helper'                       => '',
-        'ncn_ref'                         => 'NCN Ref.',
+        'ncn_ref'                         => 'Corresponding To',
         'ncn_ref_helper'                  => '',
         'root_cause'                      => 'Root Cause',
         'root_cause_helper'               => '',

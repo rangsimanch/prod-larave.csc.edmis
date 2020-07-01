@@ -121,7 +121,7 @@
                             @endif
                             <span class="help-block">{{ trans('cruds.siteWarningNotice.fields.attachment_helper') }}</span>
                         </div>
-                        <div class="form-group {{ $errors->has('root_cause') ? 'has-error' : '' }}">
+                        <!-- <div class="form-group {{ $errors->has('root_cause') ? 'has-error' : '' }}">
                             <label for="root_cause">{{ trans('cruds.siteWarningNotice.fields.root_cause') }}</label>
                             <textarea class="form-control" name="root_cause" id="root_cause">{{ old('root_cause') }}</textarea>
                             @if($errors->has('root_cause'))
@@ -216,7 +216,7 @@
                                 @foreach(App\SiteWarningNotice::REVIEW_AND_JUDGEMENT_STATUS_SELECT as $key => $label)
                                     <option value="{{ $key }}" {{ old('review_and_judgement_status', '') === (string) $key ? 'selected' : '' }}>{{ $label }}</option>
                                 @endforeach
-                            </select>
+                            </select> -->
                             @if($errors->has('review_and_judgement_status'))
                                 <span class="help-block" role="alert">{{ $errors->first('review_and_judgement_status') }}</span>
                             @endif
@@ -230,7 +230,7 @@
                             @endif
                             <span class="help-block">{{ trans('cruds.siteWarningNotice.fields.note_helper') }}</span>
                         </div>
-                        <div class="form-group {{ $errors->has('csc_issuer') ? 'has-error' : '' }}">
+                        <!-- <div class="form-group {{ $errors->has('csc_issuer') ? 'has-error' : '' }}">
                             <label for="csc_issuer_id">{{ trans('cruds.siteWarningNotice.fields.csc_issuer') }}</label>
                             <select class="form-control select2" name="csc_issuer_id" id="csc_issuer_id">
                                 @foreach($csc_issuers as $id => $csc_issuer)
@@ -253,7 +253,7 @@
                                 <span class="help-block" role="alert">{{ $errors->first('csc_qa') }}</span>
                             @endif
                             <span class="help-block">{{ trans('cruds.siteWarningNotice.fields.csc_qa_helper') }}</span>
-                        </div>
+                        </div> -->
                         <div class="form-group {{ $errors->has('disposition_status') ? 'has-error' : '' }}">
                             <label>{{ trans('cruds.siteWarningNotice.fields.disposition_status') }}</label>
                             <select class="form-control" name="disposition_status" id="disposition_status">
@@ -267,7 +267,7 @@
                             @endif
                             <span class="help-block">{{ trans('cruds.siteWarningNotice.fields.disposition_status_helper') }}</span>
                         </div>
-                        <div class="form-group {{ $errors->has('csc_pm') ? 'has-error' : '' }}">
+                        <!-- <div class="form-group {{ $errors->has('csc_pm') ? 'has-error' : '' }}">
                             <label for="csc_pm_id">{{ trans('cruds.siteWarningNotice.fields.csc_pm') }}</label>
                             <select class="form-control select2" name="csc_pm_id" id="csc_pm_id">
                                 @foreach($csc_pms as $id => $csc_pm)
@@ -278,7 +278,7 @@
                                 <span class="help-block" role="alert">{{ $errors->first('csc_pm') }}</span>
                             @endif
                             <span class="help-block">{{ trans('cruds.siteWarningNotice.fields.csc_pm_helper') }}</span>
-                        </div>
+                        </div> -->
                         <div class="form-group {{ $errors->has('file_upload') ? 'has-error' : '' }}">
                             <label for="file_upload">{{ trans('cruds.siteWarningNotice.fields.file_upload') }}</label>
                             <div class="needsclick dropzone" id="file_upload-dropzone">

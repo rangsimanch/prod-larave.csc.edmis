@@ -23,14 +23,14 @@
                             @endif
                             <span class="help-block">{{ trans('cruds.nonConformanceReport.fields.ncn_ref_helper') }}</span>
                         </div>
-                        <div class="form-group {{ $errors->has('corresponding_to') ? 'has-error' : '' }}">
+                        <!-- <div class="form-group {{ $errors->has('corresponding_to') ? 'has-error' : '' }}">
                             <label for="corresponding_to">{{ trans('cruds.nonConformanceReport.fields.corresponding_to') }}</label>
                             <input class="form-control" type="text" name="corresponding_to" id="corresponding_to" value="{{ old('corresponding_to', '') }}">
                             @if($errors->has('corresponding_to'))
                                 <span class="help-block" role="alert">{{ $errors->first('corresponding_to') }}</span>
                             @endif
                             <span class="help-block">{{ trans('cruds.nonConformanceReport.fields.corresponding_to_helper') }}</span>
-                        </div>
+                        </div> -->
                         <div class="form-group {{ $errors->has('response_date') ? 'has-error' : '' }}">
                             <label for="response_date">{{ trans('cruds.nonConformanceReport.fields.response_date') }}</label>
                             <input class="form-control date" type="text" name="response_date" id="response_date" value="{{ old('response_date') }}">
@@ -39,7 +39,7 @@
                             @endif
                             <span class="help-block">{{ trans('cruds.nonConformanceReport.fields.response_date_helper') }}</span>
                         </div>
-                        <div class="form-group {{ $errors->has('root_cause') ? 'has-error' : '' }}">
+                        <!-- <div class="form-group {{ $errors->has('root_cause') ? 'has-error' : '' }}">
                             <label for="root_cause">{{ trans('cruds.nonConformanceReport.fields.root_cause') }}</label>
                             <textarea class="form-control" name="root_cause" id="root_cause">{{ old('root_cause') }}</textarea>
                             @if($errors->has('root_cause'))
@@ -62,7 +62,7 @@
                                 <span class="help-block" role="alert">{{ $errors->first('preventive_action') }}</span>
                             @endif
                             <span class="help-block">{{ trans('cruds.nonConformanceReport.fields.preventive_action_helper') }}</span>
-                        </div>
+                        </div> -->
                         <div class="form-group {{ $errors->has('ref_no') ? 'has-error' : '' }}">
                             <label for="ref_no">{{ trans('cruds.nonConformanceReport.fields.ref_no') }}</label>
                             <input class="form-control" type="text" name="ref_no" id="ref_no" value="{{ old('ref_no', '') }}">
