@@ -274,7 +274,7 @@ class RequestForInspectionController extends Controller
         return response()->json(['id' => $media->id, 'url' => $media->getUrl()], Response::HTTP_CREATED);
     }
 
-    public function fetch (Request $request){
+    function fetch (Request $request){
         $id = $request->get('select');
         $result = array();
         $query = DB::table('wbs_level_threes')

@@ -305,7 +305,7 @@ $('.wbslv3').change(function(){
             console.log(select);
             var _token = $('input[name="_token"]').val();
             $.ajax({
-                url:"{{ route('admin.request-for-inspections.fetch') }}",
+                url:"{{ route('admin.rfas.fetch') }}",
                 method:"POST",
                 data:{select:select , _token:_token},
                 success:function(result){
