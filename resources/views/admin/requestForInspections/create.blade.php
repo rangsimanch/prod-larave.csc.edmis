@@ -296,5 +296,24 @@ Dropzone.options.filesUploadDropzone = {
          return _results
      }
 }
+
+    $('.wbslv3').change(function(){
+        if($(this).val() != ''){
+            var select = $(this).val();
+            console.log(select);
+            var _token = $('input[name="_token"]').val();
+            $.ajax({
+                url:"{{ route('admin.rfas.fetch') }}",
+                method:"POST",
+                data:{select:select , _token:_token},
+                success:function(result){
+                    //Action
+
+                    $('.wbslv4').html(result);
+                    console.log(result);
+                }
+            })
+        }
+    });
 </script>
 @endsection
