@@ -61,7 +61,7 @@
                         </div>
                         <div class="form-group {{ $errors->has('wbs_level_3') ? 'has-error' : '' }}">
                             <label for="wbs_level_3_id">{{ trans('cruds.requestForInspection.fields.wbs_level_3') }}</label>
-                            <select class="form-control select2" name="wbs_level_3_id" id="wbs_level_3_id">
+                            <select class="form-control select2 wbslv3" name="wbs_level_3_id" id="wbs_level_3_id">
                                 @foreach($wbs_level_3s as $id => $wbs_level_3)
                                     <option value="{{ $id }}" {{ old('wbs_level_3_id') == $id ? 'selected' : '' }}>{{ $wbs_level_3 }}</option>
                                 @endforeach
@@ -73,7 +73,7 @@
                         </div>
                         <div class="form-group {{ $errors->has('wbs_level_4') ? 'has-error' : '' }}">
                             <label for="wbs_level_4_id">{{ trans('cruds.requestForInspection.fields.wbs_level_4') }}</label>
-                            <select class="form-control select2" name="wbs_level_4_id" id="wbs_level_4_id">
+                            <select class="form-control select2 wbslv4" name="wbs_level_4_id" id="wbs_level_4_id">
                                 <option value="">{{ trans('global.pleaseSelect') }}</option> 
                             </select>
                             @if($errors->has('wbs_level_4'))
@@ -303,7 +303,7 @@ Dropzone.options.filesUploadDropzone = {
             console.log(select);
             var _token = $('input[name="_token"]').val();
             $.ajax({
-                url:"{{ route('admin.rfas.fetch') }}",
+                url:"{{ route('admin.request-for-inspections.fetch') }}",
                 method:"POST",
                 data:{select:select , _token:_token},
                 success:function(result){
