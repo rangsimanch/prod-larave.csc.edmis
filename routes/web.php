@@ -175,7 +175,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth'], '
     Route::post('request-for-inspections/media', 'RequestForInspectionController@storeMedia')->name('request-for-inspections.storeMedia');
     Route::post('request-for-inspections/ckmedia', 'RequestForInspectionController@storeCKEditorImages')->name('request-for-inspections.storeCKEditorImages');
     Route::resource('request-for-inspections', 'RequestForInspectionController');
-    Route::post('request-for-inspections/fetcher','RequestForInspectionController@fetcher')->name('request-for-inspections.fetcher');
+    Route::post('request-for-inspections/fetcher','RequestForInspectionController@fetcher')->name('rfns.fetcher');
 
 
     // Department Documents
