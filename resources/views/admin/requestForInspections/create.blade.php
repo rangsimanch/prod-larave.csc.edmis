@@ -296,8 +296,10 @@ Dropzone.options.filesUploadDropzone = {
          return _results
      }
 }
+</script>
 
-    $('.wbslv3').change(function(){
+<script type="text/javascript">
+$('.wbslv3').change(function(){
         if($(this).val() != ''){
             var select = $(this).val();
             console.log(select);
