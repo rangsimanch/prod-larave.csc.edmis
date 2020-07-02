@@ -174,9 +174,9 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth'], '
     Route::delete('request-for-inspections/destroy', 'RequestForInspectionController@massDestroy')->name('request-for-inspections.massDestroy');
     Route::post('request-for-inspections/media', 'RequestForInspectionController@storeMedia')->name('request-for-inspections.storeMedia');
     Route::post('request-for-inspections/ckmedia', 'RequestForInspectionController@storeCKEditorImages')->name('request-for-inspections.storeCKEditorImages');
+    Route::post('request-for-inspections/fetch','RequestForInspectionController@fetch')->name('request-for-inspections.fetch');
     Route::resource('request-for-inspections', 'RequestForInspectionController');
-    Route::post('request-for-inspections/fetcher','RequestForInspectionController@fetcher')->name('rfns.fetcher');
-
+   
 
     // Department Documents
     Route::delete('department-documents/destroy', 'DepartmentDocumentsController@massDestroy')->name('department-documents.massDestroy');

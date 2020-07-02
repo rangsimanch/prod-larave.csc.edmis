@@ -147,7 +147,7 @@ class RequestForInspectionController extends Controller
         return view('admin.requestForInspections.index', compact('bo_qs', 'boq_items', 'wbs_level_ones', 'wbs_level_twos', 'wbs_level_threes', 'wbslevelfours', 'users', 'users', 'construction_contracts', 'teams'));
     }
 
-    function fetcher(Request $request){
+    function fetch (Request $request){
         $id = $request->get('select');
         $result = array();
         $query = DB::table('wbs_level_threes')
