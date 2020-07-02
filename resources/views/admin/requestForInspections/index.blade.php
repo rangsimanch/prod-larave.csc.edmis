@@ -27,6 +27,9 @@
                                     {{ trans('cruds.requestForInspection.fields.bill') }}
                                 </th>
                                 <th>
+                                    {{ trans('cruds.requestForInspection.fields.item') }}
+                                </th>
+                                <th>
                                     {{ trans('cruds.requestForInspection.fields.wbs_level_1') }}
                                 </th>
                                 <th>
@@ -69,13 +72,16 @@
                                     {{ trans('cruds.requestForInspection.fields.result_of_inspection') }}
                                 </th>
                                 <th>
+                                    {{ trans('cruds.requestForInspection.fields.amount') }}
+                                </th>
+                                <th>
+                                    {{ trans('cruds.requestForInspection.fields.construction_contract') }}
+                                </th>
+                                <th>
                                     {{ trans('cruds.requestForInspection.fields.files_upload') }}
                                 </th>
                                 <th>
                                     {{ trans('cruds.requestForInspection.fields.created_at') }}
-                                </th>
-                                <th>
-                                    {{ trans('cruds.requestForInspection.fields.construction_contract') }}
                                 </th>
                                 <th>
                                     &nbsp;
@@ -88,7 +94,15 @@
                                     <select class="search">
                                         <option value>{{ trans('global.all') }}</option>
                                         @foreach($bo_qs as $key => $item)
-                                            <option value="{{ $item }}">{{ $item }}</option>
+                                            <option value="{{ $item->name }}">{{ $item->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </td>
+                                <td>
+                                    <select class="search">
+                                        <option value>{{ trans('global.all') }}</option>
+                                        @foreach($boq_items as $key => $item)
+                                            <option value="{{ $item->name }}">{{ $item->name }}</option>
                                         @endforeach
                                     </select>
                                 </td>
@@ -96,7 +110,7 @@
                                     <select class="search">
                                         <option value>{{ trans('global.all') }}</option>
                                         @foreach($wbs_level_ones as $key => $item)
-                                            <option value="{{ $item }}">{{ $item }}</option>
+                                            <option value="{{ $item->name }}">{{ $item->name }}</option>
                                         @endforeach
                                     </select>
                                 </td>
@@ -104,7 +118,7 @@
                                     <select class="search">
                                         <option value>{{ trans('global.all') }}</option>
                                         @foreach($wbs_level_twos as $key => $item)
-                                            <option value="{{ $item }}">{{ $item }}</option>
+                                            <option value="{{ $item->name }}">{{ $item->name }}</option>
                                         @endforeach
                                     </select>
                                 </td>
@@ -112,7 +126,7 @@
                                     <select class="search">
                                         <option value>{{ trans('global.all') }}</option>
                                         @foreach($wbs_level_threes as $key => $item)
-                                            <option value="{{ $item }}">{{ $item }}</option>
+                                            <option value="{{ $item->wbs_level_3_name }}">{{ $item->wbs_level_3_name }}</option>
                                         @endforeach
                                     </select>
                                 </td>
@@ -120,7 +134,7 @@
                                     <select class="search">
                                         <option value>{{ trans('global.all') }}</option>
                                         @foreach($wbslevelfours as $key => $item)
-                                            <option value="{{ $item }}">{{ $item }}</option>
+                                            <option value="{{ $item->wbs_level_4_name }}">{{ $item->wbs_level_4_name }}</option>
                                         @endforeach
                                     </select>
                                 </td>
@@ -139,7 +153,7 @@
                                     <select class="search">
                                         <option value>{{ trans('global.all') }}</option>
                                         @foreach($users as $key => $item)
-                                            <option value="{{ $item }}">{{ $item }}</option>
+                                            <option value="{{ $item->name }}">{{ $item->name }}</option>
                                         @endforeach
                                     </select>
                                 </td>
@@ -147,7 +161,7 @@
                                     <select class="search" strict="true">
                                         <option value>{{ trans('global.all') }}</option>
                                         @foreach(App\RequestForInspection::TYPE_OF_WORK_SELECT as $key => $item)
-                                            <option value="{{ $item }}">{{ $item }}</option>
+                                            <option value="{{ $key }}">{{ $item }}</option>
                                         @endforeach
                                     </select>
                                 </td>
@@ -161,7 +175,7 @@
                                     <select class="search">
                                         <option value>{{ trans('global.all') }}</option>
                                         @foreach($users as $key => $item)
-                                            <option value="{{ $item }}">{{ $item }}</option>
+                                            <option value="{{ $item->name }}">{{ $item->name }}</option>
                                         @endforeach
                                     </select>
                                 </td>
@@ -169,21 +183,24 @@
                                     <select class="search" strict="true">
                                         <option value>{{ trans('global.all') }}</option>
                                         @foreach(App\RequestForInspection::RESULT_OF_INSPECTION_SELECT as $key => $item)
-                                            <option value="{{ $item }}">{{ $item }}</option>
+                                            <option value="{{ $key }}">{{ $item }}</option>
                                         @endforeach
                                     </select>
                                 </td>
                                 <td>
-                                </td>
-                                <td>
+                                    <input class="search" type="text" placeholder="{{ trans('global.search') }}">
                                 </td>
                                 <td>
                                     <select class="search">
                                         <option value>{{ trans('global.all') }}</option>
                                         @foreach($construction_contracts as $key => $item)
-                                            <option value="{{ $item }}">{{ $item }}</option>
+                                            <option value="{{ $item->code }}">{{ $item->code }}</option>
                                         @endforeach
                                     </select>
+                                </td>
+                                <td>
+                                </td>
+                                <td>
                                 </td>
                                 <td>
                                 </td>
@@ -244,6 +261,7 @@
     columns: [
       { data: 'placeholder', name: 'placeholder' },
 { data: 'bill_name', name: 'bill.name' },
+{ data: 'item_name', name: 'item.name' },
 { data: 'wbs_level_1_name', name: 'wbs_level_1.name' },
 { data: 'wbs_level_2_name', name: 'wbs_level_2.name' },
 { data: 'wbs_level_3_wbs_level_3_name', name: 'wbs_level_3.wbs_level_3_name' },
@@ -258,13 +276,14 @@
 { data: 'ref_specification', name: 'ref_specification' },
 { data: 'requested_by_name', name: 'requested_by.name' },
 { data: 'result_of_inspection', name: 'result_of_inspection' },
+{ data: 'amount', name: 'amount' },
+{ data: 'construction_contract_code', name: 'construction_contract.code' },
 { data: 'files_upload', name: 'files_upload', sortable: false, searchable: false },
 { data: 'created_at', name: 'created_at' },
-{ data: 'construction_contract_code', name: 'construction_contract.code' },
 { data: 'actions', name: '{{ trans('global.actions') }}' }
     ],
     orderCellsTop: true,
-    order: [[ 17, 'desc' ]],
+    order: [[ 20, 'desc' ]],
     pageLength: 10,
   };
   let table = $('.datatable-RequestForInspection').DataTable(dtOverrideGlobals);

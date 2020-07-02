@@ -23,6 +23,18 @@
                             @endif
                             <span class="help-block">{{ trans('cruds.requestForInspection.fields.bill_helper') }}</span>
                         </div>
+                        <div class="form-group {{ $errors->has('item') ? 'has-error' : '' }}">
+                            <label for="item_id">{{ trans('cruds.requestForInspection.fields.item') }}</label>
+                            <select class="form-control select2" name="item_id" id="item_id">
+                                @foreach($items as $id => $item)
+                                    <option value="{{ $id }}" {{ old('item_id') == $id ? 'selected' : '' }}>{{ $item }}</option>
+                                @endforeach
+                            </select>
+                            @if($errors->has('item'))
+                                <span class="help-block" role="alert">{{ $errors->first('item') }}</span>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.requestForInspection.fields.item_helper') }}</span>
+                        </div>
                         <div class="form-group {{ $errors->has('wbs_level_1') ? 'has-error' : '' }}">
                             <label for="wbs_level_1_id">{{ trans('cruds.requestForInspection.fields.wbs_level_1') }}</label>
                             <select class="form-control select2" name="wbs_level_1_id" id="wbs_level_1_id">
@@ -47,31 +59,30 @@
                             @endif
                             <span class="help-block">{{ trans('cruds.requestForInspection.fields.wbs_level_2_helper') }}</span>
                         </div>
-                        
                         <div class="form-group {{ $errors->has('wbs_level_3') ? 'has-error' : '' }}">
-                            <label for="wbs_level_3_id" class="required">{{ trans('cruds.rfa.fields.wbs_level_3') }}</label>
-                            <select class="form-control select2 wbslv3" name="wbs_level_3_id" id="wbs_level_3_id" required>
+                            <label for="wbs_level_3_id">{{ trans('cruds.requestForInspection.fields.wbs_level_3') }}</label>
+                            <select class="form-control select2" name="wbs_level_3_id" id="wbs_level_3_id">
                                 @foreach($wbs_level_3s as $id => $wbs_level_3)
                                     <option value="{{ $id }}" {{ old('wbs_level_3_id') == $id ? 'selected' : '' }}>{{ $wbs_level_3 }}</option>
                                 @endforeach
                             </select>
-                            @if($errors->has('wbs_level_3_id'))
-                                <span class="help-block" role="alert">{{ $errors->first('wbs_level_3_id') }}</span>
+                            @if($errors->has('wbs_level_3'))
+                                <span class="help-block" role="alert">{{ $errors->first('wbs_level_3') }}</span>
                             @endif
-                            <span class="help-block">{{ trans('cruds.rfa.fields.wbs_level_3_helper') }}</span>
+                            <span class="help-block">{{ trans('cruds.requestForInspection.fields.wbs_level_3_helper') }}</span>
                         </div>
-                        
                         <div class="form-group {{ $errors->has('wbs_level_4') ? 'has-error' : '' }}">
-                            <label class="required" for="wbs_level_4_id">{{ trans('cruds.rfa.fields.wbs_level_4') }}</label>
-                            <select class="form-control select2 wbslv4" name="wbs_level_4_id" id="wbs_level_4_id" required>
-                                <option value=""> {{ trans('global.pleaseSelect') }} </option>
+                            <label for="wbs_level_4_id">{{ trans('cruds.requestForInspection.fields.wbs_level_4') }}</label>
+                            <select class="form-control select2" name="wbs_level_4_id" id="wbs_level_4_id">
+                                @foreach($wbs_level_4s as $id => $wbs_level_4)
+                                    <option value="{{ $id }}" {{ old('wbs_level_4_id') == $id ? 'selected' : '' }}>{{ $wbs_level_4 }}</option>
+                                @endforeach
                             </select>
-                            @if($errors->has('wbs_level_4_id'))
-                                <span class="help-block" role="alert">{{ $errors->first('wbs_level_4_id') }}</span>
+                            @if($errors->has('wbs_level_4'))
+                                <span class="help-block" role="alert">{{ $errors->first('wbs_level_4') }}</span>
                             @endif
-                            <span class="help-block">{{ trans('cruds.rfa.fields.wbs_level_4_helper') }}</span>
+                            <span class="help-block">{{ trans('cruds.requestForInspection.fields.wbs_level_4_helper') }}</span>
                         </div>
-
                         <div class="form-group {{ $errors->has('subject') ? 'has-error' : '' }}">
                             <label for="subject">{{ trans('cruds.requestForInspection.fields.subject') }}</label>
                             <input class="form-control" type="text" name="subject" id="subject" value="{{ old('subject', '') }}">
@@ -186,14 +197,13 @@
                             @endif
                             <span class="help-block">{{ trans('cruds.requestForInspection.fields.comment_helper') }}</span>
                         </div>
-                        <div class="form-group {{ $errors->has('files_upload') ? 'has-error' : '' }}">
-                            <label for="files_upload">{{ trans('cruds.requestForInspection.fields.files_upload') }}</label>
-                            <div class="needsclick dropzone" id="files_upload-dropzone">
-                            </div>
-                            @if($errors->has('files_upload'))
-                                <span class="help-block" role="alert">{{ $errors->first('files_upload') }}</span>
+                        <div class="form-group {{ $errors->has('amount') ? 'has-error' : '' }}">
+                            <label for="amount">{{ trans('cruds.requestForInspection.fields.amount') }}</label>
+                            <input class="form-control" type="number" name="amount" id="amount" value="{{ old('amount', '') }}" step="0.01">
+                            @if($errors->has('amount'))
+                                <span class="help-block" role="alert">{{ $errors->first('amount') }}</span>
                             @endif
-                            <span class="help-block">{{ trans('cruds.requestForInspection.fields.files_upload_helper') }}</span>
+                            <span class="help-block">{{ trans('cruds.requestForInspection.fields.amount_helper') }}</span>
                         </div>
                         <div class="form-group {{ $errors->has('construction_contract') ? 'has-error' : '' }}">
                             <label for="construction_contract_id">{{ trans('cruds.requestForInspection.fields.construction_contract') }}</label>
@@ -206,6 +216,15 @@
                                 <span class="help-block" role="alert">{{ $errors->first('construction_contract') }}</span>
                             @endif
                             <span class="help-block">{{ trans('cruds.requestForInspection.fields.construction_contract_helper') }}</span>
+                        </div>
+                        <div class="form-group {{ $errors->has('files_upload') ? 'has-error' : '' }}">
+                            <label for="files_upload">{{ trans('cruds.requestForInspection.fields.files_upload') }}</label>
+                            <div class="needsclick dropzone" id="files_upload-dropzone">
+                            </div>
+                            @if($errors->has('files_upload'))
+                                <span class="help-block" role="alert">{{ $errors->first('files_upload') }}</span>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.requestForInspection.fields.files_upload_helper') }}</span>
                         </div>
                         <div class="form-group">
                             <button class="btn btn-danger" type="submit">

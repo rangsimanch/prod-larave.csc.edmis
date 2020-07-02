@@ -53,6 +53,7 @@ class NonConformanceReport extends Model implements HasMedia
         'approved_by_id',
         'csc_disposition_status',
         'created_at',
+        'construction_contract_id',
         'updated_at',
         'deleted_at',
         'team_id',
@@ -101,6 +102,11 @@ class NonConformanceReport extends Model implements HasMedia
     public function getFileUploadAttribute()
     {
         return $this->getMedia('file_upload');
+    }
+
+    public function construction_contract()
+    {
+        return $this->belongsTo(ConstructionContract::class, 'construction_contract_id');
     }
 
     public function team()

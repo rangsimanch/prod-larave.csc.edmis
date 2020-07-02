@@ -43,6 +43,7 @@ class RequestForInspection extends Model implements HasMedia
 
     protected $fillable = [
         'bill_id',
+        'item_id',
         'wbs_level_1_id',
         'wbs_level_2_id',
         'wbs_level_3_id',
@@ -59,8 +60,9 @@ class RequestForInspection extends Model implements HasMedia
         'requested_by_id',
         'result_of_inspection',
         'comment',
-        'created_at',
+        'amount',
         'construction_contract_id',
+        'created_at',
         'updated_at',
         'deleted_at',
         'team_id',
@@ -74,6 +76,11 @@ class RequestForInspection extends Model implements HasMedia
     public function bill()
     {
         return $this->belongsTo(BoQ::class, 'bill_id');
+    }
+
+    public function item()
+    {
+        return $this->belongsTo(BoqItem::class, 'item_id');
     }
 
     public function wbs_level_1()
@@ -116,14 +123,14 @@ class RequestForInspection extends Model implements HasMedia
         return $this->belongsTo(User::class, 'requested_by_id');
     }
 
-    public function getFilesUploadAttribute()
-    {
-        return $this->getMedia('files_upload');
-    }
-
     public function construction_contract()
     {
         return $this->belongsTo(ConstructionContract::class, 'construction_contract_id');
+    }
+
+    public function getFilesUploadAttribute()
+    {
+        return $this->getMedia('files_upload');
     }
 
     public function team()

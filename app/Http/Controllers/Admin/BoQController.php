@@ -19,6 +19,8 @@ class BoQController extends Controller
 
     public function index(Request $request)
     {
+        abort_if(Gate::denies('bo_q_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         if ($request->ajax()) {
             $query = BoQ::query()->select(sprintf('%s.*', (new BoQ)->table));
             $table = Datatables::of($query);
@@ -87,8 +89,6 @@ class BoQController extends Controller
     public function show(BoQ $boQ)
     {
         abort_if(Gate::denies('bo_q_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
-        $boQ->load('boqWbslevelfours');
 
         return view('admin.boQs.show', compact('boQ'));
     }

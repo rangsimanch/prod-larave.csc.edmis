@@ -20,7 +20,7 @@ class NonConformanceReportApiController extends Controller
     {
         abort_if(Gate::denies('non_conformance_report_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new NonConformanceReportResource(NonConformanceReport::with(['ncn_ref', 'prepared_by', 'contractors_project', 'approved_by', 'team'])->get());
+        return new NonConformanceReportResource(NonConformanceReport::with(['ncn_ref', 'prepared_by', 'contractors_project', 'approved_by', 'construction_contract', 'team'])->get());
     }
 
     public function store(StoreNonConformanceReportRequest $request)
@@ -44,7 +44,7 @@ class NonConformanceReportApiController extends Controller
     {
         abort_if(Gate::denies('non_conformance_report_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new NonConformanceReportResource($nonConformanceReport->load(['ncn_ref', 'prepared_by', 'contractors_project', 'approved_by', 'team']));
+        return new NonConformanceReportResource($nonConformanceReport->load(['ncn_ref', 'prepared_by', 'contractors_project', 'approved_by', 'construction_contract', 'team']));
     }
 
     public function update(UpdateNonConformanceReportRequest $request, NonConformanceReport $nonConformanceReport)

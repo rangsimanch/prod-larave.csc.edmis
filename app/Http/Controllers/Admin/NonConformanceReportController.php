@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\ConstructionContract;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Traits\MediaUploadingTrait;
 use App\Http\Requests\MassDestroyNonConformanceReportRequest;
@@ -26,7 +27,7 @@ class NonConformanceReportController extends Controller
         abort_if(Gate::denies('non_conformance_report_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
-            $query = NonConformanceReport::with(['ncn_ref', 'prepared_by', 'contractors_project', 'approved_by', 'team'])->select(sprintf('%s.*', (new NonConformanceReport)->table));
+            $query = NonConformanceReport::with(['ncn_ref', 'prepared_by', 'contractors_project', 'approved_by', 'construction_contract', 'team'])->select(sprintf('%s.*', (new NonConformanceReport)->table));
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
@@ -111,8 +112,11 @@ class NonConformanceReportController extends Controller
 
                 return implode(', ', $links);
             });
+            $table->addColumn('construction_contract_code', function ($row) {
+                return $row->construction_contract ? $row->construction_contract->code : '';
+            });
 
-            $table->rawColumns(['actions', 'placeholder', 'ncn_ref', 'attachment', 'prepared_by', 'contractors_project', 'approved_by', 'file_upload']);
+            $table->rawColumns(['actions', 'placeholder', 'ncn_ref', 'attachment', 'prepared_by', 'contractors_project', 'approved_by', 'file_upload', 'construction_contract']);
 
             return $table->make(true);
         }
@@ -121,9 +125,10 @@ class NonConformanceReportController extends Controller
         $users                   = User::get();
         $users                   = User::get();
         $users                   = User::get();
+        $construction_contracts  = ConstructionContract::get();
         $teams                   = Team::get();
 
-        return view('admin.nonConformanceReports.index', compact('non_conformance_notices', 'users', 'users', 'users', 'teams'));
+        return view('admin.nonConformanceReports.index', compact('non_conformance_notices', 'users', 'users', 'users', 'construction_contracts', 'teams'));
     }
 
     public function create()
@@ -138,7 +143,9 @@ class NonConformanceReportController extends Controller
 
         $approved_bies = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        return view('admin.nonConformanceReports.create', compact('ncn_refs', 'prepared_bies', 'contractors_projects', 'approved_bies'));
+        $construction_contracts = ConstructionContract::all()->pluck('code', 'id')->prepend(trans('global.pleaseSelect'), '');
+
+        return view('admin.nonConformanceReports.create', compact('ncn_refs', 'prepared_bies', 'contractors_projects', 'approved_bies', 'construction_contracts'));
     }
 
     public function store(StoreNonConformanceReportRequest $request)
@@ -172,9 +179,11 @@ class NonConformanceReportController extends Controller
 
         $approved_bies = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $nonConformanceReport->load('ncn_ref', 'prepared_by', 'contractors_project', 'approved_by', 'team');
+        $construction_contracts = ConstructionContract::all()->pluck('code', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        return view('admin.nonConformanceReports.edit', compact('ncn_refs', 'prepared_bies', 'contractors_projects', 'approved_bies', 'nonConformanceReport'));
+        $nonConformanceReport->load('ncn_ref', 'prepared_by', 'contractors_project', 'approved_by', 'construction_contract', 'team');
+
+        return view('admin.nonConformanceReports.edit', compact('ncn_refs', 'prepared_bies', 'contractors_projects', 'approved_bies', 'construction_contracts', 'nonConformanceReport'));
     }
 
     public function update(UpdateNonConformanceReportRequest $request, NonConformanceReport $nonConformanceReport)
@@ -220,7 +229,7 @@ class NonConformanceReportController extends Controller
     {
         abort_if(Gate::denies('non_conformance_report_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $nonConformanceReport->load('ncn_ref', 'prepared_by', 'contractors_project', 'approved_by', 'team');
+        $nonConformanceReport->load('ncn_ref', 'prepared_by', 'contractors_project', 'approved_by', 'construction_contract', 'team');
 
         return view('admin.nonConformanceReports.show', compact('nonConformanceReport'));
     }

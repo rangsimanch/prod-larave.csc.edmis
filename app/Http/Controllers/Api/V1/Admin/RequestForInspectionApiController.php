@@ -20,7 +20,7 @@ class RequestForInspectionApiController extends Controller
     {
         abort_if(Gate::denies('request_for_inspection_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new RequestForInspectionResource(RequestForInspection::with(['bill', 'wbs_level_1', 'wbs_level_2', 'wbs_level_3', 'wbs_level_4', 'contact_person', 'requested_by', 'construction_contract', 'team'])->get());
+        return new RequestForInspectionResource(RequestForInspection::with(['bill', 'item', 'wbs_level_1', 'wbs_level_2', 'wbs_level_3', 'wbs_level_4', 'contact_person', 'requested_by', 'construction_contract', 'team'])->get());
     }
 
     public function store(StoreRequestForInspectionRequest $request)
@@ -40,7 +40,7 @@ class RequestForInspectionApiController extends Controller
     {
         abort_if(Gate::denies('request_for_inspection_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new RequestForInspectionResource($requestForInspection->load(['bill', 'wbs_level_1', 'wbs_level_2', 'wbs_level_3', 'wbs_level_4', 'contact_person', 'requested_by', 'construction_contract', 'team']));
+        return new RequestForInspectionResource($requestForInspection->load(['bill', 'item', 'wbs_level_1', 'wbs_level_2', 'wbs_level_3', 'wbs_level_4', 'contact_person', 'requested_by', 'construction_contract', 'team']));
     }
 
     public function update(UpdateRequestForInspectionRequest $request, RequestForInspection $requestForInspection)

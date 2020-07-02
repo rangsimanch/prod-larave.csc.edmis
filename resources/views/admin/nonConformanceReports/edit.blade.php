@@ -24,14 +24,14 @@
                             @endif
                             <span class="help-block">{{ trans('cruds.nonConformanceReport.fields.ncn_ref_helper') }}</span>
                         </div>
-                        <!-- <div class="form-group {{ $errors->has('corresponding_to') ? 'has-error' : '' }}">
+                        <div class="form-group {{ $errors->has('corresponding_to') ? 'has-error' : '' }}">
                             <label for="corresponding_to">{{ trans('cruds.nonConformanceReport.fields.corresponding_to') }}</label>
                             <input class="form-control" type="text" name="corresponding_to" id="corresponding_to" value="{{ old('corresponding_to', $nonConformanceReport->corresponding_to) }}">
                             @if($errors->has('corresponding_to'))
                                 <span class="help-block" role="alert">{{ $errors->first('corresponding_to') }}</span>
                             @endif
                             <span class="help-block">{{ trans('cruds.nonConformanceReport.fields.corresponding_to_helper') }}</span>
-                        </div> -->
+                        </div>
                         <div class="form-group {{ $errors->has('response_date') ? 'has-error' : '' }}">
                             <label for="response_date">{{ trans('cruds.nonConformanceReport.fields.response_date') }}</label>
                             <input class="form-control date" type="text" name="response_date" id="response_date" value="{{ old('response_date', $nonConformanceReport->response_date) }}">
@@ -142,6 +142,18 @@
                                 <span class="help-block" role="alert">{{ $errors->first('csc_disposition_status') }}</span>
                             @endif
                             <span class="help-block">{{ trans('cruds.nonConformanceReport.fields.csc_disposition_status_helper') }}</span>
+                        </div>
+                        <div class="form-group {{ $errors->has('construction_contract') ? 'has-error' : '' }}">
+                            <label for="construction_contract_id">{{ trans('cruds.nonConformanceReport.fields.construction_contract') }}</label>
+                            <select class="form-control select2" name="construction_contract_id" id="construction_contract_id">
+                                @foreach($construction_contracts as $id => $construction_contract)
+                                    <option value="{{ $id }}" {{ ($nonConformanceReport->construction_contract ? $nonConformanceReport->construction_contract->id : old('construction_contract_id')) == $id ? 'selected' : '' }}>{{ $construction_contract }}</option>
+                                @endforeach
+                            </select>
+                            @if($errors->has('construction_contract'))
+                                <span class="help-block" role="alert">{{ $errors->first('construction_contract') }}</span>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.nonConformanceReport.fields.construction_contract_helper') }}</span>
                         </div>
                         <div class="form-group {{ $errors->has('file_upload') ? 'has-error' : '' }}">
                             <label for="file_upload">{{ trans('cruds.nonConformanceReport.fields.file_upload') }}</label>

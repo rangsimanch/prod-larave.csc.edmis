@@ -127,6 +127,14 @@
                                 </tr>
                                 <tr>
                                     <th>
+                                        {{ trans('cruds.nonConformanceReport.fields.construction_contract') }}
+                                    </th>
+                                    <td>
+                                        {{ $nonConformanceReport->construction_contract->code ?? '' }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
                                         {{ trans('cruds.nonConformanceReport.fields.file_upload') }}
                                     </th>
                                     <td>

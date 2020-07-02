@@ -28,9 +28,4 @@ class BoQ extends Model
         'updated_at',
         'deleted_at',
     ];
-
-    public function boqWbslevelfours()
-    {
-        return $this->hasMany(Wbslevelfour::class, 'boq_id', 'id');
-    }
 }

@@ -394,6 +394,10 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth'], '
     Route::post('non-conformance-reports/ckmedia', 'NonConformanceReportController@storeCKEditorImages')->name('non-conformance-reports.storeCKEditorImages');
     Route::resource('non-conformance-reports', 'NonConformanceReportController');
 
+    // Boq Items
+    Route::delete('boq-items/destroy', 'BoqItemController@massDestroy')->name('boq-items.massDestroy');
+    Route::resource('boq-items', 'BoqItemController');
+
 
     Route::get('system-calendar', 'SystemCalendarController@index')->name('systemCalendar');
     Route::get('global-search', 'GlobalSearchController@search')->name('globalSearch');

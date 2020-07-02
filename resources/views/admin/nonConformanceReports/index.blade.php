@@ -63,6 +63,9 @@
                                     {{ trans('cruds.nonConformanceReport.fields.csc_disposition_status') }}
                                 </th>
                                 <th>
+                                    {{ trans('cruds.nonConformanceReport.fields.construction_contract') }}
+                                </th>
+                                <th>
                                     {{ trans('cruds.nonConformanceReport.fields.file_upload') }}
                                 </th>
                                 <th>
@@ -119,7 +122,7 @@
                                     <select class="search" strict="true">
                                         <option value>{{ trans('global.all') }}</option>
                                         @foreach(App\NonConformanceReport::CSC_CONSIDERATION_STATUS_SELECT as $key => $item)
-                                            <option value="{{ $item }}">{{ $item }}</option>
+                                            <option value="{{ $key }}">{{ $item }}</option>
                                         @endforeach
                                     </select>
                                 </td>
@@ -135,7 +138,15 @@
                                     <select class="search" strict="true">
                                         <option value>{{ trans('global.all') }}</option>
                                         @foreach(App\NonConformanceReport::CSC_DISPOSITION_STATUS_SELECT as $key => $item)
-                                            <option value="{{ $item }}">{{ $item }}</option>
+                                            <option value="{{ $key }}">{{ $item }}</option>
+                                        @endforeach
+                                    </select>
+                                </td>
+                                <td>
+                                    <select class="search">
+                                        <option value>{{ trans('global.all') }}</option>
+                                        @foreach($construction_contracts as $key => $item)
+                                            <option value="{{ $item->code }}">{{ $item->code }}</option>
                                         @endforeach
                                     </select>
                                 </td>
@@ -212,6 +223,7 @@
 { data: 'csc_consideration_status', name: 'csc_consideration_status' },
 { data: 'approved_by_name', name: 'approved_by.name' },
 { data: 'csc_disposition_status', name: 'csc_disposition_status' },
+{ data: 'construction_contract_code', name: 'construction_contract.code' },
 { data: 'file_upload', name: 'file_upload', sortable: false, searchable: false },
 { data: 'actions', name: '{{ trans('global.actions') }}' }
     ],

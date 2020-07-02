@@ -27,6 +27,14 @@
                                 </tr>
                                 <tr>
                                     <th>
+                                        {{ trans('cruds.requestForInspection.fields.item') }}
+                                    </th>
+                                    <td>
+                                        {{ $requestForInspection->item->name ?? '' }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
                                         {{ trans('cruds.requestForInspection.fields.wbs_level_1') }}
                                     </th>
                                     <td>
@@ -155,14 +163,10 @@
                                 </tr>
                                 <tr>
                                     <th>
-                                        {{ trans('cruds.requestForInspection.fields.files_upload') }}
+                                        {{ trans('cruds.requestForInspection.fields.amount') }}
                                     </th>
                                     <td>
-                                        @foreach($requestForInspection->files_upload as $key => $media)
-                                            <a href="{{ $media->getUrl() }}" target="_blank">
-                                                {{ trans('global.view_file') }}
-                                            </a>
-                                        @endforeach
+                                        {{ $requestForInspection->amount }}
                                     </td>
                                 </tr>
                                 <tr>
@@ -171,6 +175,18 @@
                                     </th>
                                     <td>
                                         {{ $requestForInspection->construction_contract->code ?? '' }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        {{ trans('cruds.requestForInspection.fields.files_upload') }}
+                                    </th>
+                                    <td>
+                                        @foreach($requestForInspection->files_upload as $key => $media)
+                                            <a href="{{ $media->getUrl() }}" target="_blank">
+                                                {{ trans('global.view_file') }}
+                                            </a>
+                                        @endforeach
                                     </td>
                                 </tr>
                             </tbody>
