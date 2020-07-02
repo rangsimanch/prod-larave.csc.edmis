@@ -147,23 +147,6 @@ class RequestForInspectionController extends Controller
         return view('admin.requestForInspections.index', compact('bo_qs', 'boq_items', 'wbs_level_ones', 'wbs_level_twos', 'wbs_level_threes', 'wbslevelfours', 'users', 'users', 'construction_contracts', 'teams'));
     }
 
-    function fetch (Request $request){
-        $id = $request->get('select');
-        $result = array();
-        $query = DB::table('wbs_level_threes')
-        ->join('wbslevelfours','wbs_level_threes.id','=','wbslevelfours.wbs_level_three_id')
-        ->select('wbslevelfours.wbs_level_4_name','wbslevelfours.id')
-        ->where('wbs_level_threes.id',$id)
-        ->groupBy('wbslevelfours.wbs_level_4_name','wbslevelfours.id')
-        ->orderBy('wbs_level_4_name')
-        ->get();
-        $output = '<option value="">' . trans('global.pleaseSelect') . '</option>';
-        foreach ($query as $row){
-            $output .= '<option value="'. $row->id .'">'. $row->wbs_level_4_name .'</option>';
-        }
-        echo $output;
-    }
-
     public function create()
     {
         abort_if(Gate::denies('request_for_inspection_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
@@ -289,5 +272,22 @@ class RequestForInspectionController extends Controller
         $media         = $model->addMediaFromRequest('upload')->toMediaCollection('ck-media');
 
         return response()->json(['id' => $media->id, 'url' => $media->getUrl()], Response::HTTP_CREATED);
+    }
+
+    function fetch (Request $request){
+        $id = $request->get('select');
+        $result = array();
+        $query = DB::table('wbs_level_threes')
+        ->join('wbslevelfours','wbs_level_threes.id','=','wbslevelfours.wbs_level_three_id')
+        ->select('wbslevelfours.wbs_level_4_name','wbslevelfours.id')
+        ->where('wbs_level_threes.id',$id)
+        ->groupBy('wbslevelfours.wbs_level_4_name','wbslevelfours.id')
+        ->orderBy('wbs_level_4_name')
+        ->get();
+        $output = '<option value="">' . trans('global.pleaseSelect') . '</option>';
+        foreach ($query as $row){
+            $output .= '<option value="'. $row->id .'">'. $row->wbs_level_4_name .'</option>';
+        }
+        echo $output;
     }
 }
