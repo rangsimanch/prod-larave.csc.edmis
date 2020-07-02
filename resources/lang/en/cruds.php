@@ -1795,7 +1795,7 @@ return [
     ],
 ],
 'nonConformanceReport'      => [
-    'title'          => 'Non Conformance Report (NCR)',
+    'title'          => 'NCR',
     'title_singular' => 'Non Conformance Report (NCR)',
     'fields'         => [
         'id'                              => 'ID',
