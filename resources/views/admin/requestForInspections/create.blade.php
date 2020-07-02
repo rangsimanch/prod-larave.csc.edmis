@@ -74,9 +74,7 @@
                         <div class="form-group {{ $errors->has('wbs_level_4') ? 'has-error' : '' }}">
                             <label for="wbs_level_4_id">{{ trans('cruds.requestForInspection.fields.wbs_level_4') }}</label>
                             <select class="form-control select2" name="wbs_level_4_id" id="wbs_level_4_id">
-                                @foreach($wbs_level_4s as $id => $wbs_level_4)
-                                    <option value="{{ $id }}" {{ old('wbs_level_4_id') == $id ? 'selected' : '' }}>{{ $wbs_level_4 }}</option>
-                                @endforeach
+                                <option value="">{{ trans('global.pleaseSelect') }}</option> 
                             </select>
                             @if($errors->has('wbs_level_4'))
                                 <span class="help-block" role="alert">{{ $errors->first('wbs_level_4') }}</span>
