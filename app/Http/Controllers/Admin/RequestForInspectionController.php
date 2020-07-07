@@ -153,7 +153,7 @@ class RequestForInspectionController extends Controller
 
         $bills = BoQ::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $items = BoqItem::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $items = BoqItem::all()->pluck('code' . ' ' . 'name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $wbs_level_1s = WbsLevelOne::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
