@@ -20,11 +20,18 @@ class BoqItem extends Model
     ];
 
     protected $fillable = [
-        'name',
-        'code',
-        'amount',
         'boq_id',
+        'code',
+        'name',
         'created_at',
+        'unit',
+        'quantity',
+        'unit_rate',
+        'amount',
+        'factor_f',
+        'unit_rate_x_ff',
+        'total_amount',
+        'remark',
         'updated_at',
         'deleted_at',
         'team_id',

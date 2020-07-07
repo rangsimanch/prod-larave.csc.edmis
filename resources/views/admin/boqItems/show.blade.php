@@ -19,10 +19,10 @@
                             <tbody>
                                 <tr>
                                     <th>
-                                        {{ trans('cruds.boqItem.fields.name') }}
+                                        {{ trans('cruds.boqItem.fields.boq') }}
                                     </th>
                                     <td>
-                                        {{ $boqItem->name }}
+                                        {{ $boqItem->boq->name ?? '' }}
                                     </td>
                                 </tr>
                                 <tr>
@@ -35,6 +35,38 @@
                                 </tr>
                                 <tr>
                                     <th>
+                                        {{ trans('cruds.boqItem.fields.name') }}
+                                    </th>
+                                    <td>
+                                        {{ $boqItem->name }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        {{ trans('cruds.boqItem.fields.unit') }}
+                                    </th>
+                                    <td>
+                                        {{ $boqItem->unit }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        {{ trans('cruds.boqItem.fields.quantity') }}
+                                    </th>
+                                    <td>
+                                        {{ $boqItem->quantity }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        {{ trans('cruds.boqItem.fields.unit_rate') }}
+                                    </th>
+                                    <td>
+                                        {{ $boqItem->unit_rate }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
                                         {{ trans('cruds.boqItem.fields.amount') }}
                                     </th>
                                     <td>
@@ -43,10 +75,34 @@
                                 </tr>
                                 <tr>
                                     <th>
-                                        {{ trans('cruds.boqItem.fields.boq') }}
+                                        {{ trans('cruds.boqItem.fields.factor_f') }}
                                     </th>
                                     <td>
-                                        {{ $boqItem->boq->name ?? '' }}
+                                        {{ $boqItem->factor_f }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        {{ trans('cruds.boqItem.fields.unit_rate_x_ff') }}
+                                    </th>
+                                    <td>
+                                        {{ $boqItem->unit_rate_x_ff }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        {{ trans('cruds.boqItem.fields.total_amount') }}
+                                    </th>
+                                    <td>
+                                        {{ $boqItem->total_amount }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        {{ trans('cruds.boqItem.fields.remark') }}
+                                    </th>
+                                    <td>
+                                        {{ $boqItem->remark }}
                                     </td>
                                 </tr>
                             </tbody>

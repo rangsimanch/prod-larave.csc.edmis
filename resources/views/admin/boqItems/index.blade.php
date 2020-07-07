@@ -24,16 +24,37 @@
 
                                 </th>
                                 <th>
-                                    {{ trans('cruds.boqItem.fields.name') }}
+                                    {{ trans('cruds.boqItem.fields.boq') }}
                                 </th>
                                 <th>
                                     {{ trans('cruds.boqItem.fields.code') }}
                                 </th>
                                 <th>
+                                    {{ trans('cruds.boqItem.fields.name') }}
+                                </th>
+                                <th>
+                                    {{ trans('cruds.boqItem.fields.unit') }}
+                                </th>
+                                <th>
+                                    {{ trans('cruds.boqItem.fields.quantity') }}
+                                </th>
+                                <th>
+                                    {{ trans('cruds.boqItem.fields.unit_rate') }}
+                                </th>
+                                <th>
                                     {{ trans('cruds.boqItem.fields.amount') }}
                                 </th>
                                 <th>
-                                    {{ trans('cruds.boqItem.fields.boq') }}
+                                    {{ trans('cruds.boqItem.fields.factor_f') }}
+                                </th>
+                                <th>
+                                    {{ trans('cruds.boqItem.fields.unit_rate_x_ff') }}
+                                </th>
+                                <th>
+                                    {{ trans('cruds.boqItem.fields.total_amount') }}
+                                </th>
+                                <th>
+                                    {{ trans('cruds.boqItem.fields.remark') }}
                                 </th>
                                 <th>
                                     &nbsp;
@@ -43,21 +64,42 @@
                                 <td>
                                 </td>
                                 <td>
-                                    <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                                </td>
-                                <td>
-                                    <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                                </td>
-                                <td>
-                                    <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                                </td>
-                                <td>
                                     <select class="search">
                                         <option value>{{ trans('global.all') }}</option>
                                         @foreach($bo_qs as $key => $item)
                                             <option value="{{ $item->name }}">{{ $item->name }}</option>
                                         @endforeach
                                     </select>
+                                </td>
+                                <td>
+                                    <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                                </td>
+                                <td>
+                                    <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                                </td>
+                                <td>
+                                    <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                                </td>
+                                <td>
+                                    <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                                </td>
+                                <td>
+                                    <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                                </td>
+                                <td>
+                                    <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                                </td>
+                                <td>
+                                    <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                                </td>
+                                <td>
+                                    <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                                </td>
+                                <td>
+                                    <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                                </td>
+                                <td>
+                                    <input class="search" type="text" placeholder="{{ trans('global.search') }}">
                                 </td>
                                 <td>
                                 </td>
@@ -117,18 +159,25 @@
     ajax: "{{ route('admin.boq-items.index') }}",
     columns: [
       { data: 'placeholder', name: 'placeholder' },
-{ data: 'name', name: 'name' },
-{ data: 'code', name: 'code' },
-{ data: 'amount', name: 'amount' },
 { data: 'boq_name', name: 'boq.name' },
+{ data: 'code', name: 'code' },
+{ data: 'name', name: 'name' },
+{ data: 'unit', name: 'unit' },
+{ data: 'quantity', name: 'quantity' },
+{ data: 'unit_rate', name: 'unit_rate' },
+{ data: 'amount', name: 'amount' },
+{ data: 'factor_f', name: 'factor_f' },
+{ data: 'unit_rate_x_ff', name: 'unit_rate_x_ff' },
+{ data: 'total_amount', name: 'total_amount' },
+{ data: 'remark', name: 'remark' },
 { data: 'actions', name: '{{ trans('global.actions') }}' }
     ],
     orderCellsTop: true,
-    order: [[ 4, 'asc' ]],
-    pageLength: 100,
+    order: [[ 1, 'asc' ]],
+    pageLength: 10,
   };
   let table = $('.datatable-BoqItem').DataTable(dtOverrideGlobals);
-  $('a[data-toggle="tab"]').on('shown.bs.tab', function(e){
+  $('a[data-toggle="tab"]').on('shown.bs.tab click', function(e){
       $($.fn.dataTable.tables(true)).DataTable()
           .columns.adjust();
   });

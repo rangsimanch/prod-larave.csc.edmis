@@ -42,17 +42,39 @@ class BoqItemController extends Controller
                 ));
             });
 
+            $table->addColumn('boq_name', function ($row) {
+                return $row->boq ? $row->boq->name : '';
+            });
+
+            $table->editColumn('code', function ($row) {
+                return $row->code ? $row->code : "";
+            });
             $table->editColumn('name', function ($row) {
                 return $row->name ? $row->name : "";
             });
-            $table->editColumn('code', function ($row) {
-                return $row->code ? $row->code : "";
+            $table->editColumn('unit', function ($row) {
+                return $row->unit ? $row->unit : "";
+            });
+            $table->editColumn('quantity', function ($row) {
+                return $row->quantity ? $row->quantity : "";
+            });
+            $table->editColumn('unit_rate', function ($row) {
+                return $row->unit_rate ? $row->unit_rate : "";
             });
             $table->editColumn('amount', function ($row) {
                 return $row->amount ? $row->amount : "";
             });
-            $table->addColumn('boq_name', function ($row) {
-                return $row->boq ? $row->boq->name : '';
+            $table->editColumn('factor_f', function ($row) {
+                return $row->factor_f ? $row->factor_f : "";
+            });
+            $table->editColumn('unit_rate_x_ff', function ($row) {
+                return $row->unit_rate_x_ff ? $row->unit_rate_x_ff : "";
+            });
+            $table->editColumn('total_amount', function ($row) {
+                return $row->total_amount ? $row->total_amount : "";
+            });
+            $table->editColumn('remark', function ($row) {
+                return $row->remark ? $row->remark : "";
             });
 
             $table->rawColumns(['actions', 'placeholder', 'boq']);
@@ -77,7 +99,10 @@ class BoqItemController extends Controller
 
     public function store(StoreBoqItemRequest $request)
     {
-        $boqItem = BoqItem::create($request->all());
+        $data = $request->all();
+        $data['unit_rate_x_ff'] = $data['unit_rate'] * $data['factor_f'];
+        $data['total_amount'] = $data['unit_rate_x_ff'] * $data['amount'];
+        $boqItem = BoqItem::create($data);
 
         return redirect()->route('admin.boq-items.index');
     }
