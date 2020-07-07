@@ -325,7 +325,7 @@ $('.boqs').change(function(){
             console.log(select);
             var _token = $('input[name="_token"]').val();
             $.ajax({
-                url:"{{ route('admin.rrfas.itemBoQ') }}",
+                url:"{{ route('admin.rfas.itemBoQ') }}",
                 method:"POST",
                 data:{select:select , _token:_token},
                 success:function(result){
