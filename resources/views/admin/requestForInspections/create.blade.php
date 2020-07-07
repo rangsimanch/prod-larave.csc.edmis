@@ -23,18 +23,19 @@
                             @endif
                             <span class="help-block">{{ trans('cruds.requestForInspection.fields.bill_helper') }}</span>
                         </div>
+                        
+    
                         <div class="form-group {{ $errors->has('item') ? 'has-error' : '' }}">
                             <label for="item_id">{{ trans('cruds.requestForInspection.fields.item') }}</label>
                             <select class="form-control select2 item" name="item_id" id="item_id">
-                                @foreach($items as $id => $item)
-                                    <option value="{{ $id }}" {{ old('item_id') == $id ? 'selected' : '' }}>{{ $item }}</option>
-                                @endforeach
+                                <option value="">{{ trans('global.pleaseSelect') }}</option> 
                             </select>
                             @if($errors->has('item'))
                                 <span class="help-block" role="alert">{{ $errors->first('item') }}</span>
                             @endif
                             <span class="help-block">{{ trans('cruds.requestForInspection.fields.item_helper') }}</span>
                         </div>
+
                         <div class="form-group {{ $errors->has('wbs_level_1') ? 'has-error' : '' }}">
                             <label for="wbs_level_1_id">{{ trans('cruds.requestForInspection.fields.wbs_level_1') }}</label>
                             <select class="form-control select2" name="wbs_level_1_id" id="wbs_level_1_id">
@@ -324,7 +325,7 @@ $('.boqs').change(function(){
             console.log(select);
             var _token = $('input[name="_token"]').val();
             $.ajax({
-                url:"{{ route('admin.request-for-inspections.itemBoQ') }}",
+                url:"{{ route('admin.rrfas.itemBoQ') }}",
                 method:"POST",
                 data:{select:select , _token:_token},
                 success:function(result){
