@@ -147,13 +147,30 @@ class RequestForInspectionController extends Controller
         return view('admin.requestForInspections.index', compact('bo_qs', 'boq_items', 'wbs_level_ones', 'wbs_level_twos', 'wbs_level_threes', 'wbslevelfours', 'users', 'users', 'construction_contracts', 'teams'));
     }
 
+    function itemBoQ(Request $request){
+        $id = $request->get('select');
+        $result = array();
+        $query = DB::table('bo_qs')
+        ->join('boq_items','bo_qs.id','=','boq_items.boq_id')
+        ->select('boq_items.name','boq_items.id')
+        ->where('bo_qs.id',$id)
+        ->groupBy('boq_items.name','boq_items.id')
+        ->orderBy('name')
+        ->get();
+        $output = '<option value="">' . trans('global.pleaseSelect') . '</option>';
+        foreach ($query as $row){
+            $output .= '<option value="'. $row->id .'">'. $row->name .'</option>';
+        }
+        echo $output;
+    }
+
     public function create()
     {
         abort_if(Gate::denies('request_for_inspection_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $bills = BoQ::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $items = BoqItem::all()->pluck('code' . ' ' . 'name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $items = BoqItem::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $wbs_level_1s = WbsLevelOne::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 

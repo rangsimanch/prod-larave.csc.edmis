@@ -175,6 +175,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth'], '
     Route::post('request-for-inspections/media', 'RequestForInspectionController@storeMedia')->name('request-for-inspections.storeMedia');
     Route::post('request-for-inspections/ckmedia', 'RequestForInspectionController@storeCKEditorImages')->name('request-for-inspections.storeCKEditorImages');
     Route::post('request-for-inspections/fetch','RequestForInspectionController@fetch')->name('request-for-inspections.fetch');
+    Route::post('request-for-inspections/itemBoQ','RequestForInspectionController@itemBoQ')->name('request-for-inspections.itemBoQ');
     Route::resource('request-for-inspections', 'RequestForInspectionController');
    
 

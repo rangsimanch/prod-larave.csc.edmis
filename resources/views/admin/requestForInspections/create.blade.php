@@ -13,7 +13,7 @@
                         @csrf
                         <div class="form-group {{ $errors->has('bill') ? 'has-error' : '' }}">
                             <label for="bill_id">{{ trans('cruds.requestForInspection.fields.bill') }}</label>
-                            <select class="form-control select2" name="bill_id" id="bill_id">
+                            <select class="form-control select2 boqs" name="bill_id" id="bill_id">
                                 @foreach($bills as $id => $bill)
                                     <option value="{{ $id }}" {{ old('bill_id') == $id ? 'selected' : '' }}>{{ $bill }}</option>
                                 @endforeach
@@ -25,7 +25,7 @@
                         </div>
                         <div class="form-group {{ $errors->has('item') ? 'has-error' : '' }}">
                             <label for="item_id">{{ trans('cruds.requestForInspection.fields.item') }}</label>
-                            <select class="form-control select2" name="item_id" id="item_id">
+                            <select class="form-control select2 item" name="item_id" id="item_id">
                                 @foreach($items as $id => $item)
                                     <option value="{{ $id }}" {{ old('item_id') == $id ? 'selected' : '' }}>{{ $item }}</option>
                                 @endforeach
@@ -312,6 +312,25 @@ $('.wbslv3').change(function(){
                     //Action
 
                     $('.wbslv4').html(result);
+                    console.log(result);
+                }
+            })
+        }
+    });
+
+$('.boqs').change(function(){
+        if($(this).val() != ''){
+            var select = $(this).val();
+            console.log(select);
+            var _token = $('input[name="_token"]').val();
+            $.ajax({
+                url:"{{ route('admin.request-for-inspections.itemBoQ') }}",
+                method:"POST",
+                data:{select:select , _token:_token},
+                success:function(result){
+                    //Action
+
+                    $('.item').html(result);
                     console.log(result);
                 }
             })
