@@ -139,12 +139,9 @@
                             @endif
                             <span class="help-block">{{ trans('cruds.nonConformanceNotice.fields.cc_csc_helper') }}</span>
                         </div>
-                        <div class="form-group">
-                            <button class="btn btn-danger" type="submit">
-                                {{ trans('global.save') }}
-                            </button>
-                        </div>
                         
+                        
+
                         <div class="form-group">
                             <button class="btn btn-danger" type="submit">
                                 {{ trans('global.save') }}
