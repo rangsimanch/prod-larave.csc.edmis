@@ -43,6 +43,10 @@ class NonConformanceNotice extends Model implements HasMedia
         'status_ncn',
         'csc_issuers_id',
         'created_at',
+        'cc_srt',
+        'cc_pmc',
+        'cc_cec',
+        'cc_csc',
         'updated_at',
         'deleted_at',
         'team_id',
@@ -50,7 +54,8 @@ class NonConformanceNotice extends Model implements HasMedia
 
     public function registerMediaConversions(Media $media = null)
     {
-        $this->addMediaConversion('thumb')->width(50)->height(50);
+        $this->addMediaConversion('thumb')->fit('crop', 50, 50);
+        $this->addMediaConversion('preview')->fit('crop', 120, 120);
     }
 
     public function getSubmitDateAttribute($value)
@@ -81,10 +86,5 @@ class NonConformanceNotice extends Model implements HasMedia
     public function team()
     {
         return $this->belongsTo(Team::class, 'team_id');
-    }
-
-    public function create_by_construction_contract_id()
-    {
-        return $this->belongsTo(ConstructionContract::class, 'construction_contract_id');
     }
 }

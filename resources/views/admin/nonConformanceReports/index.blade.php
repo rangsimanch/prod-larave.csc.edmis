@@ -69,6 +69,18 @@
                                     {{ trans('cruds.nonConformanceReport.fields.file_upload') }}
                                 </th>
                                 <th>
+                                    {{ trans('cruds.nonConformanceReport.fields.cc_srt') }}
+                                </th>
+                                <th>
+                                    {{ trans('cruds.nonConformanceReport.fields.cc_pmc') }}
+                                </th>
+                                <th>
+                                    {{ trans('cruds.nonConformanceReport.fields.cc_cec') }}
+                                </th>
+                                <th>
+                                    {{ trans('cruds.nonConformanceReport.fields.cc_csc') }}
+                                </th>
+                                <th>
                                     &nbsp;
                                 </th>
                             </tr>
@@ -154,6 +166,14 @@
                                 </td>
                                 <td>
                                 </td>
+                                <td>
+                                </td>
+                                <td>
+                                </td>
+                                <td>
+                                </td>
+                                <td>
+                                </td>
                             </tr>
                         </thead>
                     </table>
@@ -225,6 +245,10 @@
 { data: 'csc_disposition_status', name: 'csc_disposition_status' },
 { data: 'construction_contract_code', name: 'construction_contract.code' },
 { data: 'file_upload', name: 'file_upload', sortable: false, searchable: false },
+{ data: 'cc_srt', name: 'cc_srt' },
+{ data: 'cc_pmc', name: 'cc_pmc' },
+{ data: 'cc_cec', name: 'cc_cec' },
+{ data: 'cc_csc', name: 'cc_csc' },
 { data: 'actions', name: '{{ trans('global.actions') }}' }
     ],
     orderCellsTop: true,
@@ -232,7 +256,7 @@
     pageLength: 10,
   };
   let table = $('.datatable-NonConformanceReport').DataTable(dtOverrideGlobals);
-  $('a[data-toggle="tab"]').on('shown.bs.tab', function(e){
+  $('a[data-toggle="tab"]').on('shown.bs.tab click', function(e){
       $($.fn.dataTable.tables(true)).DataTable()
           .columns.adjust();
   });

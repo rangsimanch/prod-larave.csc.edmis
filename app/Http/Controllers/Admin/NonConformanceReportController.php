@@ -99,6 +99,10 @@ class NonConformanceReportController extends Controller
             $table->editColumn('csc_disposition_status', function ($row) {
                 return $row->csc_disposition_status ? NonConformanceReport::CSC_DISPOSITION_STATUS_SELECT[$row->csc_disposition_status] : '';
             });
+            $table->addColumn('construction_contract_code', function ($row) {
+                return $row->construction_contract ? $row->construction_contract->code : '';
+            });
+
             $table->editColumn('file_upload', function ($row) {
                 if (!$row->file_upload) {
                     return '';
@@ -112,11 +116,20 @@ class NonConformanceReportController extends Controller
 
                 return implode(', ', $links);
             });
-            $table->addColumn('construction_contract_code', function ($row) {
-                return $row->construction_contract ? $row->construction_contract->code : '';
+            $table->editColumn('cc_srt', function ($row) {
+                return '<input type="checkbox" disabled ' . ($row->cc_srt ? 'checked' : null) . '>';
+            });
+            $table->editColumn('cc_pmc', function ($row) {
+                return '<input type="checkbox" disabled ' . ($row->cc_pmc ? 'checked' : null) . '>';
+            });
+            $table->editColumn('cc_cec', function ($row) {
+                return '<input type="checkbox" disabled ' . ($row->cc_cec ? 'checked' : null) . '>';
+            });
+            $table->editColumn('cc_csc', function ($row) {
+                return '<input type="checkbox" disabled ' . ($row->cc_csc ? 'checked' : null) . '>';
             });
 
-            $table->rawColumns(['actions', 'placeholder', 'ncn_ref', 'attachment', 'prepared_by', 'contractors_project', 'approved_by', 'file_upload', 'construction_contract']);
+            $table->rawColumns(['actions', 'placeholder', 'ncn_ref', 'attachment', 'prepared_by', 'contractors_project', 'approved_by', 'construction_contract', 'file_upload', 'cc_srt', 'cc_pmc', 'cc_cec', 'cc_csc']);
 
             return $table->make(true);
         }

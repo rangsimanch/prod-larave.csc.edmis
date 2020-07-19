@@ -56,7 +56,7 @@
                             @endif
                             <span class="help-block">{{ trans('cruds.siteWarningNotice.fields.submit_date_helper') }}</span>
                         </div>
-                        <div class="form-group {{ $errors->has('to_team') ? 'has-error' : '' }}">
+                        <!-- <div class="form-group {{ $errors->has('to_team') ? 'has-error' : '' }}">
                             <label for="to_team_id">{{ trans('cruds.siteWarningNotice.fields.to_team') }}</label>
                             <select class="form-control select2" name="to_team_id" id="to_team_id">
                                 @foreach($to_teams as $id => $to_team)
@@ -67,7 +67,7 @@
                                 <span class="help-block" role="alert">{{ $errors->first('to_team') }}</span>
                             @endif
                             <span class="help-block">{{ trans('cruds.siteWarningNotice.fields.to_team_helper') }}</span>
-                        </div>
+                        </div> -->
                         <div class="form-group {{ $errors->has('construction_contract') ? 'has-error' : '' }}">
                             <label for="construction_contract_id">{{ trans('cruds.siteWarningNotice.fields.construction_contract') }}</label>
                             <select class="form-control select2" name="construction_contract_id" id="construction_contract_id">

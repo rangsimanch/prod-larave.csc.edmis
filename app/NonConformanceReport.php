@@ -52,8 +52,12 @@ class NonConformanceReport extends Model implements HasMedia
         'csc_consideration_status',
         'approved_by_id',
         'csc_disposition_status',
-        'created_at',
         'construction_contract_id',
+        'created_at',
+        'cc_srt',
+        'cc_pmc',
+        'cc_cec',
+        'cc_csc',
         'updated_at',
         'deleted_at',
         'team_id',
@@ -61,7 +65,8 @@ class NonConformanceReport extends Model implements HasMedia
 
     public function registerMediaConversions(Media $media = null)
     {
-        $this->addMediaConversion('thumb')->width(50)->height(50);
+        $this->addMediaConversion('thumb')->fit('crop', 50, 50);
+        $this->addMediaConversion('preview')->fit('crop', 120, 120);
     }
 
     public function ncn_ref()
@@ -99,23 +104,18 @@ class NonConformanceReport extends Model implements HasMedia
         return $this->belongsTo(User::class, 'approved_by_id');
     }
 
-    public function getFileUploadAttribute()
-    {
-        return $this->getMedia('file_upload');
-    }
-
     public function construction_contract()
     {
         return $this->belongsTo(ConstructionContract::class, 'construction_contract_id');
     }
 
+    public function getFileUploadAttribute()
+    {
+        return $this->getMedia('file_upload');
+    }
+
     public function team()
     {
         return $this->belongsTo(Team::class, 'team_id');
-    }
-
-    public function create_by_construction_contract_id()
-    {
-        return $this->belongsTo(ConstructionContract::class, 'construction_contract_id');
     }
 }

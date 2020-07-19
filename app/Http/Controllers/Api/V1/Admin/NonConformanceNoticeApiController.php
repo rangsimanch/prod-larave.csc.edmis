@@ -53,6 +53,10 @@ class NonConformanceNoticeApiController extends Controller
 
         if ($request->input('attachment', false)) {
             if (!$nonConformanceNotice->attachment || $request->input('attachment') !== $nonConformanceNotice->attachment->file_name) {
+                if ($nonConformanceNotice->attachment) {
+                    $nonConformanceNotice->attachment->delete();
+                }
+
                 $nonConformanceNotice->addMedia(storage_path('tmp/uploads/' . $request->input('attachment')))->toMediaCollection('attachment');
             }
         } elseif ($nonConformanceNotice->attachment) {
@@ -61,6 +65,10 @@ class NonConformanceNoticeApiController extends Controller
 
         if ($request->input('file_upload', false)) {
             if (!$nonConformanceNotice->file_upload || $request->input('file_upload') !== $nonConformanceNotice->file_upload->file_name) {
+                if ($nonConformanceNotice->file_upload) {
+                    $nonConformanceNotice->file_upload->delete();
+                }
+
                 $nonConformanceNotice->addMedia(storage_path('tmp/uploads/' . $request->input('file_upload')))->toMediaCollection('file_upload');
             }
         } elseif ($nonConformanceNotice->file_upload) {

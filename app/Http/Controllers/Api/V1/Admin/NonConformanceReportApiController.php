@@ -53,6 +53,10 @@ class NonConformanceReportApiController extends Controller
 
         if ($request->input('attachment', false)) {
             if (!$nonConformanceReport->attachment || $request->input('attachment') !== $nonConformanceReport->attachment->file_name) {
+                if ($nonConformanceReport->attachment) {
+                    $nonConformanceReport->attachment->delete();
+                }
+
                 $nonConformanceReport->addMedia(storage_path('tmp/uploads/' . $request->input('attachment')))->toMediaCollection('attachment');
             }
         } elseif ($nonConformanceReport->attachment) {
@@ -61,6 +65,10 @@ class NonConformanceReportApiController extends Controller
 
         if ($request->input('file_upload', false)) {
             if (!$nonConformanceReport->file_upload || $request->input('file_upload') !== $nonConformanceReport->file_upload->file_name) {
+                if ($nonConformanceReport->file_upload) {
+                    $nonConformanceReport->file_upload->delete();
+                }
+
                 $nonConformanceReport->addMedia(storage_path('tmp/uploads/' . $request->input('file_upload')))->toMediaCollection('file_upload');
             }
         } elseif ($nonConformanceReport->file_upload) {

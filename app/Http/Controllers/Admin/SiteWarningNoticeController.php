@@ -198,7 +198,9 @@ class SiteWarningNoticeController extends Controller
 
     public function store(StoreSiteWarningNoticeRequest $request)
     {
-        $siteWarningNotice = SiteWarningNotice::create($request->all());
+        $data = $request()->all();
+        $data['to_team_id'] = 4;   
+        $siteWarningNotice = SiteWarningNotice::create($data);
 
         foreach ($request->input('attachment', []) as $file) {
             $siteWarningNotice->addMedia(storage_path('tmp/uploads/' . $file))->toMediaCollection('attachment');

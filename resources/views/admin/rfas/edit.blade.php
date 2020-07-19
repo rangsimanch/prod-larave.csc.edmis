@@ -16,7 +16,7 @@
                         @csrf
                         
                         @can('rfa_panel_a')
-                        <legend> Constractor RFA Submittal </legend>
+                        <legend> Contractor RFA Submittal </legend>
                         
                          <div class="form-group {{ $errors->has('purpose_for') ? 'has-error' : '' }}">
                             <label>{{ trans('cruds.rfa.fields.purpose_for') }}</label>

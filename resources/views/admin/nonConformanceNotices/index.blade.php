@@ -51,6 +51,18 @@
                                     {{ trans('cruds.nonConformanceNotice.fields.file_upload') }}
                                 </th>
                                 <th>
+                                    {{ trans('cruds.nonConformanceNotice.fields.cc_srt') }}
+                                </th>
+                                <th>
+                                    {{ trans('cruds.nonConformanceNotice.fields.cc_pmc') }}
+                                </th>
+                                <th>
+                                    {{ trans('cruds.nonConformanceNotice.fields.cc_cec') }}
+                                </th>
+                                <th>
+                                    {{ trans('cruds.nonConformanceNotice.fields.cc_csc') }}
+                                </th>
+                                <th>
                                     &nbsp;
                                 </th>
                             </tr>
@@ -77,7 +89,7 @@
                                     <select class="search" strict="true">
                                         <option value>{{ trans('global.all') }}</option>
                                         @foreach(App\NonConformanceNotice::STATUS_NCN_SELECT as $key => $item)
-                                            <option value="{{ $item }}">{{ $item }}</option>
+                                            <option value="{{ $key }}">{{ $item }}</option>
                                         @endforeach
                                     </select>
                                 </td>
@@ -88,6 +100,14 @@
                                             <option value="{{ $item->name }}">{{ $item->name }}</option>
                                         @endforeach
                                     </select>
+                                </td>
+                                <td>
+                                </td>
+                                <td>
+                                </td>
+                                <td>
+                                </td>
+                                <td>
                                 </td>
                                 <td>
                                 </td>
@@ -158,6 +178,10 @@
 { data: 'status_ncn', name: 'status_ncn' },
 { data: 'csc_issuers_name', name: 'csc_issuers.name' },
 { data: 'file_upload', name: 'file_upload', sortable: false, searchable: false },
+{ data: 'cc_srt', name: 'cc_srt' },
+{ data: 'cc_pmc', name: 'cc_pmc' },
+{ data: 'cc_cec', name: 'cc_cec' },
+{ data: 'cc_csc', name: 'cc_csc' },
 { data: 'actions', name: '{{ trans('global.actions') }}' }
     ],
     orderCellsTop: true,
@@ -165,7 +189,7 @@
     pageLength: 10,
   };
   let table = $('.datatable-NonConformanceNotice').DataTable(dtOverrideGlobals);
-  $('a[data-toggle="tab"]').on('shown.bs.tab', function(e){
+  $('a[data-toggle="tab"]').on('shown.bs.tab click', function(e){
       $($.fn.dataTable.tables(true)).DataTable()
           .columns.adjust();
   });

@@ -92,8 +92,20 @@ class NonConformanceNoticeController extends Controller
 
                 return implode(', ', $links);
             });
+            $table->editColumn('cc_srt', function ($row) {
+                return '<input type="checkbox" disabled ' . ($row->cc_srt ? 'checked' : null) . '>';
+            });
+            $table->editColumn('cc_pmc', function ($row) {
+                return '<input type="checkbox" disabled ' . ($row->cc_pmc ? 'checked' : null) . '>';
+            });
+            $table->editColumn('cc_cec', function ($row) {
+                return '<input type="checkbox" disabled ' . ($row->cc_cec ? 'checked' : null) . '>';
+            });
+            $table->editColumn('cc_csc', function ($row) {
+                return '<input type="checkbox" disabled ' . ($row->cc_csc ? 'checked' : null) . '>';
+            });
 
-            $table->rawColumns(['actions', 'placeholder', 'attachment', 'csc_issuers', 'file_upload']);
+            $table->rawColumns(['actions', 'placeholder', 'attachment', 'csc_issuers', 'file_upload', 'cc_srt', 'cc_pmc', 'cc_cec', 'cc_csc']);
 
             return $table->make(true);
         }

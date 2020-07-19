@@ -13,7 +13,7 @@
                         @csrf
                         
                         @can('rfa_panel_a')
-                        <legend> Constractor RFA Submittal </legend>
+                        <legend> Contractor  RFA Submittal </legend>
 
                         <input class="form-control" type="hidden" name="id" id="id" value="{{ old('id', $rfa->id) }}">
                         <input class="form-control" type="hidden" name="review_time" id="review_time" value="{{ old('review_time', $rfa->review_time) }}">
