@@ -134,7 +134,19 @@
                                 </a>
                             </li>
                         @endcan
-                        @can('wbs_level_two_access')
+                        
+                        @can('bo_q_access')
+                            <li class="{{ request()->is('admin/bo-qs') || request()->is('admin/bo-qs/*') ? 'active' : '' }}">
+                                <a href="{{ route("admin.bo-qs.index") }}">
+                                    <i class="fa-fw fas fa-file-invoice">
+
+                                    </i>
+                                    <span>{{ trans('cruds.boQ.title') }}</span>
+                                </a>
+                            </li>
+                        @endcan
+
+                        <!-- @can('wbs_level_two_access')
                             <li class="{{ request()->is('admin/wbs-level-twos') || request()->is('admin/wbs-level-twos/*') ? 'active' : '' }}">
                                 <a href="{{ route("admin.wbs-level-twos.index") }}">
                                     <i class="fa-fw fas fa-cogs">
@@ -143,7 +155,8 @@
                                     <span>{{ trans('cruds.wbsLevelTwo.title') }}</span>
                                 </a>
                             </li>
-                        @endcan
+                        @endcan -->
+
                         @can('wbs_level_three_access')
                             <li class="{{ request()->is('admin/wbs-level-threes') || request()->is('admin/wbs-level-threes/*') ? 'active' : '' }}">
                                 <a href="{{ route("admin.wbs-level-threes.index") }}">
@@ -174,16 +187,7 @@
                                 </a>
                             </li>
                         @endcan
-                        @can('bo_q_access')
-                            <li class="{{ request()->is('admin/bo-qs') || request()->is('admin/bo-qs/*') ? 'active' : '' }}">
-                                <a href="{{ route("admin.bo-qs.index") }}">
-                                    <i class="fa-fw fas fa-file-invoice">
-
-                                    </i>
-                                    <span>{{ trans('cruds.boQ.title') }}</span>
-                                </a>
-                            </li>
-                        @endcan
+                        
                         @can('boq_item_access')
                             <li class="{{ request()->is('admin/boq-items') || request()->is('admin/boq-items/*') ? 'active' : '' }}">
                                 <a href="{{ route("admin.boq-items.index") }}">

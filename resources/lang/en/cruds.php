@@ -557,8 +557,8 @@ return [
     ],
 
     'boQ'                    => [
-        'title'          => 'Bill of Quantities (BoQ)',
-        'title_singular' => 'Bill of Quantities (BoQ)',
+        'title'          => 'WBS Level 2',
+        'title_singular' => 'WBS Level 2',
         'fields'         => [
             'id'                => 'ID',
             'id_helper'         => '',
