@@ -12,30 +12,6 @@
                     <form method="POST" action="{{ route("admin.request-for-inspections.update", [$requestForInspection->id]) }}" enctype="multipart/form-data">
                         @method('PUT')
                         @csrf
-                        <div class="form-group {{ $errors->has('bill') ? 'has-error' : '' }}">
-                            <label for="bill_id">{{ trans('cruds.requestForInspection.fields.bill') }}</label>
-                            <select class="form-control select2" name="bill_id" id="bill_id">
-                                @foreach($bills as $id => $bill)
-                                    <option value="{{ $id }}" {{ ($requestForInspection->bill ? $requestForInspection->bill->id : old('bill_id')) == $id ? 'selected' : '' }}>{{ $bill }}</option>
-                                @endforeach
-                            </select>
-                            @if($errors->has('bill'))
-                                <span class="help-block" role="alert">{{ $errors->first('bill') }}</span>
-                            @endif
-                            <span class="help-block">{{ trans('cruds.requestForInspection.fields.bill_helper') }}</span>
-                        </div>
-                        <div class="form-group {{ $errors->has('item') ? 'has-error' : '' }}">
-                            <label for="item_id">{{ trans('cruds.requestForInspection.fields.item') }}</label>
-                            <select class="form-control select2" name="item_id" id="item_id">
-                                @foreach($items as $id => $item)
-                                    <option value="{{ $id }}" {{ ($requestForInspection->item ? $requestForInspection->item->id : old('item_id')) == $id ? 'selected' : '' }}>{{ $item }}</option>
-                                @endforeach
-                            </select>
-                            @if($errors->has('item'))
-                                <span class="help-block" role="alert">{{ $errors->first('item') }}</span>
-                            @endif
-                            <span class="help-block">{{ trans('cruds.requestForInspection.fields.item_helper') }}</span>
-                        </div>
                         <div class="form-group {{ $errors->has('wbs_level_1') ? 'has-error' : '' }}">
                             <label for="wbs_level_1_id">{{ trans('cruds.requestForInspection.fields.wbs_level_1') }}</label>
                             <select class="form-control select2" name="wbs_level_1_id" id="wbs_level_1_id">
@@ -48,17 +24,17 @@
                             @endif
                             <span class="help-block">{{ trans('cruds.requestForInspection.fields.wbs_level_1_helper') }}</span>
                         </div>
-                        <div class="form-group {{ $errors->has('wbs_level_2') ? 'has-error' : '' }}">
-                            <label for="wbs_level_2_id">{{ trans('cruds.requestForInspection.fields.wbs_level_2') }}</label>
-                            <select class="form-control select2" name="wbs_level_2_id" id="wbs_level_2_id">
-                                @foreach($wbs_level_2s as $id => $wbs_level_2)
-                                    <option value="{{ $id }}" {{ ($requestForInspection->wbs_level_2 ? $requestForInspection->wbs_level_2->id : old('wbs_level_2_id')) == $id ? 'selected' : '' }}>{{ $wbs_level_2 }}</option>
+                        <div class="form-group {{ $errors->has('bill') ? 'has-error' : '' }}">
+                            <label for="bill_id">{{ trans('cruds.requestForInspection.fields.bill') }}</label>
+                            <select class="form-control select2" name="bill_id" id="bill_id">
+                                @foreach($bills as $id => $bill)
+                                    <option value="{{ $id }}" {{ ($requestForInspection->bill ? $requestForInspection->bill->id : old('bill_id')) == $id ? 'selected' : '' }}>{{ $bill }}</option>
                                 @endforeach
                             </select>
-                            @if($errors->has('wbs_level_2'))
-                                <span class="help-block" role="alert">{{ $errors->first('wbs_level_2') }}</span>
+                            @if($errors->has('bill'))
+                                <span class="help-block" role="alert">{{ $errors->first('bill') }}</span>
                             @endif
-                            <span class="help-block">{{ trans('cruds.requestForInspection.fields.wbs_level_2_helper') }}</span>
+                            <span class="help-block">{{ trans('cruds.requestForInspection.fields.bill_helper') }}</span>
                         </div>
                         <div class="form-group {{ $errors->has('wbs_level_3') ? 'has-error' : '' }}">
                             <label for="wbs_level_3_id">{{ trans('cruds.requestForInspection.fields.wbs_level_3') }}</label>
@@ -84,49 +60,21 @@
                             @endif
                             <span class="help-block">{{ trans('cruds.requestForInspection.fields.wbs_level_4_helper') }}</span>
                         </div>
-                        <div class="form-group {{ $errors->has('subject') ? 'has-error' : '' }}">
-                            <label for="subject">{{ trans('cruds.requestForInspection.fields.subject') }}</label>
-                            <input class="form-control" type="text" name="subject" id="subject" value="{{ old('subject', $requestForInspection->subject) }}">
-                            @if($errors->has('subject'))
-                                <span class="help-block" role="alert">{{ $errors->first('subject') }}</span>
-                            @endif
-                            <span class="help-block">{{ trans('cruds.requestForInspection.fields.subject_helper') }}</span>
-                        </div>
-                        <div class="form-group {{ $errors->has('item_no') ? 'has-error' : '' }}">
-                            <label for="item_no">{{ trans('cruds.requestForInspection.fields.item_no') }}</label>
-                            <input class="form-control" type="text" name="item_no" id="item_no" value="{{ old('item_no', $requestForInspection->item_no) }}">
-                            @if($errors->has('item_no'))
-                                <span class="help-block" role="alert">{{ $errors->first('item_no') }}</span>
-                            @endif
-                            <span class="help-block">{{ trans('cruds.requestForInspection.fields.item_no_helper') }}</span>
-                        </div>
-                        <div class="form-group {{ $errors->has('ref_no') ? 'has-error' : '' }}">
-                            <label for="ref_no">{{ trans('cruds.requestForInspection.fields.ref_no') }}</label>
-                            <input class="form-control" type="text" name="ref_no" id="ref_no" value="{{ old('ref_no', $requestForInspection->ref_no) }}">
-                            @if($errors->has('ref_no'))
-                                <span class="help-block" role="alert">{{ $errors->first('ref_no') }}</span>
-                            @endif
-                            <span class="help-block">{{ trans('cruds.requestForInspection.fields.ref_no_helper') }}</span>
-                        </div>
-                        <div class="form-group {{ $errors->has('inspection_date_time') ? 'has-error' : '' }}">
-                            <label for="inspection_date_time">{{ trans('cruds.requestForInspection.fields.inspection_date_time') }}</label>
-                            <input class="form-control datetime" type="text" name="inspection_date_time" id="inspection_date_time" value="{{ old('inspection_date_time', $requestForInspection->inspection_date_time) }}">
-                            @if($errors->has('inspection_date_time'))
-                                <span class="help-block" role="alert">{{ $errors->first('inspection_date_time') }}</span>
-                            @endif
-                            <span class="help-block">{{ trans('cruds.requestForInspection.fields.inspection_date_time_helper') }}</span>
-                        </div>
-                        <div class="form-group {{ $errors->has('contact_person') ? 'has-error' : '' }}">
-                            <label for="contact_person_id">{{ trans('cruds.requestForInspection.fields.contact_person') }}</label>
-                            <select class="form-control select2" name="contact_person_id" id="contact_person_id">
-                                @foreach($contact_people as $id => $contact_person)
-                                    <option value="{{ $id }}" {{ ($requestForInspection->contact_person ? $requestForInspection->contact_person->id : old('contact_person_id')) == $id ? 'selected' : '' }}>{{ $contact_person }}</option>
+                        <div class="form-group {{ $errors->has('items') ? 'has-error' : '' }}">
+                            <label for="items">{{ trans('cruds.requestForInspection.fields.item') }}</label>
+                            <div style="padding-bottom: 4px">
+                                <span class="btn btn-info btn-xs select-all" style="border-radius: 0">{{ trans('global.select_all') }}</span>
+                                <span class="btn btn-info btn-xs deselect-all" style="border-radius: 0">{{ trans('global.deselect_all') }}</span>
+                            </div>
+                            <select class="form-control select2" name="items[]" id="items" multiple>
+                                @foreach($items as $id => $item)
+                                    <option value="{{ $id }}" {{ (in_array($id, old('items', [])) || $requestForInspection->items->contains($id)) ? 'selected' : '' }}>{{ $item }}</option>
                                 @endforeach
                             </select>
-                            @if($errors->has('contact_person'))
-                                <span class="help-block" role="alert">{{ $errors->first('contact_person') }}</span>
+                            @if($errors->has('items'))
+                                <span class="help-block" role="alert">{{ $errors->first('items') }}</span>
                             @endif
-                            <span class="help-block">{{ trans('cruds.requestForInspection.fields.contact_person_helper') }}</span>
+                            <span class="help-block">{{ trans('cruds.requestForInspection.fields.item_helper') }}</span>
                         </div>
                         <div class="form-group {{ $errors->has('type_of_work') ? 'has-error' : '' }}">
                             <label>{{ trans('cruds.requestForInspection.fields.type_of_work') }}</label>
@@ -141,6 +89,22 @@
                             @endif
                             <span class="help-block">{{ trans('cruds.requestForInspection.fields.type_of_work_helper') }}</span>
                         </div>
+                        <div class="form-group {{ $errors->has('subject') ? 'has-error' : '' }}">
+                            <label for="subject">{{ trans('cruds.requestForInspection.fields.subject') }}</label>
+                            <input class="form-control" type="text" name="subject" id="subject" value="{{ old('subject', $requestForInspection->subject) }}">
+                            @if($errors->has('subject'))
+                                <span class="help-block" role="alert">{{ $errors->first('subject') }}</span>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.requestForInspection.fields.subject_helper') }}</span>
+                        </div>
+                        <div class="form-group {{ $errors->has('ref_no') ? 'has-error' : '' }}">
+                            <label for="ref_no">{{ trans('cruds.requestForInspection.fields.ref_no') }}</label>
+                            <input class="form-control" type="text" name="ref_no" id="ref_no" value="{{ old('ref_no', $requestForInspection->ref_no) }}">
+                            @if($errors->has('ref_no'))
+                                <span class="help-block" role="alert">{{ $errors->first('ref_no') }}</span>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.requestForInspection.fields.ref_no_helper') }}</span>
+                        </div>
                         <div class="form-group {{ $errors->has('location') ? 'has-error' : '' }}">
                             <label for="location">{{ trans('cruds.requestForInspection.fields.location') }}</label>
                             <input class="form-control" type="text" name="location" id="location" value="{{ old('location', $requestForInspection->location) }}">
@@ -148,22 +112,6 @@
                                 <span class="help-block" role="alert">{{ $errors->first('location') }}</span>
                             @endif
                             <span class="help-block">{{ trans('cruds.requestForInspection.fields.location_helper') }}</span>
-                        </div>
-                        <div class="form-group {{ $errors->has('details_of_inspection') ? 'has-error' : '' }}">
-                            <label for="details_of_inspection">{{ trans('cruds.requestForInspection.fields.details_of_inspection') }}</label>
-                            <textarea class="form-control" name="details_of_inspection" id="details_of_inspection">{{ old('details_of_inspection', $requestForInspection->details_of_inspection) }}</textarea>
-                            @if($errors->has('details_of_inspection'))
-                                <span class="help-block" role="alert">{{ $errors->first('details_of_inspection') }}</span>
-                            @endif
-                            <span class="help-block">{{ trans('cruds.requestForInspection.fields.details_of_inspection_helper') }}</span>
-                        </div>
-                        <div class="form-group {{ $errors->has('ref_specification') ? 'has-error' : '' }}">
-                            <label for="ref_specification">{{ trans('cruds.requestForInspection.fields.ref_specification') }}</label>
-                            <input class="form-control" type="text" name="ref_specification" id="ref_specification" value="{{ old('ref_specification', $requestForInspection->ref_specification) }}">
-                            @if($errors->has('ref_specification'))
-                                <span class="help-block" role="alert">{{ $errors->first('ref_specification') }}</span>
-                            @endif
-                            <span class="help-block">{{ trans('cruds.requestForInspection.fields.ref_specification_helper') }}</span>
                         </div>
                         <div class="form-group {{ $errors->has('requested_by') ? 'has-error' : '' }}">
                             <label for="requested_by_id">{{ trans('cruds.requestForInspection.fields.requested_by') }}</label>
@@ -177,18 +125,41 @@
                             @endif
                             <span class="help-block">{{ trans('cruds.requestForInspection.fields.requested_by_helper') }}</span>
                         </div>
-                        <div class="form-group {{ $errors->has('result_of_inspection') ? 'has-error' : '' }}">
-                            <label>{{ trans('cruds.requestForInspection.fields.result_of_inspection') }}</label>
-                            <select class="form-control" name="result_of_inspection" id="result_of_inspection">
-                                <option value disabled {{ old('result_of_inspection', null) === null ? 'selected' : '' }}>{{ trans('global.pleaseSelect') }}</option>
-                                @foreach(App\RequestForInspection::RESULT_OF_INSPECTION_SELECT as $key => $label)
-                                    <option value="{{ $key }}" {{ old('result_of_inspection', $requestForInspection->result_of_inspection) === (string) $key ? 'selected' : '' }}>{{ $label }}</option>
+                        <div class="form-group {{ $errors->has('submittal_date') ? 'has-error' : '' }}">
+                            <label for="submittal_date">{{ trans('cruds.requestForInspection.fields.submittal_date') }}</label>
+                            <input class="form-control date" type="text" name="submittal_date" id="submittal_date" value="{{ old('submittal_date', $requestForInspection->submittal_date) }}">
+                            @if($errors->has('submittal_date'))
+                                <span class="help-block" role="alert">{{ $errors->first('submittal_date') }}</span>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.requestForInspection.fields.submittal_date_helper') }}</span>
+                        </div>
+                        <div class="form-group {{ $errors->has('contact_person') ? 'has-error' : '' }}">
+                            <label for="contact_person_id">{{ trans('cruds.requestForInspection.fields.contact_person') }}</label>
+                            <select class="form-control select2" name="contact_person_id" id="contact_person_id">
+                                @foreach($contact_people as $id => $contact_person)
+                                    <option value="{{ $id }}" {{ ($requestForInspection->contact_person ? $requestForInspection->contact_person->id : old('contact_person_id')) == $id ? 'selected' : '' }}>{{ $contact_person }}</option>
                                 @endforeach
                             </select>
-                            @if($errors->has('result_of_inspection'))
-                                <span class="help-block" role="alert">{{ $errors->first('result_of_inspection') }}</span>
+                            @if($errors->has('contact_person'))
+                                <span class="help-block" role="alert">{{ $errors->first('contact_person') }}</span>
                             @endif
-                            <span class="help-block">{{ trans('cruds.requestForInspection.fields.result_of_inspection_helper') }}</span>
+                            <span class="help-block">{{ trans('cruds.requestForInspection.fields.contact_person_helper') }}</span>
+                        </div>
+                        <div class="form-group {{ $errors->has('replied_date') ? 'has-error' : '' }}">
+                            <label for="replied_date">{{ trans('cruds.requestForInspection.fields.replied_date') }}</label>
+                            <input class="form-control date" type="text" name="replied_date" id="replied_date" value="{{ old('replied_date', $requestForInspection->replied_date) }}">
+                            @if($errors->has('replied_date'))
+                                <span class="help-block" role="alert">{{ $errors->first('replied_date') }}</span>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.requestForInspection.fields.replied_date_helper') }}</span>
+                        </div>
+                        <div class="form-group {{ $errors->has('ipa') ? 'has-error' : '' }}">
+                            <label for="ipa">{{ trans('cruds.requestForInspection.fields.ipa') }}</label>
+                            <input class="form-control" type="text" name="ipa" id="ipa" value="{{ old('ipa', $requestForInspection->ipa) }}">
+                            @if($errors->has('ipa'))
+                                <span class="help-block" role="alert">{{ $errors->first('ipa') }}</span>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.requestForInspection.fields.ipa_helper') }}</span>
                         </div>
                         <div class="form-group {{ $errors->has('comment') ? 'has-error' : '' }}">
                             <label for="comment">{{ trans('cruds.requestForInspection.fields.comment') }}</label>
@@ -197,14 +168,6 @@
                                 <span class="help-block" role="alert">{{ $errors->first('comment') }}</span>
                             @endif
                             <span class="help-block">{{ trans('cruds.requestForInspection.fields.comment_helper') }}</span>
-                        </div>
-                        <div class="form-group {{ $errors->has('amount') ? 'has-error' : '' }}">
-                            <label for="amount">{{ trans('cruds.requestForInspection.fields.amount') }}</label>
-                            <input class="form-control" type="number" name="amount" id="amount" value="{{ old('amount', $requestForInspection->amount) }}" step="0.01">
-                            @if($errors->has('amount'))
-                                <span class="help-block" role="alert">{{ $errors->first('amount') }}</span>
-                            @endif
-                            <span class="help-block">{{ trans('cruds.requestForInspection.fields.amount_helper') }}</span>
                         </div>
                         <div class="form-group {{ $errors->has('construction_contract') ? 'has-error' : '' }}">
                             <label for="construction_contract_id">{{ trans('cruds.requestForInspection.fields.construction_contract') }}</label>
@@ -226,6 +189,31 @@
                                 <span class="help-block" role="alert">{{ $errors->first('files_upload') }}</span>
                             @endif
                             <span class="help-block">{{ trans('cruds.requestForInspection.fields.files_upload_helper') }}</span>
+                        </div>
+                        <div class="form-group {{ $errors->has('start_loop') ? 'has-error' : '' }}">
+                            <label for="start_loop">{{ trans('cruds.requestForInspection.fields.start_loop') }}</label>
+                            <input class="form-control" type="number" name="start_loop" id="start_loop" value="{{ old('start_loop', $requestForInspection->start_loop) }}" step="1">
+                            @if($errors->has('start_loop'))
+                                <span class="help-block" role="alert">{{ $errors->first('start_loop') }}</span>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.requestForInspection.fields.start_loop_helper') }}</span>
+                        </div>
+                        <div class="form-group {{ $errors->has('end_loop') ? 'has-error' : '' }}">
+                            <label for="end_loop">{{ trans('cruds.requestForInspection.fields.end_loop') }}</label>
+                            <input class="form-control" type="number" name="end_loop" id="end_loop" value="{{ old('end_loop', $requestForInspection->end_loop) }}" step="1">
+                            @if($errors->has('end_loop'))
+                                <span class="help-block" role="alert">{{ $errors->first('end_loop') }}</span>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.requestForInspection.fields.end_loop_helper') }}</span>
+                        </div>
+                        <div class="form-group {{ $errors->has('loop_file_upload') ? 'has-error' : '' }}">
+                            <label for="loop_file_upload">{{ trans('cruds.requestForInspection.fields.loop_file_upload') }}</label>
+                            <div class="needsclick dropzone" id="loop_file_upload-dropzone">
+                            </div>
+                            @if($errors->has('loop_file_upload'))
+                                <span class="help-block" role="alert">{{ $errors->first('loop_file_upload') }}</span>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.requestForInspection.fields.loop_file_upload_helper') }}</span>
                         </div>
                         <div class="form-group">
                             <button class="btn btn-danger" type="submit">
@@ -279,6 +267,62 @@ Dropzone.options.filesUploadDropzone = {
               this.options.addedfile.call(this, file)
               file.previewElement.classList.add('dz-complete')
               $('form').append('<input type="hidden" name="files_upload[]" value="' + file.file_name + '">')
+            }
+@endif
+    },
+     error: function (file, response) {
+         if ($.type(response) === 'string') {
+             var message = response //dropzone sends it's own error messages in string
+         } else {
+             var message = response.errors.file
+         }
+         file.previewElement.classList.add('dz-error')
+         _ref = file.previewElement.querySelectorAll('[data-dz-errormessage]')
+         _results = []
+         for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+             node = _ref[_i]
+             _results.push(node.textContent = message)
+         }
+
+         return _results
+     }
+}
+</script>
+<script>
+    var uploadedLoopFileUploadMap = {}
+Dropzone.options.loopFileUploadDropzone = {
+    url: '{{ route('admin.request-for-inspections.storeMedia') }}',
+    maxFilesize: 500, // MB
+    addRemoveLinks: true,
+    headers: {
+      'X-CSRF-TOKEN': "{{ csrf_token() }}"
+    },
+    params: {
+      size: 500
+    },
+    success: function (file, response) {
+      $('form').append('<input type="hidden" name="loop_file_upload[]" value="' + response.name + '">')
+      uploadedLoopFileUploadMap[file.name] = response.name
+    },
+    removedfile: function (file) {
+      file.previewElement.remove()
+      var name = ''
+      if (typeof file.file_name !== 'undefined') {
+        name = file.file_name
+      } else {
+        name = uploadedLoopFileUploadMap[file.name]
+      }
+      $('form').find('input[name="loop_file_upload[]"][value="' + name + '"]').remove()
+    },
+    init: function () {
+@if(isset($requestForInspection) && $requestForInspection->loop_file_upload)
+          var files =
+            {!! json_encode($requestForInspection->loop_file_upload) !!}
+              for (var i in files) {
+              var file = files[i]
+              this.options.addedfile.call(this, file)
+              file.previewElement.classList.add('dz-complete')
+              $('form').append('<input type="hidden" name="loop_file_upload[]" value="' + file.file_name + '">')
             }
 @endif
     },

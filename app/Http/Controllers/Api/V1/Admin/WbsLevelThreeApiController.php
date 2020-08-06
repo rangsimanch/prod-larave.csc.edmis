@@ -17,7 +17,7 @@ class WbsLevelThreeApiController extends Controller
     {
         abort_if(Gate::denies('wbs_level_three_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new WbsLevelThreeResource(WbsLevelThree::all());
+        return new WbsLevelThreeResource(WbsLevelThree::with(['wbs_level_2'])->get());
     }
 
     public function store(StoreWbsLevelThreeRequest $request)
@@ -33,7 +33,7 @@ class WbsLevelThreeApiController extends Controller
     {
         abort_if(Gate::denies('wbs_level_three_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new WbsLevelThreeResource($wbsLevelThree);
+        return new WbsLevelThreeResource($wbsLevelThree->load(['wbs_level_2']));
     }
 
     public function update(UpdateWbsLevelThreeRequest $request, WbsLevelThree $wbsLevelThree)

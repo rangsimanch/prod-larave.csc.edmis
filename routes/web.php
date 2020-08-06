@@ -85,7 +85,6 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth'], '
     Route::post('rfas/parse-csv-import', 'RfaController@parseCsvImport')->name('rfas.parseCsvImport');
     Route::post('rfas/process-csv-import', 'RfaController@processCsvImport')->name('rfas.processCsvImport');
     Route::post('rfas/fetch','RfaController@fetch')->name('rfas.fetch');
-    Route::post('rfas/itemBoQ','RfaController@itemBoQ')->name('rfas.itemBoQ');
 
     Route::get('rfas/{rfa}/revision','RfaController@revision')->name('rfas.revision');
     Route::post('rfas/storeRevision','RfaController@storeRevision')->name('rfas.storeRevision');
@@ -176,8 +175,12 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth'], '
     Route::delete('request-for-inspections/destroy', 'RequestForInspectionController@massDestroy')->name('request-for-inspections.massDestroy');
     Route::post('request-for-inspections/media', 'RequestForInspectionController@storeMedia')->name('request-for-inspections.storeMedia');
     Route::post('request-for-inspections/ckmedia', 'RequestForInspectionController@storeCKEditorImages')->name('request-for-inspections.storeCKEditorImages');
-    Route::post('request-for-inspections/fetch','RequestForInspectionController@fetch')->name('request-for-inspections.fetch');
-    Route::post('request-for-inspection/itemBoQ','RequestForInspectionController@itemBoQ')->name('request-for-inspections.itemBoQ');
+    Route::post('request-for-inspections/parse-csv-import', 'RequestForInspectionController@parseCsvImport')->name('request-for-inspections.parseCsvImport');
+    Route::post('request-for-inspections/process-csv-import', 'RequestForInspectionController@processCsvImport')->name('request-for-inspections.processCsvImport');
+    Route::post('request-for-inspections/fetch','RequestForInspectionController@fetch')->name('rfns.fetch');
+    Route::post('request-for-inspections/WbsTwo','RequestForInspectionController@WbsTwo')->name('rfns.WbsTwo');
+    Route::post('request-for-inspections/WbsThree','RequestForInspectionController@WbsThree')->name('rfns.WbsThree');
+    Route::post('request-for-inspections/itemBoQ','RequestForInspectionController@itemBoQ')->name('rfns.itemBoQ');
     Route::resource('request-for-inspections', 'RequestForInspectionController');
    
 

@@ -19,22 +19,6 @@
                             <tbody>
                                 <tr>
                                     <th>
-                                        {{ trans('cruds.requestForInspection.fields.bill') }}
-                                    </th>
-                                    <td>
-                                        {{ $requestForInspection->bill->name ?? '' }}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th>
-                                        {{ trans('cruds.requestForInspection.fields.item') }}
-                                    </th>
-                                    <td>
-                                        {{ $requestForInspection->item->name ?? '' }}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th>
                                         {{ trans('cruds.requestForInspection.fields.wbs_level_1') }}
                                     </th>
                                     <td>
@@ -43,10 +27,10 @@
                                 </tr>
                                 <tr>
                                     <th>
-                                        {{ trans('cruds.requestForInspection.fields.wbs_level_2') }}
+                                        {{ trans('cruds.requestForInspection.fields.bill') }}
                                     </th>
                                     <td>
-                                        {{ $requestForInspection->wbs_level_2->name ?? '' }}
+                                        {{ $requestForInspection->bill->name ?? '' }}
                                     </td>
                                 </tr>
                                 <tr>
@@ -67,42 +51,12 @@
                                 </tr>
                                 <tr>
                                     <th>
-                                        {{ trans('cruds.requestForInspection.fields.subject') }}
+                                        {{ trans('cruds.requestForInspection.fields.item') }}
                                     </th>
                                     <td>
-                                        {{ $requestForInspection->subject }}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th>
-                                        {{ trans('cruds.requestForInspection.fields.item_no') }}
-                                    </th>
-                                    <td>
-                                        {{ $requestForInspection->item_no }}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th>
-                                        {{ trans('cruds.requestForInspection.fields.ref_no') }}
-                                    </th>
-                                    <td>
-                                        {{ $requestForInspection->ref_no }}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th>
-                                        {{ trans('cruds.requestForInspection.fields.inspection_date_time') }}
-                                    </th>
-                                    <td>
-                                        {{ $requestForInspection->inspection_date_time }}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th>
-                                        {{ trans('cruds.requestForInspection.fields.contact_person') }}
-                                    </th>
-                                    <td>
-                                        {{ $requestForInspection->contact_person->name ?? '' }}
+                                        @foreach($requestForInspection->items as $key => $item)
+                                            <span class="label label-info">{{ $item->code }}</span>
+                                        @endforeach
                                     </td>
                                 </tr>
                                 <tr>
@@ -115,26 +69,26 @@
                                 </tr>
                                 <tr>
                                     <th>
+                                        {{ trans('cruds.requestForInspection.fields.subject') }}
+                                    </th>
+                                    <td>
+                                        {{ $requestForInspection->subject }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        {{ trans('cruds.requestForInspection.fields.ref_no') }}
+                                    </th>
+                                    <td>
+                                        {{ $requestForInspection->ref_no }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
                                         {{ trans('cruds.requestForInspection.fields.location') }}
                                     </th>
                                     <td>
                                         {{ $requestForInspection->location }}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th>
-                                        {{ trans('cruds.requestForInspection.fields.details_of_inspection') }}
-                                    </th>
-                                    <td>
-                                        {{ $requestForInspection->details_of_inspection }}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th>
-                                        {{ trans('cruds.requestForInspection.fields.ref_specification') }}
-                                    </th>
-                                    <td>
-                                        {{ $requestForInspection->ref_specification }}
                                     </td>
                                 </tr>
                                 <tr>
@@ -147,10 +101,34 @@
                                 </tr>
                                 <tr>
                                     <th>
-                                        {{ trans('cruds.requestForInspection.fields.result_of_inspection') }}
+                                        {{ trans('cruds.requestForInspection.fields.submittal_date') }}
                                     </th>
                                     <td>
-                                        {{ App\RequestForInspection::RESULT_OF_INSPECTION_SELECT[$requestForInspection->result_of_inspection] ?? '' }}
+                                        {{ $requestForInspection->submittal_date }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        {{ trans('cruds.requestForInspection.fields.contact_person') }}
+                                    </th>
+                                    <td>
+                                        {{ $requestForInspection->contact_person->name ?? '' }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        {{ trans('cruds.requestForInspection.fields.replied_date') }}
+                                    </th>
+                                    <td>
+                                        {{ $requestForInspection->replied_date }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        {{ trans('cruds.requestForInspection.fields.ipa') }}
+                                    </th>
+                                    <td>
+                                        {{ $requestForInspection->ipa }}
                                     </td>
                                 </tr>
                                 <tr>
@@ -159,14 +137,6 @@
                                     </th>
                                     <td>
                                         {{ $requestForInspection->comment }}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th>
-                                        {{ trans('cruds.requestForInspection.fields.amount') }}
-                                    </th>
-                                    <td>
-                                        {{ $requestForInspection->amount }}
                                     </td>
                                 </tr>
                                 <tr>
@@ -183,6 +153,34 @@
                                     </th>
                                     <td>
                                         @foreach($requestForInspection->files_upload as $key => $media)
+                                            <a href="{{ $media->getUrl() }}" target="_blank">
+                                                {{ trans('global.view_file') }}
+                                            </a>
+                                        @endforeach
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        {{ trans('cruds.requestForInspection.fields.start_loop') }}
+                                    </th>
+                                    <td>
+                                        {{ $requestForInspection->start_loop }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        {{ trans('cruds.requestForInspection.fields.end_loop') }}
+                                    </th>
+                                    <td>
+                                        {{ $requestForInspection->end_loop }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        {{ trans('cruds.requestForInspection.fields.loop_file_upload') }}
+                                    </th>
+                                    <td>
+                                        @foreach($requestForInspection->loop_file_upload as $key => $media)
                                             <a href="{{ $media->getUrl() }}" target="_blank">
                                                 {{ trans('global.view_file') }}
                                             </a>

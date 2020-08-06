@@ -6,10 +6,11 @@
 
 <div class="login-box-body">
         <div class="login-logo">
+        
         <legend>
-            <b>
-           EDMIS LOGIN
-            </b>
+        <b>
+           EDMIS Login
+        </b>
         </legend>
 </div>
                     

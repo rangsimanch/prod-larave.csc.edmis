@@ -4,7 +4,7 @@
     @can('bo_q_create')
         <div style="margin-bottom: 10px;" class="row">
             <div class="col-lg-12">
-                <a class="btn btn-success" href="{{ route("admin.bo-qs.create") }}">
+                <a class="btn btn-success" href="{{ route('admin.bo-qs.create') }}">
                     {{ trans('global.add') }} {{ trans('cruds.boQ.title_singular') }}
                 </a>
                 <button class="btn btn-warning" data-toggle="modal" data-target="#csvImportModal">
@@ -32,6 +32,9 @@
                                 </th>
                                 <th>
                                     {{ trans('cruds.boQ.fields.code') }}
+                                </th>
+                                <th>
+                                    {{ trans('cruds.boQ.fields.wbs_lv_1') }}
                                 </th>
                                 <th>
                                     &nbsp;
@@ -94,16 +97,19 @@
       { data: 'placeholder', name: 'placeholder' },
 { data: 'name', name: 'name' },
 { data: 'code', name: 'code' },
+{ data: 'wbs_lv_1_code', name: 'wbs_lv_1.code' },
 { data: 'actions', name: '{{ trans('global.actions') }}' }
     ],
+    orderCellsTop: true,
     order: [[ 1, 'desc' ]],
     pageLength: 100,
   };
-  $('.datatable-BoQ').DataTable(dtOverrideGlobals);
-    $('a[data-toggle="tab"]').on('shown.bs.tab', function(e){
-        $($.fn.dataTable.tables(true)).DataTable()
-            .columns.adjust();
-    });
+  let table = $('.datatable-BoQ').DataTable(dtOverrideGlobals);
+  $('a[data-toggle="tab"]').on('shown.bs.tab click', function(e){
+      $($.fn.dataTable.tables(true)).DataTable()
+          .columns.adjust();
+  });
+  
 });
 
 </script>

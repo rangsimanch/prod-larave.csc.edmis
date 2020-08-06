@@ -18,7 +18,6 @@ class StoreBoQRequest extends FormRequest
 
     public function rules()
     {
-        return [
-        ];
+        return [];
     }
 }

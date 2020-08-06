@@ -2,12 +2,13 @@
 
 namespace App;
 
+use App\Traits\Auditable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class WbsLevelThree extends Model
 {
-    use SoftDeletes;
+    use SoftDeletes, Auditable;
 
     public $table = 'wbs_level_threes';
 
@@ -22,15 +23,16 @@ class WbsLevelThree extends Model
     ];
 
     protected $fillable = [
+        'wbs_level_3_name',
+        'wbs_level_3_code',
+        'wbs_level_2_id',
         'created_at',
         'updated_at',
         'deleted_at',
-        'wbs_level_3_name',
-        'wbs_level_3_code',
     ];
 
-    public function wbsLevel3Rfas()
+    public function wbs_level_2()
     {
-        return $this->hasMany(Rfa::class, 'wbs_level_3_id', 'id');
+        return $this->belongsTo(BoQ::class, 'wbs_level_2_id');
     }
 }

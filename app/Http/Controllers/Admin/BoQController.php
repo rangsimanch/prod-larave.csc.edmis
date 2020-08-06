@@ -8,6 +8,7 @@ use App\Http\Controllers\Traits\CsvImportTrait;
 use App\Http\Requests\MassDestroyBoQRequest;
 use App\Http\Requests\StoreBoQRequest;
 use App\Http\Requests\UpdateBoQRequest;
+use App\WbsLevelOne;
 use Gate;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -22,7 +23,7 @@ class BoQController extends Controller
         abort_if(Gate::denies('bo_q_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
-            $query = BoQ::query()->select(sprintf('%s.*', (new BoQ)->table));
+            $query = BoQ::with(['wbs_lv_1'])->select(sprintf('%s.*', (new BoQ)->table));
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
@@ -49,8 +50,11 @@ class BoQController extends Controller
             $table->editColumn('code', function ($row) {
                 return $row->code ? $row->code : "";
             });
+            $table->addColumn('wbs_lv_1_code', function ($row) {
+                return $row->wbs_lv_1 ? $row->wbs_lv_1->code : '';
+            });
 
-            $table->rawColumns(['actions', 'placeholder']);
+            $table->rawColumns(['actions', 'placeholder', 'wbs_lv_1']);
 
             return $table->make(true);
         }
@@ -62,7 +66,9 @@ class BoQController extends Controller
     {
         abort_if(Gate::denies('bo_q_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return view('admin.boQs.create');
+        $wbs_lv_1s = WbsLevelOne::all()->pluck('code', 'id')->prepend(trans('global.pleaseSelect'), '');
+
+        return view('admin.boQs.create', compact('wbs_lv_1s'));
     }
 
     public function store(StoreBoQRequest $request)
@@ -76,7 +82,11 @@ class BoQController extends Controller
     {
         abort_if(Gate::denies('bo_q_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return view('admin.boQs.edit', compact('boQ'));
+        $wbs_lv_1s = WbsLevelOne::all()->pluck('code', 'id')->prepend(trans('global.pleaseSelect'), '');
+
+        $boQ->load('wbs_lv_1');
+
+        return view('admin.boQs.edit', compact('wbs_lv_1s', 'boQ'));
     }
 
     public function update(UpdateBoQRequest $request, BoQ $boQ)
@@ -89,6 +99,8 @@ class BoQController extends Controller
     public function show(BoQ $boQ)
     {
         abort_if(Gate::denies('bo_q_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $boQ->load('wbs_lv_1');
 
         return view('admin.boQs.show', compact('boQ'));
     }

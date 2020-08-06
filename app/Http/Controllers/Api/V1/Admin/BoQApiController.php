@@ -17,7 +17,7 @@ class BoQApiController extends Controller
     {
         abort_if(Gate::denies('bo_q_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new BoQResource(BoQ::all());
+        return new BoQResource(BoQ::with(['wbs_lv_1'])->get());
     }
 
     public function store(StoreBoQRequest $request)
@@ -33,7 +33,7 @@ class BoQApiController extends Controller
     {
         abort_if(Gate::denies('bo_q_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new BoQResource($boQ);
+        return new BoQResource($boQ->load(['wbs_lv_1']));
     }
 
     public function update(UpdateBoQRequest $request, BoQ $boQ)

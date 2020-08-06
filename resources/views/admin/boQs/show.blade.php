@@ -33,6 +33,14 @@
                                         {{ $boQ->code }}
                                     </td>
                                 </tr>
+                                <tr>
+                                    <th>
+                                        {{ trans('cruds.boQ.fields.wbs_lv_1') }}
+                                    </th>
+                                    <td>
+                                        {{ $boQ->wbs_lv_1->code ?? '' }}
+                                    </td>
+                                </tr>
                             </tbody>
                         </table>
                         <div class="form-group">

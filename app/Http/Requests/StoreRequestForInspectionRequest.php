@@ -19,9 +19,31 @@ class StoreRequestForInspectionRequest extends FormRequest
     public function rules()
     {
         return [
-            'inspection_date_time' => [
-                'date_format:' . config('panel.date_format') . ' ' . config('panel.time_format'),
+            'items.*'        => [
+                'integer',
+            ],
+            'items'          => [
+                'array',
+            ],
+            'submittal_date' => [
+                'date_format:' . config('panel.date_format'),
                 'nullable',
+            ],
+            'replied_date'   => [
+                'date_format:' . config('panel.date_format'),
+                'nullable',
+            ],
+            'start_loop'     => [
+                'nullable',
+                'integer',
+                'min:-2147483648',
+                'max:2147483647',
+            ],
+            'end_loop'       => [
+                'nullable',
+                'integer',
+                'min:-2147483648',
+                'max:2147483647',
             ],
         ];
     }

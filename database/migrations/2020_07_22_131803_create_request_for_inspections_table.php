@@ -10,20 +10,18 @@ class CreateRequestForInspectionsTable extends Migration
     {
         Schema::create('request_for_inspections', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('bill_no')->nullable();
             $table->string('subject')->nullable();
-            $table->string('item_no')->nullable();
             $table->string('ref_no')->nullable();
-            $table->datetime('inspection_date_time')->nullable();
             $table->string('type_of_work')->nullable();
             $table->string('location')->nullable();
-            $table->longText('details_of_inspection')->nullable();
-            $table->string('ref_specification')->nullable();
-            $table->string('result_of_inspection')->nullable();
             $table->longText('comment')->nullable();
+            $table->date('submittal_date')->nullable();
+            $table->date('replied_date')->nullable();
+            $table->string('ipa')->nullable();
+            $table->integer('start_loop')->nullable();
+            $table->integer('end_loop')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
-
     }
 }

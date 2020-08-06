@@ -3,7 +3,7 @@
 
 <head>
     @include('partials.head')
-    <link rel="icon" href="https://image.flaticon.com/icons/svg/609/609354.svg">
+    <link rel="icon" href="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e9/Taiwan_High_Speed_Rail_symbol.svg/1200px-Taiwan_High_Speed_Rail_symbol.svg.png">
 
 </head>
 

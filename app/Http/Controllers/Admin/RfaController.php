@@ -492,22 +492,8 @@ class RfaController extends Controller
         echo $output;
     }
 
-    function itemBoQ(Request $request){
-        $id = $request->get('select');
-        $result = array();
-        $query = DB::table('bo_qs')
-        ->join('boq_items','bo_qs.id','=','boq_items.boq_id')
-        ->select('boq_items.name','boq_items.id')
-        ->where('bo_qs.id',$id)
-        ->groupBy('boq_items.name','boq_items.id')
-        ->orderBy('name')
-        ->get();
-        $output = '<option value="">' . trans('global.pleaseSelect') . '</option>';
-        foreach ($query as $row){
-            $output .= '<option value="'. $row->id .'">'. $row->name .'</option>';
-        }
-        echo $output;
-    }
+    
+
 
     
     public function revision(Rfa $rfa)
@@ -727,7 +713,7 @@ class RfaController extends Controller
         }   
         $nextId = $previousId + 1;
         
-        
+        $data['clause'] = $data['clause'] . '.';
 
         $str_length = 6;
         $doc_number = substr("000000{$nextId}", -$str_length);
