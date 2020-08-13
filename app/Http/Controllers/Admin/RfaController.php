@@ -1101,7 +1101,7 @@ class RfaController extends Controller
         $incoming_no = $rfa->incoming_number ?? '';
         $receive_date = $rfa->receive_date ?? '';
         $spec_ref_no = $rfa->spec_ref_no ?? '';
-        $clause = $rfa->clause ?? '' . ".";
+        $clause = $rfa->clause ?? '' . ".";  
         $contract_drawing_no = $rfa->contract_drawing_no ?? '';
         $qty_page = $rfa->qty_page ?? '';
 
