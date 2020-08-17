@@ -746,6 +746,7 @@ return [
         'end_loop_helper'              => '',
         'loop_file_upload'             => 'Loop File Upload',
         'loop_file_upload_helper'      => '',
+        'modal_file_upload'            => 'Upload Attach files',
     ],
 ],
 'departmentDocument'     => [

@@ -446,4 +446,9 @@ class RequestForInspectionController extends Controller
 
         return response()->json(['id' => $media->id, 'url' => $media->getUrl()], Response::HTTP_CREATED);
     }
+
+    public function ModalAttachFilesUpload(RequestForInspection $request)
+    {
+
+    }
 }

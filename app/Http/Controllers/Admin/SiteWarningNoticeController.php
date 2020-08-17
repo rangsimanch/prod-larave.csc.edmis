@@ -198,7 +198,7 @@ class SiteWarningNoticeController extends Controller
 
     public function store(StoreSiteWarningNoticeRequest $request)
     {
-        $data = $request()->all();
+        $data = $request->all();
         $data['to_team_id'] = 4;   
         $siteWarningNotice = SiteWarningNotice::create($data);
 

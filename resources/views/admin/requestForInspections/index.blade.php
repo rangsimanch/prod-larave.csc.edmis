@@ -11,6 +11,10 @@
                     {{ trans('global.app_csvImport') }}
                 </button>
                 @include('csvImport.modal', ['model' => 'RequestForInspection', 'route' => 'admin.request-for-inspections.parseCsvImport'])
+
+                <button class="btn btn-primary" data-toggle="modal">
+                    {{ trans('cruds.requestForInspection.fields.modal_file_upload') }}
+                </button>
             </div>
         </div>
     @endcan
@@ -293,5 +297,15 @@
   });
 });
 
+</script>
+
+<script>
+/* When click New customer button */
+$('#new-customer').click(function () {
+$('#btn-save').val("create-customer");
+$('#customer').trigger("reset");
+$('#customerCrudModal').html("Add New Customer");
+$('#crud-modal').modal('show');
+});
 </script>
 @endsection
