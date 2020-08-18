@@ -56,7 +56,7 @@
                                 <th>
                                     {{ trans('cruds.siteWarningNotice.fields.attachment') }}
                                 </th>
-                                <!-- <th>
+                                <th>
                                     {{ trans('cruds.siteWarningNotice.fields.root_cause') }}
                                 </th>
                                 <th>
@@ -88,7 +88,7 @@
                                 </th>
                                 <th>
                                     {{ trans('cruds.siteWarningNotice.fields.csc_qa') }}
-                                </th> -->
+                                </th>
                                 <th>
                                     {{ trans('cruds.siteWarningNotice.fields.disposition_status') }}
                                 </th>
@@ -159,7 +159,7 @@
                                         @endforeach
                                     </select>
                                 </td>
-                                <!-- <td>
+                                <td>
                                 </td>
                                 <td>
                                     <input class="search" type="text" placeholder="{{ trans('global.search') }}">
@@ -226,7 +226,7 @@
                                             <option value="{{ $item->name }}">{{ $item->name }}</option>
                                         @endforeach
                                     </select>
-                                </td> -->
+                                </td>
                                 <td>
                                     <select class="search" strict="true">
                                         <option value>{{ trans('global.all') }}</option>
@@ -314,17 +314,17 @@
 { data: 'issue_by_name', name: 'issue_by.name' },
 { data: 'reviewed_by_name', name: 'reviewed_by.name' },
 { data: 'attachment', name: 'attachment', sortable: false, searchable: false },
-// { data: 'root_cause', name: 'root_cause' },
-// { data: 'containment_responsible_name', name: 'containment_responsible.name' },
-// { data: 'containment_completion_date', name: 'containment_completion_date' },
-// { data: 'corrective_responsible_name', name: 'corrective_responsible.name' },
-// { data: 'corrective_completion_date', name: 'corrective_completion_date' },
-// { data: 'section_2_reviewed_by_name', name: 'section_2_reviewed_by.name' },
-// { data: 'section_2_approved_by_name', name: 'section_2_approved_by.name' },
-// { data: 'review_and_judgement_status', name: 'review_and_judgement_status' },
-// { data: 'note', name: 'note' },
-// { data: 'csc_issuer_name', name: 'csc_issuer.name' },
-// { data: 'csc_qa_name', name: 'csc_qa.name' },
+{ data: 'root_cause', name: 'root_cause' },
+{ data: 'containment_responsible_name', name: 'containment_responsible.name' },
+{ data: 'containment_completion_date', name: 'containment_completion_date' },
+{ data: 'corrective_responsible_name', name: 'corrective_responsible.name' },
+{ data: 'corrective_completion_date', name: 'corrective_completion_date' },
+{ data: 'section_2_reviewed_by_name', name: 'section_2_reviewed_by.name' },
+{ data: 'section_2_approved_by_name', name: 'section_2_approved_by.name' },
+{ data: 'review_and_judgement_status', name: 'review_and_judgement_status' },
+{ data: 'note', name: 'note' },
+{ data: 'csc_issuer_name', name: 'csc_issuer.name' },
+{ data: 'csc_qa_name', name: 'csc_qa.name' },
 { data: 'disposition_status', name: 'disposition_status' },
 { data: 'csc_pm_name', name: 'csc_pm.name' },
 { data: 'file_upload', name: 'file_upload', sortable: false, searchable: false },
