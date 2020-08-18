@@ -159,7 +159,7 @@
                                         @endforeach
                                     </select>
                                 </td>
-                                <td>
+                                <!-- <td>
                                 </td>
                                 <td>
                                     <input class="search" type="text" placeholder="{{ trans('global.search') }}">
@@ -226,7 +226,7 @@
                                             <option value="{{ $item->name }}">{{ $item->name }}</option>
                                         @endforeach
                                     </select>
-                                </td>
+                                </td> -->
                                 <td>
                                     <select class="search" strict="true">
                                         <option value>{{ trans('global.all') }}</option>
