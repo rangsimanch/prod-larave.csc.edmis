@@ -1171,7 +1171,7 @@ class RfaController extends Controller
               print "Creating an mPDF object failed with" . $e->getMessage();
           }
         //RFA Page
-        $pagecount = $mpdf->SetSourceFile(public_path('pdf-asset/RFA-Form_NEW.pdf'));
+        $pagecount = $mpdf->SetSourceFile(public_path('pdf-asset/RFA-Form-new.pdf'));
         $tplId = $mpdf->ImportPage($pagecount);
         $mpdf->UseTemplate($tplId);        
           //Title
@@ -1200,10 +1200,10 @@ class RfaController extends Controller
         . $note_1 . "</div>";
         
           //Signature
-        // if($rfa->cec_sign == 1){
-        //     $html .= "<div style=\"font-size: 14px; position:absolute;top:410px;left:280px;\">
-        //         <img src=\"". public_path('png-asset/Signature_CEC.png') ."\" width=\"40px\" higth=\"40px\"> </div>";
-        // }
+        if($rfa->cec_sign == 1){
+            $html .= "<div style=\"font-size: 14px; position:absolute;top:410px;left:280px;\">
+                <img src=\"". public_path('png-asset/Signature_CEC.png') ."\" width=\"40px\" higth=\"40px\"> </div>";
+        }
         
         if($rfa->cec_stamp == 1){
             $html .= "<div style=\"font-size: 14px; position:absolute;top:300px;left:400px;\">
