@@ -1200,15 +1200,15 @@ class RfaController extends Controller
         . $note_1 . "</div>";
         
           //Signature
-        if($rfa->cec_stamp == 1){
-            $html .= "<div style=\"font-size: 14px; position:absolute;top:410px;left:280px;\">
-                <img src=\"". public_path('png-asset/Signature_CEC.png') ."\" width=\"60px\" higth=\"60px\"> </div>";
-        }
-        
         // if($rfa->cec_sign == 1){
-        //     $html .= "<div style=\"font-size: 14px; position:absolute;top:300px;left:400px;\">
-        //     <img src=\"". public_path('png-asset/Stamp_CEC.png') ."\" width=\"200px\" higth=\"200px\"> </div>";
+        //     $html .= "<div style=\"font-size: 14px; position:absolute;top:410px;left:280px;\">
+        //         <img src=\"". public_path('png-asset/Signature_CEC.png') ."\" width=\"40px\" higth=\"40px\"> </div>";
         // }
+        
+        if($rfa->cec_stamp == 1){
+            $html .= "<div style=\"font-size: 14px; position:absolute;top:300px;left:400px;\">
+            <img src=\"". public_path('png-asset/Stamp_CEC.png') ."\" width=\"500px\" higth=\"500px\"> </div>";
+        }
 
         //CSC Incoming 
         $html .= "<div style=\"font-size: 14px; position:absolute;top:485px;left:477;\">" . $incoming_no . "</div>";
