@@ -1206,8 +1206,8 @@ class RfaController extends Controller
         // }
         
         if($rfa->cec_stamp == 1){
-            $html .= "<div style=\"font-size: 14px; position:absolute;top:250px;left:400px;\">
-            <img src=\"". public_path('png-asset/Stamp_CEC.png') ."\" width=\"300px\" higth=\"300px\"> </div>";
+            $html .= "<div style=\"font-size: 14px; position:absolute;top:300px;left:400px;\">
+            <img src=\"". public_path('png-asset/Stamp_CEC.png') ."\" width=\"200px\" higth=\"200px\" style=\"opacity: 0.5;\">> </div>";
         }
 
         //CSC Incoming 
