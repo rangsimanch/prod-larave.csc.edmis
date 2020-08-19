@@ -56,6 +56,9 @@
                                 <th>
                                     {{ trans('cruds.siteWarningNotice.fields.attachment') }}
                                 </th>
+                                
+
+                                
                                 <th>
                                     {{ trans('cruds.siteWarningNotice.fields.root_cause') }}
                                 </th>
@@ -89,6 +92,9 @@
                                 <th>
                                     {{ trans('cruds.siteWarningNotice.fields.csc_qa') }}
                                 </th>
+
+
+
                                 <th>
                                     {{ trans('cruds.siteWarningNotice.fields.disposition_status') }}
                                 </th>
