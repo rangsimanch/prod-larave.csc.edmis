@@ -1207,7 +1207,7 @@ class RfaController extends Controller
         
         if($rfa->cec_stamp == 1){
             $html .= "<div style=\"font-size: 14px; position:absolute;top:300px;left:400px;\">
-            <img src=\"". public_path('png-asset/Stamp_CEC.png') ."\" width=\"200px\" higth=\"200px\" style=\"opacity: 0.5;\">> </div>";
+            <img src=\"". public_path('png-asset/Stamp_CEC.png') ."\" width=\"200px\" higth=\"200px\" style=\"opacity: 0.5;\"> </div>";
         }
 
         //CSC Incoming 
@@ -1286,7 +1286,7 @@ class RfaController extends Controller
 
         if(count($submittalsRfa) > 0){
             $mpdf->AddPage();
-            $pagecount = $mpdf->SetSourceFile(public_path('pdf-asset/Submittals_Formx.pdf'));
+            $pagecount = $mpdf->SetSourceFile(public_path('pdf-asset/Submittals_Form(n).pdf'));
             $tplId = $mpdf->ImportPage($pagecount);
             $mpdf->UseTemplate($tplId);    
 
@@ -1325,14 +1325,14 @@ class RfaController extends Controller
             $html .= "<div style=\"font-size: 10px; position:absolute;top:280px;left:216px;\">". $contract_drawing_no ."</div>";
             $html .= "<div style=\"font-size: 10px; position:absolute;top:315px;left:130px;\">". $qty_page  . '.' ."</div>";
 
-            if($rfa->cec_stamp == 1){
+            if($rfa->cec_sign == 1){
                 $html .= "<div style=\"font-size: 14px; position:absolute;top:750px;left:500px;\">
                     <img src=\"". public_path('png-asset/Signature_CEC.png') ."\" width=\"40px\" higth=\"40px\"> </div>";
             }
             
-            if($rfa->cec_sign == 1){
+            if($rfa->cec_stamp == 1){
                 $html .= "<div style=\"font-size: 14px; position:absolute;top:500px;left:560px;\">
-                <img src=\"". public_path('png-asset/Stamp_CEC.png') ."\" width=\"200px\" higth=\"200px\"> </div>";
+                <img src=\"". public_path('png-asset/Stamp_CEC.png') ."\" width=\"200px\" higth=\"200px\" style=\"opacity: 0.5;\"> </div>";
             }
 
             $html .= "<div style=\"font-size: 10px; position:absolute;top:930px;left:695px;\">". $outgoing_number  ."</div>";
