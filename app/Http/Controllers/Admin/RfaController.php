@@ -1363,7 +1363,7 @@ class RfaController extends Controller
                 $submittal['item_no'] . '  ' . $index ."</div>";
 
                 $htmlsub .= "<div style=\"font-size: 12px; padding-right:400px; position:absolute;top:". $top ."px;left:138px;LINE-HEIGHT:15px;\">". 
-                wordwrap($submittal['description'],300,"<br>\n") ."</div>";  
+                wordwrap($submittal['description'],350,"<br>\n") ."</div>";  
                 
                 $htmlsub .= "<div style=\"font-size: 12px; position:absolute;top:". $top ."px;left:445px;\">". 
                 $submittal['qty_sets'] ."</div>";
