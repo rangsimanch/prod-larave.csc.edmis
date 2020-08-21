@@ -631,8 +631,8 @@ return [
 ],
 
 'dailyRequest'           => [
-    'title'          => 'CEC Daily Request',
-    'title_singular' => 'CEC Daily Request',
+    'title'          => 'CCSP Daily Request',
+    'title_singular' => 'CCSP Daily Request',
     'fields'         => [
         'id'                      => 'ID',
         'id_helper'               => '',
@@ -661,8 +661,8 @@ return [
     ],
 ],
 'dailyReport'            => [
-    'title'          => 'CEC Daily Report',
-    'title_singular' => 'CEC Daily Report',
+    'title'          => 'CCSP Daily Report',
+    'title_singular' => 'CCSP Daily Report',
     'fields'         => [
         'id'                      => 'ID',
         'id_helper'               => '',
@@ -1069,7 +1069,7 @@ return [
         'cc_pmc_helper'                => '',
         'cc_csc'                       => 'CC CSC',
         'cc_csc_helper'                => '',
-        'cc_cec'                       => 'CC CEC',
+        'cc_cec'                       => 'CC CCSP',
         'cc_cec_helper'                => '',
     ],
 ],
@@ -1078,8 +1078,8 @@ return [
     'title_singular' => 'CSC',
 ],
 'letterCec'                 => [
-    'title'          => 'CEC',
-    'title_singular' => 'CEC',
+    'title'          => 'CCSP',
+    'title_singular' => 'CCSP',
 ],
 'letterPmc'                 => [
     'title'          => 'PMC',
@@ -1799,7 +1799,7 @@ return [
         'cc_srt_helper'                   => '',
         'cc_pmc'                          => 'CC PMC',
         'cc_pmc_helper'                   => '',
-        'cc_cec'                          => 'CC CEC',
+        'cc_cec'                          => 'CC CCSP',
         'cc_cec_helper'                   => '',
         'cc_csc'                          => 'CC CSC',
         'cc_csc_helper'                   => '',
@@ -1853,7 +1853,7 @@ return [
         'cc_srt_helper'                   => '',
         'cc_pmc'                          => 'CC PMC',
         'cc_pmc_helper'                   => '',
-        'cc_cec'                          => 'CC CEC',
+        'cc_cec'                          => 'CC CCSP',
         'cc_cec_helper'                   => '',
         'cc_csc'                          => 'CC CSC',
         'cc_csc_helper'                   => '',
