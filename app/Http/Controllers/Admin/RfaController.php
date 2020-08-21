@@ -1326,7 +1326,7 @@ class RfaController extends Controller
             $html .= "<div style=\"font-size: 10px; position:absolute;top:315px;left:130px;\">". $qty_page  . '.' ."</div>";
 
             if($rfa->cec_sign == 1){
-                $html .= "<div style=\"font-size: 14px; position:absolute;top:750px;left:500px;\">
+                $html .= "<div style=\"font-size: 14px; position:absolute;top:740px;left:520px;\">
                     <img src=\"". public_path('png-asset/Signature_CEC.png') ."\" width=\"40px\" higth=\"40px\"> </div>";
             }
             
