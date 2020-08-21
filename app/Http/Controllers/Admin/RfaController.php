@@ -1362,7 +1362,7 @@ class RfaController extends Controller
                 $htmlsub = "<div style=\"font-size: 12px; padding-right:680px; position:absolute;top:". $top ."px;left:50px;LINE-HEIGHT:15px;\">". 
                 $submittal['item_no'] . '  ' . $index ."</div>";
 
-                $htmlsub .= "<div style=\"font-size: 12px; padding-right:350px; position:absolute;top:". $top ."px;left:138px;LINE-HEIGHT:15px;\">". 
+                $htmlsub .= "<div style=\"font-size: 12px; padding-right:370px; position:absolute;top:". $top ."px;left:138px;LINE-HEIGHT:15px;\">". 
                 wordwrap($submittal['description'],350,"<br>\n") ."</div>";  
                 
                 $htmlsub .= "<div style=\"font-size: 12px; position:absolute;top:". $top ."px;left:445px;\">". 
