@@ -1171,7 +1171,7 @@ class RfaController extends Controller
               print "Creating an mPDF object failed with" . $e->getMessage();
           }
         //RFA Page
-        $pagecount = $mpdf->SetSourceFile(public_path('pdf-asset/RFA-Form.pdf'));
+        $pagecount = $mpdf->SetSourceFile(public_path('pdf-asset/RFA-Form_new.pdf'));
         $tplId = $mpdf->ImportPage($pagecount);
         $mpdf->UseTemplate($tplId);        
           //Title
