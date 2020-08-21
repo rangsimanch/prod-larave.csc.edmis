@@ -1286,7 +1286,7 @@ class RfaController extends Controller
 
         if(count($submittalsRfa) > 0){
             $mpdf->AddPage();
-            $pagecount = $mpdf->SetSourceFile(public_path('pdf-asset/Submittals_Form.pdf'));
+            $pagecount = $mpdf->SetSourceFile(public_path('pdf-asset/Submittals_Form_New.pdf'));
             $tplId = $mpdf->ImportPage($pagecount);
             $mpdf->UseTemplate($tplId);    
 
