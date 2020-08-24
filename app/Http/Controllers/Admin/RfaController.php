@@ -1215,6 +1215,7 @@ class RfaController extends Controller
         $html .= "<div style=\"font-size: 14px; position:absolute;top:500px;left:477;\">" . $receive_date . "</div>";
         $html .= "<div style=\"font-size: 14px; padding-right:180px; position:absolute;top:610;left:120px;LINE-HEIGHT:15px;\">" 
         . $note_2 . "</div>";
+        $html .= "<div style=\"font-size: 14px; position:absolute;top:660x;left:270;\">" . 'Li Guanghe' . "</div>";
         $html .= "<div style=\"font-size: 14px; position:absolute;top:675x;left:530;\">" . $receive_date . "</div>";
 
         //CSC Outgoing (1)
@@ -1260,6 +1261,8 @@ class RfaController extends Controller
         }
         $html .= "<div style=\"font-size: 14px; padding-right:180px; position:absolute;top:942;left:120px;LINE-HEIGHT:15px;\">" 
         . $note_4 . "</div>";
+
+        $html .= "<div style=\"font-size: 14px; position:absolute;top:990x;left:270;\">" . 'Li Guanghe' . "</div>";
 
         $html .= "<div style=\"font-size: 14px; position:absolute;top:990px;left:530;\">" . $outgoing_date . "</div>";
 

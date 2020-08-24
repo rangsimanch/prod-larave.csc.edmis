@@ -181,6 +181,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth'], '
     Route::post('request-for-inspections/WbsTwo','RequestForInspectionController@WbsTwo')->name('rfns.WbsTwo');
     Route::post('request-for-inspections/WbsThree','RequestForInspectionController@WbsThree')->name('rfns.WbsThree');
     Route::post('request-for-inspections/itemBoQ','RequestForInspectionController@itemBoQ')->name('rfns.itemBoQ');
+    Route::post('request-for-inspections/ModalAttachFilesUpload','RequestForInspectionController@ModalAttachFilesUpload')->name('rfns.ModalAttachFilesUpload');
     Route::resource('request-for-inspections', 'RequestForInspectionController');
    
 

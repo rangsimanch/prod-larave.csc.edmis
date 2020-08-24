@@ -447,8 +447,37 @@ class RequestForInspectionController extends Controller
         return response()->json(['id' => $media->id, 'url' => $media->getUrl()], Response::HTTP_CREATED);
     }
 
-    public function ModalAttachFilesUpload(RequestForInspection $request)
-    {
+    public function ModalAttachFilesUpload(Request $request)
+    {   
+        $data = $request->all();
+        $files = array();
 
+        foreach ($request->input('files_upload', []) as $file){
+            $files[] = $file;  //Get File to Array
+        }
+
+        foreach ($request->input('files_upload', []) as $file){
+            $files_upload[] = substr(str_replace(':','/',$file),14,-4); //Get Filename and convert to Ref Number
+        }
+
+        foreach ($files_upload as $ref_number){
+            $id[] = RequestForInspection::where('ref_no',$ref_number)->value('id'); // Find ID on Ref Number
+        }
+
+        for($i = 0; $i < sizeof($id); $i++){ //Loop for size of array
+            $requestForInspection = RequestForInspection::find($id[$i]); //Find Data in ID Array
+            if(isset($requestForInspection)){  //Check find result is not null
+                $requestForInspection->update($request->all()); // Update Table
+                try{
+                    if(isset($files[$i])){ //Check file array is not null
+                        $requestForInspection->addMedia(storage_path('tmp/uploads/' . $files[$i])) 
+                        ->toMediaCollection('files_upload'); //Put file index i to table
+                    }
+                }catch(Exception $e){
+
+                }
+            }
+        }
+        return redirect()->back();
     }
 }
