@@ -16,6 +16,7 @@ use Yajra\DataTables\Facades\DataTables;
 
 class BoqItemController extends Controller
 {
+    use CsvImportTrait;
     public function index(Request $request)
     {
         abort_if(Gate::denies('boq_item_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');

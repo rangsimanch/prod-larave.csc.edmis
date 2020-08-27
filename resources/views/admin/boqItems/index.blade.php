@@ -7,6 +7,10 @@
                 <a class="btn btn-success" href="{{ route('admin.boq-items.create') }}">
                     {{ trans('global.add') }} {{ trans('cruds.boqItem.title_singular') }}
                 </a>
+                <button class="btn btn-warning" data-toggle="modal" data-target="#csvImportModal">
+                    {{ trans('global.app_csvImport') }}
+                </button>
+                @include('csvImport.modal', ['model' => 'Rfa', 'route' => 'admin.rfas.parseCsvImport'])
             </div>
         </div>
     @endcan
