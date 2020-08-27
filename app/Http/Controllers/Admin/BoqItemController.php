@@ -58,22 +58,22 @@ class BoqItemController extends Controller
                 return $row->unit ? $row->unit : "";
             });
             $table->editColumn('quantity', function ($row) {
-                return $row->quantity ? $row->quantity : "";
+                return number_format($row->quantity ? $row->quantity : "",2);
             });
             $table->editColumn('unit_rate', function ($row) {
-                return $row->unit_rate ? $row->unit_rate : "";
+                return number_format($row->unit_rate ? $row->unit_rate : "",2);
             });
             $table->editColumn('amount', function ($row) {
-                return $row->amount ? $row->amount : "";
+                return number_format($row->amount ? $row->amount : "",2);
             });
             $table->editColumn('factor_f', function ($row) {
-                return $row->factor_f ? $row->factor_f : "";
+                return number_format($row->factor_f ? $row->factor_f : "",2);
             });
             $table->editColumn('unit_rate_x_ff', function ($row) {
-                return $row->unit_rate_x_ff ? $row->unit_rate_x_ff : "";
+                return number_format($row->unit_rate_x_ff ? $row->unit_rate_x_ff : "",2);
             });
             $table->editColumn('total_amount', function ($row) {
-                return $row->total_amount ? $row->total_amount : "";
+                return number_format($row->total_amount ? $row->total_amount : "",2);
             });
             $table->editColumn('remark', function ($row) {
                 return $row->remark ? $row->remark : "";
