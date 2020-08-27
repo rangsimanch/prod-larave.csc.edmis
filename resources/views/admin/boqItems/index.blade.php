@@ -10,7 +10,7 @@
                 <button class="btn btn-warning" data-toggle="modal" data-target="#csvImportModal">
                     {{ trans('global.app_csvImport') }}
                 </button>
-                @include('csvImport.modal', ['model' => 'Rfa', 'route' => 'admin.rfas.parseCsvImport'])
+                @include('csvImport.modal', ['model' => 'BoqItem', 'route' => 'admin.boq-items.parseCsvImport'])
             </div>
         </div>
     @endcan
