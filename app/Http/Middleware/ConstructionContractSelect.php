@@ -28,7 +28,8 @@ class ConstructionContractSelect
             Gate::denies('construction_contract_select')
         ) 
         {   
-            return $next($request);
+            // return $next($request);
+            return redirect()->back();
         } else 
         {
             // if user belongs only to one team store its id
