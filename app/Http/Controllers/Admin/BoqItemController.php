@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyBoqItemRequest;
 use App\Http\Requests\StoreBoqItemRequest;
 use App\Http\Requests\UpdateBoqItemRequest;
+use App\Http\Controllers\Traits\CsvImportTrait;
 use App\Team;
 use Gate;
 use Illuminate\Http\Request;
