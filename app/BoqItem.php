@@ -3,13 +3,12 @@
 namespace App;
 
 use App\Traits\Auditable;
-use App\Traits\MultiTenantModelTrait;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class BoqItem extends Model
 {
-    use SoftDeletes, MultiTenantModelTrait, Auditable;
+    use SoftDeletes, Auditable;
 
     public $table = 'boq_items';
 
