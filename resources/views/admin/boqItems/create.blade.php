@@ -79,7 +79,7 @@
                             @endif
                             <span class="help-block">{{ trans('cruds.boqItem.fields.factor_f_helper') }}</span>
                         </div>
-                        <!-- <div class="form-group {{ $errors->has('unit_rate_x_ff') ? 'has-error' : '' }}">
+                        <div class="form-group {{ $errors->has('unit_rate_x_ff') ? 'has-error' : '' }}">
                             <label for="unit_rate_x_ff">{{ trans('cruds.boqItem.fields.unit_rate_x_ff') }}</label>
                             <input class="form-control" type="number" name="unit_rate_x_ff" id="unit_rate_x_ff" value="{{ old('unit_rate_x_ff', '') }}" step="0.01">
                             @if($errors->has('unit_rate_x_ff'))
@@ -94,7 +94,7 @@
                                 <span class="help-block" role="alert">{{ $errors->first('total_amount') }}</span>
                             @endif
                             <span class="help-block">{{ trans('cruds.boqItem.fields.total_amount_helper') }}</span>
-                        </div> -->
+                        </div>
                         <div class="form-group {{ $errors->has('remark') ? 'has-error' : '' }}">
                             <label for="remark">{{ trans('cruds.boqItem.fields.remark') }}</label>
                             <textarea class="form-control" name="remark" id="remark">{{ old('remark') }}</textarea>

@@ -16,7 +16,7 @@
                             <label for="boq_id">{{ trans('cruds.boqItem.fields.boq') }}</label>
                             <select class="form-control select2" name="boq_id" id="boq_id">
                                 @foreach($boqs as $id => $boq)
-                                    <option value="{{ $id }}" {{ ($boqItem->boq ? $boqItem->boq->id : old('boq_id')) == $id ? 'selected' : '' }}>{{ $boq }}</option>
+                                    <option value="{{ $id }}" {{ (old('boq_id') ? old('boq_id') : $boqItem->boq->id ?? '') == $id ? 'selected' : '' }}>{{ $boq }}</option>
                                 @endforeach
                             </select>
                             @if($errors->has('boq'))
@@ -80,7 +80,7 @@
                             @endif
                             <span class="help-block">{{ trans('cruds.boqItem.fields.factor_f_helper') }}</span>
                         </div>
-                        <!-- <div class="form-group {{ $errors->has('unit_rate_x_ff') ? 'has-error' : '' }}">
+                        <div class="form-group {{ $errors->has('unit_rate_x_ff') ? 'has-error' : '' }}">
                             <label for="unit_rate_x_ff">{{ trans('cruds.boqItem.fields.unit_rate_x_ff') }}</label>
                             <input class="form-control" type="number" name="unit_rate_x_ff" id="unit_rate_x_ff" value="{{ old('unit_rate_x_ff', $boqItem->unit_rate_x_ff) }}" step="0.01">
                             @if($errors->has('unit_rate_x_ff'))
@@ -95,7 +95,7 @@
                                 <span class="help-block" role="alert">{{ $errors->first('total_amount') }}</span>
                             @endif
                             <span class="help-block">{{ trans('cruds.boqItem.fields.total_amount_helper') }}</span>
-                        </div> -->
+                        </div>
                         <div class="form-group {{ $errors->has('remark') ? 'has-error' : '' }}">
                             <label for="remark">{{ trans('cruds.boqItem.fields.remark') }}</label>
                             <textarea class="form-control" name="remark" id="remark">{{ old('remark', $boqItem->remark) }}</textarea>

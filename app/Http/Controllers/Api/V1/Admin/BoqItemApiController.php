@@ -17,7 +17,7 @@ class BoqItemApiController extends Controller
     {
         abort_if(Gate::denies('boq_item_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new BoqItemResource(BoqItem::with(['boq', 'team'])->get());
+        return new BoqItemResource(BoqItem::with(['boq'])->get());
     }
 
     public function store(StoreBoqItemRequest $request)
@@ -33,7 +33,7 @@ class BoqItemApiController extends Controller
     {
         abort_if(Gate::denies('boq_item_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new BoqItemResource($boqItem->load(['boq', 'team']));
+        return new BoqItemResource($boqItem->load(['boq']));
     }
 
     public function update(UpdateBoqItemRequest $request, BoqItem $boqItem)

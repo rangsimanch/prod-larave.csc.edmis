@@ -207,9 +207,6 @@ Route::group(['prefix' => 'v1', 'as' => 'api.', 'namespace' => 'Api\V1\Admin', '
     // Wbs Level Ones
     Route::apiResource('wbs-level-ones', 'WbsLevelOneApiController');
 
-    // Wbs Level Twos
-    Route::apiResource('wbs-level-twos', 'WbsLevelTwoApiController');
-
     // Wbs Level Fives
     Route::apiResource('wbs-level-fives', 'WbsLevelFiveApiController');
 
@@ -228,4 +225,7 @@ Route::group(['prefix' => 'v1', 'as' => 'api.', 'namespace' => 'Api\V1\Admin', '
     // Non Conformance Reports
     Route::post('non-conformance-reports/media', 'NonConformanceReportApiController@storeMedia')->name('non-conformance-reports.storeMedia');
     Route::apiResource('non-conformance-reports', 'NonConformanceReportApiController');
+
+    // Boq Items
+    Route::apiResource('boq-items', 'BoqItemApiController');
 });

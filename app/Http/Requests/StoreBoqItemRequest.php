@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use App\BoqItem;
 use Gate;
 use Illuminate\Foundation\Http\FormRequest;
-use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Http\Response;
 
 class StoreBoqItemRequest extends FormRequest
 {
@@ -18,6 +18,34 @@ class StoreBoqItemRequest extends FormRequest
 
     public function rules()
     {
-        return [];
+        return [
+            'code'           => [
+                'string',
+                'nullable',
+            ],
+            'name'           => [
+                'string',
+                'nullable',
+            ],
+            'unit'           => [
+                'string',
+                'nullable',
+            ],
+            'quantity'       => [
+                'numeric',
+            ],
+            'unit_rate'      => [
+                'numeric',
+            ],
+            'factor_f'       => [
+                'numeric',
+            ],
+            'unit_rate_x_ff' => [
+                'numeric',
+            ],
+            'total_amount'   => [
+                'numeric',
+            ],
+        ];
     }
 }

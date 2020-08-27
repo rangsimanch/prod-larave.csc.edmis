@@ -403,9 +403,10 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth'], '
 
     // Boq Items
     Route::delete('boq-items/destroy', 'BoqItemController@massDestroy')->name('boq-items.massDestroy');
-    Route::resource('boq-items', 'BoqItemController');
     Route::post('boq-items/parse-csv-import', 'BoqItemController@parseCsvImport')->name('boq-items.parseCsvImport');
     Route::post('boq-items/process-csv-import', 'BoqItemController@processCsvImport')->name('boq-items.processCsvImport');
+    Route::resource('boq-items', 'BoqItemController');
+   
 
 
     Route::get('system-calendar', 'SystemCalendarController@index')->name('systemCalendar');

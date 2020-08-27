@@ -5,11 +5,10 @@ namespace App\Http\Controllers\Admin;
 use App\BoQ;
 use App\BoqItem;
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Traits\CsvImportTrait;
 use App\Http\Requests\MassDestroyBoqItemRequest;
 use App\Http\Requests\StoreBoqItemRequest;
 use App\Http\Requests\UpdateBoqItemRequest;
-use App\Http\Controllers\Traits\CsvImportTrait;
-use App\Team;
 use Gate;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -18,12 +17,13 @@ use Yajra\DataTables\Facades\DataTables;
 class BoqItemController extends Controller
 {
     use CsvImportTrait;
+
     public function index(Request $request)
     {
         abort_if(Gate::denies('boq_item_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
-            $query = BoqItem::with(['boq', 'team'])->select(sprintf('%s.*', (new BoqItem)->table));
+            $query = BoqItem::with(['boq'])->select(sprintf('%s.*', (new BoqItem)->table));
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
@@ -58,22 +58,22 @@ class BoqItemController extends Controller
                 return $row->unit ? $row->unit : "";
             });
             $table->editColumn('quantity', function ($row) {
-                return number_format($row->quantity ? $row->quantity : "",2,".",",");
+                return $row->quantity ? $row->quantity : "";
             });
             $table->editColumn('unit_rate', function ($row) {
-                return number_format($row->unit_rate ? $row->unit_rate : "",2,".",",");
+                return $row->unit_rate ? $row->unit_rate : "";
             });
             $table->editColumn('amount', function ($row) {
-                return number_format($row->amount ? $row->amount : "",2,".",",");
+                return $row->amount ? $row->amount : "";
             });
             $table->editColumn('factor_f', function ($row) {
-                return number_format($row->factor_f ? $row->factor_f : "",4,".",",");
+                return $row->factor_f ? $row->factor_f : "";
             });
             $table->editColumn('unit_rate_x_ff', function ($row) {
-                return number_format($row->unit_rate_x_ff ? $row->unit_rate_x_ff : "",2,".",",");
+                return $row->unit_rate_x_ff ? $row->unit_rate_x_ff : "";
             });
             $table->editColumn('total_amount', function ($row) {
-                return number_format($row->total_amount ? $row->total_amount : "",2,".",",");
+                return $row->total_amount ? $row->total_amount : "";
             });
             $table->editColumn('remark', function ($row) {
                 return $row->remark ? $row->remark : "";
@@ -85,9 +85,8 @@ class BoqItemController extends Controller
         }
 
         $bo_qs = BoQ::get();
-        $teams = Team::get();
 
-        return view('admin.boqItems.index', compact('bo_qs', 'teams'));
+        return view('admin.boqItems.index', compact('bo_qs'));
     }
 
     public function create()
@@ -101,10 +100,7 @@ class BoqItemController extends Controller
 
     public function store(StoreBoqItemRequest $request)
     {
-        $data = $request->all();
-        $data['unit_rate_x_ff'] = $data['unit_rate'] * $data['factor_f'];
-        $data['total_amount'] = $data['unit_rate_x_ff'] * $data['quantity'];
-        $boqItem = BoqItem::create($data);
+        $boqItem = BoqItem::create($request->all());
 
         return redirect()->route('admin.boq-items.index');
     }
@@ -115,7 +111,7 @@ class BoqItemController extends Controller
 
         $boqs = BoQ::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $boqItem->load('boq', 'team');
+        $boqItem->load('boq');
 
         return view('admin.boqItems.edit', compact('boqs', 'boqItem'));
     }
@@ -131,7 +127,7 @@ class BoqItemController extends Controller
     {
         abort_if(Gate::denies('boq_item_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $boqItem->load('boq', 'team');
+        $boqItem->load('boq');
 
         return view('admin.boqItems.show', compact('boqItem'));
     }

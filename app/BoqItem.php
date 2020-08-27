@@ -33,16 +33,10 @@ class BoqItem extends Model
         'remark',
         'updated_at',
         'deleted_at',
-        'team_id',
     ];
 
     public function boq()
     {
         return $this->belongsTo(BoQ::class, 'boq_id');
-    }
-
-    public function team()
-    {
-        return $this->belongsTo(Team::class, 'team_id');
     }
 }

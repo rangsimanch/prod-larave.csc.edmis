@@ -3,7 +3,7 @@
 <div class="content">
     @can('boq_item_create')
         <div style="margin-bottom: 10px;" class="row">
-        <div class="col-lg-12">
+            <div class="col-lg-12">
                 <a class="btn btn-success" href="{{ route('admin.boq-items.create') }}">
                     {{ trans('global.add') }} {{ trans('cruds.boqItem.title_singular') }}
                 </a>
