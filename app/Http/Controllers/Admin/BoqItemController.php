@@ -58,22 +58,22 @@ class BoqItemController extends Controller
                 return $row->unit ? $row->unit : "";
             });
             $table->editColumn('quantity', function ($row) {
-                return var_dump(number_format($row->quantity ? $row->quantity : "",2));
+                return number_format($row->quantity,2) ? $row->quantity : "";
             });
             $table->editColumn('unit_rate', function ($row) {
-                return var_dump(number_format($row->unit_rate ? $row->unit_rate : "",2));
+                return number_format($row->unit_rate,2) ? $row->unit_rate : "";
             });
             $table->editColumn('amount', function ($row) {
-                return var_dump(number_format($row->amount ? $row->amount : "",2));
+                return number_format($row->amount,2) ? $row->amount : "";
             });
             $table->editColumn('factor_f', function ($row) {
-                return var_dump(number_format($row->factor_f ? $row->factor_f : "",2));
+                return number_format($row->factor_f,2) ? $row->factor_f : "";
             });
             $table->editColumn('unit_rate_x_ff', function ($row) {
-                return var_dump(number_format($row->unit_rate_x_ff ? $row->unit_rate_x_ff : "",2));
+                return number_format($row->unit_rate_x_ff,2) ? $row->unit_rate_x_ff : "";
             });
             $table->editColumn('total_amount', function ($row) {
-                return var_dump(number_format($row->total_amount ? $row->total_amount : "",2));
+                return number_format($row->total_amount,2) ? $row->total_amount : "";
             });
             $table->editColumn('remark', function ($row) {
                 return $row->remark ? $row->remark : "";
