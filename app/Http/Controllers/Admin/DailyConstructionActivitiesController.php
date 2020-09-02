@@ -45,6 +45,10 @@ class DailyConstructionActivitiesController extends Controller
                 ));
             });
 
+            $table->editColumn('id', function ($row) {
+                return $row->id ? $row->id : "";
+            });
+
             $table->editColumn('work_title', function ($row) {
                 return $row->work_title ? $row->work_title : "";
             });

@@ -45,6 +45,9 @@
                                 <th width="10">
 
                                 </th>
+                                <th style="display:none;">
+                                    {{ trans('cruds.dailyConstructionActivity.fields.id') }}
+                                </th>
                                 <th>
                                     {{ trans('cruds.dailyConstructionActivity.fields.work_title') }}
                                 </th>
@@ -115,13 +118,14 @@
     ajax: "{{ route('admin.daily-construction-activities.index') }}",
     columns: [
       { data: 'placeholder', name: 'placeholder' },
+      { data: 'id', name: 'id' , visible: false},
 { data: 'work_title', name: 'work_title' },
 { data: 'operation_date', name: 'operation_date' },
 { data: 'construction_contract_code', name: 'construction_contract.code' },
 { data: 'image_upload', name: 'image_upload', sortable: false, searchable: false },
 { data: 'actions', name: '{{ trans('global.actions') }}' }
     ],
-    order: [[ 2, 'desc' ]],
+    order: [[ 1, 'desc' ]],
     pageLength: 2,
   };
   $('.datatable-DailyConstructionActivity').DataTable(dtOverrideGlobals);
