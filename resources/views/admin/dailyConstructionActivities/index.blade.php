@@ -121,8 +121,8 @@
 { data: 'image_upload', name: 'image_upload', sortable: false, searchable: false },
 { data: 'actions', name: '{{ trans('global.actions') }}' }
     ],
-    order: [[ 2, 'desc' ]],
-    pageLength: 1,
+    order: [[ 2, 'asc' ]],
+    pageLength: 2,
   };
   $('.datatable-DailyConstructionActivity').DataTable(dtOverrideGlobals);
     $('a[data-toggle="tab"]').on('shown.bs.tab', function(e){
