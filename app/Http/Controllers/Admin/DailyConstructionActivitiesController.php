@@ -64,7 +64,7 @@ class DailyConstructionActivitiesController extends Controller
                 
                 foreach ($row->image_upload as $index => $media) {
                         // $links[] = '<a href="' . $media->getUrl() . '" target="_blank"><img src="' . $media->getUrl('thumb') . '" width="50px" height="50px"></a>';      
-                        $links[] = '<img class="w-100" src="' . $media->getUrl('thumb') . '" width="50px" height="50px"
+                        $links[] = '<img class="w-100" src="' . $media->getUrl('thumb') . '" width="30px" height="30px"
                         data-target="#carouselExample'. $row->id .'" data-slide-to="'. $index .'">';      
                     }
                 $links[] = '</div>';
