@@ -63,15 +63,16 @@ class DailyConstructionActivitiesController extends Controller
                 }
 
                 $links = [];
-                $links[] = '<div id="gallery'. $row->id .'" data-toggle="modal" data-target="#exampleModal'. $row->id .'">';
-                // $links[] = '<div id="gallery" data-toggle="modal" data-target="#exampleModal"><a class="btn-xs btn-info">View</a>';
+                $links[] = '<button id="gallery'. $row->id .'" data-toggle="modal" data-target="#exampleModal'. $row->id .'" class="btn btn-light" type="button"> Show Gallery </button>';
+                // $links[] = '<div id="gallery'. $row->id .'" data-toggle="modal" data-target="#exampleModal'. $row->id .'">';
+                // // $links[] = '<div id="gallery" data-toggle="modal" data-target="#exampleModal"><a class="btn-xs btn-info">View</a>';
                 
-                foreach ($row->image_upload as $index => $media) {
-                        // $links[] = '<a href="' . $media->getUrl() . '" target="_blank"><img src="' . $media->getUrl('thumb') . '" width="50px" height="50px"></a>';      
-                        $links[] = '<img class="w-100" src="' . $media->getUrl('thumb') . '" width="30px" height="30px"
-                        data-target="#carouselExample'. $row->id .'" data-slide-to="'. $index .'">';      
-                    }
-                $links[] = '</div>';
+                // foreach ($row->image_upload as $index => $media) {
+                //         // $links[] = '<a href="' . $media->getUrl() . '" target="_blank"><img src="' . $media->getUrl('thumb') . '" width="50px" height="50px"></a>';      
+                //         $links[] = '<img class="w-100" src="' . $media->getUrl('thumb') . '" width="30px" height="30px"
+                //         data-target="#carouselExample'. $row->id .'" data-slide-to="'. $index .'">';      
+                //     }
+                // $links[] = '</div>';
                     
                 $links[] = '<div class="modal fade" id="exampleModal'. $row->id .'" tabindex="-1" role="dialog" aria-hidden="true">
                 <div class="modal-dialog" role="document">
