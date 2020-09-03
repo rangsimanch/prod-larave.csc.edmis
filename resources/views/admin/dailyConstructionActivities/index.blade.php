@@ -126,7 +126,7 @@
 { data: 'actions', name: '{{ trans('global.actions') }}' }
     ],
     order: [[ 1, 'desc' ]],
-    pageLength: 2,
+    pageLength: 10,
   };
   $('.datatable-DailyConstructionActivity').DataTable(dtOverrideGlobals);
     $('a[data-toggle="tab"]').on('shown.bs.tab', function(e){
