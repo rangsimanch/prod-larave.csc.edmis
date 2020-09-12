@@ -228,4 +228,15 @@ Route::group(['prefix' => 'v1', 'as' => 'api.', 'namespace' => 'Api\V1\Admin', '
 
     // Boq Items
     Route::apiResource('boq-items', 'BoqItemApiController');
+
+    // Srt Input Documents
+    Route::post('srt-input-documents/media', 'SrtInputDocumentsApiController@storeMedia')->name('srt-input-documents.storeMedia');
+    Route::apiResource('srt-input-documents', 'SrtInputDocumentsApiController');
+
+    // Srt Document Statuses
+    Route::apiResource('srt-document-statuses', 'SrtDocumentStatusApiController');
+
+    // Srt Head Office Documents
+    Route::post('srt-head-office-documents/media', 'SrtHeadOfficeDocumentApiController@storeMedia')->name('srt-head-office-documents.storeMedia');
+    Route::apiResource('srt-head-office-documents', 'SrtHeadOfficeDocumentApiController');
 });

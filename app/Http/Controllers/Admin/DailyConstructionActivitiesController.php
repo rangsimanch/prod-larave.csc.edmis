@@ -102,13 +102,13 @@ class DailyConstructionActivitiesController extends Controller
                 foreach ($row->image_upload as $index => $media) {
                     if($index == 0){
                         $links[] = '<div class="item active">
-                        <div class="desc">' . ($index+1) .' of '. count($row->image_upload) .'</div>
+                        <div class="descPhoto">' . ($index+1) .' of '. count($row->image_upload) .'</div>
                         <img class="d-block w-100" src="'. $media->getUrl() .'">
                         </div>';
                     }
                     else{
                         $links[] = '<div class="item">
-                        <div class="desc">' . ($index+1) .' of '. count($row->image_upload) .'</div>
+                        <div class="descPhoto">' . ($index+1) .' of '. count($row->image_upload) .'</div>
                         <img class="d-block w-100" src="'. $media->getUrl() .'">
                         </div>';
                     }

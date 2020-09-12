@@ -406,6 +406,26 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth'], '
     Route::post('boq-items/parse-csv-import', 'BoqItemController@parseCsvImport')->name('boq-items.parseCsvImport');
     Route::post('boq-items/process-csv-import', 'BoqItemController@processCsvImport')->name('boq-items.processCsvImport');
     Route::resource('boq-items', 'BoqItemController');
+
+     // Srt Input Documents
+     Route::delete('srt-input-documents/destroy', 'SrtInputDocumentsController@massDestroy')->name('srt-input-documents.massDestroy');
+     Route::post('srt-input-documents/media', 'SrtInputDocumentsController@storeMedia')->name('srt-input-documents.storeMedia');
+     Route::post('srt-input-documents/ckmedia', 'SrtInputDocumentsController@storeCKEditorImages')->name('srt-input-documents.storeCKEditorImages');
+     Route::post('srt-input-documents/parse-csv-import', 'SrtInputDocumentsController@parseCsvImport')->name('srt-input-documents.parseCsvImport');
+     Route::post('srt-input-documents/process-csv-import', 'SrtInputDocumentsController@processCsvImport')->name('srt-input-documents.processCsvImport');
+     Route::resource('srt-input-documents', 'SrtInputDocumentsController');
+ 
+     // Srt Document Statuses
+     Route::delete('srt-document-statuses/destroy', 'SrtDocumentStatusController@massDestroy')->name('srt-document-statuses.massDestroy');
+     Route::resource('srt-document-statuses', 'SrtDocumentStatusController');
+ 
+     // Srt Head Office Documents
+     Route::delete('srt-head-office-documents/destroy', 'SrtHeadOfficeDocumentController@massDestroy')->name('srt-head-office-documents.massDestroy');
+     Route::post('srt-head-office-documents/media', 'SrtHeadOfficeDocumentController@storeMedia')->name('srt-head-office-documents.storeMedia');
+     Route::post('srt-head-office-documents/ckmedia', 'SrtHeadOfficeDocumentController@storeCKEditorImages')->name('srt-head-office-documents.storeCKEditorImages');
+     Route::post('srt-head-office-documents/parse-csv-import', 'SrtHeadOfficeDocumentController@parseCsvImport')->name('srt-head-office-documents.parseCsvImport');
+     Route::post('srt-head-office-documents/process-csv-import', 'SrtHeadOfficeDocumentController@processCsvImport')->name('srt-head-office-documents.processCsvImport');
+     Route::resource('srt-head-office-documents', 'SrtHeadOfficeDocumentController');
    
 
 

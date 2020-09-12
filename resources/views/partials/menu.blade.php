@@ -211,6 +211,55 @@
                     </ul>
                 </li>
             @endcan
+            
+            <!-- SRT DOCUMENT -->
+            @can('srt_document_access')
+                <li class="treeview">
+                    <a href="#">
+                        <i class="fa-fw fas fa-archive">
+
+                        </i>
+                        <span>{{ trans('cruds.srtDocument.title') }}</span>
+                        <span class="pull-right-container"><i class="fa fa-fw fa-angle-left pull-right"></i></span>
+                    </a>
+                    <ul class="treeview-menu">
+                        @can('srt_input_document_access')
+                            <li class="{{ request()->is("admin/srt-input-documents") || request()->is("admin/srt-input-documents/*") ? "active" : "" }}">
+                                <a href="{{ route("admin.srt-input-documents.index") }}">
+                                    <i class="fa-fw fas fa-passport">
+
+                                    </i>
+                                    <span>{{ trans('cruds.srtInputDocument.title') }}</span>
+
+                                </a>
+                            </li>
+                        @endcan
+                        @can('srt_head_office_document_access')
+                            <li class="{{ request()->is("admin/srt-head-office-documents") || request()->is("admin/srt-head-office-documents/*") ? "active" : "" }}">
+                                <a href="{{ route("admin.srt-head-office-documents.index") }}">
+                                    <i class="fa-fw fas fa-building">
+
+                                    </i>
+                                    <span>{{ trans('cruds.srtHeadOfficeDocument.title') }}</span>
+
+                                </a>
+                            </li>
+                        @endcan
+                        @can('srt_document_status_access')
+                            <li class="{{ request()->is("admin/srt-document-statuses") || request()->is("admin/srt-document-statuses/*") ? "active" : "" }}">
+                                <a href="{{ route("admin.srt-document-statuses.index") }}">
+                                    <i class="fa-fw fas fa-cogs">
+
+                                    </i>
+                                    <span>{{ trans('cruds.srtDocumentStatus.title') }}</span>
+
+                                </a>
+                            </li>
+                        @endcan
+                    </ul>
+                </li>
+            @endcan
+
             @can('task_access')
                 <li class="{{ request()->is('admin/tasks') || request()->is('admin/tasks/*') ? 'active' : '' }}">
                     <a href="{{ route("admin.tasks.index") }}">
