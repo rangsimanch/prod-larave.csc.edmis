@@ -14,7 +14,6 @@ class MassDestroyUserRequest extends FormRequest
         abort_if(Gate::denies('user_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         return true;
-
     }
 
     public function rules()
@@ -23,6 +22,5 @@ class MassDestroyUserRequest extends FormRequest
             'ids'   => 'required|array',
             'ids.*' => 'exists:users,id',
         ];
-
     }
 }

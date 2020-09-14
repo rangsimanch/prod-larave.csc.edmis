@@ -17,7 +17,7 @@ class ConstructionContractApiController extends Controller
     {
         abort_if(Gate::denies('construction_contract_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new ConstructionContractResource(ConstructionContract::all());
+        return new ConstructionContractResource(ConstructionContract::with(['works_code'])->get());
     }
 
     public function store(StoreConstructionContractRequest $request)
@@ -33,7 +33,7 @@ class ConstructionContractApiController extends Controller
     {
         abort_if(Gate::denies('construction_contract_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new ConstructionContractResource($constructionContract);
+        return new ConstructionContractResource($constructionContract->load(['works_code']));
     }
 
     public function update(UpdateConstructionContractRequest $request, ConstructionContract $constructionContract)

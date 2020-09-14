@@ -20,7 +20,7 @@ class SrtHeadOfficeDocumentApiController extends Controller
     {
         abort_if(Gate::denies('srt_head_office_document_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new SrtHeadOfficeDocumentResource(SrtHeadOfficeDocument::with(['refer_documents', 'special_command', 'team'])->get());
+        return new SrtHeadOfficeDocumentResource(SrtHeadOfficeDocument::with(['refer_documents', 'operator', 'team'])->get());
     }
 
     public function store(StoreSrtHeadOfficeDocumentRequest $request)
@@ -40,7 +40,7 @@ class SrtHeadOfficeDocumentApiController extends Controller
     {
         abort_if(Gate::denies('srt_head_office_document_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new SrtHeadOfficeDocumentResource($srtHeadOfficeDocument->load(['refer_documents', 'special_command', 'team']));
+        return new SrtHeadOfficeDocumentResource($srtHeadOfficeDocument->load(['refer_documents', 'operator', 'team']));
     }
 
     public function update(UpdateSrtHeadOfficeDocumentRequest $request, SrtHeadOfficeDocument $srtHeadOfficeDocument)

@@ -20,7 +20,7 @@ class SrtInputDocumentsApiController extends Controller
     {
         abort_if(Gate::denies('srt_input_document_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new SrtInputDocumentResource(SrtInputDocument::with(['docuement_status', 'team'])->get());
+        return new SrtInputDocumentResource(SrtInputDocument::with(['docuement_status', 'constuction_contract', 'from', 'to', 'close_by', 'team'])->get());
     }
 
     public function store(StoreSrtInputDocumentRequest $request)
@@ -40,7 +40,7 @@ class SrtInputDocumentsApiController extends Controller
     {
         abort_if(Gate::denies('srt_input_document_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new SrtInputDocumentResource($srtInputDocument->load(['docuement_status', 'team']));
+        return new SrtInputDocumentResource($srtInputDocument->load(['docuement_status', 'constuction_contract', 'from', 'to', 'close_by', 'team']));
     }
 
     public function update(UpdateSrtInputDocumentRequest $request, SrtInputDocument $srtInputDocument)

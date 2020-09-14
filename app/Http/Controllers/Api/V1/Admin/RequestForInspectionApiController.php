@@ -20,13 +20,12 @@ class RequestForInspectionApiController extends Controller
     {
         abort_if(Gate::denies('request_for_inspection_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new RequestForInspectionResource(RequestForInspection::with(['wbs_level_1', 'bill', 'wbs_level_3', 'wbs_level_4', 'items', 'requested_by', 'contact_person', 'construction_contract', 'team'])->get());
+        return new RequestForInspectionResource(RequestForInspection::with(['construction_contract', 'wbs_level_1', 'bill', 'wbs_level_3', 'item_1', 'item_2', 'item_3', 'requested_by', 'contact_person', 'team'])->get());
     }
 
     public function store(StoreRequestForInspectionRequest $request)
     {
         $requestForInspection = RequestForInspection::create($request->all());
-        $requestForInspection->items()->sync($request->input('items', []));
 
         if ($request->input('files_upload', false)) {
             $requestForInspection->addMedia(storage_path('tmp/uploads/' . $request->input('files_upload')))->toMediaCollection('files_upload');
@@ -45,13 +44,12 @@ class RequestForInspectionApiController extends Controller
     {
         abort_if(Gate::denies('request_for_inspection_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new RequestForInspectionResource($requestForInspection->load(['wbs_level_1', 'bill', 'wbs_level_3', 'wbs_level_4', 'items', 'requested_by', 'contact_person', 'construction_contract', 'team']));
+        return new RequestForInspectionResource($requestForInspection->load(['construction_contract', 'wbs_level_1', 'bill', 'wbs_level_3', 'item_1', 'item_2', 'item_3', 'requested_by', 'contact_person', 'team']));
     }
 
     public function update(UpdateRequestForInspectionRequest $request, RequestForInspection $requestForInspection)
     {
         $requestForInspection->update($request->all());
-        $requestForInspection->items()->sync($request->input('items', []));
 
         if ($request->input('files_upload', false)) {
             if (!$requestForInspection->files_upload || $request->input('files_upload') !== $requestForInspection->files_upload->file_name) {

@@ -37,6 +37,10 @@ class UsersApiController extends Controller
             $user->addMedia(storage_path('tmp/uploads/' . $request->input('signature')))->toMediaCollection('signature');
         }
 
+        if ($request->input('stamp_signature', false)) {
+            $user->addMedia(storage_path('tmp/uploads/' . $request->input('stamp_signature')))->toMediaCollection('stamp_signature');
+        }
+
         return (new UserResource($user))
             ->response()
             ->setStatusCode(Response::HTTP_CREATED);
@@ -57,6 +61,10 @@ class UsersApiController extends Controller
 
         if ($request->input('img_user', false)) {
             if (!$user->img_user || $request->input('img_user') !== $user->img_user->file_name) {
+                if ($user->img_user) {
+                    $user->img_user->delete();
+                }
+
                 $user->addMedia(storage_path('tmp/uploads/' . $request->input('img_user')))->toMediaCollection('img_user');
             }
         } elseif ($user->img_user) {
@@ -65,10 +73,26 @@ class UsersApiController extends Controller
 
         if ($request->input('signature', false)) {
             if (!$user->signature || $request->input('signature') !== $user->signature->file_name) {
+                if ($user->signature) {
+                    $user->signature->delete();
+                }
+
                 $user->addMedia(storage_path('tmp/uploads/' . $request->input('signature')))->toMediaCollection('signature');
             }
         } elseif ($user->signature) {
             $user->signature->delete();
+        }
+
+        if ($request->input('stamp_signature', false)) {
+            if (!$user->stamp_signature || $request->input('stamp_signature') !== $user->stamp_signature->file_name) {
+                if ($user->stamp_signature) {
+                    $user->stamp_signature->delete();
+                }
+
+                $user->addMedia(storage_path('tmp/uploads/' . $request->input('stamp_signature')))->toMediaCollection('stamp_signature');
+            }
+        } elseif ($user->stamp_signature) {
+            $user->stamp_signature->delete();
         }
 
         return (new UserResource($user))

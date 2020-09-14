@@ -18,7 +18,6 @@ class CreateRequestForInspectionsTable extends Migration
             $table->date('submittal_date')->nullable();
             $table->date('replied_date')->nullable();
             $table->string('ipa')->nullable();
-            $table->integer('start_loop')->nullable();
             $table->integer('end_loop')->nullable();
             $table->timestamps();
             $table->softDeletes();

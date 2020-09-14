@@ -5,41 +5,47 @@ namespace App\Http\Requests;
 use App\RequestForInspection;
 use Gate;
 use Illuminate\Foundation\Http\FormRequest;
-use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Http\Response;
 
 class StoreRequestForInspectionRequest extends FormRequest
 {
     public function authorize()
     {
-        abort_if(Gate::denies('request_for_inspection_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
-        return true;
+        return Gate::allows('request_for_inspection_create');
     }
 
     public function rules()
     {
         return [
-            'items.*'        => [
+            'construction_contract_id' => [
+                'required',
                 'integer',
             ],
-            'items'          => [
-                'array',
+            'subject'                  => [
+                'string',
+                'nullable',
             ],
-            'submittal_date' => [
+            'ref_no'                   => [
+                'string',
+                'nullable',
+            ],
+            'location'                 => [
+                'string',
+                'nullable',
+            ],
+            'submittal_date'           => [
                 'date_format:' . config('panel.date_format'),
                 'nullable',
             ],
-            'replied_date'   => [
+            'replied_date'             => [
                 'date_format:' . config('panel.date_format'),
                 'nullable',
             ],
-            'start_loop'     => [
+            'ipa'                      => [
+                'string',
                 'nullable',
-                'integer',
-                'min:-2147483648',
-                'max:2147483647',
             ],
-            'end_loop'       => [
+            'end_loop'                 => [
                 'nullable',
                 'integer',
                 'min:-2147483648',

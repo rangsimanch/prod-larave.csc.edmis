@@ -11,41 +11,42 @@ class UpdateSrtInputDocumentRequest extends FormRequest
 {
     public function authorize()
     {
-        abort_if(Gate::denies('srt_input_document_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
-        return true;
+        return Gate::allows('srt_input_document_edit');
     }
 
     public function rules()
     {
         return [
-            'document_number'  => [
+            'constuction_contract_id' => [
+                'required',
+                'integer',
+            ],
+            'registration_number'     => [
+                'string',
+                'required',
+                'unique:srt_input_documents,registration_number,' . request()->route('srt_input_document')->id,
+            ],
+            'document_number'         => [
                 'string',
                 'required',
             ],
-            'incoming_date'    => [
+            'incoming_date'           => [
                 'required',
                 'date_format:' . config('panel.date_format'),
             ],
-            'refer_to'         => [
+            'refer_to'                => [
                 'string',
                 'nullable',
             ],
-            'attachments'      => [
+            'attachments'             => [
                 'string',
                 'nullable',
             ],
-            'from'             => [
-                'required',
-            ],
-            'to'               => [
-                'required',
-            ],
-            'signer'           => [
+            'signatory'               => [
                 'string',
                 'nullable',
             ],
-            'document_storage' => [
+            'document_storage'        => [
                 'string',
                 'nullable',
             ],

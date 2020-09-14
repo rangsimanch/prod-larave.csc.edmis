@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\ConstructionContract;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Traits\CsvImportTrait;
 use App\Http\Controllers\Traits\MediaUploadingTrait;
@@ -11,6 +12,7 @@ use App\Http\Requests\UpdateSrtInputDocumentRequest;
 use App\SrtDocumentStatus;
 use App\SrtInputDocument;
 use App\Team;
+use App\User;
 use Gate;
 use Illuminate\Http\Request;
 use Spatie\MediaLibrary\Models\Media;
@@ -26,7 +28,7 @@ class SrtInputDocumentsController extends Controller
         abort_if(Gate::denies('srt_input_document_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
-            $query = SrtInputDocument::with(['docuement_status', 'team'])->select(sprintf('%s.*', (new SrtInputDocument)->table));
+            $query = SrtInputDocument::with(['docuement_status', 'constuction_contract', 'from', 'to', 'close_by', 'team'])->select(sprintf('%s.*', (new SrtInputDocument)->table));
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
@@ -47,6 +49,17 @@ class SrtInputDocumentsController extends Controller
                 ));
             });
 
+            $table->addColumn('docuement_status_title', function ($row) {
+                return $row->docuement_status ? $row->docuement_status->title : '';
+            });
+
+            $table->addColumn('constuction_contract_code', function ($row) {
+                return $row->constuction_contract ? $row->constuction_contract->code : '';
+            });
+
+            $table->editColumn('registration_number', function ($row) {
+                return $row->registration_number ? $row->registration_number : "";
+            });
             $table->editColumn('document_type', function ($row) {
                 return $row->document_type ? SrtInputDocument::DOCUMENT_TYPE_SELECT[$row->document_type] : '';
             });
@@ -57,14 +70,16 @@ class SrtInputDocumentsController extends Controller
             $table->editColumn('refer_to', function ($row) {
                 return $row->refer_to ? $row->refer_to : "";
             });
+            $table->addColumn('from_name', function ($row) {
+                return $row->from ? $row->from->name : '';
+            });
+
+            $table->addColumn('to_name', function ($row) {
+                return $row->to ? $row->to->name : '';
+            });
+
             $table->editColumn('attachments', function ($row) {
                 return $row->attachments ? $row->attachments : "";
-            });
-            $table->editColumn('from', function ($row) {
-                return $row->from ? SrtInputDocument::FROM_SELECT[$row->from] : '';
-            });
-            $table->editColumn('to', function ($row) {
-                return $row->to ? SrtInputDocument::TO_SELECT[$row->to] : '';
             });
             $table->editColumn('description', function ($row) {
                 return $row->description ? $row->description : "";
@@ -75,8 +90,8 @@ class SrtInputDocumentsController extends Controller
             $table->editColumn('objective', function ($row) {
                 return $row->objective ? SrtInputDocument::OBJECTIVE_SELECT[$row->objective] : '';
             });
-            $table->editColumn('signer', function ($row) {
-                return $row->signer ? $row->signer : "";
+            $table->editColumn('signatory', function ($row) {
+                return $row->signatory ? $row->signatory : "";
             });
             $table->editColumn('document_storage', function ($row) {
                 return $row->document_storage ? $row->document_storage : "";
@@ -84,10 +99,6 @@ class SrtInputDocumentsController extends Controller
             $table->editColumn('note', function ($row) {
                 return $row->note ? $row->note : "";
             });
-            $table->addColumn('docuement_status_title', function ($row) {
-                return $row->docuement_status ? $row->docuement_status->title : '';
-            });
-
             $table->editColumn('file_upload', function ($row) {
                 if (!$row->file_upload) {
                     return '';
@@ -101,23 +112,36 @@ class SrtInputDocumentsController extends Controller
 
                 return implode(', ', $links);
             });
+            $table->addColumn('close_by_name', function ($row) {
+                return $row->close_by ? $row->close_by->name : '';
+            });
 
-            $table->rawColumns(['actions', 'placeholder', 'docuement_status', 'file_upload']);
+            $table->rawColumns(['actions', 'placeholder', 'docuement_status', 'constuction_contract', 'from', 'to', 'file_upload', 'close_by']);
 
             return $table->make(true);
         }
 
-        $srt_document_statuses = SrtDocumentStatus::get();
-        $teams                 = Team::get();
+        $srt_document_statuses  = SrtDocumentStatus::get();
+        $construction_contracts = ConstructionContract::get();
+        $users                  = User::get();
+        $users                  = User::get();
+        $users                  = User::get();
+        $teams                  = Team::get();
 
-        return view('admin.srtInputDocuments.index', compact('srt_document_statuses', 'teams'));
+        return view('admin.srtInputDocuments.index', compact('srt_document_statuses', 'construction_contracts', 'users', 'users', 'users', 'teams'));
     }
 
     public function create()
     {
         abort_if(Gate::denies('srt_input_document_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return view('admin.srtInputDocuments.create');
+        $constuction_contracts = ConstructionContract::all()->pluck('code', 'id')->prepend(trans('global.pleaseSelect'), '');
+
+        $froms = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+
+        $tos = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+
+        return view('admin.srtInputDocuments.create', compact('constuction_contracts', 'froms', 'tos'));
     }
 
     public function store(StoreSrtInputDocumentRequest $request)
@@ -139,9 +163,15 @@ class SrtInputDocumentsController extends Controller
     {
         abort_if(Gate::denies('srt_input_document_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $srtInputDocument->load('docuement_status', 'team');
+        $constuction_contracts = ConstructionContract::all()->pluck('code', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        return view('admin.srtInputDocuments.edit', compact('srtInputDocument'));
+        $froms = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+
+        $tos = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+
+        $srtInputDocument->load('docuement_status', 'constuction_contract', 'from', 'to', 'close_by', 'team');
+
+        return view('admin.srtInputDocuments.edit', compact('constuction_contracts', 'froms', 'tos', 'srtInputDocument'));
     }
 
     public function update(UpdateSrtInputDocumentRequest $request, SrtInputDocument $srtInputDocument)
@@ -171,7 +201,7 @@ class SrtInputDocumentsController extends Controller
     {
         abort_if(Gate::denies('srt_input_document_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $srtInputDocument->load('docuement_status', 'team');
+        $srtInputDocument->load('docuement_status', 'constuction_contract', 'from', 'to', 'close_by', 'team');
 
         return view('admin.srtInputDocuments.show', compact('srtInputDocument'));
     }

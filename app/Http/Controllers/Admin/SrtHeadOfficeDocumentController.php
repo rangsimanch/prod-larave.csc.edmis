@@ -8,10 +8,10 @@ use App\Http\Controllers\Traits\MediaUploadingTrait;
 use App\Http\Requests\MassDestroySrtHeadOfficeDocumentRequest;
 use App\Http\Requests\StoreSrtHeadOfficeDocumentRequest;
 use App\Http\Requests\UpdateSrtHeadOfficeDocumentRequest;
-use App\SrtDocumentStatus;
 use App\SrtHeadOfficeDocument;
 use App\SrtInputDocument;
 use App\Team;
+use App\User;
 use Gate;
 use Illuminate\Http\Request;
 use Spatie\MediaLibrary\Models\Media;
@@ -27,7 +27,7 @@ class SrtHeadOfficeDocumentController extends Controller
         abort_if(Gate::denies('srt_head_office_document_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
-            $query = SrtHeadOfficeDocument::with(['refer_documents', 'special_command', 'team'])->select(sprintf('%s.*', (new SrtHeadOfficeDocument)->table));
+            $query = SrtHeadOfficeDocument::with(['refer_documents', 'operator', 'team'])->select(sprintf('%s.*', (new SrtHeadOfficeDocument)->table));
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
@@ -48,20 +48,18 @@ class SrtHeadOfficeDocumentController extends Controller
                 ));
             });
 
-            $table->editColumn('id', function ($row) {
-                return $row->id ? $row->id : "";
-            });
             $table->addColumn('refer_documents_document_number', function ($row) {
                 return $row->refer_documents ? $row->refer_documents->document_number : '';
             });
 
-            $table->addColumn('special_command_title', function ($row) {
-                return $row->special_command ? $row->special_command->title : '';
+            $table->editColumn('special_command', function ($row) {
+                return $row->special_command ? SrtHeadOfficeDocument::SPECIAL_COMMAND_SELECT[$row->special_command] : '';
             });
 
-            $table->editColumn('practitioner', function ($row) {
-                return $row->practitioner ? $row->practitioner : "";
+            $table->addColumn('operator_name', function ($row) {
+                return $row->operator ? $row->operator->name : '';
             });
+
             $table->editColumn('practice_notes', function ($row) {
                 return $row->practice_notes ? $row->practice_notes : "";
             });
@@ -82,16 +80,16 @@ class SrtHeadOfficeDocumentController extends Controller
                 return implode(', ', $links);
             });
 
-            $table->rawColumns(['actions', 'placeholder', 'refer_documents', 'special_command', 'file_upload']);
+            $table->rawColumns(['actions', 'placeholder', 'refer_documents', 'operator', 'file_upload']);
 
             return $table->make(true);
         }
 
-        $srt_input_documents   = SrtInputDocument::get();
-        $srt_document_statuses = SrtDocumentStatus::get();
-        $teams                 = Team::get();
+        $srt_input_documents = SrtInputDocument::get();
+        $users               = User::get();
+        $teams               = Team::get();
 
-        return view('admin.srtHeadOfficeDocuments.index', compact('srt_input_documents', 'srt_document_statuses', 'teams'));
+        return view('admin.srtHeadOfficeDocuments.index', compact('srt_input_documents', 'users', 'teams'));
     }
 
     public function create()
@@ -100,9 +98,9 @@ class SrtHeadOfficeDocumentController extends Controller
 
         $refer_documents = SrtInputDocument::all()->pluck('document_number', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $special_commands = SrtDocumentStatus::all()->pluck('title', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $operators = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        return view('admin.srtHeadOfficeDocuments.create', compact('refer_documents', 'special_commands'));
+        return view('admin.srtHeadOfficeDocuments.create', compact('refer_documents', 'operators'));
     }
 
     public function store(StoreSrtHeadOfficeDocumentRequest $request)
@@ -126,11 +124,11 @@ class SrtHeadOfficeDocumentController extends Controller
 
         $refer_documents = SrtInputDocument::all()->pluck('document_number', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $special_commands = SrtDocumentStatus::all()->pluck('title', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $operators = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $srtHeadOfficeDocument->load('refer_documents', 'special_command', 'team');
+        $srtHeadOfficeDocument->load('refer_documents', 'operator', 'team');
 
-        return view('admin.srtHeadOfficeDocuments.edit', compact('refer_documents', 'special_commands', 'srtHeadOfficeDocument'));
+        return view('admin.srtHeadOfficeDocuments.edit', compact('refer_documents', 'operators', 'srtHeadOfficeDocument'));
     }
 
     public function update(UpdateSrtHeadOfficeDocumentRequest $request, SrtHeadOfficeDocument $srtHeadOfficeDocument)
@@ -160,7 +158,7 @@ class SrtHeadOfficeDocumentController extends Controller
     {
         abort_if(Gate::denies('srt_head_office_document_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $srtHeadOfficeDocument->load('refer_documents', 'special_command', 'team');
+        $srtHeadOfficeDocument->load('refer_documents', 'operator', 'team');
 
         return view('admin.srtHeadOfficeDocuments.show', compact('srtHeadOfficeDocument'));
     }

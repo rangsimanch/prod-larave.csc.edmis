@@ -15,14 +15,6 @@ class SrtInputDocument extends Model implements HasMedia
 {
     use SoftDeletes, MultiTenantModelTrait, HasMediaTrait, Auditable;
 
-    const TO_SELECT = [
-        'B' => 'B',
-    ];
-
-    const FROM_SELECT = [
-        'A' => 'A',
-    ];
-
     public $table = 'srt_input_documents';
 
     protected $appends = [
@@ -48,21 +40,24 @@ class SrtInputDocument extends Model implements HasMedia
     ];
 
     protected $fillable = [
+        'docuement_status_id',
+        'constuction_contract_id',
+        'registration_number',
         'document_type',
         'document_number',
         'incoming_date',
         'refer_to',
+        'from_id',
+        'to_id',
         'attachments',
-        'from',
-        'to',
         'description',
         'speed_class',
         'objective',
-        'signer',
+        'signatory',
         'document_storage',
         'note',
+        'close_by_id',
         'created_at',
-        'docuement_status_id',
         'updated_at',
         'deleted_at',
         'team_id',
@@ -94,6 +89,16 @@ class SrtInputDocument extends Model implements HasMedia
         $this->addMediaConversion('preview')->fit('crop', 120, 120);
     }
 
+    public function docuement_status()
+    {
+        return $this->belongsTo(SrtDocumentStatus::class, 'docuement_status_id');
+    }
+
+    public function constuction_contract()
+    {
+        return $this->belongsTo(ConstructionContract::class, 'constuction_contract_id');
+    }
+
     public function getIncomingDateAttribute($value)
     {
         return $value ? Carbon::parse($value)->format(config('panel.date_format')) : null;
@@ -104,9 +109,14 @@ class SrtInputDocument extends Model implements HasMedia
         $this->attributes['incoming_date'] = $value ? Carbon::createFromFormat(config('panel.date_format'), $value)->format('Y-m-d') : null;
     }
 
-    public function docuement_status()
+    public function from()
     {
-        return $this->belongsTo(SrtDocumentStatus::class, 'docuement_status_id');
+        return $this->belongsTo(User::class, 'from_id');
+    }
+
+    public function to()
+    {
+        return $this->belongsTo(User::class, 'to_id');
     }
 
     public function getFileUploadAttribute()
@@ -114,13 +124,13 @@ class SrtInputDocument extends Model implements HasMedia
         return $this->getMedia('file_upload');
     }
 
+    public function close_by()
+    {
+        return $this->belongsTo(User::class, 'close_by_id');
+    }
+
     public function team()
     {
         return $this->belongsTo(Team::class, 'team_id');
-    }
-
-    public function create_by_construction_contract_id()
-    {
-        return $this->belongsTo(ConstructionContract::class, 'construction_contract_id');
     }
 }

@@ -11,9 +11,7 @@ class StoreSrtHeadOfficeDocumentRequest extends FormRequest
 {
     public function authorize()
     {
-        abort_if(Gate::denies('srt_head_office_document_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
-        return true;
+        return Gate::allows('srt_head_office_document_create');
     }
 
     public function rules()
@@ -29,10 +27,6 @@ class StoreSrtHeadOfficeDocumentRequest extends FormRequest
             ],
             'finished_date'      => [
                 'date_format:' . config('panel.date_format'),
-                'nullable',
-            ],
-            'practitioner'       => [
-                'string',
                 'nullable',
             ],
             'note'               => [

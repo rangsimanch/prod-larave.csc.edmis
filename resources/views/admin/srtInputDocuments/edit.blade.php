@@ -12,6 +12,26 @@
                     <form method="POST" action="{{ route("admin.srt-input-documents.update", [$srtInputDocument->id]) }}" enctype="multipart/form-data">
                         @method('PUT')
                         @csrf
+                        <div class="form-group {{ $errors->has('constuction_contract') ? 'has-error' : '' }}">
+                            <label class="required" for="constuction_contract_id">{{ trans('cruds.srtInputDocument.fields.constuction_contract') }}</label>
+                            <select class="form-control select2" name="constuction_contract_id" id="constuction_contract_id" required>
+                                @foreach($constuction_contracts as $id => $constuction_contract)
+                                    <option value="{{ $id }}" {{ (old('constuction_contract_id') ? old('constuction_contract_id') : $srtInputDocument->constuction_contract->id ?? '') == $id ? 'selected' : '' }}>{{ $constuction_contract }}</option>
+                                @endforeach
+                            </select>
+                            @if($errors->has('constuction_contract'))
+                                <span class="help-block" role="alert">{{ $errors->first('constuction_contract') }}</span>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.srtInputDocument.fields.constuction_contract_helper') }}</span>
+                        </div>
+                        <div class="form-group {{ $errors->has('registration_number') ? 'has-error' : '' }}">
+                            <label class="required" for="registration_number">{{ trans('cruds.srtInputDocument.fields.registration_number') }}</label>
+                            <input class="form-control" type="text" name="registration_number" id="registration_number" value="{{ old('registration_number', $srtInputDocument->registration_number) }}" required>
+                            @if($errors->has('registration_number'))
+                                <span class="help-block" role="alert">{{ $errors->first('registration_number') }}</span>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.srtInputDocument.fields.registration_number_helper') }}</span>
+                        </div>
                         <div class="form-group {{ $errors->has('document_type') ? 'has-error' : '' }}">
                             <label>{{ trans('cruds.srtInputDocument.fields.document_type') }}</label>
                             <select class="form-control" name="document_type" id="document_type">
@@ -49,20 +69,11 @@
                             @endif
                             <span class="help-block">{{ trans('cruds.srtInputDocument.fields.refer_to_helper') }}</span>
                         </div>
-                        <div class="form-group {{ $errors->has('attachments') ? 'has-error' : '' }}">
-                            <label for="attachments">{{ trans('cruds.srtInputDocument.fields.attachments') }}</label>
-                            <input class="form-control" type="text" name="attachments" id="attachments" value="{{ old('attachments', $srtInputDocument->attachments) }}">
-                            @if($errors->has('attachments'))
-                                <span class="help-block" role="alert">{{ $errors->first('attachments') }}</span>
-                            @endif
-                            <span class="help-block">{{ trans('cruds.srtInputDocument.fields.attachments_helper') }}</span>
-                        </div>
                         <div class="form-group {{ $errors->has('from') ? 'has-error' : '' }}">
-                            <label class="required">{{ trans('cruds.srtInputDocument.fields.from') }}</label>
-                            <select class="form-control" name="from" id="from" required>
-                                <option value disabled {{ old('from', null) === null ? 'selected' : '' }}>{{ trans('global.pleaseSelect') }}</option>
-                                @foreach(App\SrtInputDocument::FROM_SELECT as $key => $label)
-                                    <option value="{{ $key }}" {{ old('from', $srtInputDocument->from) === (string) $key ? 'selected' : '' }}>{{ $label }}</option>
+                            <label for="from_id">{{ trans('cruds.srtInputDocument.fields.from') }}</label>
+                            <select class="form-control select2" name="from_id" id="from_id">
+                                @foreach($froms as $id => $from)
+                                    <option value="{{ $id }}" {{ (old('from_id') ? old('from_id') : $srtInputDocument->from->id ?? '') == $id ? 'selected' : '' }}>{{ $from }}</option>
                                 @endforeach
                             </select>
                             @if($errors->has('from'))
@@ -71,17 +82,24 @@
                             <span class="help-block">{{ trans('cruds.srtInputDocument.fields.from_helper') }}</span>
                         </div>
                         <div class="form-group {{ $errors->has('to') ? 'has-error' : '' }}">
-                            <label class="required">{{ trans('cruds.srtInputDocument.fields.to') }}</label>
-                            <select class="form-control" name="to" id="to" required>
-                                <option value disabled {{ old('to', null) === null ? 'selected' : '' }}>{{ trans('global.pleaseSelect') }}</option>
-                                @foreach(App\SrtInputDocument::TO_SELECT as $key => $label)
-                                    <option value="{{ $key }}" {{ old('to', $srtInputDocument->to) === (string) $key ? 'selected' : '' }}>{{ $label }}</option>
+                            <label for="to_id">{{ trans('cruds.srtInputDocument.fields.to') }}</label>
+                            <select class="form-control select2" name="to_id" id="to_id">
+                                @foreach($tos as $id => $to)
+                                    <option value="{{ $id }}" {{ (old('to_id') ? old('to_id') : $srtInputDocument->to->id ?? '') == $id ? 'selected' : '' }}>{{ $to }}</option>
                                 @endforeach
                             </select>
                             @if($errors->has('to'))
                                 <span class="help-block" role="alert">{{ $errors->first('to') }}</span>
                             @endif
                             <span class="help-block">{{ trans('cruds.srtInputDocument.fields.to_helper') }}</span>
+                        </div>
+                        <div class="form-group {{ $errors->has('attachments') ? 'has-error' : '' }}">
+                            <label for="attachments">{{ trans('cruds.srtInputDocument.fields.attachments') }}</label>
+                            <input class="form-control" type="text" name="attachments" id="attachments" value="{{ old('attachments', $srtInputDocument->attachments) }}">
+                            @if($errors->has('attachments'))
+                                <span class="help-block" role="alert">{{ $errors->first('attachments') }}</span>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.srtInputDocument.fields.attachments_helper') }}</span>
                         </div>
                         <div class="form-group {{ $errors->has('description') ? 'has-error' : '' }}">
                             <label for="description">{{ trans('cruds.srtInputDocument.fields.description') }}</label>
@@ -117,13 +135,13 @@
                             @endif
                             <span class="help-block">{{ trans('cruds.srtInputDocument.fields.objective_helper') }}</span>
                         </div>
-                        <div class="form-group {{ $errors->has('signer') ? 'has-error' : '' }}">
-                            <label for="signer">{{ trans('cruds.srtInputDocument.fields.signer') }}</label>
-                            <input class="form-control" type="text" name="signer" id="signer" value="{{ old('signer', $srtInputDocument->signer) }}">
-                            @if($errors->has('signer'))
-                                <span class="help-block" role="alert">{{ $errors->first('signer') }}</span>
+                        <div class="form-group {{ $errors->has('signatory') ? 'has-error' : '' }}">
+                            <label for="signatory">{{ trans('cruds.srtInputDocument.fields.signatory') }}</label>
+                            <input class="form-control" type="text" name="signatory" id="signatory" value="{{ old('signatory', $srtInputDocument->signatory) }}">
+                            @if($errors->has('signatory'))
+                                <span class="help-block" role="alert">{{ $errors->first('signatory') }}</span>
                             @endif
-                            <span class="help-block">{{ trans('cruds.srtInputDocument.fields.signer_helper') }}</span>
+                            <span class="help-block">{{ trans('cruds.srtInputDocument.fields.signatory_helper') }}</span>
                         </div>
                         <div class="form-group {{ $errors->has('document_storage') ? 'has-error' : '' }}">
                             <label for="document_storage">{{ trans('cruds.srtInputDocument.fields.document_storage') }}</label>

@@ -15,14 +15,13 @@ class CreateSrtInputDocumentsTable extends Migration
             $table->date('incoming_date');
             $table->string('refer_to')->nullable();
             $table->string('attachments')->nullable();
-            $table->string('from');
-            $table->string('to');
             $table->longText('description')->nullable();
             $table->string('speed_class')->nullable();
             $table->string('objective')->nullable();
-            $table->string('signer')->nullable();
             $table->string('document_storage')->nullable();
             $table->longText('note')->nullable();
+            $table->string('registration_number')->unique();
+            $table->string('signatory')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

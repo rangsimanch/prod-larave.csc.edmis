@@ -19,6 +19,14 @@
                             <tbody>
                                 <tr>
                                     <th>
+                                        {{ trans('cruds.requestForInspection.fields.construction_contract') }}
+                                    </th>
+                                    <td>
+                                        {{ $requestForInspection->construction_contract->code ?? '' }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
                                         {{ trans('cruds.requestForInspection.fields.wbs_level_1') }}
                                     </th>
                                     <td>
@@ -43,20 +51,26 @@
                                 </tr>
                                 <tr>
                                     <th>
-                                        {{ trans('cruds.requestForInspection.fields.wbs_level_4') }}
+                                        {{ trans('cruds.requestForInspection.fields.item_1') }}
                                     </th>
                                     <td>
-                                        {{ $requestForInspection->wbs_level_4->wbs_level_4_name ?? '' }}
+                                        {{ $requestForInspection->item_1->code ?? '' }}
                                     </td>
                                 </tr>
                                 <tr>
                                     <th>
-                                        {{ trans('cruds.requestForInspection.fields.item') }}
+                                        {{ trans('cruds.requestForInspection.fields.item_2') }}
                                     </th>
                                     <td>
-                                        @foreach($requestForInspection->items as $key => $item)
-                                            <span class="label label-info">{{ $item->code }}</span>
-                                        @endforeach
+                                        {{ $requestForInspection->item_2->code ?? '' }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        {{ trans('cruds.requestForInspection.fields.item_3') }}
+                                    </th>
+                                    <td>
+                                        {{ $requestForInspection->item_3->code ?? '' }}
                                     </td>
                                 </tr>
                                 <tr>
@@ -141,14 +155,6 @@
                                 </tr>
                                 <tr>
                                     <th>
-                                        {{ trans('cruds.requestForInspection.fields.construction_contract') }}
-                                    </th>
-                                    <td>
-                                        {{ $requestForInspection->construction_contract->code ?? '' }}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th>
                                         {{ trans('cruds.requestForInspection.fields.files_upload') }}
                                     </th>
                                     <td>
@@ -157,14 +163,6 @@
                                                 {{ trans('global.view_file') }}
                                             </a>
                                         @endforeach
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th>
-                                        {{ trans('cruds.requestForInspection.fields.start_loop') }}
-                                    </th>
-                                    <td>
-                                        {{ $requestForInspection->start_loop }}
                                     </td>
                                 </tr>
                                 <tr>

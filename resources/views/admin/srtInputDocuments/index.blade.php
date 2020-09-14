@@ -28,6 +28,15 @@
 
                                 </th>
                                 <th>
+                                    {{ trans('cruds.srtInputDocument.fields.docuement_status') }}
+                                </th>
+                                <th>
+                                    {{ trans('cruds.srtInputDocument.fields.constuction_contract') }}
+                                </th>
+                                <th>
+                                    {{ trans('cruds.srtInputDocument.fields.registration_number') }}
+                                </th>
+                                <th>
                                     {{ trans('cruds.srtInputDocument.fields.document_type') }}
                                 </th>
                                 <th>
@@ -40,13 +49,13 @@
                                     {{ trans('cruds.srtInputDocument.fields.refer_to') }}
                                 </th>
                                 <th>
-                                    {{ trans('cruds.srtInputDocument.fields.attachments') }}
-                                </th>
-                                <th>
                                     {{ trans('cruds.srtInputDocument.fields.from') }}
                                 </th>
                                 <th>
                                     {{ trans('cruds.srtInputDocument.fields.to') }}
+                                </th>
+                                <th>
+                                    {{ trans('cruds.srtInputDocument.fields.attachments') }}
                                 </th>
                                 <th>
                                     {{ trans('cruds.srtInputDocument.fields.description') }}
@@ -58,7 +67,7 @@
                                     {{ trans('cruds.srtInputDocument.fields.objective') }}
                                 </th>
                                 <th>
-                                    {{ trans('cruds.srtInputDocument.fields.signer') }}
+                                    {{ trans('cruds.srtInputDocument.fields.signatory') }}
                                 </th>
                                 <th>
                                     {{ trans('cruds.srtInputDocument.fields.document_storage') }}
@@ -67,10 +76,10 @@
                                     {{ trans('cruds.srtInputDocument.fields.note') }}
                                 </th>
                                 <th>
-                                    {{ trans('cruds.srtInputDocument.fields.docuement_status') }}
+                                    {{ trans('cruds.srtInputDocument.fields.file_upload') }}
                                 </th>
                                 <th>
-                                    {{ trans('cruds.srtInputDocument.fields.file_upload') }}
+                                    {{ trans('cruds.srtInputDocument.fields.close_by') }}
                                 </th>
                                 <th>
                                     &nbsp;
@@ -78,6 +87,25 @@
                             </tr>
                             <tr>
                                 <td>
+                                </td>
+                                <td>
+                                    <select class="search">
+                                        <option value>{{ trans('global.all') }}</option>
+                                        @foreach($srt_document_statuses as $key => $item)
+                                            <option value="{{ $item->title }}">{{ $item->title }}</option>
+                                        @endforeach
+                                    </select>
+                                </td>
+                                <td>
+                                    <select class="search">
+                                        <option value>{{ trans('global.all') }}</option>
+                                        @foreach($construction_contracts as $key => $item)
+                                            <option value="{{ $item->code }}">{{ $item->code }}</option>
+                                        @endforeach
+                                    </select>
+                                </td>
+                                <td>
+                                    <input class="search" type="text" placeholder="{{ trans('global.search') }}">
                                 </td>
                                 <td>
                                     <select class="search" strict="true">
@@ -96,23 +124,23 @@
                                     <input class="search" type="text" placeholder="{{ trans('global.search') }}">
                                 </td>
                                 <td>
+                                    <select class="search">
+                                        <option value>{{ trans('global.all') }}</option>
+                                        @foreach($users as $key => $item)
+                                            <option value="{{ $item->name }}">{{ $item->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </td>
+                                <td>
+                                    <select class="search">
+                                        <option value>{{ trans('global.all') }}</option>
+                                        @foreach($users as $key => $item)
+                                            <option value="{{ $item->name }}">{{ $item->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </td>
+                                <td>
                                     <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                                </td>
-                                <td>
-                                    <select class="search" strict="true">
-                                        <option value>{{ trans('global.all') }}</option>
-                                        @foreach(App\SrtInputDocument::FROM_SELECT as $key => $item)
-                                            <option value="{{ $item }}">{{ $item }}</option>
-                                        @endforeach
-                                    </select>
-                                </td>
-                                <td>
-                                    <select class="search" strict="true">
-                                        <option value>{{ trans('global.all') }}</option>
-                                        @foreach(App\SrtInputDocument::TO_SELECT as $key => $item)
-                                            <option value="{{ $item }}">{{ $item }}</option>
-                                        @endforeach
-                                    </select>
                                 </td>
                                 <td>
                                     <input class="search" type="text" placeholder="{{ trans('global.search') }}">
@@ -143,14 +171,14 @@
                                     <input class="search" type="text" placeholder="{{ trans('global.search') }}">
                                 </td>
                                 <td>
-                                    <select class="search">
-                                        <option value>{{ trans('global.all') }}</option>
-                                        @foreach($srt_document_statuses as $key => $item)
-                                            <option value="{{ $item->title }}">{{ $item->title }}</option>
-                                        @endforeach
-                                    </select>
                                 </td>
                                 <td>
+                                    <select class="search">
+                                        <option value>{{ trans('global.all') }}</option>
+                                        @foreach($users as $key => $item)
+                                            <option value="{{ $item->name }}">{{ $item->name }}</option>
+                                        @endforeach
+                                    </select>
                                 </td>
                                 <td>
                                 </td>
@@ -210,25 +238,28 @@
     ajax: "{{ route('admin.srt-input-documents.index') }}",
     columns: [
       { data: 'placeholder', name: 'placeholder' },
+{ data: 'docuement_status_title', name: 'docuement_status.title' },
+{ data: 'constuction_contract_code', name: 'constuction_contract.code' },
+{ data: 'registration_number', name: 'registration_number' },
 { data: 'document_type', name: 'document_type' },
 { data: 'document_number', name: 'document_number' },
 { data: 'incoming_date', name: 'incoming_date' },
 { data: 'refer_to', name: 'refer_to' },
+{ data: 'from_name', name: 'from.name' },
+{ data: 'to_name', name: 'to.name' },
 { data: 'attachments', name: 'attachments' },
-{ data: 'from', name: 'from' },
-{ data: 'to', name: 'to' },
 { data: 'description', name: 'description' },
 { data: 'speed_class', name: 'speed_class' },
 { data: 'objective', name: 'objective' },
-{ data: 'signer', name: 'signer' },
+{ data: 'signatory', name: 'signatory' },
 { data: 'document_storage', name: 'document_storage' },
 { data: 'note', name: 'note' },
-{ data: 'docuement_status_title', name: 'docuement_status.title' },
 { data: 'file_upload', name: 'file_upload', sortable: false, searchable: false },
+{ data: 'close_by_name', name: 'close_by.name' },
 { data: 'actions', name: '{{ trans('global.actions') }}' }
     ],
     orderCellsTop: true,
-    order: [[ 1, 'desc' ]],
+    order: [[ 4, 'desc' ]],
     pageLength: 10,
   };
   let table = $('.datatable-SrtInputDocument').DataTable(dtOverrideGlobals);

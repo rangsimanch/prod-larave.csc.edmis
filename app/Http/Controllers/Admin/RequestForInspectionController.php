@@ -33,7 +33,7 @@ class RequestForInspectionController extends Controller
         abort_if(Gate::denies('request_for_inspection_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
-            $query = RequestForInspection::with(['wbs_level_1', 'bill', 'wbs_level_3', 'wbs_level_4', 'items', 'requested_by', 'contact_person', 'construction_contract', 'team'])->select(sprintf('%s.*', (new RequestForInspection)->table));
+            $query = RequestForInspection::with(['construction_contract', 'wbs_level_1', 'bill', 'wbs_level_3', 'item_1', 'item_2', 'item_3', 'requested_by', 'contact_person', 'team'])->select(sprintf('%s.*', (new RequestForInspection)->table));
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
@@ -66,19 +66,18 @@ class RequestForInspectionController extends Controller
                 return $row->wbs_level_3 ? $row->wbs_level_3->wbs_level_3_name : '';
             });
 
-            $table->addColumn('wbs_level_4_wbs_level_4_name', function ($row) {
-                return $row->wbs_level_4 ? $row->wbs_level_4->wbs_level_4_name : '';
+            $table->addColumn('item_1_code', function ($row) {
+                return $row->item_1 ? $row->item_1->code : '';
             });
 
-            $table->editColumn('item', function ($row) {
-                $labels = [];
-
-                foreach ($row->items as $item) {
-                    $labels[] = sprintf('<span class="label label-info label-many">%s</span>', $item->code);
-                }
-
-                return implode(' ', $labels);
+            $table->addColumn('item_2_code', function ($row) {
+                return $row->item_2 ? $row->item_2->code : '';
             });
+
+            $table->addColumn('item_3_code', function ($row) {
+                return $row->item_3 ? $row->item_3->code : '';
+            });
+
             $table->editColumn('type_of_work', function ($row) {
                 return $row->type_of_work ? RequestForInspection::TYPE_OF_WORK_SELECT[$row->type_of_work] : '';
             });
@@ -120,9 +119,6 @@ class RequestForInspectionController extends Controller
                 return implode(', ', $links);
             });
 
-            $table->editColumn('start_loop', function ($row) {
-                return $row->start_loop ? $row->start_loop : "";
-            });
             $table->editColumn('end_loop', function ($row) {
                 return $row->end_loop ? $row->end_loop : "";
             });
@@ -140,22 +136,23 @@ class RequestForInspectionController extends Controller
                 return implode(', ', $links);
             });
 
-            $table->rawColumns(['actions', 'placeholder', 'wbs_level_1', 'bill', 'wbs_level_3', 'wbs_level_4', 'item', 'requested_by', 'contact_person', 'construction_contract', 'files_upload', 'loop_file_upload']);
+            $table->rawColumns(['actions', 'placeholder', 'construction_contract', 'wbs_level_1', 'bill', 'wbs_level_3', 'item_1', 'item_2', 'item_3', 'requested_by', 'contact_person', 'files_upload', 'loop_file_upload']);
 
             return $table->make(true);
         }
 
+        $construction_contracts = ConstructionContract::get();
         $wbs_level_ones         = WbsLevelOne::get();
         $bo_qs                  = BoQ::get();
         $wbs_level_threes       = WbsLevelThree::get();
-        $wbslevelfours          = Wbslevelfour::get();
+        $boq_items              = BoqItem::get();
+        $boq_items              = BoqItem::get();
         $boq_items              = BoqItem::get();
         $users                  = User::get();
         $users                  = User::get();
-        $construction_contracts = ConstructionContract::get();
         $teams                  = Team::get();
 
-        return view('admin.requestForInspections.index', compact('wbs_level_ones', 'bo_qs', 'wbs_level_threes', 'wbslevelfours', 'boq_items', 'users', 'users', 'construction_contracts', 'teams'));
+        return view('admin.requestForInspections.index', compact('construction_contracts', 'wbs_level_ones', 'bo_qs', 'wbs_level_threes', 'boq_items', 'boq_items', 'boq_items', 'users', 'users', 'teams'));    
     }
 
     function fetch(Request $request){
@@ -236,9 +233,11 @@ class RequestForInspectionController extends Controller
 
         $wbs_level_3s = WbsLevelThree::all()->pluck('wbs_level_3_name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $wbs_level_4s = Wbslevelfour::all()->pluck('wbs_level_4_name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $item_1s = BoqItem::all()->pluck('code', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $items = BoqItem::all()->pluck('code', 'id');
+        $item_2s = BoqItem::all()->pluck('code', 'id')->prepend(trans('global.pleaseSelect'), '');
+
+        $item_3s = BoqItem::all()->pluck('code', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $requested_bies = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
@@ -246,8 +245,8 @@ class RequestForInspectionController extends Controller
 
         $construction_contracts = ConstructionContract::all()->pluck('code', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        return view('admin.requestForInspections.create', compact('wbs_level_1s', 'bills', 'wbs_level_3s', 'wbs_level_4s', 'items', 'requested_bies', 'contact_people', 'construction_contracts'));
-    }
+        return view('admin.requestForInspections.create', compact('construction_contracts', 'wbs_level_1s', 'bills', 'wbs_level_3s', 'item_1s', 'item_2s', 'item_3s', 'requested_bies', 'contact_people'));
+   }
 
     public function store(StoreRequestForInspectionRequest $request)
     {
@@ -261,7 +260,6 @@ class RequestForInspectionController extends Controller
         $wbs1 = WbsLevelOne::where('id','=',$request->wbs_level_1_id)->value('code');
         $wbs2 = BoQ::where('id','=',$request->bill_id)->value('code');
         $wbs3 = WbsLevelThree::where('id','=',$request->wbs_level_3_id)->value('wbs_level_3_code');
-        $wbs4 = Wbslevelfour::where('id','=',$request->wbs_level_4_id)->value('wbs_level_4_code');
         
         if(is_null($data['ref_no'])){
                 if($work_type != "Segment Production"){
@@ -283,7 +281,6 @@ class RequestForInspectionController extends Controller
 
        
         $requestForInspection = RequestForInspection::create($data);
-        $requestForInspection->items()->sync($request->input('items', []));
 
         foreach ($request->input('files_upload', []) as $file) {
             $requestForInspection->addMedia(storage_path('tmp/uploads/' . $file))->toMediaCollection('files_upload');
@@ -305,7 +302,6 @@ class RequestForInspectionController extends Controller
                 $loop_data['wbs_level_1_id'] = $data['wbs_level_1_id'];
                 $loop_data['bill_id'] = $data['bill_id'];
                 $loop_data['wbs_level_3_id'] = $data['wbs_level_3_id'];
-                $loop_data['wbs_level_4_id'] = $data['wbs_level_4_id'];
 
                 $order_num = intval(substr($order_number , -4)) + 1;
                 if($work_type != "Segment Production"){
@@ -326,7 +322,6 @@ class RequestForInspectionController extends Controller
                 $loop_data['construction_contract_id'] = $data['construction_contract_id'];
 
                 $requestForInspection = RequestForInspection::create($loop_data);
-                $requestForInspection->items()->sync($request->input('items', []));
 
                 if(is_null($request->input('loop_file_upload', []))){
                     if(is_null($data['loop_file_upload'][$i-1])){
@@ -355,9 +350,11 @@ class RequestForInspectionController extends Controller
 
         $wbs_level_3s = WbsLevelThree::all()->pluck('wbs_level_3_name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $wbs_level_4s = Wbslevelfour::all()->pluck('wbs_level_4_name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $item_1s = BoqItem::all()->pluck('code', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $items = BoqItem::all()->pluck('code', 'id');
+        $item_2s = BoqItem::all()->pluck('code', 'id')->prepend(trans('global.pleaseSelect'), '');
+
+        $item_3s = BoqItem::all()->pluck('code', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $requested_bies = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
@@ -365,16 +362,15 @@ class RequestForInspectionController extends Controller
 
         $construction_contracts = ConstructionContract::all()->pluck('code', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $requestForInspection->load('wbs_level_1', 'bill', 'wbs_level_3', 'wbs_level_4', 'items', 'requested_by', 'contact_person', 'construction_contract', 'team');
+        $requestForInspection->load('construction_contract', 'wbs_level_1', 'bill', 'wbs_level_3', 'item_1', 'item_2', 'item_3', 'requested_by', 'contact_person', 'team');
 
-        return view('admin.requestForInspections.edit', compact('wbs_level_1s', 'bills', 'wbs_level_3s', 'wbs_level_4s', 'items', 'requested_bies', 'contact_people', 'construction_contracts', 'requestForInspection'));
+        return view('admin.requestForInspections.edit', compact('construction_contracts', 'wbs_level_1s', 'bills', 'wbs_level_3s', 'item_1s', 'item_2s', 'item_3s', 'requested_bies', 'contact_people', 'requestForInspection'));
     }
 
     public function update(UpdateRequestForInspectionRequest $request, RequestForInspection $requestForInspection)
     {
         $requestForInspection->update($request->all());
-        $requestForInspection->items()->sync($request->input('items', []));
-
+      
         if (count($requestForInspection->files_upload) > 0) {
             foreach ($requestForInspection->files_upload as $media) {
                 if (!in_array($media->file_name, $request->input('files_upload', []))) {
@@ -414,8 +410,8 @@ class RequestForInspectionController extends Controller
     {
         abort_if(Gate::denies('request_for_inspection_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $requestForInspection->load('wbs_level_1', 'bill', 'wbs_level_3', 'wbs_level_4', 'items', 'requested_by', 'contact_person', 'construction_contract', 'team');
-
+        $requestForInspection->load('construction_contract', 'wbs_level_1', 'bill', 'wbs_level_3', 'item_1', 'item_2', 'item_3', 'requested_by', 'contact_person', 'team');
+       
         return view('admin.requestForInspections.show', compact('requestForInspection'));
     }
 

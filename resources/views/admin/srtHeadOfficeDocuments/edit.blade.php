@@ -33,10 +33,11 @@
                             <span class="help-block">{{ trans('cruds.srtHeadOfficeDocument.fields.process_date_helper') }}</span>
                         </div>
                         <div class="form-group {{ $errors->has('special_command') ? 'has-error' : '' }}">
-                            <label for="special_command_id">{{ trans('cruds.srtHeadOfficeDocument.fields.special_command') }}</label>
-                            <select class="form-control select2" name="special_command_id" id="special_command_id">
-                                @foreach($special_commands as $id => $special_command)
-                                    <option value="{{ $id }}" {{ (old('special_command_id') ? old('special_command_id') : $srtHeadOfficeDocument->special_command->id ?? '') == $id ? 'selected' : '' }}>{{ $special_command }}</option>
+                            <label>{{ trans('cruds.srtHeadOfficeDocument.fields.special_command') }}</label>
+                            <select class="form-control" name="special_command" id="special_command">
+                                <option value disabled {{ old('special_command', null) === null ? 'selected' : '' }}>{{ trans('global.pleaseSelect') }}</option>
+                                @foreach(App\SrtHeadOfficeDocument::SPECIAL_COMMAND_SELECT as $key => $label)
+                                    <option value="{{ $key }}" {{ old('special_command', $srtHeadOfficeDocument->special_command) === (string) $key ? 'selected' : '' }}>{{ $label }}</option>
                                 @endforeach
                             </select>
                             @if($errors->has('special_command'))
@@ -52,13 +53,17 @@
                             @endif
                             <span class="help-block">{{ trans('cruds.srtHeadOfficeDocument.fields.finished_date_helper') }}</span>
                         </div>
-                        <div class="form-group {{ $errors->has('practitioner') ? 'has-error' : '' }}">
-                            <label for="practitioner">{{ trans('cruds.srtHeadOfficeDocument.fields.practitioner') }}</label>
-                            <input class="form-control" type="text" name="practitioner" id="practitioner" value="{{ old('practitioner', $srtHeadOfficeDocument->practitioner) }}">
-                            @if($errors->has('practitioner'))
-                                <span class="help-block" role="alert">{{ $errors->first('practitioner') }}</span>
+                        <div class="form-group {{ $errors->has('operator') ? 'has-error' : '' }}">
+                            <label for="operator_id">{{ trans('cruds.srtHeadOfficeDocument.fields.operator') }}</label>
+                            <select class="form-control select2" name="operator_id" id="operator_id">
+                                @foreach($operators as $id => $operator)
+                                    <option value="{{ $id }}" {{ (old('operator_id') ? old('operator_id') : $srtHeadOfficeDocument->operator->id ?? '') == $id ? 'selected' : '' }}>{{ $operator }}</option>
+                                @endforeach
+                            </select>
+                            @if($errors->has('operator'))
+                                <span class="help-block" role="alert">{{ $errors->first('operator') }}</span>
                             @endif
-                            <span class="help-block">{{ trans('cruds.srtHeadOfficeDocument.fields.practitioner_helper') }}</span>
+                            <span class="help-block">{{ trans('cruds.srtHeadOfficeDocument.fields.operator_helper') }}</span>
                         </div>
                         <div class="form-group {{ $errors->has('practice_notes') ? 'has-error' : '' }}">
                             <label for="practice_notes">{{ trans('cruds.srtHeadOfficeDocument.fields.practice_notes') }}</label>

@@ -32,15 +32,23 @@ class SrtHeadOfficeDocument extends Model implements HasMedia
     protected $fillable = [
         'refer_documents_id',
         'process_date',
-        'special_command_id',
+        'special_command',
         'finished_date',
-        'practitioner',
+        'operator_id',
         'practice_notes',
         'note',
         'created_at',
         'updated_at',
         'deleted_at',
         'team_id',
+    ];
+
+    const SPECIAL_COMMAND_SELECT = [
+        'Record'               => 'บันทึกงาน',
+        'Approve'              => 'อนุมัติดำเนินการ',
+        'Non-Approve'          => 'ไม่อนุมัติ',
+        'Command'              => 'สั่งการ',
+        'Request more details' => 'ขอรายละเอียดเพิ่มเติม',
     ];
 
     public function registerMediaConversions(Media $media = null)
@@ -64,11 +72,6 @@ class SrtHeadOfficeDocument extends Model implements HasMedia
         $this->attributes['process_date'] = $value ? Carbon::createFromFormat(config('panel.date_format'), $value)->format('Y-m-d') : null;
     }
 
-    public function special_command()
-    {
-        return $this->belongsTo(SrtDocumentStatus::class, 'special_command_id');
-    }
-
     public function getFinishedDateAttribute($value)
     {
         return $value ? Carbon::parse($value)->format(config('panel.date_format')) : null;
@@ -79,6 +82,11 @@ class SrtHeadOfficeDocument extends Model implements HasMedia
         $this->attributes['finished_date'] = $value ? Carbon::createFromFormat(config('panel.date_format'), $value)->format('Y-m-d') : null;
     }
 
+    public function operator()
+    {
+        return $this->belongsTo(User::class, 'operator_id');
+    }
+
     public function getFileUploadAttribute()
     {
         return $this->getMedia('file_upload');
@@ -87,10 +95,5 @@ class SrtHeadOfficeDocument extends Model implements HasMedia
     public function team()
     {
         return $this->belongsTo(Team::class, 'team_id');
-    }
-
-    public function create_by_construction_contract_id()
-    {
-        return $this->belongsTo(ConstructionContract::class, 'construction_contract_id');
     }
 }

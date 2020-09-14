@@ -37,15 +37,16 @@ class RequestForInspection extends Model implements HasMedia
         'Piers'              => 'Piers',
         'Pile Cap'           => 'Pile Cap',
         'Retaining Wall'     => 'Retaining Wall',
-        'Segment Production' => 'Segment Production',
-        'Spread foundation'  => 'Spread foundation',
     ];
 
     protected $fillable = [
+        'construction_contract_id',
         'wbs_level_1_id',
         'bill_id',
         'wbs_level_3_id',
-        'wbs_level_4_id',
+        'item_1_id',
+        'item_2_id',
+        'item_3_id',
         'type_of_work',
         'subject',
         'ref_no',
@@ -56,9 +57,7 @@ class RequestForInspection extends Model implements HasMedia
         'replied_date',
         'ipa',
         'comment',
-        'construction_contract_id',
         'created_at',
-        'start_loop',
         'end_loop',
         'updated_at',
         'deleted_at',
@@ -69,6 +68,11 @@ class RequestForInspection extends Model implements HasMedia
     {
         $this->addMediaConversion('thumb')->fit('crop', 50, 50);
         $this->addMediaConversion('preview')->fit('crop', 120, 120);
+    }
+
+    public function construction_contract()
+    {
+        return $this->belongsTo(ConstructionContract::class, 'construction_contract_id');
     }
 
     public function wbs_level_1()
@@ -86,14 +90,19 @@ class RequestForInspection extends Model implements HasMedia
         return $this->belongsTo(WbsLevelThree::class, 'wbs_level_3_id');
     }
 
-    public function wbs_level_4()
+    public function item_1()
     {
-        return $this->belongsTo(Wbslevelfour::class, 'wbs_level_4_id');
+        return $this->belongsTo(BoqItem::class, 'item_1_id');
     }
 
-    public function items()
+    public function item_2()
     {
-        return $this->belongsToMany(BoqItem::class);
+        return $this->belongsTo(BoqItem::class, 'item_2_id');
+    }
+
+    public function item_3()
+    {
+        return $this->belongsTo(BoqItem::class, 'item_3_id');
     }
 
     public function requested_by()
@@ -124,11 +133,6 @@ class RequestForInspection extends Model implements HasMedia
     public function setRepliedDateAttribute($value)
     {
         $this->attributes['replied_date'] = $value ? Carbon::createFromFormat(config('panel.date_format'), $value)->format('Y-m-d') : null;
-    }
-
-    public function construction_contract()
-    {
-        return $this->belongsTo(ConstructionContract::class, 'construction_contract_id');
     }
 
     public function getFilesUploadAttribute()

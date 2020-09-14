@@ -19,6 +19,30 @@
                             <tbody>
                                 <tr>
                                     <th>
+                                        {{ trans('cruds.srtInputDocument.fields.docuement_status') }}
+                                    </th>
+                                    <td>
+                                        {{ $srtInputDocument->docuement_status->title ?? '' }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        {{ trans('cruds.srtInputDocument.fields.constuction_contract') }}
+                                    </th>
+                                    <td>
+                                        {{ $srtInputDocument->constuction_contract->code ?? '' }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        {{ trans('cruds.srtInputDocument.fields.registration_number') }}
+                                    </th>
+                                    <td>
+                                        {{ $srtInputDocument->registration_number }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
                                         {{ trans('cruds.srtInputDocument.fields.document_type') }}
                                     </th>
                                     <td>
@@ -51,18 +75,10 @@
                                 </tr>
                                 <tr>
                                     <th>
-                                        {{ trans('cruds.srtInputDocument.fields.attachments') }}
-                                    </th>
-                                    <td>
-                                        {{ $srtInputDocument->attachments }}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th>
                                         {{ trans('cruds.srtInputDocument.fields.from') }}
                                     </th>
                                     <td>
-                                        {{ App\SrtInputDocument::FROM_SELECT[$srtInputDocument->from] ?? '' }}
+                                        {{ $srtInputDocument->from->name ?? '' }}
                                     </td>
                                 </tr>
                                 <tr>
@@ -70,7 +86,15 @@
                                         {{ trans('cruds.srtInputDocument.fields.to') }}
                                     </th>
                                     <td>
-                                        {{ App\SrtInputDocument::TO_SELECT[$srtInputDocument->to] ?? '' }}
+                                        {{ $srtInputDocument->to->name ?? '' }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        {{ trans('cruds.srtInputDocument.fields.attachments') }}
+                                    </th>
+                                    <td>
+                                        {{ $srtInputDocument->attachments }}
                                     </td>
                                 </tr>
                                 <tr>
@@ -99,10 +123,10 @@
                                 </tr>
                                 <tr>
                                     <th>
-                                        {{ trans('cruds.srtInputDocument.fields.signer') }}
+                                        {{ trans('cruds.srtInputDocument.fields.signatory') }}
                                     </th>
                                     <td>
-                                        {{ $srtInputDocument->signer }}
+                                        {{ $srtInputDocument->signatory }}
                                     </td>
                                 </tr>
                                 <tr>
@@ -123,14 +147,6 @@
                                 </tr>
                                 <tr>
                                     <th>
-                                        {{ trans('cruds.srtInputDocument.fields.docuement_status') }}
-                                    </th>
-                                    <td>
-                                        {{ $srtInputDocument->docuement_status->title ?? '' }}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th>
                                         {{ trans('cruds.srtInputDocument.fields.file_upload') }}
                                     </th>
                                     <td>
@@ -139,6 +155,14 @@
                                                 {{ trans('global.view_file') }}
                                             </a>
                                         @endforeach
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        {{ trans('cruds.srtInputDocument.fields.close_by') }}
+                                    </th>
+                                    <td>
+                                        {{ $srtInputDocument->close_by->name ?? '' }}
                                     </td>
                                 </tr>
                             </tbody>

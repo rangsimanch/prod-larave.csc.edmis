@@ -11,10 +11,21 @@
                 <div class="panel-body">
                     <form method="POST" action="{{ route("admin.request-for-inspections.store") }}" enctype="multipart/form-data">
                         @csrf
-
+                        <div class="form-group {{ $errors->has('construction_contract') ? 'has-error' : '' }}">
+                            <label class="required" for="construction_contract_id">{{ trans('cruds.requestForInspection.fields.construction_contract') }}</label>
+                            <select class="form-control select2" name="construction_contract_id" id="construction_contract_id" required>
+                                @foreach($construction_contracts as $id => $construction_contract)
+                                    <option value="{{ $id }}" {{ old('construction_contract_id') == $id ? 'selected' : '' }}>{{ $construction_contract }}</option>
+                                @endforeach
+                            </select>
+                            @if($errors->has('construction_contract'))
+                                <span class="help-block" role="alert">{{ $errors->first('construction_contract') }}</span>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.requestForInspection.fields.construction_contract_helper') }}</span>
+                        </div>
                         <div class="form-group {{ $errors->has('wbs_level_1') ? 'has-error' : '' }}">
                             <label for="wbs_level_1_id">{{ trans('cruds.requestForInspection.fields.wbs_level_1') }}</label>
-                            <select class="form-control select2 wbslv1" name="wbs_level_1_id" id="wbs_level_1_id" require>
+                            <select class="form-control select2 wbslv1" name="wbs_level_1_id" id="wbs_level_1_id">
                                 @foreach($wbs_level_1s as $id => $wbs_level_1)
                                     <option value="{{ $id }}" {{ old('wbs_level_1_id') == $id ? 'selected' : '' }}>{{ $wbs_level_1 }}</option>
                                 @endforeach
@@ -24,54 +35,65 @@
                             @endif
                             <span class="help-block">{{ trans('cruds.requestForInspection.fields.wbs_level_1_helper') }}</span>
                         </div>
-
                         <div class="form-group {{ $errors->has('bill') ? 'has-error' : '' }}">
                             <label for="bill_id">{{ trans('cruds.requestForInspection.fields.bill') }}</label>
-                            <select class="form-control select2 wbslv2" name="bill_id" id="bill_id" require>
-                                <option value=""> {{ trans('global.pleaseSelect') }} </option>
+                            <select class="form-control select2 wbslv2" name="bill_id" id="bill_id">
+                                @foreach($bills as $id => $bill)
+                                    <option value="{{ $id }}" {{ old('bill_id') == $id ? 'selected' : '' }}>{{ $bill }}</option>
+                                @endforeach
                             </select>
                             @if($errors->has('bill'))
                                 <span class="help-block" role="alert">{{ $errors->first('bill') }}</span>
                             @endif
                             <span class="help-block">{{ trans('cruds.requestForInspection.fields.bill_helper') }}</span>
                         </div>
-
                         <div class="form-group {{ $errors->has('wbs_level_3') ? 'has-error' : '' }}">
-                            <label for="wbs_level_3_id" class="required">{{ trans('cruds.rfa.fields.wbs_level_3') }}</label>
-                            <select class="form-control select2 wbslv3" name="wbs_level_3_id" id="wbs_level_3_id" required>
-                                <option value=""> {{ trans('global.pleaseSelect') }} </option>
+                            <label for="wbs_level_3_id">{{ trans('cruds.requestForInspection.fields.wbs_level_3') }}</label>
+                            <select class="form-control select2 wbslv3" name="wbs_level_3_id" id="wbs_level_3_id">
+                                @foreach($wbs_level_3s as $id => $wbs_level_3)
+                                    <option value="{{ $id }}" {{ old('wbs_level_3_id') == $id ? 'selected' : '' }}>{{ $wbs_level_3 }}</option>
+                                @endforeach
                             </select>
-                            @if($errors->has('wbs_level_3_id'))
-                                <span class="help-block" role="alert">{{ $errors->first('wbs_level_3_id') }}</span>
+                            @if($errors->has('wbs_level_3'))
+                                <span class="help-block" role="alert">{{ $errors->first('wbs_level_3') }}</span>
                             @endif
-                            <span class="help-block">{{ trans('cruds.rfa.fields.wbs_level_3_helper') }}</span>
+                            <span class="help-block">{{ trans('cruds.requestForInspection.fields.wbs_level_3_helper') }}</span>
                         </div>
-                        
-                        <div class="form-group {{ $errors->has('wbs_level_4') ? 'has-error' : '' }}">
-                            <label class="required" for="wbs_level_4_id">{{ trans('cruds.rfa.fields.wbs_level_4') }}</label>
-                            <select class="form-control select2 wbslv4" name="wbs_level_4_id" id="wbs_level_4_id" required>
-                                <option value=""> {{ trans('global.pleaseSelect') }} </option>
+                        <div class="form-group {{ $errors->has('item_1') ? 'has-error' : '' }}">
+                            <label for="item_1_id">{{ trans('cruds.requestForInspection.fields.item_1') }}</label>
+                            <select class="form-control select2 itemBoq" name="item_1_id" id="item_1_id">
+                                @foreach($item_1s as $id => $item_1)
+                                    <option value="{{ $id }}" {{ old('item_1_id') == $id ? 'selected' : '' }}>{{ $item_1 }}</option>
+                                @endforeach
                             </select>
-                            @if($errors->has('wbs_level_4_id'))
-                                <span class="help-block" role="alert">{{ $errors->first('wbs_level_4_id') }}</span>
+                            @if($errors->has('item_1'))
+                                <span class="help-block" role="alert">{{ $errors->first('item_1') }}</span>
                             @endif
-                            <span class="help-block">{{ trans('cruds.rfa.fields.wbs_level_4_helper') }}</span>
+                            <span class="help-block">{{ trans('cruds.requestForInspection.fields.item_1_helper') }}</span>
                         </div>
-
-
-                        <div class="form-group {{ $errors->has('items') ? 'has-error' : '' }}">
-                            <label for="items">{{ trans('cruds.requestForInspection.fields.item') }}</label>
-                            <div style="padding-bottom: 4px">
-                                <span class="btn btn-info btn-xs select-all" style="border-radius: 0">{{ trans('global.select_all') }}</span>
-                                <span class="btn btn-info btn-xs deselect-all" style="border-radius: 0">{{ trans('global.deselect_all') }}</span>
-                            </div>
-                            <select class="form-control select2 itemBoq" name="items[]" id="items" multiple>
-                                <option value=""> {{ trans('global.pleaseSelect') }} </option>
+                        <div class="form-group {{ $errors->has('item_2') ? 'has-error' : '' }}">
+                            <label for="item_2_id">{{ trans('cruds.requestForInspection.fields.item_2') }}</label>
+                            <select class="form-control select2 itemBoq" name="item_2_id" id="item_2_id">
+                                @foreach($item_2s as $id => $item_2)
+                                    <option value="{{ $id }}" {{ old('item_2_id') == $id ? 'selected' : '' }}>{{ $item_2 }}</option>
+                                @endforeach
                             </select>
-                            @if($errors->has('items'))
-                                <span class="help-block" role="alert">{{ $errors->first('items') }}</span>
+                            @if($errors->has('item_2'))
+                                <span class="help-block" role="alert">{{ $errors->first('item_2') }}</span>
                             @endif
-                            <span class="help-block">{{ trans('cruds.requestForInspection.fields.item_helper') }}</span>
+                            <span class="help-block">{{ trans('cruds.requestForInspection.fields.item_2_helper') }}</span>
+                        </div>
+                        <div class="form-group {{ $errors->has('item_3') ? 'has-error' : '' }}">
+                            <label for="item_3_id">{{ trans('cruds.requestForInspection.fields.item_3') }}</label>
+                            <select class="form-control select2 itemBoq" name="item_3_id" id="item_3_id">
+                                @foreach($item_3s as $id => $item_3)
+                                    <option value="{{ $id }}" {{ old('item_3_id') == $id ? 'selected' : '' }}>{{ $item_3 }}</option>
+                                @endforeach
+                            </select>
+                            @if($errors->has('item_3'))
+                                <span class="help-block" role="alert">{{ $errors->first('item_3') }}</span>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.requestForInspection.fields.item_3_helper') }}</span>
                         </div>
                         <div class="form-group {{ $errors->has('type_of_work') ? 'has-error' : '' }}">
                             <label>{{ trans('cruds.requestForInspection.fields.type_of_work') }}</label>
@@ -96,7 +118,7 @@
                         </div>
                         <div class="form-group {{ $errors->has('ref_no') ? 'has-error' : '' }}">
                             <label for="ref_no">{{ trans('cruds.requestForInspection.fields.ref_no') }}</label>
-                            <input class="form-control" type="text" name="ref_no" id="ref_no" value="{{ old('ref_no', '') }}" placeholder="WBS1/WBS2/WBS3/ORDER No.">
+                            <input class="form-control" type="text" name="ref_no" id="ref_no" value="{{ old('ref_no', '') }}">
                             @if($errors->has('ref_no'))
                                 <span class="help-block" role="alert">{{ $errors->first('ref_no') }}</span>
                             @endif
@@ -166,18 +188,6 @@
                             @endif
                             <span class="help-block">{{ trans('cruds.requestForInspection.fields.comment_helper') }}</span>
                         </div>
-                        <div class="form-group {{ $errors->has('construction_contract') ? 'has-error' : '' }}">
-                            <label for="construction_contract_id">{{ trans('cruds.requestForInspection.fields.construction_contract') }}</label>
-                            <select class="form-control select2" name="construction_contract_id" id="construction_contract_id">
-                                @foreach($construction_contracts as $id => $construction_contract)
-                                    <option value="{{ $id }}" {{ old('construction_contract_id') == $id ? 'selected' : '' }}>{{ $construction_contract }}</option>
-                                @endforeach
-                            </select>
-                            @if($errors->has('construction_contract'))
-                                <span class="help-block" role="alert">{{ $errors->first('construction_contract') }}</span>
-                            @endif
-                            <span class="help-block">{{ trans('cruds.requestForInspection.fields.construction_contract_helper') }}</span>
-                        </div>
                         <div class="form-group {{ $errors->has('files_upload') ? 'has-error' : '' }}">
                             <label for="files_upload">{{ trans('cruds.requestForInspection.fields.files_upload') }}</label>
                             <div class="needsclick dropzone" id="files_upload-dropzone">
@@ -187,16 +197,7 @@
                             @endif
                             <span class="help-block">{{ trans('cruds.requestForInspection.fields.files_upload_helper') }}</span>
                         </div>
-
-                        <legend> Loop Options </legend>
-                        <!-- <div class="form-group {{ $errors->has('start_loop') ? 'has-error' : '' }}">
-                            <label for="start_loop">{{ trans('cruds.requestForInspection.fields.start_loop') }}</label>
-                            <input class="form-control" type="number" name="start_loop" id="start_loop" value="{{ old('start_loop', '') }}" step="1">
-                            @if($errors->has('start_loop'))
-                                <span class="help-block" role="alert">{{ $errors->first('start_loop') }}</span>
-                            @endif
-                            <span class="help-block">{{ trans('cruds.requestForInspection.fields.start_loop_helper') }}</span>
-                        </div> -->
+                        <legend> Loop Panel </legend>
                         <div class="form-group {{ $errors->has('end_loop') ? 'has-error' : '' }}">
                             <label for="end_loop">{{ trans('cruds.requestForInspection.fields.end_loop') }}</label>
                             <input class="form-control" type="number" name="end_loop" id="end_loop" value="{{ old('end_loop', '') }}" step="1">
@@ -342,7 +343,6 @@ Dropzone.options.loopFileUploadDropzone = {
          return _results
      }
 }
-
 $('.wbslv1').change(function(){
         if($(this).val() != ''){
             var select = $(this).val();
@@ -382,25 +382,6 @@ $('.wbslv2').change(function(){
         }
 });
 
-$('.wbslv3').change(function(){
-        if($(this).val() != ''){
-            var select = $(this).val();
-            console.log(select);
-            var _token = $('input[name="_token"]').val();
-            $.ajax({
-                url:"{{ route('admin.rfns.fetch') }}",
-                method:"POST",
-                data:{select:select , _token:_token},
-                success:function(result){
-                    //Action
-
-                    $('.wbslv4').html(result);
-                    console.log(result);
-                }
-            })
-        }
-});
-
 $('.wbslv2').change(function(){
         if($(this).val() != ''){
             var select = $(this).val();
@@ -419,7 +400,6 @@ $('.wbslv2').change(function(){
             })
         }
 });
-
 
 
 </script>

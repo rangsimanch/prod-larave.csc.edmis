@@ -12,9 +12,9 @@ class CreateSrtHeadOfficeDocumentsTable extends Migration
             $table->increments('id');
             $table->date('process_date')->nullable();
             $table->date('finished_date')->nullable();
-            $table->string('practitioner')->nullable();
             $table->longText('practice_notes')->nullable();
             $table->string('note')->nullable();
+            $table->string('special_command')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

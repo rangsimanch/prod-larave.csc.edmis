@@ -28,9 +28,6 @@
 
                                 </th>
                                 <th>
-                                    {{ trans('cruds.srtHeadOfficeDocument.fields.id') }}
-                                </th>
-                                <th>
                                     {{ trans('cruds.srtHeadOfficeDocument.fields.refer_documents') }}
                                 </th>
                                 <th>
@@ -43,7 +40,7 @@
                                     {{ trans('cruds.srtHeadOfficeDocument.fields.finished_date') }}
                                 </th>
                                 <th>
-                                    {{ trans('cruds.srtHeadOfficeDocument.fields.practitioner') }}
+                                    {{ trans('cruds.srtHeadOfficeDocument.fields.operator') }}
                                 </th>
                                 <th>
                                     {{ trans('cruds.srtHeadOfficeDocument.fields.practice_notes') }}
@@ -62,9 +59,6 @@
                                 <td>
                                 </td>
                                 <td>
-                                    <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                                </td>
-                                <td>
                                     <select class="search">
                                         <option value>{{ trans('global.all') }}</option>
                                         @foreach($srt_input_documents as $key => $item)
@@ -75,17 +69,22 @@
                                 <td>
                                 </td>
                                 <td>
-                                    <select class="search">
+                                    <select class="search" strict="true">
                                         <option value>{{ trans('global.all') }}</option>
-                                        @foreach($srt_document_statuses as $key => $item)
-                                            <option value="{{ $item->title }}">{{ $item->title }}</option>
+                                        @foreach(App\SrtHeadOfficeDocument::SPECIAL_COMMAND_SELECT as $key => $item)
+                                            <option value="{{ $item }}">{{ $item }}</option>
                                         @endforeach
                                     </select>
                                 </td>
                                 <td>
                                 </td>
                                 <td>
-                                    <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                                    <select class="search">
+                                        <option value>{{ trans('global.all') }}</option>
+                                        @foreach($users as $key => $item)
+                                            <option value="{{ $item->name }}">{{ $item->name }}</option>
+                                        @endforeach
+                                    </select>
                                 </td>
                                 <td>
                                     <input class="search" type="text" placeholder="{{ trans('global.search') }}">
@@ -153,12 +152,11 @@
     ajax: "{{ route('admin.srt-head-office-documents.index') }}",
     columns: [
       { data: 'placeholder', name: 'placeholder' },
-{ data: 'id', name: 'id' },
 { data: 'refer_documents_document_number', name: 'refer_documents.document_number' },
 { data: 'process_date', name: 'process_date' },
-{ data: 'special_command_title', name: 'special_command.title' },
+{ data: 'special_command', name: 'special_command' },
 { data: 'finished_date', name: 'finished_date' },
-{ data: 'practitioner', name: 'practitioner' },
+{ data: 'operator_name', name: 'operator.name' },
 { data: 'practice_notes', name: 'practice_notes' },
 { data: 'note', name: 'note' },
 { data: 'file_upload', name: 'file_upload', sortable: false, searchable: false },

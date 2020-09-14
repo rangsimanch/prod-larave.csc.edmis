@@ -19,14 +19,6 @@
                             <tbody>
                                 <tr>
                                     <th>
-                                        {{ trans('cruds.srtHeadOfficeDocument.fields.id') }}
-                                    </th>
-                                    <td>
-                                        {{ $srtHeadOfficeDocument->id }}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th>
                                         {{ trans('cruds.srtHeadOfficeDocument.fields.refer_documents') }}
                                     </th>
                                     <td>
@@ -46,7 +38,7 @@
                                         {{ trans('cruds.srtHeadOfficeDocument.fields.special_command') }}
                                     </th>
                                     <td>
-                                        {{ $srtHeadOfficeDocument->special_command->title ?? '' }}
+                                        {{ App\SrtHeadOfficeDocument::SPECIAL_COMMAND_SELECT[$srtHeadOfficeDocument->special_command] ?? '' }}
                                     </td>
                                 </tr>
                                 <tr>
@@ -59,10 +51,10 @@
                                 </tr>
                                 <tr>
                                     <th>
-                                        {{ trans('cruds.srtHeadOfficeDocument.fields.practitioner') }}
+                                        {{ trans('cruds.srtHeadOfficeDocument.fields.operator') }}
                                     </th>
                                     <td>
-                                        {{ $srtHeadOfficeDocument->practitioner }}
+                                        {{ $srtHeadOfficeDocument->operator->name ?? '' }}
                                     </td>
                                 </tr>
                                 <tr>
