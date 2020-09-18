@@ -37,6 +37,9 @@ class RequestForInspection extends Model implements HasMedia
         'Piers'              => 'Piers',
         'Pile Cap'           => 'Pile Cap',
         'Retaining Wall'     => 'Retaining Wall',
+        'Segment Production' => 'Segment Production',
+        'Spread foundation'  => 'Spread foundation',
+
     ];
 
     protected $fillable = [

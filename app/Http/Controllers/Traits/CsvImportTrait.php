@@ -43,6 +43,9 @@ trait CsvImportTrait
             $for_insert = array_chunk($insert, 100);
 
             foreach ($for_insert as $insert_item) {
+                if($insert_item == ''){
+                    $insert_item = null;
+                }
                 $model::insert($insert_item);
             }
 
