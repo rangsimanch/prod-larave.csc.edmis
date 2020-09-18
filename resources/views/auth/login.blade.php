@@ -4,13 +4,21 @@
 
 
 
-<div class="login-box-body">
+<div class="login-box-body" style="-webkit-box-shadow: 0px 0px 32px 0px rgba(0,0,0,0.75);
+-moz-box-shadow: 0px 0px 32px 0px rgba(0,0,0,0.75);
+box-shadow: 0px 0px 32px 0px rgba(0,0,0,0.75);">
+
         <div class="login-logo">
         
         <legend>
-        <b>
-           EDMIS Login
-        </b>
+        <p>
+        <img src="https://www.img.in.th/images/e0ce57eef9c5fc9cce3324c7431b49b3.png" border="0" style="width:80%; hight:80%;" />
+        </p>
+        <p>
+            <b>
+                Login
+            </b>
+        </p>
         </legend>
 </div>
                     
@@ -51,7 +59,7 @@
                     </div>
                 </div>
                 <div class="col-xs-4">
-                    <button type="submit" class="btn btn-primary btn-block btn-flat">
+                    <button type="submit" class="btn btn-success btn-block btn-flat">
                         {{ trans('global.login') }}
                     </button>
                 </div>

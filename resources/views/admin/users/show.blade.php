@@ -132,7 +132,7 @@
                 </div>
             </div>
 
-            <div class="panel panel-default">
+            <!-- <div class="panel panel-default">
                 <div class="panel-heading">
                     {{ trans('global.relatedData') }}
                 </div>
@@ -212,7 +212,7 @@
                         @includeIf('admin.users.relationships.userUserAlerts', ['userAlerts' => $user->userUserAlerts])
                     </div>
                 </div>
-            </div>
+            </div> -->
 
         </div>
     </div>
