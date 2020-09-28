@@ -20,8 +20,9 @@ class CreateSrtInputDocumentsTable extends Migration
             $table->string('objective')->nullable();
             $table->string('document_storage')->nullable();
             $table->longText('note')->nullable();
-            $table->string('registration_number')->unique();
             $table->string('signatory')->nullable();
+            $table->string('subject')->nullable();
+            $table->date('close_date')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

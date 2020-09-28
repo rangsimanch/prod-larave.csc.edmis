@@ -16,11 +16,9 @@ class AddRelationshipFieldsToSrtInputDocumentsTable extends Migration
             $table->unsignedInteger('constuction_contract_id');
             $table->foreign('constuction_contract_id', 'constuction_contract_fk_2170850')->references('id')->on('construction_contracts');
             $table->unsignedInteger('from_id')->nullable();
-            $table->foreign('from_id', 'from_fk_2170852')->references('id')->on('users');
-            $table->unsignedInteger('to_id')->nullable();
-            $table->foreign('to_id', 'to_fk_2170853')->references('id')->on('users');
+            $table->foreign('from_id', 'from_fk_2240466')->references('id')->on('users');
             $table->unsignedInteger('close_by_id')->nullable();
-            $table->foreign('close_by_id', 'close_by_fk_2176660')->references('id')->on('users');
+            $table->foreign('close_by_id', 'close_by_fk_2240468')->references('id')->on('users');
         });
     }
 }

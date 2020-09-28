@@ -25,6 +25,7 @@ class ConstructionContract extends Model
     protected $fillable = [
         'name',
         'code',
+        'document_code',
         'budget',
         'dk_end_1',
         'dk_end_2',

@@ -21,14 +21,13 @@ class UpdateSrtInputDocumentRequest extends FormRequest
                 'required',
                 'integer',
             ],
-            'registration_number'     => [
-                'string',
-                'required',
-                'unique:srt_input_documents,registration_number,' . request()->route('srt_input_document')->id,
-            ],
             'document_number'         => [
                 'string',
                 'required',
+            ],
+            'subject'                 => [
+                'string',
+                'nullable',
             ],
             'incoming_date'           => [
                 'required',
@@ -37,6 +36,12 @@ class UpdateSrtInputDocumentRequest extends FormRequest
             'refer_to'                => [
                 'string',
                 'nullable',
+            ],
+            'tos.*'                   => [
+                'integer',
+            ],
+            'tos'                     => [
+                'array',
             ],
             'attachments'             => [
                 'string',

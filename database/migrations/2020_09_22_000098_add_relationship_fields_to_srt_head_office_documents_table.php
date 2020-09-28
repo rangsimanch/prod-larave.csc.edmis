@@ -13,8 +13,6 @@ class AddRelationshipFieldsToSrtHeadOfficeDocumentsTable extends Migration
             $table->foreign('refer_documents_id', 'refer_documents_fk_2137407')->references('id')->on('srt_input_documents');
             $table->unsignedInteger('team_id')->nullable();
             $table->foreign('team_id', 'team_fk_2137417')->references('id')->on('teams');
-            $table->unsignedInteger('operator_id')->nullable();
-            $table->foreign('operator_id', 'operator_fk_2176659')->references('id')->on('users');
         });
     }
 }

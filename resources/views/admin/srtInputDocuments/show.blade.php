@@ -35,10 +35,10 @@
                                 </tr>
                                 <tr>
                                     <th>
-                                        {{ trans('cruds.srtInputDocument.fields.registration_number') }}
+                                        {{ trans('cruds.srtInputDocument.fields.document_number') }}
                                     </th>
                                     <td>
-                                        {{ $srtInputDocument->registration_number }}
+                                        {{ $srtInputDocument->document_number }}
                                     </td>
                                 </tr>
                                 <tr>
@@ -51,10 +51,10 @@
                                 </tr>
                                 <tr>
                                     <th>
-                                        {{ trans('cruds.srtInputDocument.fields.document_number') }}
+                                        {{ trans('cruds.srtInputDocument.fields.subject') }}
                                     </th>
                                     <td>
-                                        {{ $srtInputDocument->document_number }}
+                                        {{ $srtInputDocument->subject }}
                                     </td>
                                 </tr>
                                 <tr>
@@ -86,7 +86,9 @@
                                         {{ trans('cruds.srtInputDocument.fields.to') }}
                                     </th>
                                     <td>
-                                        {{ $srtInputDocument->to->name ?? '' }}
+                                        @foreach($srtInputDocument->tos as $key => $to)
+                                            <span class="label label-info">{{ $to->name }}</span>
+                                        @endforeach
                                     </td>
                                 </tr>
                                 <tr>
@@ -151,6 +153,42 @@
                                     </th>
                                     <td>
                                         @foreach($srtInputDocument->file_upload as $key => $media)
+                                            <a href="{{ $media->getUrl() }}" target="_blank">
+                                                {{ trans('global.view_file') }}
+                                            </a>
+                                        @endforeach
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        {{ trans('cruds.srtInputDocument.fields.file_upload_2') }}
+                                    </th>
+                                    <td>
+                                        @foreach($srtInputDocument->file_upload_2 as $key => $media)
+                                            <a href="{{ $media->getUrl() }}" target="_blank">
+                                                {{ trans('global.view_file') }}
+                                            </a>
+                                        @endforeach
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        {{ trans('cruds.srtInputDocument.fields.file_upload_3') }}
+                                    </th>
+                                    <td>
+                                        @foreach($srtInputDocument->file_upload_3 as $key => $media)
+                                            <a href="{{ $media->getUrl() }}" target="_blank">
+                                                {{ trans('global.view_file') }}
+                                            </a>
+                                        @endforeach
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        {{ trans('cruds.srtInputDocument.fields.file_upload_4') }}
+                                    </th>
+                                    <td>
+                                        @foreach($srtInputDocument->file_upload_4 as $key => $media)
                                             <a href="{{ $media->getUrl() }}" target="_blank">
                                                 {{ trans('global.view_file') }}
                                             </a>

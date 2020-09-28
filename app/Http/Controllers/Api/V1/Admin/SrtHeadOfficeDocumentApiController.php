@@ -20,12 +20,13 @@ class SrtHeadOfficeDocumentApiController extends Controller
     {
         abort_if(Gate::denies('srt_head_office_document_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new SrtHeadOfficeDocumentResource(SrtHeadOfficeDocument::with(['refer_documents', 'operator', 'team'])->get());
+        return new SrtHeadOfficeDocumentResource(SrtHeadOfficeDocument::with(['refer_documents', 'operators', 'team'])->get());
     }
 
     public function store(StoreSrtHeadOfficeDocumentRequest $request)
     {
         $srtHeadOfficeDocument = SrtHeadOfficeDocument::create($request->all());
+        $srtHeadOfficeDocument->operators()->sync($request->input('operators', []));
 
         if ($request->input('file_upload', false)) {
             $srtHeadOfficeDocument->addMedia(storage_path('tmp/uploads/' . $request->input('file_upload')))->toMediaCollection('file_upload');
@@ -40,12 +41,13 @@ class SrtHeadOfficeDocumentApiController extends Controller
     {
         abort_if(Gate::denies('srt_head_office_document_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new SrtHeadOfficeDocumentResource($srtHeadOfficeDocument->load(['refer_documents', 'operator', 'team']));
+        return new SrtHeadOfficeDocumentResource($srtHeadOfficeDocument->load(['refer_documents', 'operators', 'team']));
     }
 
     public function update(UpdateSrtHeadOfficeDocumentRequest $request, SrtHeadOfficeDocument $srtHeadOfficeDocument)
     {
         $srtHeadOfficeDocument->update($request->all());
+        $srtHeadOfficeDocument->operators()->sync($request->input('operators', []));
 
         if ($request->input('file_upload', false)) {
             if (!$srtHeadOfficeDocument->file_upload || $request->input('file_upload') !== $srtHeadOfficeDocument->file_upload->file_name) {

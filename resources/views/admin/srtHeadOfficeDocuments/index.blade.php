@@ -156,14 +156,14 @@
 { data: 'process_date', name: 'process_date' },
 { data: 'special_command', name: 'special_command' },
 { data: 'finished_date', name: 'finished_date' },
-{ data: 'operator_name', name: 'operator.name' },
+{ data: 'operator', name: 'operators.name' },
 { data: 'practice_notes', name: 'practice_notes' },
 { data: 'note', name: 'note' },
 { data: 'file_upload', name: 'file_upload', sortable: false, searchable: false },
 { data: 'actions', name: '{{ trans('global.actions') }}' }
     ],
     orderCellsTop: true,
-    order: [[ 1, 'desc' ]],
+    order: [[ 2, 'desc' ]],
     pageLength: 10,
   };
   let table = $('.datatable-SrtHeadOfficeDocument').DataTable(dtOverrideGlobals);

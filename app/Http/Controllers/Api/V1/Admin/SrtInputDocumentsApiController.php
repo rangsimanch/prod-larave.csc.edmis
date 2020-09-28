@@ -20,15 +20,28 @@ class SrtInputDocumentsApiController extends Controller
     {
         abort_if(Gate::denies('srt_input_document_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new SrtInputDocumentResource(SrtInputDocument::with(['docuement_status', 'constuction_contract', 'from', 'to', 'close_by', 'team'])->get());
+        return new SrtInputDocumentResource(SrtInputDocument::with(['docuement_status', 'constuction_contract', 'from', 'tos', 'close_by', 'team'])->get());
     }
 
     public function store(StoreSrtInputDocumentRequest $request)
     {
         $srtInputDocument = SrtInputDocument::create($request->all());
+        $srtInputDocument->tos()->sync($request->input('tos', []));
 
         if ($request->input('file_upload', false)) {
             $srtInputDocument->addMedia(storage_path('tmp/uploads/' . $request->input('file_upload')))->toMediaCollection('file_upload');
+        }
+
+        if ($request->input('file_upload_2', false)) {
+            $srtInputDocument->addMedia(storage_path('tmp/uploads/' . $request->input('file_upload_2')))->toMediaCollection('file_upload_2');
+        }
+
+        if ($request->input('file_upload_3', false)) {
+            $srtInputDocument->addMedia(storage_path('tmp/uploads/' . $request->input('file_upload_3')))->toMediaCollection('file_upload_3');
+        }
+
+        if ($request->input('file_upload_4', false)) {
+            $srtInputDocument->addMedia(storage_path('tmp/uploads/' . $request->input('file_upload_4')))->toMediaCollection('file_upload_4');
         }
 
         return (new SrtInputDocumentResource($srtInputDocument))
@@ -40,12 +53,13 @@ class SrtInputDocumentsApiController extends Controller
     {
         abort_if(Gate::denies('srt_input_document_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new SrtInputDocumentResource($srtInputDocument->load(['docuement_status', 'constuction_contract', 'from', 'to', 'close_by', 'team']));
+        return new SrtInputDocumentResource($srtInputDocument->load(['docuement_status', 'constuction_contract', 'from', 'tos', 'close_by', 'team']));
     }
 
     public function update(UpdateSrtInputDocumentRequest $request, SrtInputDocument $srtInputDocument)
     {
         $srtInputDocument->update($request->all());
+        $srtInputDocument->tos()->sync($request->input('tos', []));
 
         if ($request->input('file_upload', false)) {
             if (!$srtInputDocument->file_upload || $request->input('file_upload') !== $srtInputDocument->file_upload->file_name) {
@@ -57,6 +71,42 @@ class SrtInputDocumentsApiController extends Controller
             }
         } elseif ($srtInputDocument->file_upload) {
             $srtInputDocument->file_upload->delete();
+        }
+
+        if ($request->input('file_upload_2', false)) {
+            if (!$srtInputDocument->file_upload_2 || $request->input('file_upload_2') !== $srtInputDocument->file_upload_2->file_name) {
+                if ($srtInputDocument->file_upload_2) {
+                    $srtInputDocument->file_upload_2->delete();
+                }
+
+                $srtInputDocument->addMedia(storage_path('tmp/uploads/' . $request->input('file_upload_2')))->toMediaCollection('file_upload_2');
+            }
+        } elseif ($srtInputDocument->file_upload_2) {
+            $srtInputDocument->file_upload_2->delete();
+        }
+
+        if ($request->input('file_upload_3', false)) {
+            if (!$srtInputDocument->file_upload_3 || $request->input('file_upload_3') !== $srtInputDocument->file_upload_3->file_name) {
+                if ($srtInputDocument->file_upload_3) {
+                    $srtInputDocument->file_upload_3->delete();
+                }
+
+                $srtInputDocument->addMedia(storage_path('tmp/uploads/' . $request->input('file_upload_3')))->toMediaCollection('file_upload_3');
+            }
+        } elseif ($srtInputDocument->file_upload_3) {
+            $srtInputDocument->file_upload_3->delete();
+        }
+
+        if ($request->input('file_upload_4', false)) {
+            if (!$srtInputDocument->file_upload_4 || $request->input('file_upload_4') !== $srtInputDocument->file_upload_4->file_name) {
+                if ($srtInputDocument->file_upload_4) {
+                    $srtInputDocument->file_upload_4->delete();
+                }
+
+                $srtInputDocument->addMedia(storage_path('tmp/uploads/' . $request->input('file_upload_4')))->toMediaCollection('file_upload_4');
+            }
+        } elseif ($srtInputDocument->file_upload_4) {
+            $srtInputDocument->file_upload_4->delete();
         }
 
         return (new SrtInputDocumentResource($srtInputDocument))

@@ -19,10 +19,14 @@ class SrtInputDocument extends Model implements HasMedia
 
     protected $appends = [
         'file_upload',
+        'file_upload_2',
+        'file_upload_3',
+        'file_upload_4',
     ];
 
     protected $dates = [
         'incoming_date',
+        'close_date',
         'created_at',
         'updated_at',
         'deleted_at',
@@ -30,6 +34,11 @@ class SrtInputDocument extends Model implements HasMedia
 
     const DOCUMENT_TYPE_SELECT = [
         'เอกสารส่งภายใน' => 'เอกสารส่งภายใน',
+    ];
+
+    const SAVE_FOR_SELECT = [
+        'Process' => 'บันทึกเท่านั้น',
+        'Closed'  => 'บันทึกและปิด',
     ];
 
     const SPEED_CLASS_SELECT = [
@@ -42,13 +51,12 @@ class SrtInputDocument extends Model implements HasMedia
     protected $fillable = [
         'docuement_status_id',
         'constuction_contract_id',
-        'registration_number',
-        'document_type',
         'document_number',
+        'document_type',
+        'subject',
         'incoming_date',
         'refer_to',
         'from_id',
-        'to_id',
         'attachments',
         'description',
         'speed_class',
@@ -56,8 +64,10 @@ class SrtInputDocument extends Model implements HasMedia
         'signatory',
         'document_storage',
         'note',
-        'close_by_id',
+        'close_date',
         'created_at',
+        'close_by_id',
+        'save_for',
         'updated_at',
         'deleted_at',
         'team_id',
@@ -114,14 +124,39 @@ class SrtInputDocument extends Model implements HasMedia
         return $this->belongsTo(User::class, 'from_id');
     }
 
-    public function to()
+    public function tos()
     {
-        return $this->belongsTo(User::class, 'to_id');
+        return $this->belongsToMany(User::class);
+    }
+
+    public function getCloseDateAttribute($value)
+    {
+        return $value ? Carbon::parse($value)->format(config('panel.date_format')) : null;
+    }
+
+    public function setCloseDateAttribute($value)
+    {
+        $this->attributes['close_date'] = $value ? Carbon::createFromFormat(config('panel.date_format'), $value)->format('Y-m-d') : null;
     }
 
     public function getFileUploadAttribute()
     {
         return $this->getMedia('file_upload');
+    }
+
+    public function getFileUpload2Attribute()
+    {
+        return $this->getMedia('file_upload_2');
+    }
+
+    public function getFileUpload3Attribute()
+    {
+        return $this->getMedia('file_upload_3');
+    }
+
+    public function getFileUpload4Attribute()
+    {
+        return $this->getMedia('file_upload_4');
     }
 
     public function close_by()

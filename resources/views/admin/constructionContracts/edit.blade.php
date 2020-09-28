@@ -28,17 +28,13 @@
                             @endif
                             <span class="help-block">{{ trans('cruds.constructionContract.fields.code_helper') }}</span>
                         </div>
-                        <div class="form-group {{ $errors->has('works_code') ? 'has-error' : '' }}">
-                            <label for="works_code_id">{{ trans('cruds.constructionContract.fields.works_code') }}</label>
-                            <select class="form-control select2" name="works_code_id" id="works_code_id">
-                                @foreach($works_codes as $id => $works_code)
-                                    <option value="{{ $id }}" {{ ($constructionContract->works_code ? $constructionContract->works_code->id : old('works_code_id')) == $id ? 'selected' : '' }}>{{ $works_code }}</option>
-                                @endforeach
-                            </select>
-                            @if($errors->has('works_code_id'))
-                                <span class="help-block" role="alert">{{ $errors->first('works_code_id') }}</span>
+                        <div class="form-group {{ $errors->has('document_code') ? 'has-error' : '' }}">
+                            <label for="document_code">{{ trans('cruds.constructionContract.fields.document_code') }}</label>
+                            <input class="form-control" type="text" name="document_code" id="document_code" value="{{ old('document_code', $constructionContract->document_code) }}">
+                            @if($errors->has('document_code'))
+                                <span class="help-block" role="alert">{{ $errors->first('document_code') }}</span>
                             @endif
-                            <span class="help-block">{{ trans('cruds.constructionContract.fields.works_code_helper') }}</span>
+                            <span class="help-block">{{ trans('cruds.constructionContract.fields.document_code_helper') }}</span>
                         </div>
                         <div class="form-group {{ $errors->has('dk_start_1') ? 'has-error' : '' }}">
                             <label for="dk_start_1">{{ trans('cruds.constructionContract.fields.dk_start_1') }}</label>
@@ -119,6 +115,18 @@
                                 <span class="help-block" role="alert">{{ $errors->first('budget') }}</span>
                             @endif
                             <span class="help-block">{{ trans('cruds.constructionContract.fields.budget_helper') }}</span>
+                        </div>
+                        <div class="form-group {{ $errors->has('works_code') ? 'has-error' : '' }}">
+                            <label for="works_code_id">{{ trans('cruds.constructionContract.fields.works_code') }}</label>
+                            <select class="form-control select2" name="works_code_id" id="works_code_id">
+                                @foreach($works_codes as $id => $works_code)
+                                    <option value="{{ $id }}" {{ (old('works_code_id') ? old('works_code_id') : $constructionContract->works_code->id ?? '') == $id ? 'selected' : '' }}>{{ $works_code }}</option>
+                                @endforeach
+                            </select>
+                            @if($errors->has('works_code'))
+                                <span class="help-block" role="alert">{{ $errors->first('works_code') }}</span>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.constructionContract.fields.works_code_helper') }}</span>
                         </div>
                         <div class="form-group">
                             <button class="btn btn-danger" type="submit">

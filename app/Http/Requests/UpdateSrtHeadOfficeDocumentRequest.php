@@ -29,6 +29,12 @@ class UpdateSrtHeadOfficeDocumentRequest extends FormRequest
                 'date_format:' . config('panel.date_format'),
                 'nullable',
             ],
+            'operators.*'        => [
+                'integer',
+            ],
+            'operators'          => [
+                'array',
+            ],
             'note'               => [
                 'string',
                 'nullable',

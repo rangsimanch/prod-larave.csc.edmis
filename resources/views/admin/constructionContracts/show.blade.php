@@ -35,10 +35,10 @@
                                 </tr>
                                 <tr>
                                     <th>
-                                        {{ trans('cruds.constructionContract.fields.works_code') }}
+                                        {{ trans('cruds.constructionContract.fields.document_code') }}
                                     </th>
                                     <td>
-                                        {{ $constructionContract->works_code->code ?? '' }}
+                                        {{ $constructionContract->document_code }}
                                     </td>
                                 </tr>
                                 <tr>
@@ -121,6 +121,14 @@
                                         {{ $constructionContract->budget }}
                                     </td>
                                 </tr>
+                                <tr>
+                                    <th>
+                                        {{ trans('cruds.constructionContract.fields.works_code') }}
+                                    </th>
+                                    <td>
+                                        {{ $constructionContract->works_code->code ?? '' }}
+                                    </td>
+                                </tr>
                             </tbody>
                         </table>
                         <div class="form-group">
@@ -132,47 +140,7 @@
                 </div>
             </div>
 
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    {{ trans('global.relatedData') }}
-                </div>
-                <ul class="nav nav-tabs" role="tablist" id="relationship-tabs">
-                    <li role="presentation">
-                        <a href="#construction_contract_rfas" aria-controls="construction_contract_rfas" role="tab" data-toggle="tab">
-                            {{ trans('cruds.rfa.title') }}
-                        </a>
-                    </li>
-                    <li role="presentation">
-                        <a href="#construction_contract_tasks" aria-controls="construction_contract_tasks" role="tab" data-toggle="tab">
-                            {{ trans('cruds.task.title') }}
-                        </a>
-                    </li>
-                    <li role="presentation">
-                        <a href="#construction_contract_file_managers" aria-controls="construction_contract_file_managers" role="tab" data-toggle="tab">
-                            {{ trans('cruds.fileManager.title') }}
-                        </a>
-                    </li>
-                    <li role="presentation">
-                        <a href="#construction_contract_users" aria-controls="construction_contract_users" role="tab" data-toggle="tab">
-                            {{ trans('cruds.user.title') }}
-                        </a>
-                    </li>
-                </ul>
-                <div class="tab-content">
-                    <div class="tab-pane" role="tabpanel" id="construction_contract_rfas">
-                        @includeIf('admin.constructionContracts.relationships.constructionContractRfas', ['rfas' => $constructionContract->constructionContractRfas])
-                    </div>
-                    <div class="tab-pane" role="tabpanel" id="construction_contract_tasks">
-                        @includeIf('admin.constructionContracts.relationships.constructionContractTasks', ['tasks' => $constructionContract->constructionContractTasks])
-                    </div>
-                    <div class="tab-pane" role="tabpanel" id="construction_contract_file_managers">
-                        @includeIf('admin.constructionContracts.relationships.constructionContractFileManagers', ['fileManagers' => $constructionContract->constructionContractFileManagers])
-                    </div>
-                    <div class="tab-pane" role="tabpanel" id="construction_contract_users">
-                        @includeIf('admin.constructionContracts.relationships.constructionContractUsers', ['users' => $constructionContract->constructionContractUsers])
-                    </div>
-                </div>
-            </div>
+
 
         </div>
     </div>

@@ -54,7 +54,9 @@
                                         {{ trans('cruds.srtHeadOfficeDocument.fields.operator') }}
                                     </th>
                                     <td>
-                                        {{ $srtHeadOfficeDocument->operator->name ?? '' }}
+                                        @foreach($srtHeadOfficeDocument->operators as $key => $operator)
+                                            <span class="label label-info">{{ $operator->name }}</span>
+                                        @endforeach
                                     </td>
                                 </tr>
                                 <tr>

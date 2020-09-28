@@ -29,15 +29,20 @@ class SrtHeadOfficeDocument extends Model implements HasMedia
         'deleted_at',
     ];
 
+    const SAVE_FOR_SELECT = [
+        'Process'           => 'บันทึกเท่านั้น',
+        'Closed' => 'บันทึกและปิด',
+    ];
+
     protected $fillable = [
         'refer_documents_id',
         'process_date',
         'special_command',
         'finished_date',
-        'operator_id',
         'practice_notes',
         'note',
         'created_at',
+        'save_for',
         'updated_at',
         'deleted_at',
         'team_id',
@@ -82,9 +87,9 @@ class SrtHeadOfficeDocument extends Model implements HasMedia
         $this->attributes['finished_date'] = $value ? Carbon::createFromFormat(config('panel.date_format'), $value)->format('Y-m-d') : null;
     }
 
-    public function operator()
+    public function operators()
     {
-        return $this->belongsTo(User::class, 'operator_id');
+        return $this->belongsToMany(User::class);
     }
 
     public function getFileUploadAttribute()

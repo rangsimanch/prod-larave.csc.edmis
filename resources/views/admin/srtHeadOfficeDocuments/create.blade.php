@@ -52,15 +52,19 @@
                             @endif
                             <span class="help-block">{{ trans('cruds.srtHeadOfficeDocument.fields.finished_date_helper') }}</span>
                         </div>
-                        <div class="form-group {{ $errors->has('operator') ? 'has-error' : '' }}">
-                            <label for="operator_id">{{ trans('cruds.srtHeadOfficeDocument.fields.operator') }}</label>
-                            <select class="form-control select2" name="operator_id" id="operator_id">
+                        <div class="form-group {{ $errors->has('operators') ? 'has-error' : '' }}">
+                            <label for="operators">{{ trans('cruds.srtHeadOfficeDocument.fields.operator') }}</label>
+                            <div style="padding-bottom: 4px">
+                                <span class="btn btn-info btn-xs select-all" style="border-radius: 0">{{ trans('global.select_all') }}</span>
+                                <span class="btn btn-info btn-xs deselect-all" style="border-radius: 0">{{ trans('global.deselect_all') }}</span>
+                            </div>
+                            <select class="form-control select2" name="operators[]" id="operators" multiple>
                                 @foreach($operators as $id => $operator)
-                                    <option value="{{ $id }}" {{ old('operator_id') == $id ? 'selected' : '' }}>{{ $operator }}</option>
+                                    <option value="{{ $id }}" {{ in_array($id, old('operators', [])) ? 'selected' : '' }}>{{ $operator }}</option>
                                 @endforeach
                             </select>
-                            @if($errors->has('operator'))
-                                <span class="help-block" role="alert">{{ $errors->first('operator') }}</span>
+                            @if($errors->has('operators'))
+                                <span class="help-block" role="alert">{{ $errors->first('operators') }}</span>
                             @endif
                             <span class="help-block">{{ trans('cruds.srtHeadOfficeDocument.fields.operator_helper') }}</span>
                         </div>
@@ -88,6 +92,19 @@
                                 <span class="help-block" role="alert">{{ $errors->first('file_upload') }}</span>
                             @endif
                             <span class="help-block">{{ trans('cruds.srtHeadOfficeDocument.fields.file_upload_helper') }}</span>
+                        </div>
+                        <div class="form-group {{ $errors->has('save_for') ? 'has-error' : '' }}">
+                            <label class="required">{{ trans('cruds.srtHeadOfficeDocument.fields.save_for') }}</label>
+                            <select class="form-control" name="save_for" id="save_for" required>
+                                <option value disabled {{ old('save_for', null) === null ? 'selected' : '' }}>{{ trans('global.pleaseSelect') }}</option>
+                                @foreach(App\SrtHeadOfficeDocument::SAVE_FOR_SELECT as $key => $label)
+                                    <option value="{{ $key }}" {{ old('save_for', '') === (string) $key ? 'selected' : '' }}>{{ $label }}</option>
+                                @endforeach
+                            </select>
+                            @if($errors->has('save_for'))
+                                <span class="help-block" role="alert">{{ $errors->first('save_for') }}</span>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.srtHeadOfficeDocument.fields.save_for_helper') }}</span>
                         </div>
                         <div class="form-group">
                             <button class="btn btn-danger" type="submit">

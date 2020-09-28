@@ -27,17 +27,13 @@
                             @endif
                             <span class="help-block">{{ trans('cruds.constructionContract.fields.code_helper') }}</span>
                         </div>
-                        <div class="form-group {{ $errors->has('works_code') ? 'has-error' : '' }}">
-                            <label for="works_code_id">{{ trans('cruds.constructionContract.fields.works_code') }}</label>
-                            <select class="form-control select2" name="works_code_id" id="works_code_id">
-                                @foreach($works_codes as $id => $works_code)
-                                    <option value="{{ $id }}" {{ old('works_code_id') == $id ? 'selected' : '' }}>{{ $works_code }}</option>
-                                @endforeach
-                            </select>
-                            @if($errors->has('works_code_id'))
-                                <span class="help-block" role="alert">{{ $errors->first('works_code_id') }}</span>
+                        <div class="form-group {{ $errors->has('document_code') ? 'has-error' : '' }}">
+                            <label for="document_code">{{ trans('cruds.constructionContract.fields.document_code') }}</label>
+                            <input class="form-control" type="text" name="document_code" id="document_code" value="{{ old('document_code', '') }}">
+                            @if($errors->has('document_code'))
+                                <span class="help-block" role="alert">{{ $errors->first('document_code') }}</span>
                             @endif
-                            <span class="help-block">{{ trans('cruds.constructionContract.fields.works_code_helper') }}</span>
+                            <span class="help-block">{{ trans('cruds.constructionContract.fields.document_code_helper') }}</span>
                         </div>
                         <div class="form-group {{ $errors->has('dk_start_1') ? 'has-error' : '' }}">
                             <label for="dk_start_1">{{ trans('cruds.constructionContract.fields.dk_start_1') }}</label>
@@ -89,7 +85,7 @@
                         </div>
                         <div class="form-group {{ $errors->has('roadway_km') ? 'has-error' : '' }}">
                             <label for="roadway_km">{{ trans('cruds.constructionContract.fields.roadway_km') }}</label>
-                            <input class="form-control" type="number" name="roadway_km" id="roadway_km" value="{{ old('roadway_km') }}" step="0.01">
+                            <input class="form-control" type="number" name="roadway_km" id="roadway_km" value="{{ old('roadway_km', '0') }}" step="0.01">
                             @if($errors->has('roadway_km'))
                                 <span class="help-block" role="alert">{{ $errors->first('roadway_km') }}</span>
                             @endif
@@ -97,7 +93,7 @@
                         </div>
                         <div class="form-group {{ $errors->has('tollway_km') ? 'has-error' : '' }}">
                             <label for="tollway_km">{{ trans('cruds.constructionContract.fields.tollway_km') }}</label>
-                            <input class="form-control" type="number" name="tollway_km" id="tollway_km" value="{{ old('tollway_km') }}" step="0.01">
+                            <input class="form-control" type="number" name="tollway_km" id="tollway_km" value="{{ old('tollway_km', '0') }}" step="0.01">
                             @if($errors->has('tollway_km'))
                                 <span class="help-block" role="alert">{{ $errors->first('tollway_km') }}</span>
                             @endif
@@ -113,13 +109,24 @@
                         </div>
                         <div class="form-group {{ $errors->has('budget') ? 'has-error' : '' }}">
                             <label for="budget">{{ trans('cruds.constructionContract.fields.budget') }}</label>
-                            <input class="form-control" type="number" name="budget" id="budget" value="{{ old('budget') }}" step="0.01">
+                            <input class="form-control" type="number" name="budget" id="budget" value="{{ old('budget', '0') }}" step="0.01">
                             @if($errors->has('budget'))
                                 <span class="help-block" role="alert">{{ $errors->first('budget') }}</span>
                             @endif
                             <span class="help-block">{{ trans('cruds.constructionContract.fields.budget_helper') }}</span>
                         </div>
-                        
+                        <div class="form-group {{ $errors->has('works_code') ? 'has-error' : '' }}">
+                            <label for="works_code_id">{{ trans('cruds.constructionContract.fields.works_code') }}</label>
+                            <select class="form-control select2" name="works_code_id" id="works_code_id">
+                                @foreach($works_codes as $id => $works_code)
+                                    <option value="{{ $id }}" {{ old('works_code_id') == $id ? 'selected' : '' }}>{{ $works_code }}</option>
+                                @endforeach
+                            </select>
+                            @if($errors->has('works_code'))
+                                <span class="help-block" role="alert">{{ $errors->first('works_code') }}</span>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.constructionContract.fields.works_code_helper') }}</span>
+                        </div>
                         <div class="form-group">
                             <button class="btn btn-danger" type="submit">
                                 {{ trans('global.save') }}

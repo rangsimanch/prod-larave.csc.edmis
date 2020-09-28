@@ -4,7 +4,7 @@
     @can('construction_contract_create')
         <div style="margin-bottom: 10px;" class="row">
             <div class="col-lg-12">
-                <a class="btn btn-success" href="{{ route("admin.construction-contracts.create") }}">
+                <a class="btn btn-success" href="{{ route('admin.construction-contracts.create') }}">
                     {{ trans('global.add') }} {{ trans('cruds.constructionContract.title_singular') }}
                 </a>
             </div>
@@ -31,7 +31,7 @@
                                         {{ trans('cruds.constructionContract.fields.code') }}
                                     </th>
                                     <th>
-                                        {{ trans('cruds.constructionContract.fields.works_code') }}
+                                        {{ trans('cruds.constructionContract.fields.document_code') }}
                                     </th>
                                     <th>
                                         {{ trans('cruds.constructionContract.fields.dk_start_1') }}
@@ -64,6 +64,12 @@
                                         {{ trans('cruds.constructionContract.fields.budget') }}
                                     </th>
                                     <th>
+                                        {{ trans('cruds.constructionContract.fields.works_code') }}
+                                    </th>
+                                    <th>
+                                        {{ trans('cruds.worksCode.fields.name') }}
+                                    </th>
+                                    <th>
                                         &nbsp;
                                     </th>
                                 </tr>
@@ -81,10 +87,7 @@
                                             {{ $constructionContract->code ?? '' }}
                                         </td>
                                         <td>
-                                            {{ $constructionContract->works_code->code ?? '' }}
-                                        </td>
-                                        <td>
-                                            {{ $constructionContract->works_code->name ?? '' }}
+                                            {{ $constructionContract->document_code ?? '' }}
                                         </td>
                                         <td>
                                             {{ $constructionContract->dk_start_1 ?? '' }}
@@ -115,6 +118,12 @@
                                         </td>
                                         <td>
                                             {{ $constructionContract->budget ?? '' }}
+                                        </td>
+                                        <td>
+                                            {{ $constructionContract->works_code->code ?? '' }}
+                                        </td>
+                                        <td>
+                                            {{ $constructionContract->works_code->name ?? '' }}
                                         </td>
                                         <td>
                                             @can('construction_contract_show')
@@ -189,14 +198,16 @@
 @endcan
 
   $.extend(true, $.fn.dataTable.defaults, {
+    orderCellsTop: true,
     order: [[ 1, 'desc' ]],
     pageLength: 100,
   });
-  $('.datatable-ConstructionContract:not(.ajaxTable)').DataTable({ buttons: dtButtons })
-    $('a[data-toggle="tab"]').on('shown.bs.tab', function(e){
-        $($.fn.dataTable.tables(true)).DataTable()
-            .columns.adjust();
-    });
+  let table = $('.datatable-ConstructionContract:not(.ajaxTable)').DataTable({ buttons: dtButtons })
+  $('a[data-toggle="tab"]').on('shown.bs.tab click', function(e){
+      $($.fn.dataTable.tables(true)).DataTable()
+          .columns.adjust();
+  });
+  
 })
 
 </script>
