@@ -1217,6 +1217,7 @@ class RfaController extends Controller
         . $note_2 . "</div>";
         $html .= "<div style=\"font-size: 14px; position:absolute;top:660x;left:270;\">" . 'Li Guanghe' . "</div>";
         $html .= "<div style=\"font-size: 14px; position:absolute;top:675x;left:530;\">" . $receive_date . "</div>";
+        $html .= "<div style=\"font-size: 12px; position:absolute;top:596x;left:489;\">" . 'Transportation Specialist' . "</div>";
 
         //CSC Outgoing (1)
         if($comment_status == 1){
