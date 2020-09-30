@@ -27,8 +27,16 @@
                                 <th width="10">
 
                                 </th>
+                                
                                 <th>
                                     {{ trans('cruds.srtHeadOfficeDocument.fields.refer_documents') }}
+                                </th>
+
+                                <!-- <th>
+                                    {{ trans('cruds.srtHeadOfficeDocument.fields.refer_documents') }}
+                                </th> -->
+                                <th>
+                                    {{ trans('cruds.srtInputDocument.fields.subject') }}
                                 </th>
                                 <th>
                                     {{ trans('cruds.srtHeadOfficeDocument.fields.process_date') }}
@@ -58,6 +66,8 @@
                             <tr>
                                 <td>
                                 </td>
+                                <!-- <td>
+                                </td> -->
                                 <td>
                                     <select class="search">
                                         <option value>{{ trans('global.all') }}</option>
@@ -67,6 +77,8 @@
                                     </select>
                                 </td>
                                 <td>
+                                <td>
+                                </td>
                                 </td>
                                 <td>
                                     <select class="search" strict="true">
@@ -152,7 +164,9 @@
     ajax: "{{ route('admin.srt-head-office-documents.index') }}",
     columns: [
       { data: 'placeholder', name: 'placeholder' },
-{ data: 'refer_documents_document_number', name: 'refer_documents.document_number' },
+{ data: 'refer_documents.file_upload', name: 'refer_documents.file_upload', sortable: false, searchable: false },
+// { data: 'refer_documents_document_number', name: 'refer_documents.document_number' },
+{ data: 'refer_documents.subject', name: 'refer_documents.subject' },
 { data: 'process_date', name: 'process_date' },
 { data: 'special_command', name: 'special_command' },
 { data: 'finished_date', name: 'finished_date' },

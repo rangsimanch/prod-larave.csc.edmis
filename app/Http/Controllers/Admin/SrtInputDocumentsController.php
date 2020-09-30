@@ -316,7 +316,6 @@ class SrtInputDocumentsController extends Controller
     public function massDestroy(MassDestroySrtInputDocumentRequest $request)
     {
         SrtInputDocument::whereIn('id', request('ids'))->delete();
-
         return response(null, Response::HTTP_NO_CONTENT);
     }
 

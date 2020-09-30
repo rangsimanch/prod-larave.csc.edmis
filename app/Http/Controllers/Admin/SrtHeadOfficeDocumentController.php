@@ -52,8 +52,28 @@ class SrtHeadOfficeDocumentController extends Controller
                 }
             });
 
-            $table->addColumn('refer_documents_document_number', function ($row) {
-                return $row->refer_documents ? $row->refer_documents->document_number : '';
+            $table->editColumn('refer_documents.file_upload', function ($row) {
+                if (!$row->refer_documents->file_upload) {
+                    return '';
+                }
+
+                $links = [];
+
+                $refer_doc = $row->refer_documents ? $row->refer_documents->document_number : '';
+
+                foreach ($row->refer_documents->file_upload as $media) {
+                    $links[] = '<a href="' . $media->getUrl() . '" target="_blank">' . $refer_doc . '</a>';
+                }
+
+                return implode(', ', $links);
+            });
+
+            // $table->addColumn('refer_documents_document_number', function ($row) {
+            //     return $row->refer_documents ? $row->refer_documents->document_number : '';
+            // });
+
+            $table->editColumn('refer_documents.subject', function ($row) {
+                return $row->refer_documents ? (is_string($row->refer_documents) ? $row->refer_documents : $row->refer_documents->subject) : '';
             });
 
             $table->editColumn('special_command', function ($row) {
@@ -89,7 +109,7 @@ class SrtHeadOfficeDocumentController extends Controller
                 return implode(', ', $links);
             });
 
-            $table->rawColumns(['actions', 'placeholder', 'refer_documents', 'operator', 'file_upload']);
+            $table->rawColumns(['actions', 'placeholder', 'refer_documents', 'operator', 'file_upload','refer_documents.file_upload']);
 
             return $table->make(true);
         }
