@@ -21,10 +21,6 @@ class UpdateUserRequest extends FormRequest
                 'string',
                 'required',
             ],
-            'dob'                      => [
-                'required',
-                'date_format:' . config('panel.date_format'),
-            ],
             'gender'                   => [
                 'required',
             ],
