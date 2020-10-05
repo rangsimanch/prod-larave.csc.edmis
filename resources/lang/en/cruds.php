@@ -728,7 +728,7 @@ return [
         'construction_contract_helper' => '',
         'bill'                         => 'Bill ',
         'bill_helper'                  => '',
-        'wbs_level_1'                  => 'WBS Level 1',
+        'wbs_level_1'                  => 'WBS Level 2',
         'wbs_level_1_helper'           => '',
         'wbs_level_3'                  => 'WBS Level 3',
         'wbs_level_3_helper'           => '',

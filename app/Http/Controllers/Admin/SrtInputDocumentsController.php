@@ -159,8 +159,19 @@ class SrtInputDocumentsController extends Controller
     {
         $data = $request->all();
 
-        $data['document_number'] = ConstructionContract::where('id',$request->constuction_contract_id)->value('document_code') . '/' .  $request->document_number;
-         
+        $doc_no_prefix = ConstructionContract::where('id',$request->constuction_contract_id)->value('document_code') . '/';
+        $str_last_number = SrtInputDocumentRequest::all()->last()->document_number;
+        
+        $last_postfix = substr($str_last_number,-10);
+        $lastday_prefix = substr($last_postfix,0,-6);
+        
+        $new_date = new Datetime();
+        $today_prefix = $today->format("md");
+
+        if($lastday_prefix == $today_prefix){
+            
+        }
+
         if($data['save_for'] == "Closed"){
             $data['docuement_status_id'] = 2;
             $data['close_by_id'] = auth()->id();
