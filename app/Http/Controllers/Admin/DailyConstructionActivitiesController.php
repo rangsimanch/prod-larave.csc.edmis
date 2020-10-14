@@ -171,7 +171,7 @@ class DailyConstructionActivitiesController extends Controller
                 $zip->close();
             }
 
-             return response()->download(public_path($zip_file))->deleteFileAfterSend(true);
+             return response()->download(public_path($zip_file));
             // return serialize($zip);
     }
 
