@@ -157,31 +157,14 @@ class DailyConstructionActivitiesController extends Controller
     }
 
     public function ZipFile(DailyConstructionActivity $request){
-        
-             // Let's get some media.
+            //Get all media on model {row->id} for zip 
             $downloads = $request->getMedia('image_upload');
-
-            // Download the files associated with the media in a streamed way.
-            // No prob if your files are very large.
-            $ZipName = str_replace('/','-',$request->operation_date) . '.zip';
+            
+            $ZipName = str_replace('/','-',$request->operation_date) 
+            . "_" . substr($request->work_title,0,60) . '.zip';
+            
+            //Create download files {One time use} 
             return MediaStream::create($ZipName)->addMedia($downloads);
-
-            // $zip_file = str_replace('/','_',$request->operation_date) . '.zip';
-            // $zip = new \ZipArchive();
-            
-            // if($zip->open($zip_file, \ZipArchive::CREATE) === TRUE){
-            
-            //     foreach ($request->image_upload as $index => $media) {
-            //         $filePath  = $media->getUrl();
-            //         $filename = $index+1 . '.jpg';
-            //         $zip->addFile($filePath, $filename);   
-            //     }
-
-            //     $zip->close();
-            // }
-
-            //   return response()->download(public_path($zip_file))->deleteFileAfterSend(true);
-            // return serialize($zip->numFiles);
     }
 
     public function create()
