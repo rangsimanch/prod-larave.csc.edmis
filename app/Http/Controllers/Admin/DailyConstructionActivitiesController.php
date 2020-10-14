@@ -96,8 +96,7 @@ class DailyConstructionActivitiesController extends Controller
                     }
                 }
 
-                $links[] = '</ol>
-                <div class="carousel-inner">';
+                $links[] = '</ol> <div class="carousel-inner">';
 
                 foreach ($row->image_upload as $index => $media) {
                     if($index == 0){
@@ -112,6 +111,7 @@ class DailyConstructionActivitiesController extends Controller
                         <img class="d-block w-100" src="'. $media->getUrl() .'">
                         </div>';
                     }
+                    
                 }
                 
                 $links[] = '</div>
@@ -125,18 +125,27 @@ class DailyConstructionActivitiesController extends Controller
                 </a>
               </div>
             </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <div class="modal-footer">';
+       
+
+
+            $links[] =' <a class="btn btn-success" href="' . route('admin.' . 'daily-construction-activities' . '.ZipFile', $row->id) . '">'
+            . "Download All" . 
+            '</a>';
+
+            $links[] = 
+            '<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
             </div>
           </div>
-        </div>
-      </div>';
-                
+        </div>';
+
+
                     return implode(' ', $links);
                 
                 //   return $links;
             });
-
+            
             $table->rawColumns(['actions', 'placeholder', 'construction_contract', 'image_upload']);
             
             return $table->make(true);
@@ -144,6 +153,27 @@ class DailyConstructionActivitiesController extends Controller
         }
 
         return view('admin.dailyConstructionActivities.index');
+    }
+
+    public function ZipFile(DailyConstructionActivity $request){
+    
+            $zip_file = str_replace('/','-',$request->operation_date) . '.zip';
+            $zip = new \ZipArchive();
+            
+            if($zip->open($zip_file, \ZipArchive::CREATE | \ZipArchive::OVERWRITE) === TRUE){
+                
+                $count = 0;
+                foreach ($request->image_upload as $index => $media) {
+                    $filePath  = public_path($media->getUrl());
+                    $filename = $index+1 . '.jpg';
+                    $zip->addFile($filePath, $filename);   
+                    $count++;
+                }
+
+                $zip->close();
+            }
+
+            return response()->download(public_path($zip_file))->deleteFileAfterSend(true);
     }
 
     public function create()

@@ -23,14 +23,7 @@
                             @endif
                             <span class="help-block">{{ trans('cruds.srtInputDocument.fields.constuction_contract_helper') }}</span>
                         </div>
-                        <div class="form-group {{ $errors->has('document_number') ? 'has-error' : '' }}">
-                            <label class="required" for="document_number">{{ trans('cruds.srtInputDocument.fields.document_number') }}</label>
-                            <input class="form-control" type="text" name="document_number" id="document_number" value="{{ old('document_number', '') }}" required>
-                            @if($errors->has('document_number'))
-                                <span class="help-block" role="alert">{{ $errors->first('document_number') }}</span>
-                            @endif
-                            <span class="help-block">{{ trans('cruds.srtInputDocument.fields.document_number_helper') }}</span>
-                        </div>
+                        
                         <div class="form-group {{ $errors->has('document_type') ? 'has-error' : '' }}">
                             <label>{{ trans('cruds.srtInputDocument.fields.document_type') }}</label>
                             <select class="form-control" name="document_type" id="document_type">

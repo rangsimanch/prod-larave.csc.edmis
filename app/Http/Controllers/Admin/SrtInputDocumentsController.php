@@ -159,18 +159,63 @@ class SrtInputDocumentsController extends Controller
     {
         $data = $request->all();
 
+        //Prefix
+        $contracts_code = ConstructionContract::where('id',$request->constuction_contract_id)->value('document_code');
         $doc_no_prefix = ConstructionContract::where('id',$request->constuction_contract_id)->value('document_code') . '/';
-        $str_last_number = SrtInputDocumentRequest::all()->last()->document_number;
         
-        $last_postfix = substr($str_last_number,-10);
-        $lastday_prefix = substr($last_postfix,0,-6);
         
-        $new_date = new Datetime();
-        $today_prefix = $today->format("md");
+    
+        $inDB = SrtInputDocument::all()->count();
 
-        if($lastday_prefix == $today_prefix){
+        if($inDB > 0){
+
+            $str_last_number = SrtInputDocument::all()>where('document_number','LIKE','%' . $contracts_code .'%')
+            ->last()->value('document_number'); 
+
+            $last_postfix = substr($str_last_number,-10);
+            $lastday_prefix = substr($last_postfix,0,-7);
             
+            $today = new Datetime();
+
+            //MMDD
+            $today_prefix = $today->format("md");
+            
+            $year = $today->format("Y");
+
+            //Year
+            $year_2digit = substr(intval($year) + 543,-2);
+            
+            $count = 0;
+
+            // no. Document
+            if($lastday_prefix == $today_prefix){
+                $count = intval(substr($last_prefix,5,-4)) + 1;    
+            }
+            else{
+                $count = 1;
+            }
+
+            $data['document_number'] = $doc_no_prefix . $today_prefix . '-' . substr("00{$count}",-2) . '/' . $year_2digit;
         }
+        else{
+            $today = new Datetime();
+
+            //MMDD
+            $today_prefix = $today->format("md");
+            
+            $year = $today->format("Y");
+
+            //Year
+            $year_2digit = substr(intval($year) + 543,-2);
+
+            //no, Document 
+            $count = 1;
+
+            $data['document_number'] = $doc_no_prefix . $today_prefix . '-' . substr("00{$count}",-2) . '/' . $year_2digit;
+
+        }
+
+
 
         if($data['save_for'] == "Closed"){
             $data['docuement_status_id'] = 2;

@@ -229,6 +229,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth'], '
     Route::delete('daily-construction-activities/destroy', 'DailyConstructionActivitiesController@massDestroy')->name('daily-construction-activities.massDestroy');
     Route::post('daily-construction-activities/media', 'DailyConstructionActivitiesController@storeMedia')->name('daily-construction-activities.storeMedia');
     Route::post('daily-construction-activities/ckmedia', 'DailyConstructionActivitiesController@storeCKEditorImages')->name('daily-construction-activities.storeCKEditorImages');
+    Route::get('daily-construction-activities/{request}/ZipFile','DailyConstructionActivitiesController@ZipFile')->name('daily-construction-activities.ZipFile');
     Route::resource('daily-construction-activities', 'DailyConstructionActivitiesController');
 
     // Procedures

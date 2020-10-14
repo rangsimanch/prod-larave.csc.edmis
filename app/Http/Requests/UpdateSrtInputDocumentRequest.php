@@ -21,10 +21,6 @@ class UpdateSrtInputDocumentRequest extends FormRequest
                 'required',
                 'integer',
             ],
-            'document_number'         => [
-                'string',
-                'required',
-            ],
             'subject'                 => [
                 'string',
                 'nullable',
