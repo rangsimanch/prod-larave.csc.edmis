@@ -157,7 +157,7 @@ class DailyConstructionActivitiesController extends Controller
 
     public function ZipFile(DailyConstructionActivity $request){
     
-            $zip_file = str_replace('/','-',$request->operation_date) . '.zip';
+            $zip_file = str_replace('/','_',$request->operation_date) . '.zip';
             $zip = new \ZipArchive();
             
             if($zip->open($zip_file, \ZipArchive::CREATE | \ZipArchive::OVERWRITE) === TRUE){
