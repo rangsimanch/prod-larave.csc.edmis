@@ -160,7 +160,7 @@ class DailyConstructionActivitiesController extends Controller
             $zip_file = str_replace('/','_',$request->operation_date) . '.zip';
             $zip = new \ZipArchive();
             
-            if($zip->open($zip_file, \ZipArchive::CREATE | \ZipArchive::OVERWRITE) === TRUE){
+            if($zip->open($zip_file, \ZipArchive::CREATE) === TRUE){
             
                 foreach ($request->image_upload as $index => $media) {
                     $filePath  = public_path($media->getUrl());
