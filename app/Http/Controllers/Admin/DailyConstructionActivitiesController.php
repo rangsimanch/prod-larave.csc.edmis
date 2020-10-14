@@ -165,16 +165,13 @@ class DailyConstructionActivitiesController extends Controller
                 foreach ($request->image_upload as $index => $media) {
                     $filePath  = public_path($media->getUrl());
                     $filename = $index+1 . '.jpg';
-                    if (file_exists($media) && is_file($media)){
-                        $zip->addFile($filePath, $filename);   
-                    }
+                    $zip->addFile($filePath, $filename);   
                 }
 
+                $zip->close();
             }
 
             return response()->download(public_path($zip_file))->deleteFileAfterSend(true);
-
-            $zip->close();
     }
 
     public function create()
