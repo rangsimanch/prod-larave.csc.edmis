@@ -170,10 +170,11 @@ class DailyConstructionActivitiesController extends Controller
                     }
                 }
 
-                $zip->close();
             }
 
             return response()->download(public_path($zip_file))->deleteFileAfterSend(true);
+
+            $zip->close();
     }
 
     public function create()
