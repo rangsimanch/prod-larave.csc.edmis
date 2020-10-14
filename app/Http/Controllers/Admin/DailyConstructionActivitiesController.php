@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use Spatie\MediaLibrary\MediaStream;
 use App\ConstructionContract;
 use App\DailyConstructionActivity;
 use App\Http\Controllers\Controller;
@@ -156,22 +157,30 @@ class DailyConstructionActivitiesController extends Controller
     }
 
     public function ZipFile(DailyConstructionActivity $request){
-    
-            $zip_file = str_replace('/','_',$request->operation_date) . '.zip';
-            $zip = new \ZipArchive();
-            
-            if($zip->open($zip_file, \ZipArchive::CREATE) === TRUE){
-            
-                foreach ($request->image_upload as $index => $media) {
-                    $filePath  = $media->getUrl();
-                    $filename = $index+1 . '.jpg';
-                    $zip->addFile($filePath, $filename);   
-                }
+        
+             // Let's get some media.
+            $downloads = $request->getMedia('image_upload');
 
-                $zip->close();
-            }
+            // Download the files associated with the media in a streamed way.
+            // No prob if your files are very large.
+            $ZipName = str_replace('/','-',$request->operation_date) . '.zip';
+            return MediaStream::create($ZipName)->addMedia($downloads);
 
-              return response()->download(public_path($zip_file))->deleteFileAfterSend(true);
+            // $zip_file = str_replace('/','_',$request->operation_date) . '.zip';
+            // $zip = new \ZipArchive();
+            
+            // if($zip->open($zip_file, \ZipArchive::CREATE) === TRUE){
+            
+            //     foreach ($request->image_upload as $index => $media) {
+            //         $filePath  = $media->getUrl();
+            //         $filename = $index+1 . '.jpg';
+            //         $zip->addFile($filePath, $filename);   
+            //     }
+
+            //     $zip->close();
+            // }
+
+            //   return response()->download(public_path($zip_file))->deleteFileAfterSend(true);
             // return serialize($zip->numFiles);
     }
 
