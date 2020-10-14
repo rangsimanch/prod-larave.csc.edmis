@@ -162,18 +162,14 @@ class DailyConstructionActivitiesController extends Controller
             
             if($zip->open($zip_file, \ZipArchive::CREATE | \ZipArchive::OVERWRITE) === TRUE){
                 
-                $count = 0;
                 foreach ($request->image_upload as $index => $media) {
                     $filePath  = public_path($media->getUrl());
                     $filename = $index+1 . '.jpg';
                     $zip->addFile($filePath, $filename);   
-                    $count++;
                 }
-
-                $zip->close();
             }
 
-            return response()->download(public_path($zip_file));
+            return response()->download(public_path($zip_file))->deleteFileAfterSend(true);
     }
 
     public function create()
