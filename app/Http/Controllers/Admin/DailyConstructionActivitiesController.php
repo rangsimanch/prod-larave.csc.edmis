@@ -172,7 +172,6 @@ class DailyConstructionActivitiesController extends Controller
             }
 
             // return response()->download(public_path($zip_file))->deleteFileAfterSend(true);
-           
             return $request;
     }
 
