@@ -336,9 +336,6 @@
     processing: true,
     serverSide: true,
     retrieve: true,
-    scrollY: "600px",
-    scrollCollapse: true,
-    paging: false,
     
     aaSorting: [],
     ajax: "{{ route('admin.rfas.index') }}",
