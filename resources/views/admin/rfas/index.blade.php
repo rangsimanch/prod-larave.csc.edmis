@@ -336,6 +336,10 @@
     processing: true,
     serverSide: true,
     retrieve: true,
+    scrollY: "600px",
+    scrollCollapse: true,
+    paging: false,
+    
     aaSorting: [],
     ajax: "{{ route('admin.rfas.index') }}",
     columns: [
@@ -400,7 +404,10 @@
     $('a[data-toggle="tab"]').on('shown.bs.tab', function(e){
         $($.fn.dataTable.tables(true)).DataTable()
             .columns.adjust();
+            
     });
+
+    
         
     // Filter Class
        $('.filter-input').keyup(function(){
