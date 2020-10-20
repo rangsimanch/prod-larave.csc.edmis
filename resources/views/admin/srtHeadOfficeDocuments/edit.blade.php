@@ -127,7 +127,7 @@
 <script>
     var uploadedFileUploadMap = {}
 Dropzone.options.fileUploadDropzone = {
-    url: '{{ route('admin.srt-head-office-documents.storeMedia') }}',
+    url: '{{ route('admin.srt-input-documents.storeMedia') }}',
     maxFilesize: 500, // MB
     addRemoveLinks: true,
     headers: {
@@ -151,9 +151,9 @@ Dropzone.options.fileUploadDropzone = {
       $('form').find('input[name="file_upload[]"][value="' + name + '"]').remove()
     },
     init: function () {
-@if(isset($srtHeadOfficeDocument) && $srtHeadOfficeDocument->file_upload)
+@if(isset($srtHeadOfficeDocument) && $srtHeadOfficeDocument->refer_documents->file_upload_2)
           var files =
-            {!! json_encode($srtHeadOfficeDocument->file_upload) !!}
+            {!! json_encode($srtHeadOfficeDocument->refer_documents->file_upload_2) !!}
               for (var i in files) {
               var file = files[i]
               this.options.addedfile.call(this, file)

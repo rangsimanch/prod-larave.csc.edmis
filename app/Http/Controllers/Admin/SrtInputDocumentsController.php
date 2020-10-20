@@ -165,15 +165,18 @@ class SrtInputDocumentsController extends Controller
         
         
     
-        $inDB = SrtInputDocument::all()->count();
+        $inDB = SrtInputDocument::where('document_number','LIKE','%' . $contracts_code .'%')->count(); 
+
 
         if($inDB > 0){
 
-            $str_last_number = SrtInputDocument::all()>where('document_number','LIKE','%' . $contracts_code .'%')
-            ->last()->value('document_number'); 
+            $query= SrtInputDocument::where('document_number','LIKE','%' . $contracts_code .'%')
+            ->latest()->first(); 
+
+            $str_last_number = $query->document_number;
 
             $last_postfix = substr($str_last_number,-10);
-            $lastday_prefix = substr($last_postfix,0,-7);
+            $lastday_prefix = substr($last_postfix,0,-6);
             
             $today = new Datetime();
 
@@ -185,11 +188,12 @@ class SrtInputDocumentsController extends Controller
             //Year
             $year_2digit = substr(intval($year) + 543,-2);
             
-            $count = 0;
 
             // no. Document
             if($lastday_prefix == $today_prefix){
-                $count = intval(substr($last_prefix,5,-4)) + 1;    
+                $str_count = substr($last_postfix,5,-3);
+                $int_count = intval($str_count) + 1;
+                $count = $int_count;    
             }
             else{
                 $count = 1;
@@ -230,7 +234,7 @@ class SrtInputDocumentsController extends Controller
         $srtInputDocument = SrtInputDocument::create($data);
         
         if($data['save_for'] == "Process"){
-            $SrtDocumentID = DB::table('srt_input_documents')->max('id');
+            $SrtDocumentID = DB::table('srt_input_documents')->latest()->first()->id;
             $dataHeadOffice = array(
                 'refer_documents_id' => $SrtDocumentID,
                 'save_for'          => "Process"

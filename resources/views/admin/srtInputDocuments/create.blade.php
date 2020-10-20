@@ -156,8 +156,8 @@
                             <span class="help-block">{{ trans('cruds.srtInputDocument.fields.note_helper') }}</span>
                         </div>
                         <div class="form-group {{ $errors->has('file_upload') ? 'has-error' : '' }}">
-                            <label for="file_upload">{{ trans('cruds.srtInputDocument.fields.file_upload') }}</label>
-                            <div class="needsclick dropzone" id="file_upload-dropzone">
+                            <label class="required" for="file_upload">{{ trans('cruds.srtInputDocument.fields.file_upload') }}</label>
+                            <div class="needsclick dropzone" id="file_upload-dropzone" required>
                             </div>
                             @if($errors->has('file_upload'))
                                 <span class="help-block" role="alert">{{ $errors->first('file_upload') }}</span>
