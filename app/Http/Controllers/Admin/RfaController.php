@@ -1175,12 +1175,19 @@ class RfaController extends Controller
         $tplId = $mpdf->ImportPage($pagecount);
         $mpdf->UseTemplate($tplId);        
           //Title
+
         $html = "<div style=\"font-size: 14px; position:absolute;top:168px;left:80px;\">" . $bill . '.' . "</div>";
         $html .= "<div style=\"font-size: 14px; padding-right:240px; position:absolute;top:184px;left:80px; LINE-HEIGHT:16px;\">" 
         . $title_en . "</div>";
         $html .= "<div style=\"font-size: 14px; padding-right:230px; position:absolute;top:217px;left:80px; LINE-HEIGHT:16px;\">" 
         . $title_th . "</div>";
-          //No. Code.
+
+
+        $html .= "<div style=\"font-size: 14px; position:absolute;top:109px;left:690px;\">
+                    <img src=\"". public_path('png-asset/CCSP_small.jpg') ."\" width=\"60px\" higth=\"60px\"> </div>";
+
+
+        //No. Code.
         $html .= "<div style=\"font-size: 14px; position:absolute;top:30px;left:650px;\">" . $rfa_code . "</div>";
         $html .= "<div style=\"font-size: 11px; position:absolute;top:170px;left:477px;\">" . $document_number . "</div>";
         $html .= "<div style=\"font-size: 11px; position:absolute;top:170px;left:660px;\">" . $rfa_code . "</div>";
