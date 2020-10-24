@@ -239,4 +239,8 @@ Route::group(['prefix' => 'v1', 'as' => 'api.', 'namespace' => 'Api\V1\Admin', '
     // Srt Head Office Documents
     Route::post('srt-head-office-documents/media', 'SrtHeadOfficeDocumentApiController@storeMedia')->name('srt-head-office-documents.storeMedia');
     Route::apiResource('srt-head-office-documents', 'SrtHeadOfficeDocumentApiController');
+
+    // Tickets
+    Route::post('tickets/media', 'TicketApiController@storeMedia')->name('tickets.storeMedia');
+    Route::apiResource('tickets', 'TicketApiController');
 });

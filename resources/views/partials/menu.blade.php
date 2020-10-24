@@ -956,13 +956,26 @@
                     </a>
                 </li>
             @endcan
-            @can('file_manager_access')
+           
+            <!-- @can('file_manager_access')
                 <li class="{{ request()->is('admin/file-managers') || request()->is('admin/file-managers/*') ? 'active' : '' }}">
                     <a href="{{ route("admin.file-managers.index") }}">
                         <i class="fa-fw fas fa-file-pdf">
 
                         </i>
                         <span>{{ trans('cruds.fileManager.title') }}</span>
+                    </a>
+                </li>
+            @endcan -->
+
+            @can('ticket_access')
+                <li class="{{ request()->is("admin/tickets") || request()->is("admin/tickets/*") ? "active" : "" }}">
+                    <a href="{{ route("admin.tickets.index") }}">
+                        <i class="fa-fw fab fa-github-square">
+
+                        </i>
+                        <span>{{ trans('cruds.ticket.title') }}</span>
+
                     </a>
                 </li>
             @endcan

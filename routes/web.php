@@ -427,6 +427,13 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth'], '
      Route::post('srt-head-office-documents/parse-csv-import', 'SrtHeadOfficeDocumentController@parseCsvImport')->name('srt-head-office-documents.parseCsvImport');
      Route::post('srt-head-office-documents/process-csv-import', 'SrtHeadOfficeDocumentController@processCsvImport')->name('srt-head-office-documents.processCsvImport');
      Route::resource('srt-head-office-documents', 'SrtHeadOfficeDocumentController');
+
+     // Tickets
+    Route::delete('tickets/destroy', 'TicketController@massDestroy')->name('tickets.massDestroy');
+    Route::post('tickets/media', 'TicketController@storeMedia')->name('tickets.storeMedia');
+    Route::post('tickets/ckmedia', 'TicketController@storeCKEditorImages')->name('tickets.storeCKEditorImages');
+    Route::resource('tickets', 'TicketController');
+
    
 
 
