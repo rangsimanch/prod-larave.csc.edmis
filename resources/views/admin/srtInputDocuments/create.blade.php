@@ -199,6 +199,7 @@
 Dropzone.options.fileUploadDropzone = {
     url: '{{ route('admin.srt-input-documents.storeMedia') }}',
     maxFilesize: 500, // MB
+    acceptedFiles: '.pdf',
     addRemoveLinks: true,
     headers: {
       'X-CSRF-TOKEN': "{{ csrf_token() }}"

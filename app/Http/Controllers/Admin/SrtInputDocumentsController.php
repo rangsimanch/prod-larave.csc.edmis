@@ -14,6 +14,7 @@ use App\SrtInputDocument;
 use App\Team;
 use App\User;
 use DateTime;
+use File;
 use Gate;
 use Illuminate\Http\Request;
 use Spatie\MediaLibrary\Models\Media;
@@ -21,6 +22,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Yajra\DataTables\Facades\DataTables;
 use App\SrtHeadOfficeDocument;
 use DB;
+use LynX39\LaraPdfMerger\Facades\PdfMerger;
+
 class SrtInputDocumentsController extends Controller
 {
     use MediaUploadingTrait, CsvImportTrait;
@@ -245,9 +248,17 @@ class SrtInputDocumentsController extends Controller
 
         $srtInputDocument->tos()->sync($request->input('tos', []));
 
+        $pdfMerger = PDFMerger::init();
+
         foreach ($request->input('file_upload', []) as $file) {
-            $srtInputDocument->addMedia(storage_path('tmp/uploads/' . $file))->toMediaCollection('file_upload');
+            $pdfMerger->addPDF(storage_path('tmp/uploads/' . $file), 'all');
         }
+        $pdfMerger->merge();
+        $pdfMerger->save(storage_path('tmp/uploads/mergerPdf_01.pdf'), "file");
+        foreach ($request->input('file_upload', []) as $file) {
+            File::delete(storage_path('tmp/uploads/' . $file));
+        }
+        $srtInputDocument->addMedia(storage_path('tmp/uploads/mergerPdf_01.pdf'))->toMediaCollection('file_upload');
 
         foreach ($request->input('file_upload_2', []) as $file) {
             $srtInputDocument->addMedia(storage_path('tmp/uploads/' . $file))->toMediaCollection('file_upload_2');

@@ -11,6 +11,7 @@ use Spatie\MediaLibrary\HasMedia\HasMedia;
 use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
 use Spatie\MediaLibrary\Models\Media;
 
+
 class SrtInputDocument extends Model implements HasMedia
 {
     use SoftDeletes, MultiTenantModelTrait, HasMediaTrait, Auditable;
