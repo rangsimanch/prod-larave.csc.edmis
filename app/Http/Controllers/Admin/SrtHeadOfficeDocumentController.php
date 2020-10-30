@@ -19,6 +19,9 @@ use Illuminate\Http\Request;
 use Spatie\MediaLibrary\Models\Media;
 use Symfony\Component\HttpFoundation\Response;
 use Yajra\DataTables\Facades\DataTables;
+use LynX39\LaraPdfMerger\Facades\PdfMerger;
+use File;
+
 
 class SrtHeadOfficeDocumentController extends Controller
 {
@@ -201,12 +204,21 @@ class SrtHeadOfficeDocumentController extends Controller
         $srtInputDocument = SrtInputDocument::find($request->refer_documents_id);
 
         $media = $srtInputDocument->file_upload_2->pluck('file_name')->toArray();
-
+        $pdfMerger = PDFMerger::init();
+        
         foreach ($request->input('file_upload', []) as $file) {
             if (count($media) === 0 || !in_array($file, $media)) {
-                $srtInputDocument->addMedia(storage_path('tmp/uploads/' . $file))->toMediaCollection('file_upload_2');
+                $pdfMerger->addPDF(storage_path('tmp/uploads/' . $file), 'all');  
             }
         }
+        $pdfMerger->merge();
+        $pdfMerger->save(storage_path('tmp/uploads/mergerPdf_01.pdf'), "file");
+        foreach ($request->input('file_upload', []) as $file) {
+            if (count($media) === 0 || !in_array($file, $media)) {
+                File::delete(storage_path('tmp/uploads/' . $file));
+            }
+        }
+        $srtInputDocument->addMedia(storage_path('tmp/uploads/mergerPdf_02.pdf'))->toMediaCollection('file_upload_2');
 
         if (count($srtInputDocument->file_upload_2) > 0) {
             foreach ($srtInputDocument->file_upload_2 as $media) {
