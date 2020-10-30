@@ -205,14 +205,14 @@ class SrtHeadOfficeDocumentController extends Controller
 
         $media = $srtInputDocument->file_upload_2->pluck('file_name')->toArray();
         $pdfMerger = PDFMerger::init();
-        
         foreach ($request->input('file_upload', []) as $file) {
             if (count($media) === 0 || !in_array($file, $media)) {
                 $pdfMerger->addPDF(storage_path('tmp/uploads/' . $file), 'all');  
             }
         }
         $pdfMerger->merge();
-        $pdfMerger->save(storage_path('tmp/uploads/mergerPdf_01.pdf'), "file");
+        $pdfMerger->save(storage_path('tmp/uploads/mergerPdf_02.pdf'), "file");
+
         foreach ($request->input('file_upload', []) as $file) {
             if (count($media) === 0 || !in_array($file, $media)) {
                 File::delete(storage_path('tmp/uploads/' . $file));
