@@ -23,6 +23,7 @@ class SrtInputDocument extends Model implements HasMedia
         'file_upload_2',
         'file_upload_3',
         'file_upload_4',
+        'complete_file',
     ];
 
     protected $dates = [
@@ -122,7 +123,7 @@ class SrtInputDocument extends Model implements HasMedia
 
     public function from()
     {
-        return $this->belongsTo(User::class, 'from_id');
+        return $this->belongsTo(Team::class, 'from_id');
     }
 
     public function tos()
@@ -158,6 +159,11 @@ class SrtInputDocument extends Model implements HasMedia
     public function getFileUpload4Attribute()
     {
         return $this->getMedia('file_upload_4');
+    }
+
+    public function getCompleteFileAttribute()
+    {
+        return $this->getMedia('complete_file');
     }
 
     public function close_by()

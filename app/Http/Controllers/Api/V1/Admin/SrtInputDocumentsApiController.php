@@ -44,6 +44,10 @@ class SrtInputDocumentsApiController extends Controller
             $srtInputDocument->addMedia(storage_path('tmp/uploads/' . $request->input('file_upload_4')))->toMediaCollection('file_upload_4');
         }
 
+        if ($request->input('complete_file', false)) {
+            $srtInputDocument->addMedia(storage_path('tmp/uploads/' . $request->input('complete_file')))->toMediaCollection('complete_file');
+        }
+
         return (new SrtInputDocumentResource($srtInputDocument))
             ->response()
             ->setStatusCode(Response::HTTP_CREATED);
@@ -107,6 +111,18 @@ class SrtInputDocumentsApiController extends Controller
             }
         } elseif ($srtInputDocument->file_upload_4) {
             $srtInputDocument->file_upload_4->delete();
+        }
+
+        if ($request->input('complete_file', false)) {
+            if (!$srtInputDocument->complete_file || $request->input('complete_file') !== $srtInputDocument->complete_file->file_name) {
+                if ($srtInputDocument->complete_file) {
+                    $srtInputDocument->complete_file->delete();
+                }
+
+                $srtInputDocument->addMedia(storage_path('tmp/uploads/' . $request->input('complete_file')))->toMediaCollection('complete_file');
+            }
+        } elseif ($srtInputDocument->complete_file) {
+            $srtInputDocument->complete_file->delete();
         }
 
         return (new SrtInputDocumentResource($srtInputDocument))

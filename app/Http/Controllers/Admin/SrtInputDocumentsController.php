@@ -126,11 +126,24 @@ class SrtInputDocumentsController extends Controller
 
                 return implode(', ', $links);
             });
+            $table->editColumn('complete_file', function ($row) {
+                if (!$row->complete_file) {
+                    return '';
+                }
+
+                $links = [];
+
+                foreach ($row->complete_file as $media) {
+                    $links[] = '<a href="' . $media->getUrl() . '" target="_blank">' . trans('global.downloadFile') . '</a>';
+                }
+
+                return implode(', ', $links);
+            });
             $table->addColumn('close_by_name', function ($row) {
                 return $row->close_by ? $row->close_by->name : '';
             });
 
-            $table->rawColumns(['actions', 'placeholder', 'docuement_status', 'file_upload', 'file_upload_2', 'file_upload_3', 'file_upload_4', 'close_by']);
+            $table->rawColumns(['actions', 'placeholder', 'docuement_status', 'file_upload', 'file_upload_2', 'file_upload_3', 'file_upload_4','complete_file', 'close_by']);
 
             return $table->make(true);
         }
@@ -151,7 +164,7 @@ class SrtInputDocumentsController extends Controller
 
         $constuction_contracts = ConstructionContract::all()->pluck('code', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $froms = User::all()->where('team_id','1')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $froms = Team::all()->pluck('code', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $tos = User::all()->where('team_id','1')->pluck('name', 'id');
 
@@ -276,7 +289,7 @@ class SrtInputDocumentsController extends Controller
 
         $constuction_contracts = ConstructionContract::all()->pluck('code', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $froms = User::all()->where('team_id','1')->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $froms = Team::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $tos = User::all()->where('team_id','1')->pluck('name', 'id');
 

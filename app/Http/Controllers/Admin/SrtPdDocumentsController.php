@@ -5,16 +5,15 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Traits\CsvImportTrait;
 use App\Http\Controllers\Traits\MediaUploadingTrait;
-use App\Http\Requests\MassDestroySrtHeadOfficeDocumentRequest;
-use App\Http\Requests\StoreSrtHeadOfficeDocumentRequest;
-use App\Http\Requests\UpdateSrtHeadOfficeDocumentRequest;
-use App\SrtHeadOfficeDocument;
+use App\Http\Requests\MassDestroySrtPdDocumentRequest;
+use App\Http\Requests\StoreSrtPdDocumentRequest;
+use App\Http\Requests\UpdateSrtPdDocumentRequest;
 use App\SrtInputDocument;
 use App\SrtPdDocument;
+use App\SrtPeDocument;
+use App\SrtHeadOfficeDocument;
 use App\Team;
 use App\User;
-use DB;
-use DateTime;
 use Gate;
 use Illuminate\Http\Request;
 use Spatie\MediaLibrary\Models\Media;
@@ -23,42 +22,38 @@ use Yajra\DataTables\Facades\DataTables;
 use LynX39\LaraPdfMerger\Facades\PdfMerger;
 use File;
 
-
-
-class SrtHeadOfficeDocumentController extends Controller
+class SrtPdDocumentsController extends Controller
 {
     use MediaUploadingTrait, CsvImportTrait;
 
     public function index(Request $request)
     {
-        abort_if(Gate::denies('srt_head_office_document_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('srt_pd_document_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
-            $query = SrtHeadOfficeDocument::with(['refer_documents', 'operators', 'team'])->select(sprintf('%s.*', (new SrtHeadOfficeDocument)->table));
+            $query = SrtPdDocument::with(['refer_documents', 'operators', 'team'])->select(sprintf('%s.*', (new SrtPdDocument)->table));
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
             $table->addColumn('actions', '&nbsp;');
 
             $table->editColumn('actions', function ($row) {
-                // if(is_null($row->special_command)){
-                    $viewGate      = 'srt_head_office_document_show';
-                    $editGate      = 'srt_head_office_document_edit';
-                    $deleteGate    = 'srt_head_office_document_delete';
-                    $crudRoutePart = 'srt-head-office-documents';
-                    
-                    return view('partials.datatablesActions', compact(
-                        'viewGate',
-                        'editGate',
-                        'deleteGate',
-                        'crudRoutePart',
-                        'row'
-                    ));
-                // }
+                $viewGate      = 'srt_pd_document_show';
+                $editGate      = 'srt_pd_document_edit';
+                $deleteGate    = 'srt_pd_document_delete';
+                $crudRoutePart = 'srt-pd-documents';
+
+                return view('partials.datatablesActions', compact(
+                    'viewGate',
+                    'editGate',
+                    'deleteGate',
+                    'crudRoutePart',
+                    'row'
+                ));
             });
 
-            $table->editColumn('refer_documents.file_upload', function ($row) {
-                if (!$row->refer_documents->file_upload) {
+            $table->editColumn('refer_documents.file_upload_2', function ($row) {
+                if (!$row->refer_documents->file_upload_2) {
                     return '';
                 }
 
@@ -66,12 +61,13 @@ class SrtHeadOfficeDocumentController extends Controller
 
                 $refer_doc = $row->refer_documents ? $row->refer_documents->document_number : '';
 
-                foreach ($row->refer_documents->file_upload as $media) {
+                foreach ($row->refer_documents->file_upload_2 as $media) {
                     $links[] = '<a href="' . $media->getUrl() . '" target="_blank">' . $refer_doc . '</a>';
                 }
 
                 return implode(', ', $links);
             });
+
 
             // $table->addColumn('refer_documents_document_number', function ($row) {
             //     return $row->refer_documents ? $row->refer_documents->document_number : '';
@@ -82,7 +78,7 @@ class SrtHeadOfficeDocumentController extends Controller
             });
 
             $table->editColumn('special_command', function ($row) {
-                return $row->special_command ? SrtHeadOfficeDocument::SPECIAL_COMMAND_SELECT[$row->special_command] : '';
+                return $row->special_command ? SrtPdDocument::SPECIAL_COMMAND_SELECT[$row->special_command] : '';
             });
 
             $table->editColumn('operator', function ($row) {
@@ -105,7 +101,7 @@ class SrtHeadOfficeDocumentController extends Controller
                 //     return '';
                 // }
 
-                if (!$row->refer_documents->file_upload_2) {
+                if (!$row->refer_documents->file_upload_3) {
                     return '';
                 }
 
@@ -115,14 +111,14 @@ class SrtHeadOfficeDocumentController extends Controller
                 //     $links[] = '<a href="' . $media->getUrl() . '" target="_blank">' . trans('global.downloadFile') . '</a>';
                 // }
 
-                foreach ($row->refer_documents->file_upload_2 as $media) {
+                foreach ($row->refer_documents->file_upload_3 as $media) {
                     $links[] = '<a href="' . $media->getUrl() . '" target="_blank">' . trans('global.downloadFile') . '</a>';
                 }
 
                 return implode(', ', $links);
             });
 
-            $table->rawColumns(['actions', 'placeholder', 'refer_documents', 'operator', 'file_upload','refer_documents.file_upload']);
+            $table->rawColumns(['actions', 'placeholder', 'refer_documents', 'operator', 'file_upload', 'refer_documents.file_upload_2']);
 
             return $table->make(true);
         }
@@ -131,50 +127,50 @@ class SrtHeadOfficeDocumentController extends Controller
         $users               = User::get();
         $teams               = Team::get();
 
-        return view('admin.srtHeadOfficeDocuments.index', compact('srt_input_documents', 'users', 'teams'));
+        return view('admin.srtPdDocuments.index', compact('srt_input_documents', 'users', 'teams'));
     }
 
     public function create()
     {
-        abort_if(Gate::denies('srt_head_office_document_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('srt_pd_document_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $refer_documents = SrtInputDocument::all()->pluck('document_number', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $operators = User::all()->where('team_id','1')->pluck('name', 'id');
+        $operators = User::all()->pluck('name', 'id');
 
-        return view('admin.srtHeadOfficeDocuments.create', compact('refer_documents', 'operators'));
+        return view('admin.srtPdDocuments.create', compact('refer_documents', 'operators'));
     }
 
-    public function store(StoreSrtHeadOfficeDocumentRequest $request)
+    public function store(StoreSrtPdDocumentRequest $request)
     {
-        $srtHeadOfficeDocument = SrtHeadOfficeDocument::create($request->all());
-        $srtHeadOfficeDocument->operators()->sync($request->input('operators', []));
+        $srtPdDocument = SrtPdDocument::create($request->all());
+        $srtPdDocument->operators()->sync($request->input('operators', []));
 
         foreach ($request->input('file_upload', []) as $file) {
-            $srtHeadOfficeDocument->addMedia(storage_path('tmp/uploads/' . $file))->toMediaCollection('file_upload');
+            $srtPdDocument->addMedia(storage_path('tmp/uploads/' . $file))->toMediaCollection('file_upload');
         }
 
         if ($media = $request->input('ck-media', false)) {
-            Media::whereIn('id', $media)->update(['model_id' => $srtHeadOfficeDocument->id]);
+            Media::whereIn('id', $media)->update(['model_id' => $srtPdDocument->id]);
         }
 
-        return redirect()->route('admin.srt-head-office-documents.index');
+        return redirect()->route('admin.srt-pd-documents.index');
     }
 
-    public function edit(SrtHeadOfficeDocument $srtHeadOfficeDocument)
+    public function edit(SrtPdDocument $srtPdDocument)
     {
-        abort_if(Gate::denies('srt_head_office_document_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('srt_pd_document_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $refer_documents = SrtInputDocument::all()->pluck('document_number', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $operators = User::all()->where('team_id','1')->pluck('name', 'id');
+        $operators = User::all()->pluck('name', 'id');
 
-        $srtHeadOfficeDocument->load('refer_documents', 'operators', 'team');
+        $srtPdDocument->load('refer_documents', 'operators', 'team');
 
-        return view('admin.srtHeadOfficeDocuments.edit', compact('refer_documents', 'operators', 'srtHeadOfficeDocument'));
+        return view('admin.srtPdDocuments.edit', compact('refer_documents', 'operators', 'srtPdDocument'));
     }
 
-    public function update(UpdateSrtHeadOfficeDocumentRequest $request, SrtHeadOfficeDocument $srtHeadOfficeDocument)
+    public function update(UpdateSrtPdDocumentRequest $request, SrtPdDocument $srtPdDocument)
     {
         $data = $request->all();
         
@@ -196,35 +192,43 @@ class SrtHeadOfficeDocumentController extends Controller
         // Insert to PD
         else{
             $SrtDocumentID = $request->refer_documents_id;
-            $count_check_doc = SrtPdDocument::where('refer_documents_id',$SrtDocumentID)->count();
+            $count_check_doc = SrtPeDocument::where('refer_documents_id',$SrtDocumentID)->count();
 
             if($count_check_doc == 0){
-                $dataPD = array(
+                $dataPE = array(
                     'refer_documents_id' => $SrtDocumentID,
                     'save_for'          => "Process"
                 );
-                $InsertDataPD[] = $dataPD; 
-                $srtPDDocument = SrtPdDocument::insert($InsertDataPD);
+                $InsertDataPE[] = $dataPE; 
+                $srtPEDocument = SrtPeDocument::insert($InsertDataPE);
             }
 
         }
 
+        $srtPdDocument->update($request->all());
+        $srtPdDocument->operators()->sync($request->input('operators', []));
 
-        $srtHeadOfficeDocument->update($request->all());
-        $srtHeadOfficeDocument->operators()->sync($request->input('operators', []));
-
-        if (count($srtHeadOfficeDocument->file_upload) > 0) {
-            foreach ($srtHeadOfficeDocument->file_upload as $media) {
+        if (count($srtPdDocument->file_upload) > 0) {
+            foreach ($srtPdDocument->file_upload as $media) {
                 if (!in_array($media->file_name, $request->input('file_upload', []))) {
                     $media->delete();
                 }
             }
         }
 
+        //Default
+        // $media = $srtPdDocument->file_upload->pluck('file_name')->toArray();
+
+        // foreach ($request->input('file_upload', []) as $file) {
+        //     if (count($media) === 0 || !in_array($file, $media)) {
+        //         $srtPdDocument->addMedia(storage_path('tmp/uploads/' . $file))->toMediaCollection('file_upload');
+        //     }
+        // }
+
         //Create SrtInputDocument Object
         $srtInputDocument = SrtInputDocument::find($request->refer_documents_id);
         //Link Media to file_upload_2
-        $media = $srtInputDocument->file_upload_2->pluck('file_name')->toArray();
+        $media = $srtInputDocument->file_upload_3->pluck('file_name')->toArray();
         //Merger PDF
         $pdfMerger = PDFMerger::init();
         //Merge PDF in Dropzone
@@ -235,7 +239,7 @@ class SrtHeadOfficeDocumentController extends Controller
         }
         $pdfMerger->merge();
         //Save to tmp
-        $pdfMerger->save(storage_path('tmp/uploads/mergerPdf_02.pdf'), "file");
+        $pdfMerger->save(storage_path('tmp/uploads/mergerPdf_03.pdf'), "file");
         //Delete Dropzone file on tmp 
         foreach ($request->input('file_upload', []) as $file) {
             if (count($media) === 0 || !in_array($file, $media)) {
@@ -243,51 +247,50 @@ class SrtHeadOfficeDocumentController extends Controller
             }
         }
         //Add media to SrtInputDocument Collection (file_upload_2)
-        $srtInputDocument->addMedia(storage_path('tmp/uploads/mergerPdf_02.pdf'))->toMediaCollection('file_upload_2');
+        $srtInputDocument->addMedia(storage_path('tmp/uploads/mergerPdf_03.pdf'))->toMediaCollection('file_upload_3');
 
         //Delete Function on SrtInputDocument Collection (file_upload_2)
-        if (count($srtInputDocument->file_upload_2) > 0) {
-            foreach ($srtInputDocument->file_upload_2 as $media) {
+        if (count($srtInputDocument->file_upload_3) > 0) {
+            foreach ($srtInputDocument->file_upload_3 as $media) {
                 if (!in_array($media->file_name, $request->input('file_upload', []))) {
                     $media->delete();
                 }
             }
         }
 
-
-        return redirect()->route('admin.srt-head-office-documents.index');
+        return redirect()->route('admin.srt-pd-documents.index');
     }
 
-    public function show(SrtHeadOfficeDocument $srtHeadOfficeDocument)
+    public function show(SrtPdDocument $srtPdDocument)
     {
-        abort_if(Gate::denies('srt_head_office_document_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('srt_pd_document_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $srtHeadOfficeDocument->load('refer_documents', 'operators', 'team');
+        $srtPdDocument->load('refer_documents', 'operators', 'team');
 
-        return view('admin.srtHeadOfficeDocuments.show', compact('srtHeadOfficeDocument'));
+        return view('admin.srtPdDocuments.show', compact('srtPdDocument'));
     }
 
-    public function destroy(SrtHeadOfficeDocument $srtHeadOfficeDocument)
+    public function destroy(SrtPdDocument $srtPdDocument)
     {
-        abort_if(Gate::denies('srt_head_office_document_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('srt_pd_document_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $srtHeadOfficeDocument->delete();
+        $srtPdDocument->delete();
 
         return back();
     }
 
-    public function massDestroy(MassDestroySrtHeadOfficeDocumentRequest $request)
+    public function massDestroy(MassDestroySrtPdDocumentRequest $request)
     {
-        SrtHeadOfficeDocument::whereIn('id', request('ids'))->delete();
+        SrtPdDocument::whereIn('id', request('ids'))->delete();
 
         return response(null, Response::HTTP_NO_CONTENT);
     }
 
     public function storeCKEditorImages(Request $request)
     {
-        abort_if(Gate::denies('srt_head_office_document_create') && Gate::denies('srt_head_office_document_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('srt_pd_document_create') && Gate::denies('srt_pd_document_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $model         = new SrtHeadOfficeDocument();
+        $model         = new SrtPdDocument();
         $model->id     = $request->input('crud_id', 0);
         $model->exists = true;
         $media         = $model->addMediaFromRequest('upload')->toMediaCollection('ck-media');

@@ -243,4 +243,12 @@ Route::group(['prefix' => 'v1', 'as' => 'api.', 'namespace' => 'Api\V1\Admin', '
     // Tickets
     Route::post('tickets/media', 'TicketApiController@storeMedia')->name('tickets.storeMedia');
     Route::apiResource('tickets', 'TicketApiController');
+
+      // Srt Pd Documents
+      Route::post('srt-pd-documents/media', 'SrtPdDocumentsApiController@storeMedia')->name('srt-pd-documents.storeMedia');
+      Route::apiResource('srt-pd-documents', 'SrtPdDocumentsApiController');
+  
+      // Srt Pe Documents
+      Route::post('srt-pe-documents/media', 'SrtPeDocumentsApiController@storeMedia')->name('srt-pe-documents.storeMedia');
+      Route::apiResource('srt-pe-documents', 'SrtPeDocumentsApiController');
 });

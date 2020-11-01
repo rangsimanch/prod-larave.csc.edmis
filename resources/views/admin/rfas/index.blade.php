@@ -344,9 +344,9 @@
 { data: 'actions', name: '{{ trans('global.actions') }}', sortable: false, }, // 1
 { data: 'created_at', name: 'created_at' ,visible: true}, // 2
 { data: 'date_counter', name: 'date_counter',visible: false },// 3
-{ data: 'document_status_status_name', name: 'document_status.status_name', sortable: false, }, // 4
+{ data: 'document_status_status_name', name: 'document_status.status_name', sortable: false, visible: false}, // 4
 { data: 'file_upload_1', name: 'file_upload_1', sortable: false, searchable: false }, // 5
-{ data: 'submittals_file', name: 'submittals_file', sortable: false, searchable: false }, // 6
+{ data: 'submittals_file', name: 'submittals_file', sortable: false, searchable: false, visible: false }, // 6
 { data: 'bill', name: 'bill',sortable: false, }, // 7
 { data: 'title_eng', name: 'title_eng',sortable: false, }, // 8
 { data: 'title', name: 'title' ,sortable: false,}, // 9
@@ -367,17 +367,17 @@
 { data: 'spec_ref_no', name: 'spec_ref_no' , visible: false ,visible: false, sortable: false,}, // 23
 { data: 'clause', name: 'clause' , visible: false, visible: false, sortable: false,}, // 24
 { data: 'contract_drawing_no', name: 'contract_drawing_no' , visible: false , visible: false, sortable: false,}, // 25
-{ data: 'action_by_name', name: 'action_by.name' , sortable: false,}, // 26
+{ data: 'action_by_name', name: 'action_by.name' , sortable: false, visible: false}, // 26
 { data: 'comment_by_name', name: 'comment_by.name' ,visible: false, sortable: false,}, // 27
 { data: 'information_by_name', name: 'information_by.name' ,visible: false, sortable: false,}, // 28
-{ data: 'receive_date', name: 'receive_date' }, // 29
-{ data: 'target_date', name: 'target_date' }, // 30
+{ data: 'receive_date', name: 'receive_date' ,visible: false}, // 29
+{ data: 'target_date', name: 'target_date' ,visible: false}, // 30
 { data: 'note_2', name: 'note_2' , visible: false , sortable: false,}, // 31
-{ data: 'comment_status_name', name: 'comment_status.name' , sortable: false, sortable: false,}, // 32
+{ data: 'comment_status_name', name: 'comment_status.name' , sortable: false, visible: false}, // 32
 { data: 'note_3', name: 'note_3' , visible: false, sortable: false, }, // 33
 { data: 'document_ref', name: 'document_ref' ,visible: false, sortable: false,}, // 34
-{ data: 'document_file_upload', name: 'document_file_upload', sortable: false, searchable: false }, // 35
-{ data: 'for_status_name', name: 'for_status.name', sortable: false, }, // 36
+{ data: 'document_file_upload', name: 'document_file_upload', sortable: false, searchable: false , visible: false}, // 35
+{ data: 'for_status_name', name: 'for_status.name', sortable: false, visible: false }, // 36
 //{ data: 'created_at', name: 'created_at' ,visible: true}, // 37
 { data: 'create_by_user_name', name: 'create_by_user.name' ,visible: false}, // 38
 // { data: 'update_by_user_name', name: 'update_by_user.name' },

@@ -434,6 +434,21 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth'], '
     Route::post('tickets/ckmedia', 'TicketController@storeCKEditorImages')->name('tickets.storeCKEditorImages');
     Route::resource('tickets', 'TicketController');
 
+    // Srt Pd Documents
+    Route::delete('srt-pd-documents/destroy', 'SrtPdDocumentsController@massDestroy')->name('srt-pd-documents.massDestroy');
+    Route::post('srt-pd-documents/media', 'SrtPdDocumentsController@storeMedia')->name('srt-pd-documents.storeMedia');
+    Route::post('srt-pd-documents/ckmedia', 'SrtPdDocumentsController@storeCKEditorImages')->name('srt-pd-documents.storeCKEditorImages');
+    Route::post('srt-pd-documents/parse-csv-import', 'SrtPdDocumentsController@parseCsvImport')->name('srt-pd-documents.parseCsvImport');
+    Route::post('srt-pd-documents/process-csv-import', 'SrtPdDocumentsController@processCsvImport')->name('srt-pd-documents.processCsvImport');
+    Route::resource('srt-pd-documents', 'SrtPdDocumentsController');
+
+    // Srt Pe Documents
+    Route::delete('srt-pe-documents/destroy', 'SrtPeDocumentsController@massDestroy')->name('srt-pe-documents.massDestroy');
+    Route::post('srt-pe-documents/media', 'SrtPeDocumentsController@storeMedia')->name('srt-pe-documents.storeMedia');
+    Route::post('srt-pe-documents/ckmedia', 'SrtPeDocumentsController@storeCKEditorImages')->name('srt-pe-documents.storeCKEditorImages');
+    Route::post('srt-pe-documents/parse-csv-import', 'SrtPeDocumentsController@parseCsvImport')->name('srt-pe-documents.parseCsvImport');
+    Route::post('srt-pe-documents/process-csv-import', 'SrtPeDocumentsController@processCsvImport')->name('srt-pe-documents.processCsvImport');
+    Route::resource('srt-pe-documents', 'SrtPeDocumentsController');
    
 
 

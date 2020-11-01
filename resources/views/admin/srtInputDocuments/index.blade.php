@@ -61,6 +61,9 @@
                                     {{ trans('cruds.srtInputDocument.fields.file_upload_4') }}
                                 </th>
                                 <th>
+                                    {{ trans('cruds.srtInputDocument.fields.complete_file') }}
+                                </th>
+                                <th>
                                     {{ trans('cruds.srtInputDocument.fields.close_by') }}
                                 </th>
                                 <th>
@@ -107,6 +110,8 @@
                                             <option value="{{ $item }}">{{ $item }}</option>
                                         @endforeach
                                     </select>
+                                </td>
+                                <td>
                                 </td>
                                 <td>
                                 </td>
@@ -195,6 +200,7 @@
 { data: 'file_upload_2', name: 'file_upload_2', sortable: false, searchable: false },
 { data: 'file_upload_3', name: 'file_upload_3', sortable: false, searchable: false },
 { data: 'file_upload_4', name: 'file_upload_4', sortable: false, searchable: false },
+{ data: 'complete_file', name: 'complete_file', sortable: false, searchable: false },
 { data: 'close_by_name', name: 'close_by.name' },
 { data: 'actions', name: '{{ trans('global.actions') }}' }
     ],

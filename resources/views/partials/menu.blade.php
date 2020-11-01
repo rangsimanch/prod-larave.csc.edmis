@@ -245,6 +245,28 @@
                                 </a>
                             </li>
                         @endcan
+                        @can('srt_pd_document_access')
+                            <li class="{{ request()->is("admin/srt-pd-documents") || request()->is("admin/srt-pd-documents/*") ? "active" : "" }}">
+                                <a href="{{ route("admin.srt-pd-documents.index") }}">
+                                    <i class="fa-fw fas fa-building">
+
+                                    </i>
+                                    <span>{{ trans('cruds.srtPdDocument.title') }}</span>
+
+                                </a>
+                            </li>
+                        @endcan
+                        @can('srt_pe_document_access')
+                            <li class="{{ request()->is("admin/srt-pe-documents") || request()->is("admin/srt-pe-documents/*") ? "active" : "" }}">
+                                <a href="{{ route("admin.srt-pe-documents.index") }}">
+                                    <i class="fa-fw fas fa-building">
+
+                                    </i>
+                                    <span>{{ trans('cruds.srtPeDocument.title') }}</span>
+
+                                </a>
+                            </li>
+                        @endcan
                         @can('srt_document_status_access')
                             <li class="{{ request()->is("admin/srt-document-statuses") || request()->is("admin/srt-document-statuses/*") ? "active" : "" }}">
                                 <a href="{{ route("admin.srt-document-statuses.index") }}">
