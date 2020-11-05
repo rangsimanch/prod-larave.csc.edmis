@@ -178,8 +178,8 @@ class SrtInputDocumentsController extends Controller
         $date_search = $data['incoming_date'];
 
         //Prefix
-        $contracts_code = ConstructionContract::where('id',$request->construction_contract_id)->value('document_code');
-        $doc_no_prefix = ConstructionContract::where('id',$request->construction_contract_id)->value('document_code') . '/';
+        $contracts_code = ConstructionContract::where('id',$data['construction_contract_id'])->value('document_code');
+        $doc_no_prefix = ConstructionContract::where('id',$data['construction_contract_id'])->value('document_code') . '/';
         
         $date_replace = str_replace("/","",$date_search);
         $day_digit = substr($date_replace,0,2);
