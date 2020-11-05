@@ -52,7 +52,7 @@ class SrtInputDocument extends Model implements HasMedia
 
     protected $fillable = [
         'docuement_status_id',
-        'constuction_contract_id',
+        'construction_contract_id',
         'document_number',
         'document_type',
         'subject',
@@ -108,7 +108,7 @@ class SrtInputDocument extends Model implements HasMedia
 
     public function constuction_contract()
     {
-        return $this->belongsTo(ConstructionContract::class, 'constuction_contract_id');
+        return $this->belongsTo(ConstructionContract::class, 'construction_contract_id');
     }
 
     public function getIncomingDateAttribute($value)
