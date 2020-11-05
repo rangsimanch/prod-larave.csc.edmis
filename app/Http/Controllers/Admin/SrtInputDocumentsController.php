@@ -242,9 +242,11 @@ class SrtInputDocumentsController extends Controller
         
         if($data['save_for'] == "Process"){
             $SrtDocumentID = DB::table('srt_input_documents')->latest()->first()->id;
+            $Contract = $data['construction_contract_id'];
             $dataHeadOffice = array(
                 'refer_documents_id' => $SrtDocumentID,
-                'save_for'          => "Process"
+                'save_for'          => "Process",
+                'construction_contract_id' => $Contract
             );
             $InsertDataHeadOffice[] = $dataHeadOffice; 
             $srtHeadOfficeDocument = SrtHeadOfficeDocument::insert($InsertDataHeadOffice);

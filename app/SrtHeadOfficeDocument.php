@@ -46,6 +46,7 @@ class SrtHeadOfficeDocument extends Model implements HasMedia
         'updated_at',
         'deleted_at',
         'team_id',
+        'construction_contract_id',
     ];
 
     const SPECIAL_COMMAND_SELECT = [
@@ -55,6 +56,11 @@ class SrtHeadOfficeDocument extends Model implements HasMedia
         'Command'              => 'สั่งการ',
         'Request more details' => 'ขอรายละเอียดเพิ่มเติม',
     ];
+
+    public function construction_contract()
+    {
+        return $this->belongsTo(ConstructionContract::class, 'construction_contract_id');
+    }
 
     public function registerMediaConversions(Media $media = null)
     {
@@ -100,5 +106,10 @@ class SrtHeadOfficeDocument extends Model implements HasMedia
     public function team()
     {
         return $this->belongsTo(Team::class, 'team_id');
+    }
+
+    public function create_by_construction_contract_id()
+    {
+        return $this->belongsTo(ConstructionContract::class, 'construction_contract_id');
     }
 }

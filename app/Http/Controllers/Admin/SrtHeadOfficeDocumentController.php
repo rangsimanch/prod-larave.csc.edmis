@@ -197,11 +197,13 @@ class SrtHeadOfficeDocumentController extends Controller
         else{
             $SrtDocumentID = $request->refer_documents_id;
             $count_check_doc = SrtPdDocument::where('refer_documents_id',$SrtDocumentID)->count();
-
+            $Contract = SrtInputDocument::where('id',$SrtDocumentID)->value('construction_contract_id');
             if($count_check_doc == 0){
+                
                 $dataPD = array(
                     'refer_documents_id' => $SrtDocumentID,
-                    'save_for'          => "Process"
+                    'save_for'          => "Process",
+                    'construction_contract_id' => $Contract
                 );
                 $InsertDataPD[] = $dataPD; 
                 $srtPDDocument = SrtPdDocument::insert($InsertDataPD);

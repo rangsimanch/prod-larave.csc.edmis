@@ -46,6 +46,7 @@ class SrtPdDocument extends Model implements HasMedia
         'updated_at',
         'deleted_at',
         'team_id',
+        'construction_contract_id',
     ];
 
     const SPECIAL_COMMAND_SELECT = [
@@ -65,6 +66,11 @@ class SrtPdDocument extends Model implements HasMedia
     public function refer_documents()
     {
         return $this->belongsTo(SrtInputDocument::class, 'refer_documents_id');
+    }
+
+    public function construction_contract()
+    {
+        return $this->belongsTo(ConstructionContract::class, 'construction_contract_id');
     }
 
     public function getProcessDateAttribute($value)
@@ -100,5 +106,10 @@ class SrtPdDocument extends Model implements HasMedia
     public function team()
     {
         return $this->belongsTo(Team::class, 'team_id');
+    }
+
+    public function create_by_construction_contract_id()
+    {
+        return $this->belongsTo(ConstructionContract::class, 'construction_contract_id');
     }
 }
