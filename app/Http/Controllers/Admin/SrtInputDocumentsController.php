@@ -321,7 +321,7 @@ class SrtInputDocumentsController extends Controller
         $media = $srtInputDocument->file_upload->pluck('file_name')->toArray();
 
         foreach ($request->input('file_upload', []) as $file) {
-                $pdfMerger->addPDF(storage_path('tmp/uploads/' . $file), 'all');
+                $pdfMerger->addPDF(public_path('tmp/uploads/' . $file), 'all');
         }
         $pdfMerger->merge();
         $pdfMerger->save(storage_path('tmp/uploads/mergerPdf_01.pdf'), "file");
