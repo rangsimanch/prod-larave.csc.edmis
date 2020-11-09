@@ -13,10 +13,10 @@
                         @method('PUT')
                         @csrf
                         <div class="form-group {{ $errors->has('constuction_contract') ? 'has-error' : '' }}">
-                            <label class="required" for="constuction_contract_id">{{ trans('cruds.srtInputDocument.fields.constuction_contract') }}</label>
-                            <select class="form-control select2" name="constuction_contract_id" id="constuction_contract_id" required>
+                            <label class="required" for="construction_contract_id">{{ trans('cruds.srtInputDocument.fields.constuction_contract') }}</label>
+                            <select class="form-control select2" name="construction_contract_id" id="construction_contract_id" required>
                                 @foreach($constuction_contracts as $id => $constuction_contract)
-                                    <option value="{{ $id }}" {{ (old('constuction_contract_id') ? old('constuction_contract_id') : $srtInputDocument->constuction_contract->id ?? '') == $id ? 'selected' : '' }}>{{ $constuction_contract }}</option>
+                                    <option value="{{ $id }}" {{ (old('construction_contract_id') ? old('construction_contract_i') : $srtInputDocument->constuction_contract->id ?? '') == $id ? 'selected' : '' }}>{{ $constuction_contract }}</option>
                                 @endforeach
                             </select>
                             @if($errors->has('constuction_contract'))

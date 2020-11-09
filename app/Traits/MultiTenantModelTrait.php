@@ -36,6 +36,9 @@ trait MultiTenantModelTrait
                 }
 
             });
+
+        // *** Team Function
+
             if (!$isAdmin && !$isTeamSRT) {
 
                 if($isTeamPMC){
@@ -77,6 +80,7 @@ trait MultiTenantModelTrait
                         });
                     }
             }
+        // *** Team Function
         }
              
         }

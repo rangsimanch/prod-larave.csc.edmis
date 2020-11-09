@@ -256,6 +256,20 @@ class SrtHeadOfficeDocumentController extends Controller
             }
         }
 
+        // Not Work
+
+        // if($data['save_for'] == "Closed"){
+        //     $pdfMerger_Complete = PDFMerger::init();
+
+        //     $fileUpload_1 = $srtInputDocument->getMedia('file_upload');
+        //     $fileUpload_2 = $srtInputDocument->getMedia('file_upload_2');
+
+        //     $pdfMerger_Complete->addPDF(public_path($fileUpload_1[0]->getUrl()));
+        //     $pdfMerger_Complete->addPDF(public_path($fileUpload_2[0]->getUrl()));
+        //     $pdfMerger_Complete->merge();
+        //     $pdfMerger_Complete->save(storage_path('tmp/uploads/MergerCompletePdf.pdf'));
+        //     $srtInputDocument->addMedia(storage_path('tmp/uploads/MergerCompletePdf.pdf'))->toMediaCollection('complete_file');
+        // }
 
         return redirect()->route('admin.srt-head-office-documents.index');
     }
