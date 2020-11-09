@@ -329,7 +329,7 @@ class SrtInputDocumentsController extends Controller
         foreach ($request->input('file_upload', []) as $file) {
             File::delete(storage_path('tmp/uploads/' . $file));
         }
-        $srtInputDocument->addMedia(storage_path('tmp/uploads/mergerPdf_01.pdf'))->toMediaCollection('file_upload');
+        $srtInputDocument->addMedia(storage_path('tmp/uploads/mergerPdf_01.pdf'))->usingName('mergerPdf_01_edit.pdf')->toMediaCollection('file_upload');
 
         if (count($srtInputDocument->file_upload_2) > 0) {
             foreach ($srtInputDocument->file_upload_2 as $media) {
