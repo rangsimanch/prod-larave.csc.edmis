@@ -304,6 +304,7 @@ class SrtInputDocumentsController extends Controller
     {
         $srtInputDocument->update($request->all());
         $srtInputDocument->tos()->sync($request->input('tos', []));
+        
 
         if (count($srtInputDocument->file_upload) > 0) {
             foreach ($srtInputDocument->file_upload as $media) {
@@ -313,10 +314,16 @@ class SrtInputDocumentsController extends Controller
             }
         }
 
+
+
         $pdfMerger = PDFMerger::init();
+        
+        $media = $srtInputDocument->file_upload->pluck('file_name')->toArray();
 
         foreach ($request->input('file_upload', []) as $file) {
-            $pdfMerger->addPDF(storage_path('tmp/uploads/' . $file), 'all');
+            if (count($media) === 0 || !in_array($file, $media)) {
+                $pdfMerger->addPDF(storage_path('tmp/uploads/' . $file), 'all');
+            }
         }
         $pdfMerger->merge();
         $pdfMerger->save(storage_path('tmp/uploads/mergerPdf_01.pdf'), "file");
