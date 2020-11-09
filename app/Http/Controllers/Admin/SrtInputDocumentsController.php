@@ -313,13 +313,17 @@ class SrtInputDocumentsController extends Controller
             }
         }
 
-        $media = $srtInputDocument->file_upload->pluck('file_name')->toArray();
+        $pdfMerger = PDFMerger::init();
 
         foreach ($request->input('file_upload', []) as $file) {
-            if (count($media) === 0 || !in_array($file, $media)) {
-                $srtInputDocument->addMedia(storage_path('tmp/uploads/' . $file))->toMediaCollection('file_upload');
-            }
+            $pdfMerger->addPDF(storage_path('tmp/uploads/' . $file), 'all');
         }
+        $pdfMerger->merge();
+        $pdfMerger->save(storage_path('tmp/uploads/mergerPdf_01.pdf'), "file");
+        foreach ($request->input('file_upload', []) as $file) {
+            File::delete(storage_path('tmp/uploads/' . $file));
+        }
+        $srtInputDocument->addMedia(storage_path('tmp/uploads/mergerPdf_01.pdf'))->toMediaCollection('file_upload');
 
         if (count($srtInputDocument->file_upload_2) > 0) {
             foreach ($srtInputDocument->file_upload_2 as $media) {
@@ -368,6 +372,7 @@ class SrtInputDocumentsController extends Controller
                 $srtInputDocument->addMedia(storage_path('tmp/uploads/' . $file))->toMediaCollection('file_upload_4');
             }
         }
+
 
         return redirect()->route('admin.srt-input-documents.index');
     }
