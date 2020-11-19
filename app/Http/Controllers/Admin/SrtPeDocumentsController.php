@@ -13,6 +13,8 @@ use App\SrtPeDocument;
 use App\Team;
 use App\User;
 use Gate;
+use DB;
+use DateTime;
 use Illuminate\Http\Request;
 use Spatie\MediaLibrary\Models\Media;
 use Symfony\Component\HttpFoundation\Response;
@@ -201,6 +203,27 @@ class SrtPeDocumentsController extends Controller
         $srtInputDocument = SrtInputDocument::find($request->refer_documents_id);
         //Link Media to file_upload_2
         $media = $srtInputDocument->file_upload_4->pluck('file_name')->toArray();
+
+         // Complete Files
+         if($data['save_for'] == "Closed"){
+            $CompleteMerger = PDFMerger::init();
+            $fileUpload_1 = $srtInputDocument->getMedia('file_upload');
+            $fileUpload_2 = $srtInputDocument->getMedia('file_upload_2');
+            $fileUpload_3 = $srtInputDocument->getMedia('file_upload_3');
+            $CompleteMerger->addPDF(public_path($fileUpload_1[0]->getUrl()));
+            $CompleteMerger->addPDF(public_path($fileUpload_2[0]->getUrl()));
+            $CompleteMerger->addPDF(public_path($fileUpload_3[0]->getUrl()));
+            foreach ($request->input('file_upload', []) as $file) {
+                if (count($media) === 0 || !in_array($file, $media)) {
+                    $CompleteMerger->addPDF(storage_path('tmp/uploads/' . $file), 'all');  
+                }
+            }
+            $CompleteMerger->merge();
+            $CompleteMerger->save(storage_path('tmp/uploads/mergerPdf_Completed.pdf'), "file");
+            $srtInputDocument->addMedia(storage_path('tmp/uploads/mergerPdf_Completed.pdf'))->toMediaCollection('complete_file');
+        }
+
+
         //Merger PDF
         $pdfMerger = PDFMerger::init();
         //Merge PDF in Dropzone

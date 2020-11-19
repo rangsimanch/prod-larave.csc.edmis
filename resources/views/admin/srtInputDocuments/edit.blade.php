@@ -206,7 +206,7 @@ Dropzone.options.fileUploadDropzone = {
       'X-CSRF-TOKEN': "{{ csrf_token() }}"
     },
     params: {
-      size: 500
+      size: 500 
     },
     success: function (file, response) {
       $('form').append('<input type="hidden" name="file_upload[]" value="' + response.name + '">')

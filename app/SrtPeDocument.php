@@ -31,7 +31,7 @@ class SrtPeDocument extends Model implements HasMedia
 
     const SAVE_FOR_SELECT = [
         'Save'           => 'บันทึกเท่านั้น',
-        'Save and Close' => 'บันทึกและปิด',
+        'Closed' => 'บันทึกและปิด',
     ];
 
     protected $fillable = [
