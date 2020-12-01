@@ -128,7 +128,7 @@
 { data: 'actions', name: '{{ trans('global.actions') }}' }
     ],
     order: [[ 1, 'desc' ]],
-    pageLength: 2,
+    pageLength: 5,
     sPaginationType: "listbox",
   };
   $('.datatable-DailyConstructionActivity').DataTable(dtOverrideGlobals);
