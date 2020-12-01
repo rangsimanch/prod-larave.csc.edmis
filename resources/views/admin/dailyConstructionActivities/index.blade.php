@@ -40,7 +40,7 @@
                     {{ trans('cruds.dailyConstructionActivity.title_singular') }} {{ trans('global.list') }}
                 </div>
                 <div class="panel-body">
-                    <table class=" table table-bordered table-striped table-hover ajaxTable datatable datatable-DailyConstructionActivity">
+                    <table class=" table table-bordered table-striped table-hover ajaxTable datatable  datatable-DailyConstructionActivity">
                         <thead>
                             <tr>
                                 <th width="10">
@@ -77,6 +77,7 @@
 @endsection
 @section('scripts')
 @parent
+
 <script>
     $(function () {
   let dtButtons = $.extend(true, [], $.fn.dataTable.defaults.buttons)
@@ -127,7 +128,8 @@
 { data: 'actions', name: '{{ trans('global.actions') }}' }
     ],
     order: [[ 1, 'desc' ]],
-    pageLength: 5,
+    pageLength: 2,
+    sPaginationType: "listbox",
   };
   $('.datatable-DailyConstructionActivity').DataTable(dtOverrideGlobals);
     $('a[data-toggle="tab"]').on('shown.bs.tab', function(e){
