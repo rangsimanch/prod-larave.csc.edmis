@@ -1914,6 +1914,7 @@ return [
         'document_type'               => 'Document Type',
         'document_type_helper'        => ' ',
         'document_number'             => 'Document Number',
+        'document_number_optional'             => 'Document Number (Optional)',
         'document_number_helper'      => ' ',
         'incoming_date'               => 'Incoming Date',
         'incoming_date_helper'        => ' ',

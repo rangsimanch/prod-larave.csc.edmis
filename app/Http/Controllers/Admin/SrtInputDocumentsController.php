@@ -181,49 +181,52 @@ class SrtInputDocumentsController extends Controller
         $contracts_code = ConstructionContract::where('id',$data['construction_contract_id'])->value('document_code');
         $doc_no_prefix = ConstructionContract::where('id',$data['construction_contract_id'])->value('document_code') . '/';
         
-        $date_replace = str_replace("/","",$date_search);
-        $day_digit = substr($date_replace,0,2);
-        $month_digit = substr($date_replace,2,2);
-        $year_digit = substr($date_replace,4,4);
-        $convert_year = intval($year_digit) + 543;
-        $th_year_digit = substr($convert_year,2,2);
-
-        $doc_date = $month_digit . $day_digit;
-
-    
-        $inDB = SrtInputDocument::where('document_number','LIKE','%' . $contracts_code . "/" .  $doc_date .'%')->count(); 
-
-
-        if($inDB > 0){
-
-            $query= SrtInputDocument::where('document_number','LIKE','%' . $contracts_code . "/" . $doc_date .'%')
-            ->latest()->first(); 
-
-            
-
-            $str_last_number = $query->document_number;
-
-            $last_postfix = substr($str_last_number,-10);
-            $lastday_prefix = substr($last_postfix,0,-6);
-
-            // no. Document
-            if($lastday_prefix == $doc_date){
-                $str_count = substr($last_postfix,5,-3);
-                $int_count = intval($str_count) + 1;
-                $count = $int_count;    
-            }
-            else{
-                $count = 1;
-            }
-
-            $data['document_number'] = $doc_no_prefix . $doc_date . '-' . substr("00{$count}",-2) . '/' . $th_year_digit;
+        if($data['document_number'] != null){
+            $data['document_number'] = $doc_no_prefix . $data['document_number'];
         }
         else{
-            //no, Document 
-            $count = 1;
+            $date_replace = str_replace("/","",$date_search);
+            $day_digit = substr($date_replace,0,2);
+            $month_digit = substr($date_replace,2,2);
+            $year_digit = substr($date_replace,4,4);
+            $convert_year = intval($year_digit) + 543;
+            $th_year_digit = substr($convert_year,2,2);
 
-            $data['document_number'] = $doc_no_prefix . $doc_date . '-' . substr("00{$count}",-2) . '/' . $th_year_digit;
+            $doc_date = $month_digit . $day_digit;
 
+        
+            $inDB = SrtInputDocument::where('document_number','LIKE','%' . $contracts_code . "/" .  $doc_date .'%')->count(); 
+
+
+            if($inDB > 0){
+
+                $query= SrtInputDocument::where('document_number','LIKE','%' . $contracts_code . "/" . $doc_date .'%')
+                ->latest()->first(); 
+
+                $str_last_number = $query->document_number;
+
+                $last_postfix = substr($str_last_number,-10);
+                $lastday_prefix = substr($last_postfix,0,-6);
+
+                // no. Document
+                if($lastday_prefix == $doc_date){
+                    $str_count = substr($last_postfix,5,-3);
+                    $int_count = intval($str_count) + 1;
+                    $count = $int_count;    
+                }
+                else{
+                    $count = 1;
+                }
+
+                $data['document_number'] = $doc_no_prefix . $doc_date . '-' . substr("00{$count}",-2) . '/' . $th_year_digit;
+            }
+            else{
+                //no, Document 
+                $count = 1;
+
+                $data['document_number'] = $doc_no_prefix . $doc_date . '-' . substr("00{$count}",-2) . '/' . $th_year_digit;
+
+            }
         }
 
 

@@ -45,6 +45,16 @@
                             @endif
                             <span class="help-block">{{ trans('cruds.srtInputDocument.fields.subject_helper') }}</span>
                         </div>
+
+                        <div class="form-group {{ $errors->has('document_number') ? 'has-error' : '' }}">
+                            <label for="document_number">{{ trans('cruds.srtInputDocument.fields.document_number_optional') }}</label>
+                            <input class="form-control" type="text" name="document_number" id="document_number" value="{{ old('document_number', '') }}">
+                            @if($errors->has('document_number'))
+                                <span class="help-block" role="alert">{{ $errors->first('document_number') }}</span>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.srtInputDocument.fields.document_number_helper') }}</span>
+                        </div>
+
                         <div class="form-group {{ $errors->has('incoming_date') ? 'has-error' : '' }}">
                             <label class="required" for="incoming_date">{{ trans('cruds.srtInputDocument.fields.incoming_date') }}</label>
                             <input class="form-control date" type="text" name="incoming_date" id="incoming_date" value="{{ old('incoming_date') }}" required>
