@@ -67,6 +67,9 @@ class SrtInputDocumentsController extends Controller
             $table->editColumn('subject', function ($row) {
                 return $row->subject ? $row->subject : "";
             });
+            $table->editColumn('refer_to', function ($row) {
+                return $row->refer_to ? $row->refer_to : "";
+            });
             $table->editColumn('speed_class', function ($row) {
                 return $row->speed_class ? SrtInputDocument::SPEED_CLASS_SELECT[$row->speed_class] : '';
             });

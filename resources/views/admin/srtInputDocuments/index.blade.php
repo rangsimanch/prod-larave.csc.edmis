@@ -40,6 +40,9 @@
                                     {{ trans('cruds.srtInputDocument.fields.subject') }}
                                 </th>
                                 <th>
+                                    {{ trans('cruds.srtInputDocument.fields.refer_to') }}
+                                </th>
+                                <th>
                                     {{ trans('cruds.srtInputDocument.fields.speed_class') }}
                                 </th>
                                 <th>
@@ -95,6 +98,9 @@
                                 <td>
                                     <input class="search" type="text" placeholder="{{ trans('global.search') }}">
                                 </td>
+                               <td>
+                                    <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                               </td>
                                 <td>
                                     <select class="search" strict="true">
                                         <option value>{{ trans('global.all') }}</option>
@@ -193,6 +199,7 @@
 { data: 'document_number', name: 'document_number' },
 { data: 'document_type', name: 'document_type' },
 { data: 'subject', name: 'subject' },
+{ data: 'refer_to', name: 'refer_to' },
 { data: 'speed_class', name: 'speed_class' },
 { data: 'objective', name: 'objective' },
 { data: 'close_date', name: 'close_date' },
