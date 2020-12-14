@@ -251,4 +251,8 @@ Route::group(['prefix' => 'v1', 'as' => 'api.', 'namespace' => 'Api\V1\Admin', '
       // Srt Pe Documents
       Route::post('srt-pe-documents/media', 'SrtPeDocumentsApiController@storeMedia')->name('srt-pe-documents.storeMedia');
       Route::apiResource('srt-pe-documents', 'SrtPeDocumentsApiController');
+      
+      // Srt External Documents
+    Route::post('srt-external-documents/media', 'SrtExternalDocumentApiController@storeMedia')->name('srt-external-documents.storeMedia');
+    Route::apiResource('srt-external-documents', 'SrtExternalDocumentApiController');
 });

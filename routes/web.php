@@ -449,6 +449,13 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth'], '
     Route::post('srt-pe-documents/parse-csv-import', 'SrtPeDocumentsController@parseCsvImport')->name('srt-pe-documents.parseCsvImport');
     Route::post('srt-pe-documents/process-csv-import', 'SrtPeDocumentsController@processCsvImport')->name('srt-pe-documents.processCsvImport');
     Route::resource('srt-pe-documents', 'SrtPeDocumentsController');
+
+    // Srt External Documents
+    Route::delete('srt-external-documents/destroy', 'SrtExternalDocumentController@massDestroy')->name('srt-external-documents.massDestroy');
+    Route::post('srt-external-documents/media', 'SrtExternalDocumentController@storeMedia')->name('srt-external-documents.storeMedia');
+    Route::post('srt-external-documents/ckmedia', 'SrtExternalDocumentController@storeCKEditorImages')->name('srt-external-documents.storeCKEditorImages');
+    Route::resource('srt-external-documents', 'SrtExternalDocumentController');
+
    
 
 

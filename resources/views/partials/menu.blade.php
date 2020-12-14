@@ -267,6 +267,17 @@
                                 </a>
                             </li>
                         @endcan
+                        @can('srt_external_document_access')
+                            <li class="{{ request()->is("admin/srt-external-documents") || request()->is("admin/srt-external-documents/*") ? "active" : "" }}">
+                                <a href="{{ route("admin.srt-external-documents.index") }}">
+                                    <i class="fa-fw fas fa-door-open">
+
+                                    </i>
+                                    <span>{{ trans('cruds.srtExternalDocument.title') }}</span>
+
+                                </a>
+                            </li>
+                        @endcan
                         @can('srt_document_status_access')
                             <li class="{{ request()->is("admin/srt-document-statuses") || request()->is("admin/srt-document-statuses/*") ? "active" : "" }}">
                                 <a href="{{ route("admin.srt-document-statuses.index") }}">
