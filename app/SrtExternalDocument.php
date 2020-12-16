@@ -48,7 +48,7 @@ class SrtExternalDocument extends Model implements HasMedia
 
     protected $fillable = [
         'docuement_status_id',
-        'constuction_contract_id',
+        'construction_contract_id',
         'document_type',
         'document_number',
         'subject',
@@ -104,7 +104,7 @@ class SrtExternalDocument extends Model implements HasMedia
 
     public function constuction_contract()
     {
-        return $this->belongsTo(ConstructionContract::class, 'constuction_contract_id');
+        return $this->belongsTo(ConstructionContract::class, 'construction_contract_id');
     }
 
     public function getIncomingDateAttribute($value)
@@ -150,5 +150,10 @@ class SrtExternalDocument extends Model implements HasMedia
     public function team()
     {
         return $this->belongsTo(Team::class, 'team_id');
+    }
+
+    public function create_by_construction_contract_id()
+    {
+        return $this->belongsTo(ConstructionContract::class, 'construction_contract_id');
     }
 }

@@ -150,8 +150,8 @@ class SrtExternalDocumentController extends Controller
         $date_search = $data['incoming_date'];
 
             //Prefix
-        $contracts_code = ConstructionContract::where('id',$data['constuction_contract_id'])->value('document_code');
-        $doc_no_prefix = ConstructionContract::where('id',$data['constuction_contract_id'])->value('document_code') . '/';
+        $contracts_code = ConstructionContract::where('id',$data['construction_contract_id'])->value('document_code');
+        $doc_no_prefix = ConstructionContract::where('id',$data['construction_contract_id'])->value('document_code') . '/';
             //Manual number
         if($data['document_number'] != null){
             $data['document_number'] = $doc_no_prefix . $data['document_number'];
