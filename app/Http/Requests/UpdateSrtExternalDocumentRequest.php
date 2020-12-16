@@ -17,7 +17,7 @@ class UpdateSrtExternalDocumentRequest extends FormRequest
     public function rules()
     {
         return [
-            'constuction_contract_id' => [
+            'construction_contract_id' => [
                 'required',
                 'integer',
             ],

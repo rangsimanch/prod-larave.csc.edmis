@@ -12,7 +12,7 @@
                     <form method="POST" action="{{ route("admin.srt-external-documents.store") }}" enctype="multipart/form-data">
                         @csrf
                         <div class="form-group {{ $errors->has('constuction_contract') ? 'has-error' : '' }}">
-                            <label class="required" for="constuction_contract_id">{{ trans('cruds.srtExternalDocument.fields.constuction_contract') }}</label>
+                            <label class="required" for="construction_contract_id">{{ trans('cruds.srtExternalDocument.fields.constuction_contract') }}</label>
                             <select class="form-control select2" name="construction_contract_id" id="construction_contract_id" required>
                                 @foreach($constuction_contracts as $id => $constuction_contract)
                                     <option value="{{ $id }}" {{ old('construction_contract_id') == $id ? 'selected' : '' }}>{{ $constuction_contract }}</option>
