@@ -54,6 +54,10 @@ class SrtInputDocumentsController extends Controller
                 ));
             });
 
+            $table->editColumn('id', function ($row) {
+                return $row->id ? $row->id : "";
+            });
+
             $table->addColumn('docuement_status_title', function ($row) {
                 return $row->docuement_status ? $row->docuement_status->title : '';
             });
@@ -195,7 +199,7 @@ class SrtInputDocumentsController extends Controller
             $convert_year = intval($year_digit) + 543;
             $th_year_digit = substr($convert_year,2,2);
 
-            $doc_date = $month_digit . $day_digit;
+            $doc_date = $day_digit . $month_digit;
 
         
             $inDB = SrtInputDocument::where('document_number','LIKE','%' . $contracts_code . "/" .  $doc_date .'%')->count(); 

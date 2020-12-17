@@ -23,9 +23,9 @@
                                 <th width="10">
 
                                 </th>
-                                <!-- <th>
+                                <th>
                                     {{ trans('cruds.srtExternalDocument.fields.id') }}
-                                </th> -->
+                                </th>
                                 <th>
                                     {{ trans('cruds.srtExternalDocument.fields.docuement_status') }}
                                 </th>
@@ -69,9 +69,9 @@
                             <tr>
                                 <td>
                                 </td>
-                                <!-- <td>
+                                <td>
                                     <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                                </td> -->
+                                </td>
                                 <td>
                                     <select class="search">
                                         <option value>{{ trans('global.all') }}</option>
@@ -199,7 +199,7 @@
     ajax: "{{ route('admin.srt-external-documents.index') }}",
     columns: [
       { data: 'placeholder', name: 'placeholder' },
-// { data: 'id', name: 'id' },
+ { data: 'id', name: 'id', visible: false},
 { data: 'docuement_status_title', name: 'docuement_status.title' },
 // { data: 'constuction_contract_code', name: 'constuction_contract.code' },
 { data: 'document_type', name: 'document_type' },
@@ -215,8 +215,8 @@
 { data: 'actions', name: '{{ trans('global.actions') }}' }
     ],
     orderCellsTop: true,
-    order: [[ 1, 'asc' ]],
-    pageLength: 50,
+    order: [[ 1, 'desc' ]],
+    pageLength: 10,
   };
   let table = $('.datatable-SrtExternalDocument').DataTable(dtOverrideGlobals);
   $('a[data-toggle="tab"]').on('shown.bs.tab click', function(e){

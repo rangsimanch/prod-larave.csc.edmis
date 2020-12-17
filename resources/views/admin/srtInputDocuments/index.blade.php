@@ -28,6 +28,9 @@
 
                                 </th>
                                 <th>
+                                    {{ trans('cruds.srtExternalDocument.fields.id') }}
+                                </th>
+                                <th>
                                     {{ trans('cruds.srtInputDocument.fields.docuement_status') }}
                                 </th>
                                 <th>
@@ -75,6 +78,9 @@
                             </tr>
                             <tr>
                                 <td>
+                                </td>
+                                <td>
+                                    <input class="search" type="text" placeholder="{{ trans('global.search') }}">
                                 </td>
                                 <td>
                                     <select class="search">
@@ -195,6 +201,7 @@
     ajax: "{{ route('admin.srt-input-documents.index') }}",
     columns: [
       { data: 'placeholder', name: 'placeholder' },
+ { data: 'id', name: 'id', visible: false},
 { data: 'docuement_status_title', name: 'docuement_status.title' },
 { data: 'document_number', name: 'document_number' },
 { data: 'document_type', name: 'document_type' },
@@ -212,7 +219,7 @@
 { data: 'actions', name: '{{ trans('global.actions') }}' }
     ],
     orderCellsTop: true,
-    order: [[ 2, 'desc' ]],
+    order: [[ 1, 'desc' ]],
     pageLength: 10,
   };
   let table = $('.datatable-SrtInputDocument').DataTable(dtOverrideGlobals);
