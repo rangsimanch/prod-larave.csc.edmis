@@ -162,7 +162,7 @@
     ajax: "{{ route('admin.srt-pe-documents.index') }}",
     columns: [
       { data: 'placeholder', name: 'placeholder' },
-{ data: 'refer_documents_document_number', name: 'refer_documents.document_number', visible: false },
+{ data: 'id', name: 'id', visible: false },
 { data: 'refer_documents.file_upload_3', name: 'refer_documents.file_upload_3', sortable: false, searchable: false },
 { data: 'refer_documents.subject', name: 'refer_documents.subject' },
 { data: 'process_date', name: 'process_date' },
@@ -175,7 +175,7 @@
 { data: 'actions', name: '{{ trans('global.actions') }}' }
     ],
     orderCellsTop: true,
-    order: [[ 3, 'desc' ]],
+    order: [[ 1, 'desc' ]],
     pageLength: 10,
   };
   let table = $('.datatable-SrtPeDocument').DataTable(dtOverrideGlobals);

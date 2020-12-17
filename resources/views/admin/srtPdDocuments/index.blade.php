@@ -162,7 +162,7 @@
     ajax: "{{ route('admin.srt-pd-documents.index') }}",
     columns: [
       { data: 'placeholder', name: 'placeholder' },
-{ data: 'refer_documents_document_number', name: 'refer_documents.document_number', visible: false},
+{ data: 'id', name: 'id', visible: false},
 { data: 'refer_documents.file_upload_2', name: 'refer_documents.file_upload_2', sortable: false, searchable: false },
 { data: 'refer_documents.subject', name: 'refer_documents.subject' },
 { data: 'process_date', name: 'process_date' },

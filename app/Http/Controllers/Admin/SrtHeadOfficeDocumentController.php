@@ -73,8 +73,12 @@ class SrtHeadOfficeDocumentController extends Controller
                 return implode(', ', $links);
             });
 
-            $table->addColumn('refer_documents_document_number', function ($row) {
-                return $row->refer_documents ? $row->refer_documents->document_number : '';
+            // $table->addColumn('refer_documents_document_number', function ($row) {
+            //     return $row->refer_documents ? $row->refer_documents->document_number : '';
+            // });
+
+            $table->editColumn('id', function ($row) {
+                return $row->id ? $row->id : "";
             });
 
             $table->editColumn('refer_documents.subject', function ($row) {
