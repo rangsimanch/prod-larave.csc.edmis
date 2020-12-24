@@ -27,9 +27,9 @@
                                 <th width="10">
 
                                 </th>
-                                <th>
+                                <!-- <th>
                                     {{ trans('cruds.srtHeadOfficeDocument.fields.refer_documents') }}
-                                </th> 
+                                </th>  -->
                                 <th>
                                     {{ trans('cruds.srtHeadOfficeDocument.fields.refer_documents') }}
                                 </th>
@@ -56,16 +56,16 @@
                                 <th>
                                     {{ trans('cruds.srtHeadOfficeDocument.fields.note') }}
                                 </th>
-                                <!-- <th>
+                                <th>
                                     {{ trans('cruds.srtHeadOfficeDocument.fields.file_upload') }}
-                                </th> -->
+                                </th>
                                 <th>
                                     &nbsp;
                                 </th>
                             </tr>
                             <tr>
-                                <td>
-                                </td>
+                                <!-- <td>
+                                </td> -->
                                 <td>
                                 </td>
                                 <td>
@@ -104,8 +104,8 @@
                                 <td>
                                     <input class="search" type="text" placeholder="{{ trans('global.search') }}">
                                 </td>
-                                <!-- <td>
-                                </td> -->
+                                <td>
+                                </td>
                                 <td>
                                 </td>
                             </tr>
@@ -165,7 +165,7 @@
     columns: [
       { data: 'placeholder', name: 'placeholder' },
 { data: 'id', name: 'id', visible: false},
-{ data: 'refer_documents.file_upload', name: 'refer_documents.file_upload', sortable: false, searchable: false },
+// { data: 'refer_documents.file_upload', name: 'refer_documents.file_upload', sortable: false, searchable: false },
 { data: 'refer_documents.subject', name: 'refer_documents.subject' },
 { data: 'process_date', name: 'process_date' },
 { data: 'special_command', name: 'special_command' },
@@ -173,7 +173,7 @@
 { data: 'operator', name: 'operators.name' },
 { data: 'practice_notes', name: 'practice_notes' },
 { data: 'note', name: 'note' },
-// { data: 'file_upload', name: 'file_upload', sortable: false, searchable: false, visible: false },
+{ data: 'file_upload', name: 'file_upload', sortable: false, searchable: false, visible: false },
 { data: 'actions', name: '{{ trans('global.actions') }}' }
     ],
     orderCellsTop: true,
