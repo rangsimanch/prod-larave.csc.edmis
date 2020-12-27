@@ -18,6 +18,9 @@ use Spatie\MediaLibrary\Models\Media;
 use Symfony\Component\HttpFoundation\Response;
 use Yajra\DataTables\Facades\DataTables;
 
+use Illuminate\Support\Facades\Auth;
+
+
 class NonConformanceReportController extends Controller
 {
     use MediaUploadingTrait;
@@ -152,7 +155,14 @@ class NonConformanceReportController extends Controller
 
         $prepared_bies = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $contractors_projects = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        //Contract Check
+            //Check is Admin
+            if(Auth::id() != 1){
+                $construction_contracts = ConstructionContract::where('id',session('construction_contract_id'))->pluck('code', 'id')->prepend(trans('global.pleaseSelect'), '');
+            }
+            else{
+                $construction_contracts = ConstructionContract::all()->pluck('code', 'id')->prepend(trans('global.pleaseSelect'), '');
+            }
 
         $approved_bies = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
@@ -188,7 +198,14 @@ class NonConformanceReportController extends Controller
 
         $prepared_bies = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $contractors_projects = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        //Contract Check
+            //Check is Admin
+            if(Auth::id() != 1){
+                $construction_contracts = ConstructionContract::where('id',session('construction_contract_id'))->pluck('code', 'id')->prepend(trans('global.pleaseSelect'), '');
+            }
+            else{
+                $construction_contracts = ConstructionContract::all()->pluck('code', 'id')->prepend(trans('global.pleaseSelect'), '');
+            }
 
         $approved_bies = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 

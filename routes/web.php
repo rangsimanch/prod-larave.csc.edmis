@@ -250,47 +250,39 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth'], '
     Route::post('records-of-visitors/ckmedia', 'RecordsOfVisitorsController@storeCKEditorImages')->name('records-of-visitors.storeCKEditorImages');
     Route::resource('records-of-visitors', 'RecordsOfVisitorsController');
     
-    // Letter Types
-    Route::delete('letter-types/destroy', 'LetterTypeController@massDestroy')->name('letter-types.massDestroy');
-    Route::resource('letter-types', 'LetterTypeController');
 
     // Add Letters
     Route::delete('add-letters/destroy', 'AddLetterController@massDestroy')->name('add-letters.massDestroy');
     Route::post('add-letters/media', 'AddLetterController@storeMedia')->name('add-letters.storeMedia');
     Route::post('add-letters/ckmedia', 'AddLetterController@storeCKEditorImages')->name('add-letters.storeCKEditorImages');
+    Route::post('add-letters/parse-csv-import', 'AddLetterController@parseCsvImport')->name('add-letters.parseCsvImport');
+    Route::post('add-letters/process-csv-import', 'AddLetterController@processCsvImport')->name('add-letters.processCsvImport');
     Route::resource('add-letters', 'AddLetterController');
 
-    // Letter Incoming Srts
-    Route::delete('letter-incoming-srts/destroy', 'LetterIncomingSrtController@massDestroy')->name('letter-incoming-srts.massDestroy');
-    Route::resource('letter-incoming-srts', 'LetterIncomingSrtController');
 
-    // Letter Incoming Pmcs
-    Route::delete('letter-incoming-pmcs/destroy', 'LetterIncomingPmcController@massDestroy')->name('letter-incoming-pmcs.massDestroy');
-    Route::resource('letter-incoming-pmcs', 'LetterIncomingPmcController');
+   // Srt Inboxes
+   Route::resource('srt-inboxes', 'SrtInboxController', ['except' => ['create', 'store', 'edit', 'update', 'show', 'destroy']]);
 
-    // Letter Incoming Cecs
-    Route::delete('letter-incoming-cecs/destroy', 'LetterIncomingCecController@massDestroy')->name('letter-incoming-cecs.massDestroy');
-    Route::resource('letter-incoming-cecs', 'LetterIncomingCecController');
+   // Srt Sents
+   Route::resource('srt-sents', 'SrtSentController', ['except' => ['create', 'store', 'edit', 'update', 'show', 'destroy']]);
 
-    // Letter Incoming Cscs
-    Route::delete('letter-incoming-cscs/destroy', 'LetterIncomingCscController@massDestroy')->name('letter-incoming-cscs.massDestroy');
-    Route::resource('letter-incoming-cscs', 'LetterIncomingCscController');
+   // Pmc Inboxes
+   Route::resource('pmc-inboxes', 'PmcInboxController', ['except' => ['create', 'store', 'edit', 'update', 'show', 'destroy']]);
 
-    // Letter Outgoing Srts
-    Route::delete('letter-outgoing-srts/destroy', 'LetterOutgoingSrtController@massDestroy')->name('letter-outgoing-srts.massDestroy');
-    Route::resource('letter-outgoing-srts', 'LetterOutgoingSrtController');
+   // Pmc Sents
+   Route::resource('pmc-sents', 'PmcSentController', ['except' => ['create', 'store', 'edit', 'update', 'show', 'destroy']]);
 
-    // Letter Outgoing Pmcs
-    Route::delete('letter-outgoing-pmcs/destroy', 'LetterOutgoingPmcController@massDestroy')->name('letter-outgoing-pmcs.massDestroy');
-    Route::resource('letter-outgoing-pmcs', 'LetterOutgoingPmcController');
+   // Csc Inboxes
+   Route::resource('csc-inboxes', 'CscInboxController', ['except' => ['create', 'store', 'edit', 'update', 'show', 'destroy']]);
 
-    // Letter Outgoing Cecs
-    Route::delete('letter-outgoing-cecs/destroy', 'LetterOutgoingCecController@massDestroy')->name('letter-outgoing-cecs.massDestroy');
-    Route::resource('letter-outgoing-cecs', 'LetterOutgoingCecController');
+   // Csc Sents
+   Route::resource('csc-sents', 'CscSentController', ['except' => ['create', 'store', 'edit', 'update', 'show', 'destroy']]);
 
-    // Letter Outgoing Cscs
-    Route::delete('letter-outgoing-cscs/destroy', 'LetterOutgoingCscController@massDestroy')->name('letter-outgoing-cscs.massDestroy');
-    Route::resource('letter-outgoing-cscs', 'LetterOutgoingCscController');
+   // Ccsp Inboxes
+   Route::resource('ccsp-inboxes', 'CcspInboxController', ['except' => ['create', 'store', 'edit', 'update', 'show', 'destroy']]);
+
+   // Ccsp Sents
+   Route::resource('ccsp-sents', 'CcspSentController', ['except' => ['create', 'store', 'edit', 'update', 'show', 'destroy']]);
 
     // Check Sheets
     Route::delete('check-sheets/destroy', 'CheckSheetController@massDestroy')->name('check-sheets.massDestroy');
@@ -456,8 +448,9 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth'], '
     Route::post('srt-external-documents/ckmedia', 'SrtExternalDocumentController@storeCKEditorImages')->name('srt-external-documents.storeCKEditorImages');
     Route::resource('srt-external-documents', 'SrtExternalDocumentController');
 
-   
-
+    // Organizations
+    Route::delete('organizations/destroy', 'OrganizationController@massDestroy')->name('organizations.massDestroy');
+    Route::resource('organizations', 'OrganizationController');
 
     Route::get('system-calendar', 'SystemCalendarController@index')->name('systemCalendar');
     Route::get('global-search', 'GlobalSearchController@search')->name('globalSearch');

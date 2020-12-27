@@ -12,139 +12,38 @@
                     <form method="POST" action="{{ route("admin.add-letters.update", [$addLetter->id]) }}" enctype="multipart/form-data">
                         @method('PUT')
                         @csrf
-                        <div class="form-group {{ $errors->has('title') ? 'has-error' : '' }}">
-                            <label for="title">{{ trans('cruds.addLetter.fields.title') }}</label>
-                            <input class="form-control" type="text" name="title" id="title" value="{{ old('title', $addLetter->title) }}">
-                            @if($errors->has('title'))
-                                <span class="help-block" role="alert">{{ $errors->first('title') }}</span>
+                        
+                        <div class="form-group {{ $errors->has('mask_as_received') ? 'has-error' : '' }}">
+                            <div>
+                                <input type="hidden" name="mask_as_received" value="0">
+                                <input type="checkbox" name="mask_as_received" onclick="EnableDisableTextBox(this)" id="mask_as_received" value="1" {{ $addLetter->mask_as_received || old('mask_as_received', 0) === 1 ? 'checked' : '' }}>
+                                <label for="mask_as_received" style="font-weight: 400">{{ trans('cruds.addLetter.fields.mask_as_received') }}</label>
+                            </div>
+                            @if($errors->has('mask_as_received'))
+                                <span class="help-block" role="alert">{{ $errors->first('mask_as_received') }}</span>
                             @endif
-                            <span class="help-block">{{ trans('cruds.addLetter.fields.title_helper') }}</span>
+                            <span class="help-block">{{ trans('cruds.addLetter.fields.mask_as_received_helper') }}</span>
                         </div>
-                        <div class="form-group {{ $errors->has('letter_type') ? 'has-error' : '' }}">
-                            <label for="letter_type_id">{{ trans('cruds.addLetter.fields.letter_type') }}</label>
-                            <select class="form-control select2" name="letter_type_id" id="letter_type_id">
-                                @foreach($letter_types as $id => $letter_type)
-                                    <option value="{{ $id }}" {{ ($addLetter->letter_type ? $addLetter->letter_type->id : old('letter_type_id')) == $id ? 'selected' : '' }}>{{ $letter_type }}</option>
-                                @endforeach
-                            </select>
-                            @if($errors->has('letter_type'))
-                                <span class="help-block" role="alert">{{ $errors->first('letter_type') }}</span>
-                            @endif
-                            <span class="help-block">{{ trans('cruds.addLetter.fields.letter_type_helper') }}</span>
-                        </div>
-                        <div class="form-group {{ $errors->has('letter_no') ? 'has-error' : '' }}">
-                            <label for="letter_no">{{ trans('cruds.addLetter.fields.letter_no') }}</label>
-                            <input class="form-control" type="text" name="letter_no" id="letter_no" value="{{ old('letter_no', $addLetter->letter_no) }}">
-                            @if($errors->has('letter_no'))
-                                <span class="help-block" role="alert">{{ $errors->first('letter_no') }}</span>
-                            @endif
-                            <span class="help-block">{{ trans('cruds.addLetter.fields.letter_no_helper') }}</span>
-                        </div>
-                        <div class="form-group {{ $errors->has('sender') ? 'has-error' : '' }}">
-                            <label class="required" for="sender_id">{{ trans('cruds.addLetter.fields.sender') }}</label>
-                            <select class="form-control select2" name="sender_id" id="sender_id" required>
-                                @foreach($senders as $id => $sender)
-                                    <option value="{{ $id }}" {{ ($addLetter->sender ? $addLetter->sender->id : old('sender_id')) == $id ? 'selected' : '' }}>{{ $sender }}</option>
-                                @endforeach
-                            </select>
-                            @if($errors->has('sender'))
-                                <span class="help-block" role="alert">{{ $errors->first('sender') }}</span>
-                            @endif
-                            <span class="help-block">{{ trans('cruds.addLetter.fields.sender_helper') }}</span>
-                        </div>
-                        <div class="form-group {{ $errors->has('sent_date') ? 'has-error' : '' }}">
-                            <label class="required" for="sent_date">{{ trans('cruds.addLetter.fields.sent_date') }}</label>
-                            <input class="form-control date" type="text" name="sent_date" id="sent_date" value="{{ old('sent_date', $addLetter->sent_date) }}" required>
-                            @if($errors->has('sent_date'))
-                                <span class="help-block" role="alert">{{ $errors->first('sent_date') }}</span>
-                            @endif
-                            <span class="help-block">{{ trans('cruds.addLetter.fields.sent_date_helper') }}</span>
-                        </div>
-                        <div class="form-group {{ $errors->has('receiver') ? 'has-error' : '' }}">
-                            <label class="required" for="receiver_id">{{ trans('cruds.addLetter.fields.receiver') }}</label>
-                            <select class="form-control select2" name="receiver_id" id="receiver_id" required>
-                                @foreach($receivers as $id => $receiver)
-                                    <option value="{{ $id }}" {{ ($addLetter->receiver ? $addLetter->receiver->id : old('receiver_id')) == $id ? 'selected' : '' }}>{{ $receiver }}</option>
-                                @endforeach
-                            </select>
-                            @if($errors->has('receiver'))
-                                <span class="help-block" role="alert">{{ $errors->first('receiver') }}</span>
-                            @endif
-                            <span class="help-block">{{ trans('cruds.addLetter.fields.receiver_helper') }}</span>
-                        </div>
+
                         <div class="form-group {{ $errors->has('received_date') ? 'has-error' : '' }}">
-                            <label class="required" for="received_date">{{ trans('cruds.addLetter.fields.received_date') }}</label>
-                            <input class="form-control date" type="text" name="received_date" id="received_date" value="{{ old('received_date', $addLetter->received_date) }}" required>
+                            <label for="received_date">{{ trans('cruds.addLetter.fields.received_date') }}</label>
+                            <input class="form-control date" type="text" name="received_date" id="received_date" disabled="disabled" value="{{ old('received_date', $addLetter->received_date) }}">
                             @if($errors->has('received_date'))
                                 <span class="help-block" role="alert">{{ $errors->first('received_date') }}</span>
                             @endif
                             <span class="help-block">{{ trans('cruds.addLetter.fields.received_date_helper') }}</span>
                         </div>
-                        <div class="form-group {{ $errors->has('cc_srt') ? 'has-error' : '' }}">
-                            <div>
-                                <input type="hidden" name="cc_srt" value="0">
-                                <input type="checkbox" name="cc_srt" id="cc_srt" value="1" {{ $addLetter->cc_srt || old('cc_srt', 0) === 1 ? 'checked' : '' }}>
-                                <label for="cc_srt" style="font-weight: 400">{{ trans('cruds.addLetter.fields.cc_srt') }}</label>
-                            </div>
-                            @if($errors->has('cc_srt'))
-                                <span class="help-block" role="alert">{{ $errors->first('cc_srt') }}</span>
+
+                        <div class="form-group {{ $errors->has('note') ? 'has-error' : '' }}">
+                            <label for="note">{{ trans('cruds.addLetter.fields.note') }}</label>
+                            <textarea class="form-control" name="note" id="note">{{ old('note', $addLetter->note) }}</textarea>
+                            @if($errors->has('note'))
+                                <span class="help-block" role="alert">{{ $errors->first('note') }}</span>
                             @endif
-                            <span class="help-block">{{ trans('cruds.addLetter.fields.cc_srt_helper') }}</span>
+                            <span class="help-block">{{ trans('cruds.addLetter.fields.note_helper') }}</span>
                         </div>
-                        <div class="form-group {{ $errors->has('cc_pmc') ? 'has-error' : '' }}">
-                            <div>
-                                <input type="hidden" name="cc_pmc" value="0">
-                                <input type="checkbox" name="cc_pmc" id="cc_pmc" value="1" {{ $addLetter->cc_pmc || old('cc_pmc', 0) === 1 ? 'checked' : '' }}>
-                                <label for="cc_pmc" style="font-weight: 400">{{ trans('cruds.addLetter.fields.cc_pmc') }}</label>
-                            </div>
-                            @if($errors->has('cc_pmc'))
-                                <span class="help-block" role="alert">{{ $errors->first('cc_pmc') }}</span>
-                            @endif
-                            <span class="help-block">{{ trans('cruds.addLetter.fields.cc_pmc_helper') }}</span>
-                        </div>
-                        <div class="form-group {{ $errors->has('cc_csc') ? 'has-error' : '' }}">
-                            <div>
-                                <input type="hidden" name="cc_csc" value="0">
-                                <input type="checkbox" name="cc_csc" id="cc_csc" value="1" {{ $addLetter->cc_csc || old('cc_csc', 0) === 1 ? 'checked' : '' }}>
-                                <label for="cc_csc" style="font-weight: 400">{{ trans('cruds.addLetter.fields.cc_csc') }}</label>
-                            </div>
-                            @if($errors->has('cc_csc'))
-                                <span class="help-block" role="alert">{{ $errors->first('cc_csc') }}</span>
-                            @endif
-                            <span class="help-block">{{ trans('cruds.addLetter.fields.cc_csc_helper') }}</span>
-                        </div>
-                        <div class="form-group {{ $errors->has('cc_cec') ? 'has-error' : '' }}">
-                            <div>
-                                <input type="hidden" name="cc_cec" value="0">
-                                <input type="checkbox" name="cc_cec" id="cc_cec" value="1" {{ $addLetter->cc_cec || old('cc_cec', 0) === 1 ? 'checked' : '' }}>
-                                <label for="cc_cec" style="font-weight: 400">{{ trans('cruds.addLetter.fields.cc_cec') }}</label>
-                            </div>
-                            @if($errors->has('cc_cec'))
-                                <span class="help-block" role="alert">{{ $errors->first('cc_cec') }}</span>
-                            @endif
-                            <span class="help-block">{{ trans('cruds.addLetter.fields.cc_cec_helper') }}</span>
-                        </div>
-                        <div class="form-group {{ $errors->has('construction_contract') ? 'has-error' : '' }}">
-                            <label for="construction_contract_id">{{ trans('cruds.addLetter.fields.construction_contract') }}</label>
-                            <select class="form-control select2" name="construction_contract_id" id="construction_contract_id">
-                                @foreach($construction_contracts as $id => $construction_contract)
-                                    <option value="{{ $id }}" {{ ($addLetter->construction_contract ? $addLetter->construction_contract->id : old('construction_contract_id')) == $id ? 'selected' : '' }}>{{ $construction_contract }}</option>
-                                @endforeach
-                            </select>
-                            @if($errors->has('construction_contract'))
-                                <span class="help-block" role="alert">{{ $errors->first('construction_contract') }}</span>
-                            @endif
-                            <span class="help-block">{{ trans('cruds.addLetter.fields.construction_contract_helper') }}</span>
-                        </div>
-                        <div class="form-group {{ $errors->has('letter_upload') ? 'has-error' : '' }}">
-                            <label class="required" for="letter_upload">{{ trans('cruds.addLetter.fields.letter_upload') }}</label>
-                            <div class="needsclick dropzone" id="letter_upload-dropzone">
-                            </div>
-                            @if($errors->has('letter_upload'))
-                                <span class="help-block" role="alert">{{ $errors->first('letter_upload') }}</span>
-                            @endif
-                            <span class="help-block">{{ trans('cruds.addLetter.fields.letter_upload_helper') }}</span>
-                        </div>
+
+                        
                         <div class="form-group">
                             <button class="btn btn-danger" type="submit">
                                 {{ trans('global.save') }}
@@ -159,63 +58,18 @@
         </div>
     </div>
 </div>
-@endsection
 
-@section('scripts')
-<script>
-    var uploadedLetterUploadMap = {}
-Dropzone.options.letterUploadDropzone = {
-    url: '{{ route('admin.add-letters.storeMedia') }}',
-    maxFilesize: 500, // MB
-    addRemoveLinks: true,
-    headers: {
-      'X-CSRF-TOKEN': "{{ csrf_token() }}"
-    },
-    params: {
-      size: 500
-    },
-    success: function (file, response) {
-      $('form').append('<input type="hidden" name="letter_upload[]" value="' + response.name + '">')
-      uploadedLetterUploadMap[file.name] = response.name
-    },
-    removedfile: function (file) {
-      file.previewElement.remove()
-      var name = ''
-      if (typeof file.file_name !== 'undefined') {
-        name = file.file_name
-      } else {
-        name = uploadedLetterUploadMap[file.name]
-      }
-      $('form').find('input[name="letter_upload[]"][value="' + name + '"]').remove()
-    },
-    init: function () {
-@if(isset($addLetter) && $addLetter->letter_upload)
-          var files =
-            {!! json_encode($addLetter->letter_upload) !!}
-              for (var i in files) {
-              var file = files[i]
-              this.options.addedfile.call(this, file)
-              file.previewElement.classList.add('dz-complete')
-              $('form').append('<input type="hidden" name="letter_upload[]" value="' + file.file_name + '">')
-            }
-@endif
-    },
-     error: function (file, response) {
-         if ($.type(response) === 'string') {
-             var message = response //dropzone sends it's own error messages in string
-         } else {
-             var message = response.errors.file
-         }
-         file.previewElement.classList.add('dz-error')
-         _ref = file.previewElement.querySelectorAll('[data-dz-errormessage]')
-         _results = []
-         for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-             node = _ref[_i]
-             _results.push(node.textContent = message)
-         }
-
-         return _results
-     }
-}
+<script type="text/javascript">
+    function EnableDisableTextBox(mask_as_received) {
+        var received_date = document.getElementById("received_date");
+        received_date.disabled = mask_as_received.checked ? false : true;
+        if (!received_date.disabled) {
+            received_date.focus();
+        }
+        else{
+            document.getElementById("received_date").value = "";
+        }
+    }
 </script>
 @endsection
+

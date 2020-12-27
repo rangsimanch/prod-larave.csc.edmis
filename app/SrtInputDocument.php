@@ -58,6 +58,7 @@ class SrtInputDocument extends Model implements HasMedia
         'subject',
         'incoming_date',
         'refer_to',
+        'from_organization_id',
         'from_id',
         'attachments',
         'description',
@@ -174,6 +175,11 @@ class SrtInputDocument extends Model implements HasMedia
     public function team()
     {
         return $this->belongsTo(Team::class, 'team_id');
+    }
+
+    public function from_organization()
+    {
+        return $this->belongsTo(Organization::class, 'from_organization_id');
     }
     
     public function create_by_construction_contract_id()

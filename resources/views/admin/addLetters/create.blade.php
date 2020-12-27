@@ -11,19 +11,12 @@
                 <div class="panel-body">
                     <form method="POST" action="{{ route("admin.add-letters.store") }}" enctype="multipart/form-data">
                         @csrf
-                        <div class="form-group {{ $errors->has('title') ? 'has-error' : '' }}">
-                            <label for="title">{{ trans('cruds.addLetter.fields.title') }}</label>
-                            <input class="form-control" type="text" name="title" id="title" value="{{ old('title', '') }}">
-                            @if($errors->has('title'))
-                                <span class="help-block" role="alert">{{ $errors->first('title') }}</span>
-                            @endif
-                            <span class="help-block">{{ trans('cruds.addLetter.fields.title_helper') }}</span>
-                        </div>
                         <div class="form-group {{ $errors->has('letter_type') ? 'has-error' : '' }}">
-                            <label for="letter_type_id">{{ trans('cruds.addLetter.fields.letter_type') }}</label>
-                            <select class="form-control select2" name="letter_type_id" id="letter_type_id">
-                                @foreach($letter_types as $id => $letter_type)
-                                    <option value="{{ $id }}" {{ old('letter_type_id') == $id ? 'selected' : '' }}>{{ $letter_type }}</option>
+                            <label class="required">{{ trans('cruds.addLetter.fields.letter_type') }}</label>
+                            <select class="form-control" name="letter_type" id="letter_type" required>
+                                <option value disabled {{ old('letter_type', null) === null ? 'selected' : '' }}>{{ trans('global.pleaseSelect') }}</option>
+                                @foreach(App\AddLetter::LETTER_TYPE_SELECT as $key => $label)
+                                    <option value="{{ $key }}" {{ old('letter_type', '') === (string) $key ? 'selected' : '' }}>{{ $label }}</option>
                                 @endforeach
                             </select>
                             @if($errors->has('letter_type'))
@@ -31,13 +24,47 @@
                             @endif
                             <span class="help-block">{{ trans('cruds.addLetter.fields.letter_type_helper') }}</span>
                         </div>
+                        <div class="form-group {{ $errors->has('title') ? 'has-error' : '' }}">
+                            <label class="required" for="title">{{ trans('cruds.addLetter.fields.title') }}</label>
+                            <input class="form-control" type="text" name="title" id="title" value="{{ old('title', '') }}" required>
+                            @if($errors->has('title'))
+                                <span class="help-block" role="alert">{{ $errors->first('title') }}</span>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.addLetter.fields.title_helper') }}</span>
+                        </div>
                         <div class="form-group {{ $errors->has('letter_no') ? 'has-error' : '' }}">
-                            <label for="letter_no">{{ trans('cruds.addLetter.fields.letter_no') }}</label>
-                            <input class="form-control" type="text" name="letter_no" id="letter_no" value="{{ old('letter_no', '') }}">
+                            <label class="required" for="letter_no">{{ trans('cruds.addLetter.fields.letter_no') }}</label>
+                            <input class="form-control" type="text" name="letter_no" id="letter_no" value="{{ old('letter_no', '') }}" required>
                             @if($errors->has('letter_no'))
                                 <span class="help-block" role="alert">{{ $errors->first('letter_no') }}</span>
                             @endif
                             <span class="help-block">{{ trans('cruds.addLetter.fields.letter_no_helper') }}</span>
+                        </div>
+                        <div class="form-group {{ $errors->has('speed_class') ? 'has-error' : '' }}">
+                            <label class="required">{{ trans('cruds.addLetter.fields.speed_class') }}</label>
+                            <select class="form-control" name="speed_class" id="speed_class" required>
+                                <option value disabled {{ old('speed_class', null) === null ? 'selected' : '' }}>{{ trans('global.pleaseSelect') }}</option>
+                                @foreach(App\AddLetter::SPEED_CLASS_SELECT as $key => $label)
+                                    <option value="{{ $key }}" {{ old('speed_class', '') === (string) $key ? 'selected' : '' }}>{{ $label }}</option>
+                                @endforeach
+                            </select>
+                            @if($errors->has('speed_class'))
+                                <span class="help-block" role="alert">{{ $errors->first('speed_class') }}</span>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.addLetter.fields.speed_class_helper') }}</span>
+                        </div>
+                        <div class="form-group {{ $errors->has('objective') ? 'has-error' : '' }}">
+                            <label class="required">{{ trans('cruds.addLetter.fields.objective') }}</label>
+                            <select class="form-control" name="objective" id="objective" required>
+                                <option value disabled {{ old('objective', null) === null ? 'selected' : '' }}>{{ trans('global.pleaseSelect') }}</option>
+                                @foreach(App\AddLetter::OBJECTIVE_SELECT as $key => $label)
+                                    <option value="{{ $key }}" {{ old('objective', '') === (string) $key ? 'selected' : '' }}>{{ $label }}</option>
+                                @endforeach
+                            </select>
+                            @if($errors->has('objective'))
+                                <span class="help-block" role="alert">{{ $errors->first('objective') }}</span>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.addLetter.fields.objective_helper') }}</span>
                         </div>
                         <div class="form-group {{ $errors->has('sender') ? 'has-error' : '' }}">
                             <label class="required" for="sender_id">{{ trans('cruds.addLetter.fields.sender') }}</label>
@@ -71,64 +98,25 @@
                             @endif
                             <span class="help-block">{{ trans('cruds.addLetter.fields.receiver_helper') }}</span>
                         </div>
-                        <div class="form-group {{ $errors->has('received_date') ? 'has-error' : '' }}">
-                            <label class="required" for="received_date">{{ trans('cruds.addLetter.fields.received_date') }}</label>
-                            <input class="form-control date" type="text" name="received_date" id="received_date" value="{{ old('received_date') }}" required>
-                            @if($errors->has('received_date'))
-                                <span class="help-block" role="alert">{{ $errors->first('received_date') }}</span>
-                            @endif
-                            <span class="help-block">{{ trans('cruds.addLetter.fields.received_date_helper') }}</span>
-                        </div>
-
-
-                        <div class="form-group {{ $errors->has('cc_srt') ? 'has-error' : '' }}">
-                            <div>
-                                <input type="hidden" name="cc_srt" value="0">
-                                <input type="checkbox" name="cc_srt" id="cc_srt" value="1" {{ old('cc_srt', 0) == 1 || old('cc_srt') === null ? 'checked' : '' }}>
-                                <label for="cc_srt" style="font-weight: 400">{{ trans('cruds.addLetter.fields.cc_srt') }}</label>
+                        <div class="form-group {{ $errors->has('cc_tos') ? 'has-error' : '' }}">
+                            <label for="cc_tos">{{ trans('cruds.addLetter.fields.cc_to') }}</label>
+                            <div style="padding-bottom: 4px">
+                                <span class="btn btn-info btn-xs select-all" style="border-radius: 0">{{ trans('global.select_all') }}</span>
+                                <span class="btn btn-info btn-xs deselect-all" style="border-radius: 0">{{ trans('global.deselect_all') }}</span>
                             </div>
-                            @if($errors->has('cc_srt'))
-                                <span class="help-block" role="alert">{{ $errors->first('cc_srt') }}</span>
+                            <select class="form-control select2" name="cc_tos[]" id="cc_tos" multiple>
+                                @foreach($cc_tos as $id => $cc_to)
+                                    <option value="{{ $id }}" {{ in_array($id, old('cc_tos', [])) ? 'selected' : '' }}>{{ $cc_to }}</option>
+                                @endforeach
+                            </select>
+                            @if($errors->has('cc_tos'))
+                                <span class="help-block" role="alert">{{ $errors->first('cc_tos') }}</span>
                             @endif
-                            <span class="help-block">{{ trans('cruds.addLetter.fields.cc_srt_helper') }}</span>
+                            <span class="help-block">{{ trans('cruds.addLetter.fields.cc_to_helper') }}</span>
                         </div>
-                        <div class="form-group {{ $errors->has('cc_pmc') ? 'has-error' : '' }}">
-                            <div>
-                                <input type="hidden" name="cc_pmc" value="0">
-                                <input type="checkbox" name="cc_pmc" id="cc_pmc" value="1" {{ old('cc_pmc', 0) == 1 || old('cc_pmc') === null ? 'checked' : '' }}>
-                                <label for="cc_pmc" style="font-weight: 400">{{ trans('cruds.addLetter.fields.cc_pmc') }}</label>
-                            </div>
-                            @if($errors->has('cc_pmc'))
-                                <span class="help-block" role="alert">{{ $errors->first('cc_pmc') }}</span>
-                            @endif
-                            <span class="help-block">{{ trans('cruds.addLetter.fields.cc_pmc_helper') }}</span>
-                        </div>
-                        <div class="form-group {{ $errors->has('cc_csc') ? 'has-error' : '' }}">
-                            <div>
-                                <input type="hidden" name="cc_csc" value="0">
-                                <input type="checkbox" name="cc_csc" id="cc_csc" value="1" {{ old('cc_csc', 0) == 1 || old('cc_csc') === null ? 'checked' : '' }}>
-                                <label for="cc_csc" style="font-weight: 400">{{ trans('cruds.addLetter.fields.cc_csc') }}</label>
-                            </div>
-                            @if($errors->has('cc_csc'))
-                                <span class="help-block" role="alert">{{ $errors->first('cc_csc') }}</span>
-                            @endif
-                            <span class="help-block">{{ trans('cruds.addLetter.fields.cc_csc_helper') }}</span>
-                        </div>
-                        <div class="form-group {{ $errors->has('cc_cec') ? 'has-error' : '' }}">
-                            <div>
-                                <input type="hidden" name="cc_cec" value="0">
-                                <input type="checkbox" name="cc_cec" id="cc_cec" value="1" {{ old('cc_cec', 0) == 1 || old('cc_cec') === null ? 'checked' : '' }}>
-                                <label for="cc_cec" style="font-weight: 400">{{ trans('cruds.addLetter.fields.cc_cec') }}</label>
-                            </div>
-                            @if($errors->has('cc_cec'))
-                                <span class="help-block" role="alert">{{ $errors->first('cc_cec') }}</span>
-                            @endif
-                            <span class="help-block">{{ trans('cruds.addLetter.fields.cc_cec_helper') }}</span>
-                        </div>
-
                         <div class="form-group {{ $errors->has('construction_contract') ? 'has-error' : '' }}">
-                            <label for="construction_contract_id">{{ trans('cruds.addLetter.fields.construction_contract') }}</label>
-                            <select class="form-control select2" name="construction_contract_id" id="construction_contract_id">
+                            <label class="required" for="construction_contract_id">{{ trans('cruds.addLetter.fields.construction_contract') }}</label>
+                            <select class="form-control select2" name="construction_contract_id" id="construction_contract_id" required>
                                 @foreach($construction_contracts as $id => $construction_contract)
                                     <option value="{{ $id }}" {{ old('construction_contract_id') == $id ? 'selected' : '' }}>{{ $construction_contract }}</option>
                                 @endforeach

@@ -71,6 +71,18 @@
                             @endif
                             <span class="help-block">{{ trans('cruds.srtInputDocument.fields.refer_to_helper') }}</span>
                         </div>
+                        <div class="form-group {{ $errors->has('from_organization') ? 'has-error' : '' }}">
+                            <label for="from_organization_id">{{ trans('cruds.srtInputDocument.fields.from_organization') }}</label>
+                            <select class="form-control select2" name="from_organization_id" id="from_organization_id">
+                                @foreach($from_organizations as $id => $from_organization)
+                                    <option value="{{ $id }}" {{ old('from_organization_id') == $id ? 'selected' : '' }}>{{ $from_organization }}</option>
+                                @endforeach
+                            </select>
+                            @if($errors->has('from_organization'))
+                                <span class="help-block" role="alert">{{ $errors->first('from_organization') }}</span>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.srtInputDocument.fields.from_organization_helper') }}</span>
+                        </div>
                         <div class="form-group {{ $errors->has('from') ? 'has-error' : '' }}">
                             <label for="from_id">{{ trans('cruds.srtInputDocument.fields.from') }}</label>
                             <select class="form-control select2" name="from_id" id="from_id">

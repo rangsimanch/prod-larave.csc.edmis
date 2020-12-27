@@ -123,36 +123,9 @@ Route::group(['prefix' => 'v1', 'as' => 'api.', 'namespace' => 'Api\V1\Admin', '
     Route::post('records-of-visitors/media', 'RecordsOfVisitorsApiController@storeMedia')->name('records-of-visitors.storeMedia');
     Route::apiResource('records-of-visitors', 'RecordsOfVisitorsApiController');
 
-    // Letter Types
-    Route::apiResource('letter-types', 'LetterTypeApiController');
-
     // Add Letters
     Route::post('add-letters/media', 'AddLetterApiController@storeMedia')->name('add-letters.storeMedia');
     Route::apiResource('add-letters', 'AddLetterApiController');
-
-    // Letter Incoming Srts
-    Route::apiResource('letter-incoming-srts', 'LetterIncomingSrtApiController');
-
-    // Letter Incoming Pmcs
-    Route::apiResource('letter-incoming-pmcs', 'LetterIncomingPmcApiController');
-
-    // Letter Incoming Cecs
-    Route::apiResource('letter-incoming-cecs', 'LetterIncomingCecApiController');
-
-    // Letter Incoming Cscs
-    Route::apiResource('letter-incoming-cscs', 'LetterIncomingCscApiController');
-
-    // Letter Outgoing Srts
-    Route::apiResource('letter-outgoing-srts', 'LetterOutgoingSrtApiController');
-
-    // Letter Outgoing Pmcs
-    Route::apiResource('letter-outgoing-pmcs', 'LetterOutgoingPmcApiController');
-
-    // Letter Outgoing Cecs
-    Route::apiResource('letter-outgoing-cecs', 'LetterOutgoingCecApiController');
-
-    // Letter Outgoing Cscs
-    Route::apiResource('letter-outgoing-cscs', 'LetterOutgoingCscApiController');
 
     // Check Sheets
     Route::post('check-sheets/media', 'CheckSheetApiController@storeMedia')->name('check-sheets.storeMedia');
@@ -255,4 +228,7 @@ Route::group(['prefix' => 'v1', 'as' => 'api.', 'namespace' => 'Api\V1\Admin', '
       // Srt External Documents
     Route::post('srt-external-documents/media', 'SrtExternalDocumentApiController@storeMedia')->name('srt-external-documents.storeMedia');
     Route::apiResource('srt-external-documents', 'SrtExternalDocumentApiController');
+
+     // Organizations
+     Route::apiResource('organizations', 'OrganizationApiController');
 });

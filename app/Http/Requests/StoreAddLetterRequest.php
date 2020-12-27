@@ -5,37 +5,58 @@ namespace App\Http\Requests;
 use App\AddLetter;
 use Gate;
 use Illuminate\Foundation\Http\FormRequest;
-use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Http\Response;
 
 class StoreAddLetterRequest extends FormRequest
 {
     public function authorize()
     {
-        abort_if(Gate::denies('add_letter_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
-        return true;
+        return Gate::allows('add_letter_create');
     }
 
     public function rules()
     {
         return [
-            'sender_id'       => [
+            'letter_type'              => [
+                'required',
+            ],
+            'title'                    => [
+                'string',
+                'required',
+            ],
+            'letter_no'                => [
+                'string',
+                'required',
+            ],
+            'speed_class'              => [
+                'required',
+            ],
+            'objective'                => [
+                'required',
+            ],
+            'sender_id'                => [
                 'required',
                 'integer',
             ],
-            'sent_date'       => [
+            'sent_date'                => [
                 'required',
                 'date_format:' . config('panel.date_format'),
             ],
-            'receiver_id'     => [
+            'receiver_id'              => [
                 'required',
                 'integer',
             ],
-            'received_date'   => [
-                'required',
-                'date_format:' . config('panel.date_format'),
+            'cc_tos.*'                 => [
+                'integer',
             ],
-            'letter_upload.*' => [
+            'cc_tos'                   => [
+                'array',
+            ],
+            'construction_contract_id' => [
+                'required',
+                'integer',
+            ],
+            'letter_upload.*'          => [
                 'required',
             ],
         ];

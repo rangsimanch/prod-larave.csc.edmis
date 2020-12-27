@@ -20,12 +20,13 @@ class AddLetterApiController extends Controller
     {
         abort_if(Gate::denies('add_letter_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new AddLetterResource(AddLetter::with(['letter_type', 'sender', 'receiver', 'construction_contract', 'team'])->get());
+        return new AddLetterResource(AddLetter::with(['sender', 'receiver', 'cc_tos', 'construction_contract', 'create_by', 'receive_by', 'team'])->get());
     }
 
     public function store(StoreAddLetterRequest $request)
     {
         $addLetter = AddLetter::create($request->all());
+        $addLetter->cc_tos()->sync($request->input('cc_tos', []));
 
         if ($request->input('letter_upload', false)) {
             $addLetter->addMedia(storage_path('tmp/uploads/' . $request->input('letter_upload')))->toMediaCollection('letter_upload');
@@ -40,15 +41,20 @@ class AddLetterApiController extends Controller
     {
         abort_if(Gate::denies('add_letter_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new AddLetterResource($addLetter->load(['letter_type', 'sender', 'receiver', 'construction_contract', 'team']));
+        return new AddLetterResource($addLetter->load(['sender', 'receiver', 'cc_tos', 'construction_contract', 'create_by', 'receive_by', 'team']));
     }
 
     public function update(UpdateAddLetterRequest $request, AddLetter $addLetter)
     {
         $addLetter->update($request->all());
+        $addLetter->cc_tos()->sync($request->input('cc_tos', []));
 
         if ($request->input('letter_upload', false)) {
             if (!$addLetter->letter_upload || $request->input('letter_upload') !== $addLetter->letter_upload->file_name) {
+                if ($addLetter->letter_upload) {
+                    $addLetter->letter_upload->delete();
+                }
+
                 $addLetter->addMedia(storage_path('tmp/uploads/' . $request->input('letter_upload')))->toMediaCollection('letter_upload');
             }
         } elseif ($addLetter->letter_upload) {

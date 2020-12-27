@@ -408,23 +408,25 @@
                                     <span class="pull-right-container"><i class="fa fa-fw fa-angle-left pull-right"></i></span>
                                 </a>
                                 <ul class="treeview-menu">
-                                    @can('letter_incoming_srt_access')
-                                        <li class="{{ request()->is('admin/letter-incoming-srts') || request()->is('admin/letter-incoming-srts/*') ? 'active' : '' }}">
-                                            <a href="{{ route("admin.letter-incoming-srts.index") }}">
+                                    @can('srt_inbox_access')
+                                        <li class="{{ request()->is("admin/srt-inboxes") || request()->is("admin/srt-inboxes/*") ? "active" : "" }}">
+                                            <a href="{{ route("admin.srt-inboxes.index") }}">
                                                 <i class="fa-fw far fa-envelope">
 
                                                 </i>
-                                                <span>{{ trans('cruds.letterIncomingSrt.title') }}</span>
+                                                <span>{{ trans('cruds.srtInbox.title') }}</span>
+
                                             </a>
                                         </li>
                                     @endcan
-                                    @can('letter_outgoing_srt_access')
-                                        <li class="{{ request()->is('admin/letter-outgoing-srts') || request()->is('admin/letter-outgoing-srts/*') ? 'active' : '' }}">
-                                            <a href="{{ route("admin.letter-outgoing-srts.index") }}">
-                                                <i class="fa-fw far fa-envelope-open">
+                                    @can('srt_sent_access')
+                                        <li class="{{ request()->is("admin/srt-sents") || request()->is("admin/srt-sents/*") ? "active" : "" }}">
+                                            <a href="{{ route("admin.srt-sents.index") }}">
+                                                <i class="fa-fw far fa-share-square">
 
                                                 </i>
-                                                <span>{{ trans('cruds.letterOutgoingSrt.title') }}</span>
+                                                <span>{{ trans('cruds.srtSent.title') }}</span>
+
                                             </a>
                                         </li>
                                     @endcan
@@ -441,56 +443,25 @@
                                     <span class="pull-right-container"><i class="fa fa-fw fa-angle-left pull-right"></i></span>
                                 </a>
                                 <ul class="treeview-menu">
-                                    @can('letter_incoming_pmc_access')
-                                        <li class="{{ request()->is('admin/letter-incoming-pmcs') || request()->is('admin/letter-incoming-pmcs/*') ? 'active' : '' }}">
-                                            <a href="{{ route("admin.letter-incoming-pmcs.index") }}">
+                                    @can('pmc_inbox_access')
+                                        <li class="{{ request()->is("admin/pmc-inboxes") || request()->is("admin/pmc-inboxes/*") ? "active" : "" }}">
+                                            <a href="{{ route("admin.pmc-inboxes.index") }}">
                                                 <i class="fa-fw far fa-envelope">
 
                                                 </i>
-                                                <span>{{ trans('cruds.letterIncomingPmc.title') }}</span>
+                                                <span>{{ trans('cruds.pmcInbox.title') }}</span>
+
                                             </a>
                                         </li>
                                     @endcan
-                                    @can('letter_outgoing_pmc_access')
-                                        <li class="{{ request()->is('admin/letter-outgoing-pmcs') || request()->is('admin/letter-outgoing-pmcs/*') ? 'active' : '' }}">
-                                            <a href="{{ route("admin.letter-outgoing-pmcs.index") }}">
-                                                <i class="fa-fw far fa-envelope-open">
+                                    @can('pmc_sent_access')
+                                        <li class="{{ request()->is("admin/pmc-sents") || request()->is("admin/pmc-sents/*") ? "active" : "" }}">
+                                            <a href="{{ route("admin.pmc-sents.index") }}">
+                                                <i class="fa-fw far fa-share-square">
 
                                                 </i>
-                                                <span>{{ trans('cruds.letterOutgoingPmc.title') }}</span>
-                                            </a>
-                                        </li>
-                                    @endcan
-                                </ul>
-                            </li>
-                        @endcan
-                        @can('letter_cec_access')
-                            <li class="treeview">
-                                <a href="#">
-                                    <i class="fa-fw fas fa-envelope">
+                                                <span>{{ trans('cruds.pmcSent.title') }}</span>
 
-                                    </i>
-                                    <span>{{ trans('cruds.letterCec.title') }}</span>
-                                    <span class="pull-right-container"><i class="fa fa-fw fa-angle-left pull-right"></i></span>
-                                </a>
-                                <ul class="treeview-menu">
-                                    @can('letter_incoming_cec_access')
-                                        <li class="{{ request()->is('admin/letter-incoming-cecs') || request()->is('admin/letter-incoming-cecs/*') ? 'active' : '' }}">
-                                            <a href="{{ route("admin.letter-incoming-cecs.index") }}">
-                                                <i class="fa-fw far fa-envelope">
-
-                                                </i>
-                                                <span>{{ trans('cruds.letterIncomingCec.title') }}</span>
-                                            </a>
-                                        </li>
-                                    @endcan
-                                    @can('letter_outgoing_cec_access')
-                                        <li class="{{ request()->is('admin/letter-outgoing-cecs') || request()->is('admin/letter-outgoing-cecs/*') ? 'active' : '' }}">
-                                            <a href="{{ route("admin.letter-outgoing-cecs.index") }}">
-                                                <i class="fa-fw far fa-envelope-open">
-
-                                                </i>
-                                                <span>{{ trans('cruds.letterOutgoingCec.title') }}</span>
                                             </a>
                                         </li>
                                     @endcan
@@ -507,37 +478,64 @@
                                     <span class="pull-right-container"><i class="fa fa-fw fa-angle-left pull-right"></i></span>
                                 </a>
                                 <ul class="treeview-menu">
-                                    @can('letter_incoming_csc_access')
-                                        <li class="{{ request()->is('admin/letter-incoming-cscs') || request()->is('admin/letter-incoming-cscs/*') ? 'active' : '' }}">
-                                            <a href="{{ route("admin.letter-incoming-cscs.index") }}">
+                                    @can('csc_inbox_access')
+                                        <li class="{{ request()->is("admin/csc-inboxes") || request()->is("admin/csc-inboxes/*") ? "active" : "" }}">
+                                            <a href="{{ route("admin.csc-inboxes.index") }}">
                                                 <i class="fa-fw far fa-envelope">
 
                                                 </i>
-                                                <span>{{ trans('cruds.letterIncomingCsc.title') }}</span>
+                                                <span>{{ trans('cruds.cscInbox.title') }}</span>
+
                                             </a>
                                         </li>
                                     @endcan
-                                    @can('letter_outgoing_csc_access')
-                                        <li class="{{ request()->is('admin/letter-outgoing-cscs') || request()->is('admin/letter-outgoing-cscs/*') ? 'active' : '' }}">
-                                            <a href="{{ route("admin.letter-outgoing-cscs.index") }}">
-                                                <i class="fa-fw far fa-envelope-open">
+                                    @can('csc_sent_access')
+                                        <li class="{{ request()->is("admin/csc-sents") || request()->is("admin/csc-sents/*") ? "active" : "" }}">
+                                            <a href="{{ route("admin.csc-sents.index") }}">
+                                                <i class="fa-fw far fa-share-square">
 
                                                 </i>
-                                                <span>{{ trans('cruds.letterOutgoingCsc.title') }}</span>
+                                                <span>{{ trans('cruds.cscSent.title') }}</span>
+
                                             </a>
                                         </li>
                                     @endcan
                                 </ul>
                             </li>
                         @endcan
-                        @can('letter_type_access')
-                            <li class="{{ request()->is('admin/letter-types') || request()->is('admin/letter-types/*') ? 'active' : '' }}">
-                                <a href="{{ route("admin.letter-types.index") }}">
-                                    <i class="fa-fw fas fa-envelope-square">
+                        @can('letter_ccsp_access')
+                            <li class="treeview">
+                                <a href="#">
+                                    <i class="fa-fw fas fa-envelope">
 
                                     </i>
-                                    <span>{{ trans('cruds.letterType.title') }}</span>
+                                    <span>{{ trans('cruds.letterCcsp.title') }}</span>
+                                    <span class="pull-right-container"><i class="fa fa-fw fa-angle-left pull-right"></i></span>
                                 </a>
+                                <ul class="treeview-menu">
+                                    @can('ccsp_inbox_access')
+                                        <li class="{{ request()->is("admin/ccsp-inboxes") || request()->is("admin/ccsp-inboxes/*") ? "active" : "" }}">
+                                            <a href="{{ route("admin.ccsp-inboxes.index") }}">
+                                                <i class="fa-fw far fa-envelope">
+
+                                                </i>
+                                                <span>{{ trans('cruds.ccspInbox.title') }}</span>
+
+                                            </a>
+                                        </li>
+                                    @endcan
+                                    @can('ccsp_sent_access')
+                                        <li class="{{ request()->is("admin/ccsp-sents") || request()->is("admin/ccsp-sents/*") ? "active" : "" }}">
+                                            <a href="{{ route("admin.ccsp-sents.index") }}">
+                                                <i class="fa-fw far fa-share-square">
+
+                                                </i>
+                                                <span>{{ trans('cruds.ccspSent.title') }}</span>
+
+                                            </a>
+                                        </li>
+                                    @endcan
+                                </ul>
                             </li>
                         @endcan
                     </ul>
@@ -880,6 +878,17 @@
 
                                     </i>
                                     <span>{{ trans('cruds.user.title') }}</span>
+                                </a>
+                            </li>
+                        @endcan
+                        @can('organization_access')
+                            <li class="{{ request()->is("admin/organizations") || request()->is("admin/organizations/*") ? "active" : "" }}">
+                                <a href="{{ route("admin.organizations.index") }}">
+                                    <i class="fa-fw fas fa-sitemap">
+
+                                    </i>
+                                    <span>{{ trans('cruds.organization.title') }}</span>
+
                                 </a>
                             </li>
                         @endcan

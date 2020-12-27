@@ -29,33 +29,66 @@ class AddLetter extends Model implements HasMedia
         'deleted_at',
     ];
 
+    const SPEED_CLASS_SELECT = [
+        'Normal'      => 'ปกติ',
+        'Urgent'      => 'ด่วน',
+        'Very Urgent' => 'ด่วนมาก',
+        'Important'   => 'ด่วนที่สุด',
+    ];
+
+    const LETTER_TYPE_SELECT = [
+        'Complaint' => 'หนังสือร้องเรียน',
+        'VO'        => 'หนังสือเบิกเงิน (VO)',
+        'PS'        => 'หนังสือเบิกเงินสำรองจ่าย (PS)',
+        'General'   => 'หนังสือทั่วไป',
+    ];
+
     protected $fillable = [
+        'letter_type',
         'title',
-        'letter_type_id',
         'letter_no',
+        'speed_class',
+        'objective',
         'sender_id',
         'sent_date',
         'receiver_id',
         'received_date',
-        'cc_srt',
-        'cc_pmc',
-        'cc_csc',
-        'cc_cec',
         'construction_contract_id',
         'created_at',
+        'letter_iso_no',
+        'create_by_id',
+        'receive_by_id',
+        'mask_as_received',
+        'note',
         'updated_at',
         'deleted_at',
         'team_id',
     ];
 
+    const OBJECTIVE_SELECT = [
+        'เพื่อดำเนินการ'                           => 'เพื่อดำเนินการ',
+        'เพื่อพิจารณา'                             => 'เพื่อพิจารณา',
+        'เพื่อทราบ'                                => 'เพื่อทราบ',
+        'เพื่อโปรดทราบ'                            => 'เพื่อโปรดทราบ',
+        'เพื่อพิจารณาดำเนินการต่อไป'               => 'เพื่อพิจารณาดำเนินการต่อไป',
+        'เพื่อพิจารณาดำเนินการในส่วนที่เกี่ยวข้อง' => 'เพื่อพิจารณาดำเนินการในส่วนที่เกี่ยวข้อง',
+        'เพื่อตรวจสอบและพิจารณา'                   => 'เพื่อตรวจสอบและพิจารณา',
+        'เพื่อพิจารณาและขอทราบ'                    => 'เพื่อพิจารณาและขอทราบ',
+        'เพื่อพิจารณาให้เห็นชอบ'                   => 'เพื่อพิจารณาให้เห็นชอบ',
+        'เพื่อลงนาม'                               => 'เพื่อลงนาม',
+        'เพื่อพิจารณาลงนาม'                        => 'เพื่อพิจารณาลงนาม',
+        'เพื่อวินิจฉัยและตีความ'                   => 'เพื่อวินิจฉัยและตีความ',
+        'เพื่อพิจารณาและชี้แนะแนวทาง'              => 'เพื่อพิจารณาและชี้แนะแนวทาง',
+        'เพื่อทราบและถือปฎิบัติ'                   => 'เพื่อทราบและถือปฎิบัติ',
+        'เพื่อทราบและพิจารณา'                      => 'เพื่อทราบและพิจารณา',
+        'เพื่อพิจารณาอนุมัติ'                      => 'เพื่อพิจารณาอนุมัติ',
+        'เพื่อโปรดพิจารณา'                         => 'เพื่อโปรดพิจารณา',
+    ];
+
     public function registerMediaConversions(Media $media = null)
     {
-        $this->addMediaConversion('thumb')->width(50)->height(50);
-    }
-
-    public function letter_type()
-    {
-        return $this->belongsTo(LetterType::class, 'letter_type_id');
+        $this->addMediaConversion('thumb')->fit('crop', 50, 50);
+        $this->addMediaConversion('preview')->fit('crop', 120, 120);
     }
 
     public function sender()
@@ -88,6 +121,11 @@ class AddLetter extends Model implements HasMedia
         $this->attributes['received_date'] = $value ? Carbon::createFromFormat(config('panel.date_format'), $value)->format('Y-m-d') : null;
     }
 
+    public function cc_tos()
+    {
+        return $this->belongsToMany(Team::class);
+    }
+
     public function construction_contract()
     {
         return $this->belongsTo(ConstructionContract::class, 'construction_contract_id');
@@ -96,6 +134,16 @@ class AddLetter extends Model implements HasMedia
     public function getLetterUploadAttribute()
     {
         return $this->getMedia('letter_upload');
+    }
+
+    public function create_by()
+    {
+        return $this->belongsTo(User::class, 'create_by_id');
+    }
+
+    public function receive_by()
+    {
+        return $this->belongsTo(User::class, 'receive_by_id');
     }
 
     public function team()

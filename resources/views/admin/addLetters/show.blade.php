@@ -19,6 +19,14 @@
                             <tbody>
                                 <tr>
                                     <th>
+                                        {{ trans('cruds.addLetter.fields.letter_type') }}
+                                    </th>
+                                    <td>
+                                        {{ App\AddLetter::LETTER_TYPE_SELECT[$addLetter->letter_type] ?? '' }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
                                         {{ trans('cruds.addLetter.fields.title') }}
                                     </th>
                                     <td>
@@ -27,18 +35,26 @@
                                 </tr>
                                 <tr>
                                     <th>
-                                        {{ trans('cruds.addLetter.fields.letter_type') }}
-                                    </th>
-                                    <td>
-                                        {{ $addLetter->letter_type->type_title ?? '' }}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th>
                                         {{ trans('cruds.addLetter.fields.letter_no') }}
                                     </th>
                                     <td>
                                         {{ $addLetter->letter_no }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        {{ trans('cruds.addLetter.fields.speed_class') }}
+                                    </th>
+                                    <td>
+                                        {{ App\AddLetter::SPEED_CLASS_SELECT[$addLetter->speed_class] ?? '' }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        {{ trans('cruds.addLetter.fields.objective') }}
+                                    </th>
+                                    <td>
+                                        {{ App\AddLetter::OBJECTIVE_SELECT[$addLetter->objective] ?? '' }}
                                     </td>
                                 </tr>
                                 <tr>
@@ -75,34 +91,12 @@
                                 </tr>
                                 <tr>
                                     <th>
-                                        {{ trans('cruds.addLetter.fields.cc_srt') }}
+                                        {{ trans('cruds.addLetter.fields.cc_to') }}
                                     </th>
                                     <td>
-                                        <input type="checkbox" disabled="disabled" {{ $addLetter->cc_srt ? 'checked' : '' }}>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th>
-                                        {{ trans('cruds.addLetter.fields.cc_pmc') }}
-                                    </th>
-                                    <td>
-                                        <input type="checkbox" disabled="disabled" {{ $addLetter->cc_pmc ? 'checked' : '' }}>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th>
-                                        {{ trans('cruds.addLetter.fields.cc_csc') }}
-                                    </th>
-                                    <td>
-                                        <input type="checkbox" disabled="disabled" {{ $addLetter->cc_csc ? 'checked' : '' }}>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th>
-                                        {{ trans('cruds.addLetter.fields.cc_cec') }}
-                                    </th>
-                                    <td>
-                                        <input type="checkbox" disabled="disabled" {{ $addLetter->cc_cec ? 'checked' : '' }}>
+                                        @foreach($addLetter->cc_tos as $key => $cc_to)
+                                            <span class="label label-info">{{ $cc_to->code }}</span>
+                                        @endforeach
                                     </td>
                                 </tr>
                                 <tr>
@@ -123,6 +117,46 @@
                                                 {{ trans('global.view_file') }}
                                             </a>
                                         @endforeach
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        {{ trans('cruds.addLetter.fields.letter_iso_no') }}
+                                    </th>
+                                    <td>
+                                        {{ $addLetter->letter_iso_no }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        {{ trans('cruds.addLetter.fields.create_by') }}
+                                    </th>
+                                    <td>
+                                        {{ $addLetter->create_by->name ?? '' }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        {{ trans('cruds.addLetter.fields.receive_by') }}
+                                    </th>
+                                    <td>
+                                        {{ $addLetter->receive_by->name ?? '' }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        {{ trans('cruds.addLetter.fields.mask_as_received') }}
+                                    </th>
+                                    <td>
+                                        <input type="checkbox" disabled="disabled" {{ $addLetter->mask_as_received ? 'checked' : '' }}>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        {{ trans('cruds.addLetter.fields.note') }}
+                                    </th>
+                                    <td>
+                                        {{ $addLetter->note }}
                                     </td>
                                 </tr>
                             </tbody>

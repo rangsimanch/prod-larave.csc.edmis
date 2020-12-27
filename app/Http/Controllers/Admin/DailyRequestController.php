@@ -15,6 +15,9 @@ use Spatie\MediaLibrary\Models\Media;
 use Symfony\Component\HttpFoundation\Response;
 use Yajra\DataTables\Facades\DataTables;
 
+use Illuminate\Support\Facades\Auth;
+
+
 class DailyRequestController extends Controller
 {
     use MediaUploadingTrait;
@@ -81,7 +84,14 @@ class DailyRequestController extends Controller
     {
         abort_if(Gate::denies('daily_request_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $constuction_contracts = ConstructionContract::all()->pluck('code', 'id')->prepend(trans('global.pleaseSelect'), '');
+        //Contract Check
+            //Check is Admin
+            if(Auth::id() != 1){
+                $construction_contracts = ConstructionContract::where('id',session('construction_contract_id'))->pluck('code', 'id')->prepend(trans('global.pleaseSelect'), '');
+            }
+            else{
+                $construction_contracts = ConstructionContract::all()->pluck('code', 'id')->prepend(trans('global.pleaseSelect'), '');
+            }
 
         return view('admin.dailyRequests.create', compact('constuction_contracts'));
     }
@@ -106,7 +116,14 @@ class DailyRequestController extends Controller
     {
         abort_if(Gate::denies('daily_request_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $constuction_contracts = ConstructionContract::all()->pluck('code', 'id')->prepend(trans('global.pleaseSelect'), '');
+        //Contract Check
+            //Check is Admin
+            if(Auth::id() != 1){
+                $construction_contracts = ConstructionContract::where('id',session('construction_contract_id'))->pluck('code', 'id')->prepend(trans('global.pleaseSelect'), '');
+            }
+            else{
+                $construction_contracts = ConstructionContract::all()->pluck('code', 'id')->prepend(trans('global.pleaseSelect'), '');
+            }
 
         $dailyRequest->load('receive_by', 'constuction_contract');
 

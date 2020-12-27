@@ -391,10 +391,12 @@
     ],
     order: [[ 2, 'desc' ]],
     pageLength: 10,
+    sPaginationType: "listbox",
     fixedColumns:   {
             leftColumns: 1,
             rightColumns: 1
         }
+        
   };
   $('.datatable-Rfa').DataTable(dtOverrideGlobals);
     

@@ -5,28 +5,33 @@ namespace App\Http\Controllers\Admin;
 use App\AddLetter;
 use App\ConstructionContract;
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Traits\CsvImportTrait;
 use App\Http\Controllers\Traits\MediaUploadingTrait;
 use App\Http\Requests\MassDestroyAddLetterRequest;
 use App\Http\Requests\StoreAddLetterRequest;
 use App\Http\Requests\UpdateAddLetterRequest;
-use App\LetterType;
 use App\Team;
+use App\User;
 use Gate;
 use Illuminate\Http\Request;
 use Spatie\MediaLibrary\Models\Media;
 use Symfony\Component\HttpFoundation\Response;
 use Yajra\DataTables\Facades\DataTables;
 
+use DateTime;
+use Illuminate\Support\Facades\Auth;
+
+
 class AddLetterController extends Controller
 {
-    use MediaUploadingTrait;
+    use MediaUploadingTrait, CsvImportTrait;
 
     public function index(Request $request)
     {
         abort_if(Gate::denies('add_letter_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
-            $query = AddLetter::with(['letter_type', 'sender', 'receiver', 'construction_contract', 'team'])->select(sprintf('%s.*', (new AddLetter)->table));
+            $query = AddLetter::with(['sender', 'receiver', 'cc_tos', 'construction_contract', 'create_by', 'receive_by', 'team'])->select(sprintf('%s.*', (new AddLetter)->table));
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
@@ -47,35 +52,28 @@ class AddLetterController extends Controller
                 ));
             });
 
+            $table->editColumn('letter_type', function ($row) {
+                return $row->letter_type ? AddLetter::LETTER_TYPE_SELECT[$row->letter_type] : '';
+            });
             $table->editColumn('title', function ($row) {
                 return $row->title ? $row->title : "";
             });
-            $table->addColumn('letter_type_type_title', function ($row) {
-                return $row->letter_type ? $row->letter_type->type_title : '';
-            });
-
             $table->editColumn('letter_no', function ($row) {
                 return $row->letter_no ? $row->letter_no : "";
-            });
-            $table->addColumn('sender_code', function ($row) {
-                return $row->sender ? $row->sender->code : '';
             });
 
             $table->addColumn('receiver_code', function ($row) {
                 return $row->receiver ? $row->receiver->code : '';
             });
 
-            $table->editColumn('cc_srt', function ($row) {
-                return '<input type="checkbox" disabled ' . ($row->cc_srt ? 'checked' : null) . '>';
-            });
-            $table->editColumn('cc_pmc', function ($row) {
-                return '<input type="checkbox" disabled ' . ($row->cc_pmc ? 'checked' : null) . '>';
-            });
-            $table->editColumn('cc_csc', function ($row) {
-                return '<input type="checkbox" disabled ' . ($row->cc_csc ? 'checked' : null) . '>';
-            });
-            $table->editColumn('cc_cec', function ($row) {
-                return '<input type="checkbox" disabled ' . ($row->cc_cec ? 'checked' : null) . '>';
+            $table->editColumn('cc_to', function ($row) {
+                $labels = [];
+
+                foreach ($row->cc_tos as $cc_to) {
+                    $labels[] = sprintf('<span class="label label-info label-many">%s</span>', $cc_to->code);
+                }
+
+                return implode(' ', $labels);
             });
             $table->addColumn('construction_contract_code', function ($row) {
                 return $row->construction_contract ? $row->construction_contract->code : '';
@@ -95,38 +93,54 @@ class AddLetterController extends Controller
                 return implode(', ', $links);
             });
 
-            $table->rawColumns(['actions', 'placeholder', 'letter_type', 'sender', 'receiver', 'cc_srt', 'cc_pmc', 'cc_csc', 'cc_cec', 'construction_contract', 'letter_upload']);
+            $table->rawColumns(['actions', 'placeholder', 'receiver', 'cc_to', 'construction_contract', 'letter_upload']);
 
             return $table->make(true);
         }
 
-        $letter_types           = LetterType::get()->pluck('type_title')->toArray();
-        $teams                  = Team::get()->pluck('code')->toArray();
-        $teams                  = Team::get()->pluck('code')->toArray();
-        $construction_contracts = ConstructionContract::get()->pluck('code')->toArray();
-        $teams                  = Team::get()->pluck('code')->toArray();
+        $teams                  = Team::get();
+        $teams                  = Team::get();
+        $teams                  = Team::get();
+        $construction_contracts = ConstructionContract::get();
+        $users                  = User::get();
+        $users                  = User::get();
+        $teams                  = Team::get();
 
-        return view('admin.addLetters.index', compact('letter_types', 'teams', 'teams', 'construction_contracts', 'teams'));
+        session(['previous-url' => request()->url()]);
+        return view('admin.addLetters.index', compact('teams', 'teams', 'teams', 'construction_contracts', 'users', 'users', 'teams'));
     }
 
     public function create()
     {
         abort_if(Gate::denies('add_letter_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $letter_types = LetterType::all()->pluck('type_title', 'id')->prepend(trans('global.pleaseSelect'), '');
-
         $senders = Team::all()->pluck('code', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $receivers = Team::all()->pluck('code', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $construction_contracts = ConstructionContract::all()->pluck('code', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $cc_tos = Team::all()->pluck('code', 'id');
 
-        return view('admin.addLetters.create', compact('letter_types', 'senders', 'receivers', 'construction_contracts'));
+        //Contract Check
+            //Check is Admin
+        if(Auth::id() != 1){
+            $construction_contracts = ConstructionContract::where('id',session('construction_contract_id'))->pluck('code', 'id')->prepend(trans('global.pleaseSelect'), '');
+        }
+        else{
+            $construction_contracts = ConstructionContract::all()->pluck('code', 'id')->prepend(trans('global.pleaseSelect'), '');
+        }
+
+        return view('admin.addLetters.create', compact('senders', 'receivers', 'cc_tos', 'construction_contracts'));
     }
 
     public function store(StoreAddLetterRequest $request)
     {
-        $addLetter = AddLetter::create($request->all());
+        $data = $request->all();
+        $data['create_by_id'] = auth()->id();
+        
+        //Add letter ISO Number HERE!
+
+        $addLetter = AddLetter::create($data);
+        $addLetter->cc_tos()->sync($request->input('cc_tos', []));
 
         foreach ($request->input('letter_upload', []) as $file) {
             $addLetter->addMedia(storage_path('tmp/uploads/' . $file))->toMediaCollection('letter_upload');
@@ -136,54 +150,52 @@ class AddLetterController extends Controller
             Media::whereIn('id', $media)->update(['model_id' => $addLetter->id]);
         }
 
-        return redirect()->route('admin.add-letters.index');
+        return redirect(session('previous-url'));
     }
 
     public function edit(AddLetter $addLetter)
     {
         abort_if(Gate::denies('add_letter_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $letter_types = LetterType::all()->pluck('type_title', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $addLetter->load('sender', 'receiver', 'cc_tos', 'construction_contract', 'create_by', 'receive_by', 'team');
 
-        $senders = Team::all()->pluck('code', 'id')->prepend(trans('global.pleaseSelect'), '');
-
-        $receivers = Team::all()->pluck('code', 'id')->prepend(trans('global.pleaseSelect'), '');
-
-        $construction_contracts = ConstructionContract::all()->pluck('code', 'id')->prepend(trans('global.pleaseSelect'), '');
-
-        $addLetter->load('letter_type', 'sender', 'receiver', 'construction_contract', 'team');
-
-        return view('admin.addLetters.edit', compact('letter_types', 'senders', 'receivers', 'construction_contracts', 'addLetter'));
+        return view('admin.addLetters.edit', compact('addLetter'));
     }
 
     public function update(UpdateAddLetterRequest $request, AddLetter $addLetter)
     {
-        $addLetter->update($request->all());
-
-        if (count($addLetter->letter_upload) > 0) {
-            foreach ($addLetter->letter_upload as $media) {
-                if (!in_array($media->file_name, $request->input('letter_upload', []))) {
-                    $media->delete();
-                }
-            }
+        $data = $request->all();
+        if($data['mask_as_received'] == 1){
+            $data['receive_by_id'] = auth()->id();
+            $received_date = new DateTime();
+            $data['received_date'] = $received_date->format("d/m/Y");
         }
+        $addLetter->update($data);
 
-        $media = $addLetter->letter_upload->pluck('file_name')->toArray();
+        // if (count($addLetter->letter_upload) > 0) {
+        //     foreach ($addLetter->letter_upload as $media) {
+        //         if (!in_array($media->file_name, $request->input('letter_upload', []))) {
+        //             $media->delete();
+        //         }
+        //     }
+        // }
 
-        foreach ($request->input('letter_upload', []) as $file) {
-            if (count($media) === 0 || !in_array($file, $media)) {
-                $addLetter->addMedia(storage_path('tmp/uploads/' . $file))->toMediaCollection('letter_upload');
-            }
-        }
+        // $media = $addLetter->letter_upload->pluck('file_name')->toArray();
 
-        return redirect()->route('admin.add-letters.index');
+        // foreach ($request->input('letter_upload', []) as $file) {
+        //     if (count($media) === 0 || !in_array($file, $media)) {
+        //         $addLetter->addMedia(storage_path('tmp/uploads/' . $file))->toMediaCollection('letter_upload');
+        //     }
+        // }
+
+        return redirect(session('previous-url'));
     }
 
     public function show(AddLetter $addLetter)
     {
         abort_if(Gate::denies('add_letter_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $addLetter->load('letter_type', 'sender', 'receiver', 'construction_contract', 'team');
+        $addLetter->load('sender', 'receiver', 'cc_tos', 'construction_contract', 'create_by', 'receive_by', 'team');
 
         return view('admin.addLetters.show', compact('addLetter'));
     }

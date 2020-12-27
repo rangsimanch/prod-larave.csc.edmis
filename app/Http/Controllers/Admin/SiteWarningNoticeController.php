@@ -17,6 +17,9 @@ use Spatie\MediaLibrary\Models\Media;
 use Symfony\Component\HttpFoundation\Response;
 use Yajra\DataTables\Facades\DataTables;
 
+use Illuminate\Support\Facades\Auth;
+
+
 class SiteWarningNoticeController extends Controller
 {
     use MediaUploadingTrait;
@@ -173,7 +176,14 @@ class SiteWarningNoticeController extends Controller
 
         $to_teams = Team::all()->pluck('code', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $construction_contracts = ConstructionContract::all()->pluck('code', 'id')->prepend(trans('global.pleaseSelect'), '');
+        //Contract Check
+            //Check is Admin
+            if(Auth::id() != 1){
+                $construction_contracts = ConstructionContract::where('id',session('construction_contract_id'))->pluck('code', 'id')->prepend(trans('global.pleaseSelect'), '');
+            }
+            else{
+                $construction_contracts = ConstructionContract::all()->pluck('code', 'id')->prepend(trans('global.pleaseSelect'), '');
+            }
 
         $issue_bies = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
@@ -223,8 +233,15 @@ class SiteWarningNoticeController extends Controller
 
         $to_teams = Team::all()->pluck('code', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $construction_contracts = ConstructionContract::all()->pluck('code', 'id')->prepend(trans('global.pleaseSelect'), '');
-
+        //Contract Check
+            //Check is Admin
+            if(Auth::id() != 1){
+                $construction_contracts = ConstructionContract::where('id',session('construction_contract_id'))->pluck('code', 'id')->prepend(trans('global.pleaseSelect'), '');
+            }
+            else{
+                $construction_contracts = ConstructionContract::all()->pluck('code', 'id')->prepend(trans('global.pleaseSelect'), '');
+            }
+            
         $issue_bies = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $reviewed_bies = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');

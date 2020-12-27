@@ -16,6 +16,9 @@ use Spatie\MediaLibrary\Models\Media;
 use Symfony\Component\HttpFoundation\Response;
 use Yajra\DataTables\Facades\DataTables;
 
+use Illuminate\Support\Facades\Auth;
+
+
 class DailyConstructionActivitiesController extends Controller
 {
     use MediaUploadingTrait;
@@ -171,7 +174,14 @@ class DailyConstructionActivitiesController extends Controller
     {
         abort_if(Gate::denies('daily_construction_activity_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $construction_contracts = ConstructionContract::all()->pluck('code', 'id')->prepend(trans('global.pleaseSelect'), '');
+        //Contract Check
+            //Check is Admin
+            if(Auth::id() != 1){
+                $construction_contracts = ConstructionContract::where('id',session('construction_contract_id'))->pluck('code', 'id')->prepend(trans('global.pleaseSelect'), '');
+            }
+            else{
+                $construction_contracts = ConstructionContract::all()->pluck('code', 'id')->prepend(trans('global.pleaseSelect'), '');
+            }
 
         return view('admin.dailyConstructionActivities.create', compact('construction_contracts'));
     }
@@ -195,8 +205,15 @@ class DailyConstructionActivitiesController extends Controller
     {
         abort_if(Gate::denies('daily_construction_activity_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $construction_contracts = ConstructionContract::all()->pluck('code', 'id')->prepend(trans('global.pleaseSelect'), '');
-
+        //Contract Check
+            //Check is Admin
+            if(Auth::id() != 1){
+                $construction_contracts = ConstructionContract::where('id',session('construction_contract_id'))->pluck('code', 'id')->prepend(trans('global.pleaseSelect'), '');
+            }
+            else{
+                $construction_contracts = ConstructionContract::all()->pluck('code', 'id')->prepend(trans('global.pleaseSelect'), '');
+            }
+            
         $dailyConstructionActivity->load('construction_contract', 'team');
 
         return view('admin.dailyConstructionActivities.edit', compact('construction_contracts', 'dailyConstructionActivity'));

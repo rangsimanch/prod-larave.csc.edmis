@@ -16,6 +16,9 @@ use Spatie\MediaLibrary\Models\Media;
 use Symfony\Component\HttpFoundation\Response;
 use Yajra\DataTables\Facades\DataTables;
 
+use Illuminate\Support\Facades\Auth;
+
+
 class NonConformanceNoticeController extends Controller
 {
     use MediaUploadingTrait;

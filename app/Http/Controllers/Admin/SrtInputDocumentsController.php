@@ -13,6 +13,7 @@ use App\SrtDocumentStatus;
 use App\SrtInputDocument;
 use App\Team;
 use App\User;
+use App\Organization;
 use DateTime;
 use File;
 use Gate;
@@ -33,7 +34,7 @@ class SrtInputDocumentsController extends Controller
         abort_if(Gate::denies('srt_input_document_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
-            $query = SrtInputDocument::with(['docuement_status', 'constuction_contract', 'from', 'tos', 'close_by', 'team'])->select(sprintf('%s.*', (new SrtInputDocument)->table));
+            $query = SrtInputDocument::with(['docuement_status', 'constuction_contract','from_organization', 'from', 'tos', 'close_by', 'team'])->select(sprintf('%s.*', (new SrtInputDocument)->table));
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
@@ -157,12 +158,13 @@ class SrtInputDocumentsController extends Controller
 
         $srt_document_statuses  = SrtDocumentStatus::get();
         $construction_contracts = ConstructionContract::get();
+        $organizations          = Organization::get();
         $users                  = User::get();
         $users                  = User::get();
         $users                  = User::get();
         $teams                  = Team::get();
 
-        return view('admin.srtInputDocuments.index', compact('srt_document_statuses', 'construction_contracts', 'users', 'users', 'users', 'teams'));
+        return view('admin.srtInputDocuments.index', compact('srt_document_statuses', 'construction_contracts', 'organizations', 'users', 'users', 'users', 'teams'));
     }
 
     public function create()
@@ -171,11 +173,13 @@ class SrtInputDocumentsController extends Controller
 
         $constuction_contracts = ConstructionContract::all()->pluck('code', 'id')->prepend(trans('global.pleaseSelect'), '');
 
+        $from_organizations = Organization::all()->pluck('title_th', 'id')->prepend(trans('global.pleaseSelect'), '');
+
         $froms = Team::all()->pluck('code', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $tos = User::all()->where('team_id','1')->pluck('name', 'id');
 
-        return view('admin.srtInputDocuments.create', compact('constuction_contracts', 'froms', 'tos'));
+        return view('admin.srtInputDocuments.create', compact('constuction_contracts', 'from_organizations','froms', 'tos'));
     }
 
     public function store(StoreSrtInputDocumentRequest $request)
@@ -301,13 +305,15 @@ class SrtInputDocumentsController extends Controller
 
         $constuction_contracts = ConstructionContract::all()->pluck('code', 'id')->prepend(trans('global.pleaseSelect'), '');
 
+        $from_organizations = Organization::all()->pluck('title_th', 'id')->prepend(trans('global.pleaseSelect'), '');
+
         $froms = Team::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $tos = User::all()->where('team_id','1')->pluck('name', 'id');
 
-        $srtInputDocument->load('docuement_status', 'constuction_contract', 'from', 'tos', 'close_by', 'team');
+        $srtInputDocument->load('docuement_status', 'constuction_contract', 'from_organization' ,'from', 'tos', 'close_by', 'team');
 
-        return view('admin.srtInputDocuments.edit', compact('constuction_contracts', 'froms', 'tos', 'srtInputDocument'));
+        return view('admin.srtInputDocuments.edit', compact('constuction_contracts', 'from_organization','froms', 'tos', 'srtInputDocument'));
     }
 
     public function update(UpdateSrtInputDocumentRequest $request, SrtInputDocument $srtInputDocument)
@@ -397,7 +403,7 @@ class SrtInputDocumentsController extends Controller
     {
         abort_if(Gate::denies('srt_input_document_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $srtInputDocument->load('docuement_status', 'constuction_contract', 'from', 'tos', 'close_by', 'team');
+        $srtInputDocument->load('docuement_status', 'constuction_contract', 'from_organization','from', 'tos', 'close_by', 'team');
 
         return view('admin.srtInputDocuments.show', compact('srtInputDocument'));
     }
