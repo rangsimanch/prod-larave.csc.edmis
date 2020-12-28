@@ -87,10 +87,10 @@ class DailyRequestController extends Controller
         //Contract Check
             //Check is Admin
             if(Auth::id() != 1){
-                $construction_contracts = ConstructionContract::where('id',session('construction_contract_id'))->pluck('code', 'id')->prepend(trans('global.pleaseSelect'), '');
+                $constuction_contracts = ConstructionContract::where('id',session('construction_contract_id'))->pluck('code', 'id')->prepend(trans('global.pleaseSelect'), '');
             }
             else{
-                $construction_contracts = ConstructionContract::all()->pluck('code', 'id')->prepend(trans('global.pleaseSelect'), '');
+                $constuction_contracts = ConstructionContract::all()->pluck('code', 'id')->prepend(trans('global.pleaseSelect'), '');
             }
 
         return view('admin.dailyRequests.create', compact('constuction_contracts'));
@@ -119,10 +119,10 @@ class DailyRequestController extends Controller
         //Contract Check
             //Check is Admin
             if(Auth::id() != 1){
-                $construction_contracts = ConstructionContract::where('id',session('construction_contract_id'))->pluck('code', 'id')->prepend(trans('global.pleaseSelect'), '');
+                $constuction_contracts = ConstructionContract::where('id',session('construction_contract_id'))->pluck('code', 'id')->prepend(trans('global.pleaseSelect'), '');
             }
             else{
-                $construction_contracts = ConstructionContract::all()->pluck('code', 'id')->prepend(trans('global.pleaseSelect'), '');
+                $constuction_contracts = ConstructionContract::all()->pluck('code', 'id')->prepend(trans('global.pleaseSelect'), '');
             }
 
         $dailyRequest->load('receive_by', 'constuction_contract');
