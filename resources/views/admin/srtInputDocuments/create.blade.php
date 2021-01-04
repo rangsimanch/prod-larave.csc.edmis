@@ -253,6 +253,7 @@ Dropzone.options.fileUploadDropzone = {
               file.previewElement.classList.add('dz-complete')
               $('form').append('<input type="hidden" name="file_upload[]" value="' + file.file_name + '">')
             }
+            
 @endif
     },
      error: function (file, response) {
@@ -271,6 +272,7 @@ Dropzone.options.fileUploadDropzone = {
 
          return _results
      }
+     
 }
 </script>
 @endsection
