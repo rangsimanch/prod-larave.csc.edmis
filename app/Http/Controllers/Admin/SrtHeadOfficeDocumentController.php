@@ -115,22 +115,22 @@ class SrtHeadOfficeDocumentController extends Controller
 
                      $links = [];
 
-                        // // foreach ($row->file_upload as $media) {
-                        // //     $links[] = '<a href="' . $media->getUrl() . '" target="_blank">' . trans('global.downloadFile') . '</a>';
-                        // // }
+                // // foreach ($row->file_upload as $media) {
+                // //     $links[] = '<a href="' . $media->getUrl() . '" target="_blank">' . trans('global.downloadFile') . '</a>';
+                // // }
 
-                    // foreach ($row->refer_documents->file_upload_2 as $media) {
-                    //     $links[] = '<a href="' . $media->getUrl() . '" target="_blank">' . trans('global.downloadFile') . '</a>';
-                    // }
+                    foreach ($row->refer_documents->file_upload_2 as $media) {
+                        $links[] = '<a href="' . $media->getUrl() . '" target="_blank">' . trans('global.downloadFile') . '</a>';
+                    }
 
-                    // return implode(', ', $links);
+                    return implode(', ', $links);
 
 
                 //debug
-                return '';
+                // return '';
             });
 
-            $table->rawColumns(['actions', 'placeholder', 'refer_documents', 'operator', 'refer_documents.file_upload']);
+            $table->rawColumns(['actions', 'placeholder', 'refer_documents', 'operator', 'refer_documents.file_upload', 'file_upload']);
 
             return $table->make(true);
         }
