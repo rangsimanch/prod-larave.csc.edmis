@@ -173,7 +173,7 @@
 { data: 'operator', name: 'operators.name' },
 { data: 'practice_notes', name: 'practice_notes' },
 { data: 'note', name: 'note' },
-{ data: 'file_upload', name: 'file_upload', sortable: false, searchable: false, visible: false },
+// { data: 'file_upload', name: 'file_upload', sortable: false, searchable: false, visible: false },
 { data: 'actions', name: '{{ trans('global.actions') }}' }
     ],
     orderCellsTop: true,

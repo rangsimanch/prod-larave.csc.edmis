@@ -130,7 +130,7 @@ class SrtHeadOfficeDocumentController extends Controller
                 return '';
             });
 
-            $table->rawColumns(['actions', 'placeholder', 'refer_documents', 'operator', 'refer_documents.file_upload', 'file_upload']);
+            $table->rawColumns(['actions', 'placeholder', 'refer_documents', 'operator', 'refer_documents.file_upload']);
 
             return $table->make(true);
         }
