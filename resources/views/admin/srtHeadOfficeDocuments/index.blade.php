@@ -21,7 +21,7 @@
                     {{ trans('cruds.srtHeadOfficeDocument.title_singular') }} {{ trans('global.list') }}
                 </div>
                 <div class="panel-body">
-                    <table class=" table table-bordered table-striped table-hover ajaxTable datatable datatable-SrtHeadOfficeDocument">
+                    <table class=" table nowrap table-bordered table-striped table-hover ajaxTable datatable datatable-SrtHeadOfficeDocument">
                         <thead>
                             <tr>
                                 <th width="10">

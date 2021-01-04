@@ -413,6 +413,7 @@ class SrtInputDocumentsController extends Controller
         abort_if(Gate::denies('srt_input_document_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $srtInputDocument->delete();
+        $srtHeadOfficeDocument = SrtHeadOfficeDocument::where('refer_documents_id',$srtInputDocument->id)->delete();
 
         return back();
     }
