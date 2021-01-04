@@ -56,9 +56,9 @@
                                 <th>
                                     {{ trans('cruds.srtHeadOfficeDocument.fields.note') }}
                                 </th>
-                                <th>
+                                <!-- <th>
                                     {{ trans('cruds.srtHeadOfficeDocument.fields.file_upload') }}
-                                </th>
+                                </th> -->
                                 <th>
                                     &nbsp;
                                 </th>
@@ -104,8 +104,8 @@
                                 <td>
                                     <input class="search" type="text" placeholder="{{ trans('global.search') }}">
                                 </td>
-                                <td>
-                                </td>
+                                <!-- <td>
+                                </td> -->
                                 <td>
                                 </td>
                             </tr>
