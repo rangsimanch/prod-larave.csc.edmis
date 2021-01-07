@@ -21,7 +21,7 @@ class PmcSentController extends Controller
         if ($request->ajax()) {
             $query = AddLetter::with(['sender', 'receiver', 'cc_tos', 'construction_contract', 'create_by', 'receive_by', 'team'])
             ->select(sprintf('%s.*', (new AddLetter)->table))
-            ->orWhere('sender_id',1);
+            ->orWhere('sender_id',2);
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
