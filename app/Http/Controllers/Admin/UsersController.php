@@ -10,6 +10,8 @@ use App\Http\Requests\MassDestroyUserRequest;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
 use App\Jobtitle;
+use App\Organization;
+
 use App\Role;
 use App\Team;
 use App\User;
@@ -25,7 +27,7 @@ class UsersController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $query = User::with(['team', 'jobtitle', 'roles', 'construction_contracts'])->select(sprintf('%s.*', (new User)->table));
+            $query = User::with(['organization', 'team', 'jobtitle', 'roles', 'construction_contracts'])->select(sprintf('%s.*', (new User)->table));
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
@@ -59,6 +61,10 @@ class UsersController extends Controller
             });
             $table->editColumn('name', function ($row) {
                 return $row->name ? $row->name : "";
+            });
+
+            $table->addColumn('organization_title_th', function ($row) {
+                return $row->organization ? $row->organization->title_th : '';
             });
 
             $table->editColumn('gender', function ($row) {
@@ -112,17 +118,26 @@ class UsersController extends Controller
                 return implode(' ', $labels);
             });
 
-            $table->rawColumns(['actions', 'placeholder', 'img_user', 'team', 'jobtitle', 'roles', 'signature', 'approved', 'construction_contract']);
+            $table->rawColumns(['actions', 'placeholder', 'organization', 'img_user', 'team', 'jobtitle', 'roles', 'signature', 'approved', 'construction_contract']);
 
             return $table->make(true);
         }
 
-        return view('admin.users.index');
+        $organizations          = Organization::get();
+        $teams                  = Team::get();
+        $jobtitles              = Jobtitle::get();
+        $roles                  = Role::get();
+        $construction_contracts = ConstructionContract::get();
+
+        session(['previous-url' => route('admin.users.index')]);
+        return view('admin.users.index', compact('organizations', 'teams', 'jobtitles', 'roles', 'construction_contracts'));
     }
 
     public function create()
     {
         abort_if(Gate::denies('user_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $organizations = Organization::all()->pluck('title_th', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $teams = Team::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
@@ -132,7 +147,7 @@ class UsersController extends Controller
 
         $construction_contracts = ConstructionContract::all()->pluck('code', 'id');
 
-        return view('admin.users.create', compact('teams', 'jobtitles', 'roles', 'construction_contracts'));
+        return view('admin.users.create', compact('organizations', 'teams', 'jobtitles', 'roles', 'construction_contracts'));
     }
 
     public function store(StoreUserRequest $request)
@@ -161,6 +176,8 @@ class UsersController extends Controller
     {
         abort_if(Gate::denies('user_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
+        $organizations = Organization::all()->pluck('title_th', 'id')->prepend(trans('global.pleaseSelect'), '');
+
         $teams = Team::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $jobtitles = Jobtitle::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
@@ -169,9 +186,9 @@ class UsersController extends Controller
 
         $construction_contracts = ConstructionContract::all()->pluck('code', 'id');
 
-        $user->load('team', 'jobtitle', 'roles', 'construction_contracts');
+        $user->load('organization' ,'team', 'jobtitle', 'roles', 'construction_contracts');
 
-        return view('admin.users.edit', compact('teams', 'jobtitles', 'roles', 'construction_contracts', 'user'));
+        return view('admin.users.edit', compact('organizations','teams', 'jobtitles', 'roles', 'construction_contracts', 'user'));
     }
 
     public function update(UpdateUserRequest $request, User $user)
@@ -204,7 +221,7 @@ class UsersController extends Controller
             $user->stamp_signature->delete();
         }
 
-        return redirect()->route('admin.home');
+        return redirect(session('previous-url'));
     }
 
     public function show(User $user)

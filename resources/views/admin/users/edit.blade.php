@@ -1,6 +1,25 @@
 @extends('layouts.admin')
 @section('content')
 
+<style>
+            .jay-signature-pad {
+                position: relative;
+                display: -ms-flexbox;
+                -ms-flex-direction: column;
+                width: 100%;
+                height: 100%;
+                max-width: 800px;
+                max-height: 315px;
+                border: 1px solid #e8e8e8;
+                background-color: #fff;
+                box-shadow: 0 3px 20px rgba(0, 0, 0, 0.27), 0 0 40px rgba(0, 0, 0, 0.08) inset;
+                border-radius: 15px;
+                padding: 20px;
+            }
+            .txt-center {
+                text-align: -webkit-center;
+            }
+</style>
 
 <div class="content">
 
@@ -34,21 +53,6 @@
                                 <span class="help-block">{{ trans('cruds.user.fields.name_helper') }}</span>
                             </div>
 
-           
-
-                            <div class="form-group {{ $errors->has('gender') ? 'has-error' : '' }}">
-                                <label class="required">{{ trans('cruds.user.fields.gender') }}</label>
-                                <select class="form-control" name="gender" id="gender" required>
-                                    <option value disabled {{ old('gender', null) === null ? 'selected' : '' }}>{{ trans('global.pleaseSelect') }}</option>
-                                    @foreach(App\User::GENDER_SELECT as $key => $label)
-                                        <option value="{{ $key }}" {{ old('gender', $user->gender) === (string) $key ? 'selected' : '' }}>{{ $label }}</option>
-                                    @endforeach
-                                </select>
-                                @if($errors->has('gender'))
-                                    <span class="help-block" role="alert">{{ $errors->first('gender') }}</span>
-                                @endif
-                                <span class="help-block">{{ trans('cruds.user.fields.gender_helper') }}</span>
-                            </div>
                         @else
                             <div hidden="true" class="form-group {{ $errors->has('name') ? 'has-error' : '' }}">
                                     <label class="required" for="name">{{ trans('cruds.user.fields.name') }}</label>
@@ -58,23 +62,9 @@
                                     @endif
                                     <span class="help-block">{{ trans('cruds.user.fields.name_helper') }}</span>
                                 </div>
-
-                        
-                                <div hidden="true" class="form-group {{ $errors->has('gender') ? 'has-error' : '' }}">
-                                    <label class="required">{{ trans('cruds.user.fields.gender') }}</label>
-                                    <select class="form-control" name="gender" id="gender" required>
-                                        <option value disabled {{ old('gender', null) === null ? 'selected' : '' }}>{{ trans('global.pleaseSelect') }}</option>
-                                        @foreach(App\User::GENDER_SELECT as $key => $label)
-                                            <option value="{{ $key }}" {{ old('gender', $user->gender) === (string) $key ? 'selected' : '' }}>{{ $label }}</option>
-                                        @endforeach
-                                    </select>
-                                    @if($errors->has('gender'))
-                                        <span class="help-block" role="alert">{{ $errors->first('gender') }}</span>
-                                    @endif
-                                    <span class="help-block">{{ trans('cruds.user.fields.gender_helper') }}</span>
-                                </div>
                         @endif
 
+                        
                         <div class="form-group {{ $errors->has('workphone') ? 'has-error' : '' }}">
                             <label for="workphone">{{ trans('cruds.user.fields.workphone') }}</label>
                             <input class="form-control" type="text" name="workphone" id="workphone" value="{{ old('workphone', $user->workphone) }}">
@@ -82,6 +72,19 @@
                                 <span class="help-block" role="alert">{{ $errors->first('workphone') }}</span>
                             @endif
                             <span class="help-block">{{ trans('cruds.user.fields.workphone_helper') }}</span>
+                        </div>
+
+                        <div class="form-group {{ $errors->has('organization') ? 'has-error' : '' }}">
+                            <label for="organization_id">{{ trans('cruds.user.fields.organization') }}</label>
+                            <select class="form-control select2" name="organization_id" id="organization_id">
+                                @foreach($organizations as $id => $organization)
+                                    <option value="{{ $id }}" {{ (old('organization_id') ? old('organization_id') : $user->organization->id ?? '') == $id ? 'selected' : '' }}>{{ $organization }}</option>
+                                @endforeach
+                            </select>
+                            @if($errors->has('organization'))
+                                <span class="help-block" role="alert">{{ $errors->first('organization') }}</span>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.user.fields.organization_helper') }}</span>
                         </div>
 
                         @if(auth()->user()->roles->contains(1))
@@ -226,6 +229,7 @@
                                 @endif
                                 <span class="help-block">{{ trans('cruds.user.fields.construction_contract_helper') }}</span>
                             </div>
+                            
                         @else
                             <div hidden="true" class="form-group {{ $errors->has('approved') ? 'has-error' : '' }}">
                                 <div>
@@ -255,8 +259,9 @@
                                 <span class="help-block">{{ trans('cruds.user.fields.construction_contract_helper') }}</span>
                             </div>
                         @endif
+
                         <div class="form-group">
-                            <a class="btn btn-default" href="{{ route('admin.home') }}">
+                            <a class="btn btn-default" href="{{ session('previous-url') }}">
                                 {{ trans('global.back_to_home') }}
                             </a>
 
@@ -439,4 +444,102 @@
     }
 }
 </script>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/signature_pad@2.3.2/dist/signature_pad.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/signature_pad/1.5.3/signature_pad.min.js"></script>
+        <script>
+            var wrapper = document.getElementById("signature-pad");
+            var clearButton = wrapper.querySelector("[data-action=clear]");
+            var changeColorButton = wrapper.querySelector("[data-action=change-color]");
+            var savePNGButton = wrapper.querySelector("[data-action=save-png]");
+            var saveJPGButton = wrapper.querySelector("[data-action=save-jpg]");
+            var saveSVGButton = wrapper.querySelector("[data-action=save-svg]");
+            var canvas = wrapper.querySelector("canvas");
+            var signaturePad = new SignaturePad(canvas, {
+                backgroundColor: 'rgb(255, 255, 255)'
+            });
+            // Adjust canvas coordinate space taking into account pixel ratio,
+            // to make it look crisp on mobile devices.
+            // This also causes canvas to be cleared.
+            function resizeCanvas() {
+                // When zoomed out to less than 100%, for some very strange reason,
+                // some browsers report devicePixelRatio as less than 1
+                // and only part of the canvas is cleared then.
+                var ratio =  Math.max(window.devicePixelRatio || 1, 1);
+                // This part causes the canvas to be cleared
+                canvas.width = canvas.offsetWidth * ratio;
+                canvas.height = canvas.offsetHeight * ratio;
+                canvas.getContext("2d").scale(ratio, ratio);
+                // This library does not listen for canvas changes, so after the canvas is automatically
+                // cleared by the browser, SignaturePad#isEmpty might still return false, even though the
+                // canvas looks empty, because the internal data of this library wasn't cleared. To make sure
+                // that the state of this library is consistent with visual state of the canvas, you
+                // have to clear it manually.
+                signaturePad.clear();
+            }
+            // On mobile devices it might make more sense to listen to orientation change,
+            // rather than window resize events.
+            window.onresize = resizeCanvas;
+            resizeCanvas();
+            function download(dataURL, filename) {
+                var blob = dataURLToBlob(dataURL);
+                var url = window.URL.createObjectURL(blob);
+                var a = document.createElement("a");
+                a.style = "display: none";
+                a.href = url;
+                a.download = filename;
+                document.body.appendChild(a);
+                a.click();
+                window.URL.revokeObjectURL(url);
+            }
+            // One could simply use Canvas#toBlob method instead, but it's just to show
+            // that it can be done using result of SignaturePad#toDataURL.
+            function dataURLToBlob(dataURL) {
+                var parts = dataURL.split(';base64,');
+                var contentType = parts[0].split(":")[1];
+                var raw = window.atob(parts[1]);
+                var rawLength = raw.length;
+                var uInt8Array = new Uint8Array(rawLength);
+                for (var i = 0; i < rawLength; ++i) {
+                    uInt8Array[i] = raw.charCodeAt(i);
+                }
+                return new Blob([uInt8Array], { type: contentType });
+            }
+            clearButton.addEventListener("click", function (event) {
+                signaturePad.clear();
+            });
+            changeColorButton.addEventListener("click", function (event) {
+                var r = Math.round(Math.random() * 255);
+                var g = Math.round(Math.random() * 255);
+                var b = Math.round(Math.random() * 255);
+                var color = "rgb(" + r + "," + g + "," + b +")";
+                signaturePad.penColor = color;
+            });
+            savePNGButton.addEventListener("click", function (event) {
+                if (signaturePad.isEmpty()) {
+                alert("Please provide a signature first.");
+                } else {
+                var dataURL = signaturePad.toDataURL();
+                download(dataURL, "signature.png");
+                }
+            });
+            saveJPGButton.addEventListener("click", function (event) {
+                if (signaturePad.isEmpty()) {
+                alert("Please provide a signature first.");
+                } else {
+                var dataURL = signaturePad.toDataURL("image/jpeg");
+                download(dataURL, "signature.jpg");
+                }
+            });
+            saveSVGButton.addEventListener("click", function (event) {
+                if (signaturePad.isEmpty()) {
+                alert("Please provide a signature first.");
+                } else {
+                var dataURL = signaturePad.toDataURL('image/svg+xml');
+                download(dataURL, "signature.svg");
+                }
+            });
+        </script>
 @endsection

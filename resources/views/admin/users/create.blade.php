@@ -28,20 +28,7 @@
                             @endif
                             <span class="help-block">{{ trans('cruds.user.fields.name_helper') }}</span>
                         </div>
-                        
-                        <div class="form-group {{ $errors->has('gender') ? 'has-error' : '' }}">
-                            <label class="required">{{ trans('cruds.user.fields.gender') }}</label>
-                            <select class="form-control" name="gender" id="gender" required>
-                                <option value disabled {{ old('gender', null) === null ? 'selected' : '' }}>{{ trans('global.pleaseSelect') }}</option>
-                                @foreach(App\User::GENDER_SELECT as $key => $label)
-                                    <option value="{{ $key }}" {{ old('gender', '') === (string) $key ? 'selected' : '' }}>{{ $label }}</option>
-                                @endforeach
-                            </select>
-                            @if($errors->has('gender'))
-                                <span class="help-block" role="alert">{{ $errors->first('gender') }}</span>
-                            @endif
-                            <span class="help-block">{{ trans('cruds.user.fields.gender_helper') }}</span>
-                        </div>
+
                         <div class="form-group {{ $errors->has('workphone') ? 'has-error' : '' }}">
                             <label for="workphone">{{ trans('cruds.user.fields.workphone') }}</label>
                             <input class="form-control" type="text" name="workphone" id="workphone" value="{{ old('workphone', '') }}">
@@ -50,6 +37,20 @@
                             @endif
                             <span class="help-block">{{ trans('cruds.user.fields.workphone_helper') }}</span>
                         </div>
+
+                        <div class="form-group {{ $errors->has('organization') ? 'has-error' : '' }}">
+                            <label for="organization_id">{{ trans('cruds.user.fields.organization') }}</label>
+                            <select class="form-control select2" name="organization_id" id="organization_id">
+                                @foreach($organizations as $id => $organization)
+                                    <option value="{{ $id }}" {{ old('organization_id') == $id ? 'selected' : '' }}>{{ $organization }}</option>
+                                @endforeach
+                            </select>
+                            @if($errors->has('organization'))
+                                <span class="help-block" role="alert">{{ $errors->first('organization') }}</span>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.user.fields.organization_helper') }}</span>
+                        </div>
+                        
                         <div class="form-group {{ $errors->has('team') ? 'has-error' : '' }}">
                             <label class="required" for="team_id">{{ trans('cruds.user.fields.team') }}</label>
                             <select class="form-control select2" name="team_id" id="team_id" required>

@@ -83,6 +83,8 @@ return [
             'stamp_signature_helper'       => '',
             'construction_contract'        => 'Construction Contract',
             'construction_contract_helper' => '',
+            'organization'                 => 'Organization',
+            'organization_helper'          => ' ',
         ],
     ],
     'jobtitle'               => [

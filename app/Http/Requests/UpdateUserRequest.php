@@ -21,9 +21,7 @@ class UpdateUserRequest extends FormRequest
                 'string',
                 'required',
             ],
-            'gender'                   => [
-                'required',
-            ],
+           
             'workphone'                => [
                 'string',
                 'nullable',

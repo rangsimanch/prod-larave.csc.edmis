@@ -23,8 +23,8 @@
                                     </th>
                                     <td>
                                         @if($user->img_user)
-                                            <a href="{{ $user->img_user->getUrl() }}" target="_blank">
-                                                <img src="{{ $user->img_user->getUrl('thumb') }}" width="50px" height="50px">
+                                            <a href="{{ $user->img_user->getUrl() }}" target="_blank" style="display: inline-block">
+                                                <img src="{{ $user->img_user->getUrl('thumb') }}">
                                             </a>
                                         @endif
                                     </td>
@@ -43,6 +43,14 @@
                                     </th>
                                     <td>
                                         {{ $user->dob }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        {{ trans('cruds.user.fields.organization') }}
+                                    </th>
+                                    <td>
+                                        {{ $user->organization->title_th ?? '' }}
                                     </td>
                                 </tr>
                                 <tr>
@@ -132,7 +140,8 @@
                 </div>
             </div>
 
-         
+
+
         </div>
     </div>
 </div>

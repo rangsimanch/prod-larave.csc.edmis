@@ -21,17 +21,6 @@
                             <span class="help-block">{{ trans('cruds.user.fields.name_helper') }}</span>
                         </div>
 
-                        <!-- <div class="form-group {{ $errors->has('dob') ? 'has-error' : '' }}">
-                        <div class="input-group">
-                            <label class="required" for="dob">{{ trans('cruds.user.fields.dob') }}</label>
-                            <input class="form-control date" type="text" name="dob" id="dob" value="{{ old('dob') }}" required>
-                            @if($errors->has('dob'))
-                                <span class="help-block" role="alert">{{ $errors->first('dob') }}</span>
-                            @endif
-                            <span class="help-block">{{ trans('cruds.user.fields.dob_helper') }}</span>
-                        </div>
-                        </div> -->
-
                         <div class="form-group {{ $errors->has('gender') ? 'has-error' : '' }}">
                             <label class="required">{{ trans('cruds.user.fields.gender') }}</label>
                             <select class="form-control" name="gender" id="gender" required>
@@ -56,11 +45,25 @@
                         </div>
 
                         <legend> Job Description </legend>
+
+                        <div class="form-group {{ $errors->has('organization') ? 'has-error' : '' }}">
+                            <label for="organization_id">{{ trans('cruds.user.fields.organization') }}</label>
+                            <select class="form-control select2" name="organization_id" id="organization_id">
+                                @foreach($organizations as $id => $organization)
+                                    <option value="{{ $id }}" {{ old('organization_id') == $id ? 'selected' : '' }}>{{ $organization }}</option>
+                                @endforeach
+                            </select>
+                            @if($errors->has('organization'))
+                                <span class="help-block" role="alert">{{ $errors->first('organization') }}</span>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.user.fields.organization_helper') }}</span>
+                        </div>
+
                         <div class="form-group {{ $errors->has('team') ? 'has-error' : '' }}">
                             <label class="required" for="team_id">{{ trans('cruds.user.fields.team') }}</label>
                             <select class="form-control select2" name="team_id" id="team_id" required>
                                 @foreach($teams as $id => $team)
-                                    <option value="{{ $team->id }}" >{{ $team->name }}</option>
+                                    <option value="{{ $id }}" {{ old('team_id') == $id ? 'selected' : '' }}>{{ $team }}</option>
                                 @endforeach
                             </select>
                             @if($errors->has('team_id'))
@@ -68,11 +71,12 @@
                             @endif
                             <span class="help-block">{{ trans('cruds.user.fields.team_helper') }}</span>
                         </div>
+
                         <div class="form-group {{ $errors->has('jobtitle') ? 'has-error' : '' }}">
                             <label for="jobtitle_id">{{ trans('cruds.user.fields.jobtitle') }}</label>
                             <select class="form-control select2" name="jobtitle_id" id="jobtitle_id">
                                 @foreach($jobtitles as $id => $jobtitle)
-                                    <option value="{{ $jobtitle->id }}" >{{ $jobtitle->name }}</option>
+                                    <option value="{{ $id }}" {{ old('jobtitle_id') == $id ? 'selected' : '' }}>{{ $jobtitle }}</option>
                                 @endforeach
                             </select>
                             @if($errors->has('jobtitle_id'))
@@ -82,15 +86,14 @@
                         </div>
 
                         <div class="form-group {{ $errors->has('construction_contracts') ? 'has-error' : '' }}">
-                            <label class="required" for="construction_contracts">{{ trans('cruds.user.fields.construction_contract') }}</label>
+                            <label for="construction_contracts">{{ trans('cruds.user.fields.construction_contract') }}</label>
                             <div style="padding-bottom: 4px">
                                 <span class="btn btn-info btn-xs select-all" style="border-radius: 0">{{ trans('global.select_all') }}</span>
                                 <span class="btn btn-info btn-xs deselect-all" style="border-radius: 0">{{ trans('global.deselect_all') }}</span>
                             </div>
-
                             <select class="form-control select2" name="construction_contracts[]" id="construction_contracts" multiple>
                                 @foreach($construction_contracts as $id => $construction_contract)
-                                    <option value="{{ $construction_contract->id }}" {{ in_array($id, old('construction_contracts', [])) ? 'selected' : '' }}>{{ $construction_contract->code }}</option>
+                                    <option value="{{ $id }}" {{ in_array($id, old('construction_contracts', [])) ? 'selected' : '' }}>{{ $construction_contract }}</option>
                                 @endforeach
                             </select>
                             @if($errors->has('construction_contracts'))
@@ -142,50 +145,61 @@
 
                         <!-- Modal -->
                         <div class="modal fade bd-example-modal-lg fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                            <div class="modal-dialog modal-lg" role="document">
+                            <div class="modal-dialog modal-lg modal-dialog-scrollable" role="document">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h5 class="modal-title" id="exampleModalLabel">Policy</h5>
                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                         <span aria-hidden="true">&times;</span>
                                         </button>
                                     </div>
                                     <div class="modal-body">
-                                    <p style="margin-top:0in;margin-right:0in;margin-bottom:8.0pt;margin-left:0in;line-height:107%;font-size:15px;font-family:&quot;Calibri&quot;,sans-serif;text-align:center;"><strong><span style="font-size:24px;line-height:107%;font-family:Kanit;">สัญญาการใช้ระบบสารสนเทศเพื่อการจัดการ</span></strong></p>
-<p style="margin-top:0in;margin-right:0in;margin-bottom:8.0pt;margin-left:0in;line-height:107%;font-size:15px;font-family:&quot;Calibri&quot;,sans-serif;text-align:center;"><strong><span style="font-size:24px;line-height:107%;font-family:Kanit;">โครงการก่อสร้างรถไฟความเร็วสูงไทย-จีน</span></strong></p>
-<p style="margin-top:0in;margin-right:0in;margin-bottom:8.0pt;margin-left:0in;line-height:107%;font-size:15px;font-family:&quot;Calibri&quot;,sans-serif;text-align:center;"><strong><span style="font-size:24px;line-height:107%;font-family:Kanit;">ระยะที่ 1 (กรุงเทพ-นครราชสีมา)</span></strong></p>
-<p style="margin-top:0in;margin-right:0in;margin-bottom:8.0pt;margin-left:0in;line-height:107%;font-size:15px;font-family:&quot;Calibri&quot;,sans-serif;text-align:center;"><strong><span style="font-size:21px;line-height:107%;font-family:Kanit;">EDMIS (Electronic Document Management Information System)</span></strong></p>
-<p style="margin-top:0in;margin-right:0in;margin-bottom:8.0pt;margin-left:0in;line-height:107%;font-size:15px;font-family:&quot;Calibri&quot;,sans-serif;"><span style="font-size:9px;line-height:107%;font-family:Kanit;">&nbsp;</span></p>
-<p style="margin-top:0in;margin-right:0in;margin-bottom:8.0pt;margin-left:0in;line-height:107%;font-size:15px;font-family:&quot;Calibri&quot;,sans-serif;"><span style="font-size:19px;line-height:107%;font-family:Kanit;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;</span><span style="font-size:16px;line-height:107%;font-family:Kanit;">สัญญานี้จัดทำขึ้นระหว่างบริษัทที่ปรึกษา&nbsp;</span><span style="font-size:16px;line-height:107%;font-family:Kanit;">CSC (Construction Supervision Consultant) ซึ่งต่อไปนี้เรียกว่า&nbsp;“บริษัท&nbsp;CSC” กับอีกฝ่ายคือ&nbsp;Admin โปรแกรมและ&nbsp;User โปรแกรมซึ่งต่อไปนี้เรียกว่า&nbsp;“ผู้ใช้โปรแกรม” ซึ่งทั้งสองฝ่ายได้ตกลงที่จะทำสัญญาต่อกันเพื่อให้การใช้โปรแกรม&nbsp;EDMIS บริหารงานก่อสร้างรถไฟความเร็วสูงให้เกิดประสิทธิภาพสูงสุด และเพื่อรักษาผลประโยชน์ของทางการรถไฟแห่งประเทศไทย ด้านข้อมูลสารสนเทศของโครงการและระบบ&nbsp;Program จึงกำหนดหลักการใช้โปรแกรม ความรับผิดชอบ และข้อห้ามต่างๆ ดังนี้</span></p>
-<p style="margin-top:0in;margin-right:0in;margin-bottom:8.0pt;margin-left:0in;line-height:107%;font-size:15px;font-family:&quot;Calibri&quot;,sans-serif;"><span style="font-size:16px;line-height:107%;font-family:Kanit;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;1. บริษัท&nbsp;</span><span style="font-size:16px;line-height:107%;font-family:Kanit;">CSC เป็น&nbsp;Admin หลักของระบบมีหน้าที่ดังนี้</span></p>
-<p style="margin-top:0in;margin-right:0in;margin-bottom:8.0pt;margin-left:.5in;line-height:107%;font-size:15px;font-family:&quot;Calibri&quot;,sans-serif;text-indent:.5in;"><span style="line-height:107%;font-family:Kanit;">1.1 การแก้ไขข้อมูล&nbsp;</span><span style="font-size:12px;line-height:107%;font-family:Kanit;">User&nbsp;</span><span style="line-height:107%;font-family:Kanit;">ได้แก่ รหัสผ่าน และสัญญา</span></p>
-<p style="margin-top:0in;margin-right:0in;margin-bottom:8.0pt;margin-left:.5in;line-height:107%;font-size:15px;font-family:&quot;Calibri&quot;,sans-serif;text-indent:.5in;"><span style="line-height:107%;font-family:Kanit;">1.2 แก้ไขสถานะการใช้งานโปรแกรม (ใช้ได้/ไม่ได้)</span></p>
-<p style="margin-top:0in;margin-right:0in;margin-bottom:8.0pt;margin-left:.5in;line-height:107%;font-size:15px;font-family:&quot;Calibri&quot;,sans-serif;text-indent:.5in;"><span style="line-height:107%;font-family:Kanit;">1.3 แก้ไขการเข้าถึงข้อมูลในส่วนต่างๆของโปรแกรม&nbsp;</span></p>
-<p style="margin-top:0in;margin-right:0in;margin-bottom:8.0pt;margin-left:.5in;line-height:107%;font-size:15px;font-family:&quot;Calibri&quot;,sans-serif;text-indent:.5in;"><span style="line-height:107%;font-family:Kanit;">1.5 แก้ไขบทบาทและสิทธิ์การเข้าถึงในการทำงานบนระบบ เช่น การสร้าง การลบ การแก้ไขข้อมูล&nbsp;</span></p>
-<p style="margin-top:0in;margin-right:0in;margin-bottom:8.0pt;margin-left:0in;line-height:107%;font-size:15px;font-family:&quot;Calibri&quot;,sans-serif;"><span style="line-height:107%;font-family:Kanit;">ซึ่งมีผู้รับผิดชอบคือ&nbsp;</span></p>
-<p style="margin-top:0in;margin-right:0in;margin-bottom:8.0pt;margin-left:0in;line-height:107%;font-size:15px;font-family:&quot;Calibri&quot;,sans-serif;"><span style="font-size:16px;line-height:107%;font-family:Kanit;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;1. นายแอ๊ด เพชรฤทธิ์</span></p>
-<p style="margin-top:0in;margin-right:0in;margin-bottom:8.0pt;margin-left:0in;line-height:107%;font-size:15px;font-family:&quot;Calibri&quot;,sans-serif;"><span style="font-size:16px;line-height:107%;font-family:Kanit;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;2.&nbsp;</span><span style="font-size:16px;line-height:107%;font-family:Kanit;">Mr.Wei Wuchang</span></p>
-<p style="margin-top:0in;margin-right:0in;margin-bottom:8.0pt;margin-left:0in;line-height:107%;font-size:15px;font-family:&quot;Calibri&quot;,sans-serif;"><span style="font-size:16px;line-height:107%;font-family:Kanit;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;3. นางสาวหทัยชนก วิริยมานุวงษ์</span></p>
-<p style="margin-top:0in;margin-right:0in;margin-bottom:8.0pt;margin-left:0in;line-height:107%;font-size:15px;font-family:&quot;Calibri&quot;,sans-serif;"><span style="font-size:16px;line-height:107%;font-family:Kanit;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;2. ข้อกำหนดหน้าที่ความรับผิดชอบและข้อห้ามของผู้ใช้งาน</span></p>
-<p style="margin-top:0in;margin-right:0in;margin-bottom:8.0pt;margin-left:0in;line-height:107%;font-size:15px;font-family:&quot;Calibri&quot;,sans-serif;"><span style="font-size:16px;line-height:107%;font-family:Kanit;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;2.1 ต้องป้องกันดูแลรักษาข้อมูลบัญชีชื่อผู้ใช้งาน (</span><span style="font-size:16px;line-height:107%;font-family:Kanit;">User Account) และรหัสผ่าน (Password) โดยมีบัญชีชื่อผู้ใช้งานของตนเองและห้ามใช้ร่วมกับผู้อื่นรวมทั้งห้ามเผยแพร่แจกจ่ายหรือให้ผู้อื่นล่วงรู้รหัสผ่าน</span></p>
-<p style="margin-top:0in;margin-right:0in;margin-bottom:8.0pt;margin-left:0in;line-height:107%;font-size:15px;font-family:&quot;Calibri&quot;,sans-serif;"><span style="font-size:16px;line-height:107%;font-family:Kanit;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;2.2 ต้องร่วมกันดูแลรักษาและรับผิดชอบต่อข้อมูลของหน่วยงาน การกระทำใดๆ ที่เกิดจากการใช้บัญชีผู้ใช้งานของตนเองที่มีกฎหมายกำหนดให้เป็นความผิดไม่ว่าการกระทำนั้นจะเกิดจากตนเองหรือไม่ก็ตามโดยความประมาท ให้ถือว่าเป็นความรับผิดชอบของเจ้าของบัญชีผู้ใช้งานจะต้องรับผิดชอบต่อความผิดที่เกิดขึ้น</span></p>
-<p style="margin-top:0in;margin-right:0in;margin-bottom:8.0pt;margin-left:0in;line-height:107%;font-size:15px;font-family:&quot;Calibri&quot;,sans-serif;"><span style="font-size:16px;line-height:107%;font-family:Kanit;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;2.3 ต้องตระหนักและระมัดระวังต่อการใช้งานข้อมูล&nbsp; &nbsp; &nbsp;&nbsp;</span></p>
-<p style="margin-top:0in;margin-right:0in;margin-bottom:8.0pt;margin-left:0in;line-height:107%;font-size:15px;font-family:&quot;Calibri&quot;,sans-serif;"><span style="font-size:16px;line-height:107%;font-family:Kanit;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;2.4 ต้องไม่เผยแพร่หรือทำลายข้อมูลที่เป็นความลับหรือมีระดับความสำคัญที่อยู่ในการครอบครอง/ดูแลของหน่วยงานโดยไม่ได้รับอนุญาตจากการรถไฟแห่งประเทศไทย</span></p>
-<p style="margin-top:0in;margin-right:0in;margin-bottom:8.0pt;margin-left:0in;line-height:107%;font-size:15px;font-family:&quot;Calibri&quot;,sans-serif;"><span style="font-size:16px;line-height:107%;font-family:Kanit;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;2.5 ต้องป้องกันดูแลรักษาไว้ซึ่งความลับความถูกต้องและความพร้อมใช้ของข้อมูลตลอดจนเอกสารสื่อบันทึกข้อมูลคอมพิวเตอร์หรือสารสนเทศต่างๆ ที่เสี่ยงต่อการเข้าถึงโดยผู้ไม่มีสิทธิ์</span></p>
-<p style="margin-top:0in;margin-right:0in;margin-bottom:8.0pt;margin-left:0in;line-height:107%;font-size:15px;font-family:&quot;Calibri&quot;,sans-serif;"><span style="font-size:16px;line-height:107%;font-family:Kanit;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;2.6 ห้ามใช้สินทรัพย์ของหน่วยงานเผยแพร่ข้อมูลข้อความรูปภาพหรือสิ่งอื่นใดที่มีลักษณะขัดต่อศีลธรรมความมั่นคงของประเทศกฎหมายหรือกระทบต่อภารกิจของหน่วยงาน</span></p>
-<p style="margin-top:0in;margin-right:0in;margin-bottom:8.0pt;margin-left:0in;line-height:107%;font-size:15px;font-family:&quot;Calibri&quot;,sans-serif;"><span style="font-size:16px;line-height:107%;font-family:Kanit;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;2.7 ห้ามใช้สินทรัพย์ของหน่วยงานเพื่อรบกวนก่อให้เกิดความเสียหายหรือใช้ในการโจรกรรมข้อมูลหรือสิ่งอื่นใดอันเป็นการขัดต่อกฎหมายและศีลธรรมหรือกระทบต่อภารกิจของหน่วยงาน</span></p>
-<p style="margin-top:0in;margin-right:0in;margin-bottom:8.0pt;margin-left:0in;line-height:107%;font-size:15px;font-family:&quot;Calibri&quot;,sans-serif;"><span style="font-size:16px;line-height:107%;font-family:Kanit;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;2.8 ไม่รบกวนทำลายหรือทำให้ระบบสารสนเทศของหน่วยงานต้องหยุดชะงัก</span></p>
-<p style="margin-top:0in;margin-right:0in;margin-bottom:8.0pt;margin-left:0in;line-height:107%;font-size:15px;font-family:&quot;Calibri&quot;,sans-serif;"><span style="font-size:16px;line-height:107%;font-family:Kanit;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;2.9 ห้ามกระทำการใดๆ อันมีลักษณะเป็นการลักลอบใช้งานระบบคอมพิวเตอร์หรือระบบสารสนเทศหรือดักรับรหัสผ่านของผู้อื่นไม่ว่าจะเป็นไปเพื่อประโยชน์ในการเข้าถึงข้อมูลหรือเพื่อการใช้ทรัพยากรหรือเพื่อการอื่นใดก็ตาม</span></p>
-<p style="margin-top:0in;margin-right:0in;margin-bottom:8.0pt;margin-left:0in;line-height:107%;font-size:15px;font-family:&quot;Calibri&quot;,sans-serif;"><span style="font-size:16px;line-height:107%;font-family:Kanit;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;2.10 ห้ามนำข้อมูล คัดลอก เลียนแบบ ดัดแปลงหรือตีพิมพ์ไปใช้ประโยชน์เชิงพาณิชย์หรือมีเจตนาเอื้อผลประโยชน์ทางธุรกิจใดๆ โดยเด็ดขาด</span></p>
-<p style="margin-top:0in;margin-right:0in;margin-bottom:8.0pt;margin-left:0in;line-height:107%;font-size:15px;font-family:&quot;Calibri&quot;,sans-serif;"><span style="font-size:8px;line-height:107%;font-family:Kanit;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;</span><span style="font-size:16px;line-height:107%;font-family:Kanit;">หากผู้ใช้งานโปรแกรม&nbsp;</span><span style="font-size:16px;line-height:107%;font-family:Kanit;">EDMIS&nbsp;ทั้ง&nbsp;Admin และ&nbsp;User กระทำการใดๆที่นอกเหนือจากหน้าที่รับผิดชอบหรือปฏิบัติผิดต่อข้อกำหนดและแนวปฏิบัติในการรักษาความมั่นคงและปลอดภัยด้านสารสนเทศของโปรแกรม&nbsp;EDMIS และหลักปฏิบัติสากลที่เกี่ยวข้องกับการรักษาความลับของข้อมูลต่างๆที่อยู่ในความครอบครองหรือควบคุมดูแลของการรถไฟแห่งประเทศไทย หากพบการกระทำที่เป็นความผิดตามกฎหมาย ต้องรับผิดในทางแพ่งหรือต้องรับโทษทางอาญาตามบทบัญญัติของพระราชบัญญัติว่าด้วยการกระทำความผิดเกี่ยวกับคอมพิวเตอร์ปี พ.ศ.2561</span></p>
-<p style="margin-top:0in;margin-right:0in;margin-bottom:8.0pt;margin-left:0in;line-height:107%;font-size:15px;font-family:&quot;Calibri&quot;,sans-serif;"><span style="font-size:16px;line-height:107%;font-family:Kanit;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;3. กรณีบุคลากรลาออก ผู้รับผิดชอบด้านบุคคลแจ้งรายชื่อต่อ&nbsp;</span><span style="font-size:16px;line-height:107%;font-family:Kanit;">Admin ของแต่ละหน่วย เพื่อคัดชื่อออกจากระบบ กรณีมีบุคคลเข้าเพิ่มให้ลงทะเบียนผ่านโปรแกรม&nbsp;EDMIS โดย&nbsp;Admin ของหน่วยงานเป็นผู้ตรวจสอบและรับสมัครบุคคลดังกล่าว และกรณี&nbsp;User ย้ายหน่วยงาน&nbsp;Admin ทั้งสองหน่วยงานต้องประสานงานกันเพื่อทราบและเพื่อการควบคุมระบบต่อไป</span></p>
-<p style="margin-top:0in;margin-right:0in;margin-bottom:8.0pt;margin-left:0in;line-height:107%;font-size:15px;font-family:&quot;Calibri&quot;,sans-serif;"><span style="font-size:16px;line-height:107%;font-family:Kanit;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;4. กระบวนการยืนยันตัวตนของบุคคลากรบนโปรแกรมโดยให้หน่วยงานที่ใช้โปรแกรมเป็นผู้ตรวจสอบและยืนยันตัวตนผู้ใช้โปรแกรมทุกไตรมาส โดยตรวจสอบข้อมูลในระบบ&nbsp;</span><span style="font-size:16px;line-height:107%;font-family:Kanit;">Hard Copy</span></p>
-<p style="margin-top:0in;margin-right:0in;margin-bottom:8.0pt;margin-left:0in;line-height:107%;font-size:15px;font-family:&quot;Calibri&quot;,sans-serif;"><span style="font-size:16px;line-height:107%;font-family:Kanit;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;ทุกฝ่ายอ่านข้อความทั้งหมดเข้าใจแล้วจึงลงนาม (กด</span><span style="font-size:16px;line-height:107%;font-family:Kanit;">&nbsp;Accept) เพื่อเป็นการยอมรับข้อตกลงและเพื่อไว้เป็นหลักฐาน</span></p>
-<p style="margin-top:0in;margin-right:0in;margin-bottom:8.0pt;margin-left:0in;line-height:107%;font-size:15px;font-family:&quot;Calibri&quot;,sans-serif;"><span style="font-size:16px;line-height:107%;font-family:Kanit;">&nbsp;</span></p>
+                                            <p style="margin-top:0in;margin-right:0in;margin-bottom:8.0pt;margin-left:0in;line-height:107%;font-size:15px;font-family:&quot;Calibri&quot;,sans-serif;text-align:center;"><strong><span style="font-size:24px;line-height:107%;font-family:Kanit;">สัญญาการใช้ระบบสารสนเทศเพื่อการจัดการ</span></strong></p>
+                                            <p style="margin-top:0in;margin-right:0in;margin-bottom:8.0pt;margin-left:0in;line-height:107%;font-size:15px;font-family:&quot;Calibri&quot;,sans-serif;text-align:center;"><strong><span style="font-size:24px;line-height:107%;font-family:Kanit;">โครงการก่อสร้างรถไฟความเร็วสูงไทย-จีน</span></strong></p>
+                                            <p style="margin-top:0in;margin-right:0in;margin-bottom:8.0pt;margin-left:0in;line-height:107%;font-size:15px;font-family:&quot;Calibri&quot;,sans-serif;text-align:center;"><strong><span style="font-size:24px;line-height:107%;font-family:Kanit;">ระยะที่ 1 (กรุงเทพ-นครราชสีมา)</span></strong></p>
+                                            <p style="margin-top:0in;margin-right:0in;margin-bottom:8.0pt;margin-left:0in;line-height:107%;font-size:15px;font-family:&quot;Calibri&quot;,sans-serif;text-align:center;"><strong><span style="font-size:21px;line-height:107%;font-family:Kanit;">EDMIS (Electronic Document Management Information System)</span></strong></p>
+                                            <p style="margin-top:0in;margin-right:0in;margin-bottom:8.0pt;margin-left:0in;line-height:107%;font-size:15px;font-family:&quot;Calibri&quot;,sans-serif;"><span style="font-size:9px;line-height:107%;font-family:Kanit;">&nbsp;</span></p>
+                                            <p style="margin-top:0in;margin-right:0in;margin-bottom:8.0pt;margin-left:0in;line-height:107%;font-size:15px;font-family:&quot;Calibri&quot;,sans-serif;"><span style="font-size:19px;line-height:107%;font-family:Kanit;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;</span><span style="font-size:16px;line-height:107%;font-family:Kanit;">สัญญานี้จัดทำขึ้นระหว่างบริษัทที่ปรึกษา&nbsp;</span><span style="font-size:16px;line-height:107%;font-family:Kanit;">CSC (Construction Supervision Consultant) ซึ่งต่อไปนี้เรียกว่า&nbsp;“บริษัท&nbsp;CSC” กับอีกฝ่ายคือ&nbsp;Admin โปรแกรมและ&nbsp;User โปรแกรมซึ่งต่อไปนี้เรียกว่า&nbsp;“ผู้ใช้โปรแกรม” ซึ่งทั้งสองฝ่ายได้ตกลงที่จะทำสัญญาต่อกันเพื่อให้การใช้โปรแกรม&nbsp;EDMIS บริหารงานก่อสร้างรถไฟความเร็วสูงให้เกิดประสิทธิภาพสูงสุด และเพื่อรักษาผลประโยชน์ของทางการรถไฟแห่งประเทศไทย ด้านข้อมูลสารสนเทศของโครงการและระบบ&nbsp;Program จึงกำหนดหลักการใช้โปรแกรม ความรับผิดชอบ และข้อห้ามต่างๆ ดังนี้</span></p>
+                                            <p style="margin-top:0in;margin-right:0in;margin-bottom:8.0pt;margin-left:0in;line-height:107%;font-size:15px;font-family:&quot;Calibri&quot;,sans-serif;"><span style="font-size:16px;line-height:107%;font-family:Kanit;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;1. บริษัท&nbsp;</span><span style="font-size:16px;line-height:107%;font-family:Kanit;">CSC เป็น&nbsp;Admin หลักของระบบมีหน้าที่ดังนี้</span></p>
+                                            <p style="margin-top:0in;margin-right:0in;margin-bottom:8.0pt;margin-left:.5in;line-height:107%;font-size:15px;font-family:&quot;Calibri&quot;,sans-serif;text-indent:.5in;"><span style="line-height:107%;font-family:Kanit;">1.1 การแก้ไขข้อมูล&nbsp;</span><span style="font-size:12px;line-height:107%;font-family:Kanit;">User&nbsp;</span><span style="line-height:107%;font-family:Kanit;">ได้แก่ รหัสผ่าน และสัญญา</span></p>
+                                            <p style="margin-top:0in;margin-right:0in;margin-bottom:8.0pt;margin-left:.5in;line-height:107%;font-size:15px;font-family:&quot;Calibri&quot;,sans-serif;text-indent:.5in;"><span style="line-height:107%;font-family:Kanit;">1.2 แก้ไขสถานะการใช้งานโปรแกรม (ใช้ได้/ไม่ได้)</span></p>
+                                            <p style="margin-top:0in;margin-right:0in;margin-bottom:8.0pt;margin-left:.5in;line-height:107%;font-size:15px;font-family:&quot;Calibri&quot;,sans-serif;text-indent:.5in;"><span style="line-height:107%;font-family:Kanit;">1.3 แก้ไขการเข้าถึงข้อมูลในส่วนต่างๆของโปรแกรม&nbsp;</span></p>
+                                            <p style="margin-top:0in;margin-right:0in;margin-bottom:8.0pt;margin-left:.5in;line-height:107%;font-size:15px;font-family:&quot;Calibri&quot;,sans-serif;text-indent:.5in;"><span style="line-height:107%;font-family:Kanit;">1.5 แก้ไขบทบาทและสิทธิ์การเข้าถึงในการทำงานบนระบบ เช่น การสร้าง การลบ การแก้ไขข้อมูล&nbsp;</span></p>
+                                            <p style="margin-top:0in;margin-right:0in;margin-bottom:8.0pt;margin-left:0in;line-height:107%;font-size:15px;font-family:&quot;Calibri&quot;,sans-serif;"><span style="line-height:107%;font-family:Kanit;">ซึ่งมีผู้รับผิดชอบคือ&nbsp;</span></p>
+                                            <p style="margin-top:0in;margin-right:0in;margin-bottom:8.0pt;margin-left:0in;line-height:107%;font-size:15px;font-family:&quot;Calibri&quot;,sans-serif;"><span style="font-size:16px;line-height:107%;font-family:Kanit;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;1. นายแอ๊ด เพชรฤทธิ์</span></p>
+                                            <p style="margin-top:0in;margin-right:0in;margin-bottom:8.0pt;margin-left:0in;line-height:107%;font-size:15px;font-family:&quot;Calibri&quot;,sans-serif;"><span style="font-size:16px;line-height:107%;font-family:Kanit;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;2.&nbsp;</span><span style="font-size:16px;line-height:107%;font-family:Kanit;">Mr.Wei Wuchang</span></p>
+                                            <p style="margin-top:0in;margin-right:0in;margin-bottom:8.0pt;margin-left:0in;line-height:107%;font-size:15px;font-family:&quot;Calibri&quot;,sans-serif;"><span style="font-size:16px;line-height:107%;font-family:Kanit;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;3. นางสาวหทัยชนก วิริยมานุวงษ์</span></p>
+                                            <p style="margin-top:0in;margin-right:0in;margin-bottom:8.0pt;margin-left:0in;line-height:107%;font-size:15px;font-family:&quot;Calibri&quot;,sans-serif;"><span style="font-size:16px;line-height:107%;font-family:Kanit;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;2. ข้อกำหนดหน้าที่ความรับผิดชอบและข้อห้ามของผู้ใช้งาน</span></p>
+                                            <p style="margin-top:0in;margin-right:0in;margin-bottom:8.0pt;margin-left:0in;line-height:107%;font-size:15px;font-family:&quot;Calibri&quot;,sans-serif;"><span style="font-size:16px;line-height:107%;font-family:Kanit;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;2.1 ต้องป้องกันดูแลรักษาข้อมูลบัญชีชื่อผู้ใช้งาน (</span><span style="font-size:16px;line-height:107%;font-family:Kanit;">User Account) และรหัสผ่าน (Password) โดยมีบัญชีชื่อผู้ใช้งานของตนเองและห้ามใช้ร่วมกับผู้อื่นรวมทั้งห้ามเผยแพร่แจกจ่ายหรือให้ผู้อื่นล่วงรู้รหัสผ่าน</span></p>
+                                            <p style="margin-top:0in;margin-right:0in;margin-bottom:8.0pt;margin-left:0in;line-height:107%;font-size:15px;font-family:&quot;Calibri&quot;,sans-serif;"><span style="font-size:16px;line-height:107%;font-family:Kanit;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;2.2 ต้องร่วมกันดูแลรักษาและรับผิดชอบต่อข้อมูลของหน่วยงาน การกระทำใดๆ ที่เกิดจากการใช้บัญชีผู้ใช้งานของตนเองที่มีกฎหมายกำหนดให้เป็นความผิดไม่ว่าการกระทำนั้นจะเกิดจากตนเองหรือไม่ก็ตามโดยความประมาท ให้ถือว่าเป็นความรับผิดชอบของเจ้าของบัญชีผู้ใช้งานจะต้องรับผิดชอบต่อความผิดที่เกิดขึ้น</span></p>
+                                            <p style="margin-top:0in;margin-right:0in;margin-bottom:8.0pt;margin-left:0in;line-height:107%;font-size:15px;font-family:&quot;Calibri&quot;,sans-serif;"><span style="font-size:16px;line-height:107%;font-family:Kanit;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;2.3 ต้องตระหนักและระมัดระวังต่อการใช้งานข้อมูล&nbsp; &nbsp; &nbsp;&nbsp;</span></p>
+                                            <p style="margin-top:0in;margin-right:0in;margin-bottom:8.0pt;margin-left:0in;line-height:107%;font-size:15px;font-family:&quot;Calibri&quot;,sans-serif;"><span style="font-size:16px;line-height:107%;font-family:Kanit;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;2.4 ต้องไม่เผยแพร่หรือทำลายข้อมูลที่เป็นความลับหรือมีระดับความสำคัญที่อยู่ในการครอบครอง/ดูแลของหน่วยงานโดยไม่ได้รับอนุญาตจากการรถไฟแห่งประเทศไทย</span></p>
+                                            <p style="margin-top:0in;margin-right:0in;margin-bottom:8.0pt;margin-left:0in;line-height:107%;font-size:15px;font-family:&quot;Calibri&quot;,sans-serif;"><span style="font-size:16px;line-height:107%;font-family:Kanit;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;2.5 ต้องป้องกันดูแลรักษาไว้ซึ่งความลับความถูกต้องและความพร้อมใช้ของข้อมูลตลอดจนเอกสารสื่อบันทึกข้อมูลคอมพิวเตอร์หรือสารสนเทศต่างๆ ที่เสี่ยงต่อการเข้าถึงโดยผู้ไม่มีสิทธิ์</span></p>
+                                            <p style="margin-top:0in;margin-right:0in;margin-bottom:8.0pt;margin-left:0in;line-height:107%;font-size:15px;font-family:&quot;Calibri&quot;,sans-serif;"><span style="font-size:16px;line-height:107%;font-family:Kanit;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;2.6 ห้ามใช้สินทรัพย์ของหน่วยงานเผยแพร่ข้อมูลข้อความรูปภาพหรือสิ่งอื่นใดที่มีลักษณะขัดต่อศีลธรรมความมั่นคงของประเทศกฎหมายหรือกระทบต่อภารกิจของหน่วยงาน</span></p>
+                                            <p style="margin-top:0in;margin-right:0in;margin-bottom:8.0pt;margin-left:0in;line-height:107%;font-size:15px;font-family:&quot;Calibri&quot;,sans-serif;"><span style="font-size:16px;line-height:107%;font-family:Kanit;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;2.7 ห้ามใช้สินทรัพย์ของหน่วยงานเพื่อรบกวนก่อให้เกิดความเสียหายหรือใช้ในการโจรกรรมข้อมูลหรือสิ่งอื่นใดอันเป็นการขัดต่อกฎหมายและศีลธรรมหรือกระทบต่อภารกิจของหน่วยงาน</span></p>
+                                            <p style="margin-top:0in;margin-right:0in;margin-bottom:8.0pt;margin-left:0in;line-height:107%;font-size:15px;font-family:&quot;Calibri&quot;,sans-serif;"><span style="font-size:16px;line-height:107%;font-family:Kanit;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;2.8 ไม่รบกวนทำลายหรือทำให้ระบบสารสนเทศของหน่วยงานต้องหยุดชะงัก</span></p>
+                                            <p style="margin-top:0in;margin-right:0in;margin-bottom:8.0pt;margin-left:0in;line-height:107%;font-size:15px;font-family:&quot;Calibri&quot;,sans-serif;"><span style="font-size:16px;line-height:107%;font-family:Kanit;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;2.9 ห้ามกระทำการใดๆ อันมีลักษณะเป็นการลักลอบใช้งานระบบคอมพิวเตอร์หรือระบบสารสนเทศหรือดักรับรหัสผ่านของผู้อื่นไม่ว่าจะเป็นไปเพื่อประโยชน์ในการเข้าถึงข้อมูลหรือเพื่อการใช้ทรัพยากรหรือเพื่อการอื่นใดก็ตาม</span></p>
+                                            <p style="margin-top:0in;margin-right:0in;margin-bottom:8.0pt;margin-left:0in;line-height:107%;font-size:15px;font-family:&quot;Calibri&quot;,sans-serif;"><span style="font-size:16px;line-height:107%;font-family:Kanit;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;2.10 ห้ามนำข้อมูล คัดลอก เลียนแบบ ดัดแปลงหรือตีพิมพ์ไปใช้ประโยชน์เชิงพาณิชย์หรือมีเจตนาเอื้อผลประโยชน์ทางธุรกิจใดๆ โดยเด็ดขาด</span></p>
+                                            <p style="margin-top:0in;margin-right:0in;margin-bottom:8.0pt;margin-left:0in;line-height:107%;font-size:15px;font-family:&quot;Calibri&quot;,sans-serif;"><span style="font-size:8px;line-height:107%;font-family:Kanit;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;</span><span style="font-size:16px;line-height:107%;font-family:Kanit;">หากผู้ใช้งานโปรแกรม&nbsp;</span><span style="font-size:16px;line-height:107%;font-family:Kanit;">EDMIS&nbsp;ทั้ง&nbsp;Admin และ&nbsp;User กระทำการใดๆที่นอกเหนือจากหน้าที่รับผิดชอบหรือปฏิบัติผิดต่อข้อกำหนดและแนวปฏิบัติในการรักษาความมั่นคงและปลอดภัยด้านสารสนเทศของโปรแกรม&nbsp;EDMIS และหลักปฏิบัติสากลที่เกี่ยวข้องกับการรักษาความลับของข้อมูลต่างๆที่อยู่ในความครอบครองหรือควบคุมดูแลของการรถไฟแห่งประเทศไทย หากพบการกระทำที่เป็นความผิดตามกฎหมาย ต้องรับผิดในทางแพ่งหรือต้องรับโทษทางอาญาตามบทบัญญัติของพระราชบัญญัติว่าด้วยการกระทำความผิดเกี่ยวกับคอมพิวเตอร์ปี พ.ศ.2561</span></p>
+                                            <p style="margin-top:0in;margin-right:0in;margin-bottom:8.0pt;margin-left:0in;line-height:107%;font-size:15px;font-family:&quot;Calibri&quot;,sans-serif;"><span style="font-size:16px;line-height:107%;font-family:Kanit;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;3. กรณีบุคลากรลาออก ผู้รับผิดชอบด้านบุคคลแจ้งรายชื่อต่อ&nbsp;</span><span style="font-size:16px;line-height:107%;font-family:Kanit;">Admin ของแต่ละหน่วย เพื่อคัดชื่อออกจากระบบ กรณีมีบุคคลเข้าเพิ่มให้ลงทะเบียนผ่านโปรแกรม&nbsp;EDMIS โดย&nbsp;Admin ของหน่วยงานเป็นผู้ตรวจสอบและรับสมัครบุคคลดังกล่าว และกรณี&nbsp;User ย้ายหน่วยงาน&nbsp;Admin ทั้งสองหน่วยงานต้องประสานงานกันเพื่อทราบและเพื่อการควบคุมระบบต่อไป</span></p>
+                                            <p style="margin-top:0in;margin-right:0in;margin-bottom:8.0pt;margin-left:0in;line-height:107%;font-size:15px;font-family:&quot;Calibri&quot;,sans-serif;"><span style="font-size:16px;line-height:107%;font-family:Kanit;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;4. กระบวนการยืนยันตัวตนของบุคคลากรบนโปรแกรมโดยให้หน่วยงานที่ใช้โปรแกรมเป็นผู้ตรวจสอบและยืนยันตัวตนผู้ใช้โปรแกรมทุกไตรมาส โดยตรวจสอบข้อมูลในระบบ&nbsp;</span><span style="font-size:16px;line-height:107%;font-family:Kanit;">Hard Copy</span></p>
+                                            <p style="margin-top:0in;margin-right:0in;margin-bottom:8.0pt;margin-left:0in;line-height:107%;font-size:15px;font-family:&quot;Calibri&quot;,sans-serif;"><span style="font-size:16px;line-height:107%;font-family:Kanit;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;ทุกฝ่ายอ่านข้อความทั้งหมดเข้าใจแล้วจึงลงนาม (กด</span><span style="font-size:16px;line-height:107%;font-family:Kanit;">&nbsp;Accept) เพื่อเป็นการยอมรับข้อตกลงและเพื่อไว้เป็นหลักฐาน</span></p>
+                                            <p style="margin-top:0in;margin-right:0in;margin-bottom:8.0pt;margin-left:0in;line-height:107%;font-size:15px;font-family:&quot;Calibri&quot;,sans-serif;"><span style="font-size:16px;line-height:107%;font-family:Kanit;">&nbsp;</span></p>
+                                            
+                                    <legend> 
+                                    </legend>
+
+                                            <div class="custom-control custom-checkbox text-center">
+                                                <input type="checkbox" class="custom-control-input" id="policy_checkbox">
+                                                <label style="font-size:17px;font-family:Kanit;" class="custom-control-label" for="policy_checkbox">ฉันยินยอมต่อเงื่อนไขดังกล่าวและยินยอมให้เก็บข้อมูลการทำงานผ่านระบบ EDMIS</label>
+                                            </div>
+                                   
+                                            
                                    </div>
                                     <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Decline</button>
-                                        <button type="submit" class="btn btn-success">Accept</button>
+                                        <div>
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                            <button type="submit" class="btn btn-success" id="accept_btn" disabled>Accept</button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -310,5 +324,12 @@
         return _results
     }
 }
+
+
+var checker = document.getElementById('policy_checkbox');
+var sendbtn = document.getElementById('accept_btn');
+checker.onchange = function() {
+  sendbtn.disabled = !!!this.checked;
+};
 </script>
 @endsection

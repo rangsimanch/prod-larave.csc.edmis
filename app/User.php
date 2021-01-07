@@ -62,6 +62,7 @@ class User extends Authenticatable implements HasMedia
 
     protected $fillable = [
        'dob',
+       'organization_id',
         'name',
         'email',
         'gender',
@@ -255,5 +256,10 @@ class User extends Authenticatable implements HasMedia
 
         return $file;
 
+    }
+
+    public function organization()
+    {
+        return $this->belongsTo(Organization::class, 'organization_id');
     }
 }

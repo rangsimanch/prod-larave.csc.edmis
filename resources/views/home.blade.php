@@ -50,6 +50,11 @@
         </div>
     </div>
 </div>
+
+<?php
+session(['previous-url' => route('admin.home')]);
+?>
+
 @endsection
 @section('scripts')
 {{-- <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>

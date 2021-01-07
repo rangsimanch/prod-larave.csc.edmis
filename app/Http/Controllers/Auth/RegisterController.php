@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\User;
 use App\Team;
 use App\ConstructionContract;
+use App\Organization;
 use App\Jobtitle;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
@@ -69,12 +70,13 @@ class RegisterController extends Controller
     {
         $user = User::create([
             'name' => $data['name'],
+            'gender' => $data['gender'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
             'workphone' => $data['workphone'],
-            'gender' => $data['gender'],
             'team_id' => $data['team_id'],
             'jobtitle_id' => $data['jobtitle_id'],
+            'organization_id' => $data['organization_id'],
         ]);
         
         $user->construction_contracts()->sync($data['construction_contracts']);
@@ -84,30 +86,18 @@ class RegisterController extends Controller
         
     }
 
-    // public function store(StoreUserRequest $request)
-    // {
-    //     $user = User::create($request->all());
-    //     $user->construction_contracts()->sync($request->input('construction_contracts', []));
-
-    //     if ($request->input('img_user', false)) {
-    //         $user->addMedia(storage_path('tmp/uploads/' . $request->input('img_user')))->toMediaCollection('img_user');
-    //     }
-
-    //     if ($request->input('signature', false)) {
-    //         $user->addMedia(storage_path('tmp/uploads/' . $request->input('signature')))->toMediaCollection('signature');
-    //     }
-    //     return redirect()->route('auth.login');
-    // }
 
     public function showRegistrationForm()
     {
-            $teams = Team::all();
+        $organizations = Organization::all()->pluck('title_th', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-            $jobtitles = Jobtitle::all();
+        $teams = Team::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-            $construction_contracts = ConstructionContract::all();
+        $jobtitles = Jobtitle::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        return view('auth.register', compact('teams', 'jobtitles', 'construction_contracts'));
+        $construction_contracts = ConstructionContract::all()->pluck('code', 'id');
+
+        return view('auth.register', compact('organizations','teams', 'jobtitles', 'construction_contracts'));
     }
 
 }
