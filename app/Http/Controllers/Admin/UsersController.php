@@ -20,6 +20,7 @@ use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Yajra\DataTables\Facades\DataTables;
 
+
 class UsersController extends Controller
 {
     use MediaUploadingTrait, CsvImportTrait;
@@ -35,7 +36,7 @@ class UsersController extends Controller
                 $query = User::with(['organization', 'team', 'jobtitle', 'roles', 'construction_contracts'])
                 ->select(sprintf('%s.*', (new User)->table))
                 ->whereHas('construction_contracts', function($q) {
-                $q->where('construction_contract_id', auth()->session()->get('construction_contract_id'));
+                    $q->where('construction_contract_id', session('construction_contract_id'));
                 });
             }
             $table = Datatables::of($query);
