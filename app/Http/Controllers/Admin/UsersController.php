@@ -27,9 +27,19 @@ class UsersController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $query = User::with(['organization', 'team', 'jobtitle', 'roles', 'construction_contracts'])->select(sprintf('%s.*', (new User)->table));
+            if(auth()->user()->roles->contains(1)){
+                $query = User::with(['organization', 'team', 'jobtitle', 'roles', 'construction_contracts'])
+                ->select(sprintf('%s.*', (new User)->table));
+            }
+            else{
+                $query = User::with(['organization', 'team', 'jobtitle', 'roles', 'construction_contracts'])
+                ->select(sprintf('%s.*', (new User)->table))
+                ->whereHas('construction_contracts', function($q) {
+                $q->where('construction_contracts_id', auth()->session()->get('construction_contract_id'));
+                });
+            }
             $table = Datatables::of($query);
-
+ๅ
             $table->addColumn('placeholder', '&nbsp;');
             $table->addColumn('actions', '&nbsp;');
 
