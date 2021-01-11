@@ -39,7 +39,7 @@ class UsersController extends Controller
                 });
             }
             $table = Datatables::of($query);
-ๅ
+
             $table->addColumn('placeholder', '&nbsp;');
             $table->addColumn('actions', '&nbsp;');
 
