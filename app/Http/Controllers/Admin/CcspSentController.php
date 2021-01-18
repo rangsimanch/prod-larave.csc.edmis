@@ -101,7 +101,7 @@ class CcspSentController extends Controller
         $users                  = User::get();
         $teams                  = Team::get();
         
-        session(['previous-url' => request()->url()]);
+        session(['previous-url' => route('admin.ccsp-sents.index')]);
         return view('admin.ccspSents.index', compact('teams', 'teams', 'teams', 'construction_contracts', 'users', 'users', 'teams'));
     }
 }

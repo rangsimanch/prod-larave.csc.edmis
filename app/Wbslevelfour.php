@@ -1,5 +1,7 @@
 <?php
 
+// This is WBS Lv.5 (Detail of work)
+
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;

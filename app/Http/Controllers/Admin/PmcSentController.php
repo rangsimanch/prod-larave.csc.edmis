@@ -100,7 +100,7 @@ class PmcSentController extends Controller
         $users                  = User::get();
         $teams                  = Team::get();
         
-        session(['previous-url' => request()->url()]);
+        session(['previous-url' => route('admin.pmc-sents.index')]);
         return view('admin.pmcSents.index', compact('teams', 'teams', 'teams', 'construction_contracts', 'users', 'users', 'teams'));
     }
 }

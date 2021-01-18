@@ -100,7 +100,7 @@ class SrtSentController extends Controller
         $users                  = User::get();
         $teams                  = Team::get();
         
-        session(['previous-url' => request()->url()]);
+        session(['previous-url' => route('admin.srt-sents.index')]);
         return view('admin.srtSents.index', compact('teams', 'teams', 'teams', 'construction_contracts', 'users', 'users', 'teams'));
     }
 }
