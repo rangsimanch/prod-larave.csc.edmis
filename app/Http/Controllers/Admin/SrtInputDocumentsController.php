@@ -63,6 +63,10 @@ class SrtInputDocumentsController extends Controller
                 return $row->docuement_status ? $row->docuement_status->title : '';
             });
 
+            $table->addColumn('constuction_contract_code', function ($row) {
+                return $row->constuction_contract ? $row->constuction_contract->code : '';
+            });
+
             $table->editColumn('document_number', function ($row) {
                 return $row->document_number ? $row->document_number : "";
             });
@@ -151,7 +155,7 @@ class SrtInputDocumentsController extends Controller
                 return $row->close_by ? $row->close_by->name : '';
             });
 
-            $table->rawColumns(['actions', 'placeholder', 'docuement_status', 'file_upload', 'file_upload_2', 'file_upload_3', 'file_upload_4','complete_file', 'close_by']);
+            $table->rawColumns(['actions', 'placeholder','construction_contract', 'docuement_status', 'file_upload', 'file_upload_2', 'file_upload_3', 'file_upload_4','complete_file', 'close_by']);
 
             return $table->make(true);
         }

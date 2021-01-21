@@ -20,8 +20,7 @@ class ContractAndComponentsApiController extends Controller
     {
         abort_if(Gate::denies('contract_and_component_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new ContractAndComponentResource(ContractAndComponent::all());
-
+        return new ContractAndComponentResource(ContractAndComponent::with(['construction_contract', 'team'])->get());
     }
 
     public function store(StoreContractAndComponentRequest $request)
@@ -35,15 +34,13 @@ class ContractAndComponentsApiController extends Controller
         return (new ContractAndComponentResource($contractAndComponent))
             ->response()
             ->setStatusCode(Response::HTTP_CREATED);
-
     }
 
     public function show(ContractAndComponent $contractAndComponent)
     {
         abort_if(Gate::denies('contract_and_component_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new ContractAndComponentResource($contractAndComponent);
-
+        return new ContractAndComponentResource($contractAndComponent->load(['construction_contract', 'team']));
     }
 
     public function update(UpdateContractAndComponentRequest $request, ContractAndComponent $contractAndComponent)
@@ -52,9 +49,12 @@ class ContractAndComponentsApiController extends Controller
 
         if ($request->input('file_upload', false)) {
             if (!$contractAndComponent->file_upload || $request->input('file_upload') !== $contractAndComponent->file_upload->file_name) {
+                if ($contractAndComponent->file_upload) {
+                    $contractAndComponent->file_upload->delete();
+                }
+
                 $contractAndComponent->addMedia(storage_path('tmp/uploads/' . $request->input('file_upload')))->toMediaCollection('file_upload');
             }
-
         } elseif ($contractAndComponent->file_upload) {
             $contractAndComponent->file_upload->delete();
         }
@@ -62,7 +62,6 @@ class ContractAndComponentsApiController extends Controller
         return (new ContractAndComponentResource($contractAndComponent))
             ->response()
             ->setStatusCode(Response::HTTP_ACCEPTED);
-
     }
 
     public function destroy(ContractAndComponent $contractAndComponent)
@@ -72,7 +71,5 @@ class ContractAndComponentsApiController extends Controller
         $contractAndComponent->delete();
 
         return response(null, Response::HTTP_NO_CONTENT);
-
     }
-
 }

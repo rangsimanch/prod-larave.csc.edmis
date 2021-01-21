@@ -34,6 +34,9 @@
                                     {{ trans('cruds.srtInputDocument.fields.docuement_status') }}
                                 </th>
                                 <th>
+                                    {{ trans('cruds.srtInputDocument.fields.constuction_contract') }}
+                                </th>
+                                <th>
                                     {{ trans('cruds.srtInputDocument.fields.document_number') }}
                                 </th>
                                 <th>
@@ -87,6 +90,14 @@
                                         <option value>{{ trans('global.all') }}</option>
                                         @foreach($srt_document_statuses as $key => $item)
                                             <option value="{{ $item->title }}">{{ $item->title }}</option>
+                                        @endforeach
+                                    </select>
+                                </td>
+                                <td>
+                                    <select class="search">
+                                        <option value>{{ trans('global.all') }}</option>
+                                        @foreach($construction_contracts as $key => $item)
+                                            <option value="{{ $item->code }}">{{ $item->code }}</option>
                                         @endforeach
                                     </select>
                                 </td>
@@ -203,6 +214,7 @@
       { data: 'placeholder', name: 'placeholder' },
  { data: 'id', name: 'id', visible: false},
 { data: 'docuement_status_title', name: 'docuement_status.title' },
+{ data: 'constuction_contract_code', name: 'constuction_contract.code' },
 { data: 'document_number', name: 'document_number' },
 { data: 'document_type', name: 'document_type' },
 { data: 'subject', name: 'subject' },

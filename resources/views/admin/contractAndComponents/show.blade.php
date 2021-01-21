@@ -35,6 +35,14 @@
                                 </tr>
                                 <tr>
                                     <th>
+                                        {{ trans('cruds.contractAndComponent.fields.construction_contract') }}
+                                    </th>
+                                    <td>
+                                        {{ $contractAndComponent->construction_contract->code ?? '' }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
                                         {{ trans('cruds.contractAndComponent.fields.file_upload') }}
                                     </th>
                                     <td>

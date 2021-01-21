@@ -14,7 +14,6 @@ class MassDestroyContractAndComponentRequest extends FormRequest
         abort_if(Gate::denies('contract_and_component_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         return true;
-
     }
 
     public function rules()
@@ -23,6 +22,5 @@ class MassDestroyContractAndComponentRequest extends FormRequest
             'ids'   => 'required|array',
             'ids.*' => 'exists:contract_and_components,id',
         ];
-
     }
 }

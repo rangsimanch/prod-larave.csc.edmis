@@ -27,6 +27,18 @@
                             @endif
                             <span class="help-block">{{ trans('cruds.contractAndComponent.fields.document_code_helper') }}</span>
                         </div>
+                        <div class="form-group {{ $errors->has('construction_contract') ? 'has-error' : '' }}">
+                            <label for="construction_contract_id">{{ trans('cruds.contractAndComponent.fields.construction_contract') }}</label>
+                            <select class="form-control select2" name="construction_contract_id" id="construction_contract_id">
+                                @foreach($construction_contracts as $id => $construction_contract)
+                                    <option value="{{ $id }}" {{ old('construction_contract_id') == $id ? 'selected' : '' }}>{{ $construction_contract }}</option>
+                                @endforeach
+                            </select>
+                            @if($errors->has('construction_contract'))
+                                <span class="help-block" role="alert">{{ $errors->first('construction_contract') }}</span>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.contractAndComponent.fields.construction_contract_helper') }}</span>
+                        </div>
                         <div class="form-group {{ $errors->has('file_upload') ? 'has-error' : '' }}">
                             <label for="file_upload">{{ trans('cruds.contractAndComponent.fields.file_upload') }}</label>
                             <div class="needsclick dropzone" id="file_upload-dropzone">
@@ -57,13 +69,13 @@
     var uploadedFileUploadMap = {}
 Dropzone.options.fileUploadDropzone = {
     url: '{{ route('admin.contract-and-components.storeMedia') }}',
-    maxFilesize: 2000, // MB
+    maxFilesize: 800, // MB
     addRemoveLinks: true,
     headers: {
       'X-CSRF-TOKEN': "{{ csrf_token() }}"
     },
     params: {
-      size: 2000
+      size: 800
     },
     success: function (file, response) {
       $('form').append('<input type="hidden" name="file_upload[]" value="' + response.name + '">')

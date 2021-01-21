@@ -5,22 +5,26 @@ namespace App\Http\Requests;
 use App\ContractAndComponent;
 use Gate;
 use Illuminate\Foundation\Http\FormRequest;
-use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Http\Response;
 
 class StoreContractAndComponentRequest extends FormRequest
 {
     public function authorize()
     {
-        abort_if(Gate::denies('contract_and_component_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
-        return true;
-
+        return Gate::allows('contract_and_component_create');
     }
 
     public function rules()
     {
         return [
+            'document_name' => [
+                'string',
+                'nullable',
+            ],
+            'document_code' => [
+                'string',
+                'nullable',
+            ],
         ];
-
     }
 }

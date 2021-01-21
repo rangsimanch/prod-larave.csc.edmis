@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\ConstructionContract;
 use App\ContractAndComponent;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Traits\MediaUploadingTrait;
 use App\Http\Requests\MassDestroyContractAndComponentRequest;
 use App\Http\Requests\StoreContractAndComponentRequest;
 use App\Http\Requests\UpdateContractAndComponentRequest;
+use App\Team;
 use Gate;
 use Illuminate\Http\Request;
 use Spatie\MediaLibrary\Models\Media;
@@ -23,7 +25,7 @@ class ContractAndComponentsController extends Controller
         abort_if(Gate::denies('contract_and_component_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
-            $query = ContractAndComponent::query()->select(sprintf('%s.*', (new ContractAndComponent)->table));
+            $query = ContractAndComponent::with(['construction_contract', 'team'])->select(sprintf('%s.*', (new ContractAndComponent)->table));
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
@@ -50,6 +52,10 @@ class ContractAndComponentsController extends Controller
             $table->editColumn('document_code', function ($row) {
                 return $row->document_code ? $row->document_code : "";
             });
+            $table->addColumn('construction_contract_code', function ($row) {
+                return $row->construction_contract ? $row->construction_contract->code : '';
+            });
+
             $table->editColumn('file_upload', function ($row) {
                 if (!$row->file_upload) {
                     return '';
@@ -64,19 +70,24 @@ class ContractAndComponentsController extends Controller
                 return implode(', ', $links);
             });
 
-            $table->rawColumns(['actions', 'placeholder', 'file_upload']);
+            $table->rawColumns(['actions', 'placeholder', 'construction_contract', 'file_upload']);
 
             return $table->make(true);
         }
 
-        return view('admin.contractAndComponents.index');
+        $construction_contracts = ConstructionContract::get();
+        $teams                  = Team::get();
+
+        return view('admin.contractAndComponents.index', compact('construction_contracts', 'teams'));
     }
 
     public function create()
     {
         abort_if(Gate::denies('contract_and_component_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return view('admin.contractAndComponents.create');
+        $construction_contracts = ConstructionContract::all()->pluck('code', 'id')->prepend(trans('global.pleaseSelect'), '');
+
+        return view('admin.contractAndComponents.create', compact('construction_contracts'));
     }
 
     public function store(StoreContractAndComponentRequest $request)
@@ -92,14 +103,17 @@ class ContractAndComponentsController extends Controller
         }
 
         return redirect()->route('admin.contract-and-components.index');
-
     }
 
     public function edit(ContractAndComponent $contractAndComponent)
     {
         abort_if(Gate::denies('contract_and_component_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return view('admin.contractAndComponents.edit', compact('contractAndComponent'));
+        $construction_contracts = ConstructionContract::all()->pluck('code', 'id')->prepend(trans('global.pleaseSelect'), '');
+
+        $contractAndComponent->load('construction_contract', 'team');
+
+        return view('admin.contractAndComponents.edit', compact('construction_contracts', 'contractAndComponent'));
     }
 
     public function update(UpdateContractAndComponentRequest $request, ContractAndComponent $contractAndComponent)
@@ -111,9 +125,7 @@ class ContractAndComponentsController extends Controller
                 if (!in_array($media->file_name, $request->input('file_upload', []))) {
                     $media->delete();
                 }
-
             }
-
         }
 
         $media = $contractAndComponent->file_upload->pluck('file_name')->toArray();
@@ -122,16 +134,16 @@ class ContractAndComponentsController extends Controller
             if (count($media) === 0 || !in_array($file, $media)) {
                 $contractAndComponent->addMedia(storage_path('tmp/uploads/' . $file))->toMediaCollection('file_upload');
             }
-
         }
 
         return redirect()->route('admin.contract-and-components.index');
-
     }
 
     public function show(ContractAndComponent $contractAndComponent)
     {
         abort_if(Gate::denies('contract_and_component_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $contractAndComponent->load('construction_contract', 'team');
 
         return view('admin.contractAndComponents.show', compact('contractAndComponent'));
     }
@@ -143,7 +155,6 @@ class ContractAndComponentsController extends Controller
         $contractAndComponent->delete();
 
         return back();
-
     }
 
     public function massDestroy(MassDestroyContractAndComponentRequest $request)
@@ -151,7 +162,6 @@ class ContractAndComponentsController extends Controller
         ContractAndComponent::whereIn('id', request('ids'))->delete();
 
         return response(null, Response::HTTP_NO_CONTENT);
-
     }
 
     public function storeCKEditorImages(Request $request)
@@ -164,7 +174,5 @@ class ContractAndComponentsController extends Controller
         $media         = $model->addMediaFromRequest('upload')->toMediaCollection('ck-media');
 
         return response()->json(['id' => $media->id, 'url' => $media->getUrl()], Response::HTTP_CREATED);
-
     }
-
 }
