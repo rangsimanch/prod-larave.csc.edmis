@@ -153,7 +153,7 @@ class SrtInboxController extends Controller
         $users                  = User::get();
         $teams                  = Team::get();
 
-        session(['previous-url' => route('admin.srt-sents.index')]);
+        session(['previous-url' => route('admin.srt-inboxes.index')]);
         return view('admin.srtInboxes.index', compact('teams', 'teams', 'teams', 'construction_contracts', 'users', 'users', 'teams'));
 
     }

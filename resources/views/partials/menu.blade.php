@@ -398,7 +398,7 @@
                                 </a>
                             </li>
                         @endcan
-                        @can('letter_srt_access')
+                        @if(Auth::user()->team_id == 1)
                             <li class="treeview">
                                 <a href="#">
                                     <i class="fa-fw fas fa-envelope">
@@ -408,7 +408,7 @@
                                     <span class="pull-right-container"><i class="fa fa-fw fa-angle-left pull-right"></i></span>
                                 </a>
                                 <ul class="treeview-menu">
-                                    @can('srt_inbox_access')
+                                    @if('srt_inbox_access')
                                         <li class="{{ request()->is("admin/srt-inboxes") || request()->is("admin/srt-inboxes/*") ? "active" : "" }}">
                                             <a href="{{ route("admin.srt-inboxes.index") }}">
                                                 <i class="fa-fw far fa-envelope">
@@ -432,8 +432,8 @@
                                     @endcan
                                 </ul>
                             </li>
-                        @endcan
-                        @can('letter_pmc_access')
+                        @endif
+                        @if(Auth::user()->team_id == 2)
                             <li class="treeview">
                                 <a href="#">
                                     <i class="fa-fw fas fa-envelope">
@@ -467,8 +467,8 @@
                                     @endcan
                                 </ul>
                             </li>
-                        @endcan
-                        @can('letter_csc_access')
+                        @endif
+                        @if(Auth::user()->team_id == 3)
                             <li class="treeview">
                                 <a href="#">
                                     <i class="fa-fw fas fa-envelope">
@@ -502,8 +502,8 @@
                                     @endcan
                                 </ul>
                             </li>
-                        @endcan
-                        @can('letter_ccsp_access')
+                        @endif
+                        @if(Auth::user()->team_id == 4)
                             <li class="treeview">
                                 <a href="#">
                                     <i class="fa-fw fas fa-envelope">
@@ -537,7 +537,147 @@
                                     @endcan
                                 </ul>
                             </li>
-                        @endcan
+                        @endif
+                        @if(Auth::user()->team_id == 5)
+                            <li class="treeview">
+                                <a href="#">
+                                    <i class="fa-fw fas fa-envelope">
+
+                                    </i>
+                                    <span>{{ trans('cruds.letterNwr.title') }}</span>
+                                    <span class="pull-right-container"><i class="fa fa-fw fa-angle-left pull-right"></i></span>
+                                </a>
+                                <ul class="treeview-menu">
+                                    @can('nwr_inbox_access')
+                                        <li class="{{ request()->is("admin/nwr-inboxes") || request()->is("admin/nwr-inboxes/*") ? "active" : "" }}">
+                                            <a href="{{ route("admin.nwr-inboxes.index") }}">
+                                                <i class="fa-fw far fa-envelope">
+
+                                                </i>
+                                                <span>{{ trans('cruds.nwrInbox.title') }}</span>
+
+                                            </a>
+                                        </li>
+                                    @endcan
+                                    @can('nwr_sent_access')
+                                        <li class="{{ request()->is("admin/nwr-sents") || request()->is("admin/nwr-sents/*") ? "active" : "" }}">
+                                            <a href="{{ route("admin.nwr-sents.index") }}">
+                                                <i class="fa-fw far fa-share-square">
+
+                                                </i>
+                                                <span>{{ trans('cruds.nwrSent.title') }}</span>
+
+                                            </a>
+                                        </li>
+                                    @endcan
+                                </ul>
+                            </li>
+                        @endif
+                        @if(Auth::user()->team_id == 6)
+                            <li class="treeview">
+                                <a href="#">
+                                    <i class="fa-fw fas fa-envelope">
+
+                                    </i>
+                                    <span>{{ trans('cruds.letterCivil.title') }}</span>
+                                    <span class="pull-right-container"><i class="fa fa-fw fa-angle-left pull-right"></i></span>
+                                </a>
+                                <ul class="treeview-menu">
+                                    @can('civil_inbox_access')
+                                        <li class="{{ request()->is("admin/civil-inboxes") || request()->is("admin/civil-inboxes/*") ? "active" : "" }}">
+                                            <a href="{{ route("admin.civil-inboxes.index") }}">
+                                                <i class="fa-fw far fa-envelope">
+
+                                                </i>
+                                                <span>{{ trans('cruds.civilInbox.title') }}</span>
+
+                                            </a>
+                                        </li>
+                                    @endcan
+                                    @can('cilvil_sent_access')
+                                        <li class="{{ request()->is("admin/cilvil-sents") || request()->is("admin/cilvil-sents/*") ? "active" : "" }}">
+                                            <a href="{{ route("admin.cilvil-sents.index") }}">
+                                                <i class="fa-fw far fa-share-square">
+
+                                                </i>
+                                                <span>{{ trans('cruds.cilvilSent.title') }}</span>
+
+                                            </a>
+                                        </li>
+                                    @endcan
+                                </ul>
+                            </li>
+                        @endif
+                        @if(Auth::user()->team_id == 7)
+                            <li class="treeview">
+                                <a href="#">
+                                    <i class="fa-fw fas fa-envelope">
+
+                                    </i>
+                                    <span>{{ trans('cruds.letterTei.title') }}</span>
+                                    <span class="pull-right-container"><i class="fa fa-fw fa-angle-left pull-right"></i></span>
+                                </a>
+                                <ul class="treeview-menu">
+                                    @can('tei_inbox_access')
+                                        <li class="{{ request()->is("admin/tei-inboxes") || request()->is("admin/tei-inboxes/*") ? "active" : "" }}">
+                                            <a href="{{ route("admin.tei-inboxes.index") }}">
+                                                <i class="fa-fw far fa-envelope">
+
+                                                </i>
+                                                <span>{{ trans('cruds.teiInbox.title') }}</span>
+
+                                            </a>
+                                        </li>
+                                    @endcan
+                                    @can('tei_sent_access')
+                                        <li class="{{ request()->is("admin/tei-sents") || request()->is("admin/tei-sents/*") ? "active" : "" }}">
+                                            <a href="{{ route("admin.tei-sents.index") }}">
+                                                <i class="fa-fw far fa-share-square">
+
+                                                </i>
+                                                <span>{{ trans('cruds.teiSent.title') }}</span>
+
+                                            </a>
+                                        </li>
+                                    @endcan
+                                </ul>
+                            </li>
+                        @endif
+                        @if(Auth::user()->team_id == 8)
+                            <li class="treeview">
+                                <a href="#">
+                                    <i class="fa-fw fas fa-envelope">
+
+                                    </i>
+                                    <span>{{ trans('cruds.letterSptk.title') }}</span>
+                                    <span class="pull-right-container"><i class="fa fa-fw fa-angle-left pull-right"></i></span>
+                                </a>
+                                <ul class="treeview-menu">
+                                    @can('sptk_inbox_access')
+                                        <li class="{{ request()->is("admin/sptk-inboxes") || request()->is("admin/sptk-inboxes/*") ? "active" : "" }}">
+                                            <a href="{{ route("admin.sptk-inboxes.index") }}">
+                                                <i class="fa-fw far fa-envelope">
+
+                                                </i>
+                                                <span>{{ trans('cruds.sptkInbox.title') }}</span>
+
+                                            </a>
+                                        </li>
+                                    @endcan
+                                    @can('sptk_sent_access')
+                                        <li class="{{ request()->is("admin/sptk-sents") || request()->is("admin/sptk-sents/*") ? "active" : "" }}">
+                                            <a href="{{ route("admin.sptk-sents.index") }}">
+                                                <i class="fa-fw far fa-share-square">
+
+                                                </i>
+                                                <span>{{ trans('cruds.sptkSent.title') }}</span>
+
+                                            </a>
+                                        </li>
+                                    @endcan
+                                </ul>
+                            </li>
+                        @endif
                     </ul>
                 </li>
             @endcan

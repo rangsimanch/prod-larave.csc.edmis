@@ -14,18 +14,19 @@ use App\User;
 use Yajra\DataTables\Facades\DataTables;
 use Spatie\MediaLibrary\Models\Media;
 
-class PmcInboxController extends Controller
+class NwrInboxController extends Controller
 {
     public function index(Request $request)
     {
-        abort_if(Gate::denies('pmc_inbox_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+         abort_if(Gate::denies('nwr_inbox_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         if ($request->ajax()) {
             $query = AddLetter::with(['sender', 'receiver', 'cc_tos', 'construction_contract', 'create_by', 'receive_by', 'team'])
             ->select(sprintf('%s.*', (new AddLetter)->table))
             ->whereHas('cc_tos', function($q) {
-                $q->where('team_id', 2);
+                $q->where('team_id', 5);
             })
-            ->orWhere('receiver_id',2);
+            ->orWhere('receiver_id',5);
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
@@ -33,7 +34,7 @@ class PmcInboxController extends Controller
 
             $table->editColumn('actions', function ($row) {
                 $viewGate      = 'add_letter_show';
-                if($row->receiver->code == "PMC"){
+                if($row->receiver->code == "NWR"){
                     $editGate      = 'add_letter_edit';
                 }
                 else{
@@ -53,7 +54,7 @@ class PmcInboxController extends Controller
 
 
             $table->editColumn('letter_type', function ($row) {
-                if($row->receiver->code == "PMC" && $row->mask_as_received == 0){
+                if($row->receiver->code == "NWR" && $row->mask_as_received == 0){
                     return sprintf("<p style=\"color:blue\"><b>%s</b></p>",$row->letter_type ? AddLetter::LETTER_TYPE_SELECT[$row->letter_type] : '');
                 }
                 else{
@@ -61,7 +62,7 @@ class PmcInboxController extends Controller
                 }
             });
             $table->editColumn('title', function ($row) {
-                if($row->receiver->code == "PMC" && $row->mask_as_received == 0){
+                if($row->receiver->code == "NWR" && $row->mask_as_received == 0){
                     return sprintf("<p style=\"color:blue\"><b>%s</b></p>",$row->title ? $row->title : "");
                 }
                 else{
@@ -69,7 +70,7 @@ class PmcInboxController extends Controller
                 }
             });
             $table->editColumn('letter_no', function ($row) {
-                if($row->receiver->code == "PMC" && $row->mask_as_received == 0){
+                if($row->receiver->code == "NWR" && $row->mask_as_received == 0){
                     return sprintf("<p style=\"color:blue\"><b>%s</b></p>",$row->letter_no ? $row->letter_no : "");
                 }
                 else{
@@ -78,7 +79,7 @@ class PmcInboxController extends Controller
             });
 
             $table->addColumn('sender_code', function ($row) {
-                if($row->receiver->code == "PMC" && $row->mask_as_received == 0){
+                if($row->receiver->code == "NWR" && $row->mask_as_received == 0){
                     return sprintf("<p style=\"color:blue\"><b>%s</b></p>",$row->sender ? $row->sender->code : '');
                 }
                 else{
@@ -87,7 +88,7 @@ class PmcInboxController extends Controller
             });
 
             $table->addColumn('receiver_code', function ($row) {
-                if($row->receiver->code == "PMC" && $row->mask_as_received == 0){
+                if($row->receiver->code == "NWR" && $row->mask_as_received == 0){
                     return sprintf("<p style=\"color:blue\"><b>%s</b></p>",$row->receiver ? $row->receiver->code : '');
                 }
                 else{
@@ -105,7 +106,7 @@ class PmcInboxController extends Controller
                 return implode(' ', $labels);
             });
             $table->addColumn('construction_contract_code', function ($row) {
-                if($row->receiver->code == "PMC" && $row->mask_as_received == 0){
+                if($row->receiver->code == "NWR" && $row->mask_as_received == 0){
                     return sprintf("<p style=\"color:blue\"><b>%s</b></p>",$row->construction_contract ? $row->construction_contract->code : '');
                 }
                 else{
@@ -139,7 +140,7 @@ class PmcInboxController extends Controller
 
             $table->rawColumns(['actions', 'placeholder', 
             'letter_type', 'title', 'letter_no', 'sender_code', 'receiver_code' ,'construction_contract_code',
-            'sender','receiver', 'cc_to', 'construction_contract', 'letter_upload', ' mask_as_received']);
+            'sender','receiver', 'cc_to', 'construction_contract', 'letter_upload', 'mask_as_received']);
 
             return $table->make(true);
         }
@@ -152,8 +153,8 @@ class PmcInboxController extends Controller
         $users                  = User::get();
         $teams                  = Team::get();
 
-        session(['previous-url' => route('admin.pmc-inboxes.index')]);
-        return view('admin.pmcInboxes.index', compact('teams', 'teams', 'teams', 'construction_contracts', 'users', 'users', 'teams'));
+        session(['previous-url' => route('admin.nwr-inboxes.index')]);
+        return view('admin.nwrInboxes.index', compact('teams', 'teams', 'teams', 'construction_contracts', 'users', 'users', 'teams'));
 
     }
 }

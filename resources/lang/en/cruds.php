@@ -1109,6 +1109,22 @@ return [
     'title'          => 'SRT',
     'title_singular' => 'SRT',
 ],
+'letterNwr'                 => [
+    'title'          => 'NWR',
+    'title_singular' => 'NWR',
+],
+'letterCivil'                 => [
+    'title'          => 'CIVIL',
+    'title_singular' => 'CIVIL',
+],
+'letterTei'                 => [
+    'title'          => 'TEI',
+    'title_singular' => 'TEI',
+],
+'letterSptk'                 => [
+    'title'          => 'SPTK',
+    'title_singular' => 'SPTK',
+],
 'letterIncomingSrt'         => [
     'title'          => 'Incoming',
     'title_singular' => 'Incoming',
@@ -2231,6 +2247,54 @@ return [
         'title_singular' => 'Inbox',
     ],
     'ccspSent'                  => [
+        'title'          => 'Sent',
+        'title_singular' => 'Sent',
+    ],
+    'letterNwr'                 => [
+        'title'          => 'NWR',
+        'title_singular' => 'NWR',
+    ],
+    'letterCivil'               => [
+        'title'          => 'CIVIL',
+        'title_singular' => 'CIVIL',
+    ],
+    'letterTei'                 => [
+        'title'          => 'TEI',
+        'title_singular' => 'TEI',
+    ],
+    'letterSptk'                => [
+        'title'          => 'SPTK',
+        'title_singular' => 'SPTK',
+    ],
+    'nwrInbox'                  => [
+        'title'          => 'Inbox',
+        'title_singular' => 'Inbox',
+    ],
+    'nwrSent'                   => [
+        'title'          => 'Sent',
+        'title_singular' => 'Sent',
+    ],
+    'civilInbox'                => [
+        'title'          => 'Inbox',
+        'title_singular' => 'Inbox',
+    ],
+    'cilvilSent'                => [
+        'title'          => 'Sent',
+        'title_singular' => 'Sent',
+    ],
+    'teiInbox'                  => [
+        'title'          => 'Inbox',
+        'title_singular' => 'Inbox',
+    ],
+    'teiSent'                   => [
+        'title'          => 'Sent',
+        'title_singular' => 'Sent',
+    ],
+    'sptkInbox'                 => [
+        'title'          => 'Inbox',
+        'title_singular' => 'Inbox',
+    ],
+    'sptkSent'                  => [
         'title'          => 'Sent',
         'title_singular' => 'Sent',
     ],

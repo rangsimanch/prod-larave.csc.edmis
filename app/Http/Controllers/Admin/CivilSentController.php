@@ -7,22 +7,15 @@ use Gate;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-use App\AddLetter;
-use App\ConstructionContract;
-use App\Team;
-use App\User;
-use Yajra\DataTables\Facades\DataTables;
-use Spatie\MediaLibrary\Models\Media;
-
-class SrtSentController extends Controller
+class CivilSentController extends Controller
 {
     public function index(Request $request)
     {
-        abort_if(Gate::denies('srt_sent_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('civil_sent_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         if ($request->ajax()) {
             $query = AddLetter::with(['sender', 'receiver', 'cc_tos', 'construction_contract', 'create_by', 'receive_by', 'team'])
             ->select(sprintf('%s.*', (new AddLetter)->table))
-            ->orWhere('sender_id',1);
+            ->orWhere('sender_id',6);
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
@@ -101,7 +94,7 @@ class SrtSentController extends Controller
         $users                  = User::get();
         $teams                  = Team::get();
         
-        session(['previous-url' => route('admin.srt-sents.index')]);
-        return view('admin.srtSents.index', compact('teams', 'teams', 'teams', 'construction_contracts', 'users', 'users', 'teams'));
+        session(['previous-url' => route('admin.civil-sents.index')]);
+        return view('admin.civilSents.index', compact('teams', 'teams', 'teams', 'construction_contracts', 'users', 'users', 'teams'));
     }
 }

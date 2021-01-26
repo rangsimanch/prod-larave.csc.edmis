@@ -284,6 +284,30 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth'], '
    // Ccsp Sents
    Route::resource('ccsp-sents', 'CcspSentController', ['except' => ['create', 'store', 'edit', 'update', 'show', 'destroy']]);
 
+   // Nwr Inboxes
+   Route::resource('nwr-inboxes', 'NwrInboxController', ['except' => ['create', 'store', 'edit', 'update', 'show', 'destroy']]);
+
+   // Nwr Sents
+   Route::resource('nwr-sents', 'NwrSentController', ['except' => ['create', 'store', 'edit', 'update', 'show', 'destroy']]);
+
+   // Civil Inboxes
+   Route::resource('civil-inboxes', 'CivilInboxController', ['except' => ['create', 'store', 'edit', 'update', 'show', 'destroy']]);
+
+   // Civil Sents
+   Route::resource('civil-sents', 'CivilSentController', ['except' => ['create', 'store', 'edit', 'update', 'show', 'destroy']]);
+
+   // Tei Inboxes
+   Route::resource('tei-inboxes', 'TeiInboxController', ['except' => ['create', 'store', 'edit', 'update', 'show', 'destroy']]);
+
+   // Tei Sents
+   Route::resource('tei-sents', 'TeiSentController', ['except' => ['create', 'store', 'edit', 'update', 'show', 'destroy']]);
+
+   // Sptk Inboxes
+   Route::resource('sptk-inboxes', 'SptkInboxController', ['except' => ['create', 'store', 'edit', 'update', 'show', 'destroy']]);
+
+   // Sptk Sents
+   Route::resource('sptk-sents', 'SptkSentController', ['except' => ['create', 'store', 'edit', 'update', 'show', 'destroy']]);
+
     // Check Sheets
     Route::delete('check-sheets/destroy', 'CheckSheetController@massDestroy')->name('check-sheets.massDestroy');
     Route::post('check-sheets/media', 'CheckSheetController@storeMedia')->name('check-sheets.storeMedia');
@@ -451,6 +475,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth'], '
     // Organizations
     Route::delete('organizations/destroy', 'OrganizationController@massDestroy')->name('organizations.massDestroy');
     Route::resource('organizations', 'OrganizationController');
+
+    
 
     Route::get('system-calendar', 'SystemCalendarController@index')->name('systemCalendar');
     Route::get('global-search', 'GlobalSearchController@search')->name('globalSearch');

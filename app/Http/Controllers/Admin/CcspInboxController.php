@@ -152,7 +152,7 @@ class CcspInboxController extends Controller
         $users                  = User::get();
         $teams                  = Team::get();
 
-        session(['previous-url' => route('admin.ccsp-sents.index')]);
+        session(['previous-url' => route('admin.ccsp-inboxes.index')]);
         return view('admin.ccspInboxes.index', compact('teams', 'teams', 'teams', 'construction_contracts', 'users', 'users', 'teams'));
     }
 }

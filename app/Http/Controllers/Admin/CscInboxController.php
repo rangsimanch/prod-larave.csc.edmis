@@ -151,7 +151,7 @@ class CscInboxController extends Controller
         $users                  = User::get();
         $teams                  = Team::get();
 
-        session(['previous-url' => route('admin.csc-sents.index')]);
+        session(['previous-url' => route('admin.csc-inboxes.index')]);
         return view('admin.cscInboxes.index', compact('teams', 'teams', 'teams', 'construction_contracts', 'users', 'users', 'teams'));
     }
 }
