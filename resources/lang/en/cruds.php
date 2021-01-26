@@ -635,8 +635,8 @@ return [
 ],
 
 'dailyRequest'           => [
-    'title'          => 'CCSP Daily Request',
-    'title_singular' => 'CCSP Daily Request',
+    'title'          => 'Daily Request',
+    'title_singular' => 'Daily Request',
     'fields'         => [
         'id'                      => 'ID',
         'id_helper'               => '',
@@ -665,8 +665,8 @@ return [
     ],
 ],
 'dailyReport'            => [
-    'title'          => 'CCSP Daily Report',
-    'title_singular' => 'CCSP Daily Report',
+    'title'          => 'Daily Report',
+    'title_singular' => 'Daily Report',
     'fields'         => [
         'id'                      => 'ID',
         'id_helper'               => '',
