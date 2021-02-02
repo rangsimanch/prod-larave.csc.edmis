@@ -9,10 +9,12 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\MediaLibrary\HasMedia\HasMedia;
 use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
 use Spatie\MediaLibrary\Models\Media;
+use App\Traits\MultiTenantModelTrait;
+
 
 class DailyRequest extends Model implements HasMedia
 {
-    use SoftDeletes, HasMediaTrait, Auditable;
+    use SoftDeletes, HasMediaTrait, Auditable, MultiTenantModelTrait;
 
     public $table = 'daily_requests';
 
