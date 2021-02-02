@@ -83,6 +83,6 @@ class DailyRequest extends Model implements HasMedia
 
     public function create_by_construction_contract_id()
     {
-        return $this->belongsTo(ConstructionContract::class, 'construction_contract_id');
+        return $this->belongsTo(ConstructionContract::class, 'constuction_contract_id');
     }
 }
