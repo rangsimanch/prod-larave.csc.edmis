@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\MediaLibrary\HasMedia\HasMedia;
 use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
 use Spatie\MediaLibrary\Models\Media;
+use App\Traits\MultiTenantModelTrait;
 
 
 class DailyRequest extends Model implements HasMedia
@@ -34,7 +35,7 @@ class DailyRequest extends Model implements HasMedia
         'document_code',
         'receive_by_id',
         'acknowledge_date',
-        'construction_contract_id',
+        'constuction_contract_id',
         'created_at',
         'updated_at',
         'deleted_at',
@@ -77,7 +78,7 @@ class DailyRequest extends Model implements HasMedia
 
     public function constuction_contract()
     {
-        return $this->belongsTo(ConstructionContract::class, 'construction_contract_id');
+        return $this->belongsTo(ConstructionContract::class, 'constuction_contract_id');
     }
 
     public function create_by_construction_contract_id()
