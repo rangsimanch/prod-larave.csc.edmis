@@ -14,7 +14,7 @@ use App\Traits\MultiTenantModelTrait;
 
 class DailyRequest extends Model implements HasMedia
 {
-    use SoftDeletes, HasMediaTrait, Auditable, MultiTenantModelTrait;
+    use SoftDeletes, HasMediaTrait, Auditable;
 
     public $table = 'daily_requests';
 
