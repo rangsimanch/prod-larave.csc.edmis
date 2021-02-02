@@ -36,17 +36,17 @@
                             @endif
                             <span class="help-block">{{ trans('cruds.dailyRequest.fields.document_code_helper') }}</span>
                         </div>
-                        <div class="form-group {{ $errors->has('construction_contract') ? 'has-error' : '' }}">
-                            <label for="construction_contract_id">{{ trans('cruds.dailyRequest.fields.construction_contract') }}</label>
-                            <select class="form-control select2" name="construction_contract_id" id="construction_contract_id">
-                                @foreach($construction_contracts as $id => $construction_contract)
-                                    <option value="{{ $id }}" {{ old('construction_contract_id') == $id ? 'selected' : '' }}>{{ $construction_contract }}</option>
+                        <div class="form-group {{ $errors->has('constuction_contract') ? 'has-error' : '' }}">
+                            <label for="constuction_contract_id">{{ trans('cruds.dailyRequest.fields.constuction_contract') }}</label>
+                            <select class="form-control select2" name="constuction_contract_id" id="constuction_contract_id">
+                                @foreach($constuction_contracts as $id => $constuction_contract)
+                                    <option value="{{ $id }}" {{ old('constuction_contract_id') == $id ? 'selected' : '' }}>{{ $constuction_contract }}</option>
                                 @endforeach
                             </select>
-                            @if($errors->has('construction_contract'))
-                                <span class="help-block" role="alert">{{ $errors->first('construction_contract') }}</span>
+                            @if($errors->has('constuction_contract'))
+                                <span class="help-block" role="alert">{{ $errors->first('constuction_contract') }}</span>
                             @endif
-                            <span class="help-block">{{ trans('cruds.dailyRequest.fields.construction_contract_helper') }}</span>
+                            <span class="help-block">{{ trans('cruds.dailyRequest.fields.constuction_contract_helper') }}</span>
                         </div>
                         <div class="form-group">
                             <a class="btn btn-default" href="{{ route('admin.daily-requests.index') }}">
