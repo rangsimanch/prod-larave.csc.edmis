@@ -27,7 +27,7 @@ class DailyRequestController extends Controller
         abort_if(Gate::denies('daily_request_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
-            $query = DailyRequest::with(['receive_by', 'constuction_contract'])->select(sprintf('%s.*', (new DailyRequest)->table));
+            $query = DailyRequest::with(['receive_by', 'construction_contract'])->select(sprintf('%s.*', (new DailyRequest)->table));
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
@@ -68,11 +68,11 @@ class DailyRequestController extends Controller
                 return $row->receive_by ? $row->receive_by->name : '';
             });
 
-            $table->addColumn('constuction_contract_code', function ($row) {
-                return $row->constuction_contract ? $row->constuction_contract->code : '';
+            $table->addColumn('construction_contract_code', function ($row) {
+                return $row->construction_contract ? $row->construction_contract->code : '';
             });
 
-            $table->rawColumns(['actions', 'placeholder', 'documents', 'receive_by', 'constuction_contract']);
+            $table->rawColumns(['actions', 'placeholder', 'documents', 'receive_by', 'construction_contract']);
 
             return $table->make(true);
         }
@@ -87,13 +87,13 @@ class DailyRequestController extends Controller
         //Contract Check
             //Check is Admin
             if(Auth::id() != 1){
-                $constuction_contracts = ConstructionContract::where('id',session('constuction_contract_id'))->pluck('code', 'id')->prepend(trans('global.pleaseSelect'), '');
+                $construction_contracts = ConstructionContract::where('id',session('construction_contract_id'))->pluck('code', 'id')->prepend(trans('global.pleaseSelect'), '');
             }
             else{
-                $constuction_contracts = ConstructionContract::all()->pluck('code', 'id')->prepend(trans('global.pleaseSelect'), '');
+                $construction_contracts = ConstructionContract::all()->pluck('code', 'id')->prepend(trans('global.pleaseSelect'), '');
             }
 
-        return view('admin.dailyRequests.create', compact('constuction_contracts'));
+        return view('admin.dailyRequests.create', compact('construction_contracts'));
     }
 
     public function store(StoreDailyRequestRequest $request)
@@ -119,15 +119,15 @@ class DailyRequestController extends Controller
         //Contract Check
             //Check is Admin
             if(Auth::id() != 1){
-                $constuction_contracts = ConstructionContract::where('id',session('constuction_contract_id'))->pluck('code', 'id')->prepend(trans('global.pleaseSelect'), '');
+                $construction_contracts = ConstructionContract::where('id',session('construction_contract_id'))->pluck('code', 'id')->prepend(trans('global.pleaseSelect'), '');
             }
             else{
-                $constuction_contracts = ConstructionContract::all()->pluck('code', 'id')->prepend(trans('global.pleaseSelect'), '');
+                $construction_contracts = ConstructionContract::all()->pluck('code', 'id')->prepend(trans('global.pleaseSelect'), '');
             }
 
-        $dailyRequest->load('receive_by', 'constuction_contract');
+        $dailyRequest->load('receive_by', 'construction_contract');
 
-        return view('admin.dailyRequests.edit', compact('constuction_contracts', 'dailyRequest'));
+        return view('admin.dailyRequests.edit', compact('construction_contracts', 'dailyRequest'));
     }
 
     public function update(UpdateDailyRequestRequest $request, DailyRequest $dailyRequest)
@@ -157,7 +157,7 @@ class DailyRequestController extends Controller
     {
         abort_if(Gate::denies('daily_request_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $dailyRequest->load('receive_by', 'constuction_contract');
+        $dailyRequest->load('receive_by', 'construction_contract');
 
         return view('admin.dailyRequests.show', compact('dailyRequest'));
     }
