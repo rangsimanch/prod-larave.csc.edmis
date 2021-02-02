@@ -69,7 +69,7 @@ class DailyRequestController extends Controller
             });
 
             $table->addColumn('constuction_contract_code', function ($row) {
-                return $row->constuction_contract ? $row->constuction_contract->code : '';
+                return $row->construction_contract ? $row->construction_contract->code : '';
             });
 
             $table->rawColumns(['actions', 'placeholder', 'documents', 'receive_by', 'constuction_contract']);
