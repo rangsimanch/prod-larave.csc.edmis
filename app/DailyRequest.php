@@ -35,7 +35,7 @@ class DailyRequest extends Model implements HasMedia
         'document_code',
         'receive_by_id',
         'acknowledge_date',
-        'constuction_contract_id',
+        'construction_contract_id',
         'created_at',
         'updated_at',
         'deleted_at',
