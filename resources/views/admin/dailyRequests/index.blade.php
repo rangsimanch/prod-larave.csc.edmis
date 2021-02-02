@@ -105,7 +105,7 @@
 { data: 'document_code', name: 'document_code' },
 { data: 'receive_by_name', name: 'receive_by.name' },
 { data: 'acknowledge_date', name: 'acknowledge_date' },
-{ data: 'constuction_contract_code', name: 'constuction_contract.code' },
+{ data: 'construction_contract_code', name: 'construction_contract.code' },
 { data: 'actions', name: '{{ trans('global.actions') }}' }
     ],
     order: [[ 1, 'desc' ]],

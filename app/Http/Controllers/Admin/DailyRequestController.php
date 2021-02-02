@@ -68,7 +68,7 @@ class DailyRequestController extends Controller
                 return $row->receive_by ? $row->receive_by->name : '';
             });
 
-            $table->addColumn('constuction_contract_code', function ($row) {
+            $table->addColumn('construction_contract_code', function ($row) {
                 return $row->construction_contract ? $row->construction_contract->code : '';
             });
 
