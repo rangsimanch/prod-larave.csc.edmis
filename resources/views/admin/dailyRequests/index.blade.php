@@ -38,9 +38,9 @@
                                 <th>
                                     {{ trans('cruds.dailyRequest.fields.acknowledge_date') }}
                                 </th>
-                                <!-- <th>
+                                <th>
                                     {{ trans('cruds.dailyRequest.fields.constuction_contract') }}
-                                </th> -->
+                                </th>
                                 <th>
                                     &nbsp;
                                 </th>
@@ -105,7 +105,7 @@
 { data: 'document_code', name: 'document_code' },
 { data: 'receive_by_name', name: 'receive_by.name' },
 { data: 'acknowledge_date', name: 'acknowledge_date' },
-// { data: 'constuction_contract_code', name: 'constuction_contract.code' },
+{ data: 'constuction_contract_code', name: 'constuction_contract.code' },
 { data: 'actions', name: '{{ trans('global.actions') }}' }
     ],
     order: [[ 1, 'desc' ]],
