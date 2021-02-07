@@ -32,7 +32,7 @@
                             <label for="wbs_level_2_id">{{ trans('cruds.wbsLevelThree.fields.wbs_level_2') }}</label>
                             <select class="form-control select2" name="wbs_level_2_id" id="wbs_level_2_id">
                                 @foreach($wbs_level_2s as $id => $wbs_level_2)
-                                    <option value="{{ $id }}" {{ ($wbsLevelThree->wbs_level_2 ? $wbsLevelThree->wbs_level_2->id : old('wbs_level_2_id')) == $id ? 'selected' : '' }}>{{ $wbs_level_2 }}</option>
+                                    <option value="{{ $id }}" {{ (old('wbs_level_2_id') ? old('wbs_level_2_id') : $wbsLevelThree->wbs_level_2->id ?? '') == $id ? 'selected' : '' }}>{{ $wbs_level_2 }}</option>
                                 @endforeach
                             </select>
                             @if($errors->has('wbs_level_2'))

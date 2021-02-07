@@ -32,7 +32,7 @@
                             <label for="wbs_lv_1_id">{{ trans('cruds.boQ.fields.wbs_lv_1') }}</label>
                             <select class="form-control select2" name="wbs_lv_1_id" id="wbs_lv_1_id">
                                 @foreach($wbs_lv_1s as $id => $wbs_lv_1)
-                                    <option value="{{ $id }}" {{ ($boQ->wbs_lv_1 ? $boQ->wbs_lv_1->id : old('wbs_lv_1_id')) == $id ? 'selected' : '' }}>{{ $wbs_lv_1 }}</option>
+                                    <option value="{{ $id }}" {{ (old('wbs_lv_1_id') ? old('wbs_lv_1_id') : $boQ->wbs_lv_1->id ?? '') == $id ? 'selected' : '' }}>{{ $wbs_lv_1 }}</option>
                                 @endforeach
                             </select>
                             @if($errors->has('wbs_lv_1'))

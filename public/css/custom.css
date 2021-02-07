@@ -7,6 +7,13 @@ textarea {
     width: 100% !important;
 }
 
+table.dataTable tbody td.select-checkbox::before,
+table.dataTable tbody td.select-checkbox::after,
+table.dataTable tbody th.select-checkbox::before,
+table.dataTable tbody th.select-checkbox::after {
+    top: 50%;
+}
+
 .dataTables_length,
 .dataTables_filter,
 .dt-buttons {
@@ -61,36 +68,34 @@ table.dataTable thead .sorting_desc {
     color: red;
 }
 
-
-
 /* Custom Select */
 .select3 {
-  position: relative;
-  display: flex;
-  width: 6em;
-  height: 2em;
-  line-height: 3;
-  background: #2c3e50;
-  overflow: hidden;
-  border-radius: .25em;
-}
-/* Arrow */
-.select3::after {
-  content: '\25BC';
-  position: absolute;
-  top: 0;
-  right: 0;
-  padding: 0 1em;
-  background: #34495e;
-  cursor: pointer;
-  pointer-events: none;
-  -webkit-transition: .25s all ease;
-  -o-transition: .25s all ease;
-  transition: .25s all ease;
-}
-/* Transition */
-.select3:hover::after {
-  color: #f39c12;
-}
-
-
+    position: relative;
+    display: flex;
+    width: 6em;
+    height: 2em;
+    line-height: 3;
+    background: #2c3e50;
+    overflow: hidden;
+    border-radius: .25em;
+  }
+  /* Arrow */
+  .select3::after {
+    content: '\25BC';
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 0 1em;
+    background: #34495e;
+    cursor: pointer;
+    pointer-events: none;
+    -webkit-transition: .25s all ease;
+    -o-transition: .25s all ease;
+    transition: .25s all ease;
+  }
+  /* Transition */
+  .select3:hover::after {
+    color: #f39c12;
+  }
+  
+  

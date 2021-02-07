@@ -38,7 +38,7 @@
                                         {{ trans('cruds.boQ.fields.wbs_lv_1') }}
                                     </th>
                                     <td>
-                                        {{ $boQ->wbs_lv_1->code ?? '' }}
+                                        {{ $boQ->wbs_lv_1->name ?? '' }}
                                     </td>
                                 </tr>
                             </tbody>

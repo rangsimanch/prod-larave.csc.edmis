@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Traits\CsvImportTrait;
 use App\Http\Requests\MassDestroyWbsLevelFiveRequest;
 use App\Http\Requests\StoreWbsLevelFiveRequest;
 use App\Http\Requests\UpdateWbsLevelFiveRequest;
@@ -14,6 +15,8 @@ use Yajra\DataTables\Facades\DataTables;
 
 class WbsLevelFiveController extends Controller
 {
+    use CsvImportTrait;
+
     public function index(Request $request)
     {
         abort_if(Gate::denies('wbs_level_five_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');

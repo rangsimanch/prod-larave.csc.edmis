@@ -28,6 +28,18 @@
                             @endif
                             <span class="help-block">{{ trans('cruds.wbsLevelOne.fields.code_helper') }}</span>
                         </div>
+                        <div class="form-group {{ $errors->has('wbs_lv_1') ? 'has-error' : '' }}">
+                            <label class="required" for="wbs_lv_1_id">{{ trans('cruds.wbsLevelOne.fields.wbs_lv_1') }}</label>
+                            <select class="form-control select2" name="wbs_lv_1_id" id="wbs_lv_1_id" required>
+                                @foreach($wbs_lv_1s as $id => $wbs_lv_1)
+                                    <option value="{{ $id }}" {{ (old('wbs_lv_1_id') ? old('wbs_lv_1_id') : $wbsLevelOne->wbs_lv_1->id ?? '') == $id ? 'selected' : '' }}>{{ $wbs_lv_1 }}</option>
+                                @endforeach
+                            </select>
+                            @if($errors->has('wbs_lv_1'))
+                                <span class="help-block" role="alert">{{ $errors->first('wbs_lv_1') }}</span>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.wbsLevelOne.fields.wbs_lv_1_helper') }}</span>
+                        </div>
                         <div class="form-group">
                             <button class="btn btn-danger" type="submit">
                                 {{ trans('global.save') }}

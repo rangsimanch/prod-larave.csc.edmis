@@ -38,7 +38,7 @@
                                         {{ trans('cruds.wbsLevelThree.fields.wbs_level_2') }}
                                     </th>
                                     <td>
-                                        {{ $wbsLevelThree->wbs_level_2->code ?? '' }}
+                                        {{ $wbsLevelThree->wbs_level_2->name ?? '' }}
                                     </td>
                                 </tr>
                             </tbody>

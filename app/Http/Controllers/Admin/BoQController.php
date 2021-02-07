@@ -50,8 +50,8 @@ class BoQController extends Controller
             $table->editColumn('code', function ($row) {
                 return $row->code ? $row->code : "";
             });
-            $table->addColumn('wbs_lv_1_code', function ($row) {
-                return $row->wbs_lv_1 ? $row->wbs_lv_1->code : '';
+            $table->addColumn('wbs_lv_1_name', function ($row) {
+                return $row->wbs_lv_1 ? $row->wbs_lv_1->name : '';
             });
 
             $table->rawColumns(['actions', 'placeholder', 'wbs_lv_1']);
@@ -59,14 +59,16 @@ class BoQController extends Controller
             return $table->make(true);
         }
 
-        return view('admin.boQs.index');
+        $wbs_level_ones = WbsLevelOne::get();
+
+        return view('admin.boQs.index', compact('wbs_level_ones'));
     }
 
     public function create()
     {
         abort_if(Gate::denies('bo_q_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $wbs_lv_1s = WbsLevelOne::all()->pluck('code', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $wbs_lv_1s = WbsLevelOne::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         return view('admin.boQs.create', compact('wbs_lv_1s'));
     }
@@ -82,7 +84,7 @@ class BoQController extends Controller
     {
         abort_if(Gate::denies('bo_q_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $wbs_lv_1s = WbsLevelOne::all()->pluck('code', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $wbs_lv_1s = WbsLevelOne::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $boQ->load('wbs_lv_1');
 

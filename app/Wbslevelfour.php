@@ -1,15 +1,14 @@
 <?php
 
-// This is WBS Lv.5 (Detail of work)
-
 namespace App;
 
+use App\Traits\Auditable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Wbslevelfour extends Model
 {
-    use SoftDeletes;
+    use SoftDeletes, Auditable;
 
     public $table = 'wbslevelfours';
 
@@ -24,24 +23,13 @@ class Wbslevelfour extends Model
     ];
 
     protected $fillable = [
-        'boq_id',
-        'created_at',
-        'updated_at',
-        'deleted_at',
         'wbs_level_4_name',
         'wbs_level_4_code',
         'wbs_level_three_id',
+        'created_at',
+        'updated_at',
+        'deleted_at',
     ];
-
-    public function wbsLevel4Rfas()
-    {
-        return $this->hasMany(Rfa::class, 'wbs_level_4_id', 'id');
-    }
-
-    public function boq()
-    {
-        return $this->belongsTo(BoQ::class, 'boq_id');
-    }
 
     public function wbs_level_three()
     {

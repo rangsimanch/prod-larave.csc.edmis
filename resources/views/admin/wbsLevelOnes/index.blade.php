@@ -7,6 +7,10 @@
                 <a class="btn btn-success" href="{{ route('admin.wbs-level-ones.create') }}">
                     {{ trans('global.add') }} {{ trans('cruds.wbsLevelOne.title_singular') }}
                 </a>
+                <button class="btn btn-warning" data-toggle="modal" data-target="#csvImportModal">
+                    {{ trans('global.app_csvImport') }}
+                </button>
+                @include('csvImport.modal', ['model' => 'WbsLevelOne', 'route' => 'admin.wbs-level-ones.parseCsvImport'])
             </div>
         </div>
     @endcan
@@ -24,13 +28,13 @@
 
                                 </th>
                                 <th>
-                                    {{ trans('cruds.wbsLevelOne.fields.id') }}
-                                </th>
-                                <th>
                                     {{ trans('cruds.wbsLevelOne.fields.name') }}
                                 </th>
                                 <th>
                                     {{ trans('cruds.wbsLevelOne.fields.code') }}
+                                </th>
+                                <th>
+                                    {{ trans('cruds.wbsLevelOne.fields.wbs_lv_1') }}
                                 </th>
                                 <th>
                                     &nbsp;
@@ -46,7 +50,12 @@
                                     <input class="search" type="text" placeholder="{{ trans('global.search') }}">
                                 </td>
                                 <td>
-                                    <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                                    <select class="search">
+                                        <option value>{{ trans('global.all') }}</option>
+                                        @foreach($wbs_level_fives as $key => $item)
+                                            <option value="{{ $item->name }}">{{ $item->name }}</option>
+                                        @endforeach
+                                    </select>
                                 </td>
                                 <td>
                                 </td>
@@ -106,9 +115,9 @@
     ajax: "{{ route('admin.wbs-level-ones.index') }}",
     columns: [
       { data: 'placeholder', name: 'placeholder' },
-{ data: 'id', name: 'id' },
 { data: 'name', name: 'name' },
 { data: 'code', name: 'code' },
+{ data: 'wbs_lv_1_name', name: 'wbs_lv_1.name' },
 { data: 'actions', name: '{{ trans('global.actions') }}' }
     ],
     orderCellsTop: true,
@@ -120,14 +129,28 @@
       $($.fn.dataTable.tables(true)).DataTable()
           .columns.adjust();
   });
-  $('.datatable thead').on('input', '.search', function () {
+  
+let visibleColumnsIndexes = null;
+$('.datatable thead').on('input', '.search', function () {
       let strict = $(this).attr('strict') || false
       let value = strict && this.value ? "^" + this.value + "$" : this.value
+
+      let index = $(this).parent().index()
+      if (visibleColumnsIndexes !== null) {
+        index = visibleColumnsIndexes[index]
+      }
+
       table
-        .column($(this).parent().index())
+        .column(index)
         .search(value, strict)
         .draw()
   });
+table.on('column-visibility.dt', function(e, settings, column, state) {
+      visibleColumnsIndexes = []
+      table.columns(":visible").every(function(colIdx) {
+          visibleColumnsIndexes.push(colIdx);
+      });
+  })
 });
 
 </script>

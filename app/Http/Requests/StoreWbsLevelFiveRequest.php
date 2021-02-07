@@ -5,19 +5,26 @@ namespace App\Http\Requests;
 use App\WbsLevelFive;
 use Gate;
 use Illuminate\Foundation\Http\FormRequest;
-use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Http\Response;
 
 class StoreWbsLevelFiveRequest extends FormRequest
 {
     public function authorize()
     {
-        abort_if(Gate::denies('wbs_level_five_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
-        return true;
+        return Gate::allows('wbs_level_five_create');
     }
 
     public function rules()
     {
-        return [];
+        return [
+            'name' => [
+                'string',
+                'nullable',
+            ],
+            'code' => [
+                'string',
+                'nullable',
+            ],
+        ];
     }
 }

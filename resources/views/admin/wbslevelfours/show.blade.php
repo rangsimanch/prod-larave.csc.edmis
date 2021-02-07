@@ -35,18 +35,10 @@
                                 </tr>
                                 <tr>
                                     <th>
-                                        {{ trans('cruds.wbslevelfour.fields.boq') }}
-                                    </th>
-                                    <td>
-                                        {{ $wbslevelfour->boq->name ?? '' }}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th>
                                         {{ trans('cruds.wbslevelfour.fields.wbs_level_three') }}
                                     </th>
                                     <td>
-                                        {{ $wbslevelfour->wbs_level_three->wbs_level_3_code ?? '' }}
+                                        {{ $wbslevelfour->wbs_level_three->wbs_level_3_name ?? '' }}
                                     </td>
                                 </tr>
                             </tbody>
@@ -60,23 +52,7 @@
                 </div>
             </div>
 
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    {{ trans('global.relatedData') }}
-                </div>
-                <ul class="nav nav-tabs" role="tablist" id="relationship-tabs">
-                    <li role="presentation">
-                        <a href="#wbs_level4_rfas" aria-controls="wbs_level4_rfas" role="tab" data-toggle="tab">
-                            {{ trans('cruds.rfa.title') }}
-                        </a>
-                    </li>
-                </ul>
-                <div class="tab-content">
-                    <div class="tab-pane" role="tabpanel" id="wbs_level4_rfas">
-                        @includeIf('admin.wbslevelfours.relationships.wbsLevel4Rfas', ['rfas' => $wbslevelfour->wbsLevel4Rfas])
-                    </div>
-                </div>
-            </div>
+
 
         </div>
     </div>

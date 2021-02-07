@@ -5,20 +5,26 @@ namespace App\Http\Requests;
 use App\Wbslevelfour;
 use Gate;
 use Illuminate\Foundation\Http\FormRequest;
-use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Http\Response;
 
 class UpdateWbslevelfourRequest extends FormRequest
 {
     public function authorize()
     {
-        abort_if(Gate::denies('wbslevelfour_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
-        return true;
+        return Gate::allows('wbslevelfour_edit');
     }
 
     public function rules()
     {
         return [
+            'wbs_level_4_name' => [
+                'string',
+                'nullable',
+            ],
+            'wbs_level_4_code' => [
+                'string',
+                'nullable',
+            ],
         ];
     }
 }

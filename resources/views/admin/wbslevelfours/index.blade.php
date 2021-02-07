@@ -4,9 +4,13 @@
     @can('wbslevelfour_create')
         <div style="margin-bottom: 10px;" class="row">
             <div class="col-lg-12">
-                <a class="btn btn-success" href="{{ route("admin.wbslevelfours.create") }}">
+                <a class="btn btn-success" href="{{ route('admin.wbslevelfours.create') }}">
                     {{ trans('global.add') }} {{ trans('cruds.wbslevelfour.title_singular') }}
                 </a>
+                <button class="btn btn-warning" data-toggle="modal" data-target="#csvImportModal">
+                    {{ trans('global.app_csvImport') }}
+                </button>
+                @include('csvImport.modal', ['model' => 'Wbslevelfour', 'route' => 'admin.wbslevelfours.parseCsvImport'])
             </div>
         </div>
     @endcan
@@ -17,88 +21,52 @@
                     {{ trans('cruds.wbslevelfour.title_singular') }} {{ trans('global.list') }}
                 </div>
                 <div class="panel-body">
-                    <div class="table-responsive">
-                        <table class=" table table-bordered table-striped table-hover datatable datatable-Wbslevelfour">
-                            <thead>
-                                <tr>
-                                    <th width="10">
+                    <table class=" table table-bordered table-striped table-hover ajaxTable datatable datatable-Wbslevelfour">
+                        <thead>
+                            <tr>
+                                <th width="10">
 
-                                    </th>
-                                    <th>
-                                        {{ trans('cruds.wbslevelfour.fields.wbs_level_4_name') }}
-                                    </th>
-                                    <th>
-                                        {{ trans('cruds.wbslevelfour.fields.wbs_level_4_code') }}
-                                    </th>
-                                    <th>
-                                        {{ trans('cruds.wbslevelfour.fields.boq') }}
-                                    </th>
-                                    <th>
-                                        {{ trans('cruds.boQ.fields.code') }}
-                                    </th>
-                                    <th>
-                                        {{ trans('cruds.wbslevelfour.fields.wbs_level_three') }}
-                                    </th>
-                                    <th>
-                                        {{ trans('cruds.wbsLevelThree.fields.wbs_level_3_name') }}
-                                    </th>
-                                    <th>
-                                        &nbsp;
-                                    </th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach($wbslevelfours as $key => $wbslevelfour)
-                                    <tr data-entry-id="{{ $wbslevelfour->id }}">
-                                        <td>
-
-                                        </td>
-                                        <td>
-                                            {{ $wbslevelfour->wbs_level_4_name ?? '' }}
-                                        </td>
-                                        <td>
-                                            {{ $wbslevelfour->wbs_level_4_code ?? '' }}
-                                        </td>
-                                        <td>
-                                            {{ $wbslevelfour->boq->name ?? '' }}
-                                        </td>
-                                        <td>
-                                            {{ $wbslevelfour->boq->code ?? '' }}
-                                        </td>
-                                        <td>
-                                            {{ $wbslevelfour->wbs_level_three->wbs_level_3_code ?? '' }}
-                                        </td>
-                                        <td>
-                                            {{ $wbslevelfour->wbs_level_three->wbs_level_3_name ?? '' }}
-                                        </td>
-                                        <td>
-                                            @can('wbslevelfour_show')
-                                                <a class="btn btn-xs btn-primary" href="{{ route('admin.wbslevelfours.show', $wbslevelfour->id) }}">
-                                                    {{ trans('global.view') }}
-                                                </a>
-                                            @endcan
-
-                                            @can('wbslevelfour_edit')
-                                                <a class="btn btn-xs btn-info" href="{{ route('admin.wbslevelfours.edit', $wbslevelfour->id) }}">
-                                                    {{ trans('global.edit') }}
-                                                </a>
-                                            @endcan
-
-                                            @can('wbslevelfour_delete')
-                                                <form action="{{ route('admin.wbslevelfours.destroy', $wbslevelfour->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
-                                                    <input type="hidden" name="_method" value="DELETE">
-                                                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                                                    <input type="submit" class="btn btn-xs btn-danger" value="{{ trans('global.delete') }}">
-                                                </form>
-                                            @endcan
-
-                                        </td>
-
-                                    </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
-                    </div>
+                                </th>
+                                <th>
+                                    {{ trans('cruds.wbslevelfour.fields.wbs_level_4_name') }}
+                                </th>
+                                <th>
+                                    {{ trans('cruds.wbslevelfour.fields.wbs_level_4_code') }}
+                                </th>
+                                <th>
+                                    {{ trans('cruds.wbslevelfour.fields.wbs_level_three') }}
+                                </th>
+                                <th>
+                                    {{ trans('cruds.wbsLevelThree.fields.wbs_level_3_name') }}
+                                </th>
+                                <th>
+                                    &nbsp;
+                                </th>
+                            </tr>
+                            <tr>
+                                <td>
+                                </td>
+                                <td>
+                                    <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                                </td>
+                                <td>
+                                    <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                                </td>
+                                <td>
+                                    <select class="search">
+                                        <option value>{{ trans('global.all') }}</option>
+                                        @foreach($wbs_level_threes as $key => $item)
+                                            <option value="{{ $item->wbs_level_3_name }}">{{ $item->wbs_level_3_name }}</option>
+                                        @endforeach
+                                    </select>
+                                </td>
+                                <td>
+                                </td>
+                                <td>
+                                </td>
+                            </tr>
+                        </thead>
+                    </table>
                 </div>
             </div>
 
@@ -114,14 +82,14 @@
     $(function () {
   let dtButtons = $.extend(true, [], $.fn.dataTable.defaults.buttons)
 @can('wbslevelfour_delete')
-  let deleteButtonTrans = '{{ trans('global.datatables.delete') }}'
+  let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
   let deleteButton = {
     text: deleteButtonTrans,
     url: "{{ route('admin.wbslevelfours.massDestroy') }}",
     className: 'btn-danger',
     action: function (e, dt, node, config) {
-      var ids = $.map(dt.rows({ selected: true }).nodes(), function (entry) {
-          return $(entry).data('entry-id')
+      var ids = $.map(dt.rows({ selected: true }).data(), function (entry) {
+          return entry.id
       });
 
       if (ids.length === 0) {
@@ -143,16 +111,53 @@
   dtButtons.push(deleteButton)
 @endcan
 
-  $.extend(true, $.fn.dataTable.defaults, {
+  let dtOverrideGlobals = {
+    buttons: dtButtons,
+    processing: true,
+    serverSide: true,
+    retrieve: true,
+    aaSorting: [],
+    ajax: "{{ route('admin.wbslevelfours.index') }}",
+    columns: [
+      { data: 'placeholder', name: 'placeholder' },
+{ data: 'wbs_level_4_name', name: 'wbs_level_4_name' },
+{ data: 'wbs_level_4_code', name: 'wbs_level_4_code' },
+{ data: 'wbs_level_three_wbs_level_3_name', name: 'wbs_level_three.wbs_level_3_name' },
+{ data: 'wbs_level_three.wbs_level_3_name', name: 'wbs_level_three.wbs_level_3_name' },
+{ data: 'actions', name: '{{ trans('global.actions') }}' }
+    ],
+    orderCellsTop: true,
     order: [[ 1, 'desc' ]],
     pageLength: 100,
+  };
+  let table = $('.datatable-Wbslevelfour').DataTable(dtOverrideGlobals);
+  $('a[data-toggle="tab"]').on('shown.bs.tab click', function(e){
+      $($.fn.dataTable.tables(true)).DataTable()
+          .columns.adjust();
   });
-  $('.datatable-Wbslevelfour:not(.ajaxTable)').DataTable({ buttons: dtButtons })
-    $('a[data-toggle="tab"]').on('shown.bs.tab', function(e){
-        $($.fn.dataTable.tables(true)).DataTable()
-            .columns.adjust();
-    });
-})
+  
+let visibleColumnsIndexes = null;
+$('.datatable thead').on('input', '.search', function () {
+      let strict = $(this).attr('strict') || false
+      let value = strict && this.value ? "^" + this.value + "$" : this.value
+
+      let index = $(this).parent().index()
+      if (visibleColumnsIndexes !== null) {
+        index = visibleColumnsIndexes[index]
+      }
+
+      table
+        .column(index)
+        .search(value, strict)
+        .draw()
+  });
+table.on('column-visibility.dt', function(e, settings, column, state) {
+      visibleColumnsIndexes = []
+      table.columns(":visible").every(function(colIdx) {
+          visibleColumnsIndexes.push(colIdx);
+      });
+  })
+});
 
 </script>
 @endsection

@@ -50,8 +50,8 @@ class WbsLevelThreeController extends Controller
             $table->editColumn('wbs_level_3_code', function ($row) {
                 return $row->wbs_level_3_code ? $row->wbs_level_3_code : "";
             });
-            $table->addColumn('wbs_level_2_code', function ($row) {
-                return $row->wbs_level_2 ? $row->wbs_level_2->code : '';
+            $table->addColumn('wbs_level_2_name', function ($row) {
+                return $row->wbs_level_2 ? $row->wbs_level_2->name : '';
             });
 
             $table->rawColumns(['actions', 'placeholder', 'wbs_level_2']);
@@ -68,7 +68,7 @@ class WbsLevelThreeController extends Controller
     {
         abort_if(Gate::denies('wbs_level_three_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $wbs_level_2s = BoQ::all()->pluck('code', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $wbs_level_2s = BoQ::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         return view('admin.wbsLevelThrees.create', compact('wbs_level_2s'));
     }
@@ -84,7 +84,7 @@ class WbsLevelThreeController extends Controller
     {
         abort_if(Gate::denies('wbs_level_three_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $wbs_level_2s = BoQ::all()->pluck('code', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $wbs_level_2s = BoQ::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $wbsLevelThree->load('wbs_level_2');
 

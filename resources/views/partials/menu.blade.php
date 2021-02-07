@@ -124,6 +124,19 @@
                                 </a>
                             </li>
                         @endcan
+
+                        <!-- WBS LV.1 (Project) -->
+                        @can('wbs_level_five_access')
+                            <li class="{{ request()->is('admin/wbs-level-fives') || request()->is('admin/wbs-level-fives/*') ? 'active' : '' }}">
+                                <a href="{{ route("admin.wbs-level-fives.index") }}">
+                                    <i class="fa-fw fas fa-cogs">
+
+                                    </i>
+                                    <span>{{ trans('cruds.wbsLevelFive.title') }}</span>
+                                </a>
+                            </li>
+                        @endcan
+                        <!-- WBS LV.2 (Contract) -->
                         @can('wbs_level_one_access')
                             <li class="{{ request()->is('admin/wbs-level-ones') || request()->is('admin/wbs-level-ones/*') ? 'active' : '' }}">
                                 <a href="{{ route("admin.wbs-level-ones.index") }}">
@@ -134,7 +147,8 @@
                                 </a>
                             </li>
                         @endcan
-                        
+
+                        <!-- WBS LV.3 (BoQ) -->
                         @can('bo_q_access')
                             <li class="{{ request()->is('admin/bo-qs') || request()->is('admin/bo-qs/*') ? 'active' : '' }}">
                                 <a href="{{ route("admin.bo-qs.index") }}">
@@ -146,17 +160,7 @@
                             </li>
                         @endcan
 
-                        <!-- @can('wbs_level_two_access')
-                            <li class="{{ request()->is('admin/wbs-level-twos') || request()->is('admin/wbs-level-twos/*') ? 'active' : '' }}">
-                                <a href="{{ route("admin.wbs-level-twos.index") }}">
-                                    <i class="fa-fw fas fa-cogs">
-
-                                    </i>
-                                    <span>{{ trans('cruds.wbsLevelTwo.title') }}</span>
-                                </a>
-                            </li>
-                        @endcan -->
-
+                        <!-- WBS LV.4 (Work Type) -->
                         @can('wbs_level_three_access')
                             <li class="{{ request()->is('admin/wbs-level-threes') || request()->is('admin/wbs-level-threes/*') ? 'active' : '' }}">
                                 <a href="{{ route("admin.wbs-level-threes.index") }}">
@@ -167,6 +171,8 @@
                                 </a>
                             </li>
                         @endcan
+
+                        <!-- WBS LV.5 (Element) -->
                         @can('wbslevelfour_access')
                             <li class="{{ request()->is('admin/wbslevelfours') || request()->is('admin/wbslevelfours/*') ? 'active' : '' }}">
                                 <a href="{{ route("admin.wbslevelfours.index") }}">
@@ -174,16 +180,6 @@
 
                                     </i>
                                     <span>{{ trans('cruds.wbslevelfour.title') }}</span>
-                                </a>
-                            </li>
-                        @endcan
-                        @can('wbs_level_five_access')
-                            <li class="{{ request()->is('admin/wbs-level-fives') || request()->is('admin/wbs-level-fives/*') ? 'active' : '' }}">
-                                <a href="{{ route("admin.wbs-level-fives.index") }}">
-                                    <i class="fa-fw fas fa-cogs">
-
-                                    </i>
-                                    <span>{{ trans('cruds.wbsLevelFive.title') }}</span>
                                 </a>
                             </li>
                         @endcan
@@ -1157,6 +1153,18 @@
 
                         </i>
                         <span>{{ trans('cruds.ticket.title') }}</span>
+
+                    </a>
+                </li>
+            @endcan
+
+            @can('complaint_access')
+                <li class="{{ request()->is("admin/complaints") || request()->is("admin/complaints/*") ? "active" : "" }}">
+                    <a href="{{ route("admin.complaints.index") }}">
+                        <i class="fa-fw fas fa-list-alt">
+
+                        </i>
+                        <span>{{ trans('cruds.complaint.title') }}</span>
 
                     </a>
                 </li>

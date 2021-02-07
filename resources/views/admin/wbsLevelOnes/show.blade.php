@@ -19,14 +19,6 @@
                             <tbody>
                                 <tr>
                                     <th>
-                                        {{ trans('cruds.wbsLevelOne.fields.id') }}
-                                    </th>
-                                    <td>
-                                        {{ $wbsLevelOne->id }}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th>
                                         {{ trans('cruds.wbsLevelOne.fields.name') }}
                                     </th>
                                     <td>
@@ -39,6 +31,14 @@
                                     </th>
                                     <td>
                                         {{ $wbsLevelOne->code }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        {{ trans('cruds.wbsLevelOne.fields.wbs_lv_1') }}
+                                    </th>
+                                    <td>
+                                        {{ $wbsLevelOne->wbs_lv_1->name ?? '' }}
                                     </td>
                                 </tr>
                             </tbody>

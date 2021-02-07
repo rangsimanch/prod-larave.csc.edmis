@@ -1,30 +1,31 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
-use Illuminate\Http\Request;
-use App\Rfa;
+use LaravelDaily\LaravelCharts\Classes\LaravelChart;
 
-class HomeController extends Controller
+class HomeController 
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-
-    /**
-     * Show the application dashboard.
-     *
-     * @return \Illuminate\Contracts\Support\Renderable
-     */
     public function index()
     {
-        $rfa = Rfa::all();
-        return view('home',compact('rfa'));
+        $settings1 = [
+            'chart_title'           => 'Complaint Chart',
+            'chart_type'            => 'bar',
+            'report_type'           => 'group_by_date',
+            'model'                 => 'App\Complaint',
+            'group_by_field'        => 'received_date',
+            'group_by_period'       => 'day',
+            'aggregate_function'    => 'count',
+            'filter_field'          => 'created_at',
+            'filter_period'         => 'month',
+            'group_by_field_format' => 'd/m/Y',
+            'column_class'          => 'col-md-12',
+            'entries_number'        => '5',
+        ];
+
+        $chart1 = new LaravelChart($settings1);
+
+
+        return view('home', compact('test'));
     }
 }

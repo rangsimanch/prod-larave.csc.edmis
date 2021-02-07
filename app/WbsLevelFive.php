@@ -1,7 +1,5 @@
 <?php
 
-//This is WBS Lv.1 (Project)
-
 namespace App;
 
 use App\Traits\Auditable;

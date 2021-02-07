@@ -9,23 +9,15 @@ Route::get('/home', function () {
     return redirect()->route('admin.home');
 });
 
-
 Auth::routes();
-// Admin
 
-Route::get('/clear-cache', function() {
-    Artisan::call('cache:clear');
-    return "Cache is cleared";
-});
+// Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth'], 'namespace' => 'Admin'], function () {
 
-
-
-Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth'], 'namespace' => 'Admin'], function () {
-
-    Route::get('/push','PushController@push')->name('push');
-
-    //Route::group(['middleware' => ['auth'], 'prefix' => 'admin', 'as' => 'admin.'], function () {
+//     Route::get('/push','PushController@push')->name('push');
+Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'middleware' => ['auth']], function () {
+    
     Route::get('/', 'HomeController@index')->name('home');
+
     //->middleware('ConstructionContract.Select');
     Route::get('user-alerts/read', 'UserAlertsController@read');
     // Permissions
@@ -143,6 +135,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth'], '
 
     // Wbslevelfours
     Route::delete('wbslevelfours/destroy', 'WbslevelfourController@massDestroy')->name('wbslevelfours.massDestroy');
+    Route::post('wbslevelfours/parse-csv-import', 'WbslevelfourController@parseCsvImport')->name('wbslevelfours.parseCsvImport');
+    Route::post('wbslevelfours/process-csv-import', 'WbslevelfourController@processCsvImport')->name('wbslevelfours.processCsvImport');
     Route::resource('wbslevelfours', 'WbslevelfourController');
 
      // Bo Qs
@@ -308,6 +302,12 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth'], '
    // Sptk Sents
    Route::resource('sptk-sents', 'SptkSentController', ['except' => ['create', 'store', 'edit', 'update', 'show', 'destroy']]);
 
+   // Itd Inboxes
+   Route::resource('itd-inboxes', 'ItdInboxController', ['except' => ['create', 'store', 'edit', 'update', 'show', 'destroy']]);
+
+   // Itd Sents
+   Route::resource('itd-sents', 'ItdSentController', ['except' => ['create', 'store', 'edit', 'update', 'show', 'destroy']]);
+   
     // Check Sheets
     Route::delete('check-sheets/destroy', 'CheckSheetController@massDestroy')->name('check-sheets.massDestroy');
     Route::post('check-sheets/media', 'CheckSheetController@storeMedia')->name('check-sheets.storeMedia');
@@ -384,6 +384,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth'], '
 
     // Wbs Level Ones
     Route::delete('wbs-level-ones/destroy', 'WbsLevelOneController@massDestroy')->name('wbs-level-ones.massDestroy');
+    Route::post('wbs-level-ones/parse-csv-import', 'WbsLevelOneController@parseCsvImport')->name('wbs-level-ones.parseCsvImport');
+    Route::post('wbs-level-ones/process-csv-import', 'WbsLevelOneController@processCsvImport')->name('wbs-level-ones.processCsvImport');
     Route::resource('wbs-level-ones', 'WbsLevelOneController');
 
     // Wbs Level Twos
@@ -392,6 +394,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth'], '
 
     // Wbs Level Fives
     Route::delete('wbs-level-fives/destroy', 'WbsLevelFiveController@massDestroy')->name('wbs-level-fives.massDestroy');
+    Route::post('wbs-level-fives/parse-csv-import', 'WbsLevelFiveController@parseCsvImport')->name('wbs-level-fives.parseCsvImport');
+    Route::post('wbs-level-fives/process-csv-import', 'WbsLevelFiveController@processCsvImport')->name('wbs-level-fives.processCsvImport');
     Route::resource('wbs-level-fives', 'WbsLevelFiveController');
 
     // Request For Informations
@@ -475,6 +479,14 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth'], '
     // Organizations
     Route::delete('organizations/destroy', 'OrganizationController@massDestroy')->name('organizations.massDestroy');
     Route::resource('organizations', 'OrganizationController');
+
+    // Complaints
+    Route::delete('complaints/destroy', 'ComplaintController@massDestroy')->name('complaints.massDestroy');
+    Route::post('complaints/media', 'ComplaintController@storeMedia')->name('complaints.storeMedia');
+    Route::post('complaints/ckmedia', 'ComplaintController@storeCKEditorImages')->name('complaints.storeCKEditorImages');
+    Route::post('complaints/parse-csv-import', 'ComplaintController@parseCsvImport')->name('complaints.parseCsvImport');
+    Route::post('complaints/process-csv-import', 'ComplaintController@processCsvImport')->name('complaints.processCsvImport');
+    Route::resource('complaints', 'ComplaintController');
 
     
 
