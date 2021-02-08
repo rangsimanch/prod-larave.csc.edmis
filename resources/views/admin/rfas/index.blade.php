@@ -391,7 +391,9 @@
     ],
     order: [[ 2, 'desc' ]],
     pageLength: 10,
-    sPaginationType: "listbox",
+    sPaginationType: "full_numbers",
+    scrollY : 450,
+    scrollX : "true",
     fixedColumns:   {
             leftColumns: 1,
             rightColumns: 1
