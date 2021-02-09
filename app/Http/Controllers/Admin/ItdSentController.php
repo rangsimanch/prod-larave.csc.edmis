@@ -102,6 +102,6 @@ class ItdSentController extends Controller
         $teams                  = Team::get();
         
         session(['previous-url' => route('admin.itd-sents.index')]);
-        return view('admin.srtSents.index', compact('teams', 'teams', 'teams', 'construction_contracts', 'users', 'users', 'teams'));
+        return view('admin.itdSents.index', compact('teams', 'teams', 'teams', 'construction_contracts', 'users', 'users', 'teams'));
     }
 }

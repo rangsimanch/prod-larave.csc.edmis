@@ -154,7 +154,7 @@ class ItdInboxController extends Controller
         $teams                  = Team::get();
 
         session(['previous-url' => route('admin.itd-inboxes.index')]);
-        return view('admin.srtInboxes.index', compact('teams', 'teams', 'teams', 'construction_contracts', 'users', 'users', 'teams'));
+        return view('admin.itdInboxes.index', compact('teams', 'teams', 'teams', 'construction_contracts', 'users', 'users', 'teams'));
 
     }
 }
