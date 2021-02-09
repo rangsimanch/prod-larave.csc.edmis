@@ -674,6 +674,43 @@
                                 </ul>
                             </li>
                         @endif
+
+                        @if(Auth::user()->team_id == 13)
+                            <li class="treeview">
+                                <a href="#">
+                                    <i class="fa-fw fas fa-envelope">
+
+                                    </i>
+                                    <span>{{ trans('cruds.letterItd.title') }}</span>
+                                    <span class="pull-right-container"><i class="fa fa-fw fa-angle-left pull-right"></i></span>
+                                </a>
+                                <ul class="treeview-menu">
+                                    @can('itd_inbox_access')
+                                        <li class="{{ request()->is("admin/itd-inboxes") || request()->is("admin/itd-inboxes/*") ? "active" : "" }}">
+                                            <a href="{{ route("admin.itd-inboxes.index") }}">
+                                                <i class="fa-fw far fa-envelope">
+
+                                                </i>
+                                                <span>{{ trans('cruds.itdInbox.title') }}</span>
+
+                                            </a>
+                                        </li>
+                                    @endcan
+                                    @can('itd_sent_access')
+                                        <li class="{{ request()->is("admin/itd-sents") || request()->is("admin/itd-sents/*") ? "active" : "" }}">
+                                            <a href="{{ route("admin.itd-sents.index") }}">
+                                                <i class="fa-fw far fa-share-square">
+
+                                                </i>
+                                                <span>{{ trans('cruds.itdSent.title') }}</span>
+
+                                            </a>
+                                        </li>
+                                    @endcan
+                                </ul>
+                            </li>
+                        @endif
+
                     </ul>
                 </li>
             @endcan
