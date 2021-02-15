@@ -1183,14 +1183,36 @@ class RfaController extends Controller
         $for_statuses = $rfa->for_status->id ?? '';
         $comment_status = $$rfa->comment_status->id ?? '';
         //PDF Setting
-        try {
-            $mpdf = new \Mpdf\Mpdf([
-                'tempDir' => '../vendor/mpdf/mpdf/tmp',
-                'default_font' => 'sarabun'
-            ]);
-          } catch (\Mpdf\MpdfException $e) {
-              print "Creating an mPDF object failed with" . $e->getMessage();
-          }
+        // try {
+        //     $mpdf = new \Mpdf\Mpdf([
+        //         'tempDir' => '../vendor/mpdf/mpdf/tmp',
+        //         'default_font' => 'THSarabunNew'
+        //     ]);
+        //   } catch (\Mpdf\MpdfException $e) {
+        //       print "Creating an mPDF object failed with" . $e->getMessage();
+        //   }
+
+        //PDF New Setting
+        $defaultConfig = (new \Mpdf\Config\ConfigVariables())->getDefaults();
+        $fontDirs = $defaultConfig['fontDir'];
+        $defaultFontConfig = (new \Mpdf\Config\FontVariables())->getDefaults();
+        $fontData = $defaultFontConfig['fontdata'];
+        $mpdf = new \Mpdf\Mpdf([
+            'fontDir' => array_merge($fontDirs, [
+            storage_path('fonts/'),
+        ]),
+            'fontdata' => $fontData + [
+            'sarabun_new' => [
+            'R' => 'THSarabunNew.ttf',
+            'I' => 'THSarabunNew Italic.ttf',
+            'B' => 'THSarabunNew Bold.ttf',
+            ],
+        ],
+            'default_font' => 'sarabun_new',
+        ]);
+
+
+          
         //RFA Page
         $pagecount = $mpdf->SetSourceFile(public_path('pdf-asset/RFA-Form_new.pdf'));
         $tplId = $mpdf->ImportPage($pagecount);
