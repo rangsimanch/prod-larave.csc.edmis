@@ -15,8 +15,6 @@
                 <div class="panel-body">
                     <form  method="POST" action="{{ route("admin.rfas.store") }}" enctype="multipart/form-data" class="swa-confirm" >
                         @csrf
-
-                        @can('rfa_panel_a')
                         <legend> Contractor RFA Submittal </legend>
 
                           <div class="form-group {{ $errors->has('purpose_for') ? 'has-error' : '' }}">
@@ -33,14 +31,19 @@
                             <span class="help-block">{{ trans('cruds.rfa.fields.purpose_for_helper') }}</span>
                         </div>
 
-                        <div class="form-group {{ $errors->has('bill') ? 'has-error' : '' }}">
-                            <label for="bill">{{ trans('cruds.rfa.fields.bill') }}</label>
-                            <input class="form-control" type="text" name="bill" id="bill" value="{{ old('bill', '') }}">
-                            @if($errors->has(''))
-                                <span class="help-block" role="alert">{{ $errors->first('') }}</span>
+                        <div class="form-group {{ $errors->has('boq') ? 'has-error' : '' }}">
+                            <label for="boq_id">{{ trans('cruds.rfa.fields.boq') }}</label>
+                            <select class="form-control select2" name="boq_id" id="boq_id">
+                                @foreach($boqs as $id => $boq)
+                                    <option value="{{ $id }}" {{ old('boq_id') == $id ? 'selected' : '' }}>{{ $boq }}</option>
+                                @endforeach
+                            </select>
+                            @if($errors->has('boq'))
+                                <span class="help-block" role="alert">{{ $errors->first('boq') }}</span>
                             @endif
-                            <span class="help-block">{{ trans('cruds.rfa.fields.bill_helper') }}</span>
+                            <span class="help-block">{{ trans('cruds.rfa.fields.boq_helper') }}</span>
                         </div>
+
                         <div class="form-group {{ $errors->has('title_eng') ? 'has-error' : '' }}">
                             <label for="title_eng">{{ trans('cruds.rfa.fields.title_eng') }}</label>
                             <input class="form-control" type="text" name="title_eng" id="title_eng" value="{{ old('title_eng', '') }}">
@@ -74,30 +77,6 @@
                             @endif
                             <span class="help-block">{{ trans('cruds.rfa.fields.origin_number_helper') }}</span>
                         </div>
-                        <!-- <div class="form-group {{ $errors->has('document_number') ? 'has-error' : '' }}">
-                            <label for="document_number">{{ trans('cruds.rfa.fields.document_number') }}</label>
-                            <input class="form-control" type="text" name="document_number" id="document_number" value="{{ old('document_number', '') }}">
-                            @if($errors->has('document_number'))
-                                <span class="help-block" role="alert">{{ $errors->first('document_number') }}</span>
-                            @endif
-                            <span class="help-block">{{ trans('cruds.rfa.fields.document_number_helper') }}</span>
-                        </div>
-                        <div class="form-group {{ $errors->has('rfa_code') ? 'has-error' : '' }}">
-                            <label for="rfa_code">{{ trans('cruds.rfa.fields.rfa_code') }}</label>
-                            <input class="form-control" type="text" name="rfa_code" id="rfa_code" value="{{ old('rfa_code', '') }}">
-                            @if($errors->has('rfa_code'))
-                                <span class="help-block" role="alert">{{ $errors->first('rfa_code') }}</span>
-                            @endif
-                            <span class="help-block">{{ trans('cruds.rfa.fields.rfa_code_helper') }}</span>
-                        </div> -->
-                        <!-- <div class="form-group {{ $errors->has('review_time') ? 'has-error' : '' }}">
-                            <label for="review_time">{{ trans('cruds.rfa.fields.review_time') }}</label>
-                            <input class="form-control" type="number" name="review_time" id="review_time" value="{{ old('review_time') }}" step="1">
-                            @if($errors->has('review_time'))
-                                <span class="help-block" role="alert">{{ $errors->first('review_time') }}</span>
-                            @endif
-                            <span class="help-block">{{ trans('cruds.rfa.fields.review_time_helper') }}</span>
-                        </div> -->
 
                         <div class="form-group {{ $errors->has('type') ? 'has-error' : '' }}">
                             <label class="required" for="type_id">{{ trans('cruds.rfa.fields.type') }}</label>
@@ -292,7 +271,6 @@
                             <span class="help-block">{{ trans('cruds.rfa.fields.submittals_file_helper') }}</span>
                         </div>
 
-                        @can('rfa_cec_sign')
                          <div class="form-group {{ $errors->has('cec_sign') ? 'has-error' : '' }}">
                             <label>{{ trans('cruds.rfa.fields.cec_sign') }}</label>
                             @foreach(App\Rfa::CEC_SIGN_RADIO as $key => $label)
@@ -306,9 +284,7 @@
                             @endif
                             <span class="help-block">{{ trans('cruds.rfa.fields.cec_sign_helper') }}</span>
                         </div>
-                        @endcan
 
-                        @can('rfa_cec_stamp')
                         <div class="form-group {{ $errors->has('cec_stamp') ? 'has-error' : '' }}">
                             <label>{{ trans('cruds.rfa.fields.cec_stamp') }}</label>
                             @foreach(App\Rfa::CEC_STAMP_RADIO as $key => $label)
@@ -322,11 +298,8 @@
                             @endif
                             <span class="help-block">{{ trans('cruds.rfa.fields.cec_stamp_helper') }}</span>
                         </div>
-                        @endcan
-                        
-                        @endcan
 
-                        @can('rfa_panel_b')
+                        <!-- @can('rfa_panel_b')
                         <legend> Incoming Distribution </legend>
 
                         <div class="form-group {{ $errors->has('action_by') ? 'has-error' : '' }}">
@@ -531,7 +504,7 @@
                             @endif
                             <span class="help-block">{{ trans('cruds.rfa.fields.commercial_file_upload_helper') }}</span>
                         </div>
-                        @endcan
+                        @endcan -->
                         
                         <div class="form-row">
 
@@ -899,12 +872,13 @@ Dropzone.options.documentFileUploadDropzone = {
 
      function check_stamp() {
         
+        if(document.getElementById("cec_stamp_2").checked == false){
           var str = "\"CONFIRM\"";
             swal({
                 title: "{{ trans('global.change_box') }}",
                 text: "{{ trans('global.please_enter') }}" + str + "{{ trans('global.to_confirm') }}",
                   type: "input",
-                  showCancelButton: true,
+                  showCancelButton: false,
                   closeOnConfirm: false,
                   inputPlaceholder: "CONFIRM"
               },
@@ -914,7 +888,7 @@ Dropzone.options.documentFileUploadDropzone = {
                         swal.showInputError("You need to write something!");
                         return false
                     }
-                    if (inputValue == "CONFIRM") {
+                    if (inputValue == "CONFIRM" || inputValue == "confirm" || inputValue == "Confirm") {
                         if(document.getElementById("cec_stamp_2").checked == false){
                             swal({
                                 title: "{{ trans('global.confirm_success') }}",
@@ -922,37 +896,27 @@ Dropzone.options.documentFileUploadDropzone = {
                                 type : "success",
                             });
                         }
-                        else{
-                            swal({
-                                title: "{{ trans('global.confirm_success') }}",
-                                text: "{{ trans('global.unstamp_to_form') }}",
-                                type : "success",
-                            });
-                        }
+                        document.getElementById("cec_stamp_1").checked = true;
                     }
                     else{
                         swal.showInputError("{{ trans('global.invalid_box') }}");
-                        if(document.getElementById("cec_stamp_2").checked == false){
-                            document.getElementById("cec_stamp_2").checked = true;
-                            document.getElementById("cec_stamp_1").checked = false;
-                        }
-                    else{
-                        document.getElementById("cec_stamp_1").checked = true;
-                        document.getElementById("cec_stamp_2").checked = false;
-                    }
+                        document.getElementById("cec_stamp_1").checked = false;
+                        document.getElementById("cec_stamp_2").checked = true;
                   }
                     return false
                 });
         }
+     }
 
 
         function check_sign() {
+        if(document.getElementById("cec_sign_2").checked == false){
             var str = "\"CONFIRM\"";
             swal({
                 title: "{{ trans('global.change_box') }}",
                 text: "{{ trans('global.please_enter') }}" + str + "{{ trans('global.to_confirm') }}",
                   type: "input",
-                  showCancelButton: true,
+                  showCancelButton: false,
                   closeOnConfirm: false,
                   inputPlaceholder: "CONFIRM"
               },
@@ -962,7 +926,7 @@ Dropzone.options.documentFileUploadDropzone = {
                         swal.showInputError("You need to write something!");
                         return false
                     }
-                    if (inputValue == "CONFIRM") {
+                    if (inputValue == "CONFIRM" || inputValue == "confirm" || inputValue == "Confirm") {
                         if(document.getElementById("cec_sign_2").checked == false){
                             swal({
                                 title: "{{ trans('global.confirm_success') }}",
@@ -970,28 +934,16 @@ Dropzone.options.documentFileUploadDropzone = {
                                 type : "success",
                             });
                         }
-                        else{
-                            swal({
-                                title: "{{ trans('global.confirm_success') }}",
-                                text: "{{ trans('global.unsign_to_form') }}",
-                                type : "success",
-                            });
-                        }
+                        document.getElementById("cec_sign_1").checked = true;
                     }
                     else{
                         swal.showInputError("{{ trans('global.invalid_box') }}");
-                        
-                        if(document.getElementById("cec_sign_2").checked == false){
-                                document.getElementById("cec_sign_2").checked = true;
-                                document.getElementById("cec_sign_1").checked = false;
-                            }
-                        else{
-                                document.getElementById("cec_sign_1").checked = true;
-                                document.getElementById("cec_sign_2").checked = false;
-                            }
+                        document.getElementById("cec_sign_1").checked = false;
+                        document.getElementById("cec_sign_2").checked = true;
                       }
                       return false
                     });
+            }
         }
 
         $("#save_form").on('click',function(e) {

@@ -132,6 +132,8 @@ class Rfa extends Model implements HasMedia
         'attach_file_name',
         'rfa_count',
         'distribute_by_id',
+        'boq_id',
+        'wbs_level_one_id',
     ];
 
     public static function boot()

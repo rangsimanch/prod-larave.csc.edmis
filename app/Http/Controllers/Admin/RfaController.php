@@ -30,6 +30,8 @@ use Gate;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Yajra\DataTables\Facades\DataTables;
+use App\BoQ;
+
 
 class RfaController extends Controller
 {
@@ -74,176 +76,208 @@ class RfaController extends Controller
             });
 
             $table->addColumn('actions', '&nbsp;');
-            $table->editColumn('actions', function ($row) {
 
-                $viewGate      = 'rfa_show';
-                $crudRoutePart = 'rfas';
+            // $table->editColumn('actions', function ($row) {
 
-                if(!strcmp( $row->check_revision ? $row->check_revision : '' ,"f")){
-                    $revisionGate  = 'rfa_revision';
-                }else{
-                    $revisionGate  = 'rfa_not_revision';
-                }
+            //     $viewGate      = 'rfa_show';
+            //     $crudRoutePart = 'rfas';
+
+            //     if(!strcmp( $row->check_revision ? $row->check_revision : '' ,"f")){
+            //         $revisionGate  = 'rfa_revision';
+            //     }else{
+            //         $revisionGate  = 'rfa_not_revision';
+            //     }
 
         
-                $constructor = $row->issueby ? $row->issueby->id : '';
-                $manager = $row->assign ? $row->assign->id : '';
-                $engineer = $row->action_by ? $row->action_by->id : '';
+            //     $constructor = $row->issueby ? $row->issueby->id : '';
+            //     $manager = $row->assign ? $row->assign->id : '';
+            //     $engineer = $row->action_by ? $row->action_by->id : '';
 
-                $document_status_id = $row->document_status ? $row->document_status->id : '';
-                $sign_status = $row->cec_sign ? $row->cec_sign : '';
-                $stamp_status = $row->cec_stamp ? $row->cec_stamp : '';
+            //     $document_status_id = $row->document_status ? $row->document_status->id : '';
+            //     $sign_status = $row->cec_sign ? $row->cec_sign : '';
+            //     $stamp_status = $row->cec_stamp ? $row->cec_stamp : '';
 
 
-                //  EDIT ALL PERMISSION
-                if(!Gate::denies('rfa_edit_all')){
+            //     //  EDIT ALL PERMISSION
+            //     if(!Gate::denies('rfa_edit_all')){
+            //         $editGate      = 'rfa_edit';
+            //         $deleteGate    = 'rfa_delete';
+            //                 return view('partials.datatablesActions', compact(
+            //                     'viewGate',
+            //                     'editGate',
+            //                     'deleteGate',
+            //                     'revisionGate',
+            //                     'crudRoutePart',
+            //                     'row'
+            //                 ));
+            //     }
+            //     else{
+            //         /////////////// New Status ///////////////
+            //         if(!strcmp($document_status_id, '1')){
+            //             //Before CEC Sign and Stamp 
+            //             if(strcmp($sign_status, '2') == '0' or strcmp($stamp_status, '2') == '0' ){
+            //                 //Check Permission CEC Manager and CEC Admin
+            //                 if (!strcmp($constructor,Auth::id()) || !Gate::denies('rfa_cec_sign') ){
+            //                         $editGate      = 'rfa_edit';
+            //                         $deleteGate    = 'rfa_delete';
+            //                         return view('partials.datatablesActions', compact(
+            //                             'viewGate',
+            //                             'editGate',
+            //                             'deleteGate',
+            //                             'revisionGate',
+            //                             'crudRoutePart',
+            //                             'row'
+            //                         ));
+            //                 }
+                     
+            //                 else{
+            //                     $editGate      = 'rfa_not_edit';
+            //                     $deleteGate    = 'rfa_not_delete';
+            //                     return view('partials.datatablesActions', compact(
+            //                         'viewGate',
+            //                         'editGate',
+            //                         'deleteGate',
+            //                         'revisionGate',
+            //                         'crudRoutePart',
+            //                         'row'
+            //                     ));
+            //                 }
+            //             }
+            //         //After CEC Sign and Stamp
+            //             else {
+            //                 //Check CSC Manager
+            //                 if ( strcmp(Auth::id(),'61') == 0){
+            //                     $editGate      = 'rfa_edit';
+            //                     $deleteGate    = 'rfa_delete';
+            //                     return view('partials.datatablesActions', compact(
+            //                         'viewGate',
+            //                         'editGate',
+            //                         'deleteGate',
+            //                         'revisionGate',
+            //                         'crudRoutePart',
+            //                         'row'
+            //                     ));
+            //                 }
+            //                 else{
+            //                     $editGate      = 'rfa_not_edit';
+            //                     $deleteGate    = 'rfa_not_delete';
+            //                     return view('partials.datatablesActions', compact(
+            //                         'viewGate',
+            //                         'editGate',
+            //                         'deleteGate',
+            //                         'revisionGate',
+            //                         'crudRoutePart',
+            //                         'row'
+            //                     ));
+            //                 }
+            //             }
+            //         }
+
+            //         // /////////////// Distribute Status ///////////////
+            //         elseif(strcmp($document_status_id, '2') == 0){
+            //             //Check Engineer and Specialist
+            //             if (strcmp($engineer,Auth::id()) == 0 ){
+            //                 $editGate      = 'rfa_edit';
+            //                 $deleteGate    = 'rfa_delete';
+            //                 return view('partials.datatablesActions', compact(
+            //                     'viewGate',
+            //                     'editGate',
+            //                     'deleteGate',
+            //                     'revisionGate',
+            //                     'crudRoutePart',
+            //                     'row'
+            //                 ));
+            //             }
+            //             else{
+            //                 $editGate      = 'rfa_not_edit';
+            //                 $deleteGate    = 'rfa_not_delete';
+            //                 return view('partials.datatablesActions', compact(
+            //                     'viewGate',
+            //                     'editGate',
+            //                     'deleteGate',
+            //                     'revisionGate',
+            //                     'crudRoutePart',
+            //                     'row'
+            //                 ));
+            //             }
+            //         }
+                
+            //         // /////////////// Reviewed Status ///////////////
+            //         else if(strcmp($document_status_id, '3') == 0){
+            //         //Check CSC Manager
+            //            if ( strcmp(Auth::id(),'61') == 0){
+            //                 $editGate      = 'rfa_edit';
+            //                 $deleteGate    = 'rfa_delete';
+            //                 return view('partials.datatablesActions', compact(
+            //                     'viewGate',
+            //                     'editGate',
+            //                     'deleteGate',
+            //                     'revisionGate',
+            //                     'crudRoutePart',
+            //                     'row'
+            //                 ));
+            //             }
+            //             else{
+            //                 $editGate      = 'rfa_not_edit';
+            //                 $deleteGate    = 'rfa_not_delete';
+            //                 return view('partials.datatablesActions', compact(
+            //                     'viewGate',
+            //                     'editGate',
+            //                     'deleteGate',
+            //                     'revisionGate',
+            //                     'crudRoutePart',
+            //                     'row'
+            //                 ));
+            //             }
+            //         }
+
+            //         else{
+            //             $editGate      = 'rfa_not_edit';
+            //             $deleteGate    = 'rfa_not_delete';
+            //             return view('partials.datatablesActions', compact(
+            //                 'viewGate',
+            //                 'editGate',
+            //                 'deleteGate',
+            //                 'revisionGate',
+            //                 'crudRoutePart',
+            //                 'row'
+            //             ));
+        
+            //         }    
+
+            //     }
+
+            // });
+
+            $table->editColumn('actions', function ($row) {
+                if($row->document_status->id != 4){
+                    $viewGate      = 'rfa_show';
                     $editGate      = 'rfa_edit';
                     $deleteGate    = 'rfa_delete';
-                            return view('partials.datatablesActions', compact(
-                                'viewGate',
-                                'editGate',
-                                'deleteGate',
-                                'revisionGate',
-                                'crudRoutePart',
-                                'row'
-                            ));
+                    $crudRoutePart = 'rfas';
+
+                    return view('partials.datatablesActions', compact(
+                        'viewGate',
+                        'editGate',
+                        'deleteGate',
+                        'crudRoutePart',
+                        'row'
+                    ));
+                }else
+                {
+                    $viewGate      = 'rfa_show';
+                    $editGate      = 'rfa_not_edit';
+                    $deleteGate    = 'rfa_delete';
+                    $crudRoutePart = 'rfas';
+
+                    return view('partials.datatablesActions', compact(
+                        'viewGate',
+                        'editGate',
+                        'deleteGate',
+                        'crudRoutePart',
+                        'row'
+                    ));
                 }
-                else{
-                    /////////////// New Status ///////////////
-                    if(!strcmp($document_status_id, '1')){
-                        //Before CEC Sign and Stamp 
-                        if(strcmp($sign_status, '2') == '0' or strcmp($stamp_status, '2') == '0' ){
-                            //Check Permission CEC Manager and CEC Admin
-                            if (!strcmp($constructor,Auth::id()) || !Gate::denies('rfa_cec_sign') ){
-                                    $editGate      = 'rfa_edit';
-                                    $deleteGate    = 'rfa_delete';
-                                    return view('partials.datatablesActions', compact(
-                                        'viewGate',
-                                        'editGate',
-                                        'deleteGate',
-                                        'revisionGate',
-                                        'crudRoutePart',
-                                        'row'
-                                    ));
-                            }
-                     
-                            else{
-                                $editGate      = 'rfa_not_edit';
-                                $deleteGate    = 'rfa_not_delete';
-                                return view('partials.datatablesActions', compact(
-                                    'viewGate',
-                                    'editGate',
-                                    'deleteGate',
-                                    'revisionGate',
-                                    'crudRoutePart',
-                                    'row'
-                                ));
-                            }
-                        }
-                    //After CEC Sign and Stamp
-                        else {
-                            //Check CSC Manager
-                            if ( strcmp(Auth::id(),'61') == 0){
-                                $editGate      = 'rfa_edit';
-                                $deleteGate    = 'rfa_delete';
-                                return view('partials.datatablesActions', compact(
-                                    'viewGate',
-                                    'editGate',
-                                    'deleteGate',
-                                    'revisionGate',
-                                    'crudRoutePart',
-                                    'row'
-                                ));
-                            }
-                            else{
-                                $editGate      = 'rfa_not_edit';
-                                $deleteGate    = 'rfa_not_delete';
-                                return view('partials.datatablesActions', compact(
-                                    'viewGate',
-                                    'editGate',
-                                    'deleteGate',
-                                    'revisionGate',
-                                    'crudRoutePart',
-                                    'row'
-                                ));
-                            }
-                        }
-                    }
-
-                    // /////////////// Distribute Status ///////////////
-                    elseif(strcmp($document_status_id, '2') == 0){
-                        //Check Engineer and Specialist
-                        if (strcmp($engineer,Auth::id()) == 0 ){
-                            $editGate      = 'rfa_edit';
-                            $deleteGate    = 'rfa_delete';
-                            return view('partials.datatablesActions', compact(
-                                'viewGate',
-                                'editGate',
-                                'deleteGate',
-                                'revisionGate',
-                                'crudRoutePart',
-                                'row'
-                            ));
-                        }
-                        else{
-                            $editGate      = 'rfa_not_edit';
-                            $deleteGate    = 'rfa_not_delete';
-                            return view('partials.datatablesActions', compact(
-                                'viewGate',
-                                'editGate',
-                                'deleteGate',
-                                'revisionGate',
-                                'crudRoutePart',
-                                'row'
-                            ));
-                        }
-                    }
-                
-                    // /////////////// Reviewed Status ///////////////
-                    else if(strcmp($document_status_id, '3') == 0){
-                    //Check CSC Manager
-                       if ( strcmp(Auth::id(),'61') == 0){
-                            $editGate      = 'rfa_edit';
-                            $deleteGate    = 'rfa_delete';
-                            return view('partials.datatablesActions', compact(
-                                'viewGate',
-                                'editGate',
-                                'deleteGate',
-                                'revisionGate',
-                                'crudRoutePart',
-                                'row'
-                            ));
-                        }
-                        else{
-                            $editGate      = 'rfa_not_edit';
-                            $deleteGate    = 'rfa_not_delete';
-                            return view('partials.datatablesActions', compact(
-                                'viewGate',
-                                'editGate',
-                                'deleteGate',
-                                'revisionGate',
-                                'crudRoutePart',
-                                'row'
-                            ));
-                        }
-                    }
-
-                    else{
-                        $editGate      = 'rfa_not_edit';
-                        $deleteGate    = 'rfa_not_delete';
-                        return view('partials.datatablesActions', compact(
-                            'viewGate',
-                            'editGate',
-                            'deleteGate',
-                            'revisionGate',
-                            'crudRoutePart',
-                            'row'
-                        ));
-        
-                    }    
-
-                }
-
             });
             
 
@@ -692,20 +726,15 @@ class RfaController extends Controller
 
         $reviewed_bies = User::find([39,62])->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
+        $boqs = BoQ::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        return view('admin.rfas.create', compact('document_statuses', 'types', 'construction_contracts', 'wbs_level_3s', 'wbs_level_4s', 'issuebies', 'assigns', 'action_bies', 'comment_bies', 'information_bies', 'comment_statuses', 'for_statuses', 'reviewed_bies'));
+        return view('admin.rfas.create', compact('document_statuses', 'types', 'construction_contracts', 'wbs_level_3s', 'wbs_level_4s', 'issuebies', 'assigns', 'action_bies', 'comment_bies', 'information_bies', 'comment_statuses', 'for_statuses', 'reviewed_bies', 'boqs'));
     }
 
     public function store(StoreRfaRequest $request)
     {   $data = $request->all();
         $data['create_by_user_id'] = auth()->id();
-
-        if($request->document_status_id != ''){
-            $data['document_status_id'] = $request->document_status_id;
-        }
-        else{            
-            $data['document_status_id'] = 1;
-        }
+        $data['document_status_id'] = 1;
         
 
             //Works Code
@@ -779,44 +808,44 @@ class RfaController extends Controller
         $submittalsRfa =  SubmittalsRfa::insert($insert_data);
         }
 
-        $count_rfa = DB::table('rfas')->where([['cec_sign', '=', 1], ['cec_stamp', '=', 1], ['document_status_id', '=', 1]])->count();
-        if($request->cec_sign == 1 && $request->cec_stamp == 1){
-            //Alert Manager
-            $data_alert['alert_text'] = 'You have new RFA to Distribute.';
-            $data_alert['alert_link'] = route('admin.rfas.index');
-            $data_user_id = array($data['assign_id']);
+        // $count_rfa = DB::table('rfas')->where([['cec_sign', '=', 1], ['cec_stamp', '=', 1], ['document_status_id', '=', 1]])->count();
+        // if($request->cec_sign == 1 && $request->cec_stamp == 1){
+        //     //Alert Manager
+        //     $data_alert['alert_text'] = 'You have new RFA to Distribute.';
+        //     $data_alert['alert_link'] = route('admin.rfas.index');
+        //     $data_user_id = array($data['assign_id']);
 
-            $userAlert = UserAlert::create($data_alert);
-            $userAlert->users()->sync($data_user_id);
+        //     $userAlert = UserAlert::create($data_alert);
+        //     $userAlert->users()->sync($data_user_id);
 
-            //Alert Admin Pook
-            $data_alert['alert_text'] = 'You have new RFA.';
-            $data_alert['alert_link'] = route('admin.rfas.index');
+        //     //Alert Admin Pook
+        //     $data_alert['alert_text'] = 'You have new RFA.';
+        //     $data_alert['alert_link'] = route('admin.rfas.index');
     
-            $userAlert = UserAlert::create($data_alert);
-            $userAlert->users()->sync(11);
+        //     $userAlert = UserAlert::create($data_alert);
+        //     $userAlert->users()->sync(11);
 
-            //Alert Admin 
-            $data_alert['alert_text'] = 'You have new RFA.';
-            $data_alert['alert_link'] = route('admin.rfas.index');
+        //     //Alert Admin 
+        //     $data_alert['alert_text'] = 'You have new RFA.';
+        //     $data_alert['alert_link'] = route('admin.rfas.index');
     
-            $userAlert = UserAlert::create($data_alert);
-            $userAlert->users()->sync(56);
+        //     $userAlert = UserAlert::create($data_alert);
+        //     $userAlert->users()->sync(56);
 
-        }
+        // }
         
 
         foreach ($request->input('file_upload_1', []) as $file) {
             $rfa->addMedia(storage_path('tmp/uploads/' . $file))->toMediaCollection('file_upload_1');
         }
 
-        foreach ($request->input('commercial_file_upload', []) as $file) {
-            $rfa->addMedia(storage_path('tmp/uploads/' . $file))->toMediaCollection('commercial_file_upload');
-        }
+        // foreach ($request->input('commercial_file_upload', []) as $file) {
+        //     $rfa->addMedia(storage_path('tmp/uploads/' . $file))->toMediaCollection('commercial_file_upload');
+        // }
 
-        foreach ($request->input('document_file_upload', []) as $file) {
-            $rfa->addMedia(storage_path('tmp/uploads/' . $file))->toMediaCollection('document_file_upload');
-        }
+        // foreach ($request->input('document_file_upload', []) as $file) {
+        //     $rfa->addMedia(storage_path('tmp/uploads/' . $file))->toMediaCollection('document_file_upload');
+        // }
 
         foreach ($request->input('submittals_file', []) as $file) {
             $rfa->addMedia(storage_path('tmp/uploads/' . $file))->toMediaCollection('submittals_file');
@@ -833,9 +862,6 @@ class RfaController extends Controller
     public function edit(Rfa $rfa)
     {
         abort_if(Gate::denies('rfa_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
-        $types = Rfatype::all()->pluck('type_code', 'id')->prepend(trans('global.pleaseSelect'), '');
-
         //Contract Check
             //Check is Admin
         if(Auth::id() != 1){
@@ -844,208 +870,113 @@ class RfaController extends Controller
         else{
             $construction_contracts = ConstructionContract::all()->pluck('code', 'id')->prepend(trans('global.pleaseSelect'), '');
         }
-        
-        $wbs_level_3s = WbsLevelThree::all()->pluck('wbs_level_3_code', 'id')->prepend(trans('global.pleaseSelect'), '');
+        if($rfa->document_status_id == 1){
+            $action_bies = User::where('team_id',3)->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+            $comment_bies = User::where('team_id',3)->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+            $information_bies = User::where('team_id',3)->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $wbs_level_4s = Wbslevelfour::all()->pluck('wbs_level_4_code', 'id')->prepend(trans('global.pleaseSelect'), '');
+            $rfa->load('action_by', 'comment_by', 'information_by');
 
-        $issuebies = User::where('id',91)->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+            return view('admin.rfas.edit', compact('construction_contracts', 'action_bies', 'comment_bies', 'information_bies', 'rfa'));
+        }
+        else if($rfa->document_status_id == 2){
+            $action_bies = User::where('team_id',3)->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+            $comment_statuses = RfaCommentStatus::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+            $rfa->load('action_by');
+            return view('admin.rfas.edit', compact('construction_contracts', 'action_bies', 'comment_statuses', 'rfa'));
+        }
+        else if($rfa->document_status_id == 3){
+            $for_statuses = RfaCommentStatus::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+            $reviewed_bies = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+            return view('admin.rfas.edit', compact('construction_contracts', 'for_statuses', 'reviewed_bies', 'rfa'));
+        }
 
-        $assigns = User::where('id',61)->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), ''); //61->Li, 39->Paisan,  62->Liu 
-
-        $action_bies = User::where('team_id',3)->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
-        
-        $comment_bies = User::where('team_id',3)->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
-
-        $information_bies = User::where('team_id',3)->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
-
-        $comment_statuses = RfaCommentStatus::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
-
-        $for_statuses = RfaCommentStatus::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
-
-        $submittalsRfa = SubmittalsRfa::all()->where('on_rfa_id' , $rfa->id);
-
-        $review_statuses = RfaCommentStatus::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
-
-        $reviewed_bies = User::find([39,62])->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
-        
-
-
-        $rfa->load('type', 'construction_contract', 'issueby', 'assign', 'action_by', 'comment_by', 'information_by', 'comment_status', 'for_status', 'document_status', 'create_by_user', 'update_by_user', 'approve_by_user', 'reviewed_by', 'team');
-
-        return view('admin.rfas.edit', compact('review_statuses', 'submittalsRfa', 'types', 'construction_contracts', 'wbs_level_3s', 'wbs_level_4s', 'issuebies', 'assigns', 'action_bies', 'comment_bies', 'information_bies', 'comment_statuses', 'for_statuses', 'rfa', 'reviewed_bies'));
     }
 
     public function update(UpdateRfaRequest $request, Rfa $rfa)
     {
-        
-        if($rfa->document_status_id == 1 && ( $rfa->cec_sign == 1 && $rfa->cec_stamp == 1 ) ){
-            if($request->action_by_id != ''){
-                $rfa['document_status_id'] = 2;
-                $distribute_date = new DateTime();
-                $rfa['distribute_by_id'] = Auth::id();
-                $rfa['distribute_date'] = $distribute_date->format('d/m/Y');
+        if($rfa->document_status_id == 1){
+            $data['action_by_id'] = $request->action_by_id;
+            $data['comment_by_id'] = $request->comment_by_id;
+            $data['information_by_id'] = $request->information_by_id;
+            $data['receive_date'] = $request->receive_date;
+            $data['note_2'] = $request->note_2;
+            $data['target_date'] = $request->target_date;
+            $data['incoming_number'] = "IN-" . $rfa->origin_number;
+            $data['document_status_id'] = 2;
+            $data['distribute_by_id'] = Auth::id();
+            $distribute_date = new DateTime();
+            $data['distribute_date'] = $distribute_date->format('d/m/Y');
+            $rfa->update($data);
+
+            if (count($rfa->work_file_upload) > 0) {
+                foreach ($rfa->work_file_upload as $media) {
+                    if (!in_array($media->file_name, $request->input('work_file_upload', []))) {
+                        $media->delete();
+                    }
+                }
             }
-            else{
-                $rfa['document_status_id'] = 1;
+    
+            $media = $rfa->work_file_upload->pluck('file_name')->toArray();
+    
+            foreach ($request->input('work_file_upload', []) as $file) {
+                if (count($media) === 0 || !in_array($file, $media)) {
+                    $rfa->addMedia(storage_path('tmp/uploads/' . $file))->toMediaCollection('work_file_upload');
+                }
             }
         }
 
         else if($rfa->document_status_id == 2){
-            if($request->comment_status_id !=  ''){
-                $rfa['document_status_id'] = 3;
-                $process_date = new DateTime();
-                $rfa['process_date'] = $process_date->format('d/m/Y');
+            $data['document_status_id'] = 3;
+            $process_date = new DateTime();
+            $data['process_date'] = $process_date->format('d/m/Y');
+            $data['comment_status_id'] = $request->comment_status_id;
+            $data['note_3'] = $request->note_3;
+            $rfa->update($data);
+            
+            if (count($rfa->document_file_upload) > 0) {
+                foreach ($rfa->document_file_upload as $media) {
+                    if (!in_array($media->file_name, $request->input('document_file_upload', []))) {
+                        $media->delete();
+                    }
+                }
+            }
+    
+            $media = $rfa->document_file_upload->pluck('file_name')->toArray();
+    
+            foreach ($request->input('document_file_upload', []) as $file) {
+                if (count($media) === 0 || !in_array($file, $media)) {
+                    $rfa->addMedia(storage_path('tmp/uploads/' . $file))->toMediaCollection('document_file_upload');
+                }
             }
         }
+
         else if($rfa->document_status_id == 3){
-            if($request->for_status_id != ''){
-                $rfa['document_status_id'] = 4;
-                $outgoing_date = new DateTime();
-                $rfa['outgoing_date'] = $outgoing_date->format('d/m/Y');
+            $data['document_status_id'] = 4;
+            $outgoing_date = new DateTime();
+            $data['outgoing_date'] = $outgoing_date->format('d/m/Y');
+            $data['outgoing_number'] = "OUT-" . $rfa->rfa_code;
+            $data['reviewed_by_id'] = $request->reviewed_by_id;
+            $data['for_status_id'] = $request->for_status_id;
+            $data['note_4'] = $request->note_4;
+            $rfa->update($data);
+
+            if (count($rfa->commercial_file_upload) > 0) {
+                foreach ($rfa->commercial_file_upload as $media) {
+                    if (!in_array($media->file_name, $request->input('commercial_file_upload', []))) {
+                        $media->delete();
+                    }
+                }
             }
-        }
 
-        if($rfa->rfa_code != null){
-            $rfa['incoming_number'] = "IN-" . $rfa->rfa_code ;
-            $rfa['outgoing_number'] = "OUT-" . $rfa->rfa_code ;
-        }
-        
-        $rfa->update($request->all());
+            $media = $rfa->commercial_file_upload->pluck('file_name')->toArray();
 
-        // Submittals
-        if(count($request->only(['item'])) != 0){
-            $id = $request->id_submittals;
-            $item_no = $request->item;
-            $review_status = $request->review_status;
-            $date_returned = $request->date_returned;
-            $remarks = $request->remarks;
-
-            for($count = 0; $count < count($item_no); $count++){
-                $dataSubmittals = array(
-                    'review_status_id' => $review_status[$count],
-                    'date_returned' => $date_returned[$count],
-                    'remarks' => $remarks[$count]
-                );
-                $id_update = $id[$count]; 
-                $update_data[] = $dataSubmittals;
-                SubmittalsRfa::where('id' , $id_update)->update($dataSubmittals);
-            }
-        }
-
-        //Alert
-        if($rfa->document_status_id == 1 && ( $request->cec_sign == 1 && $request->cec_stamp == 1 ) ){
-
-            if($request->assign_id != ''){
-              //Alert Manager
-              $count_rfa = DB::table('rfas')->where([['cec_sign', '=', 1], ['cec_stamp', '=', 1], ['document_status_id', '=', 1]])->count();
-              $data_alert['alert_text'] = 'You have new RFA to Distribute.';
-              $data_alert['alert_link'] = route('admin.rfas.index');
-              $data_user_id = array($request->assign_id);
-
-
-              $userAlert = UserAlert::create($data_alert);
-              $userAlert->users()->sync($data_user_id);
-            }
-        }
-        elseif($rfa->document_status_id == 2 && $request->action_by_id != '' && $request->information_by_id != '' && $request->comment_by_id){
-
-            //Alert Engineer
-            $count_rfa = RFA::where([['action_by_id', $request->action_by_id], ['document_status_id', 2]])->count();
-            $data_alert['alert_text'] = 'You have new RFA for Review.';
-            $data_alert['alert_link'] = route('admin.rfas.index');
-            $data_user_id = $request->action_by_id;
-        
-            $userAlert = UserAlert::create($data_alert);
-            $userAlert->users()->sync($data_user_id);
-        }
-        elseif($request->comment_status_id !=  ''){
-            //Alert Manager Appove
-            $count_rfa = RFA::where('document_status_id', 3)->count();
-            $data_alert['alert_text'] = 'You have new RFA to Approve.';
-            $data_alert['alert_link'] = route('admin.rfas.index');
-            $data_user_id = 61;
-
-            $userAlert = UserAlert::create($data_alert);
-            $userAlert->users()->sync($data_user_id);
-
-        }
-        elseif($request->for_status_id != 1 && $request->for_status_id != ''){
-          //Alert Manager Appove
-            $count_rfa = RFA::where([['document_status_id', 4]])->count();
-            $data_alert['alert_text'] = 'You have RFA to Revision.';
-            $data_alert['alert_link'] = route('admin.rfas.index');
-            $data_user_id = array(32,79,28,83,84,97);
-
-            $userAlert = UserAlert::create($data_alert);
-            $userAlert->users()->sync($data_user_id);   
-        }
-
-        if (count($rfa->file_upload_1) > 0) {
-            foreach ($rfa->file_upload_1 as $media) {
-                if (!in_array($media->file_name, $request->input('file_upload_1', []))) {
-                    $media->delete();
+            foreach ($request->input('commercial_file_upload', []) as $file) {
+                if (count($media) === 0 || !in_array($file, $media)) {
+                    $rfa->addMedia(storage_path('tmp/uploads/' . $file))->toMediaCollection('commercial_file_upload');
                 }
             }
         }
-
-        $media = $rfa->file_upload_1->pluck('file_name')->toArray();
-
-        foreach ($request->input('file_upload_1', []) as $file) {
-            if (count($media) === 0 || !in_array($file, $media)) {
-                $rfa->addMedia(storage_path('tmp/uploads/' . $file))->toMediaCollection('file_upload_1');
-            }
-        }
-
-        if (count($rfa->commercial_file_upload) > 0) {
-            foreach ($rfa->commercial_file_upload as $media) {
-                if (!in_array($media->file_name, $request->input('commercial_file_upload', []))) {
-                    $media->delete();
-                }
-            }
-        }
-
-        $media = $rfa->commercial_file_upload->pluck('file_name')->toArray();
-
-        foreach ($request->input('commercial_file_upload', []) as $file) {
-            if (count($media) === 0 || !in_array($file, $media)) {
-                $rfa->addMedia(storage_path('tmp/uploads/' . $file))->toMediaCollection('commercial_file_upload');
-            }
-        }
-
-        if (count($rfa->document_file_upload) > 0) {
-            foreach ($rfa->document_file_upload as $media) {
-                if (!in_array($media->file_name, $request->input('document_file_upload', []))) {
-                    $media->delete();
-                }
-            }
-        }
-
-        $media = $rfa->document_file_upload->pluck('file_name')->toArray();
-
-        foreach ($request->input('document_file_upload', []) as $file) {
-            if (count($media) === 0 || !in_array($file, $media)) {
-                $rfa->addMedia(storage_path('tmp/uploads/' . $file))->toMediaCollection('document_file_upload');
-            }
-        }
-
-
-        if (count($rfa->submittals_file) > 0) {
-            foreach ($rfa->submittals_file as $media) {
-                if (!in_array($media->file_name, $request->input('submittals_file', []))) {
-                    $media->delete();
-                }
-            }
-        }
-
-        $media = $rfa->submittals_file->pluck('file_name')->toArray();
-
-        foreach ($request->input('submittals_file', []) as $file) {
-            if (count($media) === 0 || !in_array($file, $media)) {
-                $rfa->addMedia(storage_path('tmp/uploads/' . $file))->toMediaCollection('submittals_file');
-            }
-        }
-
         return redirect()->route('admin.rfas.index');
     }
 
@@ -1182,15 +1113,16 @@ class RfaController extends Controller
 
         $for_statuses = $rfa->for_status->id ?? '';
         $comment_status = $$rfa->comment_status->id ?? '';
-        //PDF Setting
-        // try {
-        //     $mpdf = new \Mpdf\Mpdf([
-        //         'tempDir' => '../vendor/mpdf/mpdf/tmp',
-        //         'default_font' => 'THSarabunNew'
-        //     ]);
-        //   } catch (\Mpdf\MpdfException $e) {
-        //       print "Creating an mPDF object failed with" . $e->getMessage();
-        //   }
+        
+                //PDF Setting
+                // try {
+                //     $mpdf = new \Mpdf\Mpdf([
+                //         'tempDir' => '../vendor/mpdf/mpdf/tmp',
+                //         'default_font' => 'THSarabunNew'
+                //     ]);
+                //   } catch (\Mpdf\MpdfException $e) {
+                //       print "Creating an mPDF object failed with" . $e->getMessage();
+                //   }
 
         //PDF New Setting
         $defaultConfig = (new \Mpdf\Config\ConfigVariables())->getDefaults();

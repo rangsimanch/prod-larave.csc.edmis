@@ -10,6 +10,13 @@
     </a>
 @endcan
 
+@if($crudRoutePart == 'rfas')
+@can($revisionGate)
+    <a class="btn btn-xs btn-warning" href="{{ route('admin.' . $crudRoutePart . '.revision', $row->id) }}">
+        {{ trans('global.revision') }}
+    </a>
+@endcan
+@endif 
 
 @can($deleteGate)
     <form action="{{ route('admin.' . $crudRoutePart . '.destroy', $row->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">

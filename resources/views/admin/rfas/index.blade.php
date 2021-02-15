@@ -344,7 +344,7 @@
 { data: 'actions', name: '{{ trans('global.actions') }}', sortable: false, }, // 1
 { data: 'created_at', name: 'created_at' ,visible: true}, // 2
 { data: 'date_counter', name: 'date_counter',visible: false },// 3
-{ data: 'document_status_status_name', name: 'document_status.status_name', sortable: false, visible: false}, // 4
+{ data: 'document_status_status_name', name: 'document_status.status_name'}, // 4
 { data: 'file_upload_1', name: 'file_upload_1', sortable: false, searchable: false }, // 5
 { data: 'submittals_file', name: 'submittals_file', sortable: false, searchable: false, visible: false }, // 6
 { data: 'bill', name: 'bill',sortable: false, }, // 7
