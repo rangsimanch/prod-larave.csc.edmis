@@ -60,9 +60,14 @@
                                 </th>
                                 
                                 <th>
-                                    {{ trans('cruds.rfa.fields.bill') }}
-                                    <input type="text" class="form-control filter-input"
-                                    placeholder="Search for Bill..." data-column="7"/>
+                                    {{ trans('cruds.rfa.fields.boq') }}
+                                    
+                                    <select class="form-control filter-select" data-column="7">
+                                        <option value=""> Select Bill... </option>
+                                        @foreach ($boq as $boq)
+                                            <option value="{{ $boq }}"> {{ $boq }} </option>
+                                        @endforeach
+                                    </select>
                                 </th>
 
                                 <th>
@@ -344,10 +349,10 @@
 { data: 'actions', name: '{{ trans('global.actions') }}', sortable: false, }, // 1
 { data: 'created_at', name: 'created_at' ,visible: true}, // 2
 { data: 'date_counter', name: 'date_counter',visible: false },// 3
-{ data: 'document_status_status_name', name: 'document_status.status_name'}, // 4
+{ data: 'document_status_status_name', name: 'document_status.status_name', sortable: false}, // 4
 { data: 'file_upload_1', name: 'file_upload_1', sortable: false, searchable: false }, // 5
 { data: 'submittals_file', name: 'submittals_file', sortable: false, searchable: false, visible: false }, // 6
-{ data: 'bill', name: 'bill',sortable: false, }, // 7
+{ data: 'boq_name', name: 'boq_name', sortable: false}, // 7
 { data: 'title_eng', name: 'title_eng',sortable: false, }, // 8
 { data: 'title', name: 'title' ,sortable: false,}, // 9
 { data: 'title_cn', name: 'title_cn' ,visible: false, sortable: false, }, // 10

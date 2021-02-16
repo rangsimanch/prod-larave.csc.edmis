@@ -468,9 +468,10 @@ class RfaController extends Controller
                 return $row->check_revision ? $row->check_revision : '';
             });
 
-            $table->editColumn('bill', function ($row) {
-                return $row->bill ? $row->bill : "";
+            $table->addColumn('boq_name', function ($row) {
+                return $row->boq ? $row->boq->name : '';
             });
+
             $table->editColumn('qty_page', function ($row) {
                 return $row->qty_page ? $row->qty_page : "";
             });
@@ -488,11 +489,12 @@ class RfaController extends Controller
                 return $row->reviewed_by ? $row->reviewed_by->name : '';
             });
 
-            $table->rawColumns(['actions', 'placeholder', 'type', 'construction_contract', 'wbs_level_3', 'wbs_level_4', 'issueby', 'assign', 'file_upload_1', 'comment_by', 'information_by', 'comment_status', 'for_status', 'document_status', 'action_by', 'create_by_user', 'update_by_user', 'approve_by_user', 'commercial_file_upload', 'document_file_upload', 'team', 'check_revision','reviewed_by','document_status_status_name','submittals_file']);
+            $table->rawColumns(['actions','boq_name', 'placeholder', 'type', 'construction_contract', 'wbs_level_3', 'wbs_level_4', 'issueby', 'assign', 'file_upload_1', 'comment_by', 'information_by', 'comment_status', 'for_status', 'document_status', 'action_by', 'create_by_user', 'update_by_user', 'approve_by_user', 'commercial_file_upload', 'document_file_upload', 'team', 'check_revision','reviewed_by','document_status_status_name','submittals_file']);
 
             return $table->make(true);
         }
 
+        $boq =  BoQ::all()->pluck('name');
         $document_status =  RfaDocumentStatus::all()->sortBy('status_name')->pluck('status_name')->unique();
         $types = Rfatype::all()->sortBy('type_code')->pluck('type_code')->unique();
         $work_types = Rfa::all()->sortBy('worktype')->pluck('worktype')->unique();
@@ -506,7 +508,7 @@ class RfaController extends Controller
         $teams = Team::all()->sortBy('code')->pluck('code')->unique();
 
 
-        return view('admin.rfas.index',compact('document_status','types','work_types','construction_contracts','wbs_level_3s','wbs_level_4s','submit_dates','receive_dates','comment_statuses','for_statuses','teams'));
+        return view('admin.rfas.index',compact('boq','document_status','types','work_types','construction_contracts','wbs_level_3s','wbs_level_4s','submit_dates','receive_dates','comment_statuses','for_statuses','teams'));
     }
     
     function fetch(Request $request){
@@ -544,6 +546,8 @@ class RfaController extends Controller
                 $construction_contracts = ConstructionContract::all()->pluck('code', 'id')->prepend(trans('global.pleaseSelect'), '');
             }
 
+        
+            
         $wbs_level_3s = WbsLevelThree::all()->pluck('wbs_level_3_code', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $wbs_level_4s = Wbslevelfour::all()->pluck('wbs_level_4_code', 'id')->prepend(trans('global.pleaseSelect'), '');
@@ -1026,7 +1030,7 @@ class RfaController extends Controller
         $rfa->load('type', 'construction_contract', 'wbs_level_3', 'wbs_level_4', 'issueby', 'assign', 'action_by', 'comment_by', 'information_by', 'comment_status', 'for_status', 'document_status', 'create_by_user', 'team','onRfaSubmittalsRfas', 'reviewed_by','distribute_by');
 
         //Varible setting
-        $bill = $rfa->bill ?? '';
+        $bill = $rfa->boq->name ?? '';
         $title_th = $rfa->title ?? '';
         $title_en = wordwrap($rfa->title_eng ?? '',300,"<br>\n");
         $document_number = $rfa->document_number ?? '';

@@ -53,19 +53,7 @@
                             @endif
                             <span class="help-block">{{ trans('cruds.addLetter.fields.speed_class_helper') }}</span>
                         </div>
-                        <div class="form-group {{ $errors->has('objective') ? 'has-error' : '' }}">
-                            <label class="required">{{ trans('cruds.addLetter.fields.objective') }}</label>
-                            <select class="form-control" name="objective" id="objective" required>
-                                <option value disabled {{ old('objective', null) === null ? 'selected' : '' }}>{{ trans('global.pleaseSelect') }}</option>
-                                @foreach(App\AddLetter::OBJECTIVE_SELECT as $key => $label)
-                                    <option value="{{ $key }}" {{ old('objective', '') === (string) $key ? 'selected' : '' }}>{{ $label }}</option>
-                                @endforeach
-                            </select>
-                            @if($errors->has('objective'))
-                                <span class="help-block" role="alert">{{ $errors->first('objective') }}</span>
-                            @endif
-                            <span class="help-block">{{ trans('cruds.addLetter.fields.objective_helper') }}</span>
-                        </div>
+                        
                         <div class="form-group {{ $errors->has('sender') ? 'has-error' : '' }}">
                             <label class="required" for="sender_id">{{ trans('cruds.addLetter.fields.sender') }}</label>
                             <select class="form-control select2" name="sender_id" id="sender_id" required>

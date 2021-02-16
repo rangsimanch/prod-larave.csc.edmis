@@ -31,9 +31,6 @@ class StoreAddLetterRequest extends FormRequest
             'speed_class'              => [
                 'required',
             ],
-            'objective'                => [
-                'required',
-            ],
             'sender_id'                => [
                 'required',
                 'integer',
