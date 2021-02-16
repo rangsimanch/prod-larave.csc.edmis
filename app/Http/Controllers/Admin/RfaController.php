@@ -40,7 +40,7 @@ class RfaController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $query = Rfa::with(['type', 'construction_contract','wbs_level_3', 'wbs_level_4', 'issueby', 'assign',  'action_by', 'comment_by', 'information_by', 'comment_status', 'for_status', 'document_status', 'create_by_user', 'distribute_by', 'update_by_user', 'approve_by_user', 'reviewed_by', 'team'])->select(sprintf('%s.*', (new Rfa)->table));
+            $query = Rfa::with(['type', 'construction_contract','boq','wbs_level_3', 'wbs_level_4', 'issueby', 'assign',  'action_by', 'comment_by', 'information_by', 'comment_status', 'for_status', 'document_status', 'create_by_user', 'distribute_by', 'update_by_user', 'approve_by_user', 'reviewed_by', 'team'])->select(sprintf('%s.*', (new Rfa)->table));
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
@@ -489,12 +489,12 @@ class RfaController extends Controller
                 return $row->reviewed_by ? $row->reviewed_by->name : '';
             });
 
-            $table->rawColumns(['actions','boq_name', 'placeholder', 'type', 'construction_contract', 'wbs_level_3', 'wbs_level_4', 'issueby', 'assign', 'file_upload_1', 'comment_by', 'information_by', 'comment_status', 'for_status', 'document_status', 'action_by', 'create_by_user', 'update_by_user', 'approve_by_user', 'commercial_file_upload', 'document_file_upload', 'team', 'check_revision','reviewed_by','document_status_status_name','submittals_file']);
+            $table->rawColumns(['actions','boq', 'placeholder', 'type', 'construction_contract', 'wbs_level_3', 'wbs_level_4', 'issueby', 'assign', 'file_upload_1', 'comment_by', 'information_by', 'comment_status', 'for_status', 'document_status', 'action_by', 'create_by_user', 'update_by_user', 'approve_by_user', 'commercial_file_upload', 'document_file_upload', 'team', 'check_revision','reviewed_by','document_status_status_name','submittals_file']);
 
             return $table->make(true);
         }
 
-        $boq =  BoQ::all()->pluck('name');
+        $boqs =  BoQ::all()->sortBy('id')->pluck('name')->unique();
         $document_status =  RfaDocumentStatus::all()->sortBy('status_name')->pluck('status_name')->unique();
         $types = Rfatype::all()->sortBy('type_code')->pluck('type_code')->unique();
         $work_types = Rfa::all()->sortBy('worktype')->pluck('worktype')->unique();
@@ -508,7 +508,7 @@ class RfaController extends Controller
         $teams = Team::all()->sortBy('code')->pluck('code')->unique();
 
 
-        return view('admin.rfas.index',compact('boq','document_status','types','work_types','construction_contracts','wbs_level_3s','wbs_level_4s','submit_dates','receive_dates','comment_statuses','for_statuses','teams'));
+        return view('admin.rfas.index',compact('boqs','document_status','types','work_types','construction_contracts','wbs_level_3s','wbs_level_4s','submit_dates','receive_dates','comment_statuses','for_statuses','teams'));
     }
     
     function fetch(Request $request){
