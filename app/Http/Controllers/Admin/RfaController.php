@@ -1119,33 +1119,33 @@ class RfaController extends Controller
         $comment_status = $$rfa->comment_status->id ?? '';
         
                 //PDF Setting
-                // try {
-                //     $mpdf = new \Mpdf\Mpdf([
-                //         'tempDir' => '../vendor/mpdf/mpdf/tmp',
-                //         'default_font' => 'THSarabunNew'
-                //     ]);
-                //   } catch (\Mpdf\MpdfException $e) {
-                //       print "Creating an mPDF object failed with" . $e->getMessage();
-                //   }
+                try {
+                    $mpdf = new \Mpdf\Mpdf([
+                        'tempDir' => '../vendor/mpdf/mpdf/tmp',
+                        'default_font' => 'THSarabunNew'
+                    ]);
+                  } catch (\Mpdf\MpdfException $e) {
+                      print "Creating an mPDF object failed with" . $e->getMessage();
+                  }
 
         //PDF New Setting
-        $defaultConfig = (new \Mpdf\Config\ConfigVariables())->getDefaults();
-        $fontDirs = $defaultConfig['fontDir'];
-        $defaultFontConfig = (new \Mpdf\Config\FontVariables())->getDefaults();
-        $fontData = $defaultFontConfig['fontdata'];
-        $mpdf = new \Mpdf\Mpdf([
-            'fontDir' => array_merge($fontDirs, [
-            storage_path('fonts/'),
-        ]),
-            'fontdata' => $fontData + [
-            'sarabun_new' => [
-            'R' => 'THSarabunNew.ttf',
-            'I' => 'THSarabunNew Italic.ttf',
-            'B' => 'THSarabunNew Bold.ttf',
-            ],
-        ],
-            'default_font' => 'sarabun_new',
-        ]);
+        // $defaultConfig = (new \Mpdf\Config\ConfigVariables())->getDefaults();
+        // $fontDirs = $defaultConfig['fontDir'];
+        // $defaultFontConfig = (new \Mpdf\Config\FontVariables())->getDefaults();
+        // $fontData = $defaultFontConfig['fontdata'];
+        // $mpdf = new \Mpdf\Mpdf([
+        //     'fontDir' => array_merge($fontDirs, [
+        //     storage_path('fonts/'),
+        // ]),
+        //     'fontdata' => $fontData + [
+        //     'sarabun_new' => [
+        //     'R' => 'THSarabunNew.ttf',
+        //     'I' => 'THSarabunNew Italic.ttf',
+        //     'B' => 'THSarabunNew Bold.ttf',
+        //     ],
+        // ],
+        //     'default_font' => 'sarabun_new',
+        // ]);
 
 
           
