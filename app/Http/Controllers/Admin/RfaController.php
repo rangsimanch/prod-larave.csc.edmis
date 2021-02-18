@@ -1144,7 +1144,7 @@ class RfaController extends Controller
             'B' => 'THSarabunNew Bold.ttf',
             ],
         ],
-            'default_font' => 'garuda',
+            'default_font' => 'sarabun_new',
         ]);
 
 
