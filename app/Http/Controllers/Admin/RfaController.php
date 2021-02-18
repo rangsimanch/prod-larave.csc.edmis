@@ -1122,7 +1122,7 @@ class RfaController extends Controller
                 try {
                     $mpdf = new \Mpdf\Mpdf([
                         'tempDir' => '../vendor/mpdf/mpdf/tmp',
-                        'default_font' => 'sarabun_new'
+                        // 'default_font' => 'sarabun_new'
                     ]);
                   } catch (\Mpdf\MpdfException $e) {
                       print "Creating an mPDF object failed with" . $e->getMessage();
