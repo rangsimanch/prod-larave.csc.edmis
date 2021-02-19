@@ -1178,7 +1178,7 @@ class RfaController extends Controller
         $tplId = $mpdf->ImportPage($pagecount);
         $mpdf->UseTemplate($tplId);        
 
-        $html = "<div style=\"font-size: 13px; font-weight: bold; position:absolute;top:84px;left:340px;\">" . $contract_name . "</div>";
+        $html = "<div style=\"font-size: 13px; font-weight: bold; position:absolute;top:84px;left:320px;\">" . $contract_name . "</div>";
           //Title
         $html .= "<div style=\"font-size: 14px; position:absolute;top:168px;left:80px;\">" . $bill . '.' . "</div>";
         $html .= "<div style=\"font-size: 14px; padding-right:240px; position:absolute;top:184px;left:80px; LINE-HEIGHT:16px;\">" 
