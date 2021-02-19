@@ -1030,6 +1030,48 @@ class RfaController extends Controller
         $rfa->load('type', 'construction_contract', 'wbs_level_3', 'wbs_level_4', 'issueby', 'assign', 'action_by', 'comment_by', 'information_by', 'comment_status', 'for_status', 'document_status', 'create_by_user', 'team','onRfaSubmittalsRfas', 'reviewed_by','distribute_by');
 
         //Varible setting
+
+        if($rfa->construction_contract->code == "C2-1"){
+            $issue_by = 'Sitthichai Pimsawat';
+            $constructor_name = 'Civil Construction Services & Products Company Limited';
+            $constructor_code = 'CCSP';
+            $stamp_path =  public_path('png-asset/Stamp_CEC.png');
+            $signature_path =  public_path('png-asset/Signature_CEC.png');
+            $contract_name = 'Contract ' . $rfa->construction_contract->code . ' : ' . $rfa->construction_contract->name;
+
+        }
+
+        if($rfa->construction_contract->code == "C3-4"){
+            $issue_by = '-';
+            $constructor_name = 'Italian-Thai Development PLC';
+            $constructor_code = 'ITD';
+            $stamp_path =  '';
+            $signature_path =  '';
+            $contract_name = 'Contract ' . $rfa->construction_contract->code . ' : ' . $rfa->construction_contract->name;
+
+        }
+
+        if($rfa->construction_contract->code == "C4-7"){
+            $issue_by = '-';
+            $constructor_name = 'Civil Enginneering Public Company Limited';
+            $constructor_code = 'CIVIL';
+            $stamp_path =  '';
+            $signature_path =  '';
+            $contract_name = 'Contract ' . $rfa->construction_contract->code . ' : ' . $rfa->construction_contract->name;
+
+        }
+
+        if($rfa->construction_contract->code == "C3-5"){
+            $issue_by = 'Narutchai Sammawijitra';
+            $constructor_name = 'SPTK Joint Venture Company Limited';
+            $constructor_code = 'SPTK';
+            $stamp_path =  public_path('png-asset/SPTK_stamp.png');
+            $signature_path =  public_path('png-asset/SPTK_signature.png');
+            $contract_name = 'Contract ' . $rfa->construction_contract->code . ' : ' . $rfa->construction_contract->name;
+
+        }
+
+
         $bill = $rfa->boq->name ?? '';
         $title_th = $rfa->title ?? '';
         $title_en = wordwrap($rfa->title_eng ?? '',300,"<br>\n");
@@ -1061,7 +1103,8 @@ class RfaController extends Controller
         $contract_drawing_no = $rfa->contract_drawing_no ?? '';
         $qty_page = $rfa->qty_page ?? '';
 
-        $issue_by = 'Sitthichai Pimsawat';
+
+
         $submit_date = $rfa->submit_date ?? '';
         
         $assign_to = $rfa->assign->name ?? '';
@@ -1128,42 +1171,29 @@ class RfaController extends Controller
                       print "Creating an mPDF object failed with" . $e->getMessage();
                   }
 
-        //PDF New Setting
-        // $defaultConfig = (new \Mpdf\Config\ConfigVariables())->getDefaults();
-        // $fontDirs = $defaultConfig['fontDir'];
-        // $defaultFontConfig = (new \Mpdf\Config\FontVariables())->getDefaults();
-        // $fontData = $defaultFontConfig['fontdata'];
-        // $mpdf = new \Mpdf\Mpdf([
-        //     'fontDir' => array_merge($fontDirs, [
-        //     storage_path('fonts/'),
-        // ]),
-        //     'fontdata' => $fontData + [
-        //     'sarabun_new' => [
-        //     'R' => 'THSarabunNew.ttf',
-        //     'I' => 'THSarabunNew Italic.ttf',
-        //     'B' => 'THSarabunNew Bold.ttf',
-        //     ],
-        // ],
-        //     'default_font' => 'sarabun_new',
-        // ]);
-
-
+    
           
         //RFA Page
-        $pagecount = $mpdf->SetSourceFile(public_path('pdf-asset/RFA-Form_new.pdf'));
+        $pagecount = $mpdf->SetSourceFile(public_path('pdf-asset/RFA-Form_empty.pdf'));
         $tplId = $mpdf->ImportPage($pagecount);
         $mpdf->UseTemplate($tplId);        
-          //Title
 
-        $html = "<div style=\"font-size: 14px; position:absolute;top:168px;left:80px;\">" . $bill . '.' . "</div>";
+        $html = "<div style=\"font-size: 13px; font-weight: bold; position:absolute;top:84px;left:340px;\">" . $contract_name . "</div>";
+          //Title
+        $html .= "<div style=\"font-size: 14px; position:absolute;top:168px;left:80px;\">" . $bill . '.' . "</div>";
         $html .= "<div style=\"font-size: 14px; padding-right:240px; position:absolute;top:184px;left:80px; LINE-HEIGHT:16px;\">" 
         . $title_en . "</div>";
         $html .= "<div style=\"font-size: 14px; padding-right:230px; position:absolute;top:217px;left:80px; LINE-HEIGHT:16px;\">" 
         . $title_th . "</div>";
 
-
+        
+        //Stamp Header
         $html .= "<div style=\"font-size: 14px; position:absolute;top:109px;left:690px;\">
-                    <img src=\"". public_path('png-asset/CCSP_small.jpg') ."\" width=\"60px\" higth=\"60px\"> </div>";
+                    <img src=\"". $stamp_path ."\" width=\"45px\" higth=\"45px\"> </div>";
+        
+        $html .= "<div style=\"font-size: 13px; position:absolute;top:120px;left:580px;\">" . $constructor_code . '.' . "</div>";
+        $html .= "<div style=\"font-size: 13px; position:absolute;top:140px;left:508px;\">" . $constructor_name . '.' . "</div>";
+
 
 
         //No. Code.
@@ -1185,16 +1215,15 @@ class RfaController extends Controller
         $html .= "<div style=\"font-size: 14px; padding-right:180px; position:absolute;top:380px;left:120px;LINE-HEIGHT:15px;\">" 
         . $note_1 . "</div>";
         
-          //Signature
-        // if($rfa->cec_sign == 1){
-        //     $html .= "<div style=\"font-size: 14px; position:absolute;top:410px;left:280px;\">
-        //         <img src=\"". public_path('png-asset/Signature_CEC.png') ."\" width=\"40px\" higth=\"40px\"> </div>";
-        // }
+       
+        //Signature
+        $html .= "<div style=\"font-size: 12px; position:absolute;top:433px;left:260px;\">" . $issue_by . "</div>";
+        $html .= "<div style=\"font-size: 14px; position:absolute;top:410px;left:280px;\">
+            <img src=\"". $signature_path ."\" width=\"40px\" higth=\"40px\"> </div>";
         
-        // if($rfa->cec_stamp == 1){
-        //     $html .= "<div style=\"font-size: 14px; position:absolute;top:300px;left:400px;\">
-        //     <img src=\"". public_path('png-asset/Stamp_CEC.png') ."\" width=\"200px\" higth=\"200px\" style=\"opacity: 0.5;\"> </div>";
-        // }
+        $html .= "<div style=\"font-size: 14px; position:absolute;top:300px;left:400px;\">
+            <img src=\"". $stamp_path ."\" width=\"200px\" higth=\"200px\" style=\"opacity: 0.5;\"> </div>";
+        
 
         //CSC Incoming 
         $html .= "<div style=\"font-size: 14px; position:absolute;top:485px;left:477;\">" . $incoming_no . "</div>";
@@ -1257,22 +1286,6 @@ class RfaController extends Controller
          //Add Document
         $allowed = array('pdf','PDF','Pdf');
         
-         //Submittals Page
-        // if(count($rfa->submittals_file) > 0 ){
-        //     foreach($rfa->submittals_file as $submittal){
-        //         $path = $submittal->getUrl();
-        //         if(in_array(pathinfo($path,PATHINFO_EXTENSION),$allowed)){
-        //             $pagecount = $mpdf->SetSourceFile($submittal->getUrl());
-        //             for ($i=1; $i<=($pagecount); $i++) {
-        //                 $mpdf->AddPage();
-        //                 $import_page = $mpdf->ImportPage($i);
-        //                 $mpdf->UseTemplate($import_page);
-        //             }
-        //         }
-        //       }
-        // }
-        // // //Submittals Manual
-        // else{
 
         if(count($submittalsRfa) > 0){
             $mpdf->AddPage();

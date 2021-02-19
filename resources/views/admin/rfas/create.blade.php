@@ -271,7 +271,7 @@
                             <span class="help-block">{{ trans('cruds.rfa.fields.submittals_file_helper') }}</span>
                         </div>
 
-                         <div class="form-group {{ $errors->has('cec_sign') ? 'has-error' : '' }}">
+                         <!-- <div class="form-group {{ $errors->has('cec_sign') ? 'has-error' : '' }}">
                             <label>{{ trans('cruds.rfa.fields.cec_sign') }}</label>
                             @foreach(App\Rfa::CEC_SIGN_RADIO as $key => $label)
                                 <div>
@@ -297,7 +297,7 @@
                                 <span class="help-block" role="alert">{{ $errors->first('cec_stamp') }}</span>
                             @endif
                             <span class="help-block">{{ trans('cruds.rfa.fields.cec_stamp_helper') }}</span>
-                        </div>
+                        </div> -->
 
                         <!-- @can('rfa_panel_b')
                         <legend> Incoming Distribution </legend>
