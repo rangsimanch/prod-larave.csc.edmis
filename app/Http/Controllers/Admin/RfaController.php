@@ -1197,7 +1197,7 @@ class RfaController extends Controller
         }
         else{
             $html .= "<div style=\"font-size: 14px; position:absolute;top:113px;left:630px;\">
-                        <img src=\"". $logo_path ."\" width=\"60px\" higth=\"60px\"> </div>";
+                        <img src=\"". $logo_path ."\" width=\"90px\" higth=\"90px\"> </div>";
         }
         $html .= "<div style=\"font-size: 13px; position:absolute;top:120px;left:580px;\">" . $constructor_code . '.' . "</div>";
         $html .= "<div style=\"font-size: 13px; position:absolute;top:140px;left:508px;\">" . $constructor_name . '.' . "</div>";
