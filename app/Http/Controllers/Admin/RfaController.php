@@ -1191,9 +1191,14 @@ class RfaController extends Controller
 
         
         //Logo Header
-        $html .= "<div style=\"font-size: 14px; position:absolute;top:109px;left:690px;\">
-                    <img src=\"". $logo_path ."\" width=\"45px\" higth=\"45px\"> </div>";
-        
+        if($rfa->construction_contract->code != "C4-7"){
+            $html .= "<div style=\"font-size: 14px; position:absolute;top:109px;left:690px;\">
+                        <img src=\"". $logo_path ."\" width=\"45px\" higth=\"45px\"> </div>";
+        }
+        else{
+            $html .= "<div style=\"font-size: 14px; position:absolute;top:113px;left:630px;\">
+                        <img src=\"". $logo_path ."\" width=\"60px\" higth=\"60px\"> </div>";
+        }
         $html .= "<div style=\"font-size: 13px; position:absolute;top:120px;left:580px;\">" . $constructor_code . '.' . "</div>";
         $html .= "<div style=\"font-size: 13px; position:absolute;top:140px;left:508px;\">" . $constructor_name . '.' . "</div>";
 
