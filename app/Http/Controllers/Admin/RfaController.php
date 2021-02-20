@@ -1035,6 +1035,7 @@ class RfaController extends Controller
             $issue_by = 'Sitthichai Pimsawat';
             $constructor_name = 'Civil Construction Services & Products Company Limited';
             $constructor_code = 'CCSP';
+            $logo_path =  public_path('png-asset/Stamp_CEC.png');
             $stamp_path =  public_path('png-asset/Stamp_CEC.png');
             $signature_path =  public_path('png-asset/Signature_CEC.png');
             $contract_name = 'Contract ' . $rfa->construction_contract->code . ' : ' . $rfa->construction_contract->name;
@@ -1052,11 +1053,12 @@ class RfaController extends Controller
         }
 
         if($rfa->construction_contract->code == "C4-7"){
-            $issue_by = '-';
+            $issue_by = 'สุทิน สังข์หิรัญ';
             $constructor_name = 'Civil Enginneering Public Company Limited';
             $constructor_code = 'CIVIL';
-            $stamp_path =  '';
-            $signature_path =  '';
+            $logo_path = public_path('png-asset/CIVIL_logo.png');
+            $stamp_path =  public_path('png-asset/CIVIL_stamp.png');
+            $signature_path =  public_path('png-asset/CIVIL_signature.png');;
             $contract_name = 'Contract ' . $rfa->construction_contract->code . ' : ' . $rfa->construction_contract->name;
 
         }
@@ -1065,6 +1067,7 @@ class RfaController extends Controller
             $issue_by = 'Narutchai Sammawijitra';
             $constructor_name = 'SPTK Joint Venture Company Limited';
             $constructor_code = 'SPTK';
+            $logo_path =  public_path('png-asset/Stamp_CEC.png');
             $stamp_path =  public_path('png-asset/SPTK_stamp.png');
             $signature_path =  public_path('png-asset/SPTK_signature.png');
             $contract_name = 'Contract ' . $rfa->construction_contract->code . ' : ' . $rfa->construction_contract->name;
@@ -1137,7 +1140,7 @@ class RfaController extends Controller
         $wbslv4_code = $rfa->wbs_level_4->wbs_level_4_code ?? '';
 
         $wbs = '';
-        if(isset($wbslv4)){
+        if($rfa->wbs_level_4->wbs_level_4_name ?? '' != ''){
             $wbs = '1.' . $wbslv3 . ' 2.' . $wbslv4;
         }else{
             $wbs = '1.' . $wbslv3;
@@ -1174,7 +1177,7 @@ class RfaController extends Controller
     
           
         //RFA Page
-        $pagecount = $mpdf->SetSourceFile(public_path('pdf-asset/RFA-Form_empty.pdf'));
+        $pagecount = $mpdf->SetSourceFile(public_path('pdf-asset/RFA-Form_empty_V.2.pdf'));
         $tplId = $mpdf->ImportPage($pagecount);
         $mpdf->UseTemplate($tplId);        
 
@@ -1187,9 +1190,9 @@ class RfaController extends Controller
         . $title_th . "</div>";
 
         
-        //Stamp Header
+        //Logo Header
         $html .= "<div style=\"font-size: 14px; position:absolute;top:109px;left:690px;\">
-                    <img src=\"". $stamp_path ."\" width=\"45px\" higth=\"45px\"> </div>";
+                    <img src=\"". $logo_path ."\" width=\"45px\" higth=\"45px\"> </div>";
         
         $html .= "<div style=\"font-size: 13px; position:absolute;top:120px;left:580px;\">" . $constructor_code . '.' . "</div>";
         $html .= "<div style=\"font-size: 13px; position:absolute;top:140px;left:508px;\">" . $constructor_name . '.' . "</div>";
