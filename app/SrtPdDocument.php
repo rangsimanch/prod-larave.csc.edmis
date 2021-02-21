@@ -43,6 +43,7 @@ class SrtPdDocument extends Model implements HasMedia
         'note',
         'created_at',
         'save_for',
+        'to_text',
         'updated_at',
         'deleted_at',
         'team_id',

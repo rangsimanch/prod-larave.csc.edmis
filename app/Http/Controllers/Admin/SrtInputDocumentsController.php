@@ -155,6 +155,10 @@ class SrtInputDocumentsController extends Controller
                 return $row->close_by ? $row->close_by->name : '';
             });
 
+            $table->editColumn('to_text', function ($row) {
+                return $row->to_text ? $row->to_text : "";
+            });
+
             $table->rawColumns(['actions', 'placeholder','construction_contract', 'docuement_status', 'file_upload', 'file_upload_2', 'file_upload_3', 'file_upload_4','complete_file', 'close_by']);
 
             return $table->make(true);
@@ -177,7 +181,7 @@ class SrtInputDocumentsController extends Controller
 
         $constuction_contracts = ConstructionContract::all()->pluck('code', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $from_organizations = Organization::all()->pluck('title_th', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $from_organizations = Organization::all()->pluck('code', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $froms = Team::all()->pluck('code', 'id')->prepend(trans('global.pleaseSelect'), '');
 
@@ -309,15 +313,16 @@ class SrtInputDocumentsController extends Controller
 
         $constuction_contracts = ConstructionContract::all()->pluck('code', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $from_organizations = Organization::all()->pluck('title_th', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $from_organizations = Organization::all()->pluck('code', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $froms = Team::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $tos = User::all()->where('team_id','1')->pluck('name', 'id');
+        
 
         $srtInputDocument->load('docuement_status', 'constuction_contract', 'from_organization' ,'from', 'tos', 'close_by', 'team');
 
-        return view('admin.srtInputDocuments.edit', compact('constuction_contracts', 'from_organization','froms', 'tos', 'srtInputDocument'));
+        return view('admin.srtInputDocuments.edit', compact('constuction_contracts', 'from_organizations','froms', 'tos', 'srtInputDocument'));
     }
 
     public function update(UpdateSrtInputDocumentRequest $request, SrtInputDocument $srtInputDocument)

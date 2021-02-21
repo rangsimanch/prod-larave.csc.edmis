@@ -130,6 +130,10 @@ class SrtHeadOfficeDocumentController extends Controller
                 // return '';
             });
 
+            $table->editColumn('to_text', function ($row) {
+                return $row->to_text ? $row->to_text : "";
+            });
+
             $table->rawColumns(['actions', 'placeholder', 'refer_documents', 'operator', 'refer_documents.file_upload', 'file_upload']);
 
             return $table->make(true);

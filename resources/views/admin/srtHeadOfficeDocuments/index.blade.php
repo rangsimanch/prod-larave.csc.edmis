@@ -91,12 +91,7 @@
                                 <td>
                                 </td>
                                 <td>
-                                    <select class="search">
-                                        <option value>{{ trans('global.all') }}</option>
-                                        @foreach($users as $key => $item)
-                                            <option value="{{ $item->name }}">{{ $item->name }}</option>
-                                        @endforeach
-                                    </select>
+                                    <input class="search" type="text" placeholder="{{ trans('global.search') }}">
                                 </td>
                                 <td>
                                     <input class="search" type="text" placeholder="{{ trans('global.search') }}">
@@ -170,7 +165,7 @@
 { data: 'process_date', name: 'process_date' },
 { data: 'special_command', name: 'special_command' },
 { data: 'finished_date', name: 'finished_date' },
-{ data: 'operator', name: 'operators.name' },
+{ data: 'to_text', name: 'to_text' },
 { data: 'practice_notes', name: 'practice_notes' },
 { data: 'note', name: 'note' },
 { data: 'file_upload', name: 'file_upload', sortable: false, searchable: false, visible: false },

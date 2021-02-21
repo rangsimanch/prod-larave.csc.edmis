@@ -64,6 +64,7 @@ class SrtExternalDocument extends Model implements HasMedia
         'note',
         'close_date',
         'save_for',
+        'to_text',
         'close_by_id',
         'created_at',
         'updated_at',

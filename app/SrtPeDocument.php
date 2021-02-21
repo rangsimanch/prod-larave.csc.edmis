@@ -41,6 +41,7 @@ class SrtPeDocument extends Model implements HasMedia
         'finished_date',
         'practice_notes',
         'note',
+        'to_text',
         'created_at',
         'save_for',
         'updated_at',

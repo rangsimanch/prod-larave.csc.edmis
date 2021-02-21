@@ -52,22 +52,16 @@
                             @endif
                             <span class="help-block">{{ trans('cruds.srtPeDocument.fields.finished_date_helper') }}</span>
                         </div>
-                        <div class="form-group {{ $errors->has('operators') ? 'has-error' : '' }}">
-                            <label for="operators">{{ trans('cruds.srtPeDocument.fields.operator') }}</label>
-                            <div style="padding-bottom: 4px">
-                                <span class="btn btn-info btn-xs select-all" style="border-radius: 0">{{ trans('global.select_all') }}</span>
-                                <span class="btn btn-info btn-xs deselect-all" style="border-radius: 0">{{ trans('global.deselect_all') }}</span>
-                            </div>
-                            <select class="form-control select2" name="operators[]" id="operators" multiple>
-                                @foreach($operators as $id => $operator)
-                                    <option value="{{ $id }}" {{ in_array($id, old('operators', [])) ? 'selected' : '' }}>{{ $operator }}</option>
-                                @endforeach
-                            </select>
-                            @if($errors->has('operators'))
-                                <span class="help-block" role="alert">{{ $errors->first('operators') }}</span>
+
+                        <div class="form-group {{ $errors->has('to_text') ? 'has-error' : '' }}">
+                            <label for="to_text">{{ trans('cruds.srtPeDocument.fields.operator') }}</label>
+                            <input class="form-control" type="text" name="to_text" id="to_text" value="{{ old('to_text', '') }}">
+                            @if($errors->has('to_text'))
+                                <span class="help-block" role="alert">{{ $errors->first('to_text') }}</span>
                             @endif
                             <span class="help-block">{{ trans('cruds.srtPeDocument.fields.operator_helper') }}</span>
                         </div>
+
                         <div class="form-group {{ $errors->has('practice_notes') ? 'has-error' : '' }}">
                             <label for="practice_notes">{{ trans('cruds.srtPeDocument.fields.practice_notes') }}</label>
                             <textarea class="form-control" name="practice_notes" id="practice_notes">{{ old('practice_notes') }}</textarea>

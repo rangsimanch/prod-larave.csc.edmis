@@ -67,6 +67,7 @@ class SrtInputDocument extends Model implements HasMedia
         'signatory',
         'document_storage',
         'note',
+        'to_text',
         'close_date',
         'created_at',
         'close_by_id',

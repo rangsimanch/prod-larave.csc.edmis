@@ -102,6 +102,10 @@ class SrtExternalDocumentController extends Controller
                 return $row->close_by ? $row->close_by->name : '';
             });
 
+            $table->editColumn('to_text', function ($row) {
+                return $row->to_text ? $row->to_text : "";
+            });
+
             $table->rawColumns(['actions', 'placeholder', 'docuement_status', 'constuction_contract', 'file_upload', 'close_by']);
 
             return $table->make(true);
@@ -232,6 +236,9 @@ class SrtExternalDocumentController extends Controller
         $tos = User::all()->pluck('name', 'id');
 
         $srtExternalDocument->load('docuement_status', 'constuction_contract', 'from', 'tos', 'close_by', 'team');
+
+        $close_bies = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+
 
         return view('admin.srtExternalDocuments.edit', compact('constuction_contracts', 'froms', 'tos', 'close_bies', 'srtExternalDocument'));
     }

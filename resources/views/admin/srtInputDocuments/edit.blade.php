@@ -86,22 +86,16 @@
                             @endif
                             <span class="help-block">{{ trans('cruds.srtInputDocument.fields.from_helper') }}</span>
                         </div>
-                        <div class="form-group {{ $errors->has('tos') ? 'has-error' : '' }}">
-                            <label for="tos">{{ trans('cruds.srtInputDocument.fields.to') }}</label>
-                            <div style="padding-bottom: 4px">
-                                <span class="btn btn-info btn-xs select-all" style="border-radius: 0">{{ trans('global.select_all') }}</span>
-                                <span class="btn btn-info btn-xs deselect-all" style="border-radius: 0">{{ trans('global.deselect_all') }}</span>
-                            </div>
-                            <select class="form-control select2" name="tos[]" id="tos" multiple>
-                                @foreach($tos as $id => $to)
-                                    <option value="{{ $id }}" {{ (in_array($id, old('tos', [])) || $srtInputDocument->tos->contains($id)) ? 'selected' : '' }}>{{ $to }}</option>
-                                @endforeach
-                            </select>
-                            @if($errors->has('tos'))
-                                <span class="help-block" role="alert">{{ $errors->first('tos') }}</span>
+                      
+                        <div class="form-group {{ $errors->has('to_text') ? 'has-error' : '' }}">
+                            <label for="to_text">{{ trans('cruds.srtInputDocument.fields.to') }}</label>
+                            <input class="form-control" type="text" name="to_text" id="to_text" value="{{ old('to_text', $srtInputDocument->to_text) }}">
+                            @if($errors->has('to_text'))
+                                <span class="help-block" role="alert">{{ $errors->first('to_text') }}</span>
                             @endif
                             <span class="help-block">{{ trans('cruds.srtInputDocument.fields.to_helper') }}</span>
                         </div>
+
                         <div class="form-group {{ $errors->has('attachments') ? 'has-error' : '' }}">
                             <label for="attachments">{{ trans('cruds.srtInputDocument.fields.attachments') }}</label>
                             <input class="form-control" type="text" name="attachments" id="attachments" value="{{ old('attachments', $srtInputDocument->attachments) }}">
