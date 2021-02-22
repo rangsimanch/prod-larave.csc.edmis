@@ -135,6 +135,7 @@ class AddLetterController extends Controller
     public function store(StoreAddLetterRequest $request)
     {
         $data = $request->all();
+        $data['objective'] = 'เพื่อทราบ';
         $data['create_by_id'] = auth()->id();
         
         //Add letter ISO Number HERE!
