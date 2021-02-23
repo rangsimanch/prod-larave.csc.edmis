@@ -1167,7 +1167,7 @@ class RfaController extends Controller
                 //PDF Setting
                 try {
                     $mpdf = new \Mpdf\Mpdf([
-                        'tempDir' => __DIR__ . public_path('tmp'), 
+                        'tempDir' => __DIR__ . storage_path('tmp'), 
                         'default_font' => 'sarabun_new'
                     ]);
                   } catch (\Mpdf\MpdfException $e) {
