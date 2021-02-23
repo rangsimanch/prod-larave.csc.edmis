@@ -219,24 +219,7 @@ class TaskController extends Controller
                   print "Creating an mPDF object failed with" . $e->getMessage();
               }
 
-              //PDF New Setting
-            // $defaultConfig = (new \Mpdf\Config\ConfigVariables())->getDefaults();
-            // $fontDirs = $defaultConfig['fontDir'];
-            // $defaultFontConfig = (new \Mpdf\Config\FontVariables())->getDefaults();
-            // $fontData = $defaultFontConfig['fontdata'];
-            // $mpdf = new \Mpdf\Mpdf([
-            //     'fontDir' => array_merge($fontDirs, [
-            //     storage_path('fonts/'),
-            // ]),
-            //     'fontdata' => $fontData + [
-            //     'sarabun_new' => [
-            //     'R' => 'THSarabunNew.ttf',
-            //     'I' => 'THSarabunNew Italic.ttf',
-            //     'B' => 'THSarabunNew Bold.ttf',
-            //     ],
-            // ],
-            //     'default_font' => 'sarabun_new',
-            // ]);
+            
 
             // Cover Page
                 if($reportType != 'Daily Report'){
