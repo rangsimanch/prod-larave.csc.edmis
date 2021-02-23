@@ -212,7 +212,7 @@ class TaskController extends Controller
             //PDF Setting
             try {
                 $mpdf = new \Mpdf\Mpdf([
-                    'tempDir' => '../vendor/mpdf/mpdf/tmp',
+                    'tempDir' => __DIR__ . public_path('tmp/mpdf'), 
                     'default_font' => 'sarabun_new'
                 ]);
               } catch (\Mpdf\MpdfException $e) {
