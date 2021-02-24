@@ -1058,6 +1058,7 @@ class RfaController extends Controller
             $issue_by = '-';
             $constructor_name = 'Italian-Thai Development PLC';
             $constructor_code = 'ITD';
+            $logo_path = public_path('png-asset/ITD_logo.png');
             $stamp_path =  '';
             $signature_path =  '';
             $contract_name = 'Contract ' . $rfa->construction_contract->code . ' : ' . $rfa->construction_contract->name;
@@ -1068,7 +1069,7 @@ class RfaController extends Controller
             $issue_by = 'สุทิน สังข์หิรัญ';
             $constructor_name = 'Civil Enginneering Public Company Limited';
             $constructor_code = 'CIVIL';
-            $logo_path = public_path('png-asset/CIVIL_stamp.png');
+            $logo_path = public_path('png-asset/CIVIL_logo.png');
             $stamp_path =  public_path('png-asset/CIVIL_stamp.png');
             $signature_path =  public_path('png-asset/CIVIL_signature.png');;
             $contract_name = 'Contract ' . $rfa->construction_contract->code . ' : ' . $rfa->construction_contract->name;
