@@ -45,6 +45,7 @@ class RfaController extends Controller
 
             $table->addColumn('placeholder', '&nbsp;');
 
+
             $table->addColumn('date_counter', '&nbsp;');
             $table->editColumn('date_counter', function ($row) {
                 $get_target_date = str_replace('/', '-', $row->target_date ? $row->target_date : "");
@@ -320,6 +321,14 @@ class RfaController extends Controller
                 return $row->wbs_level_3 ? $row->wbs_level_3->wbs_level_3_code : '';
             });
 
+            $table->editColumn('cover_sheet', function ($row) {
+                $cover_sheet = [];
+                $rfa_id =  $row->id;
+                $cover_sheet[] = '<a class="btn btn-default" href="' . route('admin.rfas.createReportRFA',$row->id) .'" target="_blank">
+                Cover Sheet </a>';
+                return implode(' ', $cover_sheet);
+            });
+
             $table->editColumn('wbs_level_3.wbs_level_3_name', function ($row) {
                 return $row->wbs_level_3 ? (is_string($row->wbs_level_3) ? $row->wbs_level_3 : $row->wbs_level_3->wbs_level_3_name) : '';
             });
@@ -489,7 +498,10 @@ class RfaController extends Controller
                 return $row->reviewed_by ? $row->reviewed_by->name : '';
             });
 
-            $table->rawColumns(['actions','boq', 'placeholder', 'type', 'construction_contract', 'wbs_level_3', 'wbs_level_4', 'issueby', 'assign', 'file_upload_1', 'comment_by', 'information_by', 'comment_status', 'for_status', 'document_status', 'action_by', 'create_by_user', 'update_by_user', 'approve_by_user', 'commercial_file_upload', 'document_file_upload', 'team', 'check_revision','reviewed_by','document_status_status_name','submittals_file']);
+            $table->rawColumns(['actions','boq', 'placeholder', 'type', 'construction_contract', 'wbs_level_3', 'wbs_level_4', 
+            'issueby', 'assign', 'file_upload_1', 'comment_by', 'information_by', 'comment_status', 'for_status', 'document_status', 
+            'action_by', 'create_by_user', 'update_by_user', 'approve_by_user', 'commercial_file_upload', 'document_file_upload', 
+            'team', 'check_revision','reviewed_by','document_status_status_name','submittals_file', 'cover_sheet']);
 
             return $table->make(true);
         }
@@ -552,7 +564,7 @@ class RfaController extends Controller
 
         $wbs_level_4s = Wbslevelfour::all()->pluck('wbs_level_4_code', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $issuebies = User::where('id',91)->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $issuebies = User::find(91,202)->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $assigns = User::where('id',61)->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), ''); //61->Li, 39->Paisan,  62->Liu 
 
@@ -712,7 +724,7 @@ class RfaController extends Controller
 
         $wbs_level_4s = Wbslevelfour::all()->pluck('wbs_level_4_name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $issuebies = User::where('id',91)->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $issuebies = User::find(202,91)->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $assigns = User::where('id',61)->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), ''); //61->Li, 39->Paisan,  62->Liu 
 

@@ -167,10 +167,8 @@
 
                         <div class="form-group {{ $errors->has('assign') ? 'has-error' : '' }}">
                             <label for="assign_id">{{ trans('cruds.rfa.fields.assign') }}</label>
-                            <select class="form-control select2" name="assign_id" id="assign_id">
-                                @foreach($assigns as $id => $assign)
-                                    <option value="{{ $id }}" {{ old('assign_id') == $id ? 'selected' : '' }}>{{ $assign }}</option>
-                                @endforeach
+                            <select class="form-control select2" name="assign_id" id="assign_id" disabled>
+                                    <option value="61">Li Guanghe</option>
                             </select>
                             @if($errors->has('assign_id'))
                                 <span class="help-block" role="alert">{{ $errors->first('assign_id') }}</span>
