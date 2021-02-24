@@ -1068,7 +1068,7 @@ class RfaController extends Controller
             $issue_by = 'สุทิน สังข์หิรัญ';
             $constructor_name = 'Civil Enginneering Public Company Limited';
             $constructor_code = 'CIVIL';
-            $logo_path = public_path('png-asset/CIVIL_logo.png');
+            $logo_path = public_path('png-asset/CIVIL_stamp.png');
             $stamp_path =  public_path('png-asset/CIVIL_stamp.png');
             $signature_path =  public_path('png-asset/CIVIL_signature.png');;
             $contract_name = 'Contract ' . $rfa->construction_contract->code . ' : ' . $rfa->construction_contract->name;
@@ -1079,7 +1079,7 @@ class RfaController extends Controller
             $issue_by = 'Narutchai Sammawijitra';
             $constructor_name = 'SPTK Joint Venture Company Limited';
             $constructor_code = 'SPTK';
-            $logo_path =  public_path('png-asset/Stamp_CEC.png');
+            $logo_path =  public_path('png-asset/SPTK_stamp.png');
             $stamp_path =  public_path('png-asset/SPTK_stamp.png');
             $signature_path =  public_path('png-asset/SPTK_signature.png');
             $contract_name = 'Contract ' . $rfa->construction_contract->code . ' : ' . $rfa->construction_contract->name;
