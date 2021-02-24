@@ -1206,7 +1206,7 @@ class RfaController extends Controller
         //Logo Header
         if($rfa->construction_contract->code != "C4-7"){
             $html .= "<div style=\"font-size: 14px; position:absolute;top:109px;left:690px;\">
-                        <img src=\"". $logo_path ."\" width=\"45px\" higth=\"45px\"> </div>";
+                        <img src=\"". $logo_path ."\" width=\"40px\" higth=\"40px\"> </div>";
         }
         else{
             $html .= "<div style=\"font-size: 14px; position:absolute;top:113px;left:630px;\">
