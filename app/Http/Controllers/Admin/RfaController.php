@@ -564,7 +564,7 @@ class RfaController extends Controller
 
         $wbs_level_4s = Wbslevelfour::all()->pluck('wbs_level_4_code', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $issuebies = User::find(91,202)->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $issuebies = User::find([91,202])->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $assigns = User::where('id',61)->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), ''); //61->Li, 39->Paisan,  62->Liu 
 
@@ -724,7 +724,7 @@ class RfaController extends Controller
 
         $wbs_level_4s = Wbslevelfour::all()->pluck('wbs_level_4_name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $issuebies = User::find(202,91)->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $issuebies = User::find([202,91])->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $assigns = User::where('id',61)->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), ''); //61->Li, 39->Paisan,  62->Liu 
 
