@@ -71,11 +71,14 @@
 
                         <div class="form-group {{ $errors->has('origin_number') ? 'has-error' : '' }}">
                             <label for="origin_number">{{ trans('cruds.rfa.fields.origin_number') }}</label>
-                            <input class="form-control" type="text" name="origin_number" id="origin_number" value="{{ old('origin_number', '') }}">
+                            <div class="input-group prefix"> 
+                            <span class="input-group-addon">RFA-</span>
+                            <input class="form-control" type="text" name="origin_number" id="origin_number" value="{{  old('origin_number', '') }}" placeholder="0000">
                             @if($errors->has(''))
                                 <span class="help-block" role="alert">{{ $errors->first('') }}</span>
                             @endif
                             <span class="help-block">{{ trans('cruds.rfa.fields.origin_number_helper') }}</span>
+                        </div>
                         </div>
 
                         <div class="form-group {{ $errors->has('type') ? 'has-error' : '' }}">
@@ -1000,6 +1003,8 @@ Dropzone.options.submittalsFileDropzone = {
          return _results
      }
 }
-</script>
+
+
+
 
 @endsection

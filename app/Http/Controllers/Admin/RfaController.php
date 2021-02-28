@@ -793,7 +793,8 @@ class RfaController extends Controller
 
         }
         else{
-            $data['rfa_code'] = $request->origin_number;
+            $data['origin_number'] = 'RFA-' .  $request->origin_number;
+            $data['rfa_code'] = 'RFA-' .  $request->origin_number;
             $data['document_number'] = 'HSR1/' . $const_code . '/' . $wbs3code . '/' . $wbs4code . '/' . $typecode . '/' . $code_date . '/' . substr($request->origin_number,4,4); 
         }
 
