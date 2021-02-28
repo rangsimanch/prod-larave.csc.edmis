@@ -1055,12 +1055,12 @@ class RfaController extends Controller
         }
 
         if($rfa->construction_contract->code == "C3-4"){
-            $issue_by = '-';
+            $issue_by = 'มฆา  อัศวราชันย';
             $constructor_name = 'Italian-Thai Development PLC';
             $constructor_code = 'ITD';
             $logo_path = public_path('png-asset/ITD_logo.png');
-            $stamp_path =  '';
-            $signature_path =  '';
+            $stamp_path =  public_path('png-asset/ITD_stamp.png');
+            $signature_path =  public_path('png-asset/ITD_signature.png');
             $contract_name = 'Contract ' . $rfa->construction_contract->code . ' : ' . $rfa->construction_contract->name;
 
         }
@@ -1071,7 +1071,7 @@ class RfaController extends Controller
             $constructor_code = 'CIVIL';
             $logo_path = public_path('png-asset/CIVIL_logo.png');
             $stamp_path =  public_path('png-asset/CIVIL_stamp.png');
-            $signature_path =  public_path('png-asset/CIVIL_signature.png');;
+            $signature_path =  public_path('png-asset/CIVIL_signature.png');
             $contract_name = 'Contract ' . $rfa->construction_contract->code . ' : ' . $rfa->construction_contract->name;
 
         }
@@ -1156,7 +1156,12 @@ class RfaController extends Controller
         if($rfa->wbs_level_4->wbs_level_4_name ?? '' != ''){
             $wbs = '1.' . $wbslv3 . ' 2.' . $wbslv4;
         }else{
-            $wbs = '1.' . $wbslv3;
+            if($rfa->wbs_level_3->wbs_level_3_name ?? '' != ''){
+                $wbs = '1.' . $wbslv3;
+            }
+            else{
+                $wbs = '';
+            }
         }
         $type = $rfa->type->type_code ?? '';
         $num_doc = substr($rfa_code,11,4);
@@ -1196,9 +1201,14 @@ class RfaController extends Controller
 
         $html = "<div style=\"font-size: 13px; font-weight: bold; position:absolute;top:84px;left:320px;\">" . $contract_name . "</div>";
           //Title
+        $html .= "<div style=\"font-size: 12px; position:absolute;top:168px;left:55px;\">" . 'Bill :' . "</div>";
         $html .= "<div style=\"font-size: 14px; position:absolute;top:168px;left:80px;\">" . $bill . '.' . "</div>";
+
+        $html .= "<div style=\"font-size: 12px; position:absolute;top:184px;left:55px;\">" . 'Title :' . "</div>";
         $html .= "<div style=\"font-size: 14px; padding-right:240px; position:absolute;top:184px;left:80px; LINE-HEIGHT:16px;\">" 
         . $title_en . "</div>";
+
+        $html .= "<div style=\"font-size: 12px; position:absolute;top:217px;left:55px;\">" . 'หัวข้อ :' . "</div>";
         $html .= "<div style=\"font-size: 14px; padding-right:230px; position:absolute;top:217px;left:80px; LINE-HEIGHT:16px;\">" 
         . $title_th . "</div>";
 
@@ -1308,6 +1318,7 @@ class RfaController extends Controller
         $allowed = array('pdf','PDF','Pdf');
         
 
+        /// SUBMITTAL
         if(count($submittalsRfa) > 0){
             $mpdf->AddPage();
             $pagecount = $mpdf->SetSourceFile(public_path('pdf-asset/Submittals_Form.pdf'));
@@ -1349,15 +1360,21 @@ class RfaController extends Controller
             $html .= "<div style=\"font-size: 10px; position:absolute;top:280px;left:216px;\">". $contract_drawing_no ."</div>";
             $html .= "<div style=\"font-size: 10px; position:absolute;top:315px;left:130px;\">". $qty_page  . '.' ."</div>";
 
-            if($rfa->cec_sign == 1){
-                $html .= "<div style=\"font-size: 14px; position:absolute;top:740px;left:520px;\">
-                    <img src=\"". public_path('png-asset/Signature_CEC.png') ."\" width=\"40px\" higth=\"40px\"> </div>";
-            }
+            //Signature
+
+            $html .= "<div style=\"font-size: 12px; position:absolute;top:770px;left:483px;\">"
+            . '( ' . $issue_by . ' )' . "</div>";
+
+
+            $html .= "<div style=\"font-size: 10px; position:absolute;top:787px;left:480px;\">"
+            . 'ผู้จัดการโครงการ / Project Manager (' . $constructor_code . ')' . "</div>";
             
-            if($rfa->cec_stamp == 1){
-                $html .= "<div style=\"font-size: 14px; position:absolute;top:500px;left:560px;\">
-                <img src=\"". public_path('png-asset/Stamp_CEC.png') ."\" width=\"200px\" higth=\"200px\" style=\"opacity: 0.5;\"> </div>";
-            }
+            $html .= "<div style=\"font-size: 14px; position:absolute;top:740px;left:520px;\">
+                <img src=\"". $signature_path ."\" width=\"40px\" higth=\"40px\"> </div>";
+            
+            $html .= "<div style=\"font-size: 14px; position:absolute;top:500px;left:560px;\">
+                <img src=\"". $stamp_path ."\" width=\"200px\" higth=\"200px\" style=\"opacity: 0.5;\"> </div>";
+            
 
             $html .= "<div style=\"font-size: 10px; position:absolute;top:930px;left:695px;\">". $outgoing_number  ."</div>";
             $html .= "<div style=\"font-size: 10px; position:absolute;top:950px;left:680px;\">". $outgoing_date  ."</div>";
