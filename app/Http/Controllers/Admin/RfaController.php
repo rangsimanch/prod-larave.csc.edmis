@@ -1153,10 +1153,12 @@ class RfaController extends Controller
         $wbslv4_code = $rfa->wbs_level_4->wbs_level_4_code ?? '';
 
         $wbs = '';
-        if($rfa->wbs_level_4->wbs_level_4_name ?? '' != ''){
-            $wbs = '1.' . $wbslv3 . ' 2.' . $wbslv4;
-        }else{
-            $wbs = '1.' . $wbslv3;
+        if($wbslv3_code != ''){
+            if($rfa->wbs_level_4->wbs_level_4_name ?? '' != ''){
+                $wbs = '1.' . $wbslv3 . ' 2.' . $wbslv4;
+            }else{
+                $wbs = '1.' . $wbslv3;
+            }
         }
         $type = $rfa->type->type_code ?? '';
         $num_doc = substr($rfa_code,11,4);
