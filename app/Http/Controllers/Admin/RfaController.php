@@ -564,7 +564,7 @@ class RfaController extends Controller
 
         $wbs_level_4s = Wbslevelfour::all()->pluck('wbs_level_4_code', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $issuebies = User::find([91,202])->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $issuebies = User::find([91,202,219])->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $assigns = User::where('id',61)->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), ''); //61->Li, 39->Paisan,  62->Liu 
 
@@ -724,7 +724,7 @@ class RfaController extends Controller
 
         $wbs_level_4s = Wbslevelfour::all()->pluck('wbs_level_4_name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $issuebies = User::find([202,91])->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $issuebies = User::find([202,91,219])->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $assigns = User::where('id',61)->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), ''); //61->Li, 39->Paisan,  62->Liu 
 
@@ -1156,12 +1156,7 @@ class RfaController extends Controller
         if($rfa->wbs_level_4->wbs_level_4_name ?? '' != ''){
             $wbs = '1.' . $wbslv3 . ' 2.' . $wbslv4;
         }else{
-            if($rfa->wbs_level_3->wbs_level_3_name ?? '' != ''){
-                $wbs = '1.' . $wbslv3;
-            }
-            else{
-                $wbs = '';
-            }
+            $wbs = '1.' . $wbslv3;
         }
         $type = $rfa->type->type_code ?? '';
         $num_doc = substr($rfa_code,11,4);
