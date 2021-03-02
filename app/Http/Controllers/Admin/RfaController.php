@@ -251,7 +251,7 @@ class RfaController extends Controller
             // });
 
             $table->editColumn('actions', function ($row) {
-                if($row->document_status->id != 4){
+                // if($row->document_status->id != 4){
                     $viewGate      = 'rfa_show';
                     $editGate      = 'rfa_edit';
                     $deleteGate    = 'rfa_delete';
@@ -264,21 +264,21 @@ class RfaController extends Controller
                         'crudRoutePart',
                         'row'
                     ));
-                }else
-                {
-                    $viewGate      = 'rfa_show';
-                    $editGate      = 'rfa_not_edit';
-                    $deleteGate    = 'rfa_delete';
-                    $crudRoutePart = 'rfas';
+                // }else
+                // {
+                //     $viewGate      = 'rfa_show';
+                //     $editGate      = 'rfa_not_edit';
+                //     $deleteGate    = 'rfa_delete';
+                //     $crudRoutePart = 'rfas';
 
-                    return view('partials.datatablesActions', compact(
-                        'viewGate',
-                        'editGate',
-                        'deleteGate',
-                        'crudRoutePart',
-                        'row'
-                    ));
-                }
+                //     return view('partials.datatablesActions', compact(
+                //         'viewGate',
+                //         'editGate',
+                //         'deleteGate',
+                //         'crudRoutePart',
+                //         'row'
+                //     ));
+                // }
             });
             
 
@@ -902,7 +902,7 @@ class RfaController extends Controller
             $rfa->load('action_by');
             return view('admin.rfas.edit', compact('construction_contracts', 'action_bies', 'comment_statuses', 'rfa'));
         }
-        else if($rfa->document_status_id == 3){
+        else if($rfa->document_status_id == 3 || $rfa->document_status_id == 4){
             $for_statuses = RfaCommentStatus::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
             $reviewed_bies = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
             return view('admin.rfas.edit', compact('construction_contracts', 'for_statuses', 'reviewed_bies', 'rfa'));
@@ -969,6 +969,33 @@ class RfaController extends Controller
         }
 
         else if($rfa->document_status_id == 3){
+            $data['document_status_id'] = 4;
+            $outgoing_date = new DateTime();
+            $data['outgoing_date'] = $outgoing_date->format('d/m/Y');
+            $data['outgoing_number'] = "OUT-" . $rfa->rfa_code;
+            $data['reviewed_by_id'] = $request->reviewed_by_id;
+            $data['for_status_id'] = $request->for_status_id;
+            $data['note_4'] = $request->note_4;
+            $rfa->update($data);
+
+            if (count($rfa->commercial_file_upload) > 0) {
+                foreach ($rfa->commercial_file_upload as $media) {
+                    if (!in_array($media->file_name, $request->input('commercial_file_upload', []))) {
+                        $media->delete();
+                    }
+                }
+            }
+
+            $media = $rfa->commercial_file_upload->pluck('file_name')->toArray();
+
+            foreach ($request->input('commercial_file_upload', []) as $file) {
+                if (count($media) === 0 || !in_array($file, $media)) {
+                    $rfa->addMedia(storage_path('tmp/uploads/' . $file))->toMediaCollection('commercial_file_upload');
+                }
+            }
+        }
+
+        else{
             $data['document_status_id'] = 4;
             $outgoing_date = new DateTime();
             $data['outgoing_date'] = $outgoing_date->format('d/m/Y');
