@@ -1055,6 +1055,17 @@ class RfaController extends Controller
 
         }
 
+        if($rfa->construction_contract->code == "C3-3"){
+            $issue_by = '-';
+            $constructor_name = 'Thai Engineers & Industry Company Limited';
+            $constructor_code = 'TEI';
+            $logo_path =  '';
+            $stamp_path =  '';
+            $signature_path =  '';
+            $contract_name = 'Contract ' . $rfa->construction_contract->code . ' : ' . $rfa->construction_contract->name;
+
+        }
+
         if($rfa->construction_contract->code == "C3-4"){
             $issue_by = 'มฆา  อัศวราชันย';
             $constructor_name = 'Italian-Thai Development PLC';
