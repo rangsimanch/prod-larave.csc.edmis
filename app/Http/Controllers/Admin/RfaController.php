@@ -1056,12 +1056,12 @@ class RfaController extends Controller
         }
 
         if($rfa->construction_contract->code == "C3-3"){
-            $issue_by = '-';
+            $issue_by = 'พิชัย รัตนาธรรมวัฒน์';
             $constructor_name = 'Thai Engineers & Industry Company Limited';
             $constructor_code = 'TEI';
-            $logo_path =  '';
-            $stamp_path =  '';
-            $signature_path =  '';
+            $logo_path = public_path('png-asset/TEI_logo.png');
+            $stamp_path =  public_path('png-asset/TEI_stamp.png');
+            $signature_path =  public_path('png-asset/TEI_signature.png');
             $contract_name = 'Contract ' . $rfa->construction_contract->code . ' : ' . $rfa->construction_contract->name;
 
         }
