@@ -1338,6 +1338,10 @@ class RfaController extends Controller
         $html .= "<div style=\"font-size: 14px; position:absolute;top:870px;left:477;\">" . $outgoing_number . "</div>";
         $html .= "<div style=\"font-size: 14px; position:absolute;top:885px;left:477;\">" . $outgoing_date . "</div>";
 
+
+        $html .= "<div style=\"font-size: 12px; font-weight: bold; position:absolute;top:873px;left:230px;\">"
+        . '('. $constructor_code . ')' . "</div>";
+
        if($for_statuses == 1){
             $html .= "<div style=\"font-size: 16px; position:absolute;top:912;left:215;\">" . 'X' . "</div>";
         }
