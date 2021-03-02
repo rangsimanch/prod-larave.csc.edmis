@@ -155,7 +155,7 @@
                         @endif
 
                           <!-- IF STATUS REVIEWED -->
-                        @if($rfa->document_status_id == 3)
+                        @if($rfa->document_status_id == 3 || $rfa->document_status_id == 4)
                         <div class="form-group {{ $errors->has('reviewed_by') ? 'has-error' : '' }}">
                             <label for="reviewed_by_id">{{ trans('cruds.rfa.fields.reviewed_by') }}</label>
                             <select class="form-control select2" name="reviewed_by_id" id="reviewed_by_id">
