@@ -564,7 +564,7 @@ class RfaController extends Controller
 
         $wbs_level_4s = Wbslevelfour::all()->pluck('wbs_level_4_code', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $issuebies = User::find([91,202,219])->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $issuebies = User::find([91,202,219,162])->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $assigns = User::where('id',61)->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), ''); //61->Li, 39->Paisan,  62->Liu 
 
@@ -724,7 +724,7 @@ class RfaController extends Controller
 
         $wbs_level_4s = Wbslevelfour::all()->pluck('wbs_level_4_name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $issuebies = User::find([202,91,219])->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $issuebies = User::find([202,91,219,162])->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $assigns = User::where('id',61)->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), ''); //61->Li, 39->Paisan,  62->Liu 
 
@@ -1078,6 +1078,17 @@ class RfaController extends Controller
             $logo_path =  public_path('png-asset/Stamp_CEC.png');
             $stamp_path =  public_path('png-asset/Stamp_CEC.png');
             $signature_path =  public_path('png-asset/Signature_CEC.png');
+            $contract_name = 'Contract ' . $rfa->construction_contract->code . ' : ' . $rfa->construction_contract->name;
+
+        }
+
+        if($rfa->construction_contract->code == "C3-2"){
+            $issue_by = 'ธนนท์ ดอกลัดดา';
+            $constructor_name = 'Nawarat Patanakarn Public Company Limited';
+            $constructor_code = 'NWR';
+            $logo_path =  public_path('png-asset/NWR_logo.png');
+            $stamp_path =  public_path('png-asset/NWR_stamp.png');
+            $signature_path =  public_path('png-asset/NWR_signature.png');
             $contract_name = 'Contract ' . $rfa->construction_contract->code . ' : ' . $rfa->construction_contract->name;
 
         }
