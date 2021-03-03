@@ -165,7 +165,9 @@ class TaskController extends Controller
 
         $tasks = Task::with(['tags', 'status', 'create_by_user', 'construction_contract', 'team'])
         ->whereBetween('due_date',[$StartDate, $EndDate])
-        ->where('create_by_user_id',$data['create_by_user_id'])->orderBy('due_date')->get();
+        ->where([ ['create_by_user_id',$data['create_by_user_id']], 
+                [session('construction_contract_id'), $data['construction_contract_id']] 
+                ])->orderBy('due_date')->get();
 
 
         $count_task = count($tasks);
