@@ -57,7 +57,7 @@
                         </div>
 
                         <div class="form-group">
-                            <button class="btn btn-success" type="submit">
+                            <button class="btn btn-success" type="submit" id="demo">
                                 Create Report
                             </button>
                         </div>
@@ -83,10 +83,18 @@
     if(exist){
       alert(msg);
     }
-    
+
     $(window).on("load",function(){
-     $(".loader-wrapper").fadeOut("slow");
-});
+          $(".loader-wrapper").fadeOut("slow");
+    });
+
+    document.getElementById("demo").onclick = function() {myFunction()};
+
+    function myFunction() {
+        $(window).on("load",function(){
+          $(".loader-wrapper").fadeOut("slow");
+        });
+    }
   </script>
 
   
