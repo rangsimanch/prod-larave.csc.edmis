@@ -170,7 +170,7 @@ class TaskController extends Controller
         $tasks = Task::with(['tags', 'status', 'create_by_user', 'construction_contract', 'team'])
         ->whereBetween('due_date',[$StartDate, $EndDate])
         ->where([ ['create_by_user_id',$data['create_by_user_id']], 
-                ['construction_contract_id', $data['contract']] 
+                ['construction_contract_id', $data['contracts']] 
                 ])->orderBy('due_date')->get();
 
 
