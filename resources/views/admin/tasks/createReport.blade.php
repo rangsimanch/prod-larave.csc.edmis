@@ -11,6 +11,7 @@
                 <form method="POST" action="{{ route("admin.tasks.createReportTask") }}" enctype="multipart/form-data">  
                 @csrf
                     <div class="panel-body">
+
                         <div class="form-group {{ $errors->has('create_by_user') ? 'has-error' : '' }}">
                                     <label for="create_by_user_id" class="required"> User </label>
                                     <select class="form-control select2" name="create_by_user_id" id="create_by_user_id">
@@ -20,6 +21,18 @@
                                     </select>
                                     @if($errors->has('create_by_user'))
                                         <span class="help-block" role="alert">{{ $errors->first('create_by_user') }}</span>
+                                    @endif
+                        </div>
+
+                        <div class="form-group {{ $errors->has('contracts') ? 'has-error' : '' }}">
+                                    <label for="contracts" class="required"> Contract </label>
+                                    <select class="form-control select2" name="contracts" id="contracts">
+                                        @foreach($contracts as $id => $contract)
+                                            <option value="{{ $id }}">{{ $contract }}</option>
+                                        @endforeach
+                                    </select>
+                                    @if($errors->has('contracts'))
+                                        <span class="help-block" role="alert">{{ $errors->first('contracts') }}</span>
                                     @endif
                         </div>
                         

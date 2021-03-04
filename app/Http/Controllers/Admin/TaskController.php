@@ -20,6 +20,8 @@ use Illuminate\Http\Request;
 use Spatie\MediaLibrary\Models\Media;
 use Symfony\Component\HttpFoundation\Response;
 use Yajra\DataTables\Facades\DataTables;
+use App\ConstructionContract;
+
 //use Request;
 
 class TaskController extends Controller
@@ -140,13 +142,15 @@ class TaskController extends Controller
 
     public function createReport(){
        
-        if(auth()->user()->roles->contains(28)){
+        if(auth()->user()->roles->contains(28) || auth()->user()->roles->contains(1) ){
             $create_by_users = User::all()->where('team_id','3')->pluck('name','id')->prepend(trans('global.pleaseSelect'), '');
+            $contracts = ConstructionContract::all()->pluck('code', 'id')->prepend(trans('global.pleaseSelect'), '');
         }
         else{
             $create_by_users = User::all()->where('id',auth()->id())->pluck('name','id')->prepend(trans('global.pleaseSelect'), '');
+            $contracts = ConstructionContract::where('id',session('construction_contract_id'))->pluck('code', 'id')->prepend(trans('global.pleaseSelect'), '');
         }
-        return view('admin.tasks.createReport', compact('create_by_users'));
+        return view('admin.tasks.createReport', compact('create_by_users', 'contracts'));
     }
 
     public function createReportTask(CreateReportTaskRequest $request){
@@ -166,7 +170,7 @@ class TaskController extends Controller
         $tasks = Task::with(['tags', 'status', 'create_by_user', 'construction_contract', 'team'])
         ->whereBetween('due_date',[$StartDate, $EndDate])
         ->where([ ['create_by_user_id',$data['create_by_user_id']], 
-                ['construction_contract_id', session('construction_contract_id')] 
+                ['construction_contract_id', $data['contract']] 
                 ])->orderBy('due_date')->get();
 
 

@@ -38,6 +38,9 @@ class CreateReportTaskRequest extends FormRequest
                     'required'],
                 'reportType' => [
                     'required'],
+                'contracts' => [
+                    'required'
+                ],
         ];
     }
 }
