@@ -57,7 +57,7 @@
                         </div>
 
                         <div class="form-group">
-                            <button class="btn btn-success" type="submit" id="demo">
+                            <button class="btn btn-success" type="submit" id="createReport">
                                 Create Report
                             </button>
                         </div>
@@ -69,9 +69,6 @@
 
 </div>
 
-<div class="loader-wrapper">
-    <span class="loader"><span class="loader-inner"></span></span>
-</div>
 
 
 @endsection
@@ -84,17 +81,14 @@
       alert(msg);
     }
 
-    $(window).on("load",function(){
-          $(".loader-wrapper").fadeOut("slow");
-    });
 
-    document.getElementById("demo").onclick = function() {myFunction()};
-
-    function myFunction() {
-        $(window).on("load",function(){
-          $(".loader-wrapper").fadeOut("slow");
+    $('#createReport').click(function(){
+        var html = '<div class="loader-wrapper"><span class="loader"><span class="loader-inner"></span></span></div>';
+        $('body').append(html);
+        console.log("Clicked");
         });
-    }
+    
+
   </script>
 
   
