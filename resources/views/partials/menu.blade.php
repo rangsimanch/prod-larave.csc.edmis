@@ -590,7 +590,7 @@
                                             </a>
                                         </li>
                                     @endcan
-                                    @can('cilvil_sent_access')
+                                    @can('civil_sent_access')
                                         <li class="{{ request()->is("admin/cilvil-sents") || request()->is("admin/cilvil-sents/*") ? "active" : "" }}">
                                             <a href="{{ route("admin.cilvil-sents.index") }}">
                                                 <i class="fa-fw far fa-share-square">
