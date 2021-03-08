@@ -1091,8 +1091,8 @@ class RfaController extends Controller
             $logo_path =  public_path('png-asset/NWR_logo.png');
             $stamp_path =  public_path('png-asset/NWR_stamp.png');
             $signature_path =  public_path('png-asset/NWR_signature.png');
-            $signature_size_h = 150;
-            $signature_size_w = 150;
+            $signature_size_h = 40;
+            $signature_size_w = 40;
             $contract_name = 'Contract ' . $rfa->construction_contract->code . ' : ' . $rfa->construction_contract->name;
 
         }
