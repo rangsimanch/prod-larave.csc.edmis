@@ -1315,7 +1315,7 @@ class RfaController extends Controller
         
        
         //Signature
-        $html .= "<div style=\"font-size: 10px; position:absolute;top:435px;left:257px;\">" . $issue_by . "</div>";
+        $html .= "<div style=\"font-size: 10px; position:absolute;top:435px;left:". $issue_position_lf ."px;\">" . $issue_by . "</div>";
         $html .= "<div style=\"font-size: 14px; position:absolute;top:410px;left:280px;\">
             <img src=\"". $signature_path ."\" width=\"". $signature_size_w ."\" higth=\"". $signature_size_h ."\"> </div>";
         
