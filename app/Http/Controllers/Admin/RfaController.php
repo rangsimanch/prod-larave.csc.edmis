@@ -1087,7 +1087,7 @@ class RfaController extends Controller
 
         if($rfa->construction_contract->code == "C3-2"){
             $issue_by = 'ธนนท์ ดอกลัดดา';
-            $issue_position_lf = 280;
+            $issue_position_lf = 275;
             $constructor_name = 'Nawarat Patanakarn Public Company Limited';
             $constructor_code = 'NWR';
             $logo_path =  public_path('png-asset/NWR_logo.png');
@@ -1115,7 +1115,7 @@ class RfaController extends Controller
 
         if($rfa->construction_contract->code == "C3-4"){
             $issue_by = 'มฆา  อัศวราชันย';
-            $issue_position_lf = 280;
+            $issue_position_lf = 275;
             $constructor_name = 'Italian-Thai Development PLC';
             $constructor_code = 'ITD';
             $logo_path = public_path('png-asset/ITD_logo.png');
@@ -1143,7 +1143,7 @@ class RfaController extends Controller
 
         if($rfa->construction_contract->code == "C4-7"){
             $issue_by = 'สุทิน สังข์หิรัญ';
-            $issue_position_lf = 280;
+            $issue_position_lf = 275;
             $constructor_name = 'Civil Enginneering Public Company Limited';
             $constructor_code = 'CIVIL';
             $logo_path = public_path('png-asset/CIVIL_logo.png');
