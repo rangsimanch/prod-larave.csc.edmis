@@ -1078,6 +1078,8 @@ class RfaController extends Controller
             $logo_path =  public_path('png-asset/Stamp_CEC.png');
             $stamp_path =  public_path('png-asset/Stamp_CEC.png');
             $signature_path =  public_path('png-asset/Signature_CEC.png');
+            $signature_size_h = 40;
+            $signature_size_w = 40;
             $contract_name = 'Contract ' . $rfa->construction_contract->code . ' : ' . $rfa->construction_contract->name;
 
         }
@@ -1089,6 +1091,8 @@ class RfaController extends Controller
             $logo_path =  public_path('png-asset/NWR_logo.png');
             $stamp_path =  public_path('png-asset/NWR_stamp.png');
             $signature_path =  public_path('png-asset/NWR_signature.png');
+            $signature_size_h = 60;
+            $signature_size_w = 60;
             $contract_name = 'Contract ' . $rfa->construction_contract->code . ' : ' . $rfa->construction_contract->name;
 
         }
@@ -1100,6 +1104,8 @@ class RfaController extends Controller
             $logo_path = public_path('png-asset/TEI_logo.png');
             $stamp_path =  public_path('png-asset/TEI_stamp.png');
             $signature_path =  public_path('png-asset/TEI_signature.png');
+            $signature_size_h = 40;
+            $signature_size_w = 40;
             $contract_name = 'Contract ' . $rfa->construction_contract->code . ' : ' . $rfa->construction_contract->name;
 
         }
@@ -1111,17 +1117,8 @@ class RfaController extends Controller
             $logo_path = public_path('png-asset/ITD_logo.png');
             $stamp_path =  public_path('png-asset/ITD_stamp.png');
             $signature_path =  public_path('png-asset/ITD_signature.png');
-            $contract_name = 'Contract ' . $rfa->construction_contract->code . ' : ' . $rfa->construction_contract->name;
-
-        }
-
-        if($rfa->construction_contract->code == "C4-7"){
-            $issue_by = 'สุทิน สังข์หิรัญ';
-            $constructor_name = 'Civil Enginneering Public Company Limited';
-            $constructor_code = 'CIVIL';
-            $logo_path = public_path('png-asset/CIVIL_logo.png');
-            $stamp_path =  public_path('png-asset/CIVIL_stamp.png');
-            $signature_path =  public_path('png-asset/CIVIL_signature.png');
+            $signature_size_h = 40;
+            $signature_size_w = 40;
             $contract_name = 'Contract ' . $rfa->construction_contract->code . ' : ' . $rfa->construction_contract->name;
 
         }
@@ -1133,9 +1130,26 @@ class RfaController extends Controller
             $logo_path =  public_path('png-asset/SPTK_stamp.png');
             $stamp_path =  public_path('png-asset/SPTK_stamp.png');
             $signature_path =  public_path('png-asset/SPTK_signature.png');
+            $signature_size_h = 50;
+            $signature_size_w = 50;
             $contract_name = 'Contract ' . $rfa->construction_contract->code . ' : ' . $rfa->construction_contract->name;
 
         }
+
+        if($rfa->construction_contract->code == "C4-7"){
+            $issue_by = 'สุทิน สังข์หิรัญ';
+            $constructor_name = 'Civil Enginneering Public Company Limited';
+            $constructor_code = 'CIVIL';
+            $logo_path = public_path('png-asset/CIVIL_logo.png');
+            $stamp_path =  public_path('png-asset/CIVIL_stamp.png');
+            $signature_path =  public_path('png-asset/CIVIL_signature.png');
+            $signature_size_h = 40;
+            $signature_size_w = 40;
+            $contract_name = 'Contract ' . $rfa->construction_contract->code . ' : ' . $rfa->construction_contract->name;
+
+        }
+
+        
 
 
         $bill = $rfa->boq->name ?? '';
@@ -1144,24 +1158,24 @@ class RfaController extends Controller
         $document_number = $rfa->document_number ?? '';
         $check_box = "X";
         $rfa_code = $rfa->origin_number;
-        // if(isset($rfa->origin_number)){
-        //     $rfa_code = $rfa->origin_number ?? '';
-        //     if(strlen($rfa_code) > 8){
-        //         $revision_count = substr($rfa_code,11,1);
-        //     }
-        //     else{
-        //         $revision_count = "0";
-        //     }
-        // }
-        // else{
-        //     $rfa_code = $rfa->rfa_code ?? '';  
-        //     if(strlen($rfa_code) > 14){
-        //         $revision_count = substr($rfa_code,17,2);
-        //     }
-        //     else{
-        //         $revision_count = "0";
-        //     }
-        // }
+        if(isset($rfa->origin_number)){
+            $rfa_code = $rfa->origin_number ?? '';
+            if(strlen($rfa_code) > 8){
+                $revision_count = substr($rfa_code,11,1);
+            }
+            else{
+                $revision_count = "0";
+            }
+        }
+        else{
+            $rfa_code = $rfa->rfa_code ?? '';  
+            if(strlen($rfa_code) > 14){
+                $revision_count = substr($rfa_code,17,2);
+            }
+            else{
+                $revision_count = "0";
+            }
+        }
         $incoming_no = $rfa->incoming_number ?? '';
         $receive_date = $rfa->receive_date ?? '';
         $spec_ref_no = $rfa->spec_ref_no ?? '';
@@ -1297,7 +1311,7 @@ class RfaController extends Controller
         //Signature
         $html .= "<div style=\"font-size: 10px; position:absolute;top:435px;left:257px;\">" . $issue_by . "</div>";
         $html .= "<div style=\"font-size: 14px; position:absolute;top:410px;left:280px;\">
-            <img src=\"". $signature_path ."\" width=\"40px\" higth=\"40px\"> </div>";
+            <img src=\"". $signature_path ."\" width=\"". $signature_size_w ."\" higth=\"". $signature_size_h ."\"> </div>";
         
         $html .= "<div style=\"font-size: 14px; position:absolute;top:300px;left:400px;\">
             <img src=\"". $stamp_path ."\" width=\"200px\" higth=\"200px\" style=\"opacity: 0.5;\"> </div>";
