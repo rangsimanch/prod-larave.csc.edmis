@@ -144,13 +144,13 @@
                             <span class="help-block">{{ trans('cruds.rfa.fields.note_3_helper') }}</span>
                         </div>
 
-                        <div class="form-group {{ $errors->has('document_file_upload') ? 'has-error' : '' }}">
-                            <label for="document_file_upload">{{ trans('cruds.rfa.fields.document_file_upload') }}</label>
-                            <div class="needsclick dropzone" id="document_file_upload-dropzone"></div>
+                        <div class="form-group {{ $errors->has('commercial_file_upload') ? 'has-error' : '' }}">
+                            <label for="commercial_file_upload">{{ trans('cruds.rfa.fields.commercial_file_upload') }}</label>
+                            <div class="needsclick dropzone" id="commercial_file_upload-dropzone"></div>
                             @if($errors->has(''))
                                 <span class="help-block" role="alert">{{ $errors->first('') }}</span>
                             @endif
-                                <span class="help-block">{{ trans('cruds.rfa.fields.document_file_upload_helper') }}</span>
+                            <span class="help-block">{{ trans('cruds.rfa.fields.commercial_file_upload_helper') }}</span>
                         </div>
                         @endif
 

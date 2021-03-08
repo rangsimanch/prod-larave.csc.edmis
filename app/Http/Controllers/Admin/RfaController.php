@@ -951,19 +951,19 @@ class RfaController extends Controller
             $data['note_3'] = $request->note_3;
             $rfa->update($data);
             
-            if (count($rfa->document_file_upload) > 0) {
-                foreach ($rfa->document_file_upload as $media) {
-                    if (!in_array($media->file_name, $request->input('document_file_upload', []))) {
+            if (count($rfa->commercial_file_upload) > 0) {
+                foreach ($rfa->commercial_file_upload as $media) {
+                    if (!in_array($media->file_name, $request->input('commercial_file_upload', []))) {
                         $media->delete();
                     }
                 }
             }
-    
-            $media = $rfa->document_file_upload->pluck('file_name')->toArray();
-    
-            foreach ($request->input('document_file_upload', []) as $file) {
+
+            $media = $rfa->commercial_file_upload->pluck('file_name')->toArray();
+
+            foreach ($request->input('commercial_file_upload', []) as $file) {
                 if (count($media) === 0 || !in_array($file, $media)) {
-                    $rfa->addMedia(storage_path('tmp/uploads/' . $file))->toMediaCollection('document_file_upload');
+                    $rfa->addMedia(storage_path('tmp/uploads/' . $file))->toMediaCollection('commercial_file_upload');
                 }
             }
         }
@@ -1143,25 +1143,25 @@ class RfaController extends Controller
         $title_en = wordwrap($rfa->title_eng ?? '',300,"<br>\n");
         $document_number = $rfa->document_number ?? '';
         $check_box = "X";
-        $rfa_code = '';
-        if(isset($rfa->origin_number)){
-            $rfa_code = $rfa->origin_number ?? '';
-            if(strlen($rfa_code) > 8){
-                $revision_count = substr($rfa_code,11,1);
-            }
-            else{
-                $revision_count = "0";
-            }
-        }
-        else{
-            $rfa_code = $rfa->rfa_code ?? '';  
-            if(strlen($rfa_code) > 14){
-                $revision_count = substr($rfa_code,17,2);
-            }
-            else{
-                $revision_count = "0";
-            }
-        }
+        $rfa_code = $rfa->origin_number;
+        // if(isset($rfa->origin_number)){
+        //     $rfa_code = $rfa->origin_number ?? '';
+        //     if(strlen($rfa_code) > 8){
+        //         $revision_count = substr($rfa_code,11,1);
+        //     }
+        //     else{
+        //         $revision_count = "0";
+        //     }
+        // }
+        // else{
+        //     $rfa_code = $rfa->rfa_code ?? '';  
+        //     if(strlen($rfa_code) > 14){
+        //         $revision_count = substr($rfa_code,17,2);
+        //     }
+        //     else{
+        //         $revision_count = "0";
+        //     }
+        // }
         $incoming_no = $rfa->incoming_number ?? '';
         $receive_date = $rfa->receive_date ?? '';
         $spec_ref_no = $rfa->spec_ref_no ?? '';
