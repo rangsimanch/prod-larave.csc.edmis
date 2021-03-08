@@ -1073,6 +1073,7 @@ class RfaController extends Controller
 
         if($rfa->construction_contract->code == "C2-1"){
             $issue_by = 'Sitthichai Pimsawat';
+            $issue_position_lf = 257;
             $constructor_name = 'Civil Construction Services & Products Company Limited';
             $constructor_code = 'CCSP';
             $logo_path =  public_path('png-asset/Stamp_CEC.png');
@@ -1086,6 +1087,7 @@ class RfaController extends Controller
 
         if($rfa->construction_contract->code == "C3-2"){
             $issue_by = 'ธนนท์ ดอกลัดดา';
+            $issue_position_lf = 265;
             $constructor_name = 'Nawarat Patanakarn Public Company Limited';
             $constructor_code = 'NWR';
             $logo_path =  public_path('png-asset/NWR_logo.png');
@@ -1099,6 +1101,7 @@ class RfaController extends Controller
 
         if($rfa->construction_contract->code == "C3-3"){
             $issue_by = 'พิชัย รัตนาธรรมวัฒน์';
+            $issue_position_lf = 260;
             $constructor_name = 'Thai Engineers & Industry Company Limited';
             $constructor_code = 'TEI';
             $logo_path = public_path('png-asset/TEI_logo.png');
@@ -1112,6 +1115,7 @@ class RfaController extends Controller
 
         if($rfa->construction_contract->code == "C3-4"){
             $issue_by = 'มฆา  อัศวราชันย';
+            $issue_position_lf = 265;
             $constructor_name = 'Italian-Thai Development PLC';
             $constructor_code = 'ITD';
             $logo_path = public_path('png-asset/ITD_logo.png');
@@ -1125,6 +1129,7 @@ class RfaController extends Controller
 
         if($rfa->construction_contract->code == "C3-5"){
             $issue_by = 'Narutchai Sammawijitra';
+            $issue_position_lf = 257;
             $constructor_name = 'SPTK Joint Venture Company Limited';
             $constructor_code = 'SPTK';
             $logo_path =  public_path('png-asset/SPTK_stamp.png');
@@ -1138,6 +1143,7 @@ class RfaController extends Controller
 
         if($rfa->construction_contract->code == "C4-7"){
             $issue_by = 'สุทิน สังข์หิรัญ';
+            $issue_position_lf = 265;
             $constructor_name = 'Civil Enginneering Public Company Limited';
             $constructor_code = 'CIVIL';
             $logo_path = public_path('png-asset/CIVIL_logo.png');
