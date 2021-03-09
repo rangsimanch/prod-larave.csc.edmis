@@ -73,14 +73,7 @@
                                         {{ $srtInputDocument->refer_to }}
                                     </td>
                                 </tr>
-                                <tr>
-                                    <th>
-                                        {{ trans('cruds.srtInputDocument.fields.from_organization') }}
-                                    </th>
-                                    <td>
-                                        {{ $srtInputDocument->from_organization->title_th ?? '' }}
-                                    </td>
-                                </tr>
+                                
                                 <tr>
                                     <th>
                                         {{ trans('cruds.srtInputDocument.fields.from') }}

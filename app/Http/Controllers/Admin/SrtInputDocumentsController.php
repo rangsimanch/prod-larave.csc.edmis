@@ -181,13 +181,13 @@ class SrtInputDocumentsController extends Controller
 
         $constuction_contracts = ConstructionContract::all()->pluck('code', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $from_organizations = Organization::all()->pluck('code', 'id')->prepend(trans('global.pleaseSelect'), '');
+
 
         $froms = Team::all()->pluck('code', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $tos = User::all()->where('team_id','1')->pluck('name', 'id');
 
-        return view('admin.srtInputDocuments.create', compact('constuction_contracts', 'from_organizations','froms', 'tos'));
+        return view('admin.srtInputDocuments.create', compact('constuction_contracts','froms', 'tos'));
     }
 
     public function store(StoreSrtInputDocumentRequest $request)
@@ -313,16 +313,16 @@ class SrtInputDocumentsController extends Controller
 
         $constuction_contracts = ConstructionContract::all()->pluck('code', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $from_organizations = Organization::all()->pluck('code', 'id')->prepend(trans('global.pleaseSelect'), '');
+ 
 
         $froms = Team::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $tos = User::all()->where('team_id','1')->pluck('name', 'id');
         
 
-        $srtInputDocument->load('docuement_status', 'constuction_contract', 'from_organization' ,'from', 'tos', 'close_by', 'team');
+        $srtInputDocument->load('docuement_status', 'constuction_contract', 'from', 'tos', 'close_by', 'team');
 
-        return view('admin.srtInputDocuments.edit', compact('constuction_contracts', 'from_organizations','froms', 'tos', 'srtInputDocument'));
+        return view('admin.srtInputDocuments.edit', compact('constuction_contracts', 'froms', 'tos', 'srtInputDocument'));
     }
 
     public function update(UpdateSrtInputDocumentRequest $request, SrtInputDocument $srtInputDocument)
@@ -412,7 +412,7 @@ class SrtInputDocumentsController extends Controller
     {
         abort_if(Gate::denies('srt_input_document_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $srtInputDocument->load('docuement_status', 'constuction_contract', 'from_organization','from', 'tos', 'close_by', 'team');
+        $srtInputDocument->load('docuement_status', 'constuction_contract', 'from', 'tos', 'close_by', 'team');
 
         return view('admin.srtInputDocuments.show', compact('srtInputDocument'));
     }
