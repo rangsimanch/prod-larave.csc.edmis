@@ -575,13 +575,13 @@
     var uploadedFileUpload1Map = {}
 Dropzone.options.fileUpload1Dropzone = {
     url: '{{ route('admin.rfas.storeMedia') }}',
-    maxFilesize: 200, // MB
+    maxFilesize: 500, // MB
     addRemoveLinks: true,
     headers: {
       'X-CSRF-TOKEN': "{{ csrf_token() }}"
     },
     params: {
-      size: 200
+      size: 500
     },
     success: function (file, response) {
       $('form').append('<input type="hidden" name="file_upload_1[]" value="' + response.name + '">')
