@@ -11,30 +11,6 @@
                 <div class="panel-body">
                     <form method="POST" action="{{ route("admin.request-for-informations.store") }}" enctype="multipart/form-data">
                         @csrf
-                        <div class="form-group {{ $errors->has('to_organization') ? 'has-error' : '' }}">
-                            <label for="to_organization">{{ trans('cruds.requestForInformation.fields.to_organization') }}</label>
-                            <input class="form-control" type="text" name="to_organization" id="to_organization" value="{{ old('to_organization', '') }}">
-                            @if($errors->has('to_organization'))
-                                <span class="help-block" role="alert">{{ $errors->first('to_organization') }}</span>
-                            @endif
-                            <span class="help-block">{{ trans('cruds.requestForInformation.fields.to_organization_helper') }}</span>
-                        </div>
-                        <div class="form-group {{ $errors->has('attention_name') ? 'has-error' : '' }}">
-                            <label for="attention_name">{{ trans('cruds.requestForInformation.fields.attention_name') }}</label>
-                            <input class="form-control" type="text" name="attention_name" id="attention_name" value="{{ old('attention_name', '') }}">
-                            @if($errors->has('attention_name'))
-                                <span class="help-block" role="alert">{{ $errors->first('attention_name') }}</span>
-                            @endif
-                            <span class="help-block">{{ trans('cruds.requestForInformation.fields.attention_name_helper') }}</span>
-                        </div>
-                        <div class="form-group {{ $errors->has('document_no') ? 'has-error' : '' }}">
-                            <label for="document_no">{{ trans('cruds.requestForInformation.fields.document_no') }}</label>
-                            <input class="form-control" type="text" name="document_no" id="document_no" value="{{ old('document_no', '') }}">
-                            @if($errors->has('document_no'))
-                                <span class="help-block" role="alert">{{ $errors->first('document_no') }}</span>
-                            @endif
-                            <span class="help-block">{{ trans('cruds.requestForInformation.fields.document_no_helper') }}</span>
-                        </div>
                         <div class="form-group {{ $errors->has('construction_contract') ? 'has-error' : '' }}">
                             <label for="construction_contract_id">{{ trans('cruds.requestForInformation.fields.construction_contract') }}</label>
                             <select class="form-control select2" name="construction_contract_id" id="construction_contract_id">
@@ -47,14 +23,6 @@
                             @endif
                             <span class="help-block">{{ trans('cruds.requestForInformation.fields.construction_contract_helper') }}</span>
                         </div>
-                        <div class="form-group {{ $errors->has('date') ? 'has-error' : '' }}">
-                            <label for="date">{{ trans('cruds.requestForInformation.fields.date') }}</label>
-                            <input class="form-control date" type="text" name="date" id="date" value="{{ old('date') }}">
-                            @if($errors->has('date'))
-                                <span class="help-block" role="alert">{{ $errors->first('date') }}</span>
-                            @endif
-                            <span class="help-block">{{ trans('cruds.requestForInformation.fields.date_helper') }}</span>
-                        </div>
                         <div class="form-group {{ $errors->has('title') ? 'has-error' : '' }}">
                             <label class="required" for="title">{{ trans('cruds.requestForInformation.fields.title') }}</label>
                             <input class="form-control" type="text" name="title" id="title" value="{{ old('title', '') }}" required>
@@ -62,6 +30,23 @@
                                 <span class="help-block" role="alert">{{ $errors->first('title') }}</span>
                             @endif
                             <span class="help-block">{{ trans('cruds.requestForInformation.fields.title_helper') }}</span>
+                        </div>
+                       
+                        <div class="form-group {{ $errors->has('originator_code') ? 'has-error' : '' }}">
+                            <label for="originator_code">{{ trans('cruds.requestForInformation.fields.originator_code') }}</label>
+                            <input class="form-control" type="text" name="originator_code" id="originator_code" value="{{ old('originator_code', '') }}">
+                            @if($errors->has('originator_code'))
+                                <span class="help-block" role="alert">{{ $errors->first('originator_code') }}</span>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.requestForInformation.fields.originator_code_helper') }}</span>
+                        </div>
+                        <div class="form-group {{ $errors->has('date') ? 'has-error' : '' }}">
+                            <label for="date">{{ trans('cruds.requestForInformation.fields.date') }}</label>
+                            <input class="form-control date" type="text" name="date" id="date" value="{{ old('date') }}">
+                            @if($errors->has('date'))
+                                <span class="help-block" role="alert">{{ $errors->first('date') }}</span>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.requestForInformation.fields.date_helper') }}</span>
                         </div>
                         <div class="form-group {{ $errors->has('to') ? 'has-error' : '' }}">
                             <label for="to_id">{{ trans('cruds.requestForInformation.fields.to') }}</label>
@@ -75,71 +60,45 @@
                             @endif
                             <span class="help-block">{{ trans('cruds.requestForInformation.fields.to_helper') }}</span>
                         </div>
-                        <div class="form-group {{ $errors->has('discipline') ? 'has-error' : '' }}">
-                            <label for="discipline">{{ trans('cruds.requestForInformation.fields.discipline') }}</label>
-                            <input class="form-control" type="text" name="discipline" id="discipline" value="{{ old('discipline', '') }}">
-                            @if($errors->has('discipline'))
-                                <span class="help-block" role="alert">{{ $errors->first('discipline') }}</span>
+
+                        <div class="form-group {{ $errors->has('document_type') ? 'has-error' : '' }}">
+                            <label for="document_type_id">{{ trans('cruds.requestForInformation.fields.document_type') }}</label>
+                            <select class="form-control select2" name="document_type_id" id="document_type_id">
+                                @foreach($document_types as $id => $document_type)
+                                    <option value="{{ $id }}" {{ old('document_type_id') == $id ? 'selected' : '' }}>{{ $document_type }}</option>
+                                @endforeach
+                            </select>
+                            @if($errors->has('document_type'))
+                                <span class="help-block" role="alert">{{ $errors->first('document_type') }}</span>
                             @endif
-                            <span class="help-block">{{ trans('cruds.requestForInformation.fields.discipline_helper') }}</span>
+                            <span class="help-block">{{ trans('cruds.requestForInformation.fields.document_type_helper') }}</span>
                         </div>
-                        <div class="form-group {{ $errors->has('originator_name') ? 'has-error' : '' }}">
-                            <label for="originator_name">{{ trans('cruds.requestForInformation.fields.originator_name') }}</label>
-                            <input class="form-control" type="text" name="originator_name" id="originator_name" value="{{ old('originator_name', '') }}">
-                            @if($errors->has('originator_name'))
-                                <span class="help-block" role="alert">{{ $errors->first('originator_name') }}</span>
+
+                        <div class="form-group {{ $errors->has('wbs_level_4') ? 'has-error' : '' }}">
+                            <label for="wbs_level_4_id">{{ trans('cruds.requestForInformation.fields.wbs_level_4') }}</label>
+                            <select class="form-control select2 wbslv3" name="wbs_level_4_id" id="wbs_level_4_id">
+                                @foreach($wbs_level_4s as $id => $wbs_level_4)
+                                    <option value="{{ $id }}" {{ old('wbs_level_4_id') == $id ? 'selected' : '' }}>{{ $wbs_level_4 }}</option>
+                                @endforeach
+                            </select>
+                            @if($errors->has('wbs_level_4'))
+                                <span class="help-block" role="alert">{{ $errors->first('wbs_level_4') }}</span>
                             @endif
-                            <span class="help-block">{{ trans('cruds.requestForInformation.fields.originator_name_helper') }}</span>
+                            <span class="help-block">{{ trans('cruds.requestForInformation.fields.wbs_level_4_helper') }}</span>
                         </div>
-                        <div class="form-group {{ $errors->has('cc_to') ? 'has-error' : '' }}">
-                            <label for="cc_to">{{ trans('cruds.requestForInformation.fields.cc_to') }}</label>
-                            <input class="form-control" type="text" name="cc_to" id="cc_to" value="{{ old('cc_to', '') }}">
-                            @if($errors->has('cc_to'))
-                                <span class="help-block" role="alert">{{ $errors->first('cc_to') }}</span>
+                        <div class="form-group {{ $errors->has('wbs_level_5') ? 'has-error' : '' }}">
+                            <label for="wbs_level_5_id">{{ trans('cruds.requestForInformation.fields.wbs_level_5') }}</label>
+                            <select class="form-control select2 wbslv4" name="wbs_level_5_id" id="wbs_level_5_id">
+                                @foreach($wbs_level_5s as $id => $wbs_level_5)
+                                    <option value="{{ $id }}" {{ old('wbs_level_5_id') == $id ? 'selected' : '' }}>{{ $wbs_level_5 }}</option>
+                                @endforeach
+                            </select>
+                            @if($errors->has('wbs_level_5'))
+                                <span class="help-block" role="alert">{{ $errors->first('wbs_level_5') }}</span>
                             @endif
-                            <span class="help-block">{{ trans('cruds.requestForInformation.fields.cc_to_helper') }}</span>
+                            <span class="help-block">{{ trans('cruds.requestForInformation.fields.wbs_level_5_helper') }}</span>
                         </div>
-                        <div class="form-group {{ $errors->has('incoming_no') ? 'has-error' : '' }}">
-                            <label for="incoming_no">{{ trans('cruds.requestForInformation.fields.incoming_no') }}</label>
-                            <input class="form-control" type="text" name="incoming_no" id="incoming_no" value="{{ old('incoming_no', '') }}">
-                            @if($errors->has('incoming_no'))
-                                <span class="help-block" role="alert">{{ $errors->first('incoming_no') }}</span>
-                            @endif
-                            <span class="help-block">{{ trans('cruds.requestForInformation.fields.incoming_no_helper') }}</span>
-                        </div>
-                        <div class="form-group {{ $errors->has('incoming_date') ? 'has-error' : '' }}">
-                            <label for="incoming_date">{{ trans('cruds.requestForInformation.fields.incoming_date') }}</label>
-                            <input class="form-control date" type="text" name="incoming_date" id="incoming_date" value="{{ old('incoming_date') }}">
-                            @if($errors->has('incoming_date'))
-                                <span class="help-block" role="alert">{{ $errors->first('incoming_date') }}</span>
-                            @endif
-                            <span class="help-block">{{ trans('cruds.requestForInformation.fields.incoming_date_helper') }}</span>
-                        </div>
-                        <div class="form-group {{ $errors->has('description') ? 'has-error' : '' }}">
-                            <label for="description">{{ trans('cruds.requestForInformation.fields.description') }}</label>
-                            <textarea class="form-control" name="description" id="description">{{ old('description') }}</textarea>
-                            @if($errors->has('description'))
-                                <span class="help-block" role="alert">{{ $errors->first('description') }}</span>
-                            @endif
-                            <span class="help-block">{{ trans('cruds.requestForInformation.fields.description_helper') }}</span>
-                        </div>
-                        <div class="form-group {{ $errors->has('attachment_file_description') ? 'has-error' : '' }}">
-                            <label for="attachment_file_description">{{ trans('cruds.requestForInformation.fields.attachment_file_description') }}</label>
-                            <textarea class="form-control" name="attachment_file_description" id="attachment_file_description">{{ old('attachment_file_description') }}</textarea>
-                            @if($errors->has('attachment_file_description'))
-                                <span class="help-block" role="alert">{{ $errors->first('attachment_file_description') }}</span>
-                            @endif
-                            <span class="help-block">{{ trans('cruds.requestForInformation.fields.attachment_file_description_helper') }}</span>
-                        </div>
-                        <div class="form-group {{ $errors->has('attachment_files') ? 'has-error' : '' }}">
-                            <label for="attachment_files">{{ trans('cruds.requestForInformation.fields.attachment_files') }}</label>
-                            <div class="needsclick dropzone" id="attachment_files-dropzone">
-                            </div>
-                            @if($errors->has('attachment_files'))
-                                <span class="help-block" role="alert">{{ $errors->first('attachment_files') }}</span>
-                            @endif
-                            <span class="help-block">{{ trans('cruds.requestForInformation.fields.attachment_files_helper') }}</span>
-                        </div>
+
                         <div class="form-group {{ $errors->has('request_by') ? 'has-error' : '' }}">
                             <label for="request_by_id">{{ trans('cruds.requestForInformation.fields.request_by') }}</label>
                             <select class="form-control select2" name="request_by_id" id="request_by_id">
@@ -152,78 +111,23 @@
                             @endif
                             <span class="help-block">{{ trans('cruds.requestForInformation.fields.request_by_helper') }}</span>
                         </div>
-                        <div class="form-group {{ $errors->has('outgoing_no') ? 'has-error' : '' }}">
-                            <label for="outgoing_no">{{ trans('cruds.requestForInformation.fields.outgoing_no') }}</label>
-                            <input class="form-control" type="text" name="outgoing_no" id="outgoing_no" value="{{ old('outgoing_no', '') }}">
-                            @if($errors->has('outgoing_no'))
-                                <span class="help-block" role="alert">{{ $errors->first('outgoing_no') }}</span>
+                       
+                        <div class="form-group {{ $errors->has('description') ? 'has-error' : '' }}">
+                            <label for="description">{{ trans('cruds.requestForInformation.fields.description') }}</label>
+                            <textarea class="form-control ckeditor" name="description" id="description">{!! old('description') !!}</textarea>
+                            @if($errors->has('description'))
+                                <span class="help-block" role="alert">{{ $errors->first('description') }}</span>
                             @endif
-                            <span class="help-block">{{ trans('cruds.requestForInformation.fields.outgoing_no_helper') }}</span>
+                            <span class="help-block">{{ trans('cruds.requestForInformation.fields.description_helper') }}</span>
                         </div>
-                        <div class="form-group {{ $errors->has('outgoing_date') ? 'has-error' : '' }}">
-                            <label for="outgoing_date">{{ trans('cruds.requestForInformation.fields.outgoing_date') }}</label>
-                            <input class="form-control date" type="text" name="outgoing_date" id="outgoing_date" value="{{ old('outgoing_date') }}">
-                            @if($errors->has('outgoing_date'))
-                                <span class="help-block" role="alert">{{ $errors->first('outgoing_date') }}</span>
-                            @endif
-                            <span class="help-block">{{ trans('cruds.requestForInformation.fields.outgoing_date_helper') }}</span>
-                        </div>
-                        <div class="form-group {{ $errors->has('response') ? 'has-error' : '' }}">
-                            <label for="response">{{ trans('cruds.requestForInformation.fields.response') }}</label>
-                            <textarea class="form-control" name="response" id="response">{{ old('response') }}</textarea>
-                            @if($errors->has('response'))
-                                <span class="help-block" role="alert">{{ $errors->first('response') }}</span>
-                            @endif
-                            <span class="help-block">{{ trans('cruds.requestForInformation.fields.response_helper') }}</span>
-                        </div>
-                        <div class="form-group {{ $errors->has('authorised_rep') ? 'has-error' : '' }}">
-                            <label for="authorised_rep_id">{{ trans('cruds.requestForInformation.fields.authorised_rep') }}</label>
-                            <select class="form-control select2" name="authorised_rep_id" id="authorised_rep_id">
-                                @foreach($authorised_reps as $id => $authorised_rep)
-                                    <option value="{{ $id }}" {{ old('authorised_rep_id') == $id ? 'selected' : '' }}>{{ $authorised_rep }}</option>
-                                @endforeach
-                            </select>
-                            @if($errors->has('authorised_rep'))
-                                <span class="help-block" role="alert">{{ $errors->first('authorised_rep') }}</span>
-                            @endif
-                            <span class="help-block">{{ trans('cruds.requestForInformation.fields.authorised_rep_helper') }}</span>
-                        </div>
-                        <div class="form-group {{ $errors->has('response_organization') ? 'has-error' : '' }}">
-                            <label for="response_organization_id">{{ trans('cruds.requestForInformation.fields.response_organization') }}</label>
-                            <select class="form-control select2" name="response_organization_id" id="response_organization_id">
-                                @foreach($response_organizations as $id => $response_organization)
-                                    <option value="{{ $id }}" {{ old('response_organization_id') == $id ? 'selected' : '' }}>{{ $response_organization }}</option>
-                                @endforeach
-                            </select>
-                            @if($errors->has('response_organization'))
-                                <span class="help-block" role="alert">{{ $errors->first('response_organization') }}</span>
-                            @endif
-                            <span class="help-block">{{ trans('cruds.requestForInformation.fields.response_organization_helper') }}</span>
-                        </div>
-                        <div class="form-group {{ $errors->has('response_date') ? 'has-error' : '' }}">
-                            <label for="response_date">{{ trans('cruds.requestForInformation.fields.response_date') }}</label>
-                            <input class="form-control" type="text" name="response_date" id="response_date" value="{{ old('response_date', '') }}">
-                            @if($errors->has('response_date'))
-                                <span class="help-block" role="alert">{{ $errors->first('response_date') }}</span>
-                            @endif
-                            <span class="help-block">{{ trans('cruds.requestForInformation.fields.response_date_helper') }}</span>
-                        </div>
-                        <div class="form-group {{ $errors->has('file_upload') ? 'has-error' : '' }}">
-                            <label for="file_upload">{{ trans('cruds.requestForInformation.fields.file_upload') }}</label>
-                            <div class="needsclick dropzone" id="file_upload-dropzone">
+                        <div class="form-group {{ $errors->has('attachment_files') ? 'has-error' : '' }}">
+                            <label for="attachment_files">{{ trans('cruds.requestForInformation.fields.attachment_files') }}</label>
+                            <div class="needsclick dropzone" id="attachment_files-dropzone">
                             </div>
-                            @if($errors->has('file_upload'))
-                                <span class="help-block" role="alert">{{ $errors->first('file_upload') }}</span>
+                            @if($errors->has('attachment_files'))
+                                <span class="help-block" role="alert">{{ $errors->first('attachment_files') }}</span>
                             @endif
-                            <span class="help-block">{{ trans('cruds.requestForInformation.fields.file_upload_helper') }}</span>
-                        </div>
-                        <div class="form-group {{ $errors->has('record') ? 'has-error' : '' }}">
-                            <label for="record">{{ trans('cruds.requestForInformation.fields.record') }}</label>
-                            <textarea class="form-control" name="record" id="record">{{ old('record') }}</textarea>
-                            @if($errors->has('record'))
-                                <span class="help-block" role="alert">{{ $errors->first('record') }}</span>
-                            @endif
-                            <span class="help-block">{{ trans('cruds.requestForInformation.fields.record_helper') }}</span>
+                            <span class="help-block">{{ trans('cruds.requestForInformation.fields.attachment_files_helper') }}</span>
                         </div>
                         <div class="form-group">
                             <button class="btn btn-danger" type="submit">
@@ -242,6 +146,70 @@
 @endsection
 
 @section('scripts')
+<script>
+    $(document).ready(function () {
+  function SimpleUploadAdapter(editor) {
+    editor.plugins.get('FileRepository').createUploadAdapter = function(loader) {
+      return {
+        upload: function() {
+          return loader.file
+            .then(function (file) {
+              return new Promise(function(resolve, reject) {
+                // Init request
+                var xhr = new XMLHttpRequest();
+                xhr.open('POST', '/admin/request-for-informations/ckmedia', true);
+                xhr.setRequestHeader('x-csrf-token', window._token);
+                xhr.setRequestHeader('Accept', 'application/json');
+                xhr.responseType = 'json';
+
+                // Init listeners
+                var genericErrorText = `Couldn't upload file: ${ file.name }.`;
+                xhr.addEventListener('error', function() { reject(genericErrorText) });
+                xhr.addEventListener('abort', function() { reject() });
+                xhr.addEventListener('load', function() {
+                  var response = xhr.response;
+
+                  if (!response || xhr.status !== 201) {
+                    return reject(response && response.message ? `${genericErrorText}\n${xhr.status} ${response.message}` : `${genericErrorText}\n ${xhr.status} ${xhr.statusText}`);
+                  }
+
+                  $('form').append('<input type="hidden" name="ck-media[]" value="' + response.id + '">');
+
+                  resolve({ default: response.url });
+                });
+
+                if (xhr.upload) {
+                  xhr.upload.addEventListener('progress', function(e) {
+                    if (e.lengthComputable) {
+                      loader.uploadTotal = e.total;
+                      loader.uploaded = e.loaded;
+                    }
+                  });
+                }
+
+                // Send request
+                var data = new FormData();
+                data.append('upload', file);
+                data.append('crud_id', '{{ $requestForInformation->id ?? 0 }}');
+                xhr.send(data);
+              });
+            })
+        }
+      };
+    }
+  }
+
+  var allEditors = document.querySelectorAll('.ckeditor');
+  for (var i = 0; i < allEditors.length; ++i) {
+    ClassicEditor.create(
+      allEditors[i], {
+        extraPlugins: [SimpleUploadAdapter]
+      }
+    );
+  }
+});
+</script>
+
 <script>
     var uploadedAttachmentFilesMap = {}
 Dropzone.options.attachmentFilesDropzone = {
@@ -297,61 +265,24 @@ Dropzone.options.attachmentFilesDropzone = {
          return _results
      }
 }
-</script>
-<script>
-    var uploadedFileUploadMap = {}
-Dropzone.options.fileUploadDropzone = {
-    url: '{{ route('admin.request-for-informations.storeMedia') }}',
-    maxFilesize: 500, // MB
-    addRemoveLinks: true,
-    headers: {
-      'X-CSRF-TOKEN': "{{ csrf_token() }}"
-    },
-    params: {
-      size: 500
-    },
-    success: function (file, response) {
-      $('form').append('<input type="hidden" name="file_upload[]" value="' + response.name + '">')
-      uploadedFileUploadMap[file.name] = response.name
-    },
-    removedfile: function (file) {
-      file.previewElement.remove()
-      var name = ''
-      if (typeof file.file_name !== 'undefined') {
-        name = file.file_name
-      } else {
-        name = uploadedFileUploadMap[file.name]
-      }
-      $('form').find('input[name="file_upload[]"][value="' + name + '"]').remove()
-    },
-    init: function () {
-@if(isset($requestForInformation) && $requestForInformation->file_upload)
-          var files =
-            {!! json_encode($requestForInformation->file_upload) !!}
-              for (var i in files) {
-              var file = files[i]
-              this.options.addedfile.call(this, file)
-              file.previewElement.classList.add('dz-complete')
-              $('form').append('<input type="hidden" name="file_upload[]" value="' + file.file_name + '">')
-            }
-@endif
-    },
-     error: function (file, response) {
-         if ($.type(response) === 'string') {
-             var message = response //dropzone sends it's own error messages in string
-         } else {
-             var message = response.errors.file
-         }
-         file.previewElement.classList.add('dz-error')
-         _ref = file.previewElement.querySelectorAll('[data-dz-errormessage]')
-         _results = []
-         for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-             node = _ref[_i]
-             _results.push(node.textContent = message)
-         }
 
-         return _results
-     }
-}
+    $('.wbslv3').change(function(){
+        if($(this).val() != ''){
+            var select = $(this).val();
+            console.log(select);
+            var _token = $('input[name="_token"]').val();
+            $.ajax({
+                url:"{{ route('admin.rfas.fetch') }}",
+                method:"POST",
+                data:{select:select , _token:_token},
+                success:function(result){
+                    //Action
+
+                    $('.wbslv4').html(result);
+                    console.log(result);
+                }
+            })
+        }
+    });
 </script>
 @endsection

@@ -31,14 +31,30 @@ class RequestForInformation extends Model implements HasMedia
         'deleted_at',
     ];
 
+    const DOCUMENT_STATUS_SELECT = [
+        '1' => 'New',
+        '2' => 'Done (CSC Reviewed)',
+        '3' => 'Refer to SRT',
+        '4' => 'Done (SRT Reviewed)',
+    ];
+
+    const SAVE_FOR_SELECT = [
+        'Save and Close' => 'บันทึกเพื่อปิด',
+        'Save'           => 'บันทึกเพื่อส่งเรื่องต่อไปยัง SRT',
+    ];
+
     protected $fillable = [
+        'document_status',
         'to_organization',
         'attention_name',
-        'document_no',
         'construction_contract_id',
-        'date',
         'title',
+        'document_no',
+        'originator_code',
+        'date',
         'to_id',
+        'wbs_level_4_id',
+        'wbs_level_5_id',
         'discipline',
         'originator_name',
         'cc_to',
@@ -47,22 +63,26 @@ class RequestForInformation extends Model implements HasMedia
         'description',
         'attachment_file_description',
         'request_by_id',
-        'outgoing_no',
         'outgoing_date',
-        'response',
+        'outgoing_no',
         'authorised_rep_id',
         'response_organization_id',
         'response_date',
         'record',
+        'response',
         'created_at',
+        'save_for',
         'updated_at',
         'deleted_at',
         'team_id',
+        'document_type_id',
+
     ];
 
     public function registerMediaConversions(Media $media = null)
     {
-        $this->addMediaConversion('thumb')->width(50)->height(50);
+        $this->addMediaConversion('thumb')->fit('crop', 50, 50);
+        $this->addMediaConversion('preview')->fit('crop', 120, 120);
     }
 
     public function construction_contract()
@@ -83,6 +103,16 @@ class RequestForInformation extends Model implements HasMedia
     public function to()
     {
         return $this->belongsTo(Team::class, 'to_id');
+    }
+
+    public function wbs_level_4()
+    {
+        return $this->belongsTo(WbsLevelThree::class, 'wbs_level_4_id');
+    }
+
+    public function wbs_level_5()
+    {
+        return $this->belongsTo(Wbslevelfour::class, 'wbs_level_5_id');
     }
 
     public function getIncomingDateAttribute($value)
@@ -134,7 +164,13 @@ class RequestForInformation extends Model implements HasMedia
     {
         return $this->belongsTo(Team::class, 'team_id');
     }
-    
+
+    public function document_type()
+    {
+        return $this->belongsTo(Rfatype::class, 'document_type_id');
+    }
+
+
     public function create_by_construction_contract_id()
     {
         return $this->belongsTo(ConstructionContract::class, 'construction_contract_id');

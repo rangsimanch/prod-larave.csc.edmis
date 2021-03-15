@@ -5,33 +5,32 @@ namespace App\Http\Requests;
 use App\RequestForInformation;
 use Gate;
 use Illuminate\Foundation\Http\FormRequest;
-use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Http\Response;
 
 class UpdateRequestForInformationRequest extends FormRequest
 {
     public function authorize()
     {
-        abort_if(Gate::denies('request_for_information_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
-        return true;
+        return Gate::allows('request_for_information_edit');
     }
 
     public function rules()
     {
         return [
-            'date'          => [
+            'originator_code' => [
+                'string',
+                'nullable',
+            ],
+            'outgoing_date'   => [
                 'date_format:' . config('panel.date_format'),
                 'nullable',
             ],
-            'title'         => [
-                'required',
-            ],
-            'incoming_date' => [
-                'date_format:' . config('panel.date_format'),
+            'outgoing_no'     => [
+                'string',
                 'nullable',
             ],
-            'outgoing_date' => [
-                'date_format:' . config('panel.date_format'),
+            'response_date'   => [
+                'string',
                 'nullable',
             ],
         ];

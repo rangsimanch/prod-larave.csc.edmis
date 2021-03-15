@@ -19,26 +19,10 @@
                             <tbody>
                                 <tr>
                                     <th>
-                                        {{ trans('cruds.requestForInformation.fields.to_organization') }}
+                                        {{ trans('cruds.requestForInformation.fields.document_status') }}
                                     </th>
                                     <td>
-                                        {{ $requestForInformation->to_organization }}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th>
-                                        {{ trans('cruds.requestForInformation.fields.attention_name') }}
-                                    </th>
-                                    <td>
-                                        {{ $requestForInformation->attention_name }}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th>
-                                        {{ trans('cruds.requestForInformation.fields.document_no') }}
-                                    </th>
-                                    <td>
-                                        {{ $requestForInformation->document_no }}
+                                        {{ App\RequestForInformation::DOCUMENT_STATUS_SELECT[$requestForInformation->document_status] ?? '' }}
                                     </td>
                                 </tr>
                                 <tr>
@@ -51,18 +35,34 @@
                                 </tr>
                                 <tr>
                                     <th>
-                                        {{ trans('cruds.requestForInformation.fields.date') }}
-                                    </th>
-                                    <td>
-                                        {{ $requestForInformation->date }}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th>
                                         {{ trans('cruds.requestForInformation.fields.title') }}
                                     </th>
                                     <td>
                                         {{ $requestForInformation->title }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        {{ trans('cruds.requestForInformation.fields.document_no') }}
+                                    </th>
+                                    <td>
+                                        {{ $requestForInformation->document_no }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        {{ trans('cruds.requestForInformation.fields.originator_code') }}
+                                    </th>
+                                    <td>
+                                        {{ $requestForInformation->originator_code }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        {{ trans('cruds.requestForInformation.fields.date') }}
+                                    </th>
+                                    <td>
+                                        {{ $requestForInformation->date }}
                                     </td>
                                 </tr>
                                 <tr>
@@ -75,10 +75,18 @@
                                 </tr>
                                 <tr>
                                     <th>
-                                        {{ trans('cruds.requestForInformation.fields.discipline') }}
+                                        {{ trans('cruds.requestForInformation.fields.wbs_level_4') }}
                                     </th>
                                     <td>
-                                        {{ $requestForInformation->discipline }}
+                                        {{ $requestForInformation->wbs_level_4->wbs_level_3_name ?? '' }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        {{ trans('cruds.requestForInformation.fields.wbs_level_5') }}
+                                    </th>
+                                    <td>
+                                        {{ $requestForInformation->wbs_level_5->wbs_level_4_name ?? '' }}
                                     </td>
                                 </tr>
                                 <tr>
@@ -118,7 +126,7 @@
                                         {{ trans('cruds.requestForInformation.fields.description') }}
                                     </th>
                                     <td>
-                                        {{ $requestForInformation->description }}
+                                        {!! $requestForInformation->description !!}
                                     </td>
                                 </tr>
                                 <tr>
@@ -151,14 +159,6 @@
                                 </tr>
                                 <tr>
                                     <th>
-                                        {{ trans('cruds.requestForInformation.fields.outgoing_no') }}
-                                    </th>
-                                    <td>
-                                        {{ $requestForInformation->outgoing_no }}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th>
                                         {{ trans('cruds.requestForInformation.fields.outgoing_date') }}
                                     </th>
                                     <td>
@@ -167,10 +167,10 @@
                                 </tr>
                                 <tr>
                                     <th>
-                                        {{ trans('cruds.requestForInformation.fields.response') }}
+                                        {{ trans('cruds.requestForInformation.fields.outgoing_no') }}
                                     </th>
                                     <td>
-                                        {{ $requestForInformation->response }}
+                                        {{ $requestForInformation->outgoing_no }}
                                     </td>
                                 </tr>
                                 <tr>
@@ -211,10 +211,10 @@
                                 </tr>
                                 <tr>
                                     <th>
-                                        {{ trans('cruds.requestForInformation.fields.record') }}
+                                        {{ trans('cruds.requestForInformation.fields.save_for') }}
                                     </th>
                                     <td>
-                                        {{ $requestForInformation->record }}
+                                        {{ App\RequestForInformation::SAVE_FOR_SELECT[$requestForInformation->save_for] ?? '' }}
                                     </td>
                                 </tr>
                             </tbody>

@@ -789,7 +789,7 @@ class RfaController extends Controller
             $data['rfa_code'] = 'RFA' . '/' . $const_code . '/' .  $doc_number;
             // Document Number
 //            $data['document_number'] = 'HSR1/' . $const_code . $workcode  . '/' . $wbs3code . '/' . $wbs4code . '/' . $typecode . '/' . $code_date . '/' . $doc_number; 
-            $data['document_number'] = 'HSR1/' . $const_code . '/' . $wbs3code . '/' . $wbs4code . '/' . $typecode . '/' . $code_date . '/' . $doc_number; 
+            $data['document_number'] = 'HSR1/' . $const_code . '/' . 'RFA' . '/' . $wbs3code . '/' . $wbs4code . '/' . $typecode . '/' . $code_date . '/' . $doc_number; 
 
         }
         else{

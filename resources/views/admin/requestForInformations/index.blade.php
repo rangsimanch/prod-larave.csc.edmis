@@ -24,34 +24,34 @@
 
                                 </th>
                                 <th>
-                                    {{ trans('cruds.requestForInformation.fields.to_organization') }}
-                                </th>
-                                <th>
-                                    {{ trans('cruds.requestForInformation.fields.attention_name') }}
-                                </th>
-                                <th>
-                                    {{ trans('cruds.requestForInformation.fields.document_no') }}
+                                    {{ trans('cruds.requestForInformation.fields.document_status') }}
                                 </th>
                                 <th>
                                     {{ trans('cruds.requestForInformation.fields.construction_contract') }}
                                 </th>
                                 <th>
-                                    {{ trans('cruds.requestForInformation.fields.date') }}
+                                    {{ trans('cruds.requestForInformation.fields.title') }}
                                 </th>
                                 <th>
-                                    {{ trans('cruds.requestForInformation.fields.title') }}
+                                    {{ trans('cruds.requestForInformation.fields.document_no') }}
+                                </th>
+                                <th>
+                                    {{ trans('cruds.requestForInformation.fields.originator_code') }}
+                                </th>
+                                <th>
+                                    {{ trans('cruds.requestForInformation.fields.date') }}
                                 </th>
                                 <th>
                                     {{ trans('cruds.requestForInformation.fields.to') }}
                                 </th>
                                 <th>
-                                    {{ trans('cruds.requestForInformation.fields.discipline') }}
+                                    {{ trans('cruds.requestForInformation.fields.wbs_level_4') }}
+                                </th>
+                                <th>
+                                    {{ trans('cruds.requestForInformation.fields.wbs_level_5') }}
                                 </th>
                                 <th>
                                     {{ trans('cruds.requestForInformation.fields.originator_name') }}
-                                </th>
-                                <th>
-                                    {{ trans('cruds.requestForInformation.fields.cc_to') }}
                                 </th>
                                 <th>
                                     {{ trans('cruds.requestForInformation.fields.incoming_no') }}
@@ -60,25 +60,16 @@
                                     {{ trans('cruds.requestForInformation.fields.incoming_date') }}
                                 </th>
                                 <th>
-                                    {{ trans('cruds.requestForInformation.fields.description') }}
-                                </th>
-                                <th>
-                                    {{ trans('cruds.requestForInformation.fields.attachment_file_description') }}
-                                </th>
-                                <th>
                                     {{ trans('cruds.requestForInformation.fields.attachment_files') }}
                                 </th>
                                 <th>
                                     {{ trans('cruds.requestForInformation.fields.request_by') }}
                                 </th>
                                 <th>
-                                    {{ trans('cruds.requestForInformation.fields.outgoing_no') }}
-                                </th>
-                                <th>
                                     {{ trans('cruds.requestForInformation.fields.outgoing_date') }}
                                 </th>
                                 <th>
-                                    {{ trans('cruds.requestForInformation.fields.response') }}
+                                    {{ trans('cruds.requestForInformation.fields.outgoing_no') }}
                                 </th>
                                 <th>
                                     {{ trans('cruds.requestForInformation.fields.authorised_rep') }}
@@ -93,9 +84,6 @@
                                     {{ trans('cruds.requestForInformation.fields.file_upload') }}
                                 </th>
                                 <th>
-                                    {{ trans('cruds.requestForInformation.fields.record') }}
-                                </th>
-                                <th>
                                     &nbsp;
                                 </th>
                             </tr>
@@ -103,13 +91,12 @@
                                 <td>
                                 </td>
                                 <td>
-                                    <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                                </td>
-                                <td>
-                                    <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                                </td>
-                                <td>
-                                    <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                                    <select class="search" strict="true">
+                                        <option value>{{ trans('global.all') }}</option>
+                                        @foreach(App\RequestForInformation::DOCUMENT_STATUS_SELECT as $key => $item)
+                                            <option value="{{ $key }}">{{ $item }}</option>
+                                        @endforeach
+                                    </select>
                                 </td>
                                 <td>
                                     <select class="search">
@@ -120,9 +107,70 @@
                                     </select>
                                 </td>
                                 <td>
+                                    <input class="search" type="text" placeholder="{{ trans('global.search') }}">
                                 </td>
                                 <td>
                                     <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                                </td>
+                                <td>
+                                    <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                                </td>
+                                <td>
+                                </td>
+                                <td>
+                                    <select class="search">
+                                        <option value>{{ trans('global.all') }}</option>
+                                        @foreach($teams as $key => $item)
+                                            <option value="{{ $item->code }}">{{ $item->code }}</option>
+                                        @endforeach
+                                    </select>
+                                </td>
+                                <td>
+                                    <select class="search">
+                                        <option value>{{ trans('global.all') }}</option>
+                                        @foreach($wbs_level_threes as $key => $item)
+                                            <option value="{{ $item->wbs_level_3_name }}">{{ $item->wbs_level_3_name }}</option>
+                                        @endforeach
+                                    </select>
+                                </td>
+                                <td>
+                                    <select class="search">
+                                        <option value>{{ trans('global.all') }}</option>
+                                        @foreach($wbslevelfours as $key => $item)
+                                            <option value="{{ $item->wbs_level_4_name }}">{{ $item->wbs_level_4_name }}</option>
+                                        @endforeach
+                                    </select>
+                                </td>
+                                <td>
+                                    <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                                </td>
+                                <td>
+                                    <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                                </td>
+                                <td>
+                                </td>
+                                <td>
+                                </td>
+                                <td>
+                                    <select class="search">
+                                        <option value>{{ trans('global.all') }}</option>
+                                        @foreach($users as $key => $item)
+                                            <option value="{{ $item->name }}">{{ $item->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </td>
+                                <td>
+                                </td>
+                                <td>
+                                    <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                                </td>
+                                <td>
+                                    <select class="search">
+                                        <option value>{{ trans('global.all') }}</option>
+                                        @foreach($users as $key => $item)
+                                            <option value="{{ $item->name }}">{{ $item->name }}</option>
+                                        @endforeach
+                                    </select>
                                 </td>
                                 <td>
                                     <select class="search">
@@ -136,63 +184,6 @@
                                     <input class="search" type="text" placeholder="{{ trans('global.search') }}">
                                 </td>
                                 <td>
-                                    <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                                </td>
-                                <td>
-                                    <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                                </td>
-                                <td>
-                                    <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                                </td>
-                                <td>
-                                </td>
-                                <td>
-                                    <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                                </td>
-                                <td>
-                                    <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                                </td>
-                                <td>
-                                </td>
-                                <td>
-                                    <select class="search">
-                                        <option value>{{ trans('global.all') }}</option>
-                                        @foreach($users as $key => $item)
-                                            <option value="{{ $item->name }}">{{ $item->name }}</option>
-                                        @endforeach
-                                    </select>
-                                </td>
-                                <td>
-                                    <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                                </td>
-                                <td>
-                                </td>
-                                <td>
-                                    <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                                </td>
-                                <td>
-                                    <select class="search">
-                                        <option value>{{ trans('global.all') }}</option>
-                                        @foreach($users as $key => $item)
-                                            <option value="{{ $item->name }}">{{ $item->name }}</option>
-                                        @endforeach
-                                    </select>
-                                </td>
-                                <td>
-                                    <select class="search">
-                                        <option value>{{ trans('global.all') }}</option>
-                                        @foreach($teams as $key => $item)
-                                            <option value="{{ $item->code }}">{{ $item->code }}</option>
-                                        @endforeach
-                                    </select>
-                                </td>
-                                <td>
-                                    <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                                </td>
-                                <td>
-                                </td>
-                                <td>
-                                    <input class="search" type="text" placeholder="{{ trans('global.search') }}">
                                 </td>
                                 <td>
                                 </td>
@@ -252,49 +243,59 @@
     ajax: "{{ route('admin.request-for-informations.index') }}",
     columns: [
       { data: 'placeholder', name: 'placeholder' },
-{ data: 'to_organization', name: 'to_organization' },
-{ data: 'attention_name', name: 'attention_name' },
-{ data: 'document_no', name: 'document_no' },
+{ data: 'document_status', name: 'document_status' },
 { data: 'construction_contract_code', name: 'construction_contract.code' },
-{ data: 'date', name: 'date' },
 { data: 'title', name: 'title' },
+{ data: 'document_no', name: 'document_no' },
+{ data: 'originator_code', name: 'originator_code' },
+{ data: 'date', name: 'date' },
 { data: 'to_code', name: 'to.code' },
-{ data: 'discipline', name: 'discipline' },
+{ data: 'wbs_level_4_wbs_level_3_name', name: 'wbs_level_4.wbs_level_3_name' },
+{ data: 'wbs_level_5_wbs_level_4_name', name: 'wbs_level_5.wbs_level_4_name' },
 { data: 'originator_name', name: 'originator_name' },
-{ data: 'cc_to', name: 'cc_to' },
 { data: 'incoming_no', name: 'incoming_no' },
 { data: 'incoming_date', name: 'incoming_date' },
-{ data: 'description', name: 'description' },
-{ data: 'attachment_file_description', name: 'attachment_file_description' },
 { data: 'attachment_files', name: 'attachment_files', sortable: false, searchable: false },
 { data: 'request_by_name', name: 'request_by.name' },
-{ data: 'outgoing_no', name: 'outgoing_no' },
 { data: 'outgoing_date', name: 'outgoing_date' },
-{ data: 'response', name: 'response' },
+{ data: 'outgoing_no', name: 'outgoing_no' },
 { data: 'authorised_rep_name', name: 'authorised_rep.name' },
 { data: 'response_organization_code', name: 'response_organization.code' },
 { data: 'response_date', name: 'response_date' },
 { data: 'file_upload', name: 'file_upload', sortable: false, searchable: false },
-{ data: 'record', name: 'record' },
 { data: 'actions', name: '{{ trans('global.actions') }}' }
     ],
     orderCellsTop: true,
-    order: [[ 5, 'desc' ]],
+    order: [[ 6, 'desc' ]],
     pageLength: 10,
   };
   let table = $('.datatable-RequestForInformation').DataTable(dtOverrideGlobals);
-  $('a[data-toggle="tab"]').on('shown.bs.tab', function(e){
+  $('a[data-toggle="tab"]').on('shown.bs.tab click', function(e){
       $($.fn.dataTable.tables(true)).DataTable()
           .columns.adjust();
   });
-  $('.datatable thead').on('input', '.search', function () {
+  
+let visibleColumnsIndexes = null;
+$('.datatable thead').on('input', '.search', function () {
       let strict = $(this).attr('strict') || false
       let value = strict && this.value ? "^" + this.value + "$" : this.value
+
+      let index = $(this).parent().index()
+      if (visibleColumnsIndexes !== null) {
+        index = visibleColumnsIndexes[index]
+      }
+
       table
-        .column($(this).parent().index())
+        .column(index)
         .search(value, strict)
         .draw()
   });
+table.on('column-visibility.dt', function(e, settings, column, state) {
+      visibleColumnsIndexes = []
+      table.columns(":visible").every(function(colIdx) {
+          visibleColumnsIndexes.push(colIdx);
+      });
+  })
 });
 
 </script>

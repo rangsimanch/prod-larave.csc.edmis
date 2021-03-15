@@ -405,6 +405,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::delete('request-for-informations/destroy', 'RequestForInformationController@massDestroy')->name('request-for-informations.massDestroy');
     Route::post('request-for-informations/media', 'RequestForInformationController@storeMedia')->name('request-for-informations.storeMedia');
     Route::post('request-for-informations/ckmedia', 'RequestForInformationController@storeCKEditorImages')->name('request-for-informations.storeCKEditorImages');
+    Route::post('request-for-informations/selectWBS','RequestForInformationController@selectWBS')->name('request-for-informations.selectWBS');
     Route::resource('request-for-informations', 'RequestForInformationController');
 
     // Site Warning Notices

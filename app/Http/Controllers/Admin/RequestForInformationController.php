@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use Illuminate\Support\Facades\Auth;
 use App\ConstructionContract;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Traits\MediaUploadingTrait;
@@ -11,14 +12,14 @@ use App\Http\Requests\UpdateRequestForInformationRequest;
 use App\RequestForInformation;
 use App\Team;
 use App\User;
+use App\Rfatype;
+use App\Wbslevelfour;
+use App\WbsLevelThree;
 use Gate;
 use Illuminate\Http\Request;
 use Spatie\MediaLibrary\Models\Media;
 use Symfony\Component\HttpFoundation\Response;
 use Yajra\DataTables\Facades\DataTables;
-
-use Illuminate\Support\Facades\Auth;
-
 
 class RequestForInformationController extends Controller
 {
@@ -29,7 +30,7 @@ class RequestForInformationController extends Controller
         abort_if(Gate::denies('request_for_information_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
-            $query = RequestForInformation::with(['construction_contract', 'to', 'request_by', 'authorised_rep', 'response_organization', 'team'])->select(sprintf('%s.*', (new RequestForInformation)->table));
+            $query = RequestForInformation::with(['construction_contract', 'to', 'wbs_level_4', 'wbs_level_5', 'request_by', 'authorised_rep', 'response_organization', 'team'])->select(sprintf('%s.*', (new RequestForInformation)->table));
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
@@ -50,14 +51,8 @@ class RequestForInformationController extends Controller
                 ));
             });
 
-            $table->editColumn('to_organization', function ($row) {
-                return $row->to_organization ? $row->to_organization : "";
-            });
-            $table->editColumn('attention_name', function ($row) {
-                return $row->attention_name ? $row->attention_name : "";
-            });
-            $table->editColumn('document_no', function ($row) {
-                return $row->document_no ? $row->document_no : "";
+            $table->editColumn('document_status', function ($row) {
+                return $row->document_status ? RequestForInformation::DOCUMENT_STATUS_SELECT[$row->document_status] : '';
             });
             $table->addColumn('construction_contract_code', function ($row) {
                 return $row->construction_contract ? $row->construction_contract->code : '';
@@ -66,29 +61,32 @@ class RequestForInformationController extends Controller
             $table->editColumn('title', function ($row) {
                 return $row->title ? $row->title : "";
             });
+            $table->editColumn('document_no', function ($row) {
+                return $row->document_no ? $row->document_no : "";
+            });
+            $table->editColumn('originator_code', function ($row) {
+                return $row->originator_code ? $row->originator_code : "";
+            });
+
             $table->addColumn('to_code', function ($row) {
                 return $row->to ? $row->to->code : '';
             });
 
-            $table->editColumn('discipline', function ($row) {
-                return $row->discipline ? $row->discipline : "";
+            $table->addColumn('wbs_level_4_wbs_level_3_name', function ($row) {
+                return $row->wbs_level_4 ? $row->wbs_level_4->wbs_level_3_name : '';
             });
+
+            $table->addColumn('wbs_level_5_wbs_level_4_name', function ($row) {
+                return $row->wbs_level_5 ? $row->wbs_level_5->wbs_level_4_name : '';
+            });
+
             $table->editColumn('originator_name', function ($row) {
                 return $row->originator_name ? $row->originator_name : "";
-            });
-            $table->editColumn('cc_to', function ($row) {
-                return $row->cc_to ? $row->cc_to : "";
             });
             $table->editColumn('incoming_no', function ($row) {
                 return $row->incoming_no ? $row->incoming_no : "";
             });
 
-            $table->editColumn('description', function ($row) {
-                return $row->description ? $row->description : "";
-            });
-            $table->editColumn('attachment_file_description', function ($row) {
-                return $row->attachment_file_description ? $row->attachment_file_description : "";
-            });
             $table->editColumn('attachment_files', function ($row) {
                 if (!$row->attachment_files) {
                     return '';
@@ -108,10 +106,6 @@ class RequestForInformationController extends Controller
 
             $table->editColumn('outgoing_no', function ($row) {
                 return $row->outgoing_no ? $row->outgoing_no : "";
-            });
-
-            $table->editColumn('response', function ($row) {
-                return $row->response ? $row->response : "";
             });
             $table->addColumn('authorised_rep_name', function ($row) {
                 return $row->authorised_rep ? $row->authorised_rep->name : '';
@@ -137,31 +131,43 @@ class RequestForInformationController extends Controller
 
                 return implode(', ', $links);
             });
-            $table->editColumn('record', function ($row) {
-                return $row->record ? $row->record : "";
-            });
 
-            $table->rawColumns(['actions', 'placeholder', 'construction_contract', 'to', 'attachment_files', 'request_by', 'authorised_rep', 'response_organization', 'file_upload']);
+            $table->rawColumns(['actions', 'placeholder', 'construction_contract', 'to', 'wbs_level_4', 'wbs_level_5', 'attachment_files', 'request_by', 'authorised_rep', 'response_organization', 'file_upload']);
 
             return $table->make(true);
         }
 
         $construction_contracts = ConstructionContract::get();
         $teams                  = Team::get();
+        $wbs_level_threes       = WbsLevelThree::get();
+        $wbslevelfours          = Wbslevelfour::get();
         $users                  = User::get();
-        $users                  = User::get();
-        $teams                  = Team::get();
-        $teams                  = Team::get();
 
-        return view('admin.requestForInformations.index', compact('construction_contracts', 'teams', 'users', 'users', 'teams', 'teams'));
+        return view('admin.requestForInformations.index', compact('construction_contracts', 'teams', 'wbs_level_threes', 'wbslevelfours', 'users'));
     }
+
+    function selectWBS(Request $request){
+        $id = $request->get('select');
+        $result = array();
+        $query = DB::table('wbs_level_threes')
+        ->join('wbslevelfours','wbs_level_threes.id','=','wbslevelfours.wbs_level_three_id')
+        ->select('wbslevelfours.wbs_level_4_name','wbslevelfours.id')
+        ->where('wbs_level_threes.id',$id)
+        ->groupBy('wbslevelfours.wbs_level_4_name','wbslevelfours.id')
+        ->orderBy('wbs_level_4_name')
+        ->get();
+        $output = '<option value="">' . trans('global.pleaseSelect') . '</option>';
+        foreach ($query as $row){
+            $output .= '<option value="'. $row->id .'">'. $row->wbs_level_4_name .'</option>';
+        }
+        echo $output;
+    }
+
 
     public function create()
     {
         abort_if(Gate::denies('request_for_information_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        //Contract Check
-            //Check is Admin
         if(Auth::id() != 1){
             $construction_contracts = ConstructionContract::where('id',session('construction_contract_id'))->pluck('code', 'id')->prepend(trans('global.pleaseSelect'), '');
         }
@@ -171,25 +177,65 @@ class RequestForInformationController extends Controller
 
         $tos = Team::all()->pluck('code', 'id')->prepend(trans('global.pleaseSelect'), '');
 
+        $wbs_level_4s = WbsLevelThree::all()->pluck('wbs_level_3_name', 'id')->prepend(trans('global.pleaseSelect'), '');
+
+        $wbs_level_5s = Wbslevelfour::all()->pluck('wbs_level_4_name', 'id')->prepend(trans('global.pleaseSelect'), '');
+
+        $document_types = Rfatype::all()->pluck('type_code', 'id')->prepend(trans('global.pleaseSelect'), '');
+
         $request_bies = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $authorised_reps = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $response_organizations = Team::all()->pluck('code', 'id')->prepend(trans('global.pleaseSelect'), '');
-
-        return view('admin.requestForInformations.create', compact('construction_contracts', 'tos', 'request_bies', 'authorised_reps', 'response_organizations'));
+        return view('admin.requestForInformations.create', compact('construction_contracts', 'tos', 'wbs_level_4s', 'wbs_level_5s', 'request_bies', 'document_types'));
     }
 
     public function store(StoreRequestForInformationRequest $request)
     {
-        $requestForInformation = RequestForInformation::create($request->all());
+
+        $data = $request->all();
+
+        $data['document_status'] = 1;
+        $data['to_organization'] = 'Consortium of CRIC and CRDC';
+        $data['attention_name'] = 'ผู้จัดการโครงการ/Project Manager (CSC)';
+
+        $cur_date = date("ymd");
+        $code_year = substr($cur_date,0,2);
+        $code_mouth = substr($cur_date,2,2);
+        $code_date = $code_year . "-" . $code_mouth;
+
+        //WBS3,4 Code
+        $wbs4code = WbsLevelThree::where('id','=',$request->wbs_level_4_id)->value('wbs_level_3_code');
+        $wbs5code = Wbslevelfour::where('id','=',$request->wbs_level_5_id)->value('wbs_level_4_code');
+            //Type Doc. Code
+        $typecode = Rfatype::where('id','=',$request->document_type_id)->value('type_code');
+            //ConstructionContart
+        $const_code = ConstructionContract::where('id','=',$request->construction_contract_id)->value('code');
+
+        $data['incoming_date'] = $request->date;
+        $data['document_no'] = 'HSR1/'. $const_code . '/' . 'RFI' . '/' 
+                                . $wbs4code . '/' . $wbs5code
+                                . '/' . $typecode . '/' . $code_date . '/' . substr($data['originator_code'],-4);
+
+
+         //WBS3,4 Name
+         $wbs4name = WbsLevelThree::where('id','=',$request->wbs_level_4_id)->value('wbs_level_3_name');
+         $wbs5name = Wbslevelfour::where('id','=',$request->wbs_level_5_id)->value('wbs_level_4_name');
+                         
+        if($request->wbs_level_4_id != ''){
+            $data['discipline'] = '1.' . $wbs4name;
+            if($request->wbs_level_5_id != ''){
+                $data['discipline'] = $data['discipline'] . ' 2.' . $wbs5name;
+            }
+        }
+
+        $requestForInformation = RequestForInformation::create($data);
 
         foreach ($request->input('attachment_files', []) as $file) {
-            $requestForInformation->addMedia(storage_path('tmp/uploads/' . $file))->toMediaCollection('attachment_files');
+            $requestForInformation->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('attachment_files');
         }
 
         foreach ($request->input('file_upload', []) as $file) {
-            $requestForInformation->addMedia(storage_path('tmp/uploads/' . $file))->toMediaCollection('file_upload');
+            $requestForInformation->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('file_upload');
         }
 
         if ($media = $request->input('ck-media', false)) {
@@ -203,61 +249,36 @@ class RequestForInformationController extends Controller
     {
         abort_if(Gate::denies('request_for_information_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        //Contract Check
-            //Check is Admin
-            if(Auth::id() != 1){
-                $construction_contracts = ConstructionContract::where('id',session('construction_contract_id'))->pluck('code', 'id')->prepend(trans('global.pleaseSelect'), '');
-            }
-            else{
-                $construction_contracts = ConstructionContract::all()->pluck('code', 'id')->prepend(trans('global.pleaseSelect'), '');
-            }
-        
-        $tos = Team::all()->pluck('code', 'id')->prepend(trans('global.pleaseSelect'), '');
-
-        $request_bies = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
-
         $authorised_reps = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $response_organizations = Team::all()->pluck('code', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $requestForInformation->load('construction_contract', 'to', 'request_by', 'authorised_rep', 'response_organization', 'team');
+        $requestForInformation->load('construction_contract', 'to', 'wbs_level_4', 'wbs_level_5', 'request_by', 'authorised_rep', 'response_organization', 'document_type', 'team');
 
-        return view('admin.requestForInformations.edit', compact('construction_contracts', 'tos', 'request_bies', 'authorised_reps', 'response_organizations', 'requestForInformation'));
+        return view('admin.requestForInformations.edit', compact('authorised_reps', 'response_organizations', 'requestForInformation'));
     }
 
     public function update(UpdateRequestForInformationRequest $request, RequestForInformation $requestForInformation)
     {
-        $requestForInformation->update($request->all());
+        $data = $request->all();
 
-        if (count($requestForInformation->attachment_files) > 0) {
-            foreach ($requestForInformation->attachment_files as $media) {
-                if (!in_array($media->file_name, $request->input('attachment_files', []))) {
-                    $media->delete();
-                }
+        $data['incoming_no'] = 'IN-' . $requestForInformation->originator_code;
+        $data['outgoing_no'] = 'OUT-' . $requestForInformation->originator_code;
+
+            if($request->save_for == 'Save and Close'){
+                $data['document_status'] = 2;
             }
-        }
-
-        $media = $requestForInformation->attachment_files->pluck('file_name')->toArray();
-
-        foreach ($request->input('attachment_files', []) as $file) {
-            if (count($media) === 0 || !in_array($file, $media)) {
-                $requestForInformation->addMedia(storage_path('tmp/uploads/' . $file))->toMediaCollection('attachment_files');
+            else{
+                $data['document_status'] = 3;
             }
-        }
-
-        if (count($requestForInformation->file_upload) > 0) {
-            foreach ($requestForInformation->file_upload as $media) {
-                if (!in_array($media->file_name, $request->input('file_upload', []))) {
-                    $media->delete();
-                }
-            }
-        }
-
+        
+        $requestForInformation->update($data);
+        
         $media = $requestForInformation->file_upload->pluck('file_name')->toArray();
 
         foreach ($request->input('file_upload', []) as $file) {
             if (count($media) === 0 || !in_array($file, $media)) {
-                $requestForInformation->addMedia(storage_path('tmp/uploads/' . $file))->toMediaCollection('file_upload');
+                $requestForInformation->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('file_upload');
             }
         }
 
@@ -268,7 +289,7 @@ class RequestForInformationController extends Controller
     {
         abort_if(Gate::denies('request_for_information_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $requestForInformation->load('construction_contract', 'to', 'request_by', 'authorised_rep', 'response_organization', 'team');
+        $requestForInformation->load('construction_contract', 'to', 'wbs_level_4', 'wbs_level_5', 'request_by', 'authorised_rep', 'response_organization', 'document_type', 'team');
 
         return view('admin.requestForInformations.show', compact('requestForInformation'));
     }
