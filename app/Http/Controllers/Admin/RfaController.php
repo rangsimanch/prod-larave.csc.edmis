@@ -1092,7 +1092,7 @@ class RfaController extends Controller
         if($rfa->construction_contract->code == "C3-2"){
             $issue_by = '( ธนนท์ ดอกลัดดา )';
             $issuer_jobtitle = 'ผู้จัดการโครงการ';
-            $issue_position_lf = 273;
+            $issue_position_lf = 269;
             $constructor_name = 'Nawarat Patanakarn Public Company Limited';
             $constructor_code = 'NWR';
             $logo_path =  public_path('png-asset/NWR_logo.png');
@@ -1100,7 +1100,7 @@ class RfaController extends Controller
             $signature_path =  public_path('png-asset/NWR_signature.png');
             $signature_size_h = 55;
             $signature_size_w = 55;
-            $signature_position_top = 380;
+            $signature_position_top = 400;
             $signature_position_left = 280;
             $contract_name = 'Contract ' . $rfa->construction_contract->code . ' : ' . $rfa->construction_contract->name;
 
@@ -1109,7 +1109,7 @@ class RfaController extends Controller
         if($rfa->construction_contract->code == "C3-3"){
             $issue_by = '( กิตติพัฒน์ พฤกษ์ชนัทพงศ์ )';
             $issuer_jobtitle = 'รองผู้จัดการโครงการ';
-            $issue_position_lf = 255;
+            $issue_position_lf = 251;
             $constructor_name = 'Thai Engineers & Industry Company Limited';
             $constructor_code = 'TEI';
             $logo_path = public_path('png-asset/TEI_logo.png');
@@ -1117,7 +1117,7 @@ class RfaController extends Controller
             $signature_path =  public_path('png-asset/TEI_signature.png');
             $signature_size_h = 60;
             $signature_size_w = 60;
-            $signature_position_top = 390;
+            $signature_position_top = 400;
             $signature_position_left = 280;
             $contract_name = 'Contract ' . $rfa->construction_contract->code . ' : ' . $rfa->construction_contract->name;
 
@@ -1126,7 +1126,7 @@ class RfaController extends Controller
         if($rfa->construction_contract->code == "C3-4"){
             $issue_by = '( มฆา  อัศวราชันย )';
             $issuer_jobtitle = 'ผู้จัดการโครงการ';
-            $issue_position_lf = 273;
+            $issue_position_lf = 269;
             $constructor_name = 'Italian-Thai Development PLC';
             $constructor_code = 'ITD';
             $logo_path = public_path('png-asset/ITD_logo.png');
@@ -1134,7 +1134,7 @@ class RfaController extends Controller
             $signature_path =  public_path('png-asset/ITD_signature.png');
             $signature_size_h = 60;
             $signature_size_w = 60;
-            $signature_position_top = 390;
+            $signature_position_top = 394;
             $signature_position_left = 280;
             $contract_name = 'Contract ' . $rfa->construction_contract->code . ' : ' . $rfa->construction_contract->name;
 
@@ -1143,7 +1143,7 @@ class RfaController extends Controller
         if($rfa->construction_contract->code == "C3-5"){
             $issue_by = '( Narutchai Sammawijitra )';
             $issuer_jobtitle = 'ผู้จัดการโครงการ';
-            $issue_position_lf = 253;
+            $issue_position_lf = 250;
             $constructor_name = 'SPTK Joint Venture Company Limited';
             $constructor_code = 'SPTK';
             $logo_path =  public_path('png-asset/SPTK_stamp.png');
@@ -1152,7 +1152,7 @@ class RfaController extends Controller
             $signature_size_h = 60;
             $signature_size_w = 60;
             $signature_position_top = 410;
-            $signature_position_left = 278;
+            $signature_position_left = 275;
             $contract_name = 'Contract ' . $rfa->construction_contract->code . ' : ' . $rfa->construction_contract->name;
 
         }
@@ -1160,15 +1160,15 @@ class RfaController extends Controller
         if($rfa->construction_contract->code == "C4-7"){
             $issue_by = '( สุทิน สังข์หิรัญ )';
             $issuer_jobtitle = 'ผู้จัดการโครงการ';
-            $issue_position_lf = 273;
+            $issue_position_lf = 269;
             $constructor_name = 'Civil Enginneering Public Company Limited';
             $constructor_code = 'CIVIL';
             $logo_path = public_path('png-asset/CIVIL_logo.png');
             $stamp_path =  public_path('png-asset/CIVIL_stamp.png');
             $signature_path =  public_path('png-asset/CIVIL_signature.png');
-            $signature_size_h = 55;
-            $signature_size_w = 55;
-            $signature_position_top = 390;
+            $signature_size_h = 50;
+            $signature_size_w = 50;
+            $signature_position_top = 400;
             $signature_position_left = 278;
             $contract_name = 'Contract ' . $rfa->construction_contract->code . ' : ' . $rfa->construction_contract->name;
 
