@@ -7,6 +7,13 @@ use Gate;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
+use App\AddLetter;
+use App\ConstructionContract;
+use App\Team;
+use App\User;
+use Yajra\DataTables\Facades\DataTables;
+use Spatie\MediaLibrary\Models\Media;
+
 class CivilSentController extends Controller
 {
     public function index(Request $request)
