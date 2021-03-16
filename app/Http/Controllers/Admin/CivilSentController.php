@@ -94,7 +94,7 @@ class CivilSentController extends Controller
         $users                  = User::get();
         $teams                  = Team::get();
         
-        session(['previous-url' => route('admin.civil-sents.index')]);
-        return view('admin.civilSents.index', compact('teams', 'teams', 'teams', 'construction_contracts', 'users', 'users', 'teams'));
+        session(['previous-url' => route('admin.cilvil-sents.index')]);
+        return view('admin.civlilSents.index', compact('teams', 'teams', 'teams', 'construction_contracts', 'users', 'users', 'teams'));
     }
 }
