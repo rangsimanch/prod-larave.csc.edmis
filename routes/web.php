@@ -291,7 +291,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
    Route::resource('civil-inboxes', 'CivilInboxController', ['except' => ['create', 'store', 'edit', 'update', 'show', 'destroy']]);
 
    // Civil Sents
-   Route::resource('cilvil-sents', 'CivilSentController', ['except' => ['create', 'store', 'edit', 'update', 'show', 'destroy']]);
+   Route::resource('civil-sents', 'CivilSentController', ['except' => ['create', 'store', 'edit', 'update', 'show', 'destroy']]);
 
    // Tei Inboxes
    Route::resource('tei-inboxes', 'TeiInboxController', ['except' => ['create', 'store', 'edit', 'update', 'show', 'destroy']]);
