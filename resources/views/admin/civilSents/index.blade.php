@@ -168,7 +168,7 @@
     serverSide: true,
     retrieve: true,
     aaSorting: [],
-    ajax: "{{ route('admin.civil-sents.index') }}",
+    ajax: "{{ route('admin.cilvil-sents.index') }}",
     columns: [
       { data: 'placeholder', name: 'placeholder' },
 { data: 'letter_type', name: 'letter_type' },
