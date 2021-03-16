@@ -564,7 +564,7 @@ class RfaController extends Controller
 
         $wbs_level_4s = Wbslevelfour::all()->pluck('wbs_level_4_code', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $issuebies = User::find([91,202,219,162])->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $issuebies = User::find([91,202,219,162,196])->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $assigns = User::where('id',61)->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), ''); //61->Li, 39->Paisan,  62->Liu 
 
@@ -724,7 +724,7 @@ class RfaController extends Controller
 
         $wbs_level_4s = Wbslevelfour::all()->pluck('wbs_level_4_name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $issuebies = User::find([202,91,219,162])->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $issuebies = User::find([202,91,219,162,196])->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $assigns = User::where('id',61)->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), ''); //61->Li, 39->Paisan,  62->Liu 
 
@@ -887,6 +887,7 @@ class RfaController extends Controller
         else{
             $construction_contracts = ConstructionContract::all()->pluck('code', 'id')->prepend(trans('global.pleaseSelect'), '');
         }
+
         if($rfa->document_status_id == 1){
             $action_bies = User::where('team_id',3)->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
             $comment_bies = User::where('team_id',3)->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
@@ -912,6 +913,7 @@ class RfaController extends Controller
 
     public function update(UpdateRfaRequest $request, Rfa $rfa)
     {
+        $data['update_by_user_id'] = auth()->id();
         if($rfa->document_status_id == 1){
             $data['action_by_id'] = $request->action_by_id;
             $data['comment_by_id'] = $request->comment_by_id;
@@ -1073,6 +1075,7 @@ class RfaController extends Controller
 
         if($rfa->construction_contract->code == "C2-1"){
             $issue_by = 'Sitthichai Pimsawat';
+            $issuer_jobtitle = 'ผู้จัดการโครงการ';
             $issue_position_lf = 257;
             $constructor_name = 'Civil Construction Services & Products Company Limited';
             $constructor_code = 'CCSP';
@@ -1082,81 +1085,85 @@ class RfaController extends Controller
             $signature_size_h = 40;
             $signature_size_w = 40;
             $contract_name = 'Contract ' . $rfa->construction_contract->code . ' : ' . $rfa->construction_contract->name;
-
         }
 
         if($rfa->construction_contract->code == "C3-2"){
             $issue_by = 'ธนนท์ ดอกลัดดา';
+            $issuer_jobtitle = 'ผู้จัดการโครงการ';
             $issue_position_lf = 275;
             $constructor_name = 'Nawarat Patanakarn Public Company Limited';
             $constructor_code = 'NWR';
             $logo_path =  public_path('png-asset/NWR_logo.png');
             $stamp_path =  public_path('png-asset/NWR_stamp.png');
             $signature_path =  public_path('png-asset/NWR_signature.png');
-            $signature_size_h = 40;
-            $signature_size_w = 40;
+            $signature_size_h = 60;
+            $signature_size_w = 60;
             $contract_name = 'Contract ' . $rfa->construction_contract->code . ' : ' . $rfa->construction_contract->name;
 
         }
 
         if($rfa->construction_contract->code == "C3-3"){
-            $issue_by = 'พิชัย รัตนาธรรมวัฒน์';
+            $issue_by = 'กิตติพัฒน์ พฤกษ์ชนัทพงศ์';
+            $issuer_jobtitle = 'รองผู้จัดการโครงการ';
             $issue_position_lf = 270;
             $constructor_name = 'Thai Engineers & Industry Company Limited';
             $constructor_code = 'TEI';
             $logo_path = public_path('png-asset/TEI_logo.png');
             $stamp_path =  public_path('png-asset/TEI_stamp.png');
             $signature_path =  public_path('png-asset/TEI_signature.png');
-            $signature_size_h = 40;
-            $signature_size_w = 40;
+            $signature_size_h = 60;
+            $signature_size_w = 60;
             $contract_name = 'Contract ' . $rfa->construction_contract->code . ' : ' . $rfa->construction_contract->name;
 
         }
 
         if($rfa->construction_contract->code == "C3-4"){
             $issue_by = 'มฆา  อัศวราชันย';
+            $issuer_jobtitle = 'ผู้จัดการโครงการ';
             $issue_position_lf = 275;
             $constructor_name = 'Italian-Thai Development PLC';
             $constructor_code = 'ITD';
             $logo_path = public_path('png-asset/ITD_logo.png');
             $stamp_path =  public_path('png-asset/ITD_stamp.png');
             $signature_path =  public_path('png-asset/ITD_signature.png');
-            $signature_size_h = 40;
-            $signature_size_w = 40;
+            $signature_size_h = 60;
+            $signature_size_w = 60;
             $contract_name = 'Contract ' . $rfa->construction_contract->code . ' : ' . $rfa->construction_contract->name;
 
         }
 
         if($rfa->construction_contract->code == "C3-5"){
             $issue_by = 'Narutchai Sammawijitra';
+            $issuer_jobtitle = 'ผู้จัดการโครงการ';
             $issue_position_lf = 257;
             $constructor_name = 'SPTK Joint Venture Company Limited';
             $constructor_code = 'SPTK';
             $logo_path =  public_path('png-asset/SPTK_stamp.png');
             $stamp_path =  public_path('png-asset/SPTK_stamp.png');
             $signature_path =  public_path('png-asset/SPTK_signature.png');
-            $signature_size_h = 50;
-            $signature_size_w = 50;
+            $signature_size_h = 60;
+            $signature_size_w = 60;
             $contract_name = 'Contract ' . $rfa->construction_contract->code . ' : ' . $rfa->construction_contract->name;
 
         }
 
         if($rfa->construction_contract->code == "C4-7"){
             $issue_by = 'สุทิน สังข์หิรัญ';
+            $issuer_jobtitle = 'ผู้จัดการโครงการ';
             $issue_position_lf = 275;
             $constructor_name = 'Civil Enginneering Public Company Limited';
             $constructor_code = 'CIVIL';
             $logo_path = public_path('png-asset/CIVIL_logo.png');
             $stamp_path =  public_path('png-asset/CIVIL_stamp.png');
             $signature_path =  public_path('png-asset/CIVIL_signature.png');
-            $signature_size_h = 40;
-            $signature_size_w = 40;
+            $signature_size_h = 60;
+            $signature_size_w = 60;
             $contract_name = 'Contract ' . $rfa->construction_contract->code . ' : ' . $rfa->construction_contract->name;
 
         }
 
         
-
+        
 
         $bill = $rfa->boq->name ?? '';
         $title_th = $rfa->title ?? '';
@@ -1233,7 +1240,7 @@ class RfaController extends Controller
         $type = $rfa->type->type_code ?? '';
         $num_doc = substr($rfa_code,11,4);
 
-        
+        $receive_by  = $rfa->update_by_user_id->name ?? '';
         $receive_date = $rfa->receive_date ?? '';
 
         $distribute_date = $rfa->distribute_date ?? '' ;
@@ -1259,28 +1266,17 @@ class RfaController extends Controller
                       print "Creating an mPDF object failed with" . $e->getMessage();
                   }
 
-    
+        
+        
           
         //RFA Page
         $pagecount = $mpdf->SetSourceFile(public_path('pdf-asset/RFA-Form_empty_V.2.pdf'));
         $tplId = $mpdf->ImportPage($pagecount);
         $mpdf->UseTemplate($tplId);        
-
-        $html = "<div style=\"font-size: 13px; font-weight: bold; position:absolute;top:84px;left:320px;\">" . $contract_name . "</div>";
-          //Title
-        $html .= "<div style=\"font-size: 12px; position:absolute;top:168px;left:55px;\">" . 'Bill :' . "</div>";
-        $html .= "<div style=\"font-size: 14px; position:absolute;top:168px;left:80px;\">" . $bill . '.' . "</div>";
-
-        $html .= "<div style=\"font-size: 12px; position:absolute;top:184px;left:55px;\">" . 'Title :' . "</div>";
-        $html .= "<div style=\"font-size: 14px; padding-right:240px; position:absolute;top:184px;left:80px; LINE-HEIGHT:16px;\">" 
-        . $title_en . "</div>";
-
-        $html .= "<div style=\"font-size: 12px; position:absolute;top:217px;left:55px;\">" . 'หัวข้อ :' . "</div>";
-        $html .= "<div style=\"font-size: 14px; padding-right:230px; position:absolute;top:217px;left:80px; LINE-HEIGHT:16px;\">" 
-        . $title_th . "</div>";
-
         
-        //Logo Header
+        //Header
+        $html = "<div style=\"font-size: 13px; font-weight: bold; position:absolute;top:84px;left:320px;\">" . $contract_name . "</div>";
+            //Logo
         if($rfa->construction_contract->code != "C4-7"){
             $html .= "<div style=\"font-size: 14px; position:absolute;top:109px;left:690px;\">
                         <img src=\"". $logo_path ."\" width=\"40px\" higth=\"40px\"> </div>";
@@ -1292,39 +1288,57 @@ class RfaController extends Controller
         $html .= "<div style=\"font-size: 13px; position:absolute;top:120px;left:580px;\">" . $constructor_code . '.' . "</div>";
         $html .= "<div style=\"font-size: 13px; position:absolute;top:140px;left:508px;\">" . $constructor_name . '.' . "</div>";
 
+        //Title
+        $html .= "<div style=\"font-size: 12px; position:absolute;top:168px;left:55px;\">" . 'Bill :' . "</div>";
+        $html .= "<div style=\"font-size: 10px; position:absolute;top:170px;left:80px;\">" . $bill . '.' . "</div>";
 
+        $html .= "<div style=\"font-size: 12px; position:absolute;top:184px;left:55px;\">" . 'Title :' . "</div>";
+        $html .= "<div style=\"font-size: 10px; padding-right:240px; position:absolute;top:186px;left:80px; LINE-HEIGHT:16px;\">" 
+        . $title_en . "</div>";
+
+        $html .= "<div style=\"font-size: 12px; position:absolute;top:217px;left:55px;\">" . 'หัวข้อ :' . "</div>";
+        $html .= "<div style=\"font-size: 10px; padding-right:230px; position:absolute;top:219px;left:80px; LINE-HEIGHT:16px;\">" 
+        . $title_th . "</div>";
 
         //No. Code.
         $html .= "<div style=\"font-size: 14px; position:absolute;top:30px;left:650px;\">" . $rfa_code . "</div>";
-        $html .= "<div style=\"font-size: 11px; position:absolute;top:170px;left:477px;\">" . $document_number . "</div>";
-        $html .= "<div style=\"font-size: 11px; position:absolute;top:170px;left:660px;\">" . $rfa_code . "</div>";
+        $html .= "<div style=\"font-size: 10px; position:absolute;top:172px;left:477px;\">" . $document_number . "</div>";
+        $html .= "<div style=\"font-size: 10px; position:absolute;top:172px;left:660px;\">" . $rfa_code . "</div>";
           //Date
-        $html .= "<div style=\"font-size: 14px; position:absolute;top:217px;left:630px;\">" . $submit_date . "</div>";
+        $html .= "<div style=\"font-size: 10px; position:absolute;top:219px;left:630px;\">" . $submit_date . "</div>";
           //Document Name
-        $html .= "<div style=\"font-size: 14px; padding-right:240px; position:absolute;top:269px;left:160px;LINE-HEIGHT:15px;\">" . $document_name . "</div>";
-        $html .= "<div style=\"font-size: 14px; position:absolute;top:265;left:630;\">" . $qty_page . '.' . "</div>";
+        $html .= "<div style=\"font-size: 10px; padding-right:240px; position:absolute;top:271px;left:160px;LINE-HEIGHT:15px;\">" . $document_name . "</div>";
+        $html .= "<div style=\"font-size: 10px; position:absolute;top:267;left:630;\">" . $qty_page . '.' . "</div>";
         
           //WBS Spec.Ref Clase. Contract No.
-        $html .= "<div style=\"font-size: 14px; position:absolute;top:328px;left:225px;\">" . $wbs . "</div>";
-        $html .= "<div style=\"font-size: 14px; position:absolute;top:344px;left:250px;\">" . $spec_ref_no . "</div>";
-        $html .= "<div style=\"font-size: 14px; position:absolute;top:344px;left:630px;\">" . $clause . "</div>";
-        $html .= "<div style=\"font-size: 14px; position:absolute;top:360px;left:210px;\">" . $contract_drawing_no . "</div>";
+        $html .= "<div style=\"font-size: 10px; position:absolute;top:330px;left:225px;\">" . $wbs . "</div>";
+        $html .= "<div style=\"font-size: 10px; position:absolute;top:346px;left:250px;\">" . $spec_ref_no . "</div>";
+        $html .= "<div style=\"font-size: 10px; position:absolute;top:346px;left:630px;\">" . $clause . "</div>";
+        $html .= "<div style=\"font-size: 10px; position:absolute;top:362px;left:210px;\">" . $contract_drawing_no . "</div>";
           //Note
-        $html .= "<div style=\"font-size: 14px; padding-right:180px; position:absolute;top:380px;left:120px;LINE-HEIGHT:15px;\">" 
+        $html .= "<div style=\"font-size: 10px; padding-right:180px; position:absolute;top:382px;left:120px;LINE-HEIGHT:15px;\">" 
         . $note_1 . "</div>";
         
        
-        //Signature
-        $html .= "<div style=\"font-size: 10px; position:absolute;top:435px;left:". $issue_position_lf ."px;\">" . $issue_by . "</div>";
+        //Signature Manager
+        $html .= "<div style=\"font-size: 14px; position:absolute;top:435px;left:". $issue_position_lf ."px;\">" . $issue_by . "</div>";
+        if($issuer_jobtitle == 'ผู้จัดการโครงการ'){
+            $html .= "<div style=\"font-size: 12px; position:absolute;top:450px;left:270px\">" . $issuer_jobtitle . "</div>";
+        }
+        else{
+            $html .= "<div style=\"font-size: 12px; position:absolute;top:450px;left:265px\">" . $issuer_jobtitle . "</div>";
+        }
         $html .= "<div style=\"font-size: 14px; position:absolute;top:410px;left:280px;\">
             <img src=\"". $signature_path ."\" width=\"". $signature_size_w ."\" higth=\"". $signature_size_h ."\"> </div>";
         
         $html .= "<div style=\"font-size: 14px; position:absolute;top:300px;left:400px;\">
-            <img src=\"". $stamp_path ."\" width=\"200px\" higth=\"200px\" style=\"opacity: 0.5;\"> </div>";
+            <img src=\"". $stamp_path ."\" width=\"150px\" higth=\"150px\" style=\"opacity: 0.5;\"> </div>";
+
         
 
         //CSC Incoming 
-        $html .= "<div style=\"font-size: 14px; position:absolute;top:485px;left:477;\">" . $incoming_no . "</div>";
+        $html .= "<div style=\"font-size: 13px; position:absolute;top:486px;left:405;\">ผู้รับ/Receiver :</div>";
+        $html .= "<div style=\"font-size: 14px; position:absolute;top:486px;left:477;\">" . $receive_by . "</div>";
         $html .= "<div style=\"font-size: 14px; position:absolute;top:500px;left:477;\">" . $receive_date . "</div>";
         $html .= "<div style=\"font-size: 14px; padding-right:180px; position:absolute;top:610;left:120px;LINE-HEIGHT:15px;\">" 
         . $note_2 . "</div>";
@@ -1355,7 +1369,8 @@ class RfaController extends Controller
         $html .= "<div style=\"font-size: 13px; position:absolute;top:825;left:530;\">" . $distribute_date . "</div>";
 
         //CSC Outgoing (2)
-        $html .= "<div style=\"font-size: 14px; position:absolute;top:870px;left:477;\">" . $outgoing_number . "</div>";
+        $html .= "<div style=\"font-size: 13px; position:absolute;top:871px;left:405;\">ผู้รับ/Receiver :</div>";
+        $html .= "<div style=\"font-size: 14px; position:absolute;top:871px;left:477;\">" . $receive_by . "</div>";
         $html .= "<div style=\"font-size: 14px; position:absolute;top:885px;left:477;\">" . $outgoing_date . "</div>";
 
 

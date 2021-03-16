@@ -339,8 +339,6 @@ class SrtInputDocumentsController extends Controller
             }
         }
 
-
-
         $pdfMerger = PDFMerger::init();
         $media = $srtInputDocument->file_upload->pluck('file_name')->toArray();
 
@@ -356,53 +354,53 @@ class SrtInputDocumentsController extends Controller
         }
         $srtInputDocument->addMedia(storage_path('tmp/uploads/mergerPdf_01.pdf'))->toMediaCollection('file_upload');
 
-        if (count($srtInputDocument->file_upload_2) > 0) {
-            foreach ($srtInputDocument->file_upload_2 as $media) {
-                if (!in_array($media->file_name, $request->input('file_upload_2', []))) {
-                    $media->delete();
-                }
-            }
-        }
+        // if (count($srtInputDocument->file_upload_2) > 0) {
+        //     foreach ($srtInputDocument->file_upload_2 as $media) {
+        //         if (!in_array($media->file_name, $request->input('file_upload_2', []))) {
+        //             $media->delete();
+        //         }
+        //     }
+        // }
 
-        $media = $srtInputDocument->file_upload_2->pluck('file_name')->toArray();
+        // $media = $srtInputDocument->file_upload_2->pluck('file_name')->toArray();
 
-        foreach ($request->input('file_upload_2', []) as $file) {
-            if (count($media) === 0 || !in_array($file, $media)) {
-                $srtInputDocument->addMedia(storage_path('tmp/uploads/' . $file))->toMediaCollection('file_upload_2');
-            }
-        }
+        // foreach ($request->input('file_upload_2', []) as $file) {
+        //     if (count($media) === 0 || !in_array($file, $media)) {
+        //         $srtInputDocument->addMedia(storage_path('tmp/uploads/' . $file))->toMediaCollection('file_upload_2');
+        //     }
+        // }
 
-        if (count($srtInputDocument->file_upload_3) > 0) {
-            foreach ($srtInputDocument->file_upload_3 as $media) {
-                if (!in_array($media->file_name, $request->input('file_upload_3', []))) {
-                    $media->delete();
-                }
-            }
-        }
+        // if (count($srtInputDocument->file_upload_3) > 0) {
+        //     foreach ($srtInputDocument->file_upload_3 as $media) {
+        //         if (!in_array($media->file_name, $request->input('file_upload_3', []))) {
+        //             $media->delete();
+        //         }
+        //     }
+        // }
 
-        $media = $srtInputDocument->file_upload_3->pluck('file_name')->toArray();
+        // $media = $srtInputDocument->file_upload_3->pluck('file_name')->toArray();
 
-        foreach ($request->input('file_upload_3', []) as $file) {
-            if (count($media) === 0 || !in_array($file, $media)) {
-                $srtInputDocument->addMedia(storage_path('tmp/uploads/' . $file))->toMediaCollection('file_upload_3');
-            }
-        }
+        // foreach ($request->input('file_upload_3', []) as $file) {
+        //     if (count($media) === 0 || !in_array($file, $media)) {
+        //         $srtInputDocument->addMedia(storage_path('tmp/uploads/' . $file))->toMediaCollection('file_upload_3');
+        //     }
+        // }
 
-        if (count($srtInputDocument->file_upload_4) > 0) {
-            foreach ($srtInputDocument->file_upload_4 as $media) {
-                if (!in_array($media->file_name, $request->input('file_upload_4', []))) {
-                    $media->delete();
-                }
-            }
-        }
+        // if (count($srtInputDocument->file_upload_4) > 0) {
+        //     foreach ($srtInputDocument->file_upload_4 as $media) {
+        //         if (!in_array($media->file_name, $request->input('file_upload_4', []))) {
+        //             $media->delete();
+        //         }
+        //     }
+        // }
 
-        $media = $srtInputDocument->file_upload_4->pluck('file_name')->toArray();
+        // $media = $srtInputDocument->file_upload_4->pluck('file_name')->toArray();
 
-        foreach ($request->input('file_upload_4', []) as $file) {
-            if (count($media) === 0 || !in_array($file, $media)) {
-                $srtInputDocument->addMedia(storage_path('tmp/uploads/' . $file))->toMediaCollection('file_upload_4');
-            }
-        }
+        // foreach ($request->input('file_upload_4', []) as $file) {
+        //     if (count($media) === 0 || !in_array($file, $media)) {
+        //         $srtInputDocument->addMedia(storage_path('tmp/uploads/' . $file))->toMediaCollection('file_upload_4');
+        //     }
+        // }
 
 
         return redirect()->route('admin.srt-input-documents.index');
