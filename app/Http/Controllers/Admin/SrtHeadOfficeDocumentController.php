@@ -70,7 +70,7 @@ class SrtHeadOfficeDocumentController extends Controller
                             $links[] = '<a href="' . $media->getUrl() . '" target="_blank">' . $refer_doc . '</a>';
                         }
 
-                        return implode(', ', $links ? $link: "");
+                        return implode(', ', $links ?? '');
                     });
 
             // $table->addColumn('refer_documents_document_number', function ($row) {
