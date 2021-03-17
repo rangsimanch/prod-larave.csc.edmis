@@ -123,7 +123,7 @@ class SrtHeadOfficeDocumentController extends Controller
                         $links[] = '<a href="' . $media->getUrl() . '" target="_blank">' . trans('global.downloadFile') . '</a>';
                     }
 
-                    return implode(', ', $links);
+                    return implode(', ', $links ?? '');
 
 
                 //debug
