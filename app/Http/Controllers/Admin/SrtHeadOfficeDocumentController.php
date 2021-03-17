@@ -70,7 +70,7 @@ class SrtHeadOfficeDocumentController extends Controller
                             $links[] = '<a href="' . $media->getUrl() . '" target="_blank">' . $refer_doc . '</a>';
                         }
 
-                        return implode(', ', $links);
+                        return implode(', ', $links ? $link: "");
                     });
 
             // $table->addColumn('refer_documents_document_number', function ($row) {
@@ -109,7 +109,7 @@ class SrtHeadOfficeDocumentController extends Controller
                 //     return '';
                 // }
 
-                    if ($row->refer_documents->file_upload_2 == '') {
+                    if (!$row->refer_documents->file_upload_2 == '') {
                         return '';
                     }
 
