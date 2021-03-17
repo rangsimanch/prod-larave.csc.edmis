@@ -63,16 +63,17 @@ class SrtHeadOfficeDocumentController extends Controller
                         }
                         else{
 
-                            $links = [];
+                            // $links = [];
 
                             $refer_doc = $row->refer_documents ? $row->refer_documents->document_number : '';
 
-                            foreach ($row->refer_documents->file_upload as $media) {
-                                $links[] = '<a href="' . $media->getUrl() . '" target="_blank">' . $refer_doc . '</a>';
-                            }
+                            // foreach ($row->refer_documents->file_upload as $media) {
+                            //     $links[] = '<a href="' . $media->getUrl() . '" target="_blank">' . $refer_doc . '</a>';
+                            // }
                             
 
-                            return implode(', ', $links);
+                            // return implode(', ', $links);
+                            return $refer_doc;
                         }
                     });
 
