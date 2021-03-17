@@ -109,7 +109,7 @@ class SrtHeadOfficeDocumentController extends Controller
                 //     return '';
                 // }
 
-                    if (!$row->refer_documents->file_upload_2) {
+                    if ($row->refer_documents->file_upload_2 == '') {
                         return '';
                     }
 
@@ -123,7 +123,7 @@ class SrtHeadOfficeDocumentController extends Controller
                         $links[] = '<a href="' . $media->getUrl() . '" target="_blank">' . trans('global.downloadFile') . '</a>';
                     }
 
-                    return implode(', ', $links ?? '');
+                    return implode(', ', $links);
 
 
                 //debug
