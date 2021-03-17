@@ -65,7 +65,7 @@ class SrtHeadOfficeDocumentController extends Controller
 
                             // $links = [];
 
-                            $refer_doc = $row->refer_documents ? $row->refer_documents->document_number : '';
+                            $refer_doc = $row->refer_documents ? $row->refer_documents->document_number : '' ?? '';
 
                             // foreach ($row->refer_documents->file_upload as $media) {
                             //     $links[] = '<a href="' . $media->getUrl() . '" target="_blank">' . $refer_doc . '</a>';
