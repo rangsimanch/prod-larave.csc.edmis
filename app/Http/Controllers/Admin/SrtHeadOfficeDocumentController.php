@@ -109,7 +109,7 @@ class SrtHeadOfficeDocumentController extends Controller
                 //     return '';
                 // }
 
-                    if (!$row->refer_documents->file_upload_2 == '') {
+                    if (!$row->refer_documents->file_upload_2) {
                         return '';
                     }
 
