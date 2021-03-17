@@ -58,7 +58,7 @@ class SrtHeadOfficeDocumentController extends Controller
             });
 
                     $table->editColumn('refer_documents.file_upload', function ($row) {
-                        if ($row->refer_documents->file_upload == '') {
+                        if ($row->refer_documents->file_upload->getUrl() == "") {
                             return '';
                         }
                         else{
