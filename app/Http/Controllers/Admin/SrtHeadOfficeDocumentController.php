@@ -63,13 +63,13 @@ class SrtHeadOfficeDocumentController extends Controller
 
                             $refer_doc = $row->refer_documents ? $row->refer_documents->document_number : '';
 
-                            foreach ($row->refer_documents->file_upload as $media) {
+                            // foreach ($row->refer_documents->file_upload as $media) {
                                 // if($media == ""){
                                     $link[] = '<a>' . $refer_doc .'</a>';
                                 // }else{
                                 //     $links[] = '<a href="' . $media->getUrl() . '" target="_blank">' . $refer_doc . '</a>';
                                 // }
-                            }
+                            // }
                             return implode(', ', $links);
                     });
 
