@@ -291,13 +291,13 @@
     var uploadedFileUpload1Map = {}
 Dropzone.options.fileUpload1Dropzone = {
     url: '{{ route('admin.rfas.storeMedia') }}',
-    maxFilesize: 5000, // MB
+    maxFilesize: 500, // MB
     addRemoveLinks: true,
     headers: {
       'X-CSRF-TOKEN': "{{ csrf_token() }}"
     },
     params: {
-      size: 5000
+      size: 500
     },
     success: function (file, response) {
       $('form').append('<input type="hidden" name="file_upload_1[]" value="' + response.name + '">')
@@ -347,13 +347,13 @@ Dropzone.options.fileUpload1Dropzone = {
     var uploadedCommercialFileUploadMap = {}
 Dropzone.options.commercialFileUploadDropzone = {
     url: '{{ route('admin.rfas.storeMedia') }}',
-    maxFilesize: 5000, // MB
+    maxFilesize: 500, // MB
     addRemoveLinks: true,
     headers: {
       'X-CSRF-TOKEN': "{{ csrf_token() }}"
     },
     params: {
-      size: 5000
+      size: 500
     },
     success: function (file, response) {
       $('form').append('<input type="hidden" name="commercial_file_upload[]" value="' + response.name + '">')
@@ -403,13 +403,13 @@ Dropzone.options.commercialFileUploadDropzone = {
     var uploadedDocumentFileUploadMap = {}
 Dropzone.options.documentFileUploadDropzone = {
     url: '{{ route('admin.rfas.storeMedia') }}',
-    maxFilesize: 5000, // MB
+    maxFilesize: 500, // MB
     addRemoveLinks: true,
     headers: {
       'X-CSRF-TOKEN': "{{ csrf_token() }}"
     },
     params: {
-      size: 5000
+      size: 500
     },
     success: function (file, response) {
       $('form').append('<input type="hidden" name="document_file_upload[]" value="' + response.name + '">')
@@ -714,13 +714,13 @@ function check_stamp() {
     var uploadedSubmittalsFileMap = {}
 Dropzone.options.submittalsFileDropzone = {
     url: '{{ route('admin.rfas.storeMedia') }}',
-    maxFilesize: 5000, // MB
+    maxFilesize: 500, // MB
     addRemoveLinks: true,
     headers: {
       'X-CSRF-TOKEN': "{{ csrf_token() }}"
     },
     params: {
-      size: 5000
+      size: 500
     },
     success: function (file, response) {
       $('form').append('<input type="hidden" name="submittals_file[]" value="' + response.name + '">')
@@ -771,13 +771,13 @@ Dropzone.options.submittalsFileDropzone = {
     var uploadedWorkFileUploadMap = {}
 Dropzone.options.workFileUploadDropzone = {
     url: '{{ route('admin.rfas.storeMedia') }}',
-    maxFilesize: 5000, // MB
+    maxFilesize: 500, // MB
     addRemoveLinks: true,
     headers: {
       'X-CSRF-TOKEN': "{{ csrf_token() }}"
     },
     params: {
-      size: 5000
+      size: 500
     },
     success: function (file, response) {
       $('form').append('<input type="hidden" name="work_file_upload[]" value="' + response.name + '">')

@@ -1302,14 +1302,14 @@ class RfaController extends Controller
 
         //Title
         $html .= "<div style=\"font-size: 12px; position:absolute;top:168px;left:55px;\">" . 'Bill :' . "</div>";
-        $html .= "<div style=\"font-size: 12px; position:absolute;top:168px;left:80px;\">" . $bill . '.' . "</div>";
+        $html .= "<div style=\"font-size: 14px; position:absolute;top:168px;left:80px;\">" . $bill . '.' . "</div>";
 
-        $html .= "<div style=\"font-size: 12px; position:absolute;top:184px;left:55px;\">" . 'Title :' . "</div>";
-        $html .= "<div style=\"font-size: 12px; padding-right:240px; position:absolute;top:184px;left:80px; LINE-HEIGHT:16px;\">" 
+        $html .= "<div style=\"font-size: 14px; position:absolute;top:184px;left:55px;\">" . 'Title :' . "</div>";
+        $html .= "<div style=\"font-size: 14px; padding-right:240px; position:absolute;top:184px;left:80px; LINE-HEIGHT:16px;\">" 
         . $title_en . "</div>";
 
-        $html .= "<div style=\"font-size: 12px; position:absolute;top:217px;left:55px;\">" . 'หัวข้อ :' . "</div>";
-        $html .= "<div style=\"font-size: 12px; padding-right:230px; position:absolute;top:217px;left:80px; LINE-HEIGHT:16px;\">" 
+        $html .= "<div style=\"font-size: 14px; position:absolute;top:217px;left:55px;\">" . 'หัวข้อ :' . "</div>";
+        $html .= "<div style=\"font-size: 14px; padding-right:230px; position:absolute;top:217px;left:80px; LINE-HEIGHT:16px;\">" 
         . $title_th . "</div>";
 
         //No. Code.
@@ -1317,18 +1317,18 @@ class RfaController extends Controller
         $html .= "<div style=\"font-size: 10px; position:absolute;top:170px;left:477px;\">" . $document_number . "</div>";
         $html .= "<div style=\"font-size: 12px; position:absolute;top:170px;left:660px;\">" . $rfa_code . "</div>";
           //Date
-        $html .= "<div style=\"font-size: 12px; position:absolute;top:217px;left:630px;\">" . $submit_date . "</div>";
+        $html .= "<div style=\"font-size: 14px; position:absolute;top:217px;left:630px;\">" . $submit_date . "</div>";
           //Document Name
-        $html .= "<div style=\"font-size: 12px; padding-right:240px; position:absolute;top:269px;left:160px;LINE-HEIGHT:15px;\">" . $document_name . "</div>";
-        $html .= "<div style=\"font-size: 12px; position:absolute;top:265;left:630;\">" . $qty_page . '.' . "</div>";
+        $html .= "<div style=\"font-size: 14px; padding-right:240px; position:absolute;top:269px;left:160px;LINE-HEIGHT:15px;\">" . $document_name . "</div>";
+        $html .= "<div style=\"font-size: 14px; position:absolute;top:265;left:630;\">" . $qty_page . '.' . "</div>";
         
           //WBS Spec.Ref Clase. Contract No.
-        $html .= "<div style=\"font-size: 12px; position:absolute;top:328px;left:225px;\">" . $wbs . "</div>";
-        $html .= "<div style=\"font-size: 12px; position:absolute;top:344px;left:250px;\">" . $spec_ref_no . "</div>";
-        $html .= "<div style=\"font-size: 12px; position:absolute;top:344px;left:630px;\">" . $clause . "</div>";
-        $html .= "<div style=\"font-size: 12px; position:absolute;top:360px;left:210px;\">" . $contract_drawing_no . "</div>";
+        $html .= "<div style=\"font-size: 14px; position:absolute;top:328px;left:225px;\">" . $wbs . "</div>";
+        $html .= "<div style=\"font-size: 14px; position:absolute;top:344px;left:250px;\">" . $spec_ref_no . "</div>";
+        $html .= "<div style=\"font-size: 14px; position:absolute;top:344px;left:630px;\">" . $clause . "</div>";
+        $html .= "<div style=\"font-size: 14px; position:absolute;top:360px;left:210px;\">" . $contract_drawing_no . "</div>";
           //Note
-        $html .= "<div style=\"font-size: 11px; padding-right:180px; position:absolute;top:382px;left:120px;LINE-HEIGHT:15px;\">" 
+        $html .= "<div style=\"font-size: 12px; padding-right:180px; position:absolute;top:382px;left:120px;LINE-HEIGHT:15px;\">" 
         . $note_1 . "</div>";
         
        
