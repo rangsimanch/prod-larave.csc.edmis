@@ -29,7 +29,12 @@
                                 </th>
                                 <th>
                                     {{ trans('cruds.srtHeadOfficeDocument.fields.refer_documents') }}
+                                </th> 
+                                <th>
+                                    {{ trans('cruds.srtHeadOfficeDocument.fields.refer_documents') }}
                                 </th>
+
+                               
                                 <th>
                                     {{ trans('cruds.srtInputDocument.fields.subject') }}
                                 </th>
@@ -60,11 +65,18 @@
                                 <td>
                                 </td>
                                 <td>
-                                    <input class="search" type="text" placeholder="{{ trans('global.search') }}">
                                 </td>
                                 <td>
-                                    <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-
+                                    <select class="search">
+                                        <option value>{{ trans('global.all') }}</option>
+                                        @foreach($srt_input_documents as $key => $item)
+                                            <option value="{{ $item->document_number }}">{{ $item->document_number }}</option>
+                                        @endforeach
+                                    </select>
+                                </td>
+                                <td>
+                                <td>
+                                </td>
                                 </td>
                                 <td>
                                     <select class="search" strict="true">
