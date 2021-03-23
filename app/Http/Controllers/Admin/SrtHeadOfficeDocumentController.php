@@ -59,18 +59,19 @@ class SrtHeadOfficeDocumentController extends Controller
 
                     $table->editColumn('refer_documents.file_upload', function ($row) {
                         
-                        $links = [];
+                        // $links = [];
 
-                        $refer_doc = $row->refer_documents ? $row->refer_documents->document_number : '';
+                        // $refer_doc = $row->refer_documents ? $row->refer_documents->document_number : '';
 
-                        foreach ($row->refer_documents->file_upload as $media) {
-                            if($media->size > 0)
-                                $links[] = '<a href="' . $media->getUrl() . '" target="_blank">' . $refer_doc . '</a>';
-                            else 
-                                $links[] = '<a> Error File </a>';
-                        }
+                        // foreach ($row->refer_documents->file_upload as $media) {
+                        //     if($media->size > 0)
+                        //         $links[] = '<a href="' . $media->getUrl() . '" target="_blank">' . $refer_doc . '</a>';
+                        //     else 
+                        //         $links[] = '<a> Error File </a>';
+                        // }
 
-                        return implode(', ', $links);
+                        // return implode(', ', $links);
+                        return '';
                     });
 
             // $table->addColumn('refer_documents_document_number', function ($row) {
