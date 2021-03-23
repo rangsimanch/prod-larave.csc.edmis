@@ -138,10 +138,11 @@ class SrtHeadOfficeDocumentController extends Controller
         }
 
         $srt_input_documents = SrtInputDocument::get();
+        $refer_documents = SrtInputDocument::get();
         $users               = User::get();
         $teams               = Team::get();
 
-        return view('admin.srtHeadOfficeDocuments.index', compact('srt_input_documents', 'users', 'teams'));
+        return view('admin.srtHeadOfficeDocuments.index', compact('refer_documents', 'srt_input_documents', 'users', 'teams'));
     }
 
     public function create()
