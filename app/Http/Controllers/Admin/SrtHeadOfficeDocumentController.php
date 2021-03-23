@@ -58,7 +58,7 @@ class SrtHeadOfficeDocumentController extends Controller
             });
 
                     // $table->editColumn('refer_documents.file_upload', function ($row) {
-                    $table->editColumn('refer_documents', function ($row) {
+                    $table->editColumn('refer_documents.document_number', function ($row) {
 
                         
                         // $links = [];
