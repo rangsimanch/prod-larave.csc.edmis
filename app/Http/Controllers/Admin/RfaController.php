@@ -1141,7 +1141,7 @@ class RfaController extends Controller
         }
 
         if($rfa->construction_contract->code == "C3-5"){
-            $issue_by = '( Narutchai Sammawijitra )';
+            $issue_by = '( Narutchai Summawijitra )';
             $issuer_jobtitle = 'ผู้จัดการโครงการ';
             $issue_position_lf = 245;
             $constructor_name = 'SPTK Joint Venture Company Limited';
