@@ -69,8 +69,6 @@
                                 <td>
                                 </td>
                                 <td>
-                                </td>
-                                <td>
                                     <select class="search" strict="true">
                                         <option value>{{ trans('global.all') }}</option>
                                         @foreach(App\SrtHeadOfficeDocument::SPECIAL_COMMAND_SELECT as $key => $item)
