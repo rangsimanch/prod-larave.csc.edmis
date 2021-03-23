@@ -64,10 +64,11 @@
                                 </td>
                                 <td>
                                 </td>
-                                
-                                <td>
                                 <td>
                                 </td>
+                                <td>
+                                </td>
+                                <td>
                                 </td>
                                 <td>
                                     <select class="search" strict="true">
