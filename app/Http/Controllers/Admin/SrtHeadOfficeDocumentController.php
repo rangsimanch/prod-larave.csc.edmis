@@ -58,19 +58,21 @@ class SrtHeadOfficeDocumentController extends Controller
             });
 
                     $table->editColumn('refer_documents.file_upload', function ($row) {
-                        if (!$row->refer_documents->file_upload) {
-                            return '';
-                        }
+                        // if (!$row->refer_documents->file_upload) {
+                        //     return '';
+                        // }
 
-                        $links = [];
+                        // $links = [];
 
-                        $refer_doc = $row->refer_documents ? $row->refer_documents->document_number : '';
+                        // $refer_doc = $row->refer_documents ? $row->refer_documents->document_number : '';
 
-                        foreach ($row->refer_documents->file_upload as $media) {
-                            $links[] = '<a href="' . $media->getUrl() . '" target="_blank">' . $refer_doc . '</a>';
-                        }
+                        // foreach ($row->refer_documents->file_upload as $media) {
+                        //     $links[] = '<a href="' . $media->getUrl() . '" target="_blank">' . $refer_doc . '</a>';
+                        // }
 
-                        return implode(', ', $links);
+                        // return implode(', ', $links);
+
+                        return $refer_doc;
                     });
 
             // $table->addColumn('refer_documents_document_number', function ($row) {
