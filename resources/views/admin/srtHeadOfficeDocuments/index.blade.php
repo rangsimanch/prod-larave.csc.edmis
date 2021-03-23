@@ -56,9 +56,9 @@
                                 <th>
                                     {{ trans('cruds.srtHeadOfficeDocument.fields.note') }}
                                 </th>
-                                <!-- <th>
+                                <th>
                                     {{ trans('cruds.srtHeadOfficeDocument.fields.file_upload') }}
-                                </th> -->
+                                </th>
                                 <th>
                                     &nbsp;
                                 </th>
@@ -160,7 +160,7 @@
     columns: [
       { data: 'placeholder', name: 'placeholder' },
 { data: 'id', name: 'id', visible: false},
-// { data: 'refer_documents.file_upload', name: 'refer_documents.file_upload', sortable: false, searchable: false },
+{ data: 'refer_documents', name: 'refer_documents', sortable: false, searchable: false },
 { data: 'refer_documents.subject', name: 'refer_documents.subject' },
 { data: 'process_date', name: 'process_date' },
 { data: 'special_command', name: 'special_command' },
