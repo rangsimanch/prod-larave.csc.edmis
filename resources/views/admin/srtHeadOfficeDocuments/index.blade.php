@@ -29,12 +29,7 @@
                                 </th>
                                 <th>
                                     {{ trans('cruds.srtHeadOfficeDocument.fields.refer_documents') }}
-                                </th> 
-                                <th>
-                                    {{ trans('cruds.srtHeadOfficeDocument.fields.refer_documents') }}
                                 </th>
-
-                               
                                 <th>
                                     {{ trans('cruds.srtInputDocument.fields.subject') }}
                                 </th>
