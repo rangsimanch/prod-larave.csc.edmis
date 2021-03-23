@@ -67,13 +67,9 @@
                                 <td>
                                 </td>
                                 <td>
-                                    <select class="search">
-                                        <option value>{{ trans('global.all') }}</option>
-                                        @foreach($srt_input_documents as $key => $item)
-                                            <option value="{{ $item->document_number }}">{{ $item->document_number }}</option>
-                                        @endforeach
-                                    </select>
+                                    <input class="search" type="text" placeholder="{{ trans('global.search') }}">
                                 </td>
+                                    <input class="search" type="text" placeholder="{{ trans('global.search') }}">
                                 <td>
                                 <td>
                                 </td>
