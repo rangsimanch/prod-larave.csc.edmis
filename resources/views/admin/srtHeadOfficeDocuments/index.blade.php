@@ -29,9 +29,6 @@
                                 </th>
                                 <th>
                                     {{ trans('cruds.srtHeadOfficeDocument.fields.refer_documents') }}
-                                </th> 
-                                <th>
-                                    {{ trans('cruds.srtHeadOfficeDocument.fields.refer_documents') }}
                                 </th>
 
                                
@@ -56,16 +53,11 @@
                                 <th>
                                     {{ trans('cruds.srtHeadOfficeDocument.fields.note') }}
                                 </th>
-                                <!-- <th>
-                                    {{ trans('cruds.srtHeadOfficeDocument.fields.file_upload') }}
-                                </th> -->
                                 <th>
                                     &nbsp;
                                 </th>
                             </tr>
                             <tr>
-                                <td>
-                                </td>
                                 <td>
                                 </td>
                                 <td>
@@ -159,7 +151,7 @@
     ajax: "{{ route('admin.srt-head-office-documents.index') }}",
     columns: [
       { data: 'placeholder', name: 'placeholder' },
-{ data: 'id', name: 'id', visible: false},
+// { data: 'id', name: 'id', visible: false},
 { data: 'refer_documents.document_number', name: 'refer_documents.document_number', sortable: false, searchable: false },
 { data: 'refer_documents.subject', name: 'refer_documents.subject' },
 { data: 'process_date', name: 'process_date' },
