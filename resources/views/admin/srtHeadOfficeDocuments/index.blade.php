@@ -27,9 +27,6 @@
                                 <th width="10">
 
                                 </th>
-                                <th>
-                                    ID
-                                </th>
 
                                 <th>
                                     {{ trans('cruds.srtHeadOfficeDocument.fields.refer_documents') }}
@@ -62,8 +59,7 @@
                                 </th>
                             </tr>
                             <tr>
-                                <td>
-                                </td>
+                                
                                 <td>
                                 </td>
                                 <td>
