@@ -27,6 +27,9 @@
                                 <th width="10">
 
                                 </th>
+                                <th>
+                                    ID
+                                </th>
 
                                 <th>
                                     {{ trans('cruds.srtHeadOfficeDocument.fields.refer_documents') }}
@@ -59,7 +62,8 @@
                                 </th>
                             </tr>
                             <tr>
-                                
+                                <td>
+                                </td>
                                 <td>
                                 </td>
                                 <td>
@@ -97,8 +101,6 @@
                                 </td>
                                 <td>
                                 </td>
-                                <!-- <td>
-                                </td> -->
                             </tr>
                         </thead>
                     </table>
@@ -154,8 +156,8 @@
     aaSorting: [],
     ajax: "{{ route('admin.srt-head-office-documents.index') }}",
     columns: [
-      { data: 'placeholder', name: 'placeholder' },
- { data: 'id', name: 'id', visible: false},
+{ data: 'placeholder', name: 'placeholder' },
+{ data: 'id', name: 'id', visible: false},
 { data: 'refer_documents.document_number', name: 'refer_documents.document_number', sortable: false, searchable: false },
 { data: 'refer_documents.subject', name: 'refer_documents.subject' },
 { data: 'process_date', name: 'process_date' },
@@ -164,7 +166,6 @@
 { data: 'to_text', name: 'to_text' },
 { data: 'practice_notes', name: 'practice_notes' },
 { data: 'note', name: 'note' },
-// { data: 'file_upload', name: 'file_upload', sortable: false, searchable: false, visible: false },
 { data: 'actions', name: '{{ trans('global.actions') }}' }
     ],
     orderCellsTop: true,
