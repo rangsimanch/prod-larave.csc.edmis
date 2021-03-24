@@ -61,47 +61,7 @@
                                     &nbsp;
                                 </th>
                             </tr>
-                            <tr>
-                                <td>
-                                </td>
-                                <td>
-                                </td>
-                                <td>
-                                    <!-- <select class="search">
-                                        <option value>{{ trans('global.all') }}</option>
-                                        @foreach($srt_input_documents as $key => $item)
-                                            <option value="{{ $item->document_number }}">{{ $item->document_number }}</option>
-                                        @endforeach
-                                    </select> -->
-                                    <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                                </td>
-                                <td>
-                                    <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                                </td>
-                                <td>
-                                </td>
-                                <td>
-                                    <select class="search" strict="true">
-                                        <option value>{{ trans('global.all') }}</option>
-                                        @foreach(App\SrtHeadOfficeDocument::SPECIAL_COMMAND_SELECT as $key => $item)
-                                            <option value="{{ $item }}">{{ $item }}</option>
-                                        @endforeach
-                                    </select>
-                                </td>
-                                <td>
-                                </td>
-                                <td>
-                                    <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                                </td>
-                                <td>
-                                    <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                                </td>
-                                <td>
-                                    <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                                </td>
-                                <td>
-                                </td>
-                            </tr>
+                           
                         </thead>
                     </table>
                 </div>
