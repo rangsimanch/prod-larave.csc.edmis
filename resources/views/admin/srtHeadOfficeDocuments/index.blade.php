@@ -56,9 +56,9 @@
                                 <th>
                                     {{ trans('cruds.srtHeadOfficeDocument.fields.note') }}
                                 </th>
-                                <th>
+                                <!-- <th>
                                     {{ trans('cruds.srtHeadOfficeDocument.fields.file_upload') }}
-                                </th>
+                                </th> -->
                                 <th>
                                     &nbsp;
                                 </th>
@@ -77,8 +77,8 @@
                                     </select>
                                 </td>
                                 <td>
-                                <td>
                                 </td>
+                                <td>
                                 </td>
                                 <td>
                                     <select class="search" strict="true">
@@ -101,8 +101,8 @@
                                 </td>
                                 <td>
                                 </td>
-                                <td>
-                                </td>
+                                <!-- <td>
+                                </td> -->
                             </tr>
                         </thead>
                     </table>
@@ -168,7 +168,7 @@
 { data: 'to_text', name: 'to_text' },
 { data: 'practice_notes', name: 'practice_notes' },
 { data: 'note', name: 'note' },
-{ data: 'file_upload', name: 'file_upload', sortable: false, searchable: false, visible: false },
+// { data: 'file_upload', name: 'file_upload', sortable: false, searchable: false, visible: false },
 { data: 'actions', name: '{{ trans('global.actions') }}' }
     ],
     orderCellsTop: true,
