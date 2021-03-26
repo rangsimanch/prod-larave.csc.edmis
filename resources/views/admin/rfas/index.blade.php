@@ -383,7 +383,7 @@
 { data: 'receive_date', name: 'receive_date' ,visible: false}, // 30
 { data: 'target_date', name: 'target_date' ,visible: false}, // 31
 { data: 'note_2', name: 'note_2' , visible: false , sortable: false,}, // 32
-{ data: 'comment_status_name', name: 'comment_status.name' , sortable: false, visible: false}, // 33
+{ data: 'comment_status_name', name: 'comment_status.name'}, // 33
 { data: 'note_3', name: 'note_3' , visible: false, sortable: false, }, // 34
 { data: 'document_ref', name: 'document_ref' ,visible: false, sortable: false,}, // 35
 { data: 'document_file_upload', name: 'document_file_upload', sortable: false, searchable: false , visible: false}, // 36
