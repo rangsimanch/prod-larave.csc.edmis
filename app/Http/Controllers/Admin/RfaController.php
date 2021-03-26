@@ -1468,7 +1468,7 @@ class RfaController extends Controller
             . 'ผู้จัดการโครงการ / Project Manager (' . $constructor_code . ')' . "</div>";
             
             $html .= "<div style=\"font-size: 14px; position:absolute;top:740px;left:520px;\">
-                <img src=\"". $signature_path ."\" width=\"40px\" higth=\"40px\"> </div>";
+                <img src=\"". $signature_path ."\" width=\"" . $signature_size_w . "\" higth=\"". $signature_size_h ."\"> </div>";
             
             $html .= "<div style=\"font-size: 14px; position:absolute;top:500px;left:560px;\">
                 <img src=\"". $stamp_path ."\" width=\"200px\" higth=\"200px\" style=\"opacity: 0.5;\"> </div>";
