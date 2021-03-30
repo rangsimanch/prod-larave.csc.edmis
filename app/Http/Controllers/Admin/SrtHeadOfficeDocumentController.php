@@ -219,7 +219,8 @@ class SrtHeadOfficeDocumentController extends Controller
         $srtInputDocument = SrtInputDocument::find($request->refer_documents_id);
         //Link Media to file_upload_2
         $media = $srtInputDocument->file_upload_2->pluck('file_name')->toArray();
-
+      
+        if(count($request->input('file_upload', [])) > 0){
         // Complete Files
         if($data['save_for'] == "Closed"){
             $CompleteMerger = PDFMerger::init();
@@ -243,7 +244,6 @@ class SrtHeadOfficeDocumentController extends Controller
                     $pdfMerger->addPDF(storage_path('tmp/uploads/' . $file), 'all');  
                 }
             }
-            if(count($request->input('file_upload', [])) > 0){
                 $pdfMerger->merge();
                 //Save to tmp
                 $pdfMerger->save(storage_path('tmp/uploads/mergerPdf_02.pdf'), "file");
