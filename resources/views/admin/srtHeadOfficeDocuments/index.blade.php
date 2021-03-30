@@ -32,6 +32,10 @@
                                 </th>
 
                                 <th>
+                                    Status
+                                </th>
+
+                                <th>
                                     {{ trans('cruds.srtHeadOfficeDocument.fields.refer_documents') }}
                                 </th>
 
@@ -57,6 +61,7 @@
                                 <th>
                                     {{ trans('cruds.srtHeadOfficeDocument.fields.note') }}
                                 </th>
+                               
                                 <th>
                                     &nbsp;
                                 </th>
@@ -118,6 +123,7 @@
     columns: [
 { data: 'placeholder', name: 'placeholder' },
 { data: 'id', name: 'id', visible: false},
+{ data: 'save_for', name: 'save_for' },
 { data: 'refer_documents.document_number', name: 'refer_documents.document_number', sortable: false, searchable: false },
 { data: 'refer_documents.subject', name: 'refer_documents.subject' },
 { data: 'process_date', name: 'process_date' },

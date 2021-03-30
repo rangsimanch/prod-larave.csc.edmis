@@ -288,18 +288,7 @@ class SrtInputDocumentsController extends Controller
         }
         $srtInputDocument->addMedia(storage_path('tmp/uploads/mergerPdf_01.pdf'))->toMediaCollection('file_upload');
 
-        foreach ($request->input('file_upload_2', []) as $file) {
-            $srtInputDocument->addMedia(storage_path('tmp/uploads/' . $file))->toMediaCollection('file_upload_2');
-        }
-
-        foreach ($request->input('file_upload_3', []) as $file) {
-            $srtInputDocument->addMedia(storage_path('tmp/uploads/' . $file))->toMediaCollection('file_upload_3');
-        }
-
-        foreach ($request->input('file_upload_4', []) as $file) {
-            $srtInputDocument->addMedia(storage_path('tmp/uploads/' . $file))->toMediaCollection('file_upload_4');
-        }
-
+        
         if ($media = $request->input('ck-media', false)) {
             Media::whereIn('id', $media)->update(['model_id' => $srtInputDocument->id]);
         }
