@@ -224,8 +224,8 @@ class SrtHeadOfficeDocumentController extends Controller
         // Complete Files
         if($data['save_for'] == "Closed"){
             $CompleteMerger = PDFMerger::init();
-            $fileUpload_1 = $srtInputDocument->getMedia('file_upload');
-            $CompleteMerger->addPDF(public_path($fileUpload_1[0]->getUrl()));
+            $fileUpload_1 = $srtInputDocument->getMedia('file_upload')->first();
+            $CompleteMerger->addPDF(public_path($fileUpload_1->getUrl()));
             foreach ($request->input('file_upload', []) as $file) {
                 if (count($media) === 0 || !in_array($file, $media)) {
                     $CompleteMerger->addPDF(storage_path('tmp/uploads/' . $file), 'all');  
