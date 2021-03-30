@@ -256,6 +256,15 @@ class SrtHeadOfficeDocumentController extends Controller
                 //Add media to SrtInputDocument Collection (file_upload_2)
                 $srtInputDocument->addMedia(storage_path('tmp/uploads/mergerPdf_02.pdf'))->toMediaCollection('file_upload_2');
             }
+            else{
+                if($data['save_for'] == "Closed"){
+                    $CompleteMerger = PDFMerger::init();
+                    $fileUpload_1 = $srtInputDocument->getMedia('file_upload');
+                    $CompleteMerger->addPDF(public_path($fileUpload_1[0]->getUrl()));
+                    $CompleteMerger->save(storage_path('tmp/uploads/mergerPdf_Completed.pdf'), "file");
+                    $srtInputDocument->addMedia(storage_path('tmp/uploads/mergerPdf_Completed.pdf'))->toMediaCollection('complete_file');
+                }
+            }
 
             //Delete Function on SrtInputDocument Collection (file_upload_2)
             if (count($srtInputDocument->file_upload_2) > 0) {
