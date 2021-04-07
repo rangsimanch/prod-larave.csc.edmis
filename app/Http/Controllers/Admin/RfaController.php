@@ -1125,7 +1125,7 @@ class RfaController extends Controller
 
         if($rfa->construction_contract->code == "C3-4"){
             $issue_by = '( มฆา  อัศวราชันย )';
-            $issuer_jobtitle = 'ผู้จัดการโครงการ';
+            $issuer_jobtitle = 'ผู้อำนวยการโครงการ';
             $issue_position_lf = 260;
             $constructor_name = 'Italian-Thai Development PLC';
             $constructor_code = 'ITD';
