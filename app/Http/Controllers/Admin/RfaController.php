@@ -1342,9 +1342,9 @@ class RfaController extends Controller
         }
         $html .= "<div style=\"font-size: 14px; position:absolute;top:" . $signature_position_top  ."px;left:". $signature_position_left ."px;\">
             <img src=\"". $signature_path ."\" width=\"". $signature_size_w ."\" higth=\"". $signature_size_h ."\"> </div>";
-        
+        //Stamp
         $html .= "<div style=\"font-size: 14px; position:absolute;top:300px;left:400px;\">
-            <img src=\"". $stamp_path ."\" width=\"150px\" higth=\"150px\" style=\"opacity: 0.5;\"> </div>";
+            <img src=\"". $stamp_path ."\" width=\"180px\" higth=\"180px\" style=\"opacity: 0.5;\"> </div>";
 
         
 
