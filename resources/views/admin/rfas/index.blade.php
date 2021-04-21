@@ -397,6 +397,7 @@
 
     ],
     order: [[ 2, 'desc' ]],
+    lengthMenu: [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
     pageLength: 10,
     sPaginationType: "full_numbers",
     scrollY : 450,
