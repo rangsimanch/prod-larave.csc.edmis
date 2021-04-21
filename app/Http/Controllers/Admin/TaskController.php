@@ -167,11 +167,18 @@ class TaskController extends Controller
         // ->whereBetween('due_date', array('01/06/2020', '05/06/2020'))
         // ->where('create_by_user_id',$data['create_by_user_id'])->sortBy('due_date');
 
-        $tasks = Task::with(['tags', 'status', 'create_by_user', 'construction_contract', 'team'])
-        ->whereBetween('due_date',[$StartDate, $EndDate])
-        ->where([ ['create_by_user_id',$data['create_by_user_id']], 
-                ['construction_contract_id', $data['contracts']] 
-                ])->orderBy('due_date')->get();
+        if($data['contracts'] != -1){
+            $tasks = Task::with(['tags', 'status', 'create_by_user', 'construction_contract', 'team'])
+            ->whereBetween('due_date',[$StartDate, $EndDate])
+            ->where([ ['create_by_user_id',$data['create_by_user_id']], 
+                    ['construction_contract_id', $data['contracts']] 
+                    ])->orderBy('due_date')->get();
+        }
+        else{
+            $tasks = Task::with(['tags', 'status', 'create_by_user', 'construction_contract', 'team'])
+            ->whereBetween('due_date',[$StartDate, $EndDate])
+            ->where('create_by_user_id',$data['create_by_user_id'])->orderBy('due_date')->get();
+        }
 
 
         $count_task = count($tasks);
@@ -197,8 +204,17 @@ class TaskController extends Controller
             $recordby = $gender . ' ' . $create_by->name;
             $jobtitle = $create_by->jobtitle->name ?? '';
             $team = $create_by->team->name ?? '';
-            $contract_code = $tasks->first()->construction_contract->code ?? '';
-            $contract_name = $tasks->first()->construction_contract->name ?? '';
+            
+            if($data['contracts'] != -1){
+                $contract_code = $tasks->first()->construction_contract->code ?? '';
+                $contract_name = $tasks->first()->construction_contract->name ?? '';
+            }
+            else{
+                $contract_code =  '';
+                $contract_name =  '';
+            }
+
+
 
             $dateType = '';
             

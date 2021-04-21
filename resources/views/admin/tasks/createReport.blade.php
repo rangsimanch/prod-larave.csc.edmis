@@ -30,6 +30,7 @@
                                         @foreach($contracts as $id => $contract)
                                             <option value="{{ $id }}">{{ $contract }}</option>
                                         @endforeach
+                                            <option value="-1">All Contracts</option>
                                     </select>
                                     @if($errors->has('contracts'))
                                         <span class="help-block" role="alert">{{ $errors->first('contracts') }}</span>
