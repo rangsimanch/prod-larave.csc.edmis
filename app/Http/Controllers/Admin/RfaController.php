@@ -774,12 +774,14 @@ class RfaController extends Controller
         
         $data['clause'] = $data['clause'] . '.';
 
-        $str_length = 6;
-        $doc_number = substr("000000{$nextId}", -$str_length);
+        $str_length = 4;
+        $doc_number = substr("0000{$nextId}", -$str_length);
         $cur_date = date("ymd");
         $code_year = substr($cur_date,0,2);
         $code_mouth = substr($cur_date,2,2);
         $code_date = $code_year . "-" . $code_mouth;
+
+
 
         
         
@@ -793,8 +795,8 @@ class RfaController extends Controller
 
         }
         else{
+            $data['rfa_code'] =  'RFA' . '/' . $const_code . '/' . substr($data['origin_number'],4);
             $data['origin_number'] = $request->origin_number;
-            $data['rfa_code'] =  $request->origin_number;
             $data['document_number'] = 'HSR1/' . $const_code . '/' . $wbs3code . '/' . $wbs4code . '/' . $typecode . '/' . $code_date . '/' . $request->origin_number; 
         }
 
@@ -1182,9 +1184,9 @@ class RfaController extends Controller
         $title_en = wordwrap($rfa->title_eng ?? '',300,"<br>\n");
         $document_number = $rfa->document_number ?? '';
         $check_box = "X";
-        $rfa_code = $rfa->origin_number;
-        if(isset($rfa->origin_number)){
-            $rfa_code = $rfa->origin_number ?? '';
+        $rfa_code = $rfa->rfa_code;
+        if(isset($rfa->rfa_code)){
+            $rfa_code = $rfa->rfa_code ?? '';
             if(strlen($rfa_code) > 8){
                 $revision_count = substr($rfa_code,11,1);
             }
