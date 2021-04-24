@@ -21,7 +21,6 @@ use Spatie\MediaLibrary\Models\Media;
 use Symfony\Component\HttpFoundation\Response;
 use Yajra\DataTables\Facades\DataTables;
 use App\ConstructionContract;
-use DB;
 
 //use Request;
 
@@ -151,7 +150,6 @@ class TaskController extends Controller
             $create_by_users = User::all()->where('id',auth()->id())->pluck('name','id')->prepend(trans('global.pleaseSelect'), '');
             $contracts = ConstructionContract::where('id',session('construction_contract_id'))->pluck('code', 'id')->prepend(trans('global.pleaseSelect'), '');
         }
-        
         return view('admin.tasks.createReport', compact('create_by_users', 'contracts'));
     }
 
@@ -177,7 +175,7 @@ class TaskController extends Controller
                     ])->orderBy('due_date')->get();
         }
         else{
-            $tasks = DB::table('tasks')->with(['tags', 'status', 'create_by_user', 'construction_contract', 'team'])
+            $tasks = Task::with(['tags', 'status', 'create_by_user', 'construction_contract', 'team'])
             ->whereBetween('due_date',[$StartDate, $EndDate])
             ->where('create_by_user_id',$data['create_by_user_id'])->orderBy('due_date')->get();
         }
