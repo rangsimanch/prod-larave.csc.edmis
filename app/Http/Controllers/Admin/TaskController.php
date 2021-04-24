@@ -177,7 +177,7 @@ class TaskController extends Controller
                     ])->orderBy('due_date')->get();
         }
         else{
-            $tasks = DB::table('tasks')
+            $tasks = DB::table('tasks')->with(['tags', 'status', 'create_by_user', 'construction_contract', 'team'])
             ->whereBetween('due_date',[$StartDate, $EndDate])
             ->where('create_by_user_id',$data['create_by_user_id'])->orderBy('due_date')->get();
         }
