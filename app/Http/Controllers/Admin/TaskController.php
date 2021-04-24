@@ -144,14 +144,12 @@ class TaskController extends Controller
        
         if(auth()->user()->roles->contains(28) || auth()->user()->roles->contains(1) ){
             $create_by_users = User::all()->where('team_id','3')->pluck('name','id')->prepend(trans('global.pleaseSelect'), '');
-            // $contracts = ConstructionContract::all()->pluck('code', 'id')->prepend(trans('global.pleaseSelect'), '');
+            $contracts = ConstructionContract::all()->pluck('code', 'id')->prepend(trans('global.pleaseSelect'), '');
         }
         else{
             $create_by_users = User::all()->where('id',auth()->id())->pluck('name','id')->prepend(trans('global.pleaseSelect'), '');
-            // $contracts = ConstructionContract::where('id',session('construction_contract_id'))->pluck('code', 'id')->prepend(trans('global.pleaseSelect'), '');
+            $contracts = ConstructionContract::where('id',session('construction_contract_id'))->pluck('code', 'id')->prepend(trans('global.pleaseSelect'), '');
         }
-        $contracts = ConstructionContract::all()->pluck('code', 'id')->prepend(trans('global.pleaseSelect'), '');
-
         
         return view('admin.tasks.createReport', compact('create_by_users', 'contracts'));
     }
@@ -178,7 +176,7 @@ class TaskController extends Controller
                     ])->orderBy('due_date')->get();
         }
         else{
-            $tasks = Task::with(['tags', 'status', 'create_by_user', 'construction_contract', 'team'])
+            $tasks = Task::all()
             ->whereBetween('due_date',[$StartDate, $EndDate])
             ->where('create_by_user_id',$data['create_by_user_id'])->orderBy('due_date')->get();
         }
