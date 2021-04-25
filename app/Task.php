@@ -13,7 +13,7 @@ use Spatie\MediaLibrary\Models\Media;
 
 class Task extends Model implements HasMedia
 {
-    use SoftDeletes, MultiTenantModelTrait, HasMediaTrait, Auditable;
+    use SoftDeletes, HasMediaTrait, Auditable;
 
     public $table = 'tasks';
 
