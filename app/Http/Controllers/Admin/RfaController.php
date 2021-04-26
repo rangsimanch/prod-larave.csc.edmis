@@ -1109,7 +1109,7 @@ class RfaController extends Controller
         }
 
         if($rfa->construction_contract->code == "C3-3"){
-            $issue_by = '( กิตติพัฒน์ พฤกษ์ชนัทพงศ์ )';
+            $issue_by = '( กิตติพัฒน์ พฤกษ์ธนัทพงศ์ )';
             $issuer_jobtitle = 'รองผู้จัดการโครงการ';
             $issue_position_lf = 247;
             $constructor_name = 'Thai Engineers & Industry Company Limited';
