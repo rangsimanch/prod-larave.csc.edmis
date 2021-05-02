@@ -1516,6 +1516,34 @@ class RfaController extends Controller
             }
             
          }
+
+        //Circulation of Work 
+        $mpdf->AddPage();
+        $pagecount = $mpdf->SetSourceFile(public_path('pdf-asset/Circulation_of_Work_form.pdf'));
+        $tplId = $mpdf->ImportPage($pagecount);
+        $mpdf->UseTemplate($tplId);   
+        
+        $html = "<div style=\"font-size: 14px; position:absolute;top:83px;left:130px;\">". $incoming_no ."</div>";
+        $html .= "<div style=\"font-size: 14px; position:absolute;top:83px;left:320px;\">". $submit_date ."</div>";
+        $html .= "<div style=\"font-size: 14px; position:absolute;top:83px;left:570;\">". $qty_page ."</div>";
+        $html .= "<div style=\"font-size: 14px; position:absolute;top:103px;left:175px;\">". $rfa_code ."</div>";
+        $html .= "<div style=\"font-size: 14px; position:absolute;top:123px;left:95px;\">". $title_th ."</div>";
+
+
+
+
+        $rfa_type = $rfa->type->code ?? '';
+        if($rfa_type == 'DWG'){
+            $html .= "<div style=\"font-size: 16px; position:absolute;top:204px;left:67px;\">". "X" ."</div>";
+        }
+
+        if($rfa_type == 'SUB'){
+            $html .= "<div style=\"font-size: 16px; position:absolute;top:183px;left:67px;\">". "X" ."</div>";
+        }
+
+        $mpdf->WriteHTML($html);
+
+    
         
 
         return $mpdf->Output();
