@@ -1196,8 +1196,8 @@ class RfaController extends Controller
         }
         else{
             $rfa_code = $rfa->rfa_code ?? '';  
-            if(strlen($rfa_code) > 14){
-                $revision_count = substr($rfa_code,17,2);
+            if(strlen($rfa_code) > 15){
+                $revision_count = substr($rfa_code,15,2);
             }
             else{
                 $revision_count = "0";
@@ -1252,7 +1252,7 @@ class RfaController extends Controller
             }
         }
         $type = $rfa->type->type_code ?? '';
-        $num_doc = substr($rfa_code,11,4);
+        $num_doc = substr($rfa_code,9,4);
 
         $receive_by  = $rfa->update_by_user->name ?? '';
         $receive_date = $rfa->receive_date ?? '';
@@ -1523,22 +1523,22 @@ class RfaController extends Controller
         $tplId = $mpdf->ImportPage($pagecount);
         $mpdf->UseTemplate($tplId);   
         
-        $html = "<div style=\"font-size: 14px; position:absolute;top:83px;left:130px;\">". $incoming_no ."</div>";
-        $html .= "<div style=\"font-size: 14px; position:absolute;top:83px;left:320px;\">". $submit_date ."</div>";
-        $html .= "<div style=\"font-size: 14px; position:absolute;top:83px;left:570;\">". $qty_page ."</div>";
-        $html .= "<div style=\"font-size: 14px; position:absolute;top:103px;left:175px;\">". $rfa_code ."</div>";
-        $html .= "<div style=\"font-size: 14px; position:absolute;top:123px;left:95px;\">". $title_th ."</div>";
+        $html = "<div style=\"font-size: 14px; position:absolute;top:94px;left:110px;\">". "incoming_no" ."</div>";
+        $html .= "<div style=\"font-size: 14px; position:absolute;top:94px;left:340px;\">". "submit_date" ."</div>";
+        $html .= "<div style=\"font-size: 14px; position:absolute;top:94px;left:570;\">". "qty_page" ."</div>";
+        $html .= "<div style=\"font-size: 14px; position:absolute;top:115px;left:165px;\">". "rfa_code" ."</div>";
+        $html .= "<div style=\"font-size: 14px; position:absolute;top:155px;left:75px;\">". "title_th" ."</div>";
 
-
-
+        
+        
 
         $rfa_type = $rfa->type->code ?? '';
         if($rfa_type == 'DWG'){
-            $html .= "<div style=\"font-size: 16px; position:absolute;top:204px;left:67px;\">". "X" ."</div>";
+            $html .= "<div style=\"font-size: 16px; position:absolute;top:245px;left:49px;\">". "X" ."</div>";
         }
 
         if($rfa_type == 'SUB'){
-            $html .= "<div style=\"font-size: 16px; position:absolute;top:183px;left:67px;\">". "X" ."</div>";
+            $html .= "<div style=\"font-size: 16px; position:absolute;top:224px;left:49px;\">". "X" ."</div>";
         }
 
         $mpdf->WriteHTML($html);
