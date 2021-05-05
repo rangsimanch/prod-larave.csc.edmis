@@ -1184,25 +1184,14 @@ class RfaController extends Controller
         $title_en = wordwrap($rfa->title_eng ?? '',300,"<br>\n");
         $document_number = $rfa->document_number ?? '';
         $check_box = "X";
-        $rfa_code = $rfa->rfa_code;
-        if(isset($rfa->rfa_code)){
-            $rfa_code = $rfa->rfa_code ?? '';
-            if(strlen($rfa_code) > 8){
-                $revision_count = substr($rfa_code,11,1);
-            }
-            else{
-                $revision_count = "0";
-            }
-        }
+        $rfa_code = $rfa->rfa_code;  
+        if(strlen($rfa_code) > 15){
+            $revision_count = substr($rfa_code,15,2);
+        } 
         else{
-            $rfa_code = $rfa->rfa_code ?? '';  
-            if(strlen($rfa_code) > 15){
-                $revision_count = substr($rfa_code,15,2);
-            }
-            else{
-                $revision_count = "0";
-            }
+            $revision_count = "0";
         }
+        
         $incoming_no = $rfa->incoming_number ?? '';
         $receive_date = $rfa->receive_date ?? '';
         $spec_ref_no = $rfa->spec_ref_no ?? '';
