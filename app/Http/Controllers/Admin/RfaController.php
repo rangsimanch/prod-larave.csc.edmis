@@ -1511,8 +1511,10 @@ class RfaController extends Controller
         $pagecount = $mpdf->SetSourceFile(public_path('pdf-asset/Circulation_of_Work_form.pdf'));
         $tplId = $mpdf->ImportPage($pagecount);
         $mpdf->UseTemplate($tplId);   
+
+        $html = "<div style=\"font-size: 12px; font-weight: bold; position:absolute;top:75px;left:387px;\">". $wbslv2 ."</div>";
         
-        $html = "<div style=\"font-size: 14px; position:absolute;top:94px;left:110px;\">". $incoming_no ."</div>";
+        $html .= "<div style=\"font-size: 14px; position:absolute;top:94px;left:110px;\">". $incoming_no ."</div>";
         $html .= "<div style=\"font-size: 14px; position:absolute;top:94px;left:340px;\">". $submit_date ."</div>";
         $html .= "<div style=\"font-size: 14px; position:absolute;top:94px;left:570;\">". $qty_page ."</div>";
         $html .= "<div style=\"font-size: 14px; position:absolute;top:115px;left:165px;\">". $rfa_code ."</div>";
