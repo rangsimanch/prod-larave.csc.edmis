@@ -1159,6 +1159,23 @@ class RfaController extends Controller
 
         }
 
+        if($rfa->construction_contract->code == "C4-6"){
+            $issue_by = '( นางสาวกรภัทร์ สุวิวัฒน์ธนชัย และนายปริญญา พรสวัสดิ์ )';
+            $issuer_jobtitle = 'กรรมการผู้มีอำนาจ';
+            $issue_position_lf = 200;
+            $constructor_name = 'Unique Engineering and Construction Public Company Limited';
+            $constructor_code = 'UNIQUE';
+            $logo_path = public_path('png-asset/UNIQUE_logo.png');
+            $stamp_path =  '';
+            $signature_path =  '';
+            $signature_size_h = 50;
+            $signature_size_w = 50;
+            $signature_position_top = 400;
+            $signature_position_left = 278;
+            $contract_name = 'Contract ' . $rfa->construction_contract->code . ' : ' . $rfa->construction_contract->name;
+
+        }
+
         if($rfa->construction_contract->code == "C4-7"){
             $issue_by = '( สุทิน สังข์หิรัญ )';
             $issuer_jobtitle = 'ผู้จัดการโครงการ';
