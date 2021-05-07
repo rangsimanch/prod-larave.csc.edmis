@@ -1079,6 +1079,7 @@ class RfaController extends Controller
             $issue_by = '( Sitthichai Pimsawat )';
             $issuer_jobtitle = 'ผู้จัดการโครงการ';
             $issue_position_lf = 255;
+            $issue_position_lf_sub = 483;
             $constructor_name = 'Civil Construction Services & Products Company Limited';
             $constructor_code = 'CCSP';
             $logo_path =  public_path('png-asset/Stamp_CEC.png');
@@ -1095,6 +1096,7 @@ class RfaController extends Controller
             $issue_by = '( ธนนท์ ดอกลัดดา )';
             $issuer_jobtitle = 'ผู้จัดการโครงการ';
             $issue_position_lf = 260;
+            $issue_position_lf_sub = 485;
             $constructor_name = 'Nawarat Patanakarn Public Company Limited';
             $constructor_code = 'NWR';
             $logo_path =  public_path('png-asset/NWR_logo.png');
@@ -1112,6 +1114,7 @@ class RfaController extends Controller
             $issue_by = '( กิตติพัฒน์ พฤกษ์ธนัทพงศ์ )';
             $issuer_jobtitle = 'รองผู้จัดการโครงการ';
             $issue_position_lf = 247;
+            $issue_position_lf_sub = 480;
             $constructor_name = 'Thai Engineers & Industry Company Limited';
             $constructor_code = 'TEI';
             $logo_path = public_path('png-asset/TEI_logo.png');
@@ -1129,6 +1132,7 @@ class RfaController extends Controller
             $issue_by = '( มฆา  อัศวราชันย์ )';
             $issuer_jobtitle = 'ผู้อำนวยการโครงการ';
             $issue_position_lf = 260;
+            $issue_position_lf_sub = 489;
             $constructor_name = 'Italian-Thai Development PLC';
             $constructor_code = 'ITD';
             $logo_path = public_path('png-asset/ITD_logo.png');
@@ -1146,6 +1150,7 @@ class RfaController extends Controller
             $issue_by = '( Narutchai Summawijitra )';
             $issuer_jobtitle = 'ผู้จัดการโครงการ';
             $issue_position_lf = 245;
+            $issue_position_lf_sub = 480;
             $constructor_name = 'SPTK Joint Venture Company Limited';
             $constructor_code = 'SPTK';
             $logo_path =  public_path('png-asset/SPTK_stamp.png');
@@ -1162,7 +1167,8 @@ class RfaController extends Controller
         if($rfa->construction_contract->code == "C4-6"){
             $issue_by = '( นางสาวกรภัทร์ สุวิวัฒน์ธนชัย และนายปริญญา พรสวัสดิ์ )';
             $issuer_jobtitle = 'กรรมการผู้มีอำนาจ';
-            $issue_position_lf = 200;
+            $issue_position_lf = 190;
+            $issue_position_lf_sub = 455;
             $constructor_name = 'Unique Engineering and Construction Public Company Limited';
             $constructor_code = 'UNIQUE';
             $logo_path = public_path('png-asset/UNIQUE_logo.png');
@@ -1180,6 +1186,7 @@ class RfaController extends Controller
             $issue_by = '( สุทิน สังข์หิรัญ )';
             $issuer_jobtitle = 'ผู้จัดการโครงการ';
             $issue_position_lf = 265;
+            $issue_position_lf_sub = 483;
             $constructor_name = 'Civil Enginneering Public Company Limited';
             $constructor_code = 'CIVIL';
             $logo_path = public_path('png-asset/CIVIL_logo.png');
@@ -1340,7 +1347,6 @@ class RfaController extends Controller
         . $note_1 . "</div>";
         
        
-        //Signature Manager
         $html .= "<div style=\"font-size: 14px; position:absolute;top:435px;left:". $issue_position_lf ."px;\">" . $issue_by . "</div>";
         if($issuer_jobtitle == 'ผู้จัดการโครงการ'){
             $html .= "<div style=\"font-size: 12px; position:absolute;top:450px;left:270px\">" . $issuer_jobtitle . "</div>";
@@ -1348,12 +1354,17 @@ class RfaController extends Controller
         else{
             $html .= "<div style=\"font-size: 12px; position:absolute;top:450px;left:265px\">" . $issuer_jobtitle . "</div>";
         }
-        $html .= "<div style=\"font-size: 14px; position:absolute;top:" . $signature_position_top  ."px;left:". $signature_position_left ."px;\">
-            <img src=\"". $signature_path ."\" width=\"". $signature_size_w ."\" higth=\"". $signature_size_h ."\"> </div>";
-        //Stamp
-        $html .= "<div style=\"font-size: 14px; position:absolute;top:300px;left:400px;\">
-            <img src=\"". $stamp_path ."\" width=\"180px\" higth=\"180px\" style=\"opacity: 0.5;\"> </div>";
 
+        //Signature Manager
+        if($signature_path != ''){
+            $html .= "<div style=\"font-size: 14px; position:absolute;top:" . $signature_position_top  ."px;left:". $signature_position_left ."px;\">
+                <img src=\"". $signature_path ."\" width=\"". $signature_size_w ."\" higth=\"". $signature_size_h ."\"> </div>";
+        }
+        //Stamp Organize
+        if($stamp_path != ''){
+            $html .= "<div style=\"font-size: 14px; position:absolute;top:300px;left:400px;\">
+                <img src=\"". $stamp_path ."\" width=\"180px\" higth=\"180px\" style=\"opacity: 0.5;\"> </div>";
+        }
         
 
         //CSC Incoming 
@@ -1461,26 +1472,26 @@ class RfaController extends Controller
             $html .= "<div style=\"font-size: 10px; position:absolute;top:195px;left:608px;\">". $assign_to ."</div>";
             $html .= "<div style=\"font-size: 10px; position:absolute;top:245px;left:230px;\">". $spec_ref_no ."</div>";
             $html .= "<div style=\"font-size: 10px; position:absolute;top:245px;left:685px;\">". $incoming_no ."</div>";
-            $html .= "<div style=\"font-size: 10px; position:absolute;top:260px;left:670;\">". $receive_date ."</div>";
+            $html .= "<div style=\"font-size: 10px; position:absolute;top:260px;left:670;\">". $submit_date ."</div>";
             $html .= "<div style=\"font-size: 10px; position:absolute;top:260px;left:118px;\">". $clause ."</div>";
             $html .= "<div style=\"font-size: 10px; position:absolute;top:280px;left:216px;\">". $contract_drawing_no ."</div>";
             $html .= "<div style=\"font-size: 10px; position:absolute;top:315px;left:130px;\">". $qty_page  . '.' ."</div>";
 
-            //Signature
-
-            $html .= "<div style=\"font-size: 12px; position:absolute;top:770px;left:483px;\">"
-            . '( ' . $issue_by . ' )' . "</div>";
-
-
+            $html .= "<div style=\"font-size: 12px; position:absolute;top:770px;left:". $issue_position_lf_sub ."px;\">"
+            .  $issue_by  . "</div>";
             $html .= "<div style=\"font-size: 10px; position:absolute;top:787px;left:480px;\">"
             . 'ผู้จัดการโครงการ / Project Manager (' . $constructor_code . ')' . "</div>";
             
-            $html .= "<div style=\"font-size: 14px; position:absolute;top:740px;left:520px;\">
-                <img src=\"". $signature_path ."\" width=\"" . $signature_size_w . "\" higth=\"". $signature_size_h ."\"> </div>";
-            
-            $html .= "<div style=\"font-size: 14px; position:absolute;top:500px;left:560px;\">
-                <img src=\"". $stamp_path ."\" width=\"200px\" higth=\"200px\" style=\"opacity: 0.5;\"> </div>";
-            
+            //Signature
+            if($signature_path != ''){
+                $html .= "<div style=\"font-size: 14px; position:absolute;top:740px;left:520px;\">
+                    <img src=\"". $signature_path ."\" width=\"" . $signature_size_w . "\" higth=\"". $signature_size_h ."\"> </div>";
+            }
+
+            if($stamp_path != ''){
+                $html .= "<div style=\"font-size: 14px; position:absolute;top:500px;left:560px;\">
+                    <img src=\"". $stamp_path ."\" width=\"200px\" higth=\"200px\" style=\"opacity: 0.5;\"> </div>";
+            }
 
             $html .= "<div style=\"font-size: 10px; position:absolute;top:930px;left:695px;\">". $outgoing_number  ."</div>";
             $html .= "<div style=\"font-size: 10px; position:absolute;top:950px;left:680px;\">". $outgoing_date  ."</div>";
