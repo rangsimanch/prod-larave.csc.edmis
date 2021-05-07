@@ -1168,7 +1168,7 @@ class RfaController extends Controller
             $issue_by = '( นางสาวกรภัทร์ สุวิวัฒน์ธนชัย และนายปริญญา พรสวัสดิ์ )';
             $issuer_jobtitle = 'กรรมการผู้มีอำนาจ';
             $issue_position_lf = 190;
-            $issue_position_lf_sub = 440;
+            $issue_position_lf_sub = 438;
             $constructor_name = 'Unique Engineering and Construction Public Company Limited';
             $constructor_code = 'UNIQUE';
             $logo_path = public_path('png-asset/UNIQUE_logo.png');
