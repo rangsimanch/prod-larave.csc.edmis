@@ -1168,7 +1168,7 @@ class RfaController extends Controller
             $issue_by = '( นางสาวกรภัทร์ สุวิวัฒน์ธนชัย และนายปริญญา พรสวัสดิ์ )';
             $issuer_jobtitle = 'กรรมการผู้มีอำนาจ';
             $issue_position_lf = 190;
-            $issue_position_lf_sub = 435;
+            $issue_position_lf_sub = 440;
             $constructor_name = 'Unique Engineering and Construction Public Company Limited';
             $constructor_code = 'UNIQUE';
             $logo_path = public_path('png-asset/UNIQUE_logo.png');
@@ -1479,8 +1479,8 @@ class RfaController extends Controller
 
             $html .= "<div style=\"font-size: 12px; position:absolute;top:770px;left:". $issue_position_lf_sub ."px;\">"
             .  $issue_by  . "</div>";
-            $html .= "<div style=\"font-size: 10px; position:absolute;top:787px;left:480px;\">"
-            . 'ผู้จัดการโครงการ / Project Manager (' . $constructor_code . ')' . "</div>";
+            $html .= "<div style=\"font-size: 10px; position:absolute;top:787px;left:485px;\">"
+            . $issuer_jobtitle . '  (' . $constructor_code . ')' . "</div>";
             
             //Signature
             if($signature_path != ''){
