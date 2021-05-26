@@ -114,7 +114,6 @@ class AddLetterController extends Controller
     {
         abort_if(Gate::denies('add_letter_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $senders = Team::all()->pluck('code', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $receivers = Team::all()->pluck('code', 'id')->prepend(trans('global.pleaseSelect'), '');
 
@@ -123,10 +122,13 @@ class AddLetterController extends Controller
         //Contract Check
             //Check is Admin
         if(Auth::id() != 1){
-            $construction_contracts = ConstructionContract::where('id',session('construction_contract_id'))->pluck('code', 'id')->prepend(trans('global.pleaseSelect'), '');
+            $construction_contracts = ConstructionContract::where('id',session('construction_contract_id'))->pluck('code', 'id');
+            $senders = Team::where('id',auth()->user()->team_id)->pluck('code', 'id');
+
         }
         else{
-            $construction_contracts = ConstructionContract::all()->pluck('code', 'id')->prepend(trans('global.pleaseSelect'), '');
+            $construction_contracts = ConstructionContract::all()->pluck('code', 'id');
+            $senders = Team::all()->pluck('code', 'id');
         }
 
         return view('admin.addLetters.create', compact('senders', 'receivers', 'cc_tos', 'construction_contracts'));

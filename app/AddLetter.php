@@ -37,10 +37,10 @@ class AddLetter extends Model implements HasMedia
     ];
 
     const LETTER_TYPE_SELECT = [
+        'General'   => 'หนังสือทั่วไป',
         'Complaint' => 'หนังสือร้องเรียน',
         'VO'        => 'หนังสือเบิกเงิน (VO)',
         'PS'        => 'หนังสือเบิกเงินสำรองจ่าย (PS)',
-        'General'   => 'หนังสือทั่วไป',
     ];
 
     protected $fillable = [

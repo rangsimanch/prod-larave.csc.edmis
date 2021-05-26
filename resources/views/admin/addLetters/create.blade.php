@@ -14,7 +14,6 @@
                         <div class="form-group {{ $errors->has('letter_type') ? 'has-error' : '' }}">
                             <label class="required">{{ trans('cruds.addLetter.fields.letter_type') }}</label>
                             <select class="form-control" name="letter_type" id="letter_type" required>
-                                <option value disabled {{ old('letter_type', null) === null ? 'selected' : '' }}>{{ trans('global.pleaseSelect') }}</option>
                                 @foreach(App\AddLetter::LETTER_TYPE_SELECT as $key => $label)
                                     <option value="{{ $key }}" {{ old('letter_type', '') === (string) $key ? 'selected' : '' }}>{{ $label }}</option>
                                 @endforeach
@@ -43,7 +42,6 @@
                         <div class="form-group {{ $errors->has('speed_class') ? 'has-error' : '' }}">
                             <label class="required">{{ trans('cruds.addLetter.fields.speed_class') }}</label>
                             <select class="form-control" name="speed_class" id="speed_class" required>
-                                <option value disabled {{ old('speed_class', null) === null ? 'selected' : '' }}>{{ trans('global.pleaseSelect') }}</option>
                                 @foreach(App\AddLetter::SPEED_CLASS_SELECT as $key => $label)
                                     <option value="{{ $key }}" {{ old('speed_class', '') === (string) $key ? 'selected' : '' }}>{{ $label }}</option>
                                 @endforeach
@@ -196,4 +194,6 @@ Dropzone.options.letterUploadDropzone = {
      }
 }
 </script>
+
+
 @endsection

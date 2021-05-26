@@ -51,8 +51,31 @@ class RequestForInformationController extends Controller
                 ));
             });
 
+            $table->editColumn('cover_sheet', function ($row) {
+                $cover_sheet = [];
+                $rfi_id =  $row->id;
+                $cover_sheet[] = '<a class="btn btn-default" href="' . route('admin.request-for-informations.createReportRFI',$row->id) .'" target="_blank">
+                Cover Sheet </a>';
+                return implode(' ', $cover_sheet);
+            });
+
             $table->editColumn('document_status', function ($row) {
-                return $row->document_status ? RequestForInformation::DOCUMENT_STATUS_SELECT[$row->document_status] : '';
+                $status = $row->document_status ? RequestForInformation::DOCUMENT_STATUS_SELECT[$row->document_status] : '';
+                 if ($status == 'New'){
+                        return sprintf('<p style="color:#003399"><b>%s</b></p>',$status);
+                    }
+                    else if($status == 'Refer to SRT'){
+                        return sprintf('<p style="color:#ff9900"><b>%s</b></p>',$status);
+                    }
+                    else if($status == 'Done (SRT Reviewed)'){
+                        return sprintf('<p style="color:#009933"><b>%s</b></p>',$status);
+                    }
+                    else if($status == 'Done (CSC Reviewed)'){
+                        return sprintf('<p style="color:#009933"><b>%s</b></p>',$status);
+                    }
+                    else{
+                        return $row->document_status ? RequestForInformation::DOCUMENT_STATUS_SELECT[$row->document_status] : '';
+                    }
             });
             $table->addColumn('construction_contract_code', function ($row) {
                 return $row->construction_contract ? $row->construction_contract->code : '';
@@ -132,7 +155,7 @@ class RequestForInformationController extends Controller
                 return implode(', ', $links);
             });
 
-            $table->rawColumns(['actions', 'placeholder', 'construction_contract', 'to', 'wbs_level_4', 'wbs_level_5', 'attachment_files', 'request_by', 'authorised_rep', 'response_organization', 'file_upload']);
+            $table->rawColumns(['actions', 'placeholder', 'construction_contract', 'to', 'wbs_level_4', 'wbs_level_5', 'attachment_files', 'request_by', 'authorised_rep', 'response_organization', 'file_upload', 'document_status','cover_sheet']);
 
             return $table->make(true);
         }
@@ -169,7 +192,7 @@ class RequestForInformationController extends Controller
         abort_if(Gate::denies('request_for_information_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if(Auth::id() != 1){
-            $construction_contracts = ConstructionContract::where('id',session('construction_contract_id'))->pluck('code', 'id')->prepend(trans('global.pleaseSelect'), '');
+            $construction_contracts = ConstructionContract::where('id',session('construction_contract_id'))->pluck('code', 'id');
         }
         else{
             $construction_contracts = ConstructionContract::all()->pluck('code', 'id')->prepend(trans('global.pleaseSelect'), '');
@@ -215,6 +238,9 @@ class RequestForInformationController extends Controller
         $data['document_no'] = 'HSR1/'. $const_code . '/' . 'RFI' . '/' 
                                 . $wbs4code . '/' . $wbs5code
                                 . '/' . $typecode . '/' . $code_date . '/' . substr($data['originator_code'],-4);
+        
+        $data['incoming_no'] = 'IN-' . $requestForInformation->originator_code;
+
 
 
          //WBS3,4 Name
@@ -320,5 +346,185 @@ class RequestForInformationController extends Controller
         $media         = $model->addMediaFromRequest('upload')->toMediaCollection('ck-media');
 
         return response()->json(['id' => $media->id, 'url' => $media->getUrl()], Response::HTTP_CREATED);
+    }
+
+    public function createReportRFI(RequestForInformation $rfi)
+    {
+        $rfi->load('construction_contract', 'to', 'wbs_level_4', 'wbs_level_5', 'request_by', 'authorised_rep', 'response_organization', 'document_type', 'team');
+       
+        if($rfi->construction_contract->code == "C2-1"){
+            $issue_by = '( Sitthichai Pimsawat )';
+            $issuer_jobtitle = 'ผู้จัดการโครงการ';
+            $issue_position_lf = 255;
+            $issue_position_lf_sub = 483;
+            $constructor_name = 'Civil Construction Services & Products Company Limited';
+            $constructor_code = 'CCSP';
+            $logo_path =  public_path('png-asset/Stamp_CEC.png');
+            $stamp_path =  public_path('png-asset/Stamp_CEC.png');
+            $signature_path =  public_path('png-asset/Signature_CEC.png');
+            $signature_size_h = 40;
+            $signature_size_w = 40;
+            $signature_position_top = 410;
+            $signature_position_left = 280;
+            $contract_name = 'Contract ' . $rfi->construction_contract->code . ' : ' . $rfi->construction_contract->name;
+        }
+
+        if($rfi->construction_contract->code == "C3-2"){
+            $issue_by = '( ธนนท์ ดอกลัดดา )';
+            $issuer_jobtitle = 'ผู้จัดการโครงการ';
+            $issue_position_lf = 260;
+            $issue_position_lf_sub = 485;
+            $constructor_name = 'Nawarat Patanakarn Public Company Limited';
+            $constructor_code = 'NWR';
+            $logo_path =  public_path('png-asset/NWR_logo.png');
+            $stamp_path =  public_path('png-asset/NWR_stamp.png');
+            $signature_path =  public_path('png-asset/NWR_signature.png');
+            $signature_size_h = 55;
+            $signature_size_w = 55;
+            $signature_position_top = 400;
+            $signature_position_left = 280;
+            $contract_name = 'Contract ' . $rfi->construction_contract->code . ' : ' . $rfi->construction_contract->name;
+
+        }
+
+        if($rfi->construction_contract->code == "C3-3"){
+            $issue_by = '( กิตติพัฒน์ พฤกษ์ธนัทพงศ์ )';
+            $issuer_jobtitle = 'รองผู้จัดการโครงการ';
+            $issue_position_lf = 247;
+            $issue_position_lf_sub = 480;
+            $constructor_name = 'Thai Engineers & Industry Company Limited';
+            $constructor_code = 'TEI';
+            $logo_path = public_path('png-asset/TEI_logo.png');
+            $stamp_path =  public_path('png-asset/TEI_stamp.png');
+            $signature_path =  public_path('png-asset/TEI_signature.png');
+            $signature_size_h = 60;
+            $signature_size_w = 60;
+            $signature_position_top = 400;
+            $signature_position_left = 280;
+            $contract_name = 'Contract ' . $rfi->construction_contract->code . ' : ' . $rfi->construction_contract->name;
+
+        }
+
+        if($rfi->construction_contract->code == "C3-4"){
+            $issue_by = '( มฆา  อัศวราชันย์ )';
+            $issuer_jobtitle = 'ผู้อำนวยการโครงการ';
+            $issue_position_lf = 260;
+            $issue_position_lf_sub = 489;
+            $constructor_name = 'Italian-Thai Development PLC';
+            $constructor_code = 'ITD';
+            $logo_path = public_path('png-asset/ITD_logo.png');
+            $stamp_path =  public_path('png-asset/ITD_stamp.png');
+            $signature_path =  public_path('png-asset/ITD_signature.png');
+            $signature_size_h = 60;
+            $signature_size_w = 60;
+            $signature_position_top = 394;
+            $signature_position_left = 280;
+            $contract_name = 'Contract ' . $rfi->construction_contract->code . ' : ' . $rfi->construction_contract->name;
+
+        }
+
+        if($rfi->construction_contract->code == "C3-5"){
+            $issue_by = '( Narutchai Summawijitra )';
+            $issuer_jobtitle = 'ผู้จัดการโครงการ';
+            $issue_position_lf = 245;
+            $issue_position_lf_sub = 480;
+            $constructor_name = 'SPTK Joint Venture Company Limited';
+            $constructor_code = 'SPTK';
+            $logo_path =  public_path('png-asset/SPTK_stamp.png');
+            $stamp_path =  public_path('png-asset/SPTK_stamp.png');
+            $signature_path =  public_path('png-asset/SPTK_signature.png');
+            $signature_size_h = 60;
+            $signature_size_w = 60;
+            $signature_position_top = 410;
+            $signature_position_left = 275;
+            $contract_name = 'Contract ' . $rfi->construction_contract->code . ' : ' . $rfi->construction_contract->name;
+
+        }
+
+        if($rfi->construction_contract->code == "C4-6"){
+            $issue_by = '( นางสาวกรภัทร์ สุวิวัฒน์ธนชัย และนายปริญญา พรสวัสดิ์ )';
+            $issuer_jobtitle = 'กรรมการผู้มีอำนาจ';
+            $issue_position_lf = 190;
+            $issue_position_lf_sub = 438;
+            $constructor_name = 'Unique Engineering and Construction Public Company Limited';
+            $constructor_code = 'UNIQUE';
+            $logo_path = public_path('png-asset/UNIQUE_logo.png');
+            $stamp_path =  '';
+            $signature_path =  '';
+            $signature_size_h = 50;
+            $signature_size_w = 50;
+            $signature_position_top = 400;
+            $signature_position_left = 278;
+            $contract_name = 'Contract ' . $rfi->construction_contract->code . ' : ' . $rfi->construction_contract->name;
+
+        }
+
+        if($rfi->construction_contract->code == "C4-7"){
+            $issue_by = '( สุทิน สังข์หิรัญ )';
+            $issuer_jobtitle = 'ผู้จัดการโครงการ';
+            $issue_position_lf = 265;
+            $issue_position_lf_sub = 483;
+            $constructor_name = 'Civil Enginneering Public Company Limited';
+            $constructor_code = 'CIVIL';
+            $logo_path = public_path('png-asset/CIVIL_logo.png');
+            $stamp_path =  public_path('png-asset/CIVIL_stamp.png');
+            $signature_path =  public_path('png-asset/CIVIL_signature.png');
+            $signature_size_h = 50;
+            $signature_size_w = 50;
+            $signature_position_top = 400;
+            $signature_position_left = 278;
+            $contract_name = 'Contract ' . $rfi->construction_contract->code . ' : ' . $rfi->construction_contract->name;
+        }
+
+        $rfi_no = $rfi->originator_code;
+        $submit_date = $rfi->incoming_date;
+        $title = $rfi->title;
+        $to_team = Team::where('id',$rfi->to_id)->value('code');
+        $req_by =  User::where('id',$rfi->request_by_id)->value('name');
+        $incoming_no = $rfi->incoming_no;
+        $description = $rfi->description;
+
+        try {
+            $mpdf = new \Mpdf\Mpdf([
+                'tempDir' =>  public_path('tmp'), 
+                'default_font' => 'sarabun_new'
+            ]);
+          } catch (\Mpdf\MpdfException $e) {
+              print "Creating an mPDF object failed with" . $e->getMessage();
+          }
+        $pagecount = $mpdf->SetSourceFile(public_path('pdf-asset/RFI_empty_form.pdf'));
+        $tplId = $mpdf->ImportPage($pagecount);
+        $mpdf->UseTemplate($tplId);
+
+        $html = "<div style=\"font-size: 13px; font-weight: bold; position:absolute;top:90px;left:300px;\">" . $contract_name . "</div>";
+        
+        if($rfi->construction_contract->code != "C4-7"){
+            $html .= "<div style=\"font-size: 14px; position:absolute;top:115px;left:690px;\">
+                        <img src=\"". $logo_path ."\" width=\"40px\" higth=\"40px\"> </div>";
+        }
+        else{
+            $html .= "<div style=\"font-size: 14px; position:absolute;top:115px;left:630px;\">
+                        <img src=\"". $logo_path ."\" width=\"80px\" higth=\"80px\"> </div>";
+        }
+        $html .= "<div style=\"font-size: 13px; position:absolute;top:110px;left:615px;\">" . $constructor_code . '.' . "</div>";
+        $html .= "<div style=\"font-size: 10px; position:absolute;top:155px;left:580px;\">" . $constructor_name . '.' . "</div>";
+
+        $html .= "<div style=\"font-size: 13px; position:absolute;top:210px;left:515px;\">" . $rfi_no . '.' . "</div>";
+        $html .= "<div style=\"font-size: 13px; position:absolute;top:210px;left:675px;\">" . $submit_date . '.' . "</div>";
+
+        $html .= "<div style=\"font-size: 13px; position:absolute;top:277px;left:110px;\">" . $title . '.' . "</div>";
+        $html .= "<div style=\"font-size: 13px; position:absolute;top:277px;left:520px;\">" . $to_team . '.' . "</div>";
+        $html .= "<div style=\"font-size: 13px; position:absolute;top:335px;left:180px;\">" . $req_by . '.' . "</div>";
+
+        $html .= "<div style=\"font-size: 13px; position:absolute;top:373px;left:520px;\">" . $incoming_no . '.' . "</div>";
+        $html .= "<div style=\"font-size: 13px; position:absolute;top:390px;left:520px;\">" . $submit_date . '.' . "</div>";
+
+        $html .= "<div style=\"font-size: 13px; position:absolute;top:450px;left:200px;\">" . $description . '.' . "</div>";
+
+
+
+
+        $mpdf->WriteHTML($html);
+        return $mpdf->Output();
     }
 }

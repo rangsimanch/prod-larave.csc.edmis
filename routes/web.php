@@ -168,7 +168,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::post('daily-reports/ckmedia', 'DailyReportController@storeCKEditorImages')->name('daily-reports.storeCKEditorImages');
     Route::resource('daily-reports', 'DailyReportController');
 
-    // Request For Inspections
+    // Request For Inspections (RFN)
     Route::delete('request-for-inspections/destroy', 'RequestForInspectionController@massDestroy')->name('request-for-inspections.massDestroy');
     Route::post('request-for-inspections/media', 'RequestForInspectionController@storeMedia')->name('request-for-inspections.storeMedia');
     Route::post('request-for-inspections/ckmedia', 'RequestForInspectionController@storeCKEditorImages')->name('request-for-inspections.storeCKEditorImages');
@@ -401,11 +401,13 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::post('wbs-level-fives/process-csv-import', 'WbsLevelFiveController@processCsvImport')->name('wbs-level-fives.processCsvImport');
     Route::resource('wbs-level-fives', 'WbsLevelFiveController');
 
-    // Request For Informations
+    // Request For Informations (RFI)
     Route::delete('request-for-informations/destroy', 'RequestForInformationController@massDestroy')->name('request-for-informations.massDestroy');
     Route::post('request-for-informations/media', 'RequestForInformationController@storeMedia')->name('request-for-informations.storeMedia');
     Route::post('request-for-informations/ckmedia', 'RequestForInformationController@storeCKEditorImages')->name('request-for-informations.storeCKEditorImages');
     Route::post('request-for-informations/selectWBS','RequestForInformationController@selectWBS')->name('request-for-informations.selectWBS');
+    
+    Route::get('request-for-informations/{rfi}/createReportRFI','RequestForInformationController@createReportRFI')->name('request-for-informations.createReportRFI');
     Route::resource('request-for-informations', 'RequestForInformationController');
 
     // Site Warning Notices
