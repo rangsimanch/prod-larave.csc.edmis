@@ -280,7 +280,7 @@
 { data: 'file_upload', name: 'file_upload', sortable: false, searchable: false }
     ],
     orderCellsTop: true,
-    order: [[ 6, 'desc' ]],
+    order: [[ 2, 'desc' ]],
     pageLength: 10,
   };
   let table = $('.datatable-RequestForInformation').DataTable(dtOverrideGlobals);
