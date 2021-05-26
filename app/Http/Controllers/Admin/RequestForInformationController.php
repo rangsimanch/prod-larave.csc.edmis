@@ -519,7 +519,7 @@ class RequestForInformationController extends Controller
         $html .= "<div style=\"font-size: 13px; position:absolute;top:373px;left:520px;\">" . $incoming_no . '.' . "</div>";
         $html .= "<div style=\"font-size: 13px; position:absolute;top:390px;left:520px;\">" . $submit_date . '.' . "</div>";
 
-        $html .= "<div style=\"font-size: 13px; position:absolute;top:450px;left:200px;\">" . $description . '.' . "</div>";
+        $html .= "<div style=\"font-size: 13px; position:absolute;top:450px;left:110px;text-align: center;\">" . $description . '.' . "</div>";
 
 
 
