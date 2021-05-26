@@ -121,8 +121,8 @@
                             @endif
                             <span class="help-block">{{ trans('cruds.addLetter.fields.letter_upload_helper') }}</span>
                         </div>
-                        <div class="form-group">
-                            <button class="btn btn-danger" type="submit">
+                        <div class="form-row">
+                            <button class="btn btn-success" type="submit" name="save_form" id="save_form" data-flag="0">
                                 {{ trans('global.save') }}
                             </button>
                         </div>

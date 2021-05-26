@@ -265,29 +265,29 @@ class RequestForInspectionController extends Controller
         $subject = $data['subject'];
         $suffix_subject = intval(substr($data['subject'],-1));
 
-        $work_type = $data['type_of_work'];
+        // $work_type = $data['type_of_work'];
 
-        $wbs1 = WbsLevelOne::where('id','=',$request->wbs_level_1_id)->value('code');
+        // $wbs1 = WbsLevelOne::where('id','=',$request->wbs_level_1_id)->value('code');
         $wbs2 = BoQ::where('id','=',$request->bill_id)->value('code');
-        $wbs3 = WbsLevelThree::where('id','=',$request->wbs_level_3_id)->value('wbs_level_3_code');
+        // $wbs3 = WbsLevelThree::where('id','=',$request->wbs_level_3_id)->value('wbs_level_3_code');
         
-        if(is_null($data['ref_no'])){
-                if($work_type != "Segment Production"){
-                    $order_num = RequestForInspection::where('wbs_level_3_id',$request->wbs_level_3_id)
-                    ->count() + 1;
-                    $order_number = $wbs1 . '/' .  $wbs2 . '/' . $wbs3 . '/' . substr("0000{$order_num}", -4);
-                 }
-                 else{
-                    $order_num = RequestForInspection::where('wbs_level_3_id',$request->wbs_level_3_id)
-                    ->where('type_of_work',$work_type)
-                    ->count() + 1;
-                    $order_number = $wbs1 . '/' .  $wbs2 . '/' . $wbs3 . '/' . substr("0000{$order_num}", -4) . 'Y';
-                 }
-             $data['ref_no'] = $order_number;
-        }
-        else{
-            $order_number = $data['ref_on'];
-        }
+        // if(is_null($data['ref_no'])){
+        //         if($work_type != "Segment Production"){
+        //             $order_num = RequestForInspection::where('wbs_level_3_id',$request->wbs_level_3_id)
+        //             ->count() + 1;
+        //             $order_number = $wbs1 . '/' .  $wbs2 . '/' . $wbs3 . '/' . substr("0000{$order_num}", -4);
+        //          }
+        //          else{
+        //             $order_num = RequestForInspection::where('wbs_level_3_id',$request->wbs_level_3_id)
+        //             ->where('type_of_work',$work_type)
+        //             ->count() + 1;
+        //             $order_number = $wbs1 . '/' .  $wbs2 . '/' . $wbs3 . '/' . substr("0000{$order_num}", -4) . 'Y';
+        //          }
+        //      $data['ref_no'] = $order_number;
+        // }
+        // else{
+        //     $order_number = $data['ref_on'];
+        // }
 
        
         $requestForInspection = RequestForInspection::create($data);
@@ -301,46 +301,46 @@ class RequestForInspectionController extends Controller
         }
 
         //Loop panel
-        if($data['end_loop'] > 0){
-            for($i = 1; $i <= $data['end_loop']; $i++){
-                if(intval($suffix_subject) > 0){
-                    $loop_data['subject'] = substr($subject,0,strlen($subject)-1) . intval($suffix_subject + $i);
-                }else{
-                    $loop_data['subject'] = $data['subject'];
-                }
-                $loop_data['type_of_work'] = $data['type_of_work'];
-                $loop_data['wbs_level_1_id'] = $data['wbs_level_1_id'];
-                $loop_data['bill_id'] = $data['bill_id'];
-                $loop_data['wbs_level_3_id'] = $data['wbs_level_3_id'];
+        // if($data['end_loop'] > 0){
+        //     for($i = 1; $i <= $data['end_loop']; $i++){
+        //         if(intval($suffix_subject) > 0){
+        //             $loop_data['subject'] = substr($subject,0,strlen($subject)-1) . intval($suffix_subject + $i);
+        //         }else{
+        //             $loop_data['subject'] = $data['subject'];
+        //         }
+        //         $loop_data['type_of_work'] = $data['type_of_work'];
+        //         $loop_data['wbs_level_1_id'] = $data['wbs_level_1_id'];
+        //         $loop_data['bill_id'] = $data['bill_id'];
+        //         $loop_data['wbs_level_3_id'] = $data['wbs_level_3_id'];
 
-                $order_num = intval(substr($order_number , -4)) + 1;
-                if($work_type != "Segment Production"){
-                    $order_ref = $wbs1 . '/' .  $wbs2 . '/' . $wbs3 . '/' . substr("0000{$order_num}", -4);
-                }else{
-                    $order_ref = $wbs1 . '/' .  $wbs2 . '/' . $wbs3 . '/' . substr("0000{$order_num}", -4) . 'Y';
-                }
-                $loop_data['ref_no'] = $order_ref;
+        //         $order_num = intval(substr($order_number , -4)) + 1;
+        //         if($work_type != "Segment Production"){
+        //             $order_ref = $wbs1 . '/' .  $wbs2 . '/' . $wbs3 . '/' . substr("0000{$order_num}", -4);
+        //         }else{
+        //             $order_ref = $wbs1 . '/' .  $wbs2 . '/' . $wbs3 . '/' . substr("0000{$order_num}", -4) . 'Y';
+        //         }
+        //         $loop_data['ref_no'] = $order_ref;
 
-                $order_number = $order_ref;
+        //         $order_number = $order_ref;
 
-                $loop_data['location'] = $data['location'];
-                $loop_data['requested_by_id'] = $data['requested_by_id'];
-                $loop_data['submittal_date'] = $data['submittal_date'];
-                $loop_data['contact_person_id'] = $data['contact_person_id'];
-                $loop_data['replied_date'] = $data['replied_date'];
-                $loop_data['ipa'] = $data['ipa'];
-                $loop_data['construction_contract_id'] = $data['construction_contract_id'];
+        //         $loop_data['location'] = $data['location'];
+        //         $loop_data['requested_by_id'] = $data['requested_by_id'];
+        //         $loop_data['submittal_date'] = $data['submittal_date'];
+        //         $loop_data['contact_person_id'] = $data['contact_person_id'];
+        //         $loop_data['replied_date'] = $data['replied_date'];
+        //         $loop_data['ipa'] = $data['ipa'];
+        //         $loop_data['construction_contract_id'] = $data['construction_contract_id'];
 
-                $requestForInspection = RequestForInspection::create($loop_data);
+        //         $requestForInspection = RequestForInspection::create($loop_data);
 
-                if(is_null($request->input('loop_file_upload', []))){
-                    if(is_null($data['loop_file_upload'][$i-1])){
-                        $requestForInspection->addMedia(storage_path('tmp/uploads/' . $data['loop_file_upload'][$i - 1]))
-                        ->toMediaCollection('files_upload');
-                    }
-                }
-            }
-        }
+        //         if(is_null($request->input('loop_file_upload', []))){
+        //             if(is_null($data['loop_file_upload'][$i-1])){
+        //                 $requestForInspection->addMedia(storage_path('tmp/uploads/' . $data['loop_file_upload'][$i - 1]))
+        //                 ->toMediaCollection('files_upload');
+        //             }
+        //         }
+        //     }
+        // }
 
         // foreach ($request->input('loop_file_upload', []) as $file) {
         //     $requestForInspection->addMedia(storage_path('tmp/uploads/' . $file))->toMediaCollection('loop_file_upload');
@@ -405,21 +405,21 @@ class RequestForInspectionController extends Controller
             }
         }
 
-        if (count($requestForInspection->loop_file_upload) > 0) {
-            foreach ($requestForInspection->loop_file_upload as $media) {
-                if (!in_array($media->file_name, $request->input('loop_file_upload', []))) {
-                    $media->delete();
-                }
-            }
-        }
+        // if (count($requestForInspection->loop_file_upload) > 0) {
+        //     foreach ($requestForInspection->loop_file_upload as $media) {
+        //         if (!in_array($media->file_name, $request->input('loop_file_upload', []))) {
+        //             $media->delete();
+        //         }
+        //     }
+        // }
 
-        $media = $requestForInspection->loop_file_upload->pluck('file_name')->toArray();
+        // $media = $requestForInspection->loop_file_upload->pluck('file_name')->toArray();
 
-        foreach ($request->input('loop_file_upload', []) as $file) {
-            if (count($media) === 0 || !in_array($file, $media)) {
-                $requestForInspection->addMedia(storage_path('tmp/uploads/' . $file))->toMediaCollection('loop_file_upload');
-            }
-        }
+        // foreach ($request->input('loop_file_upload', []) as $file) {
+        //     if (count($media) === 0 || !in_array($file, $media)) {
+        //         $requestForInspection->addMedia(storage_path('tmp/uploads/' . $file))->toMediaCollection('loop_file_upload');
+        //     }
+        // }
 
         return redirect()->route('admin.request-for-inspections.index');
     }

@@ -19,9 +19,9 @@
                 </button>
                 @include('csvImport.modal', ['model' => 'RequestForInspection', 'route' => 'admin.request-for-inspections.parseCsvImport'])
 
-                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#fileuploadCCSP">
+                <!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#fileuploadCCSP">
                     {{ trans('cruds.requestForInspection.fields.modal_file_upload') }}
-                </button>
+                </button> -->
 
             </div>
         </div>
@@ -33,95 +33,63 @@
                     {{ trans('cruds.requestForInspection.title_singular') }} {{ trans('global.list') }}
                 </div>
                 <div class="panel-body">
-                    <table class=" table table-bordered table-striped table-hover ajaxTable datatable datatable-RequestForInspection">
+                    <table class=" table table-bordered table-striped table-hover ajaxTable datatable datatable-RequestForInspection text-center">
                         <thead>
                             <tr>
                                 <th width="10">
 
                                 </th>
                                 <th>
-                                    {{ trans('cruds.requestForInspection.fields.construction_contract') }}
+                                    Action
                                 </th>
+                                
                                 <th>
-                                    {{ trans('cruds.requestForInspection.fields.wbs_level_1') }}
+                                    {{ trans('cruds.requestForInspection.fields.created_at') }}
                                 </th>
-                                <th>
-                                    {{ trans('cruds.requestForInspection.fields.bill') }}
-                                </th>
-                                <th>
-                                    {{ trans('cruds.requestForInspection.fields.wbs_level_3') }}
-                                </th>
-                                <th>
-                                    {{ trans('cruds.requestForInspection.fields.item_1') }}
-                                </th>
-                                <th>
-                                    {{ trans('cruds.requestForInspection.fields.item_2') }}
-                                </th>
-                                <th>
-                                    {{ trans('cruds.requestForInspection.fields.item_3') }}
-                                </th>
-                                <th>
-                                    {{ trans('cruds.requestForInspection.fields.type_of_work') }}
-                                </th>
+
                                 <th>
                                     {{ trans('cruds.requestForInspection.fields.subject') }}
                                 </th>
+
+                                <th>
+                                    {{ trans('cruds.requestForInspection.fields.bill') }}
+                                </th>
+
+                                <th>
+                                    {{ trans('cruds.requestForInspection.fields.construction_contract') }}
+                                </th>
+                                  
                                 <th>
                                     {{ trans('cruds.requestForInspection.fields.ref_no') }}
                                 </th>
-                                <th>
-                                    {{ trans('cruds.requestForInspection.fields.location') }}
-                                </th>
-                                <th>
-                                    {{ trans('cruds.requestForInspection.fields.requested_by') }}
-                                </th>
+                               
                                 <th>
                                     {{ trans('cruds.requestForInspection.fields.submittal_date') }}
                                 </th>
-                                <th>
-                                    {{ trans('cruds.requestForInspection.fields.contact_person') }}
-                                </th>
-                                <th>
-                                    {{ trans('cruds.requestForInspection.fields.replied_date') }}
-                                </th>
+                              
                                 <th>
                                     {{ trans('cruds.requestForInspection.fields.ipa') }}
                                 </th>
                                 <th>
                                     {{ trans('cruds.requestForInspection.fields.files_upload') }}
                                 </th>
-                                <!-- <th>
-                                    {{ trans('cruds.requestForInspection.fields.created_at') }}
-                                </th>
-                                <th>
-                                    {{ trans('cruds.requestForInspection.fields.end_loop') }}
-                                </th>
-                                <th>
-                                    {{ trans('cruds.requestForInspection.fields.loop_file_upload') }}
-                                </th> -->
-                                <th>
-                                    &nbsp;
-                                </th>
+                                
+                               
                             </tr>
                             <tr>
                                 <td>
                                 </td>
+
                                 <td>
-                                    <select class="search">
-                                        <option value>{{ trans('global.all') }}</option>
-                                        @foreach($construction_contracts as $key => $item)
-                                            <option value="{{ $item->code }}">{{ $item->code }}</option>
-                                        @endforeach
-                                    </select>
-                                </td>
+                                </td> 
+
                                 <td>
-                                    <select class="search">
-                                        <option value>{{ trans('global.all') }}</option>
-                                        @foreach($wbs_level_ones as $key => $item)
-                                            <option value="{{ $item->name }}">{{ $item->name }}</option>
-                                        @endforeach
-                                    </select>
                                 </td>
+
+                                <td>
+                                    <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                                </td>
+
                                 <td>
                                     <select class="search">
                                         <option value>{{ trans('global.all') }}</option>
@@ -130,91 +98,29 @@
                                         @endforeach
                                     </select>
                                 </td>
+
                                 <td>
                                     <select class="search">
                                         <option value>{{ trans('global.all') }}</option>
-                                        @foreach($wbs_level_threes as $key => $item)
-                                            <option value="{{ $item->wbs_level_3_name }}">{{ $item->wbs_level_3_name }}</option>
-                                        @endforeach
-                                    </select>
-                                </td>
-                                <td>
-                                    <select class="search">
-                                        <option value>{{ trans('global.all') }}</option>
-                                        @foreach($boq_items as $key => $item)
+                                        @foreach($construction_contracts as $key => $item)
                                             <option value="{{ $item->code }}">{{ $item->code }}</option>
                                         @endforeach
                                     </select>
                                 </td>
-                                <td>
-                                    <select class="search">
-                                        <option value>{{ trans('global.all') }}</option>
-                                        @foreach($boq_items as $key => $item)
-                                            <option value="{{ $item->code }}">{{ $item->code }}</option>
-                                        @endforeach
-                                    </select>
-                                </td>
-                                <td>
-                                    <select class="search">
-                                        <option value>{{ trans('global.all') }}</option>
-                                        @foreach($boq_items as $key => $item)
-                                            <option value="{{ $item->code }}">{{ $item->code }}</option>
-                                        @endforeach
-                                    </select>
-                                </td>
-                                <td>
-                                    <select class="search" strict="true">
-                                        <option value>{{ trans('global.all') }}</option>
-                                        @foreach(App\RequestForInspection::TYPE_OF_WORK_SELECT as $key => $item)
-                                            <option value="{{ $item }}">{{ $item }}</option>
-                                        @endforeach
-                                    </select>
-                                </td>
+                               
                                 <td>
                                     <input class="search" type="text" placeholder="{{ trans('global.search') }}">
                                 </td>
+                                
+                                <td>
+                                </td>
+
                                 <td>
                                     <input class="search" type="text" placeholder="{{ trans('global.search') }}">
                                 </td>
-                                <td>
-                                    <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                                </td>
-                                <td>
-                                    <select class="search">
-                                        <option value>{{ trans('global.all') }}</option>
-                                        @foreach($users as $key => $item)
-                                            <option value="{{ $item->name }}">{{ $item->name }}</option>
-                                        @endforeach
-                                    </select>
-                                </td>
+                               
                                 <td>
                                 </td>
-                                <td>
-                                    <select class="search">
-                                        <option value>{{ trans('global.all') }}</option>
-                                        @foreach($users as $key => $item)
-                                            <option value="{{ $item->name }}">{{ $item->name }}</option>
-                                        @endforeach
-                                    </select>
-                                </td>
-                                <td>
-                                </td>
-                                <td>
-                                    <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                                </td>
-                                <td>
-                                </td>
-                                <!-- <td>
-                                    <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                                </td>
-                                <td>
-                                    <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                                </td>
-                                <td>
-                                </td>
-                                -->
-                                <td>
-                                </td> 
                             </tr>
                         </thead>
                     </table>
@@ -364,30 +270,20 @@ Dropzone.options.filesUploadDropzone = {
     ajax: "{{ route('admin.request-for-inspections.index') }}",
     columns: [
       { data: 'placeholder', name: 'placeholder' },
-{ data: 'construction_contract_code', name: 'construction_contract.code' },
-{ data: 'wbs_level_1_name', name: 'wbs_level_1.name' },
-{ data: 'bill_name', name: 'bill.name' },
-{ data: 'wbs_level_3_wbs_level_3_name', name: 'wbs_level_3.wbs_level_3_name' },
-{ data: 'item_1_code', name: 'item_1.code' },
-{ data: 'item_2_code', name: 'item_2.code' },
-{ data: 'item_3_code', name: 'item_3.code' },
-{ data: 'type_of_work', name: 'type_of_work' },
+{ data: 'actions', name: '{{ trans('global.actions') }}' },
+{ data: 'created_at', name: 'created_at' },
 { data: 'subject', name: 'subject' },
+{ data: 'bill_name', name: 'bill.name' },
+{ data: 'construction_contract_code', name: 'construction_contract.code' },
 { data: 'ref_no', name: 'ref_no' },
-{ data: 'location', name: 'location' },
-{ data: 'requested_by_name', name: 'requested_by.name' },
 { data: 'submittal_date', name: 'submittal_date' },
-{ data: 'contact_person_name', name: 'contact_person.name' },
-{ data: 'replied_date', name: 'replied_date' },
 { data: 'ipa', name: 'ipa' },
 { data: 'files_upload', name: 'files_upload', sortable: false, searchable: false },
-// { data: 'created_at', name: 'created_at' },
 // { data: 'end_loop', name: 'end_loop' },
 // { data: 'loop_file_upload', name: 'loop_file_upload', sortable: false, searchable: false },
-{ data: 'actions', name: '{{ trans('global.actions') }}' }
     ],
     orderCellsTop: true,
-    order: [[ 13, 'desc' ]],
+    order: [[ 3, 'desc' ]],
     pageLength: 10,
   };
   let table = $('.datatable-RequestForInspection').DataTable(dtOverrideGlobals);
