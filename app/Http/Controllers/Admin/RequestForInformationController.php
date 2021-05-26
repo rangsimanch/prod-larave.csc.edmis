@@ -506,20 +506,20 @@ class RequestForInformationController extends Controller
             $html .= "<div style=\"font-size: 14px; position:absolute;top:115px;left:630px;\">
                         <img src=\"". $logo_path ."\" width=\"80px\" higth=\"80px\"> </div>";
         }
-        $html .= "<div style=\"font-size: 13px; position:absolute;top:110px;left:615px;\">" . $constructor_code . '.' . "</div>";
-        $html .= "<div style=\"font-size: 10px; position:absolute;top:155px;left:580px;\">" . $constructor_name . '.' . "</div>";
+        $html .= "<div style=\"font-size: 13px; position:absolute;top:110px;left:615px;\">" . $constructor_code  . "</div>";
+        $html .= "<div style=\"font-size: 10px; position:absolute;top:155px;left:580px;\">" . $constructor_name  . "</div>";
 
-        $html .= "<div style=\"font-size: 13px; position:absolute;top:210px;left:515px;\">" . $rfi_no . '.' . "</div>";
-        $html .= "<div style=\"font-size: 13px; position:absolute;top:210px;left:675px;\">" . $submit_date . '.' . "</div>";
+        $html .= "<div style=\"font-size: 13px; position:absolute;top:210px;left:515px;\">" . $rfi_no  . "</div>";
+        $html .= "<div style=\"font-size: 13px; position:absolute;top:210px;left:675px;\">" . $submit_date  . "</div>";
 
-        $html .= "<div style=\"font-size: 13px; position:absolute;top:277px;left:110px;\">" . $title . '.' . "</div>";
-        $html .= "<div style=\"font-size: 13px; position:absolute;top:277px;left:520px;\">" . $to_team . '.' . "</div>";
-        $html .= "<div style=\"font-size: 13px; position:absolute;top:335px;left:180px;\">" . $req_by . '.' . "</div>";
+        $html .= "<div style=\"font-size: 13px; position:absolute;top:277px;left:110px;\">" . $title  . "</div>";
+        $html .= "<div style=\"font-size: 13px; position:absolute;top:277px;left:520px;\">" . $to_team  . "</div>";
+        $html .= "<div style=\"font-size: 13px; position:absolute;top:335px;left:180px;\">" . $req_by . "</div>";
 
-        $html .= "<div style=\"font-size: 13px; position:absolute;top:373px;left:520px;\">" . $incoming_no . '.' . "</div>";
-        $html .= "<div style=\"font-size: 13px; position:absolute;top:390px;left:520px;\">" . $submit_date . '.' . "</div>";
+        $html .= "<div style=\"font-size: 13px; position:absolute;top:373px;left:520px;\">" . $incoming_no . "</div>";
+        $html .= "<div style=\"font-size: 13px; position:absolute;top:390px;left:520px;\">" . $submit_date . "</div>";
 
-        $html .= "<div style=\"font-size: 13px; position:absolute;top:450px;left:110px;text-align: center;\">" . $description . '.' . "</div>";
+        $html .= "<div style=\"font-size: 13px; position:absolute;top:430px;left:90px;text-align: center;\">" . $description . '.' . "</div>";
 
 
 
