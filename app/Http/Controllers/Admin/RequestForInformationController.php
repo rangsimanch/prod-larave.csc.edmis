@@ -239,7 +239,7 @@ class RequestForInformationController extends Controller
                                 . $wbs4code . '/' . $wbs5code
                                 . '/' . $typecode . '/' . $code_date . '/' . substr($data['originator_code'],-4);
         
-        $data['incoming_no'] = 'IN-' . $requestForInformation->originator_code;
+        $data['incoming_no'] = 'IN-' . $data['originator_code'];
 
 
 
