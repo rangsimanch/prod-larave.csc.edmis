@@ -1562,7 +1562,7 @@ class RfaController extends Controller
         
         $html .= "<div style=\"font-size: 14px; position:absolute;top:94px;left:110px;\">". $incoming_no ."</div>";
         $html .= "<div style=\"font-size: 14px; position:absolute;top:94px;left:340px;\">". $submit_date ."</div>";
-        $html .= "<div style=\"font-size: 14px; position:absolute;top:94px;left:570;\">". $qty_page ."</div>";
+        $html .= "<div style=\"font-size: 14px; position:absolute;top:94px;left:570;\">". $qty_page .'.' ."</div>";
         $html .= "<div style=\"font-size: 14px; position:absolute;top:115px;left:165px;\">". $rfa_code ."</div>";
         $html .= "<div style=\"font-size: 14px; position:absolute;top:155px;left:75px;\">". $title_th ."</div>";
 
