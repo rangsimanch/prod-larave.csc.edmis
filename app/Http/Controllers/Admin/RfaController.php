@@ -1133,11 +1133,29 @@ class RfaController extends Controller
             $issuer_jobtitle = 'ผู้อำนวยการโครงการ';
             $issue_position_lf = 260;
             $issue_position_lf_sub = 489;
-            $constructor_name = 'Italian-Thai Development PLC';
+            $constructor_name = 'Italian-Thai Development PCL.';
             $constructor_code = 'ITD';
             $logo_path = public_path('png-asset/ITD_logo.png');
             $stamp_path =  public_path('png-asset/ITD_stamp.png');
             $signature_path =  public_path('png-asset/ITD_signature.png');
+            $signature_size_h = 60;
+            $signature_size_w = 60;
+            $signature_position_top = 394;
+            $signature_position_left = 280;
+            $contract_name = 'Contract ' . $rfa->construction_contract->code . ' : ' . $rfa->construction_contract->name;
+
+        }
+
+        if($rfa->construction_contract->code == "C4-4"){
+            $issue_by = '( พิเชฐ  ภาพปัญญาพร )';
+            $issuer_jobtitle = 'ผู้อำนวยการโครงการ';
+            $issue_position_lf = 260;
+            $issue_position_lf_sub = 489;
+            $constructor_name = 'Italian-Thai Development PCL.';
+            $constructor_code = 'ITD';
+            $logo_path = public_path('png-asset/ITD_logo.png');
+            $stamp_path =  public_path('png-asset/ITD_stamp.png');
+            $signature_path = "";
             $signature_size_h = 60;
             $signature_size_w = 60;
             $signature_position_top = 394;
