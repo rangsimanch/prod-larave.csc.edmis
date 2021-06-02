@@ -316,7 +316,14 @@ class SrtInputDocumentsController extends Controller
 
     public function update(UpdateSrtInputDocumentRequest $request, SrtInputDocument $srtInputDocument)
     {
-        $srtInputDocument->update($request->all());
+        $data = $request->all();
+        $data['docuement_status_id'] = 2;
+        $data['close_by_id'] = auth()->id();
+        
+        $today = new DateTime();
+        $data['close_date'] = $today->format("d/m/Y");
+
+        $srtInputDocument->update($data);
         $srtInputDocument->tos()->sync($request->input('tos', []));
         
 
@@ -328,69 +335,60 @@ class SrtInputDocumentsController extends Controller
             }
         }
 
-        $pdfMerger = PDFMerger::init();
+        
         $media = $srtInputDocument->file_upload->pluck('file_name')->toArray();
-
-        foreach ($request->input('file_upload', []) as $file) {
-                $pdfMerger->addPDF(storage_path('tmp/uploads/' . $file), 'all');
-        }
-        $pdfMerger->merge();
-        $pdfMerger->save(storage_path('tmp/uploads/mergerPdf_01.pdf'), "file");
-        foreach ($request->input('file_upload', []) as $file) {
-            if (count($media) === 0 || !in_array($file, $media)) {
-                File::delete(storage_path('tmp/uploads/' . $file));
+        if(count($request->input('file_upload', [])) > 1){
+            // Complete Files
+            if($data['save_for'] == "Closed"){
+                $CompleteMerger = PDFMerger::init();
+                $fileUpload_1 = $srtInputDocument->getMedia('file_upload')->first();
+                $CompleteMerger->addPDF($fileUpload_1->getPath());
+                foreach ($request->input('file_upload', []) as $file) {
+                    if (count($media) === 0 || !in_array($file, $media)) {
+                        $CompleteMerger->addPDF(storage_path('tmp/uploads/' . $file), 'all');  
+                    }
+                }
+                $CompleteMerger->merge();
+                $CompleteMerger->save(storage_path('tmp/uploads/mergerPdf_Completed.pdf'), "file");
+                $srtInputDocument->addMedia(storage_path('tmp/uploads/mergerPdf_Completed.pdf'))->toMediaCollection('complete_file');
             }
-        }
-        $srtInputDocument->addMedia(storage_path('tmp/uploads/mergerPdf_01.pdf'))->toMediaCollection('file_upload');
-
-        // if (count($srtInputDocument->file_upload_2) > 0) {
-        //     foreach ($srtInputDocument->file_upload_2 as $media) {
-        //         if (!in_array($media->file_name, $request->input('file_upload_2', []))) {
-        //             $media->delete();
-        //         }
-        //     }
-        // }
-
-        // $media = $srtInputDocument->file_upload_2->pluck('file_name')->toArray();
-
-        // foreach ($request->input('file_upload_2', []) as $file) {
-        //     if (count($media) === 0 || !in_array($file, $media)) {
-        //         $srtInputDocument->addMedia(storage_path('tmp/uploads/' . $file))->toMediaCollection('file_upload_2');
-        //     }
-        // }
-
-        // if (count($srtInputDocument->file_upload_3) > 0) {
-        //     foreach ($srtInputDocument->file_upload_3 as $media) {
-        //         if (!in_array($media->file_name, $request->input('file_upload_3', []))) {
-        //             $media->delete();
-        //         }
-        //     }
-        // }
-
-        // $media = $srtInputDocument->file_upload_3->pluck('file_name')->toArray();
-
-        // foreach ($request->input('file_upload_3', []) as $file) {
-        //     if (count($media) === 0 || !in_array($file, $media)) {
-        //         $srtInputDocument->addMedia(storage_path('tmp/uploads/' . $file))->toMediaCollection('file_upload_3');
-        //     }
-        // }
-
-        // if (count($srtInputDocument->file_upload_4) > 0) {
-        //     foreach ($srtInputDocument->file_upload_4 as $media) {
-        //         if (!in_array($media->file_name, $request->input('file_upload_4', []))) {
-        //             $media->delete();
-        //         }
-        //     }
-        // }
-
-        // $media = $srtInputDocument->file_upload_4->pluck('file_name')->toArray();
-
-        // foreach ($request->input('file_upload_4', []) as $file) {
-        //     if (count($media) === 0 || !in_array($file, $media)) {
-        //         $srtInputDocument->addMedia(storage_path('tmp/uploads/' . $file))->toMediaCollection('file_upload_4');
-        //     }
-        // }
-
+    
+                //Merger PDF
+                $pdfMerger = PDFMerger::init();
+                //Merge PDF in Dropzone
+                foreach ($request->input('file_upload', []) as $file) {
+                    if (count($media) === 0 || !in_array($file, $media)) {
+                        $pdfMerger->addPDF(storage_path('tmp/uploads/' . $file), 'all');  
+                    }
+                }
+                    $pdfMerger->merge();
+                    //Save to tmp
+                    $pdfMerger->save(storage_path('tmp/uploads/mergerPdf_02.pdf'), "file");
+                    //Delete Dropzone file on tmp 
+                    foreach ($request->input('file_upload', []) as $file) {
+                        if (count($media) === 0 || !in_array($file, $media)) {
+                            File::delete(storage_path('tmp/uploads/' . $file));
+                        }
+                    }
+                    //Add media to SrtInputDocument Collection (file_upload_2)
+                    $srtInputDocument->addMedia(storage_path('tmp/uploads/mergerPdf_02.pdf'))->toMediaCollection('file_upload_2');
+                }
+                else{
+                    if($data['save_for'] == "Closed"){
+                        $CompleteMerger = PDFMerger::init();
+                        $fileUpload_1 = $srtInputDocument->getMedia('file_upload')->first();
+                        $CompleteMerger = $fileUpload_1->copy($srtInputDocument,'complete_file');
+                    }
+                }
+    
+                //Delete Function on SrtInputDocument Collection (file_upload_2)
+                if (count($srtInputDocument->file_upload) > 0) {
+                    foreach ($srtInputDocument->file_upload as $media) {
+                        if (!in_array($media->file_name, $request->input('file_upload', []))) {
+                            $media->delete();
+                        }
+                    }
+                }
 
         return redirect()->route('admin.srt-input-documents.index');
     }
