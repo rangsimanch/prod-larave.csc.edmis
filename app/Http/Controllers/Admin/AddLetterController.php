@@ -123,7 +123,7 @@ class AddLetterController extends Controller
             //Check is Admin
         if(Auth::id() != 1){
             $construction_contracts = ConstructionContract::where('id',session('construction_contract_id'))->pluck('code', 'id');
-            $senders = Team::where('id',auth()->user()->team_id)->pluck('code', 'id');
+            // $senders = Team::where('id',auth()->user()->team_id)->pluck('code', 'id');
 
         }
         else{
