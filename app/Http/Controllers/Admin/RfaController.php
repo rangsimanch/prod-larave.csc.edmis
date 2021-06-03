@@ -1171,13 +1171,13 @@ class RfaController extends Controller
             $issue_position_lf_sub = 489;
             $constructor_name = 'CAN Joint Venture';
             $constructor_code = 'CAN';
-            $logo_path = public_path('png-asset/CAN_stamp.png');
+            $logo_path = public_path('png-asset/CAN_logo.png');
             $stamp_path =  public_path('png-asset/CAN_stamp.png');
             $signature_path = public_path('png-asset/CAN_signature.png');
             $signature_size_h = 60;
             $signature_size_w = 60;
             $signature_position_top = 394;
-            $signature_position_left = 280;
+            $signature_position_left = 260;
             $contract_name = 'Contract ' . $rfa->construction_contract->code . ' : ' . $rfa->construction_contract->name;
 
         }
