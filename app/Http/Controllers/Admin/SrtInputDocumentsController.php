@@ -317,7 +317,13 @@ class SrtInputDocumentsController extends Controller
     public function update(UpdateSrtInputDocumentRequest $request, SrtInputDocument $srtInputDocument)
     {
         $data = $request->all();
-        $data['docuement_status_id'] = 2;
+        
+        if($data['save_for'] == "Closed"){
+            $data['docuement_status_id'] = 2;
+        }
+        else{
+            $data['docuement_status_id'] = 1;
+        }
         $data['close_by_id'] = auth()->id();
         
         $today = new DateTime();
