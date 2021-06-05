@@ -441,6 +441,42 @@ class RequestForInformationController extends Controller
 
         }
 
+        if($rfa->construction_contract->code == "C4-3"){
+            $issue_by = '( Zhou Jia Yi )';
+            $issuer_jobtitle = 'Project manager';
+            $issue_position_lf = 260;
+            $issue_position_lf_sub = 489;
+            $constructor_name = 'CAN Joint Venture';
+            $constructor_code = 'CAN';
+            $logo_path = public_path('png-asset/CAN_logo.png');
+            $stamp_path =  public_path('png-asset/CAN_stamp.png');
+            $signature_path = public_path('png-asset/CAN_signature.png');
+            $signature_size_h = 60;
+            $signature_size_w = 60;
+            $signature_position_top = 394;
+            $signature_position_left = 260;
+            $contract_name = 'Contract ' . $rfa->construction_contract->code . ' : ' . $rfa->construction_contract->name;
+
+        }
+
+        if($rfa->construction_contract->code == "C4-4"){
+            $issue_by = '( พิเชฐ  ภาพปัญญาพร )';
+            $issuer_jobtitle = 'ผู้อำนวยการโครงการ';
+            $issue_position_lf = 260;
+            $issue_position_lf_sub = 489;
+            $constructor_name = 'Italian-Thai Development PCL.';
+            $constructor_code = 'ITD';
+            $logo_path = public_path('png-asset/ITD_logo.png');
+            $stamp_path =  public_path('png-asset/ITD_stamp.png');
+            $signature_path = "";
+            $signature_size_h = 60;
+            $signature_size_w = 60;
+            $signature_position_top = 394;
+            $signature_position_left = 280;
+            $contract_name = 'Contract ' . $rfa->construction_contract->code . ' : ' . $rfa->construction_contract->name;
+
+        }
+
         if($rfi->construction_contract->code == "C4-6"){
             $issue_by = '( นางสาวกรภัทร์ สุวิวัฒน์ธนชัย และนายปริญญา พรสวัสดิ์ )';
             $issuer_jobtitle = 'กรรมการผู้มีอำนาจ';
