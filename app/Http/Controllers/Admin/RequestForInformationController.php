@@ -441,7 +441,7 @@ class RequestForInformationController extends Controller
 
         }
 
-        if($rfa->construction_contract->code == "C4-3"){
+        if($rfi->construction_contract->code == "C4-3"){
             $issue_by = '( Zhou Jia Yi )';
             $issuer_jobtitle = 'Project manager';
             $issue_position_lf = 260;
@@ -459,7 +459,7 @@ class RequestForInformationController extends Controller
 
         }
 
-        if($rfa->construction_contract->code == "C4-4"){
+        if($rfi->construction_contract->code == "C4-4"){
             $issue_by = '( พิเชฐ  ภาพปัญญาพร )';
             $issuer_jobtitle = 'ผู้อำนวยการโครงการ';
             $issue_position_lf = 260;
