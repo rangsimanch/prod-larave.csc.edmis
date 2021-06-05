@@ -455,7 +455,7 @@ class RequestForInformationController extends Controller
             $signature_size_w = 60;
             $signature_position_top = 394;
             $signature_position_left = 260;
-            $contract_name = 'Contract ' . $rfa->construction_contract->code . ' : ' . $rfa->construction_contract->name;
+            $contract_name = 'Contract ' . $rfi->construction_contract->code . ' : ' . $rfi->construction_contract->name;
 
         }
 
@@ -473,7 +473,7 @@ class RequestForInformationController extends Controller
             $signature_size_w = 60;
             $signature_position_top = 394;
             $signature_position_left = 280;
-            $contract_name = 'Contract ' . $rfa->construction_contract->code . ' : ' . $rfa->construction_contract->name;
+            $contract_name = 'Contract ' . $rfi->construction_contract->code . ' : ' . $rfi->construction_contract->name;
 
         }
 
