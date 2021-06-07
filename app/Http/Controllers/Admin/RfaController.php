@@ -1340,7 +1340,7 @@ class RfaController extends Controller
         //Header
         $html = "<div style=\"font-size: 13px; font-weight: bold; position:absolute;top:84px;left:320px;\">" . $contract_name . "</div>";
             //Logo
-        if($rfa->construction_contract->code != "C4-7"){
+        if($rfa->construction_contract->code != "C4-7" && $rfa->construction_contract->code != "C4-3"){
             $html .= "<div style=\"font-size: 14px; position:absolute;top:109px;left:690px;\">
                         <img src=\"". $logo_path ."\" width=\"40px\" higth=\"40px\"> </div>";
         }

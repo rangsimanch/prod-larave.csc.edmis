@@ -534,7 +534,7 @@ class RequestForInformationController extends Controller
 
         $html = "<div style=\"font-size: 13px; font-weight: bold; position:absolute;top:90px;left:300px;\">" . $contract_name . "</div>";
         
-        if($rfi->construction_contract->code != "C4-7"){
+        if($rfi->construction_contract->code != "C4-7" && $rfi->construction_contract->code != "C4-3"){
             $html .= "<div style=\"font-size: 14px; position:absolute;top:115px;left:690px;\">
                         <img src=\"". $logo_path ."\" width=\"40px\" higth=\"40px\"> </div>";
         }

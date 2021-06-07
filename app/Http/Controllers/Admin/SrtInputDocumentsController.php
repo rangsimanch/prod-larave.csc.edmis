@@ -181,8 +181,6 @@ class SrtInputDocumentsController extends Controller
 
         $constuction_contracts = ConstructionContract::all()->pluck('code', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-
-
         $froms = Team::all()->pluck('code', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $tos = User::all()->where('team_id','1')->pluck('name', 'id');
@@ -318,12 +316,13 @@ class SrtInputDocumentsController extends Controller
     {
         $data = $request->all();
         
-        if($data['save_for'] == "Closed"){
+        if($data['save_for'] == 'Closed'){
             $data['docuement_status_id'] = 2;
         }
         else{
             $data['docuement_status_id'] = 1;
         }
+
         $data['close_by_id'] = auth()->id();
         
         $today = new DateTime();

@@ -27,9 +27,9 @@
                                 <th width="10">
 
                                 </th>
-                                <th>
+                                <!-- <th>
                                     {{ trans('cruds.srtExternalDocument.fields.id') }}
-                                </th>
+                                </th> -->
                                 <th>
                                     {{ trans('cruds.srtInputDocument.fields.docuement_status') }}
                                 </th>
@@ -82,9 +82,9 @@
                             <tr>
                                 <td>
                                 </td>
-                                <td>
+                                <!-- <td>
                                     <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                                </td>
+                                </td> -->
                                 <td>
                                     <select class="search">
                                         <option value>{{ trans('global.all') }}</option>
@@ -212,7 +212,7 @@
     ajax: "{{ route('admin.srt-input-documents.index') }}",
     columns: [
       { data: 'placeholder', name: 'placeholder' },
- { data: 'id', name: 'id', visible: false},
+//  { data: 'id', name: 'id', visible: false},
 { data: 'docuement_status_title', name: 'docuement_status.title' },
 { data: 'constuction_contract_code', name: 'constuction_contract.code' },
 { data: 'document_number', name: 'document_number' },
