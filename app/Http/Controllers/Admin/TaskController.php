@@ -110,7 +110,7 @@ class TaskController extends Controller
                 }
                 else{
                     return sprintf(
-                        '<img src="https://i.webch7.com/images/theme2019/avatar.png" width="50px" height="50px" class="avatar">'
+                        '<img src="https://upload.wikimedia.org/wikipedia/commons/9/9a/No_avatar.png" width="50px" height="50px" class="avatar">'
                     );
                 }
                 return '';
