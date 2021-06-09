@@ -151,7 +151,7 @@ img {
     ajax: "{{ route('admin.tasks.index') }}",
     columns: [
       { data: 'placeholder', name: 'placeholder' },
-{ data: 'img_user', name: 'img_user', sortable: false, searchable: false },
+{ data: 'img_user', name: 'create_by_user.img_user', sortable: false, searchable: false },
 { data: 'create_by_user_name', name: 'create_by_user.name', sortable: false, },
 { data: 'name', name: 'name', sortable: false, },
 { data: 'tag', name: 'tags.name', sortable: false, },
