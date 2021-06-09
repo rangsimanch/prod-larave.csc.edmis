@@ -136,7 +136,7 @@ class TaskController extends Controller
             }
             $work_type = TaskTag::all()->sortBy('name')->pluck('name')->unique();
             $status = TaskStatus::all()->sortBy('id')->pluck('name')->unique();
-            return view('admin.tasks.index',compact('create_by_user','work_type','status'));
+            return view('admin.tasks.index',compact('create_by_user','work_type','status','img_user'));
 
     }
 
