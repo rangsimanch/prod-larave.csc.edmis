@@ -100,7 +100,7 @@ class TaskController extends Controller
                 return $row->create_by_user ? $row->create_by_user->name : '';
             });
 
-            $table->addColumn('img_user', function ($row) {
+            $table->editColumn('img_user', function ($row) {
                 if ($photo = $row->create_by_user->img_user) {
                     return sprintf(
                         '<img src="%s" width="50px" height="50px" class="avatar">',
@@ -113,7 +113,6 @@ class TaskController extends Controller
                         '<img src="https://upload.wikimedia.org/wikipedia/commons/9/9a/No_avatar.png" width="50px" height="50px" class="avatar">'
                     );
                 }
-                return '';
             });
 
             $table->addColumn('construction_contract_code', function ($row) {
