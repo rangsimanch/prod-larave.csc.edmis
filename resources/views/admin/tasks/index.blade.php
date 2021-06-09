@@ -34,7 +34,9 @@ img {
                                 <th width="10">
     
                                 </th>
-                               
+                                <th>
+                                    {{ trans('cruds.task.fields.img_user') }}
+                                </th>
                                 <th>
                                     {{ trans('cruds.task.fields.create_by_user') }}
 
@@ -149,6 +151,7 @@ img {
     ajax: "{{ route('admin.tasks.index') }}",
     columns: [
       { data: 'placeholder', name: 'placeholder' },
+{ data: 'img_user', name: 'img_user', sortable: false, searchable: false },
 { data: 'create_by_user_name', name: 'create_by_user.name', sortable: false, },
 { data: 'name', name: 'name', sortable: false, },
 { data: 'tag', name: 'tags.name', sortable: false, },
@@ -159,7 +162,7 @@ img {
 { data: 'construction_contract_code', name: 'construction_contract.code' },
 { data: 'actions', name: '{{ trans('global.actions') }}' }
     ],
-    order: [[ 5, 'desc' ]],
+    order: [[ 6, 'desc' ]],
     pageLength: 10,
   };
   $('.datatable-Task').DataTable(dtOverrideGlobals);
