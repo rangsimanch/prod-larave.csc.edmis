@@ -1083,6 +1083,10 @@ class RfaController extends Controller
             $constructor_name = 'Civil Construction Services & Products Company Limited';
             $constructor_code = 'CCSP';
             $logo_path =  public_path('png-asset/Stamp_CEC.png');
+            $logo_h = 40;
+            $logo_w = 40;
+            $logo_top = 109;
+            $logo_left = 690;
             $stamp_path =  public_path('png-asset/Stamp_CEC.png');
             $signature_path =  public_path('png-asset/Signature_CEC.png');
             $signature_size_h = 40;
@@ -1100,6 +1104,10 @@ class RfaController extends Controller
             $constructor_name = 'Nawarat Patanakarn Public Company Limited';
             $constructor_code = 'NWR';
             $logo_path =  public_path('png-asset/NWR_logo.png');
+            $logo_h = 40;
+            $logo_w = 40;
+            $logo_top = 109;
+            $logo_left = 690;
             $stamp_path =  public_path('png-asset/NWR_stamp.png');
             $signature_path =  public_path('png-asset/NWR_signature.png');
             $signature_size_h = 55;
@@ -1118,6 +1126,10 @@ class RfaController extends Controller
             $constructor_name = 'Thai Engineers & Industry Company Limited';
             $constructor_code = 'TEI';
             $logo_path = public_path('png-asset/TEI_logo.png');
+            $logo_h = 40;
+            $logo_w = 40;
+            $logo_top = 109;
+            $logo_left = 690;
             $stamp_path =  public_path('png-asset/TEI_stamp.png');
             $signature_path =  public_path('png-asset/TEI_signature.png');
             $signature_size_h = 60;
@@ -1136,6 +1148,10 @@ class RfaController extends Controller
             $constructor_name = 'Italian-Thai Development PCL.';
             $constructor_code = 'ITD';
             $logo_path = public_path('png-asset/ITD_logo.png');
+            $logo_h = 40;
+            $logo_w = 40;
+            $logo_top = 109;
+            $logo_left = 690;
             $stamp_path =  public_path('png-asset/ITD_stamp.png');
             $signature_path =  public_path('png-asset/ITD_signature.png');
             $signature_size_h = 60;
@@ -1154,6 +1170,10 @@ class RfaController extends Controller
             $constructor_name = 'SPTK Joint Venture Company Limited';
             $constructor_code = 'SPTK';
             $logo_path =  public_path('png-asset/SPTK_stamp.png');
+            $logo_h = 40;
+            $logo_w = 40;
+            $logo_top = 109;
+            $logo_left = 690;
             $stamp_path =  public_path('png-asset/SPTK_stamp.png');
             $signature_path =  public_path('png-asset/SPTK_signature.png');
             $signature_size_h = 60;
@@ -1172,6 +1192,10 @@ class RfaController extends Controller
             $constructor_name = 'CAN Joint Venture';
             $constructor_code = 'CAN';
             $logo_path = public_path('png-asset/CAN_logo.png');
+            $logo_h = 60;
+            $logo_w = 60;
+            $logo_top = 109;
+            $logo_left = 690;
             $stamp_path =  public_path('png-asset/CAN_stamp.png');
             $signature_path = public_path('png-asset/CAN_signature.png');
             $signature_size_h = 60;
@@ -1190,8 +1214,12 @@ class RfaController extends Controller
             $constructor_name = 'Italian-Thai Development PCL.';
             $constructor_code = 'ITD';
             $logo_path = public_path('png-asset/ITD_logo.png');
+            $logo_h = 40;
+            $logo_w = 40;
+            $logo_top = 109;
+            $logo_left = 690;
             $stamp_path =  public_path('png-asset/ITD_stamp.png');
-            $signature_path = "";
+            $signature_path = public_path('png-asset/ITD2_signature.png');;
             $signature_size_h = 60;
             $signature_size_w = 60;
             $signature_position_top = 394;
@@ -1208,6 +1236,10 @@ class RfaController extends Controller
             $constructor_name = 'Unique Engineering and Construction Public Company Limited';
             $constructor_code = 'UNIQUE';
             $logo_path = public_path('png-asset/UNIQUE_logo.png');
+            $logo_h = 40;
+            $logo_w = 40;
+            $logo_top = 109;
+            $logo_left = 690;
             $stamp_path =  '';
             $signature_path =  '';
             $signature_size_h = 50;
@@ -1226,6 +1258,10 @@ class RfaController extends Controller
             $constructor_name = 'Civil Enginneering Public Company Limited';
             $constructor_code = 'CIVIL';
             $logo_path = public_path('png-asset/CIVIL_logo.png');
+            $logo_h = 90;
+            $logo_w = 90;
+            $logo_top = 113;
+            $logo_left = 630;
             $stamp_path =  public_path('png-asset/CIVIL_stamp.png');
             $signature_path =  public_path('png-asset/CIVIL_signature.png');
             $signature_size_h = 50;
@@ -1340,14 +1376,10 @@ class RfaController extends Controller
         //Header
         $html = "<div style=\"font-size: 13px; font-weight: bold; position:absolute;top:84px;left:320px;\">" . $contract_name . "</div>";
             //Logo
-        if($rfa->construction_contract->code != "C4-7" && $rfa->construction_contract->code != "C4-3"){
-            $html .= "<div style=\"font-size: 14px; position:absolute;top:109px;left:690px;\">
-                        <img src=\"". $logo_path ."\" width=\"40px\" higth=\"40px\"> </div>";
-        }
-        else{
-            $html .= "<div style=\"font-size: 14px; position:absolute;top:113px;left:630px;\">
-                        <img src=\"". $logo_path ."\" width=\"90px\" higth=\"90px\"> </div>";
-        }
+      
+        $html .= "<div style=\"font-size: 14px; position:absolute;top:". $logo_top ."px;left:". $logo_left ."px;\">
+                    <img src=\"". $logo_path ."\" width=\"". $logo_w ."px\" higth=\"". $logo_h ."px\"> </div>";
+        
         $html .= "<div style=\"font-size: 13px; position:absolute;top:120px;left:580px;\">" . $constructor_code . '.' . "</div>";
         $html .= "<div style=\"font-size: 13px; position:absolute;top:140px;left:508px;\">" . $constructor_name . '.' . "</div>";
 

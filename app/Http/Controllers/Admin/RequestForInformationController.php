@@ -468,7 +468,7 @@ class RequestForInformationController extends Controller
             $constructor_code = 'ITD';
             $logo_path = public_path('png-asset/ITD_logo.png');
             $stamp_path =  public_path('png-asset/ITD_stamp.png');
-            $signature_path = "";
+            $signature_path = public_path('png-asset/ITD2_signature.png');;
             $signature_size_h = 60;
             $signature_size_w = 60;
             $signature_position_top = 394;
