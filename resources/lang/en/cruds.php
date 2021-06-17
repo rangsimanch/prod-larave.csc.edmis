@@ -1144,6 +1144,18 @@ return [
     'title'          => 'Sent',
     'title_singular' => 'Sent',
 ],
+'letterCan'                 => [
+    'title'          => 'CAN',
+    'title_singular' => 'CAN',
+],
+'canInbox'                  => [
+    'title'          => 'Inbox',
+    'title_singular' => 'Inbox',
+],
+'canSent'                   => [
+    'title'          => 'Sent',
+    'title_singular' => 'Sent',
+],
 'letterIncomingSrt'         => [
     'title'          => 'Incoming',
     'title_singular' => 'Incoming',
