@@ -721,6 +721,7 @@
                                     <span class="pull-right-container"><i class="fa fa-fw fa-angle-left pull-right"></i></span>
                                 </a>
                                 <ul class="treeview-menu">
+                                    @can('can_inbox_access')
                                         <li class="{{ request()->is("admin/can-inboxes") || request()->is("admin/can-inboxes/*") ? "active" : "" }}">
                                             <a href="{{ route("admin.can-inboxes.index") }}">
                                                 <i class="fa-fw far fa-envelope">
@@ -730,16 +731,17 @@
 
                                             </a>
                                         </li>
-
+                                    @endcan
+                                    @can('itd_sent_access')
                                         <li class="{{ request()->is("admin/can-sents") || request()->is("admin/can-sents/*") ? "active" : "" }}">
                                             <a href="{{ route("admin.can-sents.index") }}">
                                                 <i class="fa-fw far fa-share-square">
 
                                                 </i>
                                                 <span>{{ trans('cruds.canSent.title') }}</span>
-
                                             </a>
                                         </li>
+                                    @endcan
                                 </ul>
                             </li>
                         @endif

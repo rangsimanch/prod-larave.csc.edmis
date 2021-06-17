@@ -311,10 +311,10 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
    // Itd Sents
    Route::resource('itd-sents', 'ItdSentController', ['except' => ['create', 'store', 'edit', 'update', 'show', 'destroy']]);
 
-    // Itd Inboxes
+    // Can Inboxes
     Route::resource('can-inboxes', 'CanInboxController', ['except' => ['create', 'store', 'edit', 'update', 'show', 'destroy']]);
 
-    // Itd Sents
+    // Can Sents
     Route::resource('can-sents', 'CanSentController', ['except' => ['create', 'store', 'edit', 'update', 'show', 'destroy']]);
    
     // Check Sheets
