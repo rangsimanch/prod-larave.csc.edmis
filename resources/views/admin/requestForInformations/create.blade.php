@@ -34,11 +34,14 @@
                        
                         <div class="form-group {{ $errors->has('originator_code') ? 'has-error' : '' }}">
                             <label for="originator_code">{{ trans('cruds.requestForInformation.fields.originator_code') }}</label>
-                            <input class="form-control" type="text" name="originator_code" id="originator_code" value="{{ old('originator_code', '') }}">
+                            <div class="input-group">
+                                <span class="input-group-addon">RFI-</span>
+                            <input class="form-control" type="text" name="originator_code" id="originator_code" value="{{ old('originator_code', '') }}" placeholder="Example : 0000, XXXX">
                             @if($errors->has('originator_code'))
                                 <span class="help-block" role="alert">{{ $errors->first('originator_code') }}</span>
                             @endif
                             <span class="help-block">{{ trans('cruds.requestForInformation.fields.originator_code_helper') }}</span>
+                            </div>
                         </div>
                         <div class="form-group {{ $errors->has('date') ? 'has-error' : '' }}">
                             <label for="date">{{ trans('cruds.requestForInformation.fields.date') }}</label>

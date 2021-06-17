@@ -241,7 +241,8 @@ class RequestForInformationController extends Controller
         
         $data['incoming_no'] = 'IN-' . $data['originator_code'];
 
-
+        $rfi_code = 'RFI/' . $const_code . '/' . $data['originator_code'];
+        $data['originator_code'] = $rfi_code;
 
          //WBS3,4 Name
          $wbs4name = WbsLevelThree::where('id','=',$request->wbs_level_4_id)->value('wbs_level_3_name');
@@ -353,13 +354,17 @@ class RequestForInformationController extends Controller
         $rfi->load('construction_contract', 'to', 'wbs_level_4', 'wbs_level_5', 'request_by', 'authorised_rep', 'response_organization', 'document_type', 'team');
        
         if($rfi->construction_contract->code == "C2-1"){
-            $issue_by = '( Sitthichai Pimsawat )';
+            $issue_by = 'Sitthichai Pimsawat';
             $issuer_jobtitle = 'ผู้จัดการโครงการ';
             $issue_position_lf = 255;
             $issue_position_lf_sub = 483;
             $constructor_name = 'Civil Construction Services & Products Company Limited';
             $constructor_code = 'CCSP';
             $logo_path =  public_path('png-asset/Stamp_CEC.png');
+            $logo_h = 40;
+            $logo_w = 40;
+            $logo_top = 115;
+            $logo_left = 690;
             $stamp_path =  public_path('png-asset/Stamp_CEC.png');
             $signature_path =  public_path('png-asset/Signature_CEC.png');
             $signature_size_h = 40;
@@ -370,13 +375,17 @@ class RequestForInformationController extends Controller
         }
 
         if($rfi->construction_contract->code == "C3-2"){
-            $issue_by = '( ธนนท์ ดอกลัดดา )';
+            $issue_by = 'ธนนท์ ดอกลัดดา';
             $issuer_jobtitle = 'ผู้จัดการโครงการ';
             $issue_position_lf = 260;
             $issue_position_lf_sub = 485;
             $constructor_name = 'Nawarat Patanakarn Public Company Limited';
             $constructor_code = 'NWR';
             $logo_path =  public_path('png-asset/NWR_logo.png');
+            $logo_h = 40;
+            $logo_w = 40;
+            $logo_top = 115;
+            $logo_left = 690;
             $stamp_path =  public_path('png-asset/NWR_stamp.png');
             $signature_path =  public_path('png-asset/NWR_signature.png');
             $signature_size_h = 55;
@@ -388,13 +397,17 @@ class RequestForInformationController extends Controller
         }
 
         if($rfi->construction_contract->code == "C3-3"){
-            $issue_by = '( กิตติพัฒน์ พฤกษ์ธนัทพงศ์ )';
+            $issue_by = 'กิตติพัฒน์ พฤกษ์ธนัทพงศ์';
             $issuer_jobtitle = 'รองผู้จัดการโครงการ';
             $issue_position_lf = 247;
             $issue_position_lf_sub = 480;
             $constructor_name = 'Thai Engineers & Industry Company Limited';
             $constructor_code = 'TEI';
             $logo_path = public_path('png-asset/TEI_logo.png');
+            $logo_h = 40;
+            $logo_w = 40;
+            $logo_top = 115;
+            $logo_left = 690;
             $stamp_path =  public_path('png-asset/TEI_stamp.png');
             $signature_path =  public_path('png-asset/TEI_signature.png');
             $signature_size_h = 60;
@@ -406,13 +419,17 @@ class RequestForInformationController extends Controller
         }
 
         if($rfi->construction_contract->code == "C3-4"){
-            $issue_by = '( มฆา  อัศวราชันย์ )';
+            $issue_by = 'มฆา  อัศวราชันย์';
             $issuer_jobtitle = 'ผู้อำนวยการโครงการ';
             $issue_position_lf = 260;
             $issue_position_lf_sub = 489;
             $constructor_name = 'Italian-Thai Development PLC';
             $constructor_code = 'ITD';
             $logo_path = public_path('png-asset/ITD_logo.png');
+            $logo_h = 40;
+            $logo_w = 40;
+            $logo_top = 115;
+            $logo_left = 690;
             $stamp_path =  public_path('png-asset/ITD_stamp.png');
             $signature_path =  public_path('png-asset/ITD_signature.png');
             $signature_size_h = 60;
@@ -424,13 +441,17 @@ class RequestForInformationController extends Controller
         }
 
         if($rfi->construction_contract->code == "C3-5"){
-            $issue_by = '( Narutchai Summawijitra )';
+            $issue_by = 'Narutchai Summawijitra';
             $issuer_jobtitle = 'ผู้จัดการโครงการ';
             $issue_position_lf = 245;
             $issue_position_lf_sub = 480;
             $constructor_name = 'SPTK Joint Venture Company Limited';
             $constructor_code = 'SPTK';
             $logo_path =  public_path('png-asset/SPTK_stamp.png');
+            $logo_h = 40;
+            $logo_w = 40;
+            $logo_top = 115;
+            $logo_left = 690;
             $stamp_path =  public_path('png-asset/SPTK_stamp.png');
             $signature_path =  public_path('png-asset/SPTK_signature.png');
             $signature_size_h = 60;
@@ -442,13 +463,17 @@ class RequestForInformationController extends Controller
         }
 
         if($rfi->construction_contract->code == "C4-3"){
-            $issue_by = '( Zhou Jia Yi )';
+            $issue_by = 'Zhou Jia Yi';
             $issuer_jobtitle = 'Project manager';
             $issue_position_lf = 260;
             $issue_position_lf_sub = 489;
             $constructor_name = 'CAN Joint Venture';
             $constructor_code = 'CAN';
             $logo_path = public_path('png-asset/CAN_logo.png');
+            $logo_h = 80;
+            $logo_w = 80;
+            $logo_top = 115;
+            $logo_left = 670;
             $stamp_path =  public_path('png-asset/CAN_stamp.png');
             $signature_path = public_path('png-asset/CAN_signature.png');
             $signature_size_h = 60;
@@ -460,13 +485,17 @@ class RequestForInformationController extends Controller
         }
 
         if($rfi->construction_contract->code == "C4-4"){
-            $issue_by = '( พิเชฐ  ภาพปัญญาพร )';
+            $issue_by = 'พิเชฐ  ภาพปัญญาพร';
             $issuer_jobtitle = 'ผู้อำนวยการโครงการ';
             $issue_position_lf = 260;
             $issue_position_lf_sub = 489;
             $constructor_name = 'Italian-Thai Development PCL.';
             $constructor_code = 'ITD';
             $logo_path = public_path('png-asset/ITD_logo.png');
+            $logo_h = 40;
+            $logo_w = 40;
+            $logo_top = 115;
+            $logo_left = 690;
             $stamp_path =  public_path('png-asset/ITD_stamp.png');
             $signature_path = public_path('png-asset/ITD2_signature.png');;
             $signature_size_h = 60;
@@ -478,13 +507,17 @@ class RequestForInformationController extends Controller
         }
 
         if($rfi->construction_contract->code == "C4-6"){
-            $issue_by = '( นางสาวกรภัทร์ สุวิวัฒน์ธนชัย และนายปริญญา พรสวัสดิ์ )';
+            $issue_by = 'นางสาวกรภัทร์ สุวิวัฒน์ธนชัย และนายปริญญา พรสวัสดิ์';
             $issuer_jobtitle = 'กรรมการผู้มีอำนาจ';
             $issue_position_lf = 190;
             $issue_position_lf_sub = 438;
             $constructor_name = 'Unique Engineering and Construction Public Company Limited';
             $constructor_code = 'UNIQUE';
             $logo_path = public_path('png-asset/UNIQUE_logo.png');
+            $logo_h = 40;
+            $logo_w = 40;
+            $logo_top = 115;
+            $logo_left = 690;
             $stamp_path =  '';
             $signature_path =  '';
             $signature_size_h = 50;
@@ -496,13 +529,17 @@ class RequestForInformationController extends Controller
         }
 
         if($rfi->construction_contract->code == "C4-7"){
-            $issue_by = '( สุทิน สังข์หิรัญ )';
+            $issue_by = 'สุทิน สังข์หิรัญ';
             $issuer_jobtitle = 'ผู้จัดการโครงการ';
             $issue_position_lf = 265;
             $issue_position_lf_sub = 483;
             $constructor_name = 'Civil Enginneering Public Company Limited';
             $constructor_code = 'CIVIL';
             $logo_path = public_path('png-asset/CIVIL_logo.png');
+            $logo_h = 80;
+            $logo_w = 80;
+            $logo_top = 115;
+            $logo_left = 670;
             $stamp_path =  public_path('png-asset/CIVIL_stamp.png');
             $signature_path =  public_path('png-asset/CIVIL_signature.png');
             $signature_size_h = 50;
@@ -534,14 +571,10 @@ class RequestForInformationController extends Controller
 
         $html = "<div style=\"font-size: 13px; font-weight: bold; position:absolute;top:90px;left:300px;\">" . $contract_name . "</div>";
         
-        if($rfi->construction_contract->code != "C4-7" && $rfi->construction_contract->code != "C4-3"){
-            $html .= "<div style=\"font-size: 14px; position:absolute;top:115px;left:690px;\">
-                        <img src=\"". $logo_path ."\" width=\"40px\" higth=\"40px\"> </div>";
-        }
-        else{
-            $html .= "<div style=\"font-size: 14px; position:absolute;top:115px;left:630px;\">
-                        <img src=\"". $logo_path ."\" width=\"80px\" higth=\"80px\"> </div>";
-        }
+        // Logo
+        $html .= "<div style=\"font-size: 14px; position:absolute;top:". $logo_top ."px;left:". $logo_left ."px;\">
+        <img src=\"". $logo_path ."\" width=\"". $logo_w ."px\" higth=\"". $logo_h ."px\"> </div>";
+
         $html .= "<div style=\"font-size: 13px; position:absolute;top:110px;left:615px;\">" . $constructor_code . '.' . "</div>";
         $html .= "<div style=\"font-size: 10px; position:absolute;top:155px;left:580px;\">" . $constructor_name  . '.' . "</div>";
 
@@ -555,7 +588,12 @@ class RequestForInformationController extends Controller
         $html .= "<div style=\"font-size: 13px; position:absolute;top:373px;left:520px;\">" . $incoming_no . '.' . "</div>";
         $html .= "<div style=\"font-size: 13px; position:absolute;top:390px;left:520px;\">" . $submit_date . '.' . "</div>";
 
-        $html .= "<div style=\"font-size: 13px; position:absolute;top:430px;left:60px;right:60px;text-align: center;\">" . $description . '.' . "</div>";
+        $html .= "<div style=\"font-size: 13px; position:absolute;top:430px;left:60px;right:45px;text-align: justify;\">" . $description  . "</div>";
+
+        $html .= "<div style=\"font-size: 13px; position:absolute;top:730px;left:270px;\">" . $issue_by  . "</div>";
+        $html .= "<div style=\"font-size: 14px; position:absolute;top:720px;left:500px;\">
+        <img src=\"". $signature_path ."\" width=\"". $signature_size_w ."px\" higth=\"". $signature_size_h ."px\"> </div>";
+
 
 
 
