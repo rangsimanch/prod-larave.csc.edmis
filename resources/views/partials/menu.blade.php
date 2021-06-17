@@ -711,6 +711,39 @@
                             </li>
                         @endif
 
+                        @if(Auth::user()->team_id == 15)
+                            <li class="treeview">
+                                <a href="#">
+                                    <i class="fa-fw fas fa-envelope">
+
+                                    </i>
+                                    <span>{{ trans('cruds.letterCan.title') }}</span>
+                                    <span class="pull-right-container"><i class="fa fa-fw fa-angle-left pull-right"></i></span>
+                                </a>
+                                <ul class="treeview-menu">
+                                        <li class="{{ request()->is("admin/can-inboxes") || request()->is("admin/can-inboxes/*") ? "active" : "" }}">
+                                            <a href="{{ route("admin.can-inboxes.index") }}">
+                                                <i class="fa-fw far fa-envelope">
+
+                                                </i>
+                                                <span>{{ trans('cruds.canInbox.title') }}</span>
+
+                                            </a>
+                                        </li>
+
+                                        <li class="{{ request()->is("admin/can-sents") || request()->is("admin/can-sents/*") ? "active" : "" }}">
+                                            <a href="{{ route("admin.can-sents.index") }}">
+                                                <i class="fa-fw far fa-share-square">
+
+                                                </i>
+                                                <span>{{ trans('cruds.canSent.title') }}</span>
+
+                                            </a>
+                                        </li>
+                                </ul>
+                            </li>
+                        @endif
+
                     </ul>
                 </li>
             @endcan
