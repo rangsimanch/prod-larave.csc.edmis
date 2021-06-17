@@ -35,8 +35,10 @@
                         <div class="form-group {{ $errors->has('originator_code') ? 'has-error' : '' }}">
                             <label for="originator_code">{{ trans('cruds.requestForInformation.fields.originator_code') }}</label>
                             <div class="input-group">
-                                <span class="input-group-addon">RFI-</span>
-                            <input class="form-control" type="text" name="originator_code" id="originator_code" value="{{ old('originator_code', '') }}" placeholder="Example : 0000, XXXX">
+                            @foreach($construction_contracts as $id => $construction_contract)
+                                <span class="input-group-addon">RFI/{{ $construction_contract }}/</span>
+                            @endforeach
+                            <input class="form-control" type="text" name="originator_code" id="originator_code" value="{{ old('originator_code', '') }}" placeholder="Example : 0001" maxlength="4">
                             @if($errors->has('originator_code'))
                                 <span class="help-block" role="alert">{{ $errors->first('originator_code') }}</span>
                             @endif
