@@ -732,7 +732,7 @@
                                             </a>
                                         </li>
                                     @endcan
-                                    @can('itd_sent_access')
+                                    @can('can_sent_access')
                                         <li class="{{ request()->is("admin/can-sents") || request()->is("admin/can-sents/*") ? "active" : "" }}">
                                             <a href="{{ route("admin.can-sents.index") }}">
                                                 <i class="fa-fw far fa-share-square">
