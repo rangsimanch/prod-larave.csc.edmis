@@ -154,7 +154,7 @@ class CanInboxController extends Controller
         $teams                  = Team::get();
 
         session(['previous-url' => route('admin.can-inboxes.index')]);
-        return view('admin.can.index', compact('teams', 'teams', 'teams', 'construction_contracts', 'users', 'users', 'teams'));
+        return view('admin.canInboxes.index', compact('teams', 'teams', 'teams', 'construction_contracts', 'users', 'users', 'teams'));
 
     }
 }
