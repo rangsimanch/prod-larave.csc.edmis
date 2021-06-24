@@ -194,7 +194,7 @@
 { data: 'actions', name: '{{ trans('global.actions') }}' }
     ],
     orderCellsTop: true,
-    order: [[ 11, 'asc' ]],
+    order: [[ 5, 'desc' ]],
     sPaginationType: "listbox",
     pageLength: 25,
   };

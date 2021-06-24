@@ -717,7 +717,7 @@ class RfaController extends Controller
                 $construction_contracts = ConstructionContract::where('id',session('construction_contract_id'))->pluck('code', 'id')->prepend(trans('global.pleaseSelect'), '');
             }
             else{
-                $construction_contracts = ConstructionContract::all()->pluck('code', 'id')->prepend(trans('global.pleaseSelect'), '');
+                $construction_contracts = ConstructionContract::all()->prepend(trans('global.pleaseSelect'), '');
             }
 
         $wbs_level_3s = WbsLevelThree::all()->pluck('wbs_level_3_name', 'id')->prepend(trans('global.pleaseSelect'), '');
