@@ -507,7 +507,7 @@ class RequestForInformationController extends Controller
         }
 
         if($rfi->construction_contract->code == "C4-6"){
-            $issue_by = 'นางสาวกรภัทร์ สุวิวัฒน์ธนชัย และนายปริญญา พรสวัสดิ์';
+            $issue_by = 'นายเติมพงษ์ เหมาะสุวรรณ และนายปริญญา พรสวัสดิ์';
             $issuer_jobtitle = 'กรรมการผู้มีอำนาจ';
             $issue_position_lf = 190;
             $issue_position_lf_sub = 438;

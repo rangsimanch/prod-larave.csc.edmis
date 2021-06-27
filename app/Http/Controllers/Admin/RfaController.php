@@ -780,9 +780,6 @@ class RfaController extends Controller
         $code_year = substr($cur_date,0,2);
         $code_mouth = substr($cur_date,2,2);
         $code_date = $code_year . "-" . $code_mouth;
-
-
-
         
         
         if($request->origin_number == ''){
@@ -1229,7 +1226,7 @@ class RfaController extends Controller
         }
 
         if($rfa->construction_contract->code == "C4-6"){
-            $issue_by = '( นางสาวกรภัทร์ สุวิวัฒน์ธนชัย และนายปริญญา พรสวัสดิ์ )';
+            $issue_by = '( นายเติมพงษ์ เหมาะสุวรรณ และนายปริญญา พรสวัสดิ์ )';
             $issuer_jobtitle = 'กรรมการผู้มีอำนาจ';
             $issue_position_lf = 190;
             $issue_position_lf_sub = 438;

@@ -205,7 +205,7 @@
           .columns.adjust();
   });
   
-let visibleColumnsIndexes = null;
+  let visibleColumnsIndexes = null;
 $('.datatable thead').on('input', '.search', function () {
       let strict = $(this).attr('strict') || false
       let value = strict && this.value ? "^" + this.value + "$" : this.value
