@@ -1136,6 +1136,10 @@ return [
     'title'          => 'ITD',
     'title_singular' => 'ITD',
 ],
+'letterUnique'                 => [
+    'title'          => 'UNIQUE',
+    'title_singular' => 'UNIQUE',
+],
 'itdInbox'                  => [
     'title'          => 'Inbox',
     'title_singular' => 'Inbox',
@@ -1153,6 +1157,14 @@ return [
     'title_singular' => 'Inbox',
 ],
 'canSent'                   => [
+    'title'          => 'Sent',
+    'title_singular' => 'Sent',
+],
+'uniqueInbox'                  => [
+    'title'          => 'Inbox',
+    'title_singular' => 'Inbox',
+],
+'uniqueSent'                   => [
     'title'          => 'Sent',
     'title_singular' => 'Sent',
 ],

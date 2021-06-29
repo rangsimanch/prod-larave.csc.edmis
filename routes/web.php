@@ -316,6 +316,12 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
 
     // Can Sents
     Route::resource('can-sents', 'CanSentController', ['except' => ['create', 'store', 'edit', 'update', 'show', 'destroy']]);
+
+    // Can Inboxes
+    Route::resource('unique-inboxes', 'UniqueInboxController', ['except' => ['create', 'store', 'edit', 'update', 'show', 'destroy']]);
+
+    // Can Sents
+    Route::resource('unique-sents', 'UniqueSentController', ['except' => ['create', 'store', 'edit', 'update', 'show', 'destroy']]);
    
     // Check Sheets
     Route::delete('check-sheets/destroy', 'CheckSheetController@massDestroy')->name('check-sheets.massDestroy');

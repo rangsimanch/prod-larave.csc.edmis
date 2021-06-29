@@ -711,6 +711,41 @@
                             </li>
                         @endif
 
+                        @if(Auth::user()->team_id == 14)
+                            <li class="treeview">
+                                <a href="#">
+                                    <i class="fa-fw fas fa-envelope">
+
+                                    </i>
+                                    <span>{{ trans('cruds.letterUnique.title') }}</span>
+                                    <span class="pull-right-container"><i class="fa fa-fw fa-angle-left pull-right"></i></span>
+                                </a>
+                                <ul class="treeview-menu">
+                                    @can('unique_inbox_access')
+                                        <li class="{{ request()->is("admin/unique-inboxes") || request()->is("admin/unique-inboxes/*") ? "active" : "" }}">
+                                            <a href="{{ route("admin.unique-inboxes.index") }}">
+                                                <i class="fa-fw far fa-envelope">
+
+                                                </i>
+                                                <span>{{ trans('cruds.uniqueInbox.title') }}</span>
+
+                                            </a>
+                                        </li>
+                                    @endcan
+                                    @can('unique_sent_access')
+                                        <li class="{{ request()->is("admin/unique-sents") || request()->is("admin/unique-sents/*") ? "active" : "" }}">
+                                            <a href="{{ route("admin.unique-sents.index") }}">
+                                                <i class="fa-fw far fa-share-square">
+
+                                                </i>
+                                                <span>{{ trans('cruds.uniqueSent.title') }}</span>
+                                            </a>
+                                        </li>
+                                    @endcan
+                                </ul>
+                            </li>
+                        @endif
+
                         @if(Auth::user()->team_id == 15)
                             <li class="treeview">
                                 <a href="#">
