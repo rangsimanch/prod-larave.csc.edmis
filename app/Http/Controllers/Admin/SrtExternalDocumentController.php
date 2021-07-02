@@ -255,21 +255,15 @@ class SrtExternalDocumentController extends Controller
                 }
             }
         }
-
-        $pdfMerger = PDFMerger::init();
+ 
         $media = $srtExternalDocument->file_upload->pluck('file_name')->toArray();
 
-        foreach ($request->input('file_upload', []) as $file) {
-                $pdfMerger->addPDF(storage_path('tmp/uploads/' . $file), 'all');
-        }
-        $pdfMerger->merge();
-        $pdfMerger->save(storage_path('tmp/uploads/mergerPdf_01.pdf'), "file");
+
         foreach ($request->input('file_upload', []) as $file) {
             if (count($media) === 0 || !in_array($file, $media)) {
-                File::delete(storage_path('tmp/uploads/' . $file));
+                $srtExternalDocument->addMedia(storage_path('tmp/uploads/' . $file))->toMediaCollection('file_upload');
             }
         }
-        $srtExternalDocument->addMedia(storage_path('tmp/uploads/mergerPdf_01.pdf'))->toMediaCollection('file_upload');
 
         return redirect()->route('admin.srt-external-documents.index');
     }
