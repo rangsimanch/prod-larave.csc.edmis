@@ -258,11 +258,13 @@ class TaskController extends Controller
                            
                     $mpdf->WriteHTML($html);
                     
-                    $mpdf->AddPage();
-                    $pagecount = $mpdf->SetSourceFile(public_path('pdf-asset/coverpage.pdf'));
-                    // Import the last page of the source PDF file
-                    $tplId = $mpdf->ImportPage($pagecount);
-                    $mpdf->UseTemplate($tplId);
+                    if($contract_code == "C2-1"){
+                        $mpdf->AddPage();
+                        $pagecount = $mpdf->SetSourceFile(public_path('pdf-asset/coverpage.pdf'));
+                        // Import the last page of the source PDF file
+                        $tplId = $mpdf->ImportPage($pagecount);
+                        $mpdf->UseTemplate($tplId);
+                    }
                 }
 
             // Activity
