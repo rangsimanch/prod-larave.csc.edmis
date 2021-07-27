@@ -22,7 +22,7 @@
                 </div>
                 <div class="panel-body">
                     <div class="table-responsive">
-                        <table class=" table table-bordered table-striped table-hover datatable datatable-SubmittalsRfa">
+                        <table class=" table table-bordered table-striped table-hover ajaxTable datatable datatable-SubmittalsRfa">
                             <thead>
                                 <tr>
                                     <th width="10">
