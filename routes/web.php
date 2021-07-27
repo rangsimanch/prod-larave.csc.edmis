@@ -154,6 +154,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
 
      // Submittals Rfas
      Route::delete('submittals-rfas/destroy', 'SubmittalsRfaController@massDestroy')->name('submittals-rfas.massDestroy');
+     Route::post('submittals-rfas/parse-csv-import', 'SubmittalsRfaController@parseCsvImport')->name('submittals-rfas.parseCsvImport');
+     Route::post('submittals-rfas/process-csv-import', 'SubmittalsRfaController@processCsvImport')->name('submittals-rfas.processCsvImport');
      Route::resource('submittals-rfas', 'SubmittalsRfaController');
 
     // Daily Requests

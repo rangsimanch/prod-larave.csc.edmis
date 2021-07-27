@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroySubmittalsRfaRequest;
 use App\Http\Requests\StoreSubmittalsRfaRequest;
 use App\Http\Requests\UpdateSubmittalsRfaRequest;
+use App\Http\Controllers\Traits\CsvImportTrait;
+use App\Http\Controllers\Traits\MediaUploadingTrait;
 use App\Rfa;
 use App\RfaCommentStatus;
 use App\SubmittalsRfa;
@@ -15,6 +17,8 @@ use Symfony\Component\HttpFoundation\Response;
 
 class SubmittalsRfaController extends Controller
 {
+    use MediaUploadingTrait, CsvImportTrait;
+
     public function index()
     {
         abort_if(Gate::denies('submittals_rfa_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');

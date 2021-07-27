@@ -642,9 +642,9 @@ class RfaController extends Controller
         
          // Submittals
         if(count($request->only(['item'])) != 0){
-             $item_no = $request->item;
-             $description = $request->des;
-             $qty_sets    = $request->qty;
+             $item_no = $request->item ?? '';
+             $description = $request->des ?? '';
+             $qty_sets    = $request->qty ?? '';
              $on_rfa_id = DB::table('rfas')->max('id');
              for($count = 0; $count < count($item_no); $count++){
                  $dataSubmittals = array(
