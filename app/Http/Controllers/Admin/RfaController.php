@@ -1412,12 +1412,12 @@ class RfaController extends Controller
         . $note_1 . "</div>";
         
        
-        $html .= "<div style=\"font-size: 14px; position:absolute;top:455px;left:". $issue_position_lf ."px;\">" . $issue_by . "</div>";
+        $html .= "<div style=\"font-size: 14px; position:absolute;top:453px;left:". $issue_position_lf ."px;\">" . $issue_by . "</div>";
         if($issuer_jobtitle == 'ผู้จัดการโครงการ'){
-            $html .= "<div style=\"font-size: 12px; position:absolute;top:468px;left:270px\">" . $issuer_jobtitle . "</div>";
+            $html .= "<div style=\"font-size: 12px; position:absolute;top:465px;left:270px\">" . $issuer_jobtitle . "</div>";
         }
         else{
-            $html .= "<div style=\"font-size: 12px; position:absolute;top:468px;left:265px\">" . $issuer_jobtitle . "</div>";
+            $html .= "<div style=\"font-size: 12px; position:absolute;top:465px;left:265px\">" . $issuer_jobtitle . "</div>";
         }
 
         //Signature Manager
