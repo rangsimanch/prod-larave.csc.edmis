@@ -1109,7 +1109,7 @@ class RfaController extends Controller
             $signature_path =  public_path('png-asset/NWR_signature.png');
             $signature_size_h = 55;
             $signature_size_w = 55;
-            $signature_position_top = 400;
+            $signature_position_top = 410;
             $signature_position_left = 280;
             $contract_name = 'Contract ' . $rfa->construction_contract->code . ' : ' . $rfa->construction_contract->name;
 
@@ -1412,12 +1412,12 @@ class RfaController extends Controller
         . $note_1 . "</div>";
         
        
-        $html .= "<div style=\"font-size: 14px; position:absolute;top:435px;left:". $issue_position_lf ."px;\">" . $issue_by . "</div>";
+        $html .= "<div style=\"font-size: 14px; position:absolute;top:455px;left:". $issue_position_lf ."px;\">" . $issue_by . "</div>";
         if($issuer_jobtitle == 'ผู้จัดการโครงการ'){
-            $html .= "<div style=\"font-size: 12px; position:absolute;top:450px;left:270px\">" . $issuer_jobtitle . "</div>";
+            $html .= "<div style=\"font-size: 12px; position:absolute;top:460px;left:270px\">" . $issuer_jobtitle . "</div>";
         }
         else{
-            $html .= "<div style=\"font-size: 12px; position:absolute;top:450px;left:265px\">" . $issuer_jobtitle . "</div>";
+            $html .= "<div style=\"font-size: 12px; position:absolute;top:460px;left:265px\">" . $issuer_jobtitle . "</div>";
         }
 
         //Signature Manager
