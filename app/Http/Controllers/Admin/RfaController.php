@@ -1088,7 +1088,7 @@ class RfaController extends Controller
             $signature_path =  public_path('png-asset/Signature_CEC.png');
             $signature_size_h = 40;
             $signature_size_w = 40;
-            $signature_position_top = 410;
+            $signature_position_top = 425;
             $signature_position_left = 280;
             $contract_name = 'Contract ' . $rfa->construction_contract->code . ' : ' . $rfa->construction_contract->name;
         }
@@ -1131,7 +1131,7 @@ class RfaController extends Controller
             $signature_path =  public_path('png-asset/TEI_signature.png');
             $signature_size_h = 60;
             $signature_size_w = 60;
-            $signature_position_top = 400;
+            $signature_position_top = 415;
             $signature_position_left = 280;
             $contract_name = 'Contract ' . $rfa->construction_contract->code . ' : ' . $rfa->construction_contract->name;
 
@@ -1153,7 +1153,7 @@ class RfaController extends Controller
             $signature_path =  public_path('png-asset/ITD_signature.png');
             $signature_size_h = 60;
             $signature_size_w = 60;
-            $signature_position_top = 394;
+            $signature_position_top = 409;
             $signature_position_left = 280;
             $contract_name = 'Contract ' . $rfa->construction_contract->code . ' : ' . $rfa->construction_contract->name;
 
@@ -1175,7 +1175,7 @@ class RfaController extends Controller
             $signature_path =  public_path('png-asset/SPTK_signature.png');
             $signature_size_h = 60;
             $signature_size_w = 60;
-            $signature_position_top = 410;
+            $signature_position_top = 425;
             $signature_position_left = 275;
             $contract_name = 'Contract ' . $rfa->construction_contract->code . ' : ' . $rfa->construction_contract->name;
 
@@ -1197,7 +1197,7 @@ class RfaController extends Controller
             $signature_path = public_path('png-asset/CAN_signature.png');
             $signature_size_h = 60;
             $signature_size_w = 60;
-            $signature_position_top = 394;
+            $signature_position_top = 409;
             $signature_position_left = 260;
             $contract_name = 'Contract ' . $rfa->construction_contract->code . ' : ' . $rfa->construction_contract->name;
 
@@ -1219,7 +1219,7 @@ class RfaController extends Controller
             $signature_path = public_path('png-asset/ITD2_signature.png');;
             $signature_size_h = 60;
             $signature_size_w = 60;
-            $signature_position_top = 394;
+            $signature_position_top = 409;
             $signature_position_left = 280;
             $contract_name = 'Contract ' . $rfa->construction_contract->code . ' : ' . $rfa->construction_contract->name;
 
@@ -1241,7 +1241,7 @@ class RfaController extends Controller
             $signature_path =  '';
             $signature_size_h = 50;
             $signature_size_w = 50;
-            $signature_position_top = 400;
+            $signature_position_top = 415;
             $signature_position_left = 278;
             $contract_name = 'Contract ' . $rfa->construction_contract->code . ' : ' . $rfa->construction_contract->name;
 
@@ -1263,7 +1263,7 @@ class RfaController extends Controller
             $signature_path =  public_path('png-asset/CIVIL_signature.png');
             $signature_size_h = 50;
             $signature_size_w = 50;
-            $signature_position_top = 400;
+            $signature_position_top = 415;
             $signature_position_left = 278;
             $contract_name = 'Contract ' . $rfa->construction_contract->code . ' : ' . $rfa->construction_contract->name;
 
@@ -1414,10 +1414,10 @@ class RfaController extends Controller
        
         $html .= "<div style=\"font-size: 14px; position:absolute;top:455px;left:". $issue_position_lf ."px;\">" . $issue_by . "</div>";
         if($issuer_jobtitle == 'ผู้จัดการโครงการ'){
-            $html .= "<div style=\"font-size: 12px; position:absolute;top:465px;left:270px\">" . $issuer_jobtitle . "</div>";
+            $html .= "<div style=\"font-size: 12px; position:absolute;top:470px;left:270px\">" . $issuer_jobtitle . "</div>";
         }
         else{
-            $html .= "<div style=\"font-size: 12px; position:absolute;top:465px;left:265px\">" . $issuer_jobtitle . "</div>";
+            $html .= "<div style=\"font-size: 12px; position:absolute;top:470px;left:265px\">" . $issuer_jobtitle . "</div>";
         }
 
         //Signature Manager
