@@ -258,6 +258,11 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::post('add-letters/process-csv-import', 'AddLetterController@processCsvImport')->name('add-letters.processCsvImport');
     Route::resource('add-letters', 'AddLetterController');
 
+     // Announcements
+     Route::delete('announcements/destroy', 'AnnouncementsController@massDestroy')->name('announcements.massDestroy');
+     Route::post('announcements/media', 'AnnouncementsController@storeMedia')->name('announcements.storeMedia');
+     Route::post('announcements/ckmedia', 'AnnouncementsController@storeCKEditorImages')->name('announcements.storeCKEditorImages');
+     Route::resource('announcements', 'AnnouncementsController');
 
    // Srt Inboxes
    Route::resource('srt-inboxes', 'SrtInboxController', ['except' => ['create', 'store', 'edit', 'update', 'show', 'destroy']]);

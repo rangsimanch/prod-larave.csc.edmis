@@ -2424,6 +2424,35 @@ return [
             'action_date_helper'            => ' ',
         ],
     ],
+    
+    'announcement' => [
+        'title'          => 'Announcements',
+        'title_singular' => 'Announcement',
+        'fields'         => [
+            'id'                       => 'ID',
+            'id_helper'                => ' ',
+            'title'                    => 'Title',
+            'title_helper'             => ' ',
+            'description'              => 'Description',
+            'description_helper'       => ' ',
+            'start_date'               => 'Start Date',
+            'start_date_helper'        => ' ',
+            'end_date'                 => 'End Date',
+            'end_date_helper'          => ' ',
+            'attachments'              => 'Attachments',
+            'attachments_helper'       => ' ',
+            'announce_contract'        => 'Announce for Contract',
+            'announce_contract_helper' => ' ',
+            'created_at'               => 'Created at',
+            'created_at_helper'        => ' ',
+            'updated_at'               => 'Updated at',
+            'updated_at_helper'        => ' ',
+            'deleted_at'               => 'Deleted at',
+            'deleted_at_helper'        => ' ',
+            'team'                     => 'Team',
+            'team_helper'              => ' ',
+        ],
+    ],
 ];
 
 

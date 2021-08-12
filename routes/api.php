@@ -235,4 +235,8 @@ Route::group(['prefix' => 'v1', 'as' => 'api.', 'namespace' => 'Api\V1\Admin', '
       // Complaints
     Route::post('complaints/media', 'ComplaintApiController@storeMedia')->name('complaints.storeMedia');
     Route::apiResource('complaints', 'ComplaintApiController');
+
+     // Announcements
+    Route::post('announcements/media', 'AnnouncementsApiController@storeMedia')->name('announcements.storeMedia');
+    Route::apiResource('announcements', 'AnnouncementsApiController');
 });

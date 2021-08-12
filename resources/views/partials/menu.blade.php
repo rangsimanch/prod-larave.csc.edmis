@@ -784,6 +784,18 @@
                     </ul>
                 </li>
             @endcan
+
+            @can('announcement_access')
+                <li class="{{ request()->is("admin/announcements") || request()->is("admin/announcements/*") ? "active" : "" }}">
+                    <a href="{{ route("admin.announcements.index") }}">
+                        <i class="fa-fw fas fa-bullhorn">
+
+                        </i>
+                        <span>{{ trans('cruds.announcement.title') }}</span>
+
+                    </a>
+                </li>
+            @endcan
             
             <!-- Download System -->
             @can('download_system_access')
