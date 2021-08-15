@@ -1599,11 +1599,18 @@ class RfaController extends Controller
             
          }
 
-        //Circulation of Work 
-        $mpdf->AddPage();
-        $pagecount = $mpdf->SetSourceFile(public_path('pdf-asset/Circulation_of_Work_form_2.pdf'));
-        $tplId = $mpdf->ImportPage($pagecount);
-        $mpdf->UseTemplate($tplId);   
+        //Circulation of Work
+        if($wbslv2 == "C4-1" || $wbslv2 == "C4-2" || $wbslv2 == "C4-3" || $wbslv2 == "C4-4" || $wbslv2 == "C4-5"){ 
+            $mpdf->AddPage();
+            $pagecount = $mpdf->SetSourceFile(public_path('pdf-asset/Circulation_C4.pdf'));
+            $tplId = $mpdf->ImportPage($pagecount);
+            $mpdf->UseTemplate($tplId);   
+        }else{
+            $mpdf->AddPage();
+            $pagecount = $mpdf->SetSourceFile(public_path('pdf-asset/Circulation_General.pdf'));
+            $tplId = $mpdf->ImportPage($pagecount);
+            $mpdf->UseTemplate($tplId);   
+        }
 
         $html = "<div style=\"font-size: 12px; font-weight: bold; position:absolute;top:75px;left:387px;\">". $wbslv2 ."</div>";
         
