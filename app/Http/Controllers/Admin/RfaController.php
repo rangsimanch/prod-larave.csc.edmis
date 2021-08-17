@@ -1427,8 +1427,8 @@ class RfaController extends Controller
         }
         //Stamp Organize
         if($stamp_path != ''){
-            $html .= "<div style=\"font-size: 14px; position:absolute;top:350px;left:600px;\">
-                <img src=\"". $stamp_path ."\" width=\"100px\" higth=\"100px\" style=\"opacity: 0.8;\"> </div>";
+            $html .= "<div style=\"font-size: 14px; position:absolute;top:380px;left:600px;\">
+                <img src=\"". $stamp_path ."\" width=\"120px\" higth=\"120px\" style=\"opacity: 0.8;\"> </div>";
         }
         
 
