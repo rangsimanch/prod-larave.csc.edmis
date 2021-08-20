@@ -297,12 +297,19 @@ class TaskController extends Controller
                             <div style=\" padding-left: 80px; padding-right:80px; \">
                             <div style=\"text-align: center;font-weight: bold; font-size: 22px;\">". nl2br(str_replace(';',"\r\n",$activity_name))  ."</div>
                             </div>";
-                $html .= "<div style=\" padding-left: 80px; padding-right:80px; \">
-                            <div style=\"vertical-align: top; max-width: 50%; display: inline-block; font-size: 20px;\">".  nl2br(str_replace(';','\n',$description)) ."</div>
-                            </div>";
+                if(strlen($description) > 500){
+                    $html .= "<div style=\" padding-left: 80px; padding-right:80px; \">
+                                <div style=\"vertical-align: top; max-width: 50%; display: inline-block; font-size: 14px;\">".  nl2br(str_replace(';','\n',$description)) ."</div>
+                                </div>";
+                }
+                else{
+                    $html .= "<div style=\" padding-left: 80px; padding-right:80px; \">
+                                <div style=\"vertical-align: top; max-width: 50%; display: inline-block; font-size: 20px;\">".  nl2br(str_replace(';','\n',$description)) ."</div>
+                                </div>";
+                }
                 
+                    
                 $html .= "<div style=\"font-weight: bold; font-size: 20px; position:absolute;top:990;left:580px;\">(". $recordby  .")</div>";
-                
                 if(!is_null($task->create_by_user->signature)){
                     $html .= "<div style=\"font-weight: bold; position:absolute;top:950;left:630px;\">
                             <img width=\"60%\" height=\"auto\" src=\"" . $task->create_by_user->signature->getPath()
