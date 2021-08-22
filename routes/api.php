@@ -229,6 +229,10 @@ Route::group(['prefix' => 'v1', 'as' => 'api.', 'namespace' => 'Api\V1\Admin', '
     Route::post('srt-external-documents/media', 'SrtExternalDocumentApiController@storeMedia')->name('srt-external-documents.storeMedia');
     Route::apiResource('srt-external-documents', 'SrtExternalDocumentApiController');
 
+     // Srt Other
+     Route::post('srt-others/media', 'SrtOtherApiController@storeMedia')->name('srt-others.storeMedia');
+     Route::apiResource('srt-others', 'SrtOtherApiController');
+
      // Organizations
      Route::apiResource('organizations', 'OrganizationApiController');
 

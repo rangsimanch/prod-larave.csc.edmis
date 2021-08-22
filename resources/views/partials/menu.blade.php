@@ -274,6 +274,17 @@
                                 </a>
                             </li>
                         @endcan
+                        @can('srt_other_access')
+                            <li class="{{ request()->is("admin/srt-others") || request()->is("admin/srt-others/*") ? "active" : "" }}">
+                                <a href="{{ route("admin.srt-others.index") }}">
+                                    <i class="fa-fw fas fa-atlas">
+
+                                    </i>
+                                    <span>{{ trans('cruds.srtOther.title') }}</span>
+
+                                </a>
+                            </li>
+                        @endcan
                         @can('srt_document_status_access')
                             <li class="{{ request()->is("admin/srt-document-statuses") || request()->is("admin/srt-document-statuses/*") ? "active" : "" }}">
                                 <a href="{{ route("admin.srt-document-statuses.index") }}">

@@ -501,6 +501,12 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::post('srt-external-documents/ckmedia', 'SrtExternalDocumentController@storeCKEditorImages')->name('srt-external-documents.storeCKEditorImages');
     Route::resource('srt-external-documents', 'SrtExternalDocumentController');
 
+     // Srt Other
+     Route::delete('srt-others/destroy', 'SrtOtherController@massDestroy')->name('srt-others.massDestroy');
+     Route::post('srt-others/media', 'SrtOtherController@storeMedia')->name('srt-others.storeMedia');
+     Route::post('srt-others/ckmedia', 'SrtOtherController@storeCKEditorImages')->name('srt-others.storeCKEditorImages');
+     Route::resource('srt-others', 'SrtOtherController');
+
     // Organizations
     Route::delete('organizations/destroy', 'OrganizationController@massDestroy')->name('organizations.massDestroy');
     Route::resource('organizations', 'OrganizationController');
