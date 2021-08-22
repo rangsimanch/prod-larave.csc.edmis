@@ -74,8 +74,8 @@
                                 </th>
                             </tr>
                             <tr>
-                                <td>
-                                </td>
+                                <!-- <td>
+                                </td> -->
                                 <td>
                                     <input class="search" type="text" placeholder="{{ trans('global.search') }}">
                                 </td>
@@ -210,7 +210,7 @@
     columns: [
       { data: 'placeholder', name: 'placeholder' },
 // { data: 'id', name: 'id' },
-{ data: 'created_at', name: 'created_at' ,visible: true}, 
+// { data: 'created_at', name: 'created_at' ,visible: true}, 
 { data: 'docuement_status_title', name: 'docuement_status.title' },
 { data: 'constuction_contract_code', name: 'constuction_contract.code' },
 { data: 'document_type', name: 'document_type' },
