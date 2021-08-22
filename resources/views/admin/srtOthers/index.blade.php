@@ -23,9 +23,13 @@
                                 <th width="10">
 
                                 </th>
-                                <th>
+                                <!-- <th>
                                     {{ trans('cruds.srtOther.fields.id') }}
-                                </th>
+                                </th> -->
+
+                                <th>
+                                    {{ trans('cruds.srtOther.fields.created_at') }}
+                                </th>   
                                 <th>
                                     {{ trans('cruds.srtOther.fields.docuement_status') }}
                                 </th>
@@ -205,7 +209,8 @@
     ajax: "{{ route('admin.srt-others.index') }}",
     columns: [
       { data: 'placeholder', name: 'placeholder' },
-{ data: 'id', name: 'id' },
+// { data: 'id', name: 'id' },
+{ data: 'created_at', name: 'created_at' ,visible: true}, 
 { data: 'docuement_status_title', name: 'docuement_status.title' },
 { data: 'constuction_contract_code', name: 'constuction_contract.code' },
 { data: 'document_type', name: 'document_type' },
@@ -222,7 +227,7 @@
 { data: 'actions', name: '{{ trans('global.actions') }}' }
     ],
     orderCellsTop: true,
-    order: [[ 10, 'desc' ]],
+    order: [[ 9, 'desc' ]],
     pageLength: 25,
   };
   let table = $('.datatable-SrtOther').DataTable(dtOverrideGlobals);
