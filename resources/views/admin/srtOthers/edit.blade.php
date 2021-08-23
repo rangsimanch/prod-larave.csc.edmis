@@ -12,18 +12,7 @@
                     <form method="POST" action="{{ route("admin.srt-others.update", [$srtOther->id]) }}" enctype="multipart/form-data">
                         @method('PUT')
                         @csrf
-                        <div class="form-group {{ $errors->has('constuction_contract') ? 'has-error' : '' }}">
-                            <label class="required" for="constuction_contract_id">{{ trans('cruds.srtOther.fields.constuction_contract') }}</label>
-                            <select class="form-control select2" name="constuction_contract_id" id="constuction_contract_id" required>
-                                @foreach($constuction_contracts as $id => $entry)
-                                    <option value="{{ $id }}" {{ (old('constuction_contract_id') ? old('constuction_contract_id') : $srtOther->constuction_contract->id ?? '') == $id ? 'selected' : '' }}>{{ $entry }}</option>
-                                @endforeach
-                            </select>
-                            @if($errors->has('constuction_contract'))
-                                <span class="help-block" role="alert">{{ $errors->first('constuction_contract') }}</span>
-                            @endif
-                            <span class="help-block">{{ trans('cruds.srtOther.fields.constuction_contract_helper') }}</span>
-                        </div>
+                        
                         <div class="form-group {{ $errors->has('document_type') ? 'has-error' : '' }}">
                             <label>{{ trans('cruds.srtOther.fields.document_type') }}</label>
                             <select class="form-control" name="document_type" id="document_type">

@@ -18,8 +18,8 @@ class UpdateSrtOtherRequest extends FormRequest
     {
         return [
             'constuction_contract_id' => [
-                'required',
                 'integer',
+                'nullable',
             ],
             'document_number' => [
                 'string',

@@ -33,9 +33,9 @@
                                 <th>
                                     {{ trans('cruds.srtOther.fields.docuement_status') }}
                                 </th>
-                                <th>
+                                <!-- <th>
                                     {{ trans('cruds.srtOther.fields.constuction_contract') }}
-                                </th>
+                                </th> -->
                                 <th>
                                     {{ trans('cruds.srtOther.fields.document_type') }}
                                 </th>
@@ -77,7 +77,6 @@
                                 <td>
                                 </td>
                                 <td>
-
                                 </td>
                                 <td>
                                     <select class="search">
@@ -87,14 +86,14 @@
                                         @endforeach
                                     </select>
                                 </td>
-                                <td>
+                                <!-- <td>
                                     <select class="search">
                                         <option value>{{ trans('global.all') }}</option>
                                         @foreach($construction_contracts as $key => $item)
                                             <option value="{{ $item->code }}">{{ $item->code }}</option>
                                         @endforeach
                                     </select>
-                                </td>
+                                </td> -->
                                 <td>
                                     <select class="search" strict="true">
                                         <option value>{{ trans('global.all') }}</option>
@@ -212,7 +211,7 @@
 // { data: 'id', name: 'id' },
 { data: 'created_at', name: 'created_at' ,visible: true}, 
 { data: 'docuement_status_title', name: 'docuement_status.title' },
-{ data: 'constuction_contract_code', name: 'constuction_contract.code' },
+// { data: 'constuction_contract_code', name: 'constuction_contract.code' },
 { data: 'document_type', name: 'document_type' },
 { data: 'document_number', name: 'document_number' },
 { data: 'subject', name: 'subject' },
