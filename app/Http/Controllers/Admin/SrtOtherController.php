@@ -130,7 +130,9 @@ class SrtOtherController extends Controller
 
     public function store(StoreSrtOtherRequest $request)
     {
-        $srtOther = SrtOther::create($request->all());
+        $data = $request->all();
+        $data['constuction_contract_id'] = 15;
+        $srtOther = SrtOther::create($data);
         $srtOther->tos()->sync($request->input('tos', []));
         foreach ($request->input('file_upload', []) as $file) {
             $srtOther->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('file_upload');
