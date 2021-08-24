@@ -123,8 +123,8 @@
                                         @endforeach
                                     </select>
                                 </td>
-                                </td>
                                 <td>
+                                </td>
                                 <td>
                                 </td>
                                 <td>
