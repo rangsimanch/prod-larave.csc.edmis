@@ -1090,6 +1090,8 @@ class RfaController extends Controller
             $signature_size_w = 40;
             $signature_position_top = 425;
             $signature_position_left = 280;
+            $stamp_size_h = 120;
+            $stamp_size_w = 120;
             $contract_name = 'Contract ' . $rfa->construction_contract->code . ' : ' . $rfa->construction_contract->name;
         }
 
@@ -1111,6 +1113,8 @@ class RfaController extends Controller
             $signature_size_w = 55;
             $signature_position_top = 415;
             $signature_position_left = 280;
+            $stamp_size_h = 120;
+            $stamp_size_w = 120;
             $contract_name = 'Contract ' . $rfa->construction_contract->code . ' : ' . $rfa->construction_contract->name;
 
         }
@@ -1133,6 +1137,8 @@ class RfaController extends Controller
             $signature_size_w = 60;
             $signature_position_top = 415;
             $signature_position_left = 280;
+            $stamp_size_h = 120;
+            $stamp_size_w = 120;
             $contract_name = 'Contract ' . $rfa->construction_contract->code . ' : ' . $rfa->construction_contract->name;
 
         }
@@ -1155,6 +1161,8 @@ class RfaController extends Controller
             $signature_size_w = 60;
             $signature_position_top = 409;
             $signature_position_left = 280;
+            $stamp_size_h = 120;
+            $stamp_size_w = 120;
             $contract_name = 'Contract ' . $rfa->construction_contract->code . ' : ' . $rfa->construction_contract->name;
 
         }
@@ -1177,6 +1185,8 @@ class RfaController extends Controller
             $signature_size_w = 60;
             $signature_position_top = 425;
             $signature_position_left = 275;
+            $stamp_size_h = 120;
+            $stamp_size_w = 120;
             $contract_name = 'Contract ' . $rfa->construction_contract->code . ' : ' . $rfa->construction_contract->name;
 
         }
@@ -1199,6 +1209,8 @@ class RfaController extends Controller
             $signature_size_w = 60;
             $signature_position_top = 409;
             $signature_position_left = 260;
+            $stamp_size_h = 160;
+            $stamp_size_w = 160;
             $contract_name = 'Contract ' . $rfa->construction_contract->code . ' : ' . $rfa->construction_contract->name;
 
         }
@@ -1221,6 +1233,8 @@ class RfaController extends Controller
             $signature_size_w = 60;
             $signature_position_top = 409;
             $signature_position_left = 280;
+            $stamp_size_h = 120;
+            $stamp_size_w = 120;
             $contract_name = 'Contract ' . $rfa->construction_contract->code . ' : ' . $rfa->construction_contract->name;
 
         }
@@ -1243,6 +1257,8 @@ class RfaController extends Controller
             $signature_size_w = 50;
             $signature_position_top = 415;
             $signature_position_left = 278;
+            $stamp_size_h = 120;
+            $stamp_size_w = 120;
             $contract_name = 'Contract ' . $rfa->construction_contract->code . ' : ' . $rfa->construction_contract->name;
 
         }
@@ -1265,6 +1281,8 @@ class RfaController extends Controller
             $signature_size_w = 50;
             $signature_position_top = 415;
             $signature_position_left = 278;
+            $stamp_size_h = 120;
+            $stamp_size_w = 120;
             $contract_name = 'Contract ' . $rfa->construction_contract->code . ' : ' . $rfa->construction_contract->name;
 
         }
@@ -1439,7 +1457,7 @@ class RfaController extends Controller
         //Stamp Organize
         if($stamp_path != ''){
             $html .= "<div style=\"font-size: 14px; position:absolute;top:380px;left:600px;\">
-                <img src=\"". $stamp_path ."\" width=\"120px\" higth=\"120px\" style=\"opacity: 0.8;\"> </div>";
+                <img src=\"". $stamp_path ."\" width=\"". $stamp_size_w ."\" higth=\"". $stamp_size_h ."\" style=\"opacity: 0.8;\"> </div>";
         }
         
 
