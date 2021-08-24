@@ -21,15 +21,23 @@
                     {{ trans('cruds.rfa.title_singular') }} {{ trans('global.list') }}
                 </div>
                 <div class="panel-body">
-                    <table class=" table table-bordered table-striped table-hover ajaxTable datatable datatable-Rfa">
+                    <table class=" table table-bordered table-striped table-hover ajaxTable datatable datatable-Rfa text-center">
                         <thead>
                             <tr>
                                 <th width="10">
 
                                 </th>
+
+                                <th>
+                                    {{ trans('cruds.rfa.fields.action') }}
+                                </th>
+
                                 <th>
                                     {{ trans('cruds.rfa.fields.document_status') }}
                                 </th>
+                                <th>
+                                    {{ trans('cruds.rfa.fields.cover_sheet') }}
+                                </th> 
                                 <th>
                                     {{ trans('cruds.rfa.fields.file_upload_1') }}
                                 </th>
@@ -90,12 +98,15 @@
                                 <th>
                                     {{ trans('cruds.rfa.fields.updated_at') }}
                                 </th>
-                                <th>
-                                    &nbsp;
-                                </th>
+                              
                             </tr>
                             <tr>
                                 <td>
+                                </td>
+                                <td>
+                                </td>
+                                <td>
+                                    <input class="search" type="text" placeholder="{{ trans('global.search') }}">
                                 </td>
                                 <td>
                                     <select class="search">
@@ -105,6 +116,8 @@
                                         @endforeach
                                     </select>
                                 </td>
+                                </td>
+                                <td>
                                 <td>
                                 </td>
                                 <td>
@@ -185,9 +198,7 @@
                                         @endforeach
                                     </select>
                                 </td>
-                                <td>
-                                    <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                                </td>
+                                
                                 <td>
                                     <select class="search">
                                         <option value>{{ trans('global.all') }}</option>
@@ -201,8 +212,7 @@
                                 <td>
                                     <input class="search" type="text" placeholder="{{ trans('global.search') }}">
                                 </td>
-                                <td>
-                                </td>
+                                
                             </tr>
                         </thead>
                     </table>
@@ -259,6 +269,10 @@
     ajax: "{{ route('admin.rfas.index') }}",
     columns: [
       { data: 'placeholder', name: 'placeholder' },
+{ data: 'actions', name: '{{ trans('global.actions') }}' }
+{ data: 'created_at', name: 'created_at' },
+{ data: 'cover_sheet', name: 'cover_sheet', sortable: false, searchable: false }, // 3
+
 { data: 'document_status_status_name', name: 'document_status.status_name' },
 { data: 'file_upload_1', name: 'file_upload_1', sortable: false, searchable: false },
 { data: 'boq_name', name: 'boq.name' },
@@ -276,15 +290,21 @@
 { data: 'information_by_name', name: 'information_by.name' },
 { data: 'receive_date', name: 'receive_date' },
 { data: 'comment_status_name', name: 'comment_status.name' },
-{ data: 'created_at', name: 'created_at' },
+// { data: 'created_at', name: 'created_at' },
 { data: 'create_by_user_name', name: 'create_by_user.name' },
 { data: 'commercial_file_upload', name: 'commercial_file_upload', sortable: false, searchable: false },
 { data: 'updated_at', name: 'updated_at' },
-{ data: 'actions', name: '{{ trans('global.actions') }}' }
     ],
-    orderCellsTop: true,
-    order: [[ 5, 'desc' ]],
-    pageLength: 25,
+    order: [[ 2, 'desc' ]],
+    lengthMenu: [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
+    pageLength: 10,
+    sPaginationType: "full_numbers",
+    scrollY : 450,
+    scrollX : "true",
+    fixedColumns:   {
+            leftColumns: 1,
+            rightColumns: 1
+        }
   };
   let table = $('.datatable-Rfa').DataTable(dtOverrideGlobals);
   $('a[data-toggle="tab"]').on('shown.bs.tab click', function(e){
