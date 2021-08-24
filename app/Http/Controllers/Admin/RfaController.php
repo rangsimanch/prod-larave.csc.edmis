@@ -507,18 +507,18 @@ class RfaController extends Controller
             return $table->make(true);
         }
 
-        $bo_qs =  BoQ::all()->sortBy('id')->pluck('name')->unique();
-        $rfa_document_statuses =  RfaDocumentStatus::all()->sortBy('status_name')->pluck('status_name')->unique();
-        $rfatypes = Rfatype::all()->sortBy('type_code')->pluck('type_code')->unique();
-        $work_types = Rfa::all()->sortBy('worktype')->pluck('worktype')->unique();
-        $construction_contracts = ConstructionContract::all()->sortBy('code')->pluck('code')->unique();
-        $wbs_level_threes = WbsLevelThree::all()->sortBy('wbs_level_3_code')->pluck('wbs_level_3_code')->unique();
-        $wbslevelfours = Wbslevelfour::all()->sortBy('wbs_level_4_code')->pluck('wbs_level_4_code')->unique();
-        $submit_dates = Rfa::all()->sortBy('submit_date')->pluck('submit_date')->unique();
-        $receive_dates = Rfa::all()->sortBy('receive_date')->pluck('receive_date')->unique();
-        $rfa_comment_statuses = RfaCommentStatus::all()->sortBy('name')->pluck('name')->unique();
-        $for_statuses = RfaCommentStatus::all()->sortBy('name')->pluck('name')->unique();
-        $teams = Team::all()->sortBy('code')->pluck('code')->unique();
+        $bo_qs =  BoQ::get();
+        $rfa_document_statuses =  RfaDocumentStatus::get();
+        $rfatypes = Rfatype::get();
+        $work_types = Rfa::get();
+        $construction_contracts = ConstructionContract::get();
+        $wbs_level_threes = WbsLevelThree::get();
+        $wbslevelfours = Wbslevelfour::get();
+        $submit_dates = Rfa::get();
+        $receive_dates = Rfa::get();
+        $rfa_comment_statuses = RfaCommentStatus::get();
+        $for_statuses = RfaCommentStatus::get();
+        $teams = Team::get();
         $users                  = User::get();
         $wbs_level_ones         = WbsLevelOne::get();
 
