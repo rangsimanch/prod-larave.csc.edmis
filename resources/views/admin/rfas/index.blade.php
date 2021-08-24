@@ -36,7 +36,9 @@
                                     {{ trans('cruds.rfa.fields.created_at') }}
                                 </th>
                                 
-                               
+                                <th>
+                                    {{ trans('cruds.rfa.fields.cover_sheet') }}
+                                </th> 
 
                                 <th>
                                     {{ trans('cruds.rfa.fields.document_status') }}
@@ -112,7 +114,9 @@
                                     <input class="search" type="text" placeholder="{{ trans('global.search') }}">
                                 </td>
 
-                                
+                                <td>
+                                </td>
+                            
                                 <td>
                                     <select class="search">
                                         <option value>{{ trans('global.all') }}</option>
@@ -290,8 +294,9 @@
     ajax: "{{ route('admin.rfas.index') }}",
     columns: [
       { data: 'placeholder', name: 'placeholder' },
-{ data: 'actions', name: '{{ trans('global.actions') }}' }
+{ data: 'actions', name: '{{ trans('global.actions') }}' },
 { data: 'created_at', name: 'created_at' },
+{ data: 'cover_sheet', name: 'cover_sheet', sortable: false, searchable: false }, // 3
 { data: 'document_status_status_name', name: 'document_status.status_name' },
 { data: 'file_upload_1', name: 'file_upload_1', sortable: false, searchable: false },
 { data: 'boq_name', name: 'boq.name' },
