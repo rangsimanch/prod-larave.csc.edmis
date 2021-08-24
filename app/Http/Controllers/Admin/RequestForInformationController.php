@@ -581,7 +581,7 @@ class RequestForInformationController extends Controller
         $html .= "<div style=\"font-size: 13px; position:absolute;top:210px;left:515px;\">" . $rfi_no  . '.' . "</div>";
         $html .= "<div style=\"font-size: 13px; position:absolute;top:210px;left:675px;\">" . $submit_date  . '.' . "</div>";
 
-        $html .= "<div style=\"font-size: 13px; position:absolute;top:277px;left:110px;\">" . $title  . '.' . "</div>";
+        $html .= "<div style=\"font-size: 13px; padding-right:230px; position:absolute;top:277px;left:110px;\">" . $title  . '.' . "</div>";
         $html .= "<div style=\"font-size: 13px; position:absolute;top:277px;left:520px;\">" . $to_team  . '.' . "</div>";
         $html .= "<div style=\"font-size: 13px; position:absolute;top:335px;left:180px;\">" . $req_by . '.' . "</div>";
 
@@ -590,10 +590,12 @@ class RequestForInformationController extends Controller
 
         $html .= "<div style=\"font-size: 13px; position:absolute;top:430px;left:60px;right:45px;text-align: justify;\">" . $description  . "</div>";
 
-        $html .= "<div style=\"font-size: 13px; position:absolute;top:730px;left:270px;\">" . $issue_by  . "</div>";
-        $html .= "<div style=\"font-size: 14px; position:absolute;top:720px;left:500px;\">
-        <img src=\"". $signature_path ."\" width=\"". $signature_size_w ."px\" higth=\"". $signature_size_h ."px\"> </div>";
+        $html .= "<div style=\"font-size: 11px; position:absolute;top:730px;left:270px;\">" . $issue_by  . "</div>";
 
+        if($signature_path != ''){
+            $html .= "<div style=\"font-size: 14px; position:absolute;top:720px;left:500px;\">
+            <img src=\"". $signature_path ."\" width=\"". $signature_size_w ."px\" higth=\"". $signature_size_h ."px\"> </div>";
+        }
 
 
 
