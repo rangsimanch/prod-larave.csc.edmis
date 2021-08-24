@@ -576,12 +576,12 @@ class RequestForInformationController extends Controller
         <img src=\"". $logo_path ."\" width=\"". $logo_w ."px\" higth=\"". $logo_h ."px\"> </div>";
 
         $html .= "<div style=\"font-size: 13px; position:absolute;top:110px;left:615px;\">" . $constructor_code . '.' . "</div>";
-        $html .= "<div style=\"font-size: 8px; position:absolute;top:155px;left:578px;\">" . $constructor_name  . '.' . "</div>";
+        $html .= "<div style=\"font-size: 8px; position:absolute;top:155px;left:580px;\">" . $constructor_name  . '.' . "</div>";
 
         $html .= "<div style=\"font-size: 13px; position:absolute;top:210px;left:515px;\">" . $rfi_no  . '.' . "</div>";
         $html .= "<div style=\"font-size: 13px; position:absolute;top:210px;left:675px;\">" . $submit_date  . '.' . "</div>";
 
-        $html .= "<div style=\"font-size: 13px; padding-right:300px; position:absolute;top:277px;left:110px;\">" . $title  . '.' . "</div>";
+        $html .= "<div style=\"font-size: 13px; padding-right:320px; position:absolute;top:277px;left:110px;\">" . $title  . '.' . "</div>";
         $html .= "<div style=\"font-size: 13px; position:absolute;top:277px;left:520px;\">" . $to_team  . '.' . "</div>";
         $html .= "<div style=\"font-size: 13px; position:absolute;top:335px;left:180px;\">" . $req_by . '.' . "</div>";
 
