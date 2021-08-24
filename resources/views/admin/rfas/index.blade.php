@@ -295,7 +295,7 @@
     columns: [
       { data: 'placeholder', name: 'placeholder' },
 { data: 'actions', name: '{{ trans('global.actions') }}' },
-{ data: 'created_at', name: 'created_at' ,sortable: false},
+{ data: 'created_at', name: 'created_at'},
 { data: 'cover_sheet', name: 'cover_sheet', sortable: false, searchable: false }, // 3
 { data: 'document_status_status_name', name: 'document_status.status_name' ,sortable: false},
 { data: 'file_upload_1', name: 'file_upload_1', sortable: false, searchable: false },
