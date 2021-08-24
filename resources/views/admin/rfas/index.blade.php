@@ -29,7 +29,7 @@
                                 </th>
                                 
                                 <th>
-                                {{ trans('cruds.rfa.fields.action') }}
+                                    {{ trans('cruds.rfa.fields.action') }}
                                 </th>
 
                                 <th>
@@ -47,12 +47,12 @@
                                 <th>
                                     {{ trans('cruds.rfa.fields.document_status') }}
 
-                                    <select class="form-control filter-select" data-column="5">
+                                    <!-- <select class="form-control filter-select" data-column="5">
                                         <option value=""> Select Status... </option>
                                         @foreach ($document_status as $status)
                                             <option value="{{ $status }}"> {{ $status }} </option>
                                         @endforeach
-                                    </select>
+                                    </select> -->
                                 </th>
 
                                 <th>
@@ -293,6 +293,136 @@
                                 <th>
                                     Check
                                 </th>
+                            </tr>
+                            <tr>
+                                <td>
+                                </td>
+
+                                <td>
+                                </td>
+
+                                <td>
+                                </td>
+
+                                <td>
+                                </td>
+
+                                <td>
+                                </td>
+
+                                <td>
+                                </td>
+
+                                <td>
+                                </td>
+
+                                <td>
+                                </td>
+
+                                <td>
+                                </td>
+
+                                <td>
+                                </td>
+
+                                <td>
+                                </td>
+
+                                <td>
+                                </td>
+
+                                <td>
+                                </td>
+
+                                <td>
+                                </td>
+
+                                <td>
+                                </td>
+
+                                <td>
+                                </td>
+
+                                <td>
+                                </td>
+
+                                <td>
+                                </td>
+
+                                <td>
+                                </td>
+
+                                <td>
+                                </td>
+
+                                <td>
+                                </td>
+
+                                <td>
+                                </td>
+
+                                <td>
+                                </td>
+
+                                <td>
+                                </td>
+
+                                <td>
+                                </td>
+
+                                <td>
+                                </td>
+
+                                <td>
+                                </td>
+
+                                <td>
+                                </td>
+
+                                <td>
+                                </td>
+
+                                <td>
+                                </td>
+
+                                <td>
+                                </td>
+
+                                <td>
+                                </td>
+
+                                <td>
+                                </td>
+
+                                <td>
+                                </td>
+
+                                <td>
+                                </td>
+
+                                <td>
+                                </td>
+
+                                <td>
+                                </td>
+
+                                <td>
+                                </td>
+
+                                <td>
+                                </td>
+
+                                <td>
+                                </td>
+
+                                <td>
+                                </td>
+
+                                <td>
+                                </td>
+
+                                <td>
+                                </td>
                             </tr>
                         </thead>
                     </table>
