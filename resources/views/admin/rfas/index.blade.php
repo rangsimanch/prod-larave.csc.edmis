@@ -120,7 +120,7 @@
                                 <td>
                                     <select class="search">
                                         <option value>{{ trans('global.all') }}</option>
-                                        @foreach($document_statuses as $key => $item)
+                                        @foreach($rfa_document_statuses as $key => $item)
                                             <option value="{{ $item->status_name }}">{{ $item->status_name }}</option>
                                         @endforeach
                                     </select>
@@ -216,7 +216,7 @@
                                 <td>
                                     <select class="search">
                                         <option value>{{ trans('global.all') }}</option>
-                                        @foreach($comment_statuses as $key => $item)
+                                        @foreach($rfa_comment_statuses as $key => $item)
                                             <option value="{{ $item->name }}">{{ $item->name }}</option>
                                         @endforeach
                                     </select>
@@ -299,7 +299,7 @@
 { data: 'cover_sheet', name: 'cover_sheet', sortable: false, searchable: false }, // 3
 { data: 'document_status_status_name', name: 'document_status.status_name' ,sortable: false},
 { data: 'file_upload_1', name: 'file_upload_1', sortable: false, searchable: false },
-{ data: 'boq_name', name: 'boq.name' ,sortable: false,sortable: false},
+{ data: 'boq_name', name: 'boq.name' ,sortable: false},
 { data: 'title_eng', name: 'title_eng' },
 { data: 'title', name: 'title' },
 { data: 'title_cn', name: 'title_cn' },
