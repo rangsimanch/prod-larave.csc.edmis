@@ -516,7 +516,7 @@ class RfaController extends Controller
         $rfa_comment_statuses   = RfaCommentStatus::get();
         $teams                  = Team::get();
 
-        return view('admin.rfas.index', compact('rfa_document_statuses', 'bo_qs', 'rfatypes', 'construction_contracts', 'wbs_level_threes', 'wbslevelfours', 'users', 'rfa_comment_statuses', 'wbs_level_ones', 'teams'));
+        return view('admin.rfas.index', compact('rfa_document_statuses', 'bo_qs', 'rfatypes', 'construction_contracts', 'wbs_level_threes', 'wbslevelfours', 'users', 'rfa_comment_statuses', 'teams'));
     }
     
     function fetch(Request $request){
