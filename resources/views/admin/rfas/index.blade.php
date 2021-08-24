@@ -318,7 +318,7 @@
 { data: 'commercial_file_upload', name: 'commercial_file_upload', sortable: false, searchable: false },
 { data: 'updated_at', name: 'updated_at' },
     ],
-    order: [[ 3, 'desc' ]],
+    order: [[ 2, 'desc' ]],
     lengthMenu: [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
     pageLength: 10,
     sPaginationType: "full_numbers",
