@@ -235,9 +235,6 @@
                                 </td>
                                 
                                 <td>
-                                </td>
-
-                                <td>
                                     <input class="search" type="text" placeholder="{{ trans('global.search') }}">
                                 </td>
                                 
@@ -317,12 +314,11 @@
 { data: 'information_by_name', name: 'information_by.name' },
 { data: 'receive_date', name: 'receive_date' },
 { data: 'comment_status_name', name: 'comment_status.name' },
-// { data: 'created_at', name: 'created_at' },
 { data: 'create_by_user_name', name: 'create_by_user.name' },
 { data: 'commercial_file_upload', name: 'commercial_file_upload', sortable: false, searchable: false },
 { data: 'updated_at', name: 'updated_at' },
     ],
-    order: [[ 2, 'desc' ]],
+    order: [[ 3, 'desc' ]],
     lengthMenu: [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
     pageLength: 10,
     sPaginationType: "full_numbers",
