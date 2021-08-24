@@ -120,7 +120,7 @@
                                 <td>
                                     <select class="search">
                                         <option value>{{ trans('global.all') }}</option>
-                                        @foreach($rfa_document_statuses as $key => $item)
+                                        @foreach($document_statuses as $key => $item)
                                             <option value="{{ $item->status_name }}">{{ $item->status_name }}</option>
                                         @endforeach
                                     </select>
@@ -216,7 +216,7 @@
                                 <td>
                                     <select class="search">
                                         <option value>{{ trans('global.all') }}</option>
-                                        @foreach($rfa_comment_statuses as $key => $item)
+                                        @foreach($comment_statuses as $key => $item)
                                             <option value="{{ $item->name }}">{{ $item->name }}</option>
                                         @endforeach
                                     </select>
