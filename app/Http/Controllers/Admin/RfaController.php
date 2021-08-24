@@ -514,7 +514,6 @@ class RfaController extends Controller
         $wbslevelfours          = Wbslevelfour::get();
         $users                  = User::get();
         $rfa_comment_statuses   = RfaCommentStatus::get();
-        $wbs_level_ones         = WbsLevelOne::get();
         $teams                  = Team::get();
 
         return view('admin.rfas.index', compact('rfa_document_statuses', 'bo_qs', 'rfatypes', 'construction_contracts', 'wbs_level_threes', 'wbslevelfours', 'users', 'rfa_comment_statuses', 'wbs_level_ones', 'teams'));
