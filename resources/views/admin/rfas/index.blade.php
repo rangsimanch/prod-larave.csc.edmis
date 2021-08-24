@@ -303,7 +303,7 @@
 { data: 'title_eng', name: 'title_eng' ,sortable: false},
 { data: 'title', name: 'title' ,sortable: false},
 { data: 'title_cn', name: 'title_cn' ,sortable: false},
-{ data: 'origin_number', name: 'origin_number' },
+{ data: 'origin_number', name: 'origin_number',sortable: false },
 { data: 'document_number', name: 'document_number' ,sortable: false},
 { data: 'rfa_code', name: 'rfa_code' ,sortable: false},
 { data: 'submit_date', name: 'submit_date' ,sortable: false},
