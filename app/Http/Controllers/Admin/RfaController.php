@@ -506,21 +506,22 @@ class RfaController extends Controller
             return $table->make(true);
         }
 
-        $boqs =  BoQ::all()->sortBy('id')->pluck('name')->unique();
-        $document_status =  RfaDocumentStatus::all()->sortBy('status_name')->pluck('status_name')->unique();
-        $types = Rfatype::all()->sortBy('type_code')->pluck('type_code')->unique();
+        $bo_qs =  BoQ::all()->sortBy('id')->pluck('name')->unique();
+        $rfa_document_statuses =  RfaDocumentStatus::all()->sortBy('status_name')->pluck('status_name')->unique();
+        $rfatypes = Rfatype::all()->sortBy('type_code')->pluck('type_code')->unique();
         $work_types = Rfa::all()->sortBy('worktype')->pluck('worktype')->unique();
         $construction_contracts = ConstructionContract::all()->sortBy('code')->pluck('code')->unique();
-        $wbs_level_3s = WbsLevelThree::all()->sortBy('wbs_level_3_code')->pluck('wbs_level_3_code')->unique();
-        $wbs_level_4s = Wbslevelfour::all()->sortBy('wbs_level_4_code')->pluck('wbs_level_4_code')->unique();
+        $wbs_level_threes = WbsLevelThree::all()->sortBy('wbs_level_3_code')->pluck('wbs_level_3_code')->unique();
+        $wbslevelfours = Wbslevelfour::all()->sortBy('wbs_level_4_code')->pluck('wbs_level_4_code')->unique();
         $submit_dates = Rfa::all()->sortBy('submit_date')->pluck('submit_date')->unique();
         $receive_dates = Rfa::all()->sortBy('receive_date')->pluck('receive_date')->unique();
-        $comment_statuses = RfaCommentStatus::all()->sortBy('name')->pluck('name')->unique();
+        $rfa_comment_statuses = RfaCommentStatus::all()->sortBy('name')->pluck('name')->unique();
         $for_statuses = RfaCommentStatus::all()->sortBy('name')->pluck('name')->unique();
         $teams = Team::all()->sortBy('code')->pluck('code')->unique();
+        $users                  = User::get();
+        $wbs_level_ones         = WbsLevelOne::get();
 
-
-        return view('admin.rfas.index',compact('boqs','document_status','types','work_types','construction_contracts','wbs_level_3s','wbs_level_4s','submit_dates','receive_dates','comment_statuses','for_statuses','teams'));
+        return view('admin.rfas.index',compact('bo_qs','rfa_document_statuses','rfatypes','work_types','construction_contracts','wbs_level_threes','wbslevelfours','submit_dates','receive_dates','rfa_comment_statuses','for_statuses','teams','users'));
     }
     
     function fetch(Request $request){
