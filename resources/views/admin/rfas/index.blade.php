@@ -107,6 +107,8 @@
                                 <td>
                                 </td>
                                 <td>
+                                </td>
+                                <td>
                                     <input class="search" type="text" placeholder="{{ trans('global.search') }}">
                                 </td>
 
