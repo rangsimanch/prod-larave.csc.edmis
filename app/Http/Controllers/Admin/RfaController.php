@@ -904,8 +904,9 @@ class RfaController extends Controller
         }
         else if($rfa->document_status_id == 3 || $rfa->document_status_id == 4){
             $for_statuses = RfaCommentStatus::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+            $comment_statuses = RfaCommentStatus::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
             $reviewed_bies = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
-            return view('admin.rfas.edit', compact('construction_contracts', 'for_statuses', 'reviewed_bies', 'rfa'));
+            return view('admin.rfas.edit', compact('construction_contracts', 'for_statuses','comment_statuses', 'reviewed_bies', 'rfa'));
         }
 
     }
@@ -975,7 +976,7 @@ class RfaController extends Controller
             $data['outgoing_date'] = $outgoing_date->format('d/m/Y');
             $data['outgoing_number'] = "OUT-" . $rfa->rfa_code;
             $data['reviewed_by_id'] = $request->reviewed_by_id;
-            $data['for_status_id'] = $request->for_status_id;
+            // $data['for_status_id'] = $request->for_status_id;
             $data['note_4'] = $request->note_4;
             $rfa->update($data);
 
@@ -1002,7 +1003,7 @@ class RfaController extends Controller
             $data['outgoing_date'] = $outgoing_date->format('d/m/Y');
             $data['outgoing_number'] = "OUT-" . $rfa->rfa_code;
             $data['reviewed_by_id'] = $request->reviewed_by_id;
-            $data['for_status_id'] = $request->for_status_id;
+            // $data['for_status_id'] = $request->for_status_id;
             $data['note_4'] = $request->note_4;
             $rfa->update($data);
 
