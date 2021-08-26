@@ -168,18 +168,20 @@
                             @endif
                             <span class="help-block">{{ trans('cruds.rfa.fields.reviewed_by_helper') }}</span>
                         </div>
-                        <div class="form-group {{ $errors->has('for_status') ? 'has-error' : '' }}">
-                            <label for="for_status_id">{{ trans('cruds.rfa.fields.for_status') }}</label>
-                            <select class="form-control select2" name="for_status_id" id="for_status_id">
-                                @foreach($for_statuses as $id => $for_status)
-                                    <option value="{{ $id }}" {{ ($rfa->for_status ? $rfa->for_status->id : old('for_status_id')) == $id ? 'selected' : '' }}>{{ $for_status }}</option>
+
+                        <div class="form-group {{ $errors->has('comment_status') ? 'has-error' : '' }}">
+                            <label for="comment_status_id">{{ trans('cruds.rfa.fields.comment_status') }}</label>
+                            <select class="form-control select2" name="comment_status_id" id="comment_status_id">
+                                @foreach($comment_statuses as $id => $comment_status)
+                                    <option value="{{ $id }}" {{ ($rfa->comment_status ? $rfa->comment_status->id : old('comment_status_id')) == $id ? 'selected' : '' }}>{{ $comment_status }}</option>
                                 @endforeach
                             </select>
-                            @if($errors->has('for_status_id'))
-                                <span class="help-block" role="alert">{{ $errors->first('for_status_id') }}</span>
+                            @if($errors->has('comment_status_id'))
+                                <span class="help-block" role="alert">{{ $errors->first('comment_status_id') }}</span>
                             @endif
-                            <span class="help-block">{{ trans('cruds.rfa.fields.for_status_helper') }}</span>
+                            <span class="help-block">{{ trans('cruds.rfa.fields.comment_status_helper') }}</span>
                         </div>
+
                         <div class="form-group {{ $errors->has('note_4') ? 'has-error' : '' }}">
                             <label for="note_4">{{ trans('cruds.rfa.fields.note_4') }}</label>
                             <textarea class="form-control" name="note_4" id="note_4">{{ old('note_4', $rfa->note_4) }}</textarea>
