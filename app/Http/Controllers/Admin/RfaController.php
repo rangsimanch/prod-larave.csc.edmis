@@ -977,6 +977,7 @@ class RfaController extends Controller
             $data['outgoing_number'] = "OUT-" . $rfa->rfa_code;
             $data['reviewed_by_id'] = $request->reviewed_by_id;
             // $data['for_status_id'] = $request->for_status_id;
+            $data['comment_status_id'] = $request->comment_status_id;
             $data['note_4'] = $request->note_4;
             $rfa->update($data);
 
@@ -1004,6 +1005,7 @@ class RfaController extends Controller
             $data['outgoing_number'] = "OUT-" . $rfa->rfa_code;
             $data['reviewed_by_id'] = $request->reviewed_by_id;
             // $data['for_status_id'] = $request->for_status_id;
+            $data['comment_status_id'] = $request->comment_status_id;
             $data['note_4'] = $request->note_4;
             $rfa->update($data);
 
