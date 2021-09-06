@@ -143,7 +143,7 @@ class TaskController extends Controller
        
         if(auth()->user()->roles->contains(28) || auth()->user()->roles->contains(1) ){
             $create_by_users = User::all()->where('team_id','3')->pluck('name','id')->prepend(trans('global.pleaseSelect'), '');
-            $contracts = ConstructionContract::all()->pluck('code', 'id')->prepend(trans('global.pleaseSelect'), '');
+            $contracts = ConstructionContract::all()->where('id','!=',15)->pluck('code', 'id')->prepend(trans('global.pleaseSelect'), '');
         }
         else{
             $create_by_users = User::all()->where('id',auth()->id())->pluck('name','id')->prepend(trans('global.pleaseSelect'), '');
@@ -336,7 +336,7 @@ class TaskController extends Controller
                             
                             if(in_array(pathinfo(public_path($task->attachment[0]->getUrl()),PATHINFO_EXTENSION),$allowed)){
                             
-                                $img = (string) Image::make($task->attachment[0]->getqPath())->resize(null, 180, function ($constraint) {
+                                $img = (string) Image::make($task->attachment[0]->getPath())->resize(null, 180, function ($constraint) {
                                     $constraint->aspectRatio();
                                 })->encode('data-url');
 
