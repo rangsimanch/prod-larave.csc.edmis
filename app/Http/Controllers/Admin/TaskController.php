@@ -342,6 +342,7 @@ class TaskController extends Controller
 
                                 $img = (string) urlencode($task->attachment[0]->getUrl());
 
+
                                 $html .= "<br><div style=\"text-align:center;\"> <img width=\"30%\" height=\"auto\" src=\"" 
                                     . $img
                                     . "\"></div>";
