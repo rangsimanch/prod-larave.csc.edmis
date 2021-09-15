@@ -144,6 +144,7 @@ Dropzone.options.letterUploadDropzone = {
     url: '{{ route('admin.add-letters.storeMedia') }}',
     maxFilesize: 5120, // MB
     addRemoveLinks: true,
+    timeout: 180000,
     headers: {
       'X-CSRF-TOKEN': "{{ csrf_token() }}"
     },
