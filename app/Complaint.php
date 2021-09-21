@@ -23,9 +23,10 @@ class Complaint extends Model implements HasMedia
     ];
 
     const STATUS_SELECT = [
-        '1' => 'New',
-        '2' => 'In progress/Monitor',
-        '3' => 'Closed',
+        '1' => 'อยู่ในระหว่างการแก้ไข',
+        '2' => 'ใช้เวลาการแก้ไขน้อยกว่า 30 วัน',
+        '3' => 'ใช้เวลาการแก้ไขมากกว่า 30 วัน',
+
     ];
 
     protected $dates = [
