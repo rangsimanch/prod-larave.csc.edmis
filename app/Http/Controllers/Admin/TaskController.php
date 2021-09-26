@@ -321,7 +321,7 @@ class TaskController extends Controller
                     //     $allowed = array('gif', 'png', 'jpg', 'jpeg', 'JPG', 'JPEG', 'PNG');
                     //     if(in_array(pathinfo(public_path($media->getUrl()),PATHINFO_EXTENSION),$allowed)){
                     //         //Prod use $task->attachment[0]->getPath() 
-                    //         $html .= "<img  width=\"30%\" height=\"auto\" src=\"" 
+                    //         $html .= "<img  width=\"30%\" height=\"20%\" src=\"" 
                     //             . $media->getUrl()
                     //             . "\">";
                     //     }
@@ -343,7 +343,7 @@ class TaskController extends Controller
                                 $img = (string) urlencode($task->attachment[0]->getUrl());
 
 
-                                $html .= "<br><div style=\"text-align:center;\"> <img width=\"30%\" height=\"auto\" src=\"" 
+                                $html .= "<br><div style=\"text-align:center;\"> <img width=\"30%\" height=\"30%\" src=\"" 
                                     . $img
                                     . "\"></div>";
                             }
@@ -358,7 +358,7 @@ class TaskController extends Controller
                                 })
                                 ->encode('data-url');
 
-                                $html .= "<br><div style=\"text-align:center;\"> <img width=\"25%\" height=\"auto\" src=\"" 
+                                $html .= "<br><div style=\"text-align:center;\"> <img width=\"25%\" height=\"25%\" src=\"" 
                                     . $img
                                     . "\">";
                             }
@@ -367,7 +367,7 @@ class TaskController extends Controller
                                     $constraint->aspectRatio();
                                 })->encode('data-url');
                                 
-                                $html .= " <img width=\"25%\" height=\"auto\" src=\"" 
+                                $html .= " <img width=\"25%\" height=\"20%\" src=\"" 
                                     . $img
                                     . "\"></div>";
                             }
@@ -378,7 +378,7 @@ class TaskController extends Controller
                                     $constraint->aspectRatio();
                                 })->encode('data-url');
                                 
-                                $html .= "<br><div style=\"text-align:center;\"> <img width=\"20%\" height=\"auto\" src=\"" 
+                                $html .= "<br><div style=\"text-align:center;\"> <img width=\"20%\" height=\"20%\" src=\"" 
                                     . $img
                                     . "\">";
                             }
@@ -387,7 +387,7 @@ class TaskController extends Controller
                                     $constraint->aspectRatio();
                                 })->encode('data-url');
                                 
-                                $html .= " <img width=\"20%\" height=\"auto\" src=\"" 
+                                $html .= " <img width=\"20%\" height=\"20%\" src=\"" 
                                     . $img
                                     . "\">";
                             }
@@ -396,7 +396,7 @@ class TaskController extends Controller
                                     $constraint->aspectRatio();
                                 })->encode('data-url');
 
-                                $html .= "<img width=\"20%\" height=\"auto\" src=\"" 
+                                $html .= "<img width=\"20%\" height=\"20%\" src=\"" 
                                     . $img 
                                     . "\"></div>";
                             }
@@ -408,7 +408,7 @@ class TaskController extends Controller
                                     $constraint->aspectRatio();
                                 })->encode('data-url');
 
-                                $html .= "<br><div style=\"text-align:center;\"> <img width=\"25%\" height=\"auto\" src=\"" 
+                                $html .= "<br><div style=\"text-align:center;\"> <img width=\"25%\" height=\"25%\" src=\"" 
                                     . $img
                                     . "\">";
                             }
@@ -418,7 +418,7 @@ class TaskController extends Controller
                                     $constraint->aspectRatio();
                                 })->encode('data-url');
                                 
-                                $html .= " <img width=\"25%\" height=\"auto\" src=\"" 
+                                $html .= " <img width=\"25%\" height=\"20%\" src=\"" 
                                     . $img 
                                     . "\"></div>";
                             }
@@ -428,7 +428,7 @@ class TaskController extends Controller
                                     $constraint->aspectRatio();
                                 })->encode('data-url');
 
-                                $html .= "<div style=\"text-align:center;\"> <img width=\"25%\" height=\"auto\" src=\"" 
+                                $html .= "<div style=\"text-align:center;\"> <img width=\"25%\" height=\"25%\" src=\"" 
                                     . $img
                                     . "\">";
                             }
@@ -438,7 +438,7 @@ class TaskController extends Controller
                                     $constraint->aspectRatio();
                                 })->encode('data-url');
 
-                                $html .= " <img width=\"25%\" height=\"auto\" src=\"" 
+                                $html .= " <img width=\"25%\" height=\"20%\" src=\"" 
                                     . $img
                                     . "\"></div>";
                             }
@@ -450,7 +450,7 @@ class TaskController extends Controller
                     //                 $constraint->aspectRatio();
                     //             })->encode('data-url');
                                 
-                    //             $html .= "<br><div style=\"text-align:center;\"> <img width=\"20%\" height=\"auto\" src=\"" 
+                    //             $html .= "<br><div style=\"text-align:center;\"> <img width=\"20%\" height=\"20%\" src=\"" 
                     //                 . $img
                     //                 . "\">";
                     //         }
@@ -459,7 +459,7 @@ class TaskController extends Controller
                     //                 $constraint->aspectRatio();
                     //             })->encode('data-url');
                                 
-                    //             $html .= " <img width=\"20%\" height=\"auto\" src=\"" 
+                    //             $html .= " <img width=\"20%\" height=\"20%\" src=\"" 
                     //                 . $img
                     //                 . "\">";
                     //         }
@@ -468,7 +468,7 @@ class TaskController extends Controller
                     //                 $constraint->aspectRatio();
                     //             })->encode('data-url');
 
-                    //             $html .= "<img width=\"20%\" height=\"auto\" src=\"" 
+                    //             $html .= "<img width=\"20%\" height=\"20%\" src=\"" 
                     //                 . $img 
                     //                 . "\"></div>";
                     //         }
@@ -482,7 +482,7 @@ class TaskController extends Controller
                                     $constraint->aspectRatio();
                                 })->encode('data-url');
 
-                                $html .= "<br><div style=\"text-align:center;\"> <img width=\"20%\" height=\"auto\" src=\"" 
+                                $html .= "<br><div style=\"text-align:center;\"> <img width=\"20%\" height=\"20%\" src=\"" 
                                     . $img
                                     . "\">";
                             }
@@ -492,7 +492,7 @@ class TaskController extends Controller
                                     $constraint->aspectRatio();
                                 })->encode('data-url');
 
-                                $html .= " <img width=\"20%\" height=\"auto\" src=\"" 
+                                $html .= " <img width=\"20%\" height=\"20%\" src=\"" 
                                     . $img
                                     . "\"></div>";
                             }
@@ -502,7 +502,7 @@ class TaskController extends Controller
                                     $constraint->aspectRatio();
                                 })->encode('data-url');
 
-                                $html .= "<div style=\"text-align:center;\"> <img width=\"20%\" height=\"auto\" src=\"" 
+                                $html .= "<div style=\"text-align:center;\"> <img width=\"20%\" height=\"20%\" src=\"" 
                                     . $img
                                     . "\">";
                             }
@@ -512,7 +512,7 @@ class TaskController extends Controller
                                     $constraint->aspectRatio();
                                 })->encode('data-url');
 
-                                $html .= " <img width=\"20%\" height=\"auto\" src=\"" 
+                                $html .= " <img width=\"20%\" height=\"20%\" src=\"" 
                                     . $img 
                                     . "\">";
                             }
@@ -522,7 +522,7 @@ class TaskController extends Controller
                                     $constraint->aspectRatio();
                                 })->encode('data-url');
 
-                                $html .= " <img width=\"20%\" height=\"auto\" src=\"" 
+                                $html .= " <img width=\"20%\" height=\"20%\" src=\"" 
                                     . $img
                                     . "\"></div>";
                             }
@@ -535,7 +535,7 @@ class TaskController extends Controller
                                     $constraint->aspectRatio();
                                 })->encode('data-url');
 
-                                $html .= "<br><div style=\"text-align:center;\"> <img width=\"20%\" height=\"auto\" src=\"" 
+                                $html .= "<br><div style=\"text-align:center;\"> <img width=\"20%\" height=\"20%\" src=\"" 
                                     . $img
                                     . "\">";
                             }
@@ -545,7 +545,7 @@ class TaskController extends Controller
                                     $constraint->aspectRatio();
                                 })->encode('data-url');
 
-                                $html .= " <img width=\"20%\" height=\"auto\" src=\"" 
+                                $html .= " <img width=\"20%\" height=\"20%\" src=\"" 
                                     . $img
                                     . "\">";
                             }
@@ -555,7 +555,7 @@ class TaskController extends Controller
                                     $constraint->aspectRatio();
                                 })->encode('data-url');
 
-                                $html .= " <img width=\"20%\" height=\"auto\" src=\"" 
+                                $html .= " <img width=\"20%\" height=\"20%\" src=\"" 
                                     . $img
                                     . "\"></div>";
                             }
@@ -565,7 +565,7 @@ class TaskController extends Controller
                                     $constraint->aspectRatio();
                                 })->encode('data-url');
                                 
-                                $html .= "<div style=\"text-align:center;\"><img width=\"20%\" height=\"auto\" src=\"" 
+                                $html .= "<div style=\"text-align:center;\"><img width=\"20%\" height=\"20%\" src=\"" 
                                     . $img
                                     . "\">";
                             }
@@ -575,7 +575,7 @@ class TaskController extends Controller
                                     $constraint->aspectRatio();
                                 })->encode('data-url');
 
-                                $html .= " <img width=\"20%\" height=\"auto\" src=\"" 
+                                $html .= " <img width=\"20%\" height=\"20%\" src=\"" 
                                     . $img
                                     . "\">";
                             }
@@ -585,7 +585,7 @@ class TaskController extends Controller
                                     $constraint->aspectRatio();
                                 })->encode('data-url');
 
-                                $html .= " <img width=\"20%\" height=\"auto\" src=\"" 
+                                $html .= " <img width=\"20%\" height=\"20%\" src=\"" 
                                     . $img
                                     . "\"></div>";
                             }
