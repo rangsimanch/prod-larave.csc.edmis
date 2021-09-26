@@ -297,7 +297,7 @@ class TaskController extends Controller
                             <div style=\" padding-left: 80px; padding-right:80px; \">
                             <div style=\"text-align: center;font-weight: bold; font-size: 22px;\">". nl2br(str_replace(';',"\r\n",$activity_name))  ."</div>
                             </div>";
-                if(strlen($description) > 500){
+                if(strlen($description) > 800){
                     $html .= "<div style=\" padding-left: 80px; padding-right:80px; \">
                                 <div style=\"vertical-align: top; max-width: 50%; display: inline-block; font-size: 14px;\">".  nl2br(str_replace(';','\n',$description)) ."</div>
                                 </div>";
