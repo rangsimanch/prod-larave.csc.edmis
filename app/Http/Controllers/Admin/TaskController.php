@@ -312,7 +312,7 @@ class TaskController extends Controller
                 $html .= "<div style=\"font-weight: bold; font-size: 20px; position:absolute;top:990;left:580px;\">(". $recordby  .")</div>";
                 if(!is_null($task->create_by_user->signature)){
                     $html .= "<div style=\"font-weight: bold; position:absolute;top:950;left:630px;\">
-                            <img width=\"60%\" height=\"auto\" src=\"" . $task->create_by_user->signature->getPath()
+                            <img width=\"60%\" height=\"60%\" src=\"" . $task->create_by_user->signature->getPath()
                             . "\"></div>";
                 }
                 
