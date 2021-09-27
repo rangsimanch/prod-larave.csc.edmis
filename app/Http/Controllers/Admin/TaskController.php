@@ -340,7 +340,7 @@ class TaskController extends Controller
                                 //     $constraint->aspectRatio();
                                 // })->encode('data-url');
 
-                                $img = urlencode($task->attachment[0]->getUrl());
+                                $img = (string) urlencode(Image::make($task->attachment[0]->getUrl()));
 
 
                                 $html .= "<br><div style=\"text-align:center;\"> <img width=\"30%\" height=\"30%\" src=\"" 
