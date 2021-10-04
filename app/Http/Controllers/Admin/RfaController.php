@@ -1416,8 +1416,8 @@ class RfaController extends Controller
         }
         
         $html .= "<div style=\"font-size: 14px; position:absolute;top:217px;left:55px;\">" . 'หัวข้อ :' . "</div>";
-        if(strlen($title_th) > 230){
-            $html .= "<div style=\"font-size: 10px; padding-right:230px; position:absolute;top:217px;left:80px; LINE-HEIGHT:16px;\">" 
+        if(strlen($title_th) > 235){
+            $html .= "<div style=\"font-size: 12px; padding-right:230px; position:absolute;top:217px;left:80px; LINE-HEIGHT:16px;\">" 
             . $title_th . "</div>";
         }
         else{
