@@ -73,7 +73,6 @@ trait CsvImportTrait
         $headers = $reader->current();
         $lines   = [];
         $lines[] = $reader->next();
-        $lines[] = $reader->next();
 
         $filename = Str::random(10) . '.csv';
         $file->storeAs('csv_import', $filename);
