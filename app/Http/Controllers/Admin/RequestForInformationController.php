@@ -241,7 +241,9 @@ class RequestForInformationController extends Controller
         
         $data['incoming_no'] = 'IN-' . $data['originator_code'];
 
-        $rfi_code = 'RFI/' . $const_code . '/' . $data['originator_code'];
+        // $rfi_code = 'RFI/' . $const_code . '/' . $data['originator_code'];
+        $rfi_code =  $data['originator_code'];
+
         $data['originator_code'] = $rfi_code;
 
          //WBS3,4 Name
