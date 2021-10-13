@@ -48,13 +48,6 @@ class SrtOtherController extends Controller
             ));
             });
 
-            $table->editColumn('id', function ($row) {
-                return $row->id ? $row->id : '';
-            });
-            $table->addColumn('docuement_status_title', function ($row) {
-                return $row->docuement_status ? $row->docuement_status->title : '';
-            });
-
             $table->addColumn('constuction_contract_code', function ($row) {
                 return $row->constuction_contract ? $row->constuction_contract->code : '';
             });
@@ -101,11 +94,8 @@ class SrtOtherController extends Controller
             $table->editColumn('close_by_text', function ($row) {
                 return $row->close_by_text ? $row->close_by_text : '';
             });
-            $table->addColumn('close_by_name', function ($row) {
-                return $row->close_by ? $row->close_by->name : '';
-            });
 
-            $table->rawColumns(['actions', 'placeholder', 'docuement_status', 'constuction_contract', 'file_upload', 'close_by']);
+            $table->rawColumns(['actions', 'placeholder', 'constuction_contract', 'file_upload']);
 
             return $table->make(true);
         }

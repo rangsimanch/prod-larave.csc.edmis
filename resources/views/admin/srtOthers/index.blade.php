@@ -24,12 +24,6 @@
 
                                 </th>
                                 <th>
-                                    {{ trans('cruds.srtOther.fields.id') }}
-                                </th>
-                                <th>
-                                    {{ trans('cruds.srtOther.fields.docuement_status') }}
-                                </th>
-                                <th>
                                     {{ trans('cruds.srtOther.fields.constuction_contract') }}
                                 </th>
                                 <th>
@@ -69,25 +63,11 @@
                                     {{ trans('cruds.srtOther.fields.close_by_text') }}
                                 </th>
                                 <th>
-                                    {{ trans('cruds.srtOther.fields.close_by') }}
-                                </th>
-                                <th>
                                     &nbsp;
                                 </th>
                             </tr>
                             <tr>
                                 <td>
-                                </td>
-                                <td>
-                                    <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                                </td>
-                                <td>
-                                    <select class="search">
-                                        <option value>{{ trans('global.all') }}</option>
-                                        @foreach($srt_document_statuses as $key => $item)
-                                            <option value="{{ $item->title }}">{{ $item->title }}</option>
-                                        @endforeach
-                                    </select>
                                 </td>
                                 <td>
                                     <select class="search">
@@ -152,14 +132,6 @@
                                     <input class="search" type="text" placeholder="{{ trans('global.search') }}">
                                 </td>
                                 <td>
-                                    <select class="search">
-                                        <option value>{{ trans('global.all') }}</option>
-                                        @foreach($users as $key => $item)
-                                            <option value="{{ $item->name }}">{{ $item->name }}</option>
-                                        @endforeach
-                                    </select>
-                                </td>
-                                <td>
                                 </td>
                             </tr>
                         </thead>
@@ -217,8 +189,6 @@
     ajax: "{{ route('admin.srt-others.index') }}",
     columns: [
       { data: 'placeholder', name: 'placeholder' },
-{ data: 'id', name: 'id' },
-{ data: 'docuement_status_title', name: 'docuement_status.title' },
 { data: 'constuction_contract_code', name: 'constuction_contract.code' },
 { data: 'document_type', name: 'document_type' },
 { data: 'document_number', name: 'document_number' },
@@ -232,11 +202,10 @@
 { data: 'file_upload', name: 'file_upload', sortable: false, searchable: false },
 { data: 'save_for', name: 'save_for' },
 { data: 'close_by_text', name: 'close_by_text' },
-{ data: 'close_by_name', name: 'close_by.name' },
 { data: 'actions', name: '{{ trans('global.actions') }}' }
     ],
     orderCellsTop: true,
-    order: [[ 12, 'desc' ]],
+    order: [[ 10, 'desc' ]],
     pageLength: 25,
   };
   let table = $('.datatable-SrtOther').DataTable(dtOverrideGlobals);
