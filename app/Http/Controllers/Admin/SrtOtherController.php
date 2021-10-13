@@ -71,6 +71,12 @@ class SrtOtherController extends Controller
             $table->editColumn('refer_to', function ($row) {
                 return $row->refer_to ? $row->refer_to : '';
             });
+            $table->editColumn('from_text', function ($row) {
+                return $row->from_text ? $row->from_text : '';
+            });
+            $table->editColumn('to_text', function ($row) {
+                return $row->to_text ? $row->to_text : '';
+            });
             $table->editColumn('speed_class', function ($row) {
                 return $row->speed_class ? SrtOther::SPEED_CLASS_SELECT[$row->speed_class] : '';
             });
@@ -92,12 +98,11 @@ class SrtOtherController extends Controller
             $table->editColumn('save_for', function ($row) {
                 return $row->save_for ? SrtOther::SAVE_FOR_SELECT[$row->save_for] : '';
             });
+            $table->editColumn('close_by_text', function ($row) {
+                return $row->close_by_text ? $row->close_by_text : '';
+            });
             $table->addColumn('close_by_name', function ($row) {
                 return $row->close_by ? $row->close_by->name : '';
-            });
-
-            $table->editColumn('to_text', function ($row) {
-                return $row->to_text ? $row->to_text : '';
             });
 
             $table->rawColumns(['actions', 'placeholder', 'docuement_status', 'constuction_contract', 'file_upload', 'close_by']);
@@ -130,9 +135,7 @@ class SrtOtherController extends Controller
 
     public function store(StoreSrtOtherRequest $request)
     {
-        $data = $request->all();
-        $data['constuction_contract_id'] = 15;
-        $srtOther = SrtOther::create($data);
+        $srtOther = SrtOther::create($request->all());
         $srtOther->tos()->sync($request->input('tos', []));
         foreach ($request->input('file_upload', []) as $file) {
             $srtOther->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('file_upload');

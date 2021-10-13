@@ -83,10 +83,26 @@
                                 </tr>
                                 <tr>
                                     <th>
+                                        {{ trans('cruds.srtOther.fields.from_text') }}
+                                    </th>
+                                    <td>
+                                        {{ $srtOther->from_text }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
                                         {{ trans('cruds.srtOther.fields.from') }}
                                     </th>
                                     <td>
                                         {{ $srtOther->from->code ?? '' }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        {{ trans('cruds.srtOther.fields.to_text') }}
+                                    </th>
+                                    <td>
+                                        {{ $srtOther->to_text }}
                                     </td>
                                 </tr>
                                 <tr>
@@ -185,18 +201,18 @@
                                 </tr>
                                 <tr>
                                     <th>
-                                        {{ trans('cruds.srtOther.fields.close_by') }}
+                                        {{ trans('cruds.srtOther.fields.close_by_text') }}
                                     </th>
                                     <td>
-                                        {{ $srtOther->close_by->name ?? '' }}
+                                        {{ $srtOther->close_by_text }}
                                     </td>
                                 </tr>
                                 <tr>
                                     <th>
-                                        {{ trans('cruds.srtOther.fields.to_text') }}
+                                        {{ trans('cruds.srtOther.fields.close_by') }}
                                     </th>
                                     <td>
-                                        {{ $srtOther->to_text }}
+                                        {{ $srtOther->close_by->name ?? '' }}
                                     </td>
                                 </tr>
                             </tbody>

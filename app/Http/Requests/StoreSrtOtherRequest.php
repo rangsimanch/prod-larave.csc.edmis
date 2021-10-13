@@ -18,8 +18,8 @@ class StoreSrtOtherRequest extends FormRequest
     {
         return [
             'constuction_contract_id' => [
+                'required',
                 'integer',
-                'nullable',
             ],
             'document_number' => [
                 'string',
@@ -34,6 +34,14 @@ class StoreSrtOtherRequest extends FormRequest
                 'nullable',
             ],
             'refer_to' => [
+                'string',
+                'nullable',
+            ],
+            'from_text' => [
+                'string',
+                'nullable',
+            ],
+            'to_text' => [
                 'string',
                 'nullable',
             ],
@@ -59,13 +67,17 @@ class StoreSrtOtherRequest extends FormRequest
                 'date_format:' . config('panel.date_format'),
                 'nullable',
             ],
+            'file_upload' => [
+                'array',
+                'required',
+            ],
             'file_upload.*' => [
                 'required',
             ],
             'save_for' => [
                 'required',
             ],
-            'to_text' => [
+            'close_by_text' => [
                 'string',
                 'nullable',
             ],

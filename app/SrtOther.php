@@ -14,6 +14,7 @@ use Spatie\MediaLibrary\Models\Media;
 class SrtOther extends Model implements HasMedia
 {
     use SoftDeletes;
+    use MultiTenantModelTrait;
     use HasMediaTrait;
     use Auditable;
 
@@ -76,7 +77,9 @@ class SrtOther extends Model implements HasMedia
         'subject',
         'incoming_date',
         'refer_to',
+        'from_text',
         'from_id',
+        'to_text',
         'attachments',
         'description',
         'speed_class',
@@ -86,9 +89,9 @@ class SrtOther extends Model implements HasMedia
         'note',
         'close_date',
         'save_for',
+        'close_by_text',
         'close_by_id',
         'created_at',
-        'to_text',
         'updated_at',
         'deleted_at',
         'team_id',

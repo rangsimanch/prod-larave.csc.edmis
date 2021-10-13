@@ -11,7 +11,18 @@
                 <div class="panel-body">
                     <form method="POST" action="{{ route("admin.srt-others.store") }}" enctype="multipart/form-data">
                         @csrf
-                       
+                        <div class="form-group {{ $errors->has('constuction_contract') ? 'has-error' : '' }}">
+                            <label class="required" for="constuction_contract_id">{{ trans('cruds.srtOther.fields.constuction_contract') }}</label>
+                            <select class="form-control select2" name="constuction_contract_id" id="constuction_contract_id" required>
+                                @foreach($constuction_contracts as $id => $entry)
+                                    <option value="{{ $id }}" {{ old('constuction_contract_id') == $id ? 'selected' : '' }}>{{ $entry }}</option>
+                                @endforeach
+                            </select>
+                            @if($errors->has('constuction_contract'))
+                                <span class="help-block" role="alert">{{ $errors->first('constuction_contract') }}</span>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.srtOther.fields.constuction_contract_helper') }}</span>
+                        </div>
                         <div class="form-group {{ $errors->has('document_type') ? 'has-error' : '' }}">
                             <label>{{ trans('cruds.srtOther.fields.document_type') }}</label>
                             <select class="form-control" name="document_type" id="document_type">
@@ -57,34 +68,24 @@
                             @endif
                             <span class="help-block">{{ trans('cruds.srtOther.fields.refer_to_helper') }}</span>
                         </div>
-                        <div class="form-group {{ $errors->has('from') ? 'has-error' : '' }}">
-                            <label for="from_id">{{ trans('cruds.srtOther.fields.from') }}</label>
-                            <select class="form-control select2" name="from_id" id="from_id">
-                                @foreach($froms as $id => $entry)
-                                    <option value="{{ $id }}" {{ old('from_id') == $id ? 'selected' : '' }}>{{ $entry }}</option>
-                                @endforeach
-                            </select>
-                            @if($errors->has('from'))
-                                <span class="help-block" role="alert">{{ $errors->first('from') }}</span>
+                        <div class="form-group {{ $errors->has('from_text') ? 'has-error' : '' }}">
+                            <label for="from_text">{{ trans('cruds.srtOther.fields.from_text') }}</label>
+                            <input class="form-control" type="text" name="from_text" id="from_text" value="{{ old('from_text', '') }}">
+                            @if($errors->has('from_text'))
+                                <span class="help-block" role="alert">{{ $errors->first('from_text') }}</span>
                             @endif
-                            <span class="help-block">{{ trans('cruds.srtOther.fields.from_helper') }}</span>
+                            <span class="help-block">{{ trans('cruds.srtOther.fields.from_text_helper') }}</span>
                         </div>
-                        <div class="form-group {{ $errors->has('tos') ? 'has-error' : '' }}">
-                            <label for="tos">{{ trans('cruds.srtOther.fields.to') }}</label>
-                            <div style="padding-bottom: 4px">
-                                <span class="btn btn-info btn-xs select-all" style="border-radius: 0">{{ trans('global.select_all') }}</span>
-                                <span class="btn btn-info btn-xs deselect-all" style="border-radius: 0">{{ trans('global.deselect_all') }}</span>
-                            </div>
-                            <select class="form-control select2" name="tos[]" id="tos" multiple>
-                                @foreach($tos as $id => $to)
-                                    <option value="{{ $id }}" {{ in_array($id, old('tos', [])) ? 'selected' : '' }}>{{ $to }}</option>
-                                @endforeach
-                            </select>
-                            @if($errors->has('tos'))
-                                <span class="help-block" role="alert">{{ $errors->first('tos') }}</span>
+                        
+                        <div class="form-group {{ $errors->has('to_text') ? 'has-error' : '' }}">
+                            <label for="to_text">{{ trans('cruds.srtOther.fields.to_text') }}</label>
+                            <input class="form-control" type="text" name="to_text" id="to_text" value="{{ old('to_text', '') }}">
+                            @if($errors->has('to_text'))
+                                <span class="help-block" role="alert">{{ $errors->first('to_text') }}</span>
                             @endif
-                            <span class="help-block">{{ trans('cruds.srtOther.fields.to_helper') }}</span>
+                            <span class="help-block">{{ trans('cruds.srtOther.fields.to_text_helper') }}</span>
                         </div>
+                       
                         <div class="form-group {{ $errors->has('attachments') ? 'has-error' : '' }}">
                             <label for="attachments">{{ trans('cruds.srtOther.fields.attachments') }}</label>
                             <input class="form-control" type="text" name="attachments" id="attachments" value="{{ old('attachments', '') }}">
@@ -181,26 +182,15 @@
                             @endif
                             <span class="help-block">{{ trans('cruds.srtOther.fields.save_for_helper') }}</span>
                         </div>
-                        <div class="form-group {{ $errors->has('close_by') ? 'has-error' : '' }}">
-                            <label for="close_by_id">{{ trans('cruds.srtOther.fields.close_by') }}</label>
-                            <select class="form-control select2" name="close_by_id" id="close_by_id">
-                                @foreach($close_bies as $id => $entry)
-                                    <option value="{{ $id }}" {{ old('close_by_id') == $id ? 'selected' : '' }}>{{ $entry }}</option>
-                                @endforeach
-                            </select>
-                            @if($errors->has('close_by'))
-                                <span class="help-block" role="alert">{{ $errors->first('close_by') }}</span>
+                        <div class="form-group {{ $errors->has('close_by_text') ? 'has-error' : '' }}">
+                            <label for="close_by_text">{{ trans('cruds.srtOther.fields.close_by_text') }}</label>
+                            <input class="form-control" type="text" name="close_by_text" id="close_by_text" value="{{ old('close_by_text', '') }}">
+                            @if($errors->has('close_by_text'))
+                                <span class="help-block" role="alert">{{ $errors->first('close_by_text') }}</span>
                             @endif
-                            <span class="help-block">{{ trans('cruds.srtOther.fields.close_by_helper') }}</span>
+                            <span class="help-block">{{ trans('cruds.srtOther.fields.close_by_text_helper') }}</span>
                         </div>
-                        <div class="form-group {{ $errors->has('to_text') ? 'has-error' : '' }}">
-                            <label for="to_text">{{ trans('cruds.srtOther.fields.to_text') }}</label>
-                            <input class="form-control" type="text" name="to_text" id="to_text" value="{{ old('to_text', '') }}">
-                            @if($errors->has('to_text'))
-                                <span class="help-block" role="alert">{{ $errors->first('to_text') }}</span>
-                            @endif
-                            <span class="help-block">{{ trans('cruds.srtOther.fields.to_text_helper') }}</span>
-                        </div>
+                       
                         <div class="form-group">
                             <button class="btn btn-danger" type="submit">
                                 {{ trans('global.save') }}

@@ -23,19 +23,15 @@
                                 <th width="10">
 
                                 </th>
-                                <!-- <th>
-                                    {{ trans('cruds.srtOther.fields.id') }}
-                                </th> -->
-
                                 <th>
-                                    {{ trans('cruds.srtOther.fields.created_at') }}
-                                </th>   
+                                    {{ trans('cruds.srtOther.fields.id') }}
+                                </th>
                                 <th>
                                     {{ trans('cruds.srtOther.fields.docuement_status') }}
                                 </th>
-                                <!-- <th>
+                                <th>
                                     {{ trans('cruds.srtOther.fields.constuction_contract') }}
-                                </th> -->
+                                </th>
                                 <th>
                                     {{ trans('cruds.srtOther.fields.document_type') }}
                                 </th>
@@ -47,6 +43,12 @@
                                 </th>
                                 <th>
                                     {{ trans('cruds.srtOther.fields.refer_to') }}
+                                </th>
+                                <th>
+                                    {{ trans('cruds.srtOther.fields.from_text') }}
+                                </th>
+                                <th>
+                                    {{ trans('cruds.srtOther.fields.to_text') }}
                                 </th>
                                 <th>
                                     {{ trans('cruds.srtOther.fields.speed_class') }}
@@ -64,10 +66,10 @@
                                     {{ trans('cruds.srtOther.fields.save_for') }}
                                 </th>
                                 <th>
-                                    {{ trans('cruds.srtOther.fields.close_by') }}
+                                    {{ trans('cruds.srtOther.fields.close_by_text') }}
                                 </th>
                                 <th>
-                                    {{ trans('cruds.srtOther.fields.to_text') }}
+                                    {{ trans('cruds.srtOther.fields.close_by') }}
                                 </th>
                                 <th>
                                     &nbsp;
@@ -77,6 +79,7 @@
                                 <td>
                                 </td>
                                 <td>
+                                    <input class="search" type="text" placeholder="{{ trans('global.search') }}">
                                 </td>
                                 <td>
                                     <select class="search">
@@ -86,14 +89,14 @@
                                         @endforeach
                                     </select>
                                 </td>
-                                <!-- <td>
+                                <td>
                                     <select class="search">
                                         <option value>{{ trans('global.all') }}</option>
                                         @foreach($construction_contracts as $key => $item)
                                             <option value="{{ $item->code }}">{{ $item->code }}</option>
                                         @endforeach
                                     </select>
-                                </td> -->
+                                </td>
                                 <td>
                                     <select class="search" strict="true">
                                         <option value>{{ trans('global.all') }}</option>
@@ -101,6 +104,12 @@
                                             <option value="{{ $key }}">{{ $item }}</option>
                                         @endforeach
                                     </select>
+                                </td>
+                                <td>
+                                    <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                                </td>
+                                <td>
+                                    <input class="search" type="text" placeholder="{{ trans('global.search') }}">
                                 </td>
                                 <td>
                                     <input class="search" type="text" placeholder="{{ trans('global.search') }}">
@@ -140,15 +149,15 @@
                                     </select>
                                 </td>
                                 <td>
+                                    <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                                </td>
+                                <td>
                                     <select class="search">
                                         <option value>{{ trans('global.all') }}</option>
                                         @foreach($users as $key => $item)
                                             <option value="{{ $item->name }}">{{ $item->name }}</option>
                                         @endforeach
                                     </select>
-                                </td>
-                                <td>
-                                    <input class="search" type="text" placeholder="{{ trans('global.search') }}">
                                 </td>
                                 <td>
                                 </td>
@@ -208,25 +217,26 @@
     ajax: "{{ route('admin.srt-others.index') }}",
     columns: [
       { data: 'placeholder', name: 'placeholder' },
-// { data: 'id', name: 'id' },
-{ data: 'created_at', name: 'created_at' ,visible: true}, 
+{ data: 'id', name: 'id' },
 { data: 'docuement_status_title', name: 'docuement_status.title' },
-// { data: 'constuction_contract_code', name: 'constuction_contract.code' },
+{ data: 'constuction_contract_code', name: 'constuction_contract.code' },
 { data: 'document_type', name: 'document_type' },
 { data: 'document_number', name: 'document_number' },
 { data: 'subject', name: 'subject' },
 { data: 'refer_to', name: 'refer_to' },
+{ data: 'from_text', name: 'from_text' },
+{ data: 'to_text', name: 'to_text' },
 { data: 'speed_class', name: 'speed_class' },
 { data: 'objective', name: 'objective' },
 { data: 'close_date', name: 'close_date' },
 { data: 'file_upload', name: 'file_upload', sortable: false, searchable: false },
 { data: 'save_for', name: 'save_for' },
+{ data: 'close_by_text', name: 'close_by_text' },
 { data: 'close_by_name', name: 'close_by.name' },
-{ data: 'to_text', name: 'to_text' },
 { data: 'actions', name: '{{ trans('global.actions') }}' }
     ],
     orderCellsTop: true,
-    order: [[ 1, 'desc' ]],
+    order: [[ 12, 'desc' ]],
     pageLength: 25,
   };
   let table = $('.datatable-SrtOther').DataTable(dtOverrideGlobals);
