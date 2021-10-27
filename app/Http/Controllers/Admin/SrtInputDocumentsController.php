@@ -178,8 +178,13 @@ class SrtInputDocumentsController extends Controller
     public function create()
     {
         abort_if(Gate::denies('srt_input_document_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
-        $constuction_contracts = ConstructionContract::all()->pluck('code', 'id')->prepend(trans('global.pleaseSelect'), '');
+        
+        if(Auth::id() != 1){
+            $constuction_contracts = ConstructionContract::where('id',session('construction_contract_id'))->pluck('code', 'id')->prepend(trans('global.pleaseSelect'), '');
+        }
+        else{
+            $constuction_contracts = ConstructionContract::all()->prepend(trans('global.pleaseSelect'), '');
+        }
 
         $froms = Team::all()->pluck('code', 'id')->prepend(trans('global.pleaseSelect'), '');
 
