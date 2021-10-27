@@ -1471,7 +1471,7 @@ class RfaController extends Controller
         $html .= "<div style=\"font-size: 14px; padding-right:180px; position:absolute;top:610;left:120px;LINE-HEIGHT:15px;\">" 
         . $note_2 . "</div>";
         $html .= "<div style=\"font-size: 14px; position:absolute;top:660x;left:270;\">" . $assign_to . "</div>";
-        $html .= "<div style=\"font-size: 14px; position:absolute;top:665x;left:250;\">" . "( Chief Engineer )" . "</div>";
+        $html .= "<div style=\"font-size: 14px; font-weight: bold; position:absolute;top:670x;left:255;\">" . "( Chief Engineer )" . "</div>";
         $html .= "<div style=\"font-size: 14px; position:absolute;top:675x;left:530;\">" . $receive_date . "</div>";
         $html .= "<div style=\"font-size: 12px; position:absolute;top:596x;left:489;\">" . 'Transportation Specialist' . "</div>";
 
