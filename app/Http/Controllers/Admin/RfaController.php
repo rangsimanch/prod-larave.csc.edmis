@@ -726,7 +726,7 @@ class RfaController extends Controller
 
         $issuebies = User::find([202,91,219,162,196])->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $assigns = User::where('id',61)->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), ''); //61->Li,  62->Liu 
+        $assigns = User::find([61,461])->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), ''); //61->Li,  62->Liu , 461-> Ma
 
         $action_bies = User::where('team_id',3)->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
         
@@ -1471,7 +1471,12 @@ class RfaController extends Controller
         $html .= "<div style=\"font-size: 14px; padding-right:180px; position:absolute;top:610;left:120px;LINE-HEIGHT:15px;\">" 
         . $note_2 . "</div>";
         $html .= "<div style=\"font-size: 14px; position:absolute;top:660x;left:270;\">" . $assign_to . "</div>";
-        $html .= "<div style=\"font-size: 14px; font-weight: bold; position:absolute;top:675x;left:255;\">" . "( Chief Engineer )" . "</div>";
+        if($assign_to == "Ma Shengshuang") {
+            $html .= "<div style=\"font-size: 14px; font-weight: bold; position:absolute;top:675x;left:245;\">" . '( Deputy Project Manager )' . "</div>";
+        }
+        else{
+            $html .= "<div style=\"font-size: 14px; font-weight: bold; position:absolute;top:675x;left:255;\">" . '( Chief Engineer )' . "</div>";
+        }
         $html .= "<div style=\"font-size: 14px; position:absolute;top:675x;left:530;\">" . $receive_date . "</div>";
         $html .= "<div style=\"font-size: 12px; position:absolute;top:596x;left:489;\">" . 'Transportation Specialist' . "</div>";
 
@@ -1525,7 +1530,12 @@ class RfaController extends Controller
         . $note_4 . "</div>";
 
         $html .= "<div style=\"font-size: 14px; position:absolute;top:990x;left:270;\">" . $assign_to . "</div>";
-        $html .= "<div style=\"font-size: 14px; font-weight: bold; position:absolute;top:1005x;left:255;\">" . '( Chief Engineer )' . "</div>";
+        if($assign_to == "Ma Shengshuang") {
+            $html .= "<div style=\"font-size: 14px; font-weight: bold; position:absolute;top:1005x;left:245;\">" . '( Deputy Project Manager )' . "</div>";
+        }
+        else{
+            $html .= "<div style=\"font-size: 14px; font-weight: bold; position:absolute;top:1005x;left:255;\">" . '( Chief Engineer )' . "</div>";
+        }
 
 
         $html .= "<div style=\"font-size: 14px; position:absolute;top:990px;left:530;\">" . $outgoing_date . "</div>";
