@@ -24,6 +24,8 @@ use Yajra\DataTables\Facades\DataTables;
 use App\SrtHeadOfficeDocument;
 use DB;
 use LynX39\LaraPdfMerger\Facades\PdfMerger;
+use Illuminate\Support\Facades\Auth;
+
 
 class SrtInputDocumentsController extends Controller
 {
