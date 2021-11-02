@@ -192,8 +192,12 @@ class UsersController extends Controller
         $teams = Team::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $jobtitles = Jobtitle::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
-
-        $roles = Role::all()->pluck('title', 'id');
+        if(Auth::id() != 1){
+            $roles = Role::where('id','!=',1)->pluck('title', 'id');
+        }
+        else{
+            $roles = Role::all()->pluck('title', 'id');
+        }
 
         $construction_contracts = ConstructionContract::all()->pluck('code', 'id');
 
