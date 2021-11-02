@@ -11,7 +11,7 @@ use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
 use App\Jobtitle;
 use App\Organization;
-
+use Illuminate\Support\Facades\Auth;
 use App\Role;
 use App\Team;
 use App\User;
