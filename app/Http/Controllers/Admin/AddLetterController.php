@@ -176,21 +176,21 @@ class AddLetterController extends Controller
         }
         $addLetter->update($data);
 
-        // if (count($addLetter->letter_upload) > 0) {
-        //     foreach ($addLetter->letter_upload as $media) {
-        //         if (!in_array($media->file_name, $request->input('letter_upload', []))) {
-        //             $media->delete();
-        //         }
-        //     }
-        // }
+        if (count($addLetter->letter_upload) > 0) {
+            foreach ($addLetter->letter_upload as $media) {
+                if (!in_array($media->file_name, $request->input('letter_upload', []))) {
+                    $media->delete();
+                }
+            }
+        }
 
-        // $media = $addLetter->letter_upload->pluck('file_name')->toArray();
+        $media = $addLetter->letter_upload->pluck('file_name')->toArray();
 
-        // foreach ($request->input('letter_upload', []) as $file) {
-        //     if (count($media) === 0 || !in_array($file, $media)) {
-        //         $addLetter->addMedia(storage_path('tmp/uploads/' . $file))->toMediaCollection('letter_upload');
-        //     }
-        // }
+        foreach ($request->input('letter_upload', []) as $file) {
+            if (count($media) === 0 || !in_array($file, $media)) {
+                $addLetter->addMedia(storage_path('tmp/uploads/' . $file))->toMediaCollection('letter_upload');
+            }
+        }
 
         return redirect(session('previous-url'));
     }
