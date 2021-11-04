@@ -12,11 +12,12 @@
                     <form method="POST" action="{{ route("admin.complaints.update", [$complaint->id]) }}" enctype="multipart/form-data">
                         @method('PUT')
                         @csrf
+                       
                         <div class="form-group {{ $errors->has('operator') ? 'has-error' : '' }}">
                             <label for="operator_id">{{ trans('cruds.complaint.fields.operator') }}</label>
                             <select class="form-control select2" name="operator_id" id="operator_id">
-                                @foreach($operators as $id => $operator)
-                                    <option value="{{ $id }}" {{ (old('operator_id') ? old('operator_id') : $complaint->operator->id ?? '') == $id ? 'selected' : '' }}>{{ $operator }}</option>
+                                @foreach($operators as $id => $entry)
+                                    <option value="{{ $id }}" {{ (old('operator_id') ? old('operator_id') : $complaint->operator->id ?? '') == $id ? 'selected' : '' }}>{{ $entry }}</option>
                                 @endforeach
                             </select>
                             @if($errors->has('operator'))
@@ -48,6 +49,19 @@
                                 <span class="help-block" role="alert">{{ $errors->first('action_date') }}</span>
                             @endif
                             <span class="help-block">{{ trans('cruds.complaint.fields.action_date_helper') }}</span>
+                        </div>
+                        <div class="form-group {{ $errors->has('status') ? 'has-error' : '' }}">
+                            <label>{{ trans('cruds.complaint.fields.status') }}</label>
+                            <select class="form-control" name="status" id="status">
+                                <option value disabled {{ old('status', null) === null ? 'selected' : '' }}>{{ trans('global.pleaseSelect') }}</option>
+                                @foreach(App\Complaint::STATUS_SELECT as $key => $label)
+                                    <option value="{{ $key }}" {{ old('status', $complaint->status) === (string) $key ? 'selected' : '' }}>{{ $label }}</option>
+                                @endforeach
+                            </select>
+                            @if($errors->has('status'))
+                                <span class="help-block" role="alert">{{ $errors->first('status') }}</span>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.complaint.fields.status_helper') }}</span>
                         </div>
                         <div class="form-group">
                             <button class="btn btn-danger" type="submit">

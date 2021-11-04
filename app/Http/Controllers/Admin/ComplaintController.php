@@ -167,7 +167,7 @@ class ComplaintController extends Controller
     {
         abort_if(Gate::denies('complaint_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $operators = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $operators = User::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $complaint->load('construction_contract', 'complaint_recipient', 'operator', 'team');
 
