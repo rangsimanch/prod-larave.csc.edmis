@@ -726,7 +726,7 @@ class RfaController extends Controller
 
         $issuebies = User::find([202,91,219,162,196])->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $assigns = User::find([61,461])->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), ''); //61->Li,  62->Liu , 461-> Ma
+        $assigns = User::find([61, 461, 288])->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), ''); //61->Li,  62->Liu , 461-> Ma, 288->Jiang
 
         $action_bies = User::where('team_id',3)->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
         
@@ -1474,8 +1474,11 @@ class RfaController extends Controller
         if($assign_to == "Ma Shengshuang") {
             $html .= "<div style=\"font-size: 14px; font-weight: bold; position:absolute;top:675x;left:245;\">" . '( Deputy Project Manager )' . "</div>";
         }
-        else{
+        if($assign_to == "Li Guanghe"){
             $html .= "<div style=\"font-size: 14px; font-weight: bold; position:absolute;top:675x;left:255;\">" . '( Chief Engineer )' . "</div>";
+        }
+        if($assign_to == "Jiang Yalei"){
+            $html .= "<div style=\"font-size: 14px; font-weight: bold; position:absolute;top:675x;left:235;\">" . '( Leader of Design Review Team )' . "</div>";
         }
         $html .= "<div style=\"font-size: 14px; position:absolute;top:675x;left:530;\">" . $receive_date . "</div>";
         $html .= "<div style=\"font-size: 12px; position:absolute;top:596x;left:489;\">" . 'Transportation Specialist' . "</div>";
