@@ -167,8 +167,9 @@ class UsersController extends Controller
     }
 
     public function store(StoreUserRequest $request)
-    {
-        $user = User::create($request->all());
+    {   
+        $data = $request->all();
+        $user = User::create($data);
 
         $user->roles()->sync($request->input('roles', []));
         $user->construction_contracts()->sync($request->input('construction_contracts', []));
