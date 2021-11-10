@@ -52,14 +52,6 @@ class StoreUserRequest extends FormRequest
             'construction_contracts'   => [
                 'array',
             ],
-            'construction_contract.*' => [
-                'integer',
-            ],
-            'construction_contract'   => [
-                'array',
-            ],
-
-
         ];
     }
 }
