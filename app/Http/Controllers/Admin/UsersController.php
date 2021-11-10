@@ -161,12 +161,7 @@ class UsersController extends Controller
             $roles = Role::all()->pluck('title', 'id');
         }
 
-        if(Auth::id() != 1){
-            $construction_contracts = ConstructionContract::where('id',session('construction_contract_id'))->pluck('code', 'id')->prepend(trans('global.pleaseSelect'), '');
-        }
-        else{
-            $construction_contracts = ConstructionContract::all()->pluck('code', 'id')->prepend(trans('global.pleaseSelect'), '');
-        }
+        $construction_contracts = ConstructionContract::where('id', '!=', 15)->pluck('code', 'id');
 
         return view('admin.users.create', compact('organizations', 'teams', 'jobtitles', 'roles', 'construction_contracts'));
     }
@@ -203,12 +198,8 @@ class UsersController extends Controller
         $teams = Team::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $jobtitles = Jobtitle::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
-        if(Auth::id() != 1){
-            $roles = Role::where('id','!=',1)->pluck('title', 'id');
-        }
-        else{
-            $roles = Role::all()->pluck('title', 'id');
-        }
+    
+        $roles = Role::all()->pluck('title', 'id');
 
         $construction_contracts = ConstructionContract::all()->pluck('code', 'id');
 
