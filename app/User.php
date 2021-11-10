@@ -235,10 +235,10 @@ class User extends Authenticatable implements HasMedia
         return $this->belongsToMany(ConstructionContract::class);
     }
 
-    public function create_by_construction_contract_id()
-    {
-        return $this->belongsToMany(ConstructionContract::class);
-    }
+    // public function create_by_construction_contract_id()
+    // {
+    //     return $this->belongsToMany(ConstructionContract::class);
+    // }
 
     public function distributeByRfas()
     {
