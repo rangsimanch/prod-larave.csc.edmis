@@ -161,7 +161,7 @@ class UsersController extends Controller
             $roles = Role::all()->pluck('title', 'id');
         }
 
-        $construction_contracts = ConstructionContract::all()->pluck('code', 'id');
+        $construction_contracts = ConstructionContract::where('id', '!=', 15)->all()->pluck('code', 'id');
 
         return view('admin.users.create', compact('organizations', 'teams', 'jobtitles', 'roles', 'construction_contracts'));
     }
