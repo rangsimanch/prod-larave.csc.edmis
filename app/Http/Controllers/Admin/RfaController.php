@@ -1329,7 +1329,7 @@ class RfaController extends Controller
         $submittalsRfa = $submittalsRfa ?? '';
         
         $document_name = wordwrap($rfa->attach_file_name ?? '',300,"<br>\n");
-        $note_1 = wordwrap($rfa->note_1 ?? '',400,"<br>\n");
+        $note_1 = wordwrap($rfa->note_1 ?? '',450,"<br>\n");
         $note_2 = wordwrap($rfa->note_2 ?? '',400,"<br>\n");
         $note_3 = wordwrap($rfa->note_3 ?? '',400,"<br>\n");
         $note_4 = wordwrap($rfa->note_4 ?? '',400,"<br>\n");
@@ -1435,7 +1435,7 @@ class RfaController extends Controller
         $html .= "<div style=\"font-size: 14px; position:absolute;top:344px;left:630px;\">" . $clause . "</div>";
         $html .= "<div style=\"font-size: 14px; position:absolute;top:360px;left:210px;\">" . $contract_drawing_no . "</div>";
           //Note
-        $html .= "<div style=\"font-size: 12px; padding-right:60px; position:absolute;top:381px;left:120px;LINE-HEIGHT:15px;\">" 
+        $html .= "<div style=\"font-size: 11px; padding-right:55px; position:absolute;top:381px;left:120px;LINE-HEIGHT:15px;\">" 
         . $note_1 . "</div>";
         
        
