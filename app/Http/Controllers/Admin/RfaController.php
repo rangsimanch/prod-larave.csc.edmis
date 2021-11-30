@@ -1086,7 +1086,7 @@ class RfaController extends Controller
             $signature_path =  public_path('png-asset/Signature_CEC.png');
             $signature_size_h = 40;
             $signature_size_w = 40;
-            $signature_position_top = 425;
+            $signature_position_top = 430;
             $signature_position_left = 280;
             $stamp_size_h = 120;
             $stamp_size_w = 120;
@@ -1109,7 +1109,7 @@ class RfaController extends Controller
             $signature_path =  public_path('png-asset/NWR_signature.png');
             $signature_size_h = 55;
             $signature_size_w = 55;
-            $signature_position_top = 415;
+            $signature_position_top = 420;
             $signature_position_left = 280;
             $stamp_size_h = 120;
             $stamp_size_w = 120;
@@ -1133,7 +1133,7 @@ class RfaController extends Controller
             $signature_path =  public_path('png-asset/TEI_signature.png');
             $signature_size_h = 60;
             $signature_size_w = 60;
-            $signature_position_top = 415;
+            $signature_position_top = 420;
             $signature_position_left = 280;
             $stamp_size_h = 120;
             $stamp_size_w = 120;
@@ -1157,7 +1157,7 @@ class RfaController extends Controller
             $signature_path =  public_path('png-asset/ITD_signature.png');
             $signature_size_h = 60;
             $signature_size_w = 60;
-            $signature_position_top = 409;
+            $signature_position_top = 414;
             $signature_position_left = 280;
             $stamp_size_h = 120;
             $stamp_size_w = 120;
@@ -1181,7 +1181,7 @@ class RfaController extends Controller
             $signature_path =  public_path('png-asset/SPTK_signature.png');
             $signature_size_h = 60;
             $signature_size_w = 60;
-            $signature_position_top = 425;
+            $signature_position_top = 430;
             $signature_position_left = 275;
             $stamp_size_h = 120;
             $stamp_size_w = 120;
@@ -1205,7 +1205,7 @@ class RfaController extends Controller
             $signature_path = public_path('png-asset/CAN_signature.png');
             $signature_size_h = 60;
             $signature_size_w = 60;
-            $signature_position_top = 409;
+            $signature_position_top = 414;
             $signature_position_left = 260;
             $stamp_size_h = 160;
             $stamp_size_w = 160;
@@ -1229,7 +1229,7 @@ class RfaController extends Controller
             $signature_path = public_path('png-asset/ITD2_signature.png');;
             $signature_size_h = 60;
             $signature_size_w = 60;
-            $signature_position_top = 409;
+            $signature_position_top = 414;
             $signature_position_left = 280;
             $stamp_size_h = 120;
             $stamp_size_w = 120;
@@ -1253,7 +1253,7 @@ class RfaController extends Controller
             $signature_path =  '';
             $signature_size_h = 50;
             $signature_size_w = 50;
-            $signature_position_top = 415;
+            $signature_position_top = 420;
             $signature_position_left = 278;
             $stamp_size_h = 120;
             $stamp_size_w = 120;
@@ -1277,7 +1277,7 @@ class RfaController extends Controller
             $signature_path =  public_path('png-asset/CIVIL_signature.png');
             $signature_size_h = 50;
             $signature_size_w = 50;
-            $signature_position_top = 415;
+            $signature_position_top = 420;
             $signature_position_left = 278;
             $stamp_size_h = 120;
             $stamp_size_w = 120;
@@ -1430,21 +1430,21 @@ class RfaController extends Controller
         $html .= "<div style=\"font-size: 14px; position:absolute;top:265;left:630;\">" . $qty_page . '.' . "</div>";
         
           //WBS Spec.Ref Clase. Contract No.
-        $html .= "<div style=\"font-size: 14px; position:absolute;top:328px;left:225px;\">" . $wbs . "</div>";
-        $html .= "<div style=\"font-size: 14px; position:absolute;top:344px;left:250px;\">" . $spec_ref_no . "</div>";
-        $html .= "<div style=\"font-size: 14px; position:absolute;top:344px;left:630px;\">" . $clause . "</div>";
-        $html .= "<div style=\"font-size: 14px; position:absolute;top:360px;left:210px;\">" . $contract_drawing_no . "</div>";
+        $html .= "<div style=\"font-size: 14px; position:absolute;top:344px;left:225px;\">" . $wbs . "</div>";
+        $html .= "<div style=\"font-size: 14px; position:absolute;top:360px;left:250px;\">" . $spec_ref_no . "</div>";
+        $html .= "<div style=\"font-size: 14px; position:absolute;top:360px;left:630px;\">" . $clause . "</div>";
+        $html .= "<div style=\"font-size: 14px; position:absolute;top:376px;left:210px;\">" . $contract_drawing_no . "</div>";
           //Note
-        $html .= "<div style=\"font-size: 12px; padding-right:60px; position:absolute;top:381px;left:120px;LINE-HEIGHT:15px;\">" 
+        $html .= "<div style=\"font-size: 12px; padding-right:60px; position:absolute;top:397px;left:120px;LINE-HEIGHT:15px;\">" 
         . $note_1 . "</div>";
         
        
-        $html .= "<div style=\"font-size: 14px; position:absolute;top:453px;left:". $issue_position_lf ."px;\">" . $issue_by . "</div>";
+        $html .= "<div style=\"font-size: 12px; position:absolute;top:460px;left:". $issue_position_lf ."px;\">" . $issue_by . "</div>";
         if($issuer_jobtitle == 'ผู้จัดการโครงการ'){
-            $html .= "<div style=\"font-size: 12px; position:absolute;top:465px;left:270px\">" . $issuer_jobtitle . "</div>";
+            $html .= "<div style=\"font-size: 10px; position:absolute;top:470px;left:270px\">" . $issuer_jobtitle . "</div>";
         }
         else{
-            $html .= "<div style=\"font-size: 12px; position:absolute;top:465px;left:265px\">" . $issuer_jobtitle . "</div>";
+            $html .= "<div style=\"font-size: 10px; position:absolute;top:470px;left:265px\">" . $issuer_jobtitle . "</div>";
         }
 
         //Signature Manager
