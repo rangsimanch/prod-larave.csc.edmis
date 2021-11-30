@@ -1441,10 +1441,10 @@ class RfaController extends Controller
        
         $html .= "<div style=\"font-size: 14px; position:absolute;top:453px;left:". $issue_position_lf ."px;\">" . $issue_by . "</div>";
         if($issuer_jobtitle == 'ผู้จัดการโครงการ'){
-            $html .= "<div style=\"font-size: 12px; position:absolute;top:465px;left:270px\">" . $issuer_jobtitle . "</div>";
+            $html .= "<div style=\"font-size: 10px; position:absolute;top:467px;left:270px\">" . $issuer_jobtitle . "</div>";
         }
         else{
-            $html .= "<div style=\"font-size: 12px; position:absolute;top:465px;left:265px\">" . $issuer_jobtitle . "</div>";
+            $html .= "<div style=\"font-size: 10px; position:absolute;top:467px;left:265px\">" . $issuer_jobtitle . "</div>";
         }
 
         //Signature Manager
