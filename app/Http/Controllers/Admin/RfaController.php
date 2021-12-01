@@ -1181,7 +1181,7 @@ class RfaController extends Controller
             $signature_path =  public_path('png-asset/SPTK_signature.png');
             $signature_size_h = 60;
             $signature_size_w = 60;
-            $signature_position_top = 425;
+            $signature_position_top = 430;
             $signature_position_left = 275;
             $stamp_size_h = 120;
             $stamp_size_w = 120;
