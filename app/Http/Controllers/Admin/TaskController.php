@@ -272,8 +272,8 @@ class TaskController extends Controller
                 $description = $task->description ?? '';
                 $description_len = strlen($description);
 
-                if($description_len > 500){
-                    $description_set = str_split($description, 500);
+                if($description_len > 1000){
+                    $description_set = str_split($description, 1000);
                 }
                 else{
                     $description_set = $description;
