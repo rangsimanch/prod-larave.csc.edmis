@@ -267,16 +267,14 @@ class TaskController extends Controller
                     }
                 }
 
-            // Activity
-            // for($i = 0; $i < $count_task; $i++){
             foreach($tasks as $task){
 
                 $description = $task->description ?? '';
                 $description_len = strlen($description);
                 $descWordWrap =   wordwrap($description, 300,"<br>\n");
-                
+
                 if($description_len > 500){
-                    $description_set = chunk_split($description, 500);
+                    $description_set = str_split($description, 500);
                 }
                 else{
                     $description_set = $description;
