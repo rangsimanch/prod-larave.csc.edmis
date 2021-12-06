@@ -307,8 +307,9 @@ class TaskController extends Controller
                                 <img width=\"60%\" height=\"60%\" src=\"" . $task->create_by_user->signature->getPath()
                                 . "\"></div>";
                     }
-                $html .= "<div style=\"font-weight: bold; font-size: 8px; position:absolute;top:0;left:0;\">". $description_set[0]  ."</div>";
-                    
+                foreach($description_set as $dc){
+                    $html .= "<div style=\"font-weight: bold; font-size: 8px; position:absolute;top:0;left:0;\">". $dc  ."</div>";
+                }  
 
                                 
                 try{
