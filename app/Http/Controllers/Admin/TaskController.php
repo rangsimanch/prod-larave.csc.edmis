@@ -271,7 +271,6 @@ class TaskController extends Controller
 
                 $description = $task->description ?? '';
                 $description_len = strlen($description);
-                $descWordWrap =   wordwrap($description, 300,"<br>\n");
 
                 if($description_len > 500){
                     $description_set = str_split($description, 500);
@@ -295,6 +294,8 @@ class TaskController extends Controller
                     $temperature = $task->temperature ?? '';
                     $activity_name = $task->name ?? '';
                     $contractNo = $task->construction_contract->code ?? '';
+                    $descWordWrap =   wordwrap($description, 300,"<br>\n");
+
                     
                     $html = "<div style=\"font-size: 18px; position:absolute;top:990;left:95px;\">Construction Contract : ". $contractNo  ." </div>";
                     $html .= "<div style=\"text-decoration: underline;font-weight: bold; font-size: 18px; position:absolute;top:112px;left:140px;\">". $due_date ."</div>";
