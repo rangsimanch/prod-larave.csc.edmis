@@ -284,7 +284,6 @@ class TaskController extends Controller
                     $temperature = $task->temperature ?? '';
                     $activity_name = $task->name ?? '';
                     $contractNo = $task->construction_contract->code ?? '';
-                    $descWordWrap =   wordwrap($description, 300,"<br>\n");
 
                     
                     $html = "<div style=\"font-size: 18px; position:absolute;top:990;left:95px;\">Construction Contract : ". $contractNo  ." </div>";
@@ -308,11 +307,8 @@ class TaskController extends Controller
                                 <img width=\"60%\" height=\"60%\" src=\"" . $task->create_by_user->signature->getPath()
                                 . "\"></div>";
                     }
-                    $index_dc = 0;
-                    foreach($description_set as $dc) {
-                        $html .= "<div style=\"font-weight: bold; font-size: 8px; position:absolute;top:0;left:0;\">". $dc  ."</div>";
-                        
-                    }
+                        $html .= "<div style=\"font-weight: bold; font-size: 8px; position:absolute;top:0;left:0;\">". $description_set[0]  ."</div>";
+                    
 
                                 
                 try{
