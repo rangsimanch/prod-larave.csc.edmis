@@ -271,6 +271,7 @@ class TaskController extends Controller
                 $pagecount = $mpdf->SetSourceFile(public_path('pdf-asset/activity.pdf'));
                 $description = $task->description ?? '';
                 $description_set = str_split($description, 1500);
+                foreach($description_set as $dc) {
                 
                     $mpdf->AddPage();
                     // Import the last page of the source PDF file
@@ -300,7 +301,7 @@ class TaskController extends Controller
                 
 
                     $html .= "<div style=\" padding-left: 80px; padding-right:80px; \">
-                                    <div style=\"vertical-align: top; max-width: 50%; display: inline-block; font-size: 18px;\">".  nl2br(str_replace(';','\n',$description)) ."</div>
+                                    <div style=\"vertical-align: top; max-width: 50%; display: inline-block; font-size: 18px;\">".  nl2br(str_replace(';','\n',$dc)) ."</div>
                                     </div>";   
                     $html .= "<div style=\"font-weight: bold; font-size: 20px; position:absolute;top:990;left:580px;\">(". $recordby  .")</div>";
                     if(!is_null($task->create_by_user->signature)){
@@ -308,11 +309,9 @@ class TaskController extends Controller
                                 <img width=\"60%\" height=\"60%\" src=\"" . $task->create_by_user->signature->getPath()
                                 . "\"></div>";
                     }
-                    $index_dc = 0;
-                    foreach($description_set as $dc) {
-                        $index_dc++;
-                    }
-                    $html .= "<div style=\"font-weight: bold; font-size: 14px; position:absolute;top:0;left:0;\">". $index_dc  ."</div>";
+                }
+                    
+                    // $html .= "<div style=\"font-weight: bold; font-size: 14px; position:absolute;top:0;left:0;\">". $index_dc  ."</div>";
 
                                 
                 try{
