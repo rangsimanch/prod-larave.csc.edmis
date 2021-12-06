@@ -309,11 +309,11 @@ class TaskController extends Controller
                                 <img width=\"60%\" height=\"60%\" src=\"" . $task->create_by_user->signature->getPath()
                                 . "\"></div>";
                     }
+                    foreach($description_set as $dc) {
+                        $html .= "<div style=\"font-weight: bold; font-size: 10px; position:absolute;top:0;left:0;\">". $dc  ."</div>";
 
-                    $mpdf->WriteHTML($html); 
-
-                
-                
+                    }
+                                
                 try{
                     // Add Image       
                     $allowed = array('gif', 'png', 'jpg', 'jpeg', 'JPG', 'JPEG', 'PNG');
