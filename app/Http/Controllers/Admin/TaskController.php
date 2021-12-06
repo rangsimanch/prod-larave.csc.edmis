@@ -270,7 +270,7 @@ class TaskController extends Controller
             foreach($tasks as $task){
                 $pagecount = $mpdf->SetSourceFile(public_path('pdf-asset/activity.pdf'));
                 $description = $task->description ?? '';
-                $description_set = str_split($description, 1500);
+                $description_set[] = str_split($description, 1500);
                 
                     $mpdf->AddPage();
                     // Import the last page of the source PDF file
@@ -307,7 +307,7 @@ class TaskController extends Controller
                                 <img width=\"60%\" height=\"60%\" src=\"" . $task->create_by_user->signature->getPath()
                                 . "\"></div>";
                     }
-                        $html .= "<div style=\"font-weight: bold; font-size: 8px; position:absolute;top:0;left:0;\">". $description_set[0]  ."</div>";
+                $html .= "<div style=\"font-weight: bold; font-size: 8px; position:absolute;top:0;left:0;\">". $description_set[0]  ."</div>";
                     
 
                                 
