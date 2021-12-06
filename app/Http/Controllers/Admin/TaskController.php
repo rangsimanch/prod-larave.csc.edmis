@@ -268,18 +268,16 @@ class TaskController extends Controller
                 }
 
             foreach($tasks as $task){
-
-                $mpdf->AddPage();
-                $pagecount = $mpdf->SetSourceFile(public_path('pdf-asset/activity.pdf'));
-                // Import the last page of the source PDF file
-                $tplId = $mpdf->ImportPage($pagecount);
-                $mpdf->UseTemplate($tplId);
-
                 $description = $task->description ?? '';
                 $description_len = strlen($description);
                 $description_set = str_split($description, 502);
                 
                 foreach($description_set as $description){
+                    $pagecount = $mpdf->SetSourceFile(public_path('pdf-asset/activity.pdf'));
+                    $mpdf->AddPage();
+                    $tplId = $mpdf->ImportPage($pagecount);
+                    $mpdf->UseTemplate($tplId);
+
                     $wind = $task->wind ?? '';
                     $wind .=   ' m/sec';
                     $due_date = $task->due_date ?? ''; 
@@ -310,6 +308,7 @@ class TaskController extends Controller
                         $html .= "<div style=\"font-weight: bold; position:absolute;top:930;left:630px;\">
                                 <img width=\"60%\" height=\"60%\" src=\"" . $task->create_by_user->signature->getPath()
                                 . "\"></div>";
+                    $mpdf->WriteHTML($html); 
                     }
                 }
                 
@@ -550,10 +549,9 @@ class TaskController extends Controller
                 //     print "Creating an mPDF object failed with" . $e->getMessage();
                 // }
 
-                $mpdf->WriteHTML($html); 
+                // $mpdf->WriteHTML($html); 
             }
             return $mpdf->Output();
-            // return redirect()->back() ->with('alert', $tasks);
         }
         else{
             return redirect()->back() ->with('alert', "No activity on date range");
