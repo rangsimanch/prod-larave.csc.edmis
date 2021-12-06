@@ -274,7 +274,13 @@ class TaskController extends Controller
                 $description = $task->description ?? '';
                 $description_len = strlen($description);
                 $descWordWrap =   wordwrap($description, 300,"<br>\n");
-                $description_set = chunk_split($description, 500);
+                
+                if($description_len > 500){
+                    $description_set = chunk_split($description, 500);
+                }
+                else{
+                    $description_set = $description;
+                }
                 
                 foreach($description_set as $description){
                     $mpdf->AddPage();
