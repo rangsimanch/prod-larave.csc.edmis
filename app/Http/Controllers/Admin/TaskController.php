@@ -308,7 +308,8 @@ class TaskController extends Controller
                                 . "\"></div>";
                     }
                     foreach($description_set as $des) {
-                        $html .= "<div style=\"font-weight: bold; font-size: 8px; position:absolute;top:0;left:0;\">". $des ?? '' ."</div>";
+                        $text_des = "" . $des ?? '';
+                        $html .= "<div style=\"font-weight: bold; font-size: 8px; position:absolute;top:0;left:0;\">". $text_des ."</div>";
                     }
 
                                 
