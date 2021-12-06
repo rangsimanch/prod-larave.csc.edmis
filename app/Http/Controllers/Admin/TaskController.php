@@ -308,7 +308,7 @@ class TaskController extends Controller
                                 . "\"></div>";
                     }
                     for($i = 0; $i < count($description_set); $i++){
-                        $html .= "<div style=\"font-weight: bold; font-size: 8px; position:absolute;top:0;left:0;\">". var_dump($description_set[$i]) ."</div>";
+                        $html .= "<div style=\"font-weight: bold; font-size: 8px; position:absolute;top:0;left:0;\">". strval($description_set[$i]) ."</div>";
                     }
 
                                 
