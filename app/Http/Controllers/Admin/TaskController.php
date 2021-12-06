@@ -271,15 +271,9 @@ class TaskController extends Controller
                 $pagecount = $mpdf->SetSourceFile(public_path('pdf-asset/activity.pdf'));
                 $description = $task->description ?? '';
                 $description_len = strlen($description);
-
-                if($description_len > 500){
-                    $description_set = str_split($description, 500);
-                }
-                else{
-                    $description_set = $description;
-                }
+                $description_set = str_split($description, 502);
                 
-                // foreach($description_set as $description){
+                foreach($description_set as $description){
                     $mpdf->AddPage();
                     // Import the last page of the source PDF file
                     $tplId = $mpdf->ImportPage($pagecount);
@@ -316,244 +310,244 @@ class TaskController extends Controller
                                 <img width=\"60%\" height=\"60%\" src=\"" . $task->create_by_user->signature->getPath()
                                 . "\"></div>";
                     }
-                // }
-                
-                try{
-                    // Add Image       
-                    $allowed = array('gif', 'png', 'jpg', 'jpeg', 'JPG', 'JPEG', 'PNG');
-                    if(count($task['attachment'])  > 0){
-                        if(count($task['attachment'])  == 1){
-                            
-                            if(in_array(pathinfo(public_path($task->attachment[0]->getUrl()),PATHINFO_EXTENSION),$allowed)){
-                            
-                                $img = (string) Image::make($task->attachment[0]->getUrl())->resize(null, 180, function ($constraint) {
-                                    $constraint->aspectRatio();
-                                })->encode('data-url');
-
-                                // $img = (string) urlencode($task->attachment[0]->getUrl());
-
-
-                                $html .= "<br><div style=\"text-align:center;\"> <img width=\"30%\" height=\"30%\" src=\"" 
-                                    . $img
-                                    . "\"></div>";
-                            }
-                        
-                        }
-
-                        else if(count($task['attachment'])  == 2){
-
-                            if(in_array(pathinfo(public_path($task->attachment[0]->getUrl()),PATHINFO_EXTENSION),$allowed)){
-                                $img = (string) Image::make($task->attachment[0]->getPath())->resize(null, 180, function ($constraint) {
-                                    $constraint->aspectRatio();
-                                })
-                                ->encode('data-url');
-
-                                $html .= "<br><div style=\"text-align:center;\"> <img width=\"25%\" height=\"25%\" src=\"" 
-                                    . $img
-                                    . "\">";
-                            }
-                            if(in_array(pathinfo(public_path($task->attachment[1]->getUrl()),PATHINFO_EXTENSION),$allowed)){
-                                $img = (string) Image::make($task->attachment[1]->getPath())->resize(null, 180, function ($constraint) {
-                                    $constraint->aspectRatio();
-                                })->encode('data-url');
-                                
-                                $html .= " <img width=\"25%\" height=\"20%\" src=\"" 
-                                    . $img
-                                    . "\"></div>";
-                            }
-                        }
-                        else if(count($task['attachment'])  == 3){
-                            if(in_array(pathinfo(public_path($task->attachment[0]->getUrl()),PATHINFO_EXTENSION),$allowed)){
-                                $img = (string) Image::make($task->attachment[0]->getPath())->resize(null, 180, function ($constraint) {
-                                    $constraint->aspectRatio();
-                                })->encode('data-url');
-                                
-                                $html .= "<br><div style=\"text-align:center;\"> <img width=\"20%\" height=\"20%\" src=\"" 
-                                    . $img
-                                    . "\">";
-                            }
-                            if(in_array(pathinfo(public_path($task->attachment[1]->getUrl()),PATHINFO_EXTENSION),$allowed)){
-                                $img = (string) Image::make($task->attachment[1]->getPath())->resize(null, 180, function ($constraint) {
-                                    $constraint->aspectRatio();
-                                })->encode('data-url');
-                                
-                                $html .= " <img width=\"20%\" height=\"20%\" src=\"" 
-                                    . $img
-                                    . "\">";
-                            }
-                            if(in_array(pathinfo(public_path($task->attachment[2]->getUrl()),PATHINFO_EXTENSION),$allowed)){
-                                $img = (string) Image::make($task->attachment[2]->getPath())->resize(null, 180, function ($constraint) {
-                                    $constraint->aspectRatio();
-                                })->encode('data-url');
-
-                                $html .= "<img width=\"20%\" height=\"20%\" src=\"" 
-                                    . $img 
-                                    . "\"></div>";
-                            }
-                        }
-                        else if(count($task['attachment'])  == 4){
-                            if(in_array(pathinfo(public_path($task->attachment[0]->getUrl()),PATHINFO_EXTENSION),$allowed)){
-                                
-                                $img = (string) Image::make($task->attachment[0]->getPath())->resize(null, 180, function ($constraint) {
-                                    $constraint->aspectRatio();
-                                })->encode('data-url');
-
-                                $html .= "<br><div style=\"text-align:center;\"> <img width=\"25%\" height=\"25%\" src=\"" 
-                                    . $img
-                                    . "\">";
-                            }
-                            if(in_array(pathinfo(public_path($task->attachment[1]->getUrl()),PATHINFO_EXTENSION),$allowed)){
-
-                                $img = (string) Image::make($task->attachment[1]->getPath())->resize(null, 180, function ($constraint) {
-                                    $constraint->aspectRatio();
-                                })->encode('data-url');
-                                
-                                $html .= " <img width=\"25%\" height=\"20%\" src=\"" 
-                                    . $img 
-                                    . "\"></div>";
-                            }
-                            if(in_array(pathinfo(public_path($task->attachment[2]->getUrl()),PATHINFO_EXTENSION),$allowed)){
-
-                                $img = (string) Image::make($task->attachment[2]->getPath())->resize(null, 180, function ($constraint) {
-                                    $constraint->aspectRatio();
-                                })->encode('data-url');
-
-                                $html .= "<div style=\"text-align:center;\"> <img width=\"25%\" height=\"25%\" src=\"" 
-                                    . $img
-                                    . "\">";
-                            }
-                            if(in_array(pathinfo(public_path($task->attachment[3]->getUrl()),PATHINFO_EXTENSION),$allowed)){
-
-                                $img = (string) Image::make($task->attachment[3]->getPath())->resize(null, 180, function ($constraint) {
-                                    $constraint->aspectRatio();
-                                })->encode('data-url');
-
-                                $html .= " <img width=\"25%\" height=\"20%\" src=\"" 
-                                    . $img
-                                    . "\"></div>";
-                            }
-                        }
-
-                        else if(count($task['attachment'])  == 5){
-                            if(in_array(pathinfo(public_path($task->attachment[0]->getUrl()),PATHINFO_EXTENSION),$allowed)){
-
-                                $img = (string) Image::make($task->attachment[0]->getPath())->resize(null, 180, function ($constraint) {
-                                    $constraint->aspectRatio();
-                                })->encode('data-url');
-
-                                $html .= "<br><div style=\"text-align:center;\"> <img width=\"20%\" height=\"20%\" src=\"" 
-                                    . $img
-                                    . "\">";
-                            }
-                            if(in_array(pathinfo(public_path($task->attachment[1]->getUrl()),PATHINFO_EXTENSION),$allowed)){
-
-                                $img = (string) Image::make($task->attachment[1]->getPath())->resize(null, 180, function ($constraint) {
-                                    $constraint->aspectRatio();
-                                })->encode('data-url');
-
-                                $html .= " <img width=\"20%\" height=\"20%\" src=\"" 
-                                    . $img
-                                    . "\"></div>";
-                            }
-                            if(in_array(pathinfo(public_path($task->attachment[2]->getUrl()),PATHINFO_EXTENSION),$allowed)){
-
-                                $img = (string) Image::make($task->attachment[2]->getPath())->resize(null, 180, function ($constraint) {
-                                    $constraint->aspectRatio();
-                                })->encode('data-url');
-
-                                $html .= "<div style=\"text-align:center;\"> <img width=\"20%\" height=\"20%\" src=\"" 
-                                    . $img
-                                    . "\">";
-                            }
-                            if(in_array(pathinfo(public_path($task->attachment[3]->getUrl()),PATHINFO_EXTENSION),$allowed)){
-
-                                $img = (string) Image::make($task->attachment[3]->getPath())->resize(null, 180, function ($constraint) {
-                                    $constraint->aspectRatio();
-                                })->encode('data-url');
-
-                                $html .= " <img width=\"20%\" height=\"20%\" src=\"" 
-                                    . $img 
-                                    . "\">";
-                            }
-                            if(in_array(pathinfo(public_path($task->attachment[4]->getUrl()),PATHINFO_EXTENSION),$allowed)){
-
-                                $img = (string) Image::make($task->attachment[4]->getPath())->resize(null, 180, function ($constraint) {
-                                    $constraint->aspectRatio();
-                                })->encode('data-url');
-
-                                $html .= " <img width=\"20%\" height=\"20%\" src=\"" 
-                                    . $img
-                                    . "\"></div>";
-                            }
-
-                        }
-                        else if(count($task['attachment'])  >= 6){
-                            if(in_array(pathinfo(public_path($task->attachment[0]->getUrl()),PATHINFO_EXTENSION),$allowed)){
-
-                                $img = (string) Image::make($task->attachment[0]->getPath())->resize(null, 180, function ($constraint) {
-                                    $constraint->aspectRatio();
-                                })->encode('data-url');
-
-                                $html .= "<br><div style=\"text-align:center;\"> <img width=\"20%\" height=\"20%\" src=\"" 
-                                    . $img
-                                    . "\">";
-                            }
-                            if(in_array(pathinfo(public_path($task->attachment[1]->getUrl()),PATHINFO_EXTENSION),$allowed)){
-
-                                $img = (string) Image::make($task->attachment[1]->getPath())->resize(null, 180, function ($constraint) {
-                                    $constraint->aspectRatio();
-                                })->encode('data-url');
-
-                                $html .= " <img width=\"20%\" height=\"20%\" src=\"" 
-                                    . $img
-                                    . "\">";
-                            }
-                            if(in_array(pathinfo(public_path($task->attachment[2]->getUrl()),PATHINFO_EXTENSION),$allowed)){
-
-                                $img = (string) Image::make($task->attachment[2]->getPath())->resize(null, 180, function ($constraint) {
-                                    $constraint->aspectRatio();
-                                })->encode('data-url');
-
-                                $html .= " <img width=\"20%\" height=\"20%\" src=\"" 
-                                    . $img
-                                    . "\"></div>";
-                            }
-                            if(in_array(pathinfo(public_path($task->attachment[3]->getUrl()),PATHINFO_EXTENSION),$allowed)){
-
-                                $img = (string) Image::make($task->attachment[3]->getPath())->resize(null, 180, function ($constraint) {
-                                    $constraint->aspectRatio();
-                                })->encode('data-url');
-                                
-                                $html .= "<div style=\"text-align:center;\"><img width=\"20%\" height=\"20%\" src=\"" 
-                                    . $img
-                                    . "\">";
-                            }
-                            if(in_array(pathinfo(public_path($task->attachment[4]->getUrl()),PATHINFO_EXTENSION),$allowed)){
-
-                                $img = (string) Image::make($task->attachment[4]->getPath())->resize(null, 180, function ($constraint) {
-                                    $constraint->aspectRatio();
-                                })->encode('data-url');
-
-                                $html .= " <img width=\"20%\" height=\"20%\" src=\"" 
-                                    . $img
-                                    . "\">";
-                            }
-                            if(in_array(pathinfo(public_path($task->attachment[5]->getUrl()),PATHINFO_EXTENSION),$allowed)){
-
-                                $img = (string) Image::make($task->attachment[5]->getPath())->resize(null, 180, function ($constraint) {
-                                    $constraint->aspectRatio();
-                                })->encode('data-url');
-
-                                $html .= " <img width=\"20%\" height=\"20%\" src=\"" 
-                                    . $img
-                                    . "\"></div>";
-                            }
-                        }
-                    }
-                    
-                }catch(Exception $e){
-                    print "Creating an mPDF object failed with" . $e->getMessage();
                 }
+                
+                // try{
+                //     // Add Image       
+                //     $allowed = array('gif', 'png', 'jpg', 'jpeg', 'JPG', 'JPEG', 'PNG');
+                //     if(count($task['attachment'])  > 0){
+                //         if(count($task['attachment'])  == 1){
+                            
+                //             if(in_array(pathinfo(public_path($task->attachment[0]->getUrl()),PATHINFO_EXTENSION),$allowed)){
+                            
+                //                 $img = (string) Image::make($task->attachment[0]->getUrl())->resize(null, 180, function ($constraint) {
+                //                     $constraint->aspectRatio();
+                //                 })->encode('data-url');
+
+                //                 // $img = (string) urlencode($task->attachment[0]->getUrl());
+
+
+                //                 $html .= "<br><div style=\"text-align:center;\"> <img width=\"30%\" height=\"30%\" src=\"" 
+                //                     . $img
+                //                     . "\"></div>";
+                //             }
+                        
+                //         }
+
+                //         else if(count($task['attachment'])  == 2){
+
+                //             if(in_array(pathinfo(public_path($task->attachment[0]->getUrl()),PATHINFO_EXTENSION),$allowed)){
+                //                 $img = (string) Image::make($task->attachment[0]->getPath())->resize(null, 180, function ($constraint) {
+                //                     $constraint->aspectRatio();
+                //                 })
+                //                 ->encode('data-url');
+
+                //                 $html .= "<br><div style=\"text-align:center;\"> <img width=\"25%\" height=\"25%\" src=\"" 
+                //                     . $img
+                //                     . "\">";
+                //             }
+                //             if(in_array(pathinfo(public_path($task->attachment[1]->getUrl()),PATHINFO_EXTENSION),$allowed)){
+                //                 $img = (string) Image::make($task->attachment[1]->getPath())->resize(null, 180, function ($constraint) {
+                //                     $constraint->aspectRatio();
+                //                 })->encode('data-url');
+                                
+                //                 $html .= " <img width=\"25%\" height=\"20%\" src=\"" 
+                //                     . $img
+                //                     . "\"></div>";
+                //             }
+                //         }
+                //         else if(count($task['attachment'])  == 3){
+                //             if(in_array(pathinfo(public_path($task->attachment[0]->getUrl()),PATHINFO_EXTENSION),$allowed)){
+                //                 $img = (string) Image::make($task->attachment[0]->getPath())->resize(null, 180, function ($constraint) {
+                //                     $constraint->aspectRatio();
+                //                 })->encode('data-url');
+                                
+                //                 $html .= "<br><div style=\"text-align:center;\"> <img width=\"20%\" height=\"20%\" src=\"" 
+                //                     . $img
+                //                     . "\">";
+                //             }
+                //             if(in_array(pathinfo(public_path($task->attachment[1]->getUrl()),PATHINFO_EXTENSION),$allowed)){
+                //                 $img = (string) Image::make($task->attachment[1]->getPath())->resize(null, 180, function ($constraint) {
+                //                     $constraint->aspectRatio();
+                //                 })->encode('data-url');
+                                
+                //                 $html .= " <img width=\"20%\" height=\"20%\" src=\"" 
+                //                     . $img
+                //                     . "\">";
+                //             }
+                //             if(in_array(pathinfo(public_path($task->attachment[2]->getUrl()),PATHINFO_EXTENSION),$allowed)){
+                //                 $img = (string) Image::make($task->attachment[2]->getPath())->resize(null, 180, function ($constraint) {
+                //                     $constraint->aspectRatio();
+                //                 })->encode('data-url');
+
+                //                 $html .= "<img width=\"20%\" height=\"20%\" src=\"" 
+                //                     . $img 
+                //                     . "\"></div>";
+                //             }
+                //         }
+                //         else if(count($task['attachment'])  == 4){
+                //             if(in_array(pathinfo(public_path($task->attachment[0]->getUrl()),PATHINFO_EXTENSION),$allowed)){
+                                
+                //                 $img = (string) Image::make($task->attachment[0]->getPath())->resize(null, 180, function ($constraint) {
+                //                     $constraint->aspectRatio();
+                //                 })->encode('data-url');
+
+                //                 $html .= "<br><div style=\"text-align:center;\"> <img width=\"25%\" height=\"25%\" src=\"" 
+                //                     . $img
+                //                     . "\">";
+                //             }
+                //             if(in_array(pathinfo(public_path($task->attachment[1]->getUrl()),PATHINFO_EXTENSION),$allowed)){
+
+                //                 $img = (string) Image::make($task->attachment[1]->getPath())->resize(null, 180, function ($constraint) {
+                //                     $constraint->aspectRatio();
+                //                 })->encode('data-url');
+                                
+                //                 $html .= " <img width=\"25%\" height=\"20%\" src=\"" 
+                //                     . $img 
+                //                     . "\"></div>";
+                //             }
+                //             if(in_array(pathinfo(public_path($task->attachment[2]->getUrl()),PATHINFO_EXTENSION),$allowed)){
+
+                //                 $img = (string) Image::make($task->attachment[2]->getPath())->resize(null, 180, function ($constraint) {
+                //                     $constraint->aspectRatio();
+                //                 })->encode('data-url');
+
+                //                 $html .= "<div style=\"text-align:center;\"> <img width=\"25%\" height=\"25%\" src=\"" 
+                //                     . $img
+                //                     . "\">";
+                //             }
+                //             if(in_array(pathinfo(public_path($task->attachment[3]->getUrl()),PATHINFO_EXTENSION),$allowed)){
+
+                //                 $img = (string) Image::make($task->attachment[3]->getPath())->resize(null, 180, function ($constraint) {
+                //                     $constraint->aspectRatio();
+                //                 })->encode('data-url');
+
+                //                 $html .= " <img width=\"25%\" height=\"20%\" src=\"" 
+                //                     . $img
+                //                     . "\"></div>";
+                //             }
+                //         }
+
+                //         else if(count($task['attachment'])  == 5){
+                //             if(in_array(pathinfo(public_path($task->attachment[0]->getUrl()),PATHINFO_EXTENSION),$allowed)){
+
+                //                 $img = (string) Image::make($task->attachment[0]->getPath())->resize(null, 180, function ($constraint) {
+                //                     $constraint->aspectRatio();
+                //                 })->encode('data-url');
+
+                //                 $html .= "<br><div style=\"text-align:center;\"> <img width=\"20%\" height=\"20%\" src=\"" 
+                //                     . $img
+                //                     . "\">";
+                //             }
+                //             if(in_array(pathinfo(public_path($task->attachment[1]->getUrl()),PATHINFO_EXTENSION),$allowed)){
+
+                //                 $img = (string) Image::make($task->attachment[1]->getPath())->resize(null, 180, function ($constraint) {
+                //                     $constraint->aspectRatio();
+                //                 })->encode('data-url');
+
+                //                 $html .= " <img width=\"20%\" height=\"20%\" src=\"" 
+                //                     . $img
+                //                     . "\"></div>";
+                //             }
+                //             if(in_array(pathinfo(public_path($task->attachment[2]->getUrl()),PATHINFO_EXTENSION),$allowed)){
+
+                //                 $img = (string) Image::make($task->attachment[2]->getPath())->resize(null, 180, function ($constraint) {
+                //                     $constraint->aspectRatio();
+                //                 })->encode('data-url');
+
+                //                 $html .= "<div style=\"text-align:center;\"> <img width=\"20%\" height=\"20%\" src=\"" 
+                //                     . $img
+                //                     . "\">";
+                //             }
+                //             if(in_array(pathinfo(public_path($task->attachment[3]->getUrl()),PATHINFO_EXTENSION),$allowed)){
+
+                //                 $img = (string) Image::make($task->attachment[3]->getPath())->resize(null, 180, function ($constraint) {
+                //                     $constraint->aspectRatio();
+                //                 })->encode('data-url');
+
+                //                 $html .= " <img width=\"20%\" height=\"20%\" src=\"" 
+                //                     . $img 
+                //                     . "\">";
+                //             }
+                //             if(in_array(pathinfo(public_path($task->attachment[4]->getUrl()),PATHINFO_EXTENSION),$allowed)){
+
+                //                 $img = (string) Image::make($task->attachment[4]->getPath())->resize(null, 180, function ($constraint) {
+                //                     $constraint->aspectRatio();
+                //                 })->encode('data-url');
+
+                //                 $html .= " <img width=\"20%\" height=\"20%\" src=\"" 
+                //                     . $img
+                //                     . "\"></div>";
+                //             }
+
+                //         }
+                //         else if(count($task['attachment'])  >= 6){
+                //             if(in_array(pathinfo(public_path($task->attachment[0]->getUrl()),PATHINFO_EXTENSION),$allowed)){
+
+                //                 $img = (string) Image::make($task->attachment[0]->getPath())->resize(null, 180, function ($constraint) {
+                //                     $constraint->aspectRatio();
+                //                 })->encode('data-url');
+
+                //                 $html .= "<br><div style=\"text-align:center;\"> <img width=\"20%\" height=\"20%\" src=\"" 
+                //                     . $img
+                //                     . "\">";
+                //             }
+                //             if(in_array(pathinfo(public_path($task->attachment[1]->getUrl()),PATHINFO_EXTENSION),$allowed)){
+
+                //                 $img = (string) Image::make($task->attachment[1]->getPath())->resize(null, 180, function ($constraint) {
+                //                     $constraint->aspectRatio();
+                //                 })->encode('data-url');
+
+                //                 $html .= " <img width=\"20%\" height=\"20%\" src=\"" 
+                //                     . $img
+                //                     . "\">";
+                //             }
+                //             if(in_array(pathinfo(public_path($task->attachment[2]->getUrl()),PATHINFO_EXTENSION),$allowed)){
+
+                //                 $img = (string) Image::make($task->attachment[2]->getPath())->resize(null, 180, function ($constraint) {
+                //                     $constraint->aspectRatio();
+                //                 })->encode('data-url');
+
+                //                 $html .= " <img width=\"20%\" height=\"20%\" src=\"" 
+                //                     . $img
+                //                     . "\"></div>";
+                //             }
+                //             if(in_array(pathinfo(public_path($task->attachment[3]->getUrl()),PATHINFO_EXTENSION),$allowed)){
+
+                //                 $img = (string) Image::make($task->attachment[3]->getPath())->resize(null, 180, function ($constraint) {
+                //                     $constraint->aspectRatio();
+                //                 })->encode('data-url');
+                                
+                //                 $html .= "<div style=\"text-align:center;\"><img width=\"20%\" height=\"20%\" src=\"" 
+                //                     . $img
+                //                     . "\">";
+                //             }
+                //             if(in_array(pathinfo(public_path($task->attachment[4]->getUrl()),PATHINFO_EXTENSION),$allowed)){
+
+                //                 $img = (string) Image::make($task->attachment[4]->getPath())->resize(null, 180, function ($constraint) {
+                //                     $constraint->aspectRatio();
+                //                 })->encode('data-url');
+
+                //                 $html .= " <img width=\"20%\" height=\"20%\" src=\"" 
+                //                     . $img
+                //                     . "\">";
+                //             }
+                //             if(in_array(pathinfo(public_path($task->attachment[5]->getUrl()),PATHINFO_EXTENSION),$allowed)){
+
+                //                 $img = (string) Image::make($task->attachment[5]->getPath())->resize(null, 180, function ($constraint) {
+                //                     $constraint->aspectRatio();
+                //                 })->encode('data-url');
+
+                //                 $html .= " <img width=\"20%\" height=\"20%\" src=\"" 
+                //                     . $img
+                //                     . "\"></div>";
+                //             }
+                //         }
+                //     }
+                    
+                // }catch(Exception $e){
+                //     print "Creating an mPDF object failed with" . $e->getMessage();
+                // }
 
                 $mpdf->WriteHTML($html); 
             }
