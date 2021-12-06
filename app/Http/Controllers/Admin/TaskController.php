@@ -273,7 +273,6 @@ class TaskController extends Controller
                 $description_len = strlen($description);
                 $description_set = str_split($description, 502);
                 
-                foreach($description_set as $descriptions){
                     $mpdf->AddPage();
                     // Import the last page of the source PDF file
                     $tplId = $mpdf->ImportPage($pagecount);
@@ -310,7 +309,10 @@ class TaskController extends Controller
                                 <img width=\"60%\" height=\"60%\" src=\"" . $task->create_by_user->signature->getPath()
                                 . "\"></div>";
                     }
-                }
+                    
+                    $mpdf->WriteHTML($html); 
+
+                
                 
                 try{
                     // Add Image       
