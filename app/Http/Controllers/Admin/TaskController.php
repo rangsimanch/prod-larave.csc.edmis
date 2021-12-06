@@ -272,6 +272,7 @@ class TaskController extends Controller
                 $description = $task->description ?? '';
                 $description_len = strlen($description);
                 $description_set = str_split($description, 502);
+                $description = implode(" ",$description_set);
                 
                 // foreach($description_set as $description){
                     $mpdf->AddPage();
