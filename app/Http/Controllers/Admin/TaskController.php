@@ -271,12 +271,12 @@ class TaskController extends Controller
             // for($i = 0; $i < $count_task; $i++){
             foreach($tasks as $task){
 
-                $descriptions = $task->description ?? '';
-                $description_len = strlen($descriptions);
-                $descWordWrap =   wordwrap($descriptions, 300,"<br>\n");
-                $description_set = chunk_split($descriptions,500);
+                $description = $task->description ?? '';
+                $description_len = strlen($description);
+                $descWordWrap =   wordwrap($description, 300,"<br>\n");
+                $description_set = chunk_split($description, 500);
                 
-                foreach($description as $description_set){
+                foreach($description_set as $description){
                     $mpdf->AddPage();
                     $pagecount = $mpdf->SetSourceFile(public_path('pdf-asset/activity.pdf'));
                 
