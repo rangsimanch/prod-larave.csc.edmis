@@ -317,8 +317,8 @@ class TaskController extends Controller
                         $html .= "<div style=\"font-weight: bold; position:absolute;top:930;left:630px;\">
                                 <img width=\"60%\" height=\"60%\" src=\"" . $task->create_by_user->signature->getPath()
                                 . "\"></div>";
-                    
                     }
+                    $mpdf->WriteHTML($html); 
                 }
                 
                 try{
@@ -436,37 +436,6 @@ class TaskController extends Controller
                                     . "\"></div>";
                             }
                         }
-
-                    //     else{
-                    //         if(in_array(pathinfo(public_path($task->attachment[0]->getUrl()),PATHINFO_EXTENSION),$allowed)){
-                    //             $img = (string) Image::make($task->attachment[0]->getPath())->resize(null, 200, function ($constraint) {
-                    //                 $constraint->aspectRatio();
-                    //             })->encode('data-url');
-                                
-                    //             $html .= "<br><div style=\"text-align:center;\"> <img width=\"20%\" height=\"20%\" src=\"" 
-                    //                 . $img
-                    //                 . "\">";
-                    //         }
-                    //         if(in_array(pathinfo(public_path($task->attachment[1]->getUrl()),PATHINFO_EXTENSION),$allowed)){
-                    //             $img = (string) Image::make($task->attachment[1]->getPath())->resize(null, 200, function ($constraint) {
-                    //                 $constraint->aspectRatio();
-                    //             })->encode('data-url');
-                                
-                    //             $html .= " <img width=\"20%\" height=\"20%\" src=\"" 
-                    //                 . $img
-                    //                 . "\">";
-                    //         }
-                    //         if(in_array(pathinfo(public_path($task->attachment[2]->getUrl()),PATHINFO_EXTENSION),$allowed)){
-                    //             $img = (string) Image::make($task->attachment[2]->getPath())->resize(null, 200, function ($constraint) {
-                    //                 $constraint->aspectRatio();
-                    //             })->encode('data-url');
-
-                    //             $html .= "<img width=\"20%\" height=\"20%\" src=\"" 
-                    //                 . $img 
-                    //                 . "\"></div>";
-                    //         }
-                    //     }
-                    // }
 
                         else if(count($task['attachment'])  == 5){
                             if(in_array(pathinfo(public_path($task->attachment[0]->getUrl()),PATHINFO_EXTENSION),$allowed)){
