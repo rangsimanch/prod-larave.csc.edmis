@@ -307,7 +307,7 @@ class TaskController extends Controller
                 
                 $html .= "<div style=\" padding-left: 80px; padding-right:80px; padding-bottom:-15px; \">
                                     <div style=\"vertical-align: top; max-width: 50%; display: inline-block; font-size: 18px;\">".  nl2br(str_replace(';','\n',$description)) ."</div>
-                                    </div>";   
+                                    </div><br>";   
                 
                
                 try{
@@ -316,6 +316,7 @@ class TaskController extends Controller
                     if(count($task['attachment'])  > 0){
                         $index = 0;
                         $count_img = 1;
+                        
                         foreach($task['attachment'] as $picture){
                             if($index < 6){
                                 if($count_img % 2 == 0){
