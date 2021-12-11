@@ -317,20 +317,27 @@ class TaskController extends Controller
                         $index = 0;
                         $count_img = 1;
                         $close_div = 0;
+                        $count_attachment = count($task['attachment']);
+                        if($count_attachment > 6){
+                            $img_wh = "25%";
+                        }
+                        else{
+                            if($count_attachment % 2 == 0){
+                                $img_wh = "25%";
+                            }
+                            else{
+                                $img_wh = "20%";
+                            }
+                        }
                         $html .= "<div style=\"text-align:center;\"> ";
+
                         foreach($task['attachment'] as $picture){
                             if($index < 6){
-                                if($count_img % 2 == 0){
-                                    $img_wh = "25%";
+                                if($count_img == 3){
+                                    $html .= "</div>";
+                                    $html .= "<div style=\"text-align:center;\"> ";
                                 }
-                                else{
-                                    if($count_img == 3){
-                                        $html .= "</div>";
-                                        $html .= "<div style=\"text-align:center;\"> ";
-                                    }
-                                    $img_wh = "20%";
-                                }
-
+                                
                                 if(in_array(pathinfo(public_path($task->attachment[$index]->getUrl()),PATHINFO_EXTENSION),$allowed)){
                                 
                                     $img = (string) Image::make($task->attachment[$index]->getUrl())->orientate()->resize(null, 180, function ($constraint) {
