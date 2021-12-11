@@ -334,8 +334,8 @@ class TaskController extends Controller
                         else if(count($task['attachment'])  == 2){
 
                             if(in_array(pathinfo(public_path($task->attachment[0]->getUrl()),PATHINFO_EXTENSION),$allowed)){
-                                $img = (string) Image::make($task->attachment[0]->getPath())->resize(180, null, function ($constraint) {
-                                    $constraint->aspectRatio();
+                                $img = (string) Image::make($task->attachment[0]->getPath())->orientate()->fit(null, 180, function ($constraint) {
+                                    $constraint->upsize();
                                 })
                                 ->encode('data-url');
 
@@ -344,8 +344,8 @@ class TaskController extends Controller
                                     . "\">";
                             }
                             if(in_array(pathinfo(public_path($task->attachment[1]->getUrl()),PATHINFO_EXTENSION),$allowed)){
-                                $img = (string) Image::make($task->attachment[1]->getPath())->resize(180, null, function ($constraint) {
-                                    $constraint->aspectRatio();
+                                $img = (string) Image::make($task->attachment[0]->getPath())->orientate()->fit(null, 180, function ($constraint) {
+                                    $constraint->upsize();
                                 })->encode('data-url');
                                 
                                 $html .= " <img width=\"25%\" height=\"25%\" src=\"" 
