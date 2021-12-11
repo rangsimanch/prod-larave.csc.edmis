@@ -340,9 +340,9 @@ class TaskController extends Controller
 
                                 if(in_array(pathinfo(public_path($task->attachment[$index]->getUrl()),PATHINFO_EXTENSION),$allowed)){
 
-                                    $img = (string) Image::make($task->attachment[$index]->getUrl());
+                                    $img = Image::make($task->attachment[$index]->getUrl());
                                     $img->orientate();
-                                    $img->resize(null, 180, function ($constraint) {
+                                    $img = (string) $img->resize(null, 180, function ($constraint) {
                                         $constraint->aspectRatio();
                                     })->encode('data-url');
 
