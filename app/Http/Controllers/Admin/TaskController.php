@@ -297,12 +297,9 @@ class TaskController extends Controller
                             <img width=\"60%\" height=\"60%\" src=\"" . $task->create_by_user->signature->getPath()
                             . "\"></div>";
                 }
-
-                $mpdf->SetHeader($html);
-
+            
                 
-                
-                $html = "
+                $html .= "
                                 <div style=\" padding-left: 80px; padding-right:80px;\">
                                 <div style=\"text-align: center;font-weight: bold; font-size: 22px;\">". nl2br(str_replace(';',"\r\n",$activity_name))  ."</div>
                                 </div>";
