@@ -326,7 +326,7 @@ class TaskController extends Controller
                                 $img_wh = "25%";
                             }
                             else{
-                                $img_wh = "20%";
+                                $img_wh = "25%";
                             }
                         }
                         $html .= "<div style=\"text-align:center;\"> ";
@@ -337,16 +337,16 @@ class TaskController extends Controller
                                     $html .= "</div>";
                                     $html .= "<div style=\"text-align:center;\"> ";
                                 }
-                                
+
                                 if(in_array(pathinfo(public_path($task->attachment[$index]->getUrl()),PATHINFO_EXTENSION),$allowed)){
-                                
+
                                     $img = (string) Image::make($task->attachment[$index]->getUrl())->orientate()->resize(null, 180, function ($constraint) {
                                         $constraint->aspectRatio();
                                     })->encode('data-url');
 
                                     $html .= "<img width=\"". $img_wh ."\" height=\"". $img_wh ."\" src=\"" 
                                         . $img
-                                        . "\">";
+                                        . "\"> ";
                                 }
                             }
                             $index++;
