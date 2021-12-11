@@ -316,7 +316,7 @@ class TaskController extends Controller
                     if(count($task['attachment'])  > 0){
                         $index = 0;
                         $count_img = 1;
-                        foreach($picture as $task['attachment']){
+                        foreach($task['attachment'] as $picture){
                             if($index < 6){
                                 if($count_img % 2 == 0){
                                     $img_wh = "25%";
