@@ -307,7 +307,6 @@ class TaskController extends Controller
                             . "\"></div>";
                 }
                 
-                $mpdf->WriteHTML($html); 
 
                                 
                 try{
