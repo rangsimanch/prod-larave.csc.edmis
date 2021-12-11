@@ -332,9 +332,10 @@ class TaskController extends Controller
 
                                     $html .= "<br><div style=\"text-align:center;\"> <img width=\"". $img_wh ."\" height=\"". $img_wh ."\" src=\"" 
                                         . $img
-                                        . "\"></div>";
+                                        . "\">";
                                 }
                             }
+                            $html .= "</div>";
                             $index++;
                         }
                     }
