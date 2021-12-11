@@ -335,7 +335,7 @@ class TaskController extends Controller
 
                             if(in_array(pathinfo(public_path($task->attachment[0]->getUrl()),PATHINFO_EXTENSION),$allowed)){
                                 $img = (string) Image::make($task->attachment[0]->getPath())->orientate()->fit(null, 180, function ($constraint) {
-                                    $constraint->upsize();
+                                    $constraint->aspectRatio();
                                 })
                                 ->encode('data-url');
 
@@ -345,7 +345,7 @@ class TaskController extends Controller
                             }
                             if(in_array(pathinfo(public_path($task->attachment[1]->getUrl()),PATHINFO_EXTENSION),$allowed)){
                                 $img = (string) Image::make($task->attachment[0]->getPath())->orientate()->fit(null, 180, function ($constraint) {
-                                    $constraint->upsize();
+                                    $constraint->aspectRatio();
                                 })->encode('data-url');
                                 
                                 $html .= " <img width=\"25%\" height=\"25%\" src=\"" 
