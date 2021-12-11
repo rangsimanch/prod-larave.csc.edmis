@@ -293,7 +293,7 @@ class TaskController extends Controller
                 $html .= "<div style=\"font-weight: bold; font-size: 20px; position:absolute;top:155px;left:500px;\">Temperature : ". $temperature  ." °C</div>";
                     
                 $html .= "<br><br><br><br><br><br><br><br>
-                                <div style=\" padding-left: 80px; padding-right:80px;  position:absolute;top:200px;\">
+                                <div style=\" padding-left: 80px; padding-right:80px;  position:top:200px;\">
                                 <div style=\"text-align: center;font-weight: bold; font-size: 22px;\">". nl2br(str_replace(';',"\r\n",$activity_name))  ."</div>
                                 </div>";
                 
