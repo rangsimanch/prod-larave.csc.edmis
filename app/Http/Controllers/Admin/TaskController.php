@@ -298,7 +298,7 @@ class TaskController extends Controller
                             . "\"></div>";
                 }
                 
-                $mpdf->SetHTMLHeader($html);
+                $mpdf->SetHTMLHeader($html,'0',true);
                 
                 $html = "
                                 <div style=\" padding-left: 80px; padding-right:80px;\">
