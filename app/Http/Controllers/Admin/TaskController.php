@@ -316,7 +316,7 @@ class TaskController extends Controller
                     if(count($task['attachment'])  > 0){
                         $index = 0;
                         $count_img = 1;
-                        
+                        $html .= "<div style=\"text-align:center;\"> ";
                         foreach($task['attachment'] as $picture){
                             if($index < 6){
                                 if($count_img % 2 == 0){
@@ -331,7 +331,7 @@ class TaskController extends Controller
                                         $constraint->aspectRatio();
                                     })->encode('data-url');
 
-                                    $html .= "<div style=\"text-align:center;\"> <img width=\"". $img_wh ."\" height=\"". $img_wh ."\" src=\"" 
+                                    $html .= "<img width=\"". $img_wh ."\" height=\"". $img_wh ."\" src=\"" 
                                         . $img
                                         . "\">";
                                 }
