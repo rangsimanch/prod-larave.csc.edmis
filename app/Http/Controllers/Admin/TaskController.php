@@ -292,7 +292,6 @@ class TaskController extends Controller
                 $html .= "<div style=\"font-weight: bold; font-size: 20px; position:absolute;top:155px;left:300px;\">Wind : ". $wind ."</div>";
                 $html .= "<div style=\"font-weight: bold; font-size: 20px; position:absolute;top:155px;left:500px;\">Temperature : ". $temperature  ." °C</div>";
                 
-                $mpdf->WriteHTML($html); 
                     
                 $html = "
                                 <div style=\" padding-left: 80px; padding-right:80px;\">
@@ -309,6 +308,9 @@ class TaskController extends Controller
                             <img width=\"60%\" height=\"60%\" src=\"" . $task->create_by_user->signature->getPath()
                             . "\"></div>";
                 }
+
+                $mpdf->WriteHTML($html); 
+
                 
 
                                 
