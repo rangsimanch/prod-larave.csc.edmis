@@ -297,7 +297,7 @@ class TaskController extends Controller
                                 </div>";
                 
 
-                $html .= "<div style=\" padding-left: 80px; padding-right:80px; padding-bottom: 80px;\">
+                $html .= "<div style=\" padding-left: 80px; padding-right:80px; padding-bottom: 500px;\">
                                     <div style=\"vertical-align: top; max-width: 50%; display: inline-block; font-size: 18px;\">".  nl2br(str_replace(';','\n',$description)) ."</div>
                                     </div>";   
                 $html .= "<div style=\"font-weight: bold; font-size: 20px; position:absolute;top:990;left:580px;\">(". $recordby  .")</div>";
