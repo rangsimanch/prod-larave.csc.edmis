@@ -334,7 +334,7 @@ class TaskController extends Controller
                         foreach($task['attachment'] as $picture){
                             if($index < 6){
                                 if($count_attachment == 4){
-                                    if($count_img == 2){
+                                    if($count_img == 3){
                                         $html .= "</div>";
                                         $html .= "<div style=\"text-align:center;\"> ";
                                     }
