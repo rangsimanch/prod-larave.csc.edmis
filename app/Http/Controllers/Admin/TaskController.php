@@ -300,19 +300,17 @@ class TaskController extends Controller
                 
                 $mpdf->SetHTMLHeader($html,'0',true);
                 
-                $html = "
-                                <div style=\" padding-left: 80px; padding-right:80px;\">
+                $html = "<div style=\" padding-left: 80px; padding-right:80px;\">
                                 <div style=\"text-align: center;font-weight: bold; font-size: 22px;\">". nl2br(str_replace(';',"\r\n",$activity_name))  ."</div>
                                 </div>";
                 
                 
-                $html .= "<div style=\" padding-left: 80px; padding-right:80px;\">
+                $html .= "<div style=\" padding-left: 80px; padding-right:80px; padding-bottom:-10px; \">
                                     <div style=\"vertical-align: top; max-width: 50%; display: inline-block; font-size: 18px;\">".  nl2br(str_replace(';','\n',$description)) ."</div>
                                     </div>";   
                 
                
                 try{
-                   
                     $allowed = array('gif', 'png', 'jpg', 'jpeg', 'JPG', 'JPEG', 'PNG');
                     if(count($task['attachment'])  > 0){
                         if(count($task['attachment'])  == 1){
@@ -350,7 +348,7 @@ class TaskController extends Controller
                                     $constraint->aspectRatio();
                                 })->encode('data-url');
                                 
-                                $html .= " <img width=\"25%\" height=\"20%\" src=\"" 
+                                $html .= " <img width=\"25%\" height=\"25%\" src=\"" 
                                     . $img
                                     . "\"></div>";
                             }
@@ -401,7 +399,7 @@ class TaskController extends Controller
                                     $constraint->aspectRatio();
                                 })->encode('data-url');
                                 
-                                $html .= " <img width=\"25%\" height=\"20%\" src=\"" 
+                                $html .= " <img width=\"25%\" height=\"25%\" src=\"" 
                                     . $img 
                                     . "\"></div>";
                             }
@@ -421,7 +419,7 @@ class TaskController extends Controller
                                     $constraint->aspectRatio();
                                 })->encode('data-url');
 
-                                $html .= " <img width=\"25%\" height=\"20%\" src=\"" 
+                                $html .= " <img width=\"25%\" height=\"25%\" src=\"" 
                                     . $img
                                     . "\"></div>";
                             }
