@@ -342,7 +342,7 @@ class TaskController extends Controller
 
                                     $img = Image::make($task->attachment[$index]->getUrl());
                                     $img->orientate();
-                                    $img = (string) $img->resize(null, 90, function ($constraint) {
+                                    $img = (string) $img->resize(null, 360, function ($constraint) {
                                         $constraint->aspectRatio();
                                     })->encode('data-url');
 
