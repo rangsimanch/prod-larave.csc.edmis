@@ -298,7 +298,7 @@ class TaskController extends Controller
                 
 
                 $html .= "<div style=\" padding-left: 80px; padding-right:80px; \">
-                                    <div style=\"vertical-align: top; max-width: 50%; display: inline-block; font-size: 18px;\">".  nl2br(str_replace(';','\n',$description)) ."</div>
+                                    <div style=\"vertical-align: top; max-width: 50%; display: inline-block; height: 200px; font-size: 18px;\">".  nl2br(str_replace(';','\n',$description)) ."</div>
                                     </div>";   
                 $html .= "<div style=\"font-weight: bold; font-size: 20px; position:absolute;top:990;left:580px;\">(". $recordby  .")</div>";
                 if(!is_null($task->create_by_user->signature)){
@@ -311,39 +311,7 @@ class TaskController extends Controller
 
                                 
                 try{
-                    // Add Image      
-                    $pagecount = $mpdf->SetSourceFile(public_path('pdf-asset/activity.pdf'));
-                    $mpdf->AddPage();
-                    // Import the last page of the source PDF file
-                    $tplId = $mpdf->ImportPage($pagecount);
-                    $mpdf->UseTemplate($tplId); 
-                    $wind = $task->wind ?? '';
-                    $wind .=   ' m/sec';
-                    $due_date = $task->due_date ?? ''; 
-                    $weather = $task->weather ?? '';
-                    $temperature = $task->temperature ?? '';
-                    $activity_name = $task->name ?? '';
-                    $contractNo = $task->construction_contract->code ?? '';
-        
-                    $html = "<div style=\"font-size: 18px; position:absolute;top:990;left:95px;\">Construction Contract : ". $contractNo  ." </div>";
-                    $html .= "<div style=\"text-decoration: underline;font-weight: bold; font-size: 18px; position:absolute;top:112px;left:140px;\">". $due_date ."</div>";
-                    $html .= "<div style=\"font-weight: bold; font-size: 20px; position:absolute;top:155px;left:95px;\">Weather : ". $weather ."</div>";
-                    $html .= "<div style=\"font-weight: bold; font-size: 20px; position:absolute;top:155px;left:300px;\">Wind : ". $wind ."</div>";
-                    $html .= "<div style=\"font-weight: bold; font-size: 20px; position:absolute;top:155px;left:500px;\">Temperature : ". $temperature  ." °C</div>";
-                        
-                    $html .= "<br><br><br><br><br><br><br><br>
-                                    <div style=\" padding-left: 80px; padding-right:80px; \">
-                                    <div style=\"text-align: center;font-weight: bold; font-size: 22px;\">". nl2br(str_replace(';',"\r\n",$activity_name))  ."</div>
-                                    </div>";
-
-                    $html .= "<div style=\"font-weight: bold; font-size: 20px; position:absolute;top:990;left:580px;\">(". $recordby  .")</div>";
-                    
-                    if(!is_null($task->create_by_user->signature)){
-                        $html .= "<div style=\"font-weight: bold; position:absolute;top:930;left:630px;\">
-                            <img width=\"60%\" height=\"60%\" src=\"" . $task->create_by_user->signature->getPath()
-                            . "\"></div>";
-                    }
-
+                   
                     $allowed = array('gif', 'png', 'jpg', 'jpeg', 'JPG', 'JPEG', 'PNG');
                     if(count($task['attachment'])  > 0){
                         if(count($task['attachment'])  == 1){
