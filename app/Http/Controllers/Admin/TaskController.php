@@ -337,6 +337,7 @@ class TaskController extends Controller
                             }
                             $index++;
                         }
+                    }
                     //     if(count($task['attachment'])  == 1){
                             
                     //         if(in_array(pathinfo(public_path($task->attachment[0]->getUrl()),PATHINFO_EXTENSION),$allowed)){
