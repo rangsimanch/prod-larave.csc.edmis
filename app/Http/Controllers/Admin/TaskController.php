@@ -317,6 +317,7 @@ class TaskController extends Controller
                         $index = 0;
                         $count_img = 1;
                         $close_div = 0;
+                        $html .= "<div style=\"text-align:center;\"> ";
                         foreach($task['attachment'] as $picture){
                             if($index < 6){
                                 if($count_img % 2 == 0){
@@ -342,6 +343,7 @@ class TaskController extends Controller
                                 }
                             }
                             $index++;
+                            $count_img++;
                         }
                         $html .= "</div>";
                     }
