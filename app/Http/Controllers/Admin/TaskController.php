@@ -330,14 +330,14 @@ class TaskController extends Controller
                                         $constraint->aspectRatio();
                                     })->encode('data-url');
 
-                                    $html .= "<br><div style=\"text-align:center;\"> <img width=\"". $img_wh ."\" height=\"". $img_wh ."\" src=\"" 
+                                    $html .= "<div style=\"text-align:center;\"> <img width=\"". $img_wh ."\" height=\"". $img_wh ."\" src=\"" 
                                         . $img
                                         . "\">";
                                 }
                             }
-                            $html .= "</div>";
                             $index++;
                         }
+                        $html .= "</div>";
                     }
                     //     if(count($task['attachment'])  == 1){
                             
