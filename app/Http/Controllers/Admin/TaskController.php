@@ -268,11 +268,12 @@ class TaskController extends Controller
                 }
 
             foreach($tasks as $task){
-                $pagecount = $mpdf->SetSourceFile(public_path('pdf-asset/activity.pdf'));
+                // $pagecount = $mpdf->SetSourceFile(public_path('pdf-asset/activity.pdf'));
+                $mpdf->SetDocTemplate(public_path('pdf-asset/activity.pdf'),true);
                 $mpdf->AddPage();
                 // Import the last page of the source PDF file
-                $tplId = $mpdf->ImportPage($pagecount);
-                $mpdf->UseTemplate($tplId);
+                // $tplId = $mpdf->ImportPage($pagecount);
+                // $mpdf->UseTemplate($tplId);
 
                 $description = $task->description ?? '';
                 $description_set = str_split($description, 1500);
@@ -297,7 +298,7 @@ class TaskController extends Controller
                                 </div>";
                 
 
-                $html .= "<div style=\" padding-left: 80px; padding-right:80px; padding-bottom: 500px;\">
+                $html .= "<div style=\" padding-left: 80px; padding-right:80px;\">
                                     <div style=\"vertical-align: top; max-width: 50%; display: inline-block; font-size: 18px;\">".  nl2br(str_replace(';','\n',$description)) ."</div>
                                     </div>";   
                 $html .= "<div style=\"font-weight: bold; font-size: 20px; position:absolute;top:990;left:580px;\">(". $recordby  .")</div>";
