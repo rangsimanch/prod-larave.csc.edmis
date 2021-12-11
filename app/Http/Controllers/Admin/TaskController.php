@@ -358,11 +358,10 @@ class TaskController extends Controller
                         if(count($task['attachment'])  == 1){
                             
                             if(in_array(pathinfo(public_path($task->attachment[0]->getUrl()),PATHINFO_EXTENSION),$allowed)){
-                            
-                                $img = (string) Image::make($task->attachment[0]->getUrl())->orientate()->resize(null, 180, function ($constraint) {
+                                $img = (string) Image::make($task->attachment[0]->getPath())->orientate()->resize(null, 180, function ($constraint) {
                                     $constraint->aspectRatio();
-                                })->encode('data-url');
-
+                                })
+                                ->encode('data-url');
                                 // $img = (string) urlencode($task->attachment[0]->getUrl());
 
 
