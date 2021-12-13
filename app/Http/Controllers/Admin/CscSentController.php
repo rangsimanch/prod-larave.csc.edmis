@@ -99,7 +99,7 @@ class CscSentController extends Controller
         $teams                  = Team::get();
         $teams                  = Team::get();
         $teams                  = Team::get();
-        $construction_contracts = ConstructionContract::where('id',session('construction_contract_id'))->pluck('code', 'id');
+        $construction_contracts = ConstructionContract::where('id',session('construction_contract_id'))->get();
         // $construction_contracts = ConstructionContract::get();
         $users                  = User::get();
         $users                  = User::get();
