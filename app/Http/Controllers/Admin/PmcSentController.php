@@ -13,6 +13,9 @@ use App\Team;
 use App\User;
 use Yajra\DataTables\Facades\DataTables;
 use Spatie\MediaLibrary\Models\Media;
+use Illuminate\Support\Facades\Auth;
+
+
 class PmcSentController extends Controller
 {
     public function index(Request $request)
@@ -95,7 +98,8 @@ class PmcSentController extends Controller
         $teams                  = Team::get();
         $teams                  = Team::get();
         $teams                  = Team::get();
-        $construction_contracts = ConstructionContract::get();
+        // $construction_contracts = ConstructionContract::get();
+        $construction_contracts = ConstructionContract::where('id',session('construction_contract_id'))->get();
         $users                  = User::get();
         $users                  = User::get();
         $teams                  = Team::get();
