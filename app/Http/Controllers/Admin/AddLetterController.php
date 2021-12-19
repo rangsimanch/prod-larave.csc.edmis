@@ -161,11 +161,26 @@ class AddLetterController extends Controller
     {
         abort_if(Gate::denies('add_letter_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
+        if(Auth::id() != 1){
+            $construction_contracts = ConstructionContract::where('id',session('construction_contract_id'))->pluck('code', 'id');
+            // $senders = Team::where('id',auth()->user()->team_id)->pluck('code', 'id');
+            $senders = Team::all()->pluck('code', 'id');
+
+        }
+        else{
+            $construction_contracts = ConstructionContract::all()->pluck('code', 'id');
+            $senders = Team::all()->pluck('code', 'id');
+        }
+
+        $receivers = Team::pluck('code', 'id')->prepend(trans('global.pleaseSelect'), '');
+
+        $cc_tos = Team::pluck('code', 'id');
+
         $addLetter->load('sender', 'receiver', 'cc_tos', 'construction_contract', 'create_by', 'receive_by', 'team');
 
-        return view('admin.addLetters.edit', compact('addLetter'));
+        return view('admin.addLetters.edit', compact('addLetter', 'cc_tos', 'construction_contracts', 'receivers', 'senders'));
     }
-
+    
     public function update(UpdateAddLetterRequest $request, AddLetter $addLetter)
     {
         $data = $request->all();
@@ -175,6 +190,7 @@ class AddLetterController extends Controller
             $data['received_date'] = $received_date->format("d/m/Y");
         }
         $addLetter->update($data);
+        $addLetter->cc_tos()->sync($request->input('cc_tos', []));
 
         if (count($addLetter->letter_upload) > 0) {
             foreach ($addLetter->letter_upload as $media) {
@@ -185,7 +201,6 @@ class AddLetterController extends Controller
         }
 
         $media = $addLetter->letter_upload->pluck('file_name')->toArray();
-
         foreach ($request->input('letter_upload', []) as $file) {
             if (count($media) === 0 || !in_array($file, $media)) {
                 $addLetter->addMedia(storage_path('tmp/uploads/' . $file))->toMediaCollection('letter_upload');
