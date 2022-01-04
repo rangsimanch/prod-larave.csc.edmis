@@ -209,7 +209,7 @@ class TaskController extends Controller
                 $contract_name = $tasks->first()->construction_contract->name ?? '';
             }
             else{
-                $contract_code =  '';
+                $contract_code =  'All work of the whole line';
                 $contract_name =  '';
             }
 
@@ -244,12 +244,24 @@ class TaskController extends Controller
 
             // Cover Page
                 if($reportType != 'Daily Report'){
-                $html = "<div style=\"text-align: center; font-weight: bold;  font-size: 70px;\">". $reportType ."</div>";
+                    // $html = "<div style=\"text-align: center; font-weight: bold;  font-size: 70px;\">". $reportType ."</div>";
+                    // $html .= "<div style=\"text-align: center; font-weight: bold; font-size: 50px;\">Bangkok - Nakhon Ratchasima HSR</div>";        
+                    // $html .= "<div style=\"text-align: center; font-weight: bold; font-size: 40px;\">" .  $dateType . "</div>";        
+                    // $html .= "<div style=\"text-align: center; font-weight: bold; font-size: 40px;\"><img src=\"". public_path('png-asset/train_cover.png') ."\"\></div>";        
+                    // $html .= "<br></br><div style=\"text-align: center; font-weight: bold; font-size: 40px;\"> Supervision Diary </div>";        
+                    // $html .= "<div style=\"text-align: center; font-weight: bold; font-size: 30px;\">Contract Section No. : " . $contract_code . ' ' . $contract_name  . "</div>";        
+                    // $html .= "<div style=\"text-align: center; font-weight: bold; font-size: 30px;\">BANGKOK-NAKHON RATCHASIMA HIGH SPEED RAILWAY</div>";        
+                    // $html .= "<div style=\"text-align: center; font-weight: bold; font-size: 30px;\">Supevision Unit : State Railway of Thailand</div>";        
+                    // $html .= "<br></br><div style=\"text-align: center; font-weight: bold; font-size: 30px;\">By ". $recordby ."</div>";        
+                    // $html .= "<div style=\"text-align: center; font-weight: bold; font-size: 25px;\">". $jobtitle ."</div>";        
+                    // $html .= "<div style=\"text-align: center; font-weight: bold; font-size: 25px;\">". $team ."</div>"; 
+
+                    $html = "<div style=\"text-align: center; font-weight: bold;  font-size: 70px;\">". $reportType ."</div>";
                     $html .= "<div style=\"text-align: center; font-weight: bold; font-size: 50px;\">Bangkok - Nakhon Ratchasima HSR</div>";        
                     $html .= "<div style=\"text-align: center; font-weight: bold; font-size: 40px;\">" .  $dateType . "</div>";        
                     $html .= "<div style=\"text-align: center; font-weight: bold; font-size: 40px;\"><img src=\"". public_path('png-asset/train_cover.png') ."\"\></div>";        
                     $html .= "<br></br><div style=\"text-align: center; font-weight: bold; font-size: 40px;\"> Supervision Diary </div>";        
-                    $html .= "<div style=\"text-align: center; font-weight: bold; font-size: 26px;\">Contract Section No. : " . "All work of the whole line"  . "</div>";   
+                    $html .= "<div style=\"text-align: center; font-weight: bold; font-size: 26px;\">Contract Section No. : " . $contract_code . ' ' . $contract_name  . "</div>";      
                     $html .= "<div style=\"text-align: center; font-weight: bold; font-size: 26px;\">Supervision mileage chainage : DK 000 + 300 to DK 253 + 000 Section </div>";        
                     $html .= "<div style=\"text-align: center; font-weight: bold; font-size: 30px;\">BANGKOK-NAKHON RATCHASIMA HIGH SPEED RAILWAY</div>";        
                     $html .= "<div style=\"text-align: center; font-weight: bold; font-size: 22px;\">Supevision Unit : Chaina Railway International Corporation and Chaina Railway Design Group</div>";   
