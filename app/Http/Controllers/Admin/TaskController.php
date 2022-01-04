@@ -254,9 +254,9 @@ class TaskController extends Controller
                     $html .= "<div style=\"text-align: center; font-weight: bold; font-size: 30px;\">BANGKOK-NAKHON RATCHASIMA HIGH SPEED RAILWAY</div>";        
                     $html .= "<div style=\"text-align: center; font-weight: bold; font-size: 22px;\">Supevision Unit : Chaina Railway International Corporation and Chaina Railway Design Group</div>";   
                     $html .= "<div style=\"text-align: center; font-weight: bold; font-size: 22px;\">Thailand Railway Project Depart of the Consortium</div>";        
-                    $html .= "<div style=\"text-align: center; font-weight: bold; font-size: 20px;\">By ". $recordby ."</div>";        
-                    $html .= "<div style=\"text-align: center; font-weight: bold; font-size: 20px;\">". $jobtitle ."</div>";        
-                    $html .= "<div style=\"text-align: center; font-weight: bold; font-size: 20px;\">". $team ."</div>"; 
+                    $html .= "<br></br><div style=\"text-align: center; font-weight: bold; font-size: 22px;\">By ". $recordby ."</div>";        
+                    $html .= "<div style=\"text-align: center; font-weight: bold; font-size: 22px;\">". $jobtitle ."</div>";        
+                    $html .= "<div style=\"text-align: center; font-weight: bold; font-size: 22px;\">". $team ."</div>"; 
                            
                     $mpdf->WriteHTML($html);
                     
