@@ -252,11 +252,11 @@ class TaskController extends Controller
                     $html .= "<div style=\"text-align: left; font-weight: bold; font-size: 28px;\">Contract Section No. : " . "All work of the whole line"  . "</div>";   
                     $html .= "<div style=\"text-align: left; font-weight: bold; font-size: 28px;\">Supervision mileage chainage : DK 000 + 300 to DK 253 + 000 Section </div>";        
                     $html .= "<div style=\"text-align: center; font-weight: bold; font-size: 30px;\">BANGKOK-NAKHON RATCHASIMA HIGH SPEED RAILWAY</div>";        
-                    $html .= "<div style=\"text-align: center; font-weight: bold; font-size: 28px;\">Supevision Unit : Chaina Railway International Corporation and Chaina Railway Design Group</div>";   
-                    $html .= "<div style=\"text-align: center; font-weight: bold; font-size: 28px;\">Thailand Railway Project Depart of the Consortium</div>";        
-                    $html .= "<div style=\"text-align: center; font-weight: bold; font-size: 28px;\">By ". $recordby ."</div>";        
-                    $html .= "<div style=\"text-align: center; font-weight: bold; font-size: 25px;\">". $jobtitle ."</div>";        
-                    $html .= "<div style=\"text-align: center; font-weight: bold; font-size: 25px;\">". $team ."</div>"; 
+                    $html .= "<div style=\"text-align: center; font-weight: bold; font-size: 25px;\">Supevision Unit : Chaina Railway International Corporation and Chaina Railway Design Group</div>";   
+                    $html .= "<div style=\"text-align: center; font-weight: bold; font-size: 25px;\">Thailand Railway Project Depart of the Consortium</div>";        
+                    $html .= "<div style=\"text-align: center; font-weight: bold; font-size: 24px;\">By ". $recordby ."</div>";        
+                    $html .= "<div style=\"text-align: center; font-weight: bold; font-size: 24px;\">". $jobtitle ."</div>";        
+                    $html .= "<div style=\"text-align: center; font-weight: bold; font-size: 24px;\">". $team ."</div>"; 
                            
                     $mpdf->WriteHTML($html);
                     
