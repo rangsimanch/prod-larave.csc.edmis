@@ -307,15 +307,8 @@ class TaskController extends Controller
                 $html .= "<div style=\"font-weight: bold; font-size: 20px; position:absolute;top:155px;left:500px;\">Temperature : ". $temperature  ." °C</div>";
                 $html .= "<div style=\"font-weight: bold; font-size: 20px; position:absolute;top:990;left:580px;\">(". $recordby  .")</div>";
                 if(!is_null($task->create_by_user->signature)){
-                    $signature_img = Image::make($task->create_by_user->signature->getPath());
-                    $signature_img->resizeCanvas(
-                            $dimension['width'],  // use the same width
-                            $dimension['height'], // use the same height
-                            'center',             // centre the image on the canvas
-                            false,                // don't apply relative mode 
-                            '#ffffff')->encode('data-url');
                     $html .= "<div style=\"font-weight: bold; position:absolute;top:930;left:630px;\">
-                            <img width=\"60%\" height=\"60%\" src=\"" . $signature_img
+                            <img width=\"60%\" height=\"60%\" src=\"" . $task->create_by_user->signature->getPath()
                             . "\"></div>";
                 }
                 
