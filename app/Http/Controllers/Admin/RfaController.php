@@ -1406,7 +1406,7 @@ class RfaController extends Controller
             . $title_en . "</div>";
         }
         else{
-            $html .= "<div style=\"font-size: 14px; padding-right:240px; position:absolute;top:184px;left:80px; LINE-HEIGHT:16px;\">" 
+            $html .= "<div style=\"font-size: 12px; padding-right:240px; position:absolute;top:184px;left:80px; LINE-HEIGHT:16px;\">" 
             . $title_en . "</div>";
         }
         
@@ -1416,7 +1416,7 @@ class RfaController extends Controller
             . $title_th . "</div>";
         }
         else{
-            $html .= "<div style=\"font-size: 14px; padding-right:230px; position:absolute;top:217px;left:80px; LINE-HEIGHT:16px;\">" 
+            $html .= "<div style=\"font-size: 12px; padding-right:230px; position:absolute;top:217px;left:80px; LINE-HEIGHT:16px;\">" 
             . $title_th . "</div>";
         }
         //No. Code.
