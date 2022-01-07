@@ -71,7 +71,7 @@ trait MultiTenantModelTrait
                     }
 
                     // **Contract Check
-                    if(session()->has('construction_contract_id')){
+                    if(session()->has('construction_contract_id') and session()->has('construction_contract_id') != 15){ // <- 07/01/2022
                         if(((new self)->getTable()) == 'construction_contracts'){
                             static::addGlobalScope('construction_contract_id', function (Builder $builder) use($currentUser){
                                 $builder->whereHas('create_by_construction_contract_id', function($q){

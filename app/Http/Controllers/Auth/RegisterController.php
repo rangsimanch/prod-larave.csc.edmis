@@ -95,7 +95,7 @@ class RegisterController extends Controller
 
         $jobtitles = Jobtitle::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $construction_contracts = ConstructionContract::all()->pluck('code', 'id');
+        $construction_contracts = ConstructionContract::where('id', '!=', 15)->pluck('code', 'id');
 
         return view('auth.register', compact('organizations','teams', 'jobtitles', 'construction_contracts'));
     }
