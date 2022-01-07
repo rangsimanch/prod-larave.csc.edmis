@@ -145,7 +145,7 @@ class ComplaintController extends Controller
     public function store(StoreComplaintRequest $request)
     {
         $data = $request->all();
-        $data['status'] = '1';
+        $data['status'] = 1;
         $complaint = Complaint::create($data);
 
         foreach ($request->input('file_attachment_create', []) as $file) {
