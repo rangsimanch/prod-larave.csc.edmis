@@ -28,11 +28,11 @@ trait MultiTenantModelTrait
             // $isTeamCEC = auth()->user()->roles->contains(18);
 
             // static::creating(function ($model) use ($isAdmin, $isTeamSRT, $isTeamPMC,$isTeamCSC,$isTeamCEC) {
-            static::creating(function ($model) use ($isAdmin) {
+            static::creating(function ($model) use ($isAdmin, $isComplaintAdmin) {
 
         // **Prevent admin from setting his own id - admin entries are global.
         // **If required, remove the surrounding IF condition and admins will act as users
-                if (!$isAdmin) {
+                if (!$isAdmin && !$isComplaintAdmin) {
                     // **Check Team Status
                         // $model->team_id = auth()->user()->team_id;
 
@@ -44,8 +44,7 @@ trait MultiTenantModelTrait
         // *** Team Function
 
                 // if (!$isAdmin && !$isTeamSRT) {
-                if (!$isAdmin) {
-
+                if (!$isAdmin && !$isComplaintAdmin) {
 
                     // if($isTeamPMC){
                     //     static::addGlobalScope('team_id', function (Builder $builder) {
@@ -72,7 +71,7 @@ trait MultiTenantModelTrait
                     }
 
                     // **Contract Check
-                    if(session()->has('construction_contract_id')){ // <- 07/01/2022
+                    if(session()->has('construction_contract_id')){ 
                         if(((new self)->getTable()) == 'construction_contracts'){
                             static::addGlobalScope('construction_contract_id', function (Builder $builder) use($currentUser){
                                 $builder->whereHas('create_by_construction_contract_id', function($q){
