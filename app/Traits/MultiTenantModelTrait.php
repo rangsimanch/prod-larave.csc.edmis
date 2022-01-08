@@ -32,7 +32,7 @@ trait MultiTenantModelTrait
 
         // **Prevent admin from setting his own id - admin entries are global.
         // **If required, remove the surrounding IF condition and admins will act as users
-                if (!$isAdmin && !$isComplaintAdmin) {
+                if (!$isAdmin) {
                     // **Check Team Status
                         // $model->team_id = auth()->user()->team_id;
 
@@ -44,7 +44,7 @@ trait MultiTenantModelTrait
         // *** Team Function
 
                 // if (!$isAdmin && !$isTeamSRT) {
-                if (!$isAdmin && !$isComplaintAdmin) {
+                if (!$isAdmin) {
 
 
                     // if($isTeamPMC){
