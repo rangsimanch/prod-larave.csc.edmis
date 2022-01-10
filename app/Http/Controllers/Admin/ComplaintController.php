@@ -177,7 +177,6 @@ class ComplaintController extends Controller
     public function update(UpdateComplaintRequest $request, Complaint $complaint)
     {
         $data = $request->all();
-        $data['status'] = '3';
         $complaint->update($data);
 
         if (count($complaint->file_attachment_create) > 0) {
