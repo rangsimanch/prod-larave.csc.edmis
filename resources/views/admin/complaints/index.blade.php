@@ -322,9 +322,9 @@ $(document).ready(function() {
     var table = $('#complaintTable').DataTable();
     
     // Refilter the table
-    $("#min", "#max").change(function () {
-        var max = new Date(document.getElementById("max").value);
-        console.log(max.toDateString());
+    $("#min").change(function () {
+        var min = new Date(document.getElementById("min").val);
+        console.log(min.toDateString());
         table.draw();
     });
 });
