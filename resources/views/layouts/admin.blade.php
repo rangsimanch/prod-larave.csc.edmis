@@ -121,12 +121,7 @@
     <link href="{{ asset('css/custom.css') }}" rel="stylesheet" />
     <link href="https://unpkg.com/bootstrap-table@1.15.5/dist/bootstrap-table.min.css" rel="stylesheet">
     <link href="https://cdn.datatables.net/fixedheader/3.1.8/css/fixedHeader.dataTables.min.css" rel="stylesheet">
-
-    <link href="https://code.jquery.com/jquery-3.5.1.js" rel="stylesheet">
-    <link href="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js" rel="stylesheet">
-    <link href="https://cdn.datatables.net/datetime/1.1.1/js/dataTables.dateTime.min.js" rel="stylesheet">    
-
+  
     <link href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css" rel="stylesheet"/>
 
     @yield('styles')

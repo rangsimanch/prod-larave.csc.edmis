@@ -24,11 +24,11 @@
                 <table border="0" cellspacing="5" cellpadding="5">
                     <tbody><tr>
                         <td>Minimum date:</td>
-                        <td><input type="text" id="min" name="min"></td>
+                        <td><input class="form-control date" type="text" id="min" name="min"></td>
                     </tr>
                     <tr>
                         <td>Maximum date:</td>
-                        <td><input type="text" id="max" name="max"></td>
+                        <td><input class="form-control date" type="text" id="max" name="max"></td>
                     </tr>
                     </tbody>
                 </table>
@@ -289,21 +289,17 @@ table.on('column-visibility.dt', function(e, settings, column, state) {
 });
 
 
-var minDate, maxDate;
- 
-// Custom filtering function which will search data in column four between two values
 $.fn.dataTable.ext.search.push(
     function( settings, data, dataIndex ) {
-        var min = minDate.val();
-        var max = maxDate.val();
-        var date = new Date( data[5] );
+        var min = parseInt( $('#min').val(), 10 );
+        var max = parseInt( $('#max').val(), 10 );
+        var age = parseFloat( data[5] ) || 0; 
  
-        if (
-            ( min === null && max === null ) ||
-            ( min === null && date <= max ) ||
-            ( min <= date   && max === null ) ||
-            ( min <= date   && date <= max )
-        ) {
+        if ( ( isNaN( min ) && isNaN( max ) ) ||
+             ( isNaN( min ) && age <= max ) ||
+             ( min <= age   && isNaN( max ) ) ||
+             ( min <= age   && age <= max ) )
+        {
             return true;
         }
         return false;
@@ -311,22 +307,13 @@ $.fn.dataTable.ext.search.push(
 );
  
 $(document).ready(function() {
-    // Create date inputs
-    minDate = new DateTime($('#min'), {
-        format: 'MMMM Do YYYY'
-    });
-    maxDate = new DateTime($('#max'), {
-        format: 'MMMM Do YYYY'
-    });
- 
-    // DataTables initialisation
     var table = $('#complaintTable').DataTable();
- 
-    // Refilter the table
-    $('#min, #max').on('change', function () {
+     
+    // Event listener to the two range filtering inputs to redraw on input
+    $('#min, #max').keyup( function() {
         table.draw();
-    });
-});
+    } );
+} );
 
 </script>
 @endsection
