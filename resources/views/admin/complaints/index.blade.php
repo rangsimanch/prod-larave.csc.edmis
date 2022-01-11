@@ -288,13 +288,11 @@ table.on('column-visibility.dt', function(e, settings, column, state) {
   })
 });
 
-var minDate, maxDate;
- 
 // Custom filtering function which will search data in column four between two values
 $.fn.dataTable.ext.search.push(
     function( settings, data, dataIndex ) {
-        var min = minDate.val();
-        var max = maxDate.val();
+        var min = document.getElementById("min").value;
+        var max = document.getElementById("max").value;
         var date = new Date( data[5] );
  
         if (
