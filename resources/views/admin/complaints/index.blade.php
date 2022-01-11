@@ -24,11 +24,11 @@
                 <table border="0" cellspacing="5" cellpadding="5">
                     <tbody><tr>
                         <td>Minimum date:</td>
-                        <td><date type="text" id="min" name="min"></td>
+                        <td><input class="form-control date" type="text" id="min" name="min"></td>
                     </tr>
                     <tr>
                         <td>Maximum date:</td>
-                        <td><date type="text" id="max" name="max"></td>
+                        <td><input class="form-control date" type="text" id="max" name="max"></td>
                     </tr>
                 </tbody></table>
                     <table id="complaintTable" class=" table table-bordered table-striped table-hover ajaxTable datatable datatable-Complaint">
