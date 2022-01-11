@@ -305,7 +305,11 @@ $(function() {
   });
 
   $('input[name="datefilter"]').on('apply.daterangepicker', function(ev, picker) {
-      $(this).val(picker.startDate.format('DD/MM/YYYY') + ' - ' + picker.endDate.format('DD/MM/YYYY'));
+        $(this).val(picker.startDate.format('DD/MM/YYYY') + ' - ' + picker.endDate.format('DD/MM/YYYY'));
+        var start = $(this).val(picker.startDate.format('DD/MM/YYYY');
+        var parts = start.split('/');
+        var mydate = new Date(parts[0], parts[1] - 1, parts[2]); 
+        console.log(mydate.toDateString());
   });
 });
 
