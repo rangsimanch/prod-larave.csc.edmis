@@ -293,7 +293,7 @@ $.fn.dataTable.ext.search.push(
     function( settings, data, dataIndex ) {
         var min = parseInt( $('#min').val(), 10 );
         var max = parseInt( $('#max').val(), 10 );
-        var age = parseFloat( data[5] ) || 0; 
+        var age = parseFloat( data[4] ) || 0; 
  
         if ( ( isNaN( min ) && isNaN( max ) ) ||
              ( isNaN( min ) && age <= max ) ||
