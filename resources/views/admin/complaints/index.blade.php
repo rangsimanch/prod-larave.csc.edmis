@@ -291,9 +291,15 @@ table.on('column-visibility.dt', function(e, settings, column, state) {
 // Custom filtering function which will search data in column four between two values
 $.fn.dataTable.ext.search.push(
     function( settings, data, dataIndex ) {
-        var min = document.getElementById("min").value;
-        var max = document.getElementById("max").value;
+        var min = new Date(document.getElementById("min").value);
+        var max = new Date(document.getElementById("max").value);
+
+        console.log(min.toDateString());
+        console.log(max.toDateString());
+
         var date = new Date( data[5] );
+        console.log(date.toDateString());
+
  
         if (
             ( min === null && max === null ) ||
