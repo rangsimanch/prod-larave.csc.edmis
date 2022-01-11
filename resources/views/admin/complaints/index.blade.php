@@ -41,9 +41,6 @@
                                 </th>
                                 <th>
                                     {{ trans('cruds.complaint.fields.received_date') }}
-                                
-                                    <input type="date" class="form-control filter-input"
-                                    placeholder="Search for summit date..." data-column="5"/>
                                 </th>
                                 <th>
                                     {{ trans('cruds.complaint.fields.source_code') }}
@@ -116,6 +113,8 @@
                                     </select>
                                 </td>
                                 <td>
+                                    <input type="date" class="form-control filter-input"
+                                        placeholder="Search for recieve date..." data-column="5"/>
                                 </td>
                                 <td>
                                     <select class="search" strict="true">
