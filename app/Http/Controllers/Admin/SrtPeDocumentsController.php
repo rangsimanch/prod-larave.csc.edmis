@@ -52,24 +52,20 @@ class SrtPeDocumentsController extends Controller
                 ));
             });
 
-            // $table->editColumn('refer_documents.file_upload_3', function ($row) {
-            //     if (!$row->refer_documents->file_upload_3) {
-            //         return '';
-            //     }
+            $table->editColumn('refer_documents.file_upload_3', function ($row) {
+                if (!$row->refer_documents->file_upload_3) {
+                    return '';
+                }
 
-            //     $links = [];
+                $links = [];
 
-            //     $refer_doc = $row->refer_documents ? $row->refer_documents->document_number : '';
+                $refer_doc = $row->refer_documents ? $row->refer_documents->document_number : '';
 
-            //     foreach ($row->refer_documents->file_upload_3 as $media) {
-            //         $links[] = '<a href="' . $media->getUrl() . '" target="_blank">' . $refer_doc . '</a>';
-            //     }
+                foreach ($row->refer_documents->file_upload_3 as $media) {
+                    $links[] = '<a href="' . $media->getUrl() . '" target="_blank">' . $refer_doc . '</a>';
+                }
 
-            //     return implode(', ', $links);
-            // });
-
-            $table->addColumn('refer_documents_document_number', function ($row) {
-                return $row->refer_documents ? $row->refer_documents->document_number : '';
+                return implode(', ', $links);
             });
 
             $table->editColumn('id', function ($row) {
@@ -104,13 +100,21 @@ class SrtPeDocumentsController extends Controller
                 return $row->note ? $row->note : "";
             });
             $table->editColumn('file_upload', function ($row) {
-                if (!$row->file_upload) {
+                // if (!$row->file_upload) {
+                //     return '';
+                // }
+
+                if (!$row->refer_documents->file_upload_4) {
                     return '';
                 }
 
                 $links = [];
 
-                foreach ($row->file_upload as $media) {
+                // foreach ($row->file_upload as $media) {
+                //     $links[] = '<a href="' . $media->getUrl() . '" target="_blank">' . trans('global.downloadFile') . '</a>';
+                // }
+
+                foreach ($row->refer_documents->file_upload_4 as $media) {
                     $links[] = '<a href="' . $media->getUrl() . '" target="_blank">' . trans('global.downloadFile') . '</a>';
                 }
 
