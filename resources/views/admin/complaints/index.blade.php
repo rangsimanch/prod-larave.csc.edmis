@@ -113,7 +113,7 @@
                                     </select>
                                 </td>
                                 <td>
-                                    <input type="date" name="datefilter" class="filter-select" value="" data-column="5"/>
+                                    <input type="text" name="datefilter" class="filter-select" value="" data-column="5"/>
                                 </td>
                                 <td>
                                     <select class="search" strict="true">
