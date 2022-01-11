@@ -52,20 +52,24 @@ class SrtPeDocumentsController extends Controller
                 ));
             });
 
-            $table->editColumn('refer_documents.file_upload_3', function ($row) {
-                if (!$row->refer_documents->file_upload_3) {
-                    return '';
-                }
+            // $table->editColumn('refer_documents.file_upload_3', function ($row) {
+            //     if (!$row->refer_documents->file_upload_3) {
+            //         return '';
+            //     }
 
-                $links = [];
+            //     $links = [];
 
-                $refer_doc = $row->refer_documents ? $row->refer_documents->document_number : '';
+            //     $refer_doc = $row->refer_documents ? $row->refer_documents->document_number : '';
 
-                foreach ($row->refer_documents->file_upload_3 as $media) {
-                    $links[] = '<a href="' . $media->getUrl() . '" target="_blank">' . $refer_doc . '</a>';
-                }
+            //     foreach ($row->refer_documents->file_upload_3 as $media) {
+            //         $links[] = '<a href="' . $media->getUrl() . '" target="_blank">' . $refer_doc . '</a>';
+            //     }
 
-                return implode(', ', $links);
+            //     return implode(', ', $links);
+            // });
+
+            $table->addColumn('refer_documents_document_number', function ($row) {
+                return $row->refer_documents ? $row->refer_documents->document_number : '';
             });
 
             $table->editColumn('id', function ($row) {
