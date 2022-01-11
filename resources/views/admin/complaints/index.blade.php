@@ -113,7 +113,8 @@
                                     </select>
                                 </td>
                                 <td>
-                                    <input type="text" name="datefilter" class="filter-select" value="" data-column="5"/>
+                                    <!-- <input type="text" name="datefilter" class="filter-select" value="" data-column="5"/> -->
+                                    <input type="date" class="form-control filter-input" data-column="5"/>
                                 </td>
                                 <td>
                                     <select class="search" strict="true">
@@ -294,7 +295,7 @@ table.on('column-visibility.dt', function(e, settings, column, state) {
         $.fn.dataTable.ext.errMode = 'throw';
 </script>
 
-<script type="text/javascript">
+<!-- <script type="text/javascript">
 $(function() {
 
   $('input[name="datefilter"]').daterangepicker({
@@ -309,15 +310,6 @@ $(function() {
   });
 });
 
-
-    var startDate = $('input[name="datefilter"]').val(picker.startDate.format('DD/MM/YYYY'));
-    var parts = startDate.split('/');
-    // Please pay attention to the month (parts[1]); JavaScript counts months from 0:
-    // January - 0, February - 1, etc.
-    var mydate = new Date(parts[0], parts[1] - 1, parts[2]); 
-    console.log(mydate.toDateString());
-
-
-</script>
+</script> -->
 
 @endsection
