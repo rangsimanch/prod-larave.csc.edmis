@@ -113,7 +113,7 @@
                                     </select>
                                 </td>
                                 <td>
-                                    <input type="text" name="daterange" class="filter-input" value="01/01/2022 - 01/15/2022" data-column="5"/>
+                                    <input type="text" name="daterange" value="01/01/2022 - 01/15/2022" data-column="5"/>
                                     
                                 </td>
                                 <td>
