@@ -113,8 +113,7 @@
                                     </select>
                                 </td>
                                 <td>
-                                    <input type="text" name="daterange" value="01/01/2022 - 01/15/2022" data-column="5"/>
-                                    
+                                    <input type="text" name="datefilter" value="" />
                                 </td>
                                 <td>
                                     <select class="search" strict="true">
@@ -293,16 +292,20 @@ table.on('column-visibility.dt', function(e, settings, column, state) {
         });
 
         $.fn.dataTable.ext.errMode = 'throw';
-
-
-$(function() {
-  $('input[name="daterange"]').daterangepicker({
-    opens: 'left'
-  }, function(start, end, label) {
-    console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
-  });
-});
-
 </script>
+
+<script type="text/javascript">
+$(function() {
+
+  $('input[name="datefilter"]').daterangepicker({
+      autoUpdateInput: false,
+      locale: {
+          cancelLabel: 'Clear'
+      }
+  });
+
+  $('input[name="datefilter"]').on('apply.daterangepicker', function(ev, picker) {
+      $(this).val(picker.startDate.format('MM/DD/YYYY') + ' - ' + picker.endDate.format('MM/DD/YYYY'));
+  });
 
 @endsection
