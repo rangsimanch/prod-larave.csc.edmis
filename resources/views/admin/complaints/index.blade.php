@@ -32,7 +32,7 @@
                     </tr>
                     </tbody>
                 </table>
-                    <table id="complaint" class=" table table-bordered table-striped table-hover ajaxTable datatable datatable-Complaint">
+                    <table id="complaintTable" class=" table table-bordered table-striped table-hover ajaxTable datatable datatable-Complaint">
                         <thead>
                             <tr>
                                 <th width="10">
@@ -288,7 +288,6 @@ table.on('column-visibility.dt', function(e, settings, column, state) {
   })
 });
 
-
 var minDate, maxDate;
  
 // Custom filtering function which will search data in column four between two values
@@ -296,7 +295,7 @@ $.fn.dataTable.ext.search.push(
     function( settings, data, dataIndex ) {
         var min = minDate.val();
         var max = maxDate.val();
-        var date = new Date( data[5] );
+        var date = new Date( data[4] );
  
         if (
             ( min === null && max === null ) ||
@@ -309,14 +308,17 @@ $.fn.dataTable.ext.search.push(
         return false;
     }
 );
+ 
 $(document).ready(function() {
-   
     // DataTables initialisation
-    var table = $('#complaint').DataTable();
+    var table = $('#complaintTable').DataTable();
  
     // Refilter the table
     $('#min, #max').on('change', function () {
         table.draw();
     });
 });
+
+
+</script>
 @endsection
