@@ -32,7 +32,7 @@
                     </tr>
                     </tbody>
                 </table>
-                    <table id="complaintTable" class=" table table-bordered table-striped table-hover ajaxTable datatable datatable-Complaint">
+                    <table id="complaint" class=" table table-bordered table-striped table-hover ajaxTable datatable datatable-Complaint">
                         <thead>
                             <tr>
                                 <th width="10">
@@ -289,31 +289,34 @@ table.on('column-visibility.dt', function(e, settings, column, state) {
 });
 
 
+var minDate, maxDate;
+ 
+// Custom filtering function which will search data in column four between two values
 $.fn.dataTable.ext.search.push(
     function( settings, data, dataIndex ) {
-        var min = parseInt( $('#min').val(), 10 );
-        var max = parseInt( $('#max').val(), 10 );
-        var age = parseFloat( data[4] ) || 0; 
+        var min = minDate.val();
+        var max = maxDate.val();
+        var date = new Date( data['received_date'] );
  
-        if ( ( isNaN( min ) && isNaN( max ) ) ||
-             ( isNaN( min ) && age <= max ) ||
-             ( min <= age   && isNaN( max ) ) ||
-             ( min <= age   && age <= max ) )
-        {
+        if (
+            ( min === null && max === null ) ||
+            ( min === null && date <= max ) ||
+            ( min <= date   && max === null ) ||
+            ( min <= date   && date <= max )
+        ) {
             return true;
         }
         return false;
     }
 );
- 
 $(document).ready(function() {
-    var table = $('#complaintTable').DataTable();
-     
-    // Event listener to the two range filtering inputs to redraw on input
-    $('#min, #max').keyup( function() {
+   
+    // DataTables initialisation
+    var table = $('#complaint').DataTable();
+ 
+    // Refilter the table
+    $('#min, #max').on('change', function () {
         table.draw();
-    } );
-} );
-
-</script>
+    });
+});
 @endsection
