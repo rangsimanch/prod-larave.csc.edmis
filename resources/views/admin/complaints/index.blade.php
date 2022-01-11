@@ -21,7 +21,17 @@
                     {{ trans('cruds.complaint.title_singular') }} {{ trans('global.list') }}
                 </div>
                 <div class="panel-body">
-                    <table class=" table table-bordered table-striped table-hover ajaxTable datatable datatable-Complaint">
+                <table border="0" cellspacing="5" cellpadding="5">
+                    <tbody><tr>
+                        <td>Minimum date:</td>
+                        <td><input type="text" id="min" name="min"></td>
+                    </tr>
+                    <tr>
+                        <td>Maximum date:</td>
+                        <td><input type="text" id="max" name="max"></td>
+                    </tr>
+                </tbody></table>
+                    <table id="complaintTable" class=" table table-bordered table-striped table-hover ajaxTable datatable datatable-Complaint">
                         <thead>
                             <tr>
                                 <th width="10">
@@ -224,7 +234,7 @@
     aaSorting: [],
     ajax: "{{ route('admin.complaints.index') }}",
     columns: [
-      { data: 'placeholder', name: 'placeholder' },
+{ data: 'placeholder', name: 'placeholder' },
 { data: 'status', name: 'status' },
 { data: 'construction_contract_code', name: 'construction_contract.code' },
 { data: 'document_number', name: 'document_number' },
@@ -275,6 +285,46 @@ table.on('column-visibility.dt', function(e, settings, column, state) {
           visibleColumnsIndexes.push(colIdx);
       });
   })
+});
+
+
+var minDate, maxDate;
+ 
+// Custom filtering function which will search data in column four between two values
+$.fn.dataTable.ext.search.push(
+    function( settings, data, dataIndex ) {
+        var min = minDate.val();
+        var max = maxDate.val();
+        var date = new Date( data[5] );
+ 
+        if (
+            ( min === null && max === null ) ||
+            ( min === null && date <= max ) ||
+            ( min <= date   && max === null ) ||
+            ( min <= date   && date <= max )
+        ) {
+            return true;
+        }
+        return false;
+    }
+);
+ 
+$(document).ready(function() {
+    // Create date inputs
+    minDate = new DateTime($('#min'), {
+        format: 'MMMM Do YYYY'
+    });
+    maxDate = new DateTime($('#max'), {
+        format: 'MMMM Do YYYY'
+    });
+ 
+    // DataTables initialisation
+    var table = $('#complaintTable').DataTable();
+ 
+    // Refilter the table
+    $('#min, #max').on('change', function () {
+        table.draw();
+    });
 });
 
 </script>
