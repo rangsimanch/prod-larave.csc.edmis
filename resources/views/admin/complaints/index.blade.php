@@ -232,7 +232,7 @@
 { data: 'construction_contract_code', name: 'construction_contract.code' },
 { data: 'document_number', name: 'document_number' },
 { data: 'complaint_recipient_code', name: 'complaint_recipient.code' },
-{ data: 'received_date', name: 'received_date'},
+{ data: 'received_date', name: 'received_date', sortable: false},
 { data: 'source_code', name: 'source_code' },
 { data: 'file_attachment_create', name: 'file_attachment_create', sortable: false, searchable: false },
 { data: 'complainant', name: 'complainant' },
@@ -280,9 +280,20 @@ table.on('column-visibility.dt', function(e, settings, column, state) {
   })
 });
 
-$('.input-daterange input').each(function() {
-    $(this).datepicker('clearDates');
-});
+ // Filter Class
+ $('.filter-input').keyup(function(){
+        $($.fn.dataTable.tables(true)).DataTable().column( $(this).data('column'))
+            .search($(this).val())
+            .draw();
+        });
+
+        $('.filter-select').change(function(){
+            $($.fn.dataTable.tables(true)).DataTable().column( $(this).data('column'))
+            .search($(this).val())
+            .draw();
+        });
+
+        $.fn.dataTable.ext.errMode = 'throw';
 
 </script>
 
