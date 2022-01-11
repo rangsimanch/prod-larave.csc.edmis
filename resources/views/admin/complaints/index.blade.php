@@ -289,6 +289,10 @@ table.on('column-visibility.dt', function(e, settings, column, state) {
 });
 
 // Custom filtering function which will search data in column four between two values
+
+</script>
+
+<script>
 $.fn.dataTable.ext.search.push(
     function( settings, data, dataIndex ) {
         var min = new Date(document.getElementById("min").value);
@@ -316,13 +320,11 @@ $.fn.dataTable.ext.search.push(
 $(document).ready(function() {
     // DataTables initialisation
     var table = $('#complaintTable').DataTable();
- 
     // Refilter the table
     $('#min, #max').on('change', function () {
         table.draw();
     });
 });
-
 
 </script>
 @endsection
