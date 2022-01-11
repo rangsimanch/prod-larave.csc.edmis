@@ -305,12 +305,14 @@ $(function() {
   });
 
   $('input[name="datefilter"]').on('apply.daterangepicker', function(ev, picker) {
-        $(this).val(picker.startDate.format('DD/MM/YYYY') + ' - ' + picker.endDate.format('DD/MM/YYYY'));
-        var start = $(this).val(picker.startDate.format('DD/MM/YYYY');
-        var parts = start.split('/');
-        var mydate = new Date(parts[0], parts[1] - 1, parts[2]); 
-        console.log(mydate.toDateString());
+      $(this).val(picker.startDate.format('DD/MM/YYYY') + ' - ' + picker.endDate.format('DD/MM/YYYY'));
   });
+var startDate = $(this).val(picker.startDate.format('DD/MM/YYYY');
+var parts = startDate.split('/');
+// Please pay attention to the month (parts[1]); JavaScript counts months from 0:
+// January - 0, February - 1, etc.
+var mydate = new Date(parts[0], parts[1] - 1, parts[2]); 
+console.log(mydate.toDateString());
 });
 
 </script>
