@@ -295,7 +295,7 @@ $.fn.dataTable.ext.search.push(
     function( settings, data, dataIndex ) {
         var min = minDate.val();
         var max = maxDate.val();
-        var date = new Date( data[4] );
+        var date = new Date( data[5] );
  
         if (
             ( min === null && max === null ) ||
