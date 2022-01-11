@@ -299,7 +299,7 @@ $.fn.dataTable.ext.search.push(
         var max = new Date(document.getElementById("max").value);
 
         console.log(min.toDateString());
-        console.log(max.toDateString());
+        
 
         var date = new Date( data[5] );
         console.log(date.toDateString());
@@ -320,6 +320,8 @@ $.fn.dataTable.ext.search.push(
 $(document).ready(function() {
     // DataTables initialisation
     var table = $('#complaintTable').DataTable();
+    var max = new Date(document.getElementById("max").value);
+    console.log(max.toDateString());
     // Refilter the table
     $('#min, #max').on('change', function () {
         table.draw();
