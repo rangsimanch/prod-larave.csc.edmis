@@ -104,21 +104,13 @@ class SrtPeDocumentsController extends Controller
                 return $row->note ? $row->note : "";
             });
             $table->editColumn('file_upload', function ($row) {
-                // if (!$row->file_upload) {
-                //     return '';
-                // }
-
-                if (!$row->refer_documents->file_upload_4) {
+                if (!$row->file_upload) {
                     return '';
                 }
 
                 $links = [];
 
-                // foreach ($row->file_upload as $media) {
-                //     $links[] = '<a href="' . $media->getUrl() . '" target="_blank">' . trans('global.downloadFile') . '</a>';
-                // }
-
-                foreach ($row->refer_documents->file_upload_4 as $media) {
+                foreach ($row->file_upload as $media) {
                     $links[] = '<a href="' . $media->getUrl() . '" target="_blank">' . trans('global.downloadFile') . '</a>';
                 }
 
