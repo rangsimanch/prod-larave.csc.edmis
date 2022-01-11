@@ -23,11 +23,13 @@
                 <div class="panel-body">
                 <table border="0" cellspacing="5" cellpadding="5">
                     <tbody><tr>
-                    <div class="input-group input-daterange">
-                        <input type="text" class="form-control date" value="2012-04-05">
-                        <div class="input-group-addon">to</div>
-                        <input type="text" class="form-control date" value="2012-04-19">
-                    </div>
+                    <td>
+                        <div class="input-group input-daterange">
+                            <input type="text" class="form-control date">
+                            <div class="input-group-addon">to</div>
+                            <input type="text" class="form-control date">
+                        </div>
+                    </td>
                     </tbody>
                 </table>
                     <table id="complaintTable" class=" table table-bordered table-striped table-hover ajaxTable datatable datatable-Complaint">
