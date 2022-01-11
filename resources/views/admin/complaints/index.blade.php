@@ -21,17 +21,6 @@
                     {{ trans('cruds.complaint.title_singular') }} {{ trans('global.list') }}
                 </div>
                 <div class="panel-body">
-                <table border="0" cellspacing="5" cellpadding="5">
-                    <tbody><tr>
-                    <td>
-                        <div class="input-group input-daterange">
-                            <input type="text" class="form-control date">
-                            <div class="input-group-addon">to</div>
-                            <input type="text" class="form-control date">
-                        </div>
-                    </td>
-                    </tbody>
-                </table>
                     <table id="complaintTable" class=" table table-bordered table-striped table-hover ajaxTable datatable datatable-Complaint">
                         <thead>
                             <tr>
@@ -52,6 +41,10 @@
                                 </th>
                                 <th>
                                     {{ trans('cruds.complaint.fields.received_date') }}
+                                
+                                    <input type="date" class="form-control filter-input"
+                                    placeholder="Search for summit date..." data-column="5"/>
+                                </th>
                                 </th>
                                 <th>
                                     {{ trans('cruds.complaint.fields.source_code') }}
