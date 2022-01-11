@@ -23,13 +23,11 @@
                 <div class="panel-body">
                 <table border="0" cellspacing="5" cellpadding="5">
                     <tbody><tr>
-                        <td>Minimum date:</td>
-                        <td><input class="form-control date" type="text" id="min" name="min"></td>
-                    </tr>
-                    <tr>
-                        <td>Maximum date:</td>
-                        <td><input class="form-control date" type="text" id="max" name="max"></td>
-                    </tr>
+                    <div class="input-group input-daterange">
+                        <input type="text" class="form-control" value="2012-04-05">
+                        <div class="input-group-addon">to</div>
+                        <input type="text" class="form-control" value="2012-04-19">
+                    </div>
                     </tbody>
                 </table>
                     <table id="complaintTable" class=" table table-bordered table-striped table-hover ajaxTable datatable datatable-Complaint">
@@ -288,46 +286,10 @@ table.on('column-visibility.dt', function(e, settings, column, state) {
   })
 });
 
-// Custom filtering function which will search data in column four between two values
-
-</script>
-
-<script>
-$.fn.dataTable.ext.search.push(
-    function( settings, data, dataIndex ) {
-        var min = new Date(document.getElementById("min").value);
-        var max = new Date(document.getElementById("max").value);
-
-        console.log(min.toDateString());
-        
-
-        var date = new Date( data[5] );
-        console.log(date.toDateString());
-
- 
-        if (
-            ( min === null && max === null ) ||
-            ( min === null && date <= max ) ||
-            ( min <= date   && max === null ) ||
-            ( min <= date   && date <= max )
-        ) {
-            return true;
-        }
-        return false;
-    }
-);
- 
-$(document).ready(function() {
-    // DataTables initialisation
-    var table = $('#complaintTable').DataTable();
-    
-    // Refilter the table
-    $("#min").change(function () {
-        var min = new Date(document.getElementById("min").val);
-        console.log(min.toDateString());
-        table.draw();
-    });
+$('.input-daterange input').each(function() {
+    $(this).datepicker('clearDates');
 });
 
 </script>
+
 @endsection
