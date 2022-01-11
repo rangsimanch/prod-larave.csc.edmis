@@ -322,7 +322,7 @@ $(document).ready(function() {
     var table = $('#complaintTable').DataTable();
     
     // Refilter the table
-    $('#min, #max').on('change', function () {
+    $("#min", "#max").change(function () {
         var max = new Date(document.getElementById("max").value);
         console.log(max.toDateString());
         table.draw();
