@@ -45,7 +45,6 @@
                                     <input type="date" class="form-control filter-input"
                                     placeholder="Search for summit date..." data-column="5"/>
                                 </th>
-                                </th>
                                 <th>
                                     {{ trans('cruds.complaint.fields.source_code') }}
                                 </th>
@@ -233,7 +232,7 @@
 { data: 'construction_contract_code', name: 'construction_contract.code' },
 { data: 'document_number', name: 'document_number' },
 { data: 'complaint_recipient_code', name: 'complaint_recipient.code' },
-{ data: 'received_date', name: 'received_date' },
+{ data: 'received_date', name: 'received_date' , sortable: false},
 { data: 'source_code', name: 'source_code' },
 { data: 'file_attachment_create', name: 'file_attachment_create', sortable: false, searchable: false },
 { data: 'complainant', name: 'complainant' },
