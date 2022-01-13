@@ -315,6 +315,7 @@ table.on('column-visibility.dt', function(e, settings, column, state) {
                             ) {
                                 return true;
                             }
+                            $('#complaint').DataTable().draw();
                             return false;
                         });
                     }
