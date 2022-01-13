@@ -113,7 +113,7 @@
                                     </select>
                                 </td>
                                 <td>
-                                    <input id="datefilter" type="text" name="datefilter" value="" placeholder="Select Period.."/>
+                                    <input id="datefilter" type="text" name="datefilter" value="" autocomplete="off" placeholder="Select Period.."/>
                                     <!-- <input type="date" class="form-control filter-input" data-column="5"/> -->
                                 </td>
                                 <td>
