@@ -280,33 +280,28 @@ table.on('column-visibility.dt', function(e, settings, column, state) {
 });
 
  // Filter Class
- $('.filter-input').keyup(function(){
+    $('.filter-input').keyup(function(){
         $($.fn.dataTable.tables(true)).DataTable().column( $(this).data('column'))
             .search($(this).val())
             .draw();
-        });
+    });
 
-        $('.filter-select').change(function(){
-            $($.fn.dataTable.tables(true)).DataTable().column( $(this).data('column'))
+    $('.filter-select').change(function(){
+        $($.fn.dataTable.tables(true)).DataTable().column( $(this).data('column'))
             .search($(this).val())
             .draw();
-        });
+    });
 
-        $.fn.dataTable.ext.errMode = 'throw';
-</script>
+    $.fn.dataTable.ext.errMode = 'throw';
 
-<script>
-    var startDate;
-    var endDate;
     $(function() {
-    $('input[name="daterange"]').daterangepicker({
-        opens: 'left'
-    }, function(start, end, label) {
-        startDate = start.format('DD-MM-YYYY');
-        endDate = end.format('DD-MM-YYYY');
+        $('input[name="daterange"]').daterangepicker({
+            opens: 'left'
+        }, function(start, end, label) {
+            console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
         });
     });
-    console.log(startDate));
+
 </script>
 
 @endsection
