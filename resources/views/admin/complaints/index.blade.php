@@ -283,9 +283,11 @@ table.on('column-visibility.dt', function(e, settings, column, state) {
 <script>
     var minDate, maxDate;
     
-    $.fn.dataTable.ext.search.change(function( settings, data, dataIndex ){
+    $.fn.dataTable.ext.search.push(function( settings, data, dataIndex ){
         var min = minDate.val();
         var max = maxDate.val();
+        console.log(min)
+        console.log(max)
         var date = new Date(data[5]);
         if (
             ( min === null && max === null ) ||
@@ -313,8 +315,8 @@ table.on('column-visibility.dt', function(e, settings, column, state) {
 
             $('input[name="datefilter"]').on('apply.daterangepicker', function(ev, picker) {
                 $(this).val(picker.startDate.format('DD/MM/YYYY') + ' - ' + picker.endDate.format('DD/MM/YYYY'));
-                startDate = new Date(picker.startDate);
-                endDate = new Date(picker.endDate);
+                startDate = new Date(picker.startDate.format('DD/MM/YYYY'));
+                endDate = new Date(picker.endDate.format('DD/MM/YYYY'));
                 minDate = startDate;
                 maxDate = endDate;
                 table.draw();
