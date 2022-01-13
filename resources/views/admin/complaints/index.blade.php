@@ -301,8 +301,8 @@ table.on('column-visibility.dt', function(e, settings, column, state) {
         $('input[name="daterange"]').daterangepicker({
             opens: 'left'
         }, function(start, end, label) {
-            minDate = new Date(start.format('DD-MM-YYYY'));
-            maxDate = new Date(end.format('DD-MM-YYYY'));
+            minDate = new Date(start);
+            maxDate = new Date(end);
             console.log("A new date selection was made: " + start.format('DD-MM-YYYY') + ' to ' + end.format('DD-MM-YYYY'));
             console.log(minDate);
             console.log(maxDate);
