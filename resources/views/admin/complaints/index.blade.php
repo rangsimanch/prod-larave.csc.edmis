@@ -113,7 +113,7 @@
                                     </select>
                                 </td>
                                 <td>
-                                    <input type="text" name="datefilter" class="filter-select" value=""/>
+                                    <input type="text" name="daterange" value="" />
                                     <!-- <input type="date" class="form-control filter-input" data-column="5"/> -->
                                 </td>
                                 <td>
