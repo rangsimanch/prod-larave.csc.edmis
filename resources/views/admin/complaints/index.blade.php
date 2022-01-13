@@ -322,7 +322,7 @@ table.on('column-visibility.dt', function(e, settings, column, state) {
             });
         });   
 
-        $('input[name="datefilter"]').on('apply.daterangepicker', function(ev, picker) {
+        $('input[name="datefilter"]').on('change', function(ev, picker) {
                 startDate = new Date(picker.startDate);
                 endDate = new Date(picker.endDate);
                 minDate = startDate;
