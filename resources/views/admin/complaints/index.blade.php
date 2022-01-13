@@ -299,8 +299,8 @@ table.on('column-visibility.dt', function(e, settings, column, state) {
             $(this).val(picker.startDate.format('DD/MM/YYYY') + ' - ' + picker.endDate.format('DD/MM/YYYY'));
             start = picker.startDate;
             end = picker.endDate;
-            console.log(minDate)
-            console.log(maxDate)
+            console.log(start);
+            console.log(end);
             $.fn.dataTable.ext.search.push(
                 function(settings, data, dataIndex) {
                 var min = start;
