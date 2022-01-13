@@ -309,32 +309,18 @@ table.on('column-visibility.dt', function(e, settings, column, state) {
         });
     });
 
-    // DataTables initialisation
-    var table = $('#complaintTable').DataTable();
- 
-    // Refilter the table
-    // $('input[name="daterange"]').on('change', function () {
-    //     table.draw();
-    // });
-
-    $.fn.dataTable.ext.search.push(
-    function( settings, data, dataIndex ) {
-        var min = minDate;
-        var max = maxDate;
-        var date = new Date( data[5] );
- 
+    $.fn.dataTable.ext.search.push(function( settings, data, dataIndex ){
+        let date = new Date(data[5]);
         if (
-            ( min === null && max === null ) ||
-            ( min === null && date <= max ) ||
-            ( min <= date   && max === null ) ||
-            ( min <= date   && date <= max )
+            ( minDate === null && maxDate === null ) ||
+            ( minDate === null && date <= maxDate ) ||
+            ( minDate <= date   && maxDate === null ) ||
+            ( minDate <= date   && date <= maxDate )
         ) {
             return true;
         }
         return false;
-    }
-);
-
+    });
 
 </script>
 
