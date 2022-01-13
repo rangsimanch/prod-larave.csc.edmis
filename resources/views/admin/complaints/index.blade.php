@@ -286,23 +286,25 @@ table.on('column-visibility.dt', function(e, settings, column, state) {
         var startDate = new Date();
         var endDate = new Date();
         var table = $('#complaint').DataTable();
-        
+
         $.fn.dataTable.ext.search.push(
         function( settings, data, dataIndex ) {
             var min = minDate.val();
             var max = maxDate.val();
             console.log("in func")
-            var date = new Date( data['received_date'] );
+            // var date = new Date( data['received_date'] );
     
-            if (
-                ( min === null && max === null ) ||
-                ( min === null && date <= max ) ||
-                ( min <= date   && max === null ) ||
-                ( min <= date   && date <= max )
-            ) {
-                return true;
-            }
-            return false;
+            // if (
+            //     ( min === null && max === null ) ||
+            //     ( min === null && date <= max ) ||
+            //     ( min <= date   && max === null ) ||
+            //     ( min <= date   && date <= max )
+            // ) {
+            //     return true;
+            // }
+            // return false;
+            return true;
+
         });
 
         $('input[name="datefilter"]').daterangepicker({
