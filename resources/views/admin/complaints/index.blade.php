@@ -279,23 +279,22 @@ table.on('column-visibility.dt', function(e, settings, column, state) {
   })
 });
 
- // Filter Class
-    $('.filter-input').keyup(function(){
-        $($.fn.dataTable.tables(true)).DataTable().column( $(this).data('column'))
-            .search($(this).val())
-            .draw();
-    });
+//  // Filter Class
+//     $('.filter-input').keyup(function(){
+//         $($.fn.dataTable.tables(true)).DataTable().column( $(this).data('column'))
+//             .search($(this).val())
+//             .draw();
+//     });
 
-    $('.filter-select').change(function(){
-        $($.fn.dataTable.tables(true)).DataTable().column( $(this).data('column'))
-            .search($(this).val())
-            .draw();
-    });
+//     $('.filter-select').change(function(){
+//         $($.fn.dataTable.tables(true)).DataTable().column( $(this).data('column'))
+//             .search($(this).val())
+//             .draw();
+//     });
 
     var minDate, maxDate;
 
     $.fn.dataTable.ext.search.push(function( settings, data, dataIndex ){
-        console.log("Search Date")
         var min = minDate.val();
         var max = maxDate.val();
         var date = new Date(data[5]);
