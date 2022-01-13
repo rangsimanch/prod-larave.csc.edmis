@@ -284,25 +284,9 @@ table.on('column-visibility.dt', function(e, settings, column, state) {
 
 <script>
     $(document).ready(function() {
-        var minDate, maxDate;
-        var table = $('#complaint').DataTable({
-            searching: true,
-        });
 
-        $('input[name="datefilter"]').daterangepicker({
-            autoUpdateInput: false,
-            showDropdowns: true,
-            locale: {
-                cancelLabel: 'Clear'
-            }
-        });
-
-        $('input[name="datefilter"]').on('apply.daterangepicker', function(ev, picker) {
-            $(this).val(picker.startDate.format('DD/MM/YYYY') + ' - ' + picker.endDate.format('DD/MM/YYYY'));
-            start = picker.startDate;
-            end = picker.endDate;
-            $.fn.dataTable.ext.search.push(
-                function(settings, data, dataIndex) {
+        $.fn.dataTable.ext.search.push(
+            function(settings, data, dataIndex) {
                 var min = start;
                 var max = end;
                 var startDate = new Date(data[5]);
@@ -322,10 +306,34 @@ table.on('column-visibility.dt', function(e, settings, column, state) {
                     return true;
                 }
                 return false;
-                }
-            );
+            }
+        );
+
+        var minDate, maxDate;
+        var table = $('#complaint').DataTable();
+
+        $('input[name="datefilter"]').daterangepicker({
+            autoUpdateInput: false,
+            showDropdowns: true,
+            locale: {
+                cancelLabel: 'Clear'
+            }
+        });
+
+        $('input[name="datefilter"]').on('apply.daterangepicker', function(ev, picker) {
+            $(this).val(picker.startDate.format('DD/MM/YYYY') + ' - ' + picker.endDate.format('DD/MM/YYYY'));
+            start = picker.startDate;
+            end = picker.endDate;
             table.draw();
             $.fn.dataTable.ext.search.pop();
+        });
+
+        $('input[name="datefilter"]').on('change', function(){
+            table.draw();
+        });
+
+        $('input[name="datefilter"]').on('keyup', function(){
+            table.draw();
         });
 
         $('input[name="datefilter"]').on('cancel.daterangepicker', function(ev, picker) {
