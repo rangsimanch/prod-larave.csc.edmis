@@ -293,6 +293,7 @@ table.on('column-visibility.dt', function(e, settings, column, state) {
     });
 
     $.fn.dataTable.ext.search.push(function( settings, data, dataIndex ){
+        console.log("Search Date")
         let date = new Date(data[5]);
         if (
             ( minDate === null && maxDate === null ) ||
