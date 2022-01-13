@@ -326,8 +326,8 @@ table.on('column-visibility.dt', function(e, settings, column, state) {
         });   
 
         $('#datefilter').on('change', function () {
-            minDate = new Date(startDate);
-            maxDate = new Date(endDate);
+            minDate = new Date($(datefilter).val(picker.startDate.format('DD/MM/YYYY')));
+            maxDate = new Date($(datefilter).val(picker.endDate.format('DD/MM/YYYY')));
             console.log(minDate)
             console.log(maxDate)
             table.draw();
