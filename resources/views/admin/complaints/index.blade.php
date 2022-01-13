@@ -283,22 +283,22 @@ table.on('column-visibility.dt', function(e, settings, column, state) {
 <script>
     var minDate, maxDate;
     
-    $.fn.dataTable.ext.search.push(
-    function( settings, data, dataIndex ) {
-        var min = minDate.val();
-        var max = maxDate.val();
-        var date = new Date( data[5] );
+    // $.fn.dataTable.ext.search.push(
+    // function( settings, data, dataIndex ) {
+    //     var min = minDate.val();
+    //     var max = maxDate.val();
+    //     var date = new Date( data[5] );
  
-        if (
-            ( min === null && max === null ) ||
-            ( min === null && date <= max ) ||
-            ( min <= date   && max === null ) ||
-            ( min <= date   && date <= max )
-        ) {
-            return true;
-        }
-        return false;
-    });
+    //     if (
+    //         ( min === null && max === null ) ||
+    //         ( min === null && date <= max ) ||
+    //         ( min <= date   && max === null ) ||
+    //         ( min <= date   && date <= max )
+    //     ) {
+    //         return true;
+    //     }
+    //     return false;
+    // });
 
 
     $(document).ready(function() {
