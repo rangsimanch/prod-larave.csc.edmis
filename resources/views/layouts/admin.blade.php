@@ -318,9 +318,6 @@
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
 <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
 
-<script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
-<link href="https://nightly.datatables.net/css/jquery.dataTables.css" rel="stylesheet" type="text/css" />
-<script src="https://nightly.datatables.net/js/jquery.dataTables.js"></script>
 
     @include('partials.javascripts')
     <script>
