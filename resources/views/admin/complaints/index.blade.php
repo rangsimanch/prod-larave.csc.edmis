@@ -113,7 +113,7 @@
                                     </select>
                                 </td>
                                 <td>
-                                    <input id="period" type="text" name="datefilter" value="" placeholder="Select Period.."/>
+                                    <input id="datefilter" type="text" name="datefilter" value="" placeholder="Select Period.."/>
                                     <!-- <input type="date" class="form-control filter-input" data-column="5"/> -->
                                 </td>
                                 <td>
@@ -326,10 +326,11 @@ table.on('column-visibility.dt', function(e, settings, column, state) {
             });
 
         });   
-
-        $('#period]').on('change', function () {
-        table.draw();
-    }); 
+        $('#datefilter').on('change', function () {
+            console.log(minDate)
+            console.log(maxDate)
+            table.draw();
+        }); 
     });
 </script>
 
