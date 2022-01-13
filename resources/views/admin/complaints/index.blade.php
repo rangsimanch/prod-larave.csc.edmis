@@ -305,33 +305,34 @@ table.on('column-visibility.dt', function(e, settings, column, state) {
         return false;
     });
 
-    // $.fn.dataTable.ext.errMode = 'throw';
+    $.fn.dataTable.ext.errMode = 'throw';
 
-    let minDate = new Date();
-    let maxDate = new Date();
-    var table = $('#complaint').DataTable();
+    $(document).ready(function() {
+        let minDate = new Date();
+        let maxDate = new Date();
+        var table = $('#complaint').DataTable();
 
-    $(function() {
-        $('input[name="datefilter"]').daterangepicker({
-            autoUpdateInput: false,
-            locale: {
-                cancelLabel: 'Clear'
-            }
-        });
+        $(function() {
+            $('input[name="datefilter"]').daterangepicker({
+                autoUpdateInput: false,
+                locale: {
+                    cancelLabel: 'Clear'
+                }
+            });
 
-        $('input[name="datefilter"]').on('apply.daterangepicker', function(ev, picker) {
-            $(this).val(picker.startDate.format('DD/MM/YYYY') + ' - ' + picker.endDate.format('DD/MM/YYYY'));
-            minDate = new Date(picker.startDate);
-            maxDate = new Date(picker.endDate);
-            table.draw();
-        });
+            $('input[name="datefilter"]').on('apply.daterangepicker', function(ev, picker) {
+                $(this).val(picker.startDate.format('DD/MM/YYYY') + ' - ' + picker.endDate.format('DD/MM/YYYY'));
+                minDate = new Date(picker.startDate);
+                maxDate = new Date(picker.endDate);
+                table.draw();
+            });
 
-        $('input[name="datefilter"]').on('cancel.daterangepicker', function(ev, picker) {
-            $(this).val('');
-        });
+            $('input[name="datefilter"]').on('cancel.daterangepicker', function(ev, picker) {
+                $(this).val('');
+            });
 
-    });    
-
+        });    
+    });
 </script>
 
 @endsection
