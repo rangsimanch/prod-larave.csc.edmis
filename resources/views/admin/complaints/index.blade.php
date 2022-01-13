@@ -284,7 +284,7 @@ table.on('column-visibility.dt', function(e, settings, column, state) {
     var minDate, maxDate;
     var table = $('#complaint').DataTable();
     $(document).ready(function() {
-        table.DataTable( {
+        $('#complaint').DataTable( {
             initComplete: function () {
                 $.fn.dataTable.ext.search.push(function( settings, data, dataIndex ){
                     var min = minDate.val();
