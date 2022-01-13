@@ -278,11 +278,14 @@ table.on('column-visibility.dt', function(e, settings, column, state) {
       });
   })
 });
+</script>
 
+<script>
     $(document).ready(function() {
         var minDate, maxDate;
         var startDate = new Date();
         var endDate = new Date();
+        var table = $('#complaint').DataTable();
 
         $('input[name="datefilter"]').daterangepicker({
             autoUpdateInput: false,
