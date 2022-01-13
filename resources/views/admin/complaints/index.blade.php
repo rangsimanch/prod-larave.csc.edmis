@@ -319,7 +319,7 @@ table.on('column-visibility.dt', function(e, settings, column, state) {
                 endDate = new Date(picker.endDate);
                 minDate = new Date(startDate);
                 maxDate = new Date(endDate);
-                $($.fn.dataTable.tables(true)).DataTable().column( $(this).data('column'))
+                $($.fn.dataTable.tables(true)).DataTable()
                 .search(function(){
                     var min = minDate.val();
                     var max = maxDate.val();
