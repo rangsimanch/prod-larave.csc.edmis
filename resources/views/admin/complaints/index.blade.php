@@ -324,7 +324,6 @@ table.on('column-visibility.dt', function(e, settings, column, state) {
             );
             table.draw();
             $.fn.dataTable.ext.search.pop();
-            });
         });
 
         $('input[name="datefilter"]').on('cancel.daterangepicker', function(ev, picker) {
