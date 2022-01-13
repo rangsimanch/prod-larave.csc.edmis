@@ -296,6 +296,27 @@ table.on('column-visibility.dt', function(e, settings, column, state) {
 
     let minDate = new Date();
     let maxDate = new Date();
+    let table = $('#complaintTable').DataTable();
+    $(function() {
+
+        $('input[name="datefilter"]').daterangepicker({
+            autoUpdateInput: false,
+            locale: {
+                cancelLabel: 'Clear'
+            }
+        });
+
+        $('input[name="datefilter"]').on('apply.daterangepicker', function(ev, picker) {
+            minDate = new Date(picker.startDate);
+            maxDate = new Date(picker.endDate);
+            table.draw();
+        });
+
+        $('input[name="datefilter"]').on('cancel.daterangepicker', function(ev, picker) {
+            $(this).val('');
+        });
+
+    });
 
     $.fn.dataTable.ext.search.push(function( settings, data, dataIndex ){
         let date = new Date(data[5]);
@@ -308,15 +329,7 @@ table.on('column-visibility.dt', function(e, settings, column, state) {
             return true;
         }
         return false;
-    });
-
-    let table = $('#example').DataTable();
-    $('#daterange').daterangepicker();
-    $('#daterange').on('apply.daterangepicker', function(ev, picker) {
-        minDate = new Date(picker.startDate);
-        maxDate = new Date(picker.endDate);
-        table.draw();
-    });
+    });    
 
 </script>
 
