@@ -322,6 +322,7 @@ table.on('column-visibility.dt', function(e, settings, column, state) {
             console.log(minDate)
             console.log(maxDate)
             table.draw();
+            console.log(table.draw());
         });
 
         $('input[name="datefilter"]').on('cancel.daterangepicker', function(ev, picker) {
