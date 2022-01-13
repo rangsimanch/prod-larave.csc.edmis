@@ -317,6 +317,11 @@ table.on('column-visibility.dt', function(e, settings, column, state) {
                 $(this).val(picker.startDate.format('DD/MM/YYYY') + ' - ' + picker.endDate.format('DD/MM/YYYY'));
                 startDate = new Date(picker.startDate);
                 endDate = new Date(picker.endDate);
+                minDate = startDate;
+                maxDate = endDate;
+                console.log(minDate)
+                console.log(maxDate)
+                table.draw();
             });
 
             $('input[name="datefilter"]').on('cancel.daterangepicker', function(ev, picker) {
@@ -324,14 +329,6 @@ table.on('column-visibility.dt', function(e, settings, column, state) {
             });
 
         });   
-        
-        $('#datefilter').on('change', function () {
-            minDate = startDate;
-            maxDate = endDate;
-            console.log(minDate)
-            console.log(maxDate)
-            table.draw();
-        }); 
     });
 </script>
 
