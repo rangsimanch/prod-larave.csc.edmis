@@ -113,7 +113,7 @@
                                     </select>
                                 </td>
                                 <td>
-                                    <input type="text" name="datefilter" value="" placeholder="Select Period..."/>
+                                    <input type="text" name="datefilter" value="" placeholder="Select Period.."/>
                                     <!-- <input type="date" class="form-control filter-input" data-column="5"/> -->
                                 </td>
                                 <td>
@@ -283,22 +283,22 @@ table.on('column-visibility.dt', function(e, settings, column, state) {
 <script>
     var minDate, maxDate;
     
-    // $.fn.dataTable.ext.search.push(
-    // function( settings, data, dataIndex ) {
-    //     var min = minDate.val();
-    //     var max = maxDate.val();
-    //     var date = new Date( data[5] );
+    $.fn.dataTable.search(
+    function( settings, data, dataIndex ) {
+        var min = minDate.val();
+        var max = maxDate.val();
+        var date = new Date( data[5] );
  
-    //     if (
-    //         ( min === null && max === null ) ||
-    //         ( min === null && date <= max ) ||
-    //         ( min <= date   && max === null ) ||
-    //         ( min <= date   && date <= max )
-    //     ) {
-    //         return true;
-    //     }
-    //     return false;
-    // });
+        if (
+            ( min === null && max === null ) ||
+            ( min === null && date <= max ) ||
+            ( min <= date   && max === null ) ||
+            ( min <= date   && date <= max )
+        ) {
+            return true;
+        }
+        return false;
+    });
 
 
     $(document).ready(function() {
@@ -319,24 +319,7 @@ table.on('column-visibility.dt', function(e, settings, column, state) {
                 endDate = new Date(picker.endDate);
                 minDate = new Date(startDate);
                 maxDate = new Date(endDate);
-                $($.fn.dataTable.tables(true)).DataTable()
-                .search(function(){
-                    var min = minDate.val();
-                    var max = maxDate.val();
-                    console.log(min);
-                    console.log(max);
-                    var date = new Date( data[5] );
-                    if (
-                        ( min === null && max === null ) ||
-                        ( min === null && date <= max ) ||
-                        ( min <= date   && max === null ) ||
-                        ( min <= date   && date <= max )
-                    ) {
-                        return true;
-                    }
-                    return false;
-                }).draw();
-                // table.draw();
+                table.draw();
             });
 
             $('input[name="datefilter"]').on('cancel.daterangepicker', function(ev, picker) {
