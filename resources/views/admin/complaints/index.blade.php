@@ -21,7 +21,7 @@
                     {{ trans('cruds.complaint.title_singular') }} {{ trans('global.list') }}
                 </div>
                 <div class="panel-body">
-                    <table id="complaint" class=" table table-bordered table-striped table-hover ajaxTable datatable datatable-Complaint">
+                    <table id="complaintDB" class=" table table-bordered table-striped table-hover ajaxTable datatable datatable-Complaint">
                         <thead>
                             <tr>
                                 <th width="10">
@@ -304,7 +304,6 @@ table.on('column-visibility.dt', function(e, settings, column, state) {
     $(document).ready(function() {
         var startDate = new Date();
         var endDate = new Date();
-        var table = $('#complaint').DataTable();
         $('input[name="datefilter"]').daterangepicker({
             autoUpdateInput: false,
             showDropdowns: true,
@@ -321,6 +320,7 @@ table.on('column-visibility.dt', function(e, settings, column, state) {
             maxDate = endDate;
             console.log(minDate)
             console.log(maxDate)
+            var table = $('#complaintDB').DataTable();
             table.draw();
             console.log(table.draw());
         });
