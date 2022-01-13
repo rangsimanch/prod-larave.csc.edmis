@@ -304,10 +304,10 @@ table.on('column-visibility.dt', function(e, settings, column, state) {
             startDate = new Date(start.format('DD-MM-YYYY'))
             endDate = new Date(end.format('DD-MM-YYYY'))
             // console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
+            console.log(startDate)
+            console.log(endDate)
         });
     });
-    console.log(startDate)
-    console.log(endDate)
 
 
 </script>
