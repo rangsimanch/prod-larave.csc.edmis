@@ -297,8 +297,8 @@ table.on('column-visibility.dt', function(e, settings, column, state) {
 
         $('input[name="datefilter"]').on('apply.daterangepicker', function(ev, picker) {
             $(this).val(picker.startDate.format('DD/MM/YYYY') + ' - ' + picker.endDate.format('DD/MM/YYYY'));
-            start = new Date(picker.startDate);
-            end = new Date(picker.endDate);
+            start = picker.startDate;
+            end = picker.endDate;
             console.log(start);
             console.log(end);
             $.fn.dataTable.ext.search.push(
