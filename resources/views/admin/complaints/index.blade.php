@@ -296,7 +296,7 @@ table.on('column-visibility.dt', function(e, settings, column, state) {
 
     let minDate = new Date();
     let maxDate = new Date();
-    // let table = $('#complaintTable').DataTable();
+    let table = $('#complaintTable').DataTable();
     $(function() {
         $('input[name="datefilter"]').daterangepicker({
             autoUpdateInput: false,
@@ -306,9 +306,10 @@ table.on('column-visibility.dt', function(e, settings, column, state) {
         });
 
         $('input[name="datefilter"]').on('apply.daterangepicker', function(ev, picker) {
+            $(this).val(picker.startDate.format('DD/MM/YYYY') + ' - ' + picker.endDate.format('DD/MM/YYYY'));
             minDate = new Date(picker.startDate);
             maxDate = new Date(picker.endDate);
-            // table.draw();
+            table.draw();
         });
 
         $('input[name="datefilter"]').on('cancel.daterangepicker', function(ev, picker) {
