@@ -288,10 +288,10 @@ table.on('column-visibility.dt', function(e, settings, column, state) {
         var table = $('#complaint').DataTable();
 
         $.fn.dataTable.ext.search.push(
-        function( settings, data, dataIndex ) {
+            function( settings, searchData, index, rowData, counter ) {
             var min = minDate.val();
             var max = maxDate.val();
-            console.log("in func")
+            console.log("in func");
             // var date = new Date( data['received_date'] );
     
             // if (
@@ -304,7 +304,6 @@ table.on('column-visibility.dt', function(e, settings, column, state) {
             // }
             // return false;
             return true;
-
         });
 
         $('input[name="datefilter"]').daterangepicker({
