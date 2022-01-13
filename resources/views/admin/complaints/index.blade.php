@@ -113,7 +113,7 @@
                                     </select>
                                 </td>
                                 <td>
-                                    <input type="text" name="datefilter" value="" placeholder="Select Period.."/>
+                                    <input type="text" name="datefilter" value="" placeholder="Select Period..." data-column="5"/>
                                     <!-- <input type="date" class="form-control filter-input" data-column="5"/> -->
                                 </td>
                                 <td>
@@ -317,11 +317,26 @@ table.on('column-visibility.dt', function(e, settings, column, state) {
                 $(this).val(picker.startDate.format('DD/MM/YYYY') + ' - ' + picker.endDate.format('DD/MM/YYYY'));
                 startDate = new Date(picker.startDate);
                 endDate = new Date(picker.endDate);
-                minDate = new Date(startDate, { format: 'DD/MM/YYYY'});
-                maxDate = new Date(endDate, { format: 'DD/MM/YYYY'});
-                console.log(minDate);
-                console.log(maxDate);
-                table.draw();
+                minDate = new Date(startDate);
+                maxDate = new Date(endDate);
+                $($.fn.dataTable.tables(true)).DataTable().column( $(this).data('column'))
+                .search(function(){
+                    var min = minDate.val();
+                    var max = maxDate.val();
+                    console.log(min);
+                    console.log(max);
+                    var date = new Date( data[5] );
+                    if (
+                        ( min === null && max === null ) ||
+                        ( min === null && date <= max ) ||
+                        ( min <= date   && max === null ) ||
+                        ( min <= date   && date <= max )
+                    ) {
+                        return true;
+                    }
+                    return false;
+                }).draw();
+                // table.draw();
             });
 
             $('input[name="datefilter"]').on('cancel.daterangepicker', function(ev, picker) {
