@@ -113,7 +113,7 @@
                                     </select>
                                 </td>
                                 <td>
-                                    <input type="text" name="datefilter" value="" placeholder="Select Period.."/>
+                                    <input id="period" type="text" name="datefilter" value="" placeholder="Select Period.."/>
                                     <!-- <input type="date" class="form-control filter-input" data-column="5"/> -->
                                 </td>
                                 <td>
@@ -283,7 +283,7 @@ table.on('column-visibility.dt', function(e, settings, column, state) {
 <script>
     var minDate, maxDate;
     
-    $.fn.dataTable.search(
+    $.fn.dataTable.ext.search.push(
     function( settings, data, dataIndex ) {
         var min = minDate.val();
         var max = maxDate.val();
@@ -319,14 +319,17 @@ table.on('column-visibility.dt', function(e, settings, column, state) {
                 endDate = new Date(picker.endDate);
                 minDate = new Date(startDate);
                 maxDate = new Date(endDate);
-                table.draw();
             });
 
             $('input[name="datefilter"]').on('cancel.daterangepicker', function(ev, picker) {
                 $(this).val('');
             });
 
-        });    
+        });   
+
+        $('#period]').on('change', function () {
+        table.draw();
+    }); 
     });
 </script>
 
