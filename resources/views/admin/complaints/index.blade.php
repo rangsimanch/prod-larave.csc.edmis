@@ -21,7 +21,7 @@
                     {{ trans('cruds.complaint.title_singular') }} {{ trans('global.list') }}
                 </div>
                 <div class="panel-body">
-                    <table id="complaintTable" class=" table table-bordered table-striped table-hover ajaxTable datatable datatable-Complaint">
+                    <table id="complaint" class=" table table-bordered table-striped table-hover ajaxTable datatable datatable-Complaint">
                         <thead>
                             <tr>
                                 <th width="10">
@@ -292,11 +292,25 @@ table.on('column-visibility.dt', function(e, settings, column, state) {
             .draw();
     });
 
+    $.fn.dataTable.ext.search.push(function( settings, data, dataIndex ){
+        let date = new Date(data[5]);
+        if (
+            ( minDate === null && maxDate === null ) ||
+            ( minDate === null && date <= maxDate ) ||
+            ( minDate <= date   && maxDate === null ) ||
+            ( minDate <= date   && date <= maxDate )
+        ) {
+            return true;
+        }
+        return false;
+    });
+
     $.fn.dataTable.ext.errMode = 'throw';
 
     let minDate = new Date();
     let maxDate = new Date();
-    var table = $('#complaintTable').DataTable();
+    var table = $('#complaint').DataTable();
+
     $(function() {
         $('input[name="datefilter"]').daterangepicker({
             autoUpdateInput: false,
@@ -309,26 +323,13 @@ table.on('column-visibility.dt', function(e, settings, column, state) {
             $(this).val(picker.startDate.format('DD/MM/YYYY') + ' - ' + picker.endDate.format('DD/MM/YYYY'));
             minDate = new Date(picker.startDate);
             maxDate = new Date(picker.endDate);
-            // table.draw();
+            table.draw();
         });
 
         $('input[name="datefilter"]').on('cancel.daterangepicker', function(ev, picker) {
             $(this).val('');
         });
 
-    });
-
-    $.fn.dataTable.ext.search.push(function( settings, data, dataIndex ){
-        let date = new Date(data[5]);
-        if (
-            ( minDate === null && maxDate === null ) ||
-            ( minDate === null && date <= maxDate ) ||
-            ( minDate <= date   && maxDate === null ) ||
-            ( minDate <= date   && date <= maxDate )
-        ) {
-            return true;
-        }
-        return false;
     });    
 
 </script>
