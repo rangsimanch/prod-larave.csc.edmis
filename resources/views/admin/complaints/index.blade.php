@@ -297,18 +297,6 @@ table.on('column-visibility.dt', function(e, settings, column, state) {
     let minDate = new Date();
     let maxDate = new Date();
 
-    $(function() {
-        $('input[name="daterange"]').daterangepicker({
-            opens: 'left'
-        }, function(start, end, label) {
-            minDate = new Date(start);
-            maxDate = new Date(end);
-            // console.log("A new date selection was made: " + start.format('DD-MM-YYYY') + ' to ' + end.format('DD-MM-YYYY'));
-            // console.log(minDate);
-            // console.log(maxDate);
-        });
-    });
-
     $.fn.dataTable.ext.search.push(function( settings, data, dataIndex ){
         let date = new Date(data[5]);
         if (
@@ -323,8 +311,10 @@ table.on('column-visibility.dt', function(e, settings, column, state) {
     });
 
     let table = $('#example').DataTable();
-    $('#daterange').on('change', function () {
-        console.log("Change")
+    $('#daterange').daterangepicker();
+    $('#daterange').on('apply.daterangepicker', function(ev, picker) {
+        minDate = new Date(picker.startDate);
+        maxDate = new Date(picker.endDate);
         table.draw();
     });
 
