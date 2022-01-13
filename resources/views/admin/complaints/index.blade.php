@@ -278,22 +278,10 @@ table.on('column-visibility.dt', function(e, settings, column, state) {
       });
   })
 });
+</script>
 
-//  // Filter Class
-//     $('.filter-input').keyup(function(){
-//         $($.fn.dataTable.tables(true)).DataTable().column( $(this).data('column'))
-//             .search($(this).val())
-//             .draw();
-//     });
-
-//     $('.filter-select').change(function(){
-//         $($.fn.dataTable.tables(true)).DataTable().column( $(this).data('column'))
-//             .search($(this).val())
-//             .draw();
-//     });
-
+<script>
     var minDate, maxDate;
-
     $.fn.dataTable.ext.search.push(function( settings, data, dataIndex ){
         var min = minDate.val();
         var max = maxDate.val();
@@ -309,7 +297,6 @@ table.on('column-visibility.dt', function(e, settings, column, state) {
         return false;
     });
 
-    $.fn.dataTable.ext.errMode = 'throw';
 
     $(document).ready(function() {
         var startDate = new Date();
