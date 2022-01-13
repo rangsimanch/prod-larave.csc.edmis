@@ -282,12 +282,13 @@ table.on('column-visibility.dt', function(e, settings, column, state) {
 
 <script>
     var minDate, maxDate;
-    
     $.fn.dataTable.ext.search.push(
     function( settings, data, dataIndex ) {
         var min = minDate.val();
         var max = maxDate.val();
-        var date = new Date( data[5] );
+        console.log(min)
+        console.log(max)
+        var date = new Date( data['received_date'] );
  
         if (
             ( min === null && max === null ) ||
@@ -321,10 +322,6 @@ table.on('column-visibility.dt', function(e, settings, column, state) {
             maxDate = endDate;
             console.log(minDate)
             console.log(maxDate)
-            // table.draw();
-        });
-
-        $('input[name="datefilter"]').on('change', function() {
             table.draw();
         });
 
