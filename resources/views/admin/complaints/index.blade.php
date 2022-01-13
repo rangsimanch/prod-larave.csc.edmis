@@ -324,6 +324,7 @@ table.on('column-visibility.dt', function(e, settings, column, state) {
 
     let table = $('#example').DataTable();
     $('#daterange').on('change', function () {
+        console.log("Change")
         table.draw();
     });
 
