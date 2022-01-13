@@ -313,9 +313,9 @@ table.on('column-visibility.dt', function(e, settings, column, state) {
     var table = $('#complaintTable').DataTable();
  
     // Refilter the table
-    $('input[name="daterange"]').on('change', function () {
-        table.draw();
-    });
+    // $('input[name="daterange"]').on('change', function () {
+    //     table.draw();
+    // });
 
     $.fn.dataTable.ext.search.push(
     function( settings, data, dataIndex ) {
