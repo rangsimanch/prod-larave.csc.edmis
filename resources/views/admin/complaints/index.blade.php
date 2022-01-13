@@ -321,8 +321,11 @@ table.on('column-visibility.dt', function(e, settings, column, state) {
             maxDate = endDate;
             console.log(minDate)
             console.log(maxDate)
+            // table.draw();
+        });
+
+        $('input[name="datefilter"]').on('change', function() {
             table.draw();
-            console.log(table);
         });
 
         $('input[name="datefilter"]').on('cancel.daterangepicker', function(ev, picker) {
