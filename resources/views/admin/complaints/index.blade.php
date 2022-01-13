@@ -305,7 +305,7 @@ table.on('column-visibility.dt', function(e, settings, column, state) {
         return false;
     });
 
-    $.fn.dataTable.ext.errMode = 'throw';
+    // $.fn.dataTable.ext.errMode = 'throw';
 
     let minDate = new Date();
     let maxDate = new Date();
