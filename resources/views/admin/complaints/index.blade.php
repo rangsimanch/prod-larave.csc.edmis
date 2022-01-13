@@ -113,8 +113,8 @@
                                     </select>
                                 </td>
                                 <td>
-                                    <!-- <input type="text" name="datefilter" class="filter-select" value="" data-column="5"/> -->
-                                    <input type="date" class="form-control filter-input" data-column="5"/>
+                                    <input type="text" name="datefilter" class="filter-select" value=""/>
+                                    <!-- <input type="date" class="form-control filter-input" data-column="5"/> -->
                                 </td>
                                 <td>
                                     <select class="search" strict="true">
@@ -295,21 +295,18 @@ table.on('column-visibility.dt', function(e, settings, column, state) {
         $.fn.dataTable.ext.errMode = 'throw';
 </script>
 
-<!-- <script type="text/javascript">
-$(function() {
-
-  $('input[name="datefilter"]').daterangepicker({
-      autoUpdateInput: false,
-      locale: {
-          cancelLabel: 'Clear'
-      }
-  });
-
-  $('input[name="datefilter"]').on('apply.daterangepicker', function(ev, picker) {
-      $(this).val(picker.startDate.format('DD/MM/YYYY') + ' - ' + picker.endDate.format('DD/MM/YYYY'));
-  });
-});
-
-</script> -->
+<script>
+    var startDate;
+    var endDate;
+    $(function() {
+    $('input[name="daterange"]').daterangepicker({
+        opens: 'left'
+    }, function(start, end, label) {
+        startDate = start.format('DD-MM-YYYY');
+        endDate = end.format('DD-MM-YYYY');
+        });
+    });
+    console.log(startDate));
+</script>
 
 @endsection
