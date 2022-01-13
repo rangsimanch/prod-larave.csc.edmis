@@ -307,7 +307,8 @@ table.on('column-visibility.dt', function(e, settings, column, state) {
         var table = $('#complaint').DataTable();
         $(function() {
             $('input[name="datefilter"]').daterangepicker({
-                autoUpdateInput: false,
+                showDropdowns: true,
+                drops: "auto",
                 locale: {
                     cancelLabel: 'Clear'
                 }
@@ -322,7 +323,7 @@ table.on('column-visibility.dt', function(e, settings, column, state) {
             });
         });   
 
-        $('input[name="datefilter"]').on('change', function(ev, picker) {
+        $('input[name="datefilter"]').on('apply.daterangepicker', function(ev, picker) {
                 startDate = new Date(picker.startDate);
                 endDate = new Date(picker.endDate);
                 minDate = startDate;
