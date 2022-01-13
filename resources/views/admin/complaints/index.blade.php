@@ -251,7 +251,6 @@
     pageLength: 10,
     processing: true,
     serverSide: true,
-    stateSave: true,
   };
   let table = $('.datatable-Complaint').DataTable(dtOverrideGlobals);
   $('a[data-toggle="tab"]').on('shown.bs.tab click', function(e){
@@ -286,7 +285,7 @@ table.on('column-visibility.dt', function(e, settings, column, state) {
 <script>
     $(document).ready(function() {
         var minDate, maxDate;
-        var table = $('#complaint').DataTable();
+        var table = $('#complaint').dataTable();
 
         $('input[name="datefilter"]').daterangepicker({
             autoUpdateInput: false,
