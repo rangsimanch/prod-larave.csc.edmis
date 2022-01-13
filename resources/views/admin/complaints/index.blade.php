@@ -282,31 +282,6 @@ table.on('column-visibility.dt', function(e, settings, column, state) {
 
 <script>
     var minDate, maxDate;
-    var table = $('#complaint').DataTable();
-    $(document).ready(function() {
-        $('#complaint').DataTable( {
-            initComplete: function () {
-                $.fn.dataTable.ext.search.push(function( settings, data, dataIndex ){
-                    var min = minDate.val();
-                    var max = maxDate.val();
-                    console.log(min)
-                    console.log(max)
-                    var date = new Date(data[5]);
-                    if (
-                        ( min === null && max === null ) ||
-                        ( min === null && date <= max ) ||
-                        ( min <= date   && max === null ) ||
-                        ( min <= date   && date <= max )
-                    ) {
-                        return true;
-                    }
-                    return false;
-                });
-            }
-        });
-    });
-
-
     $(document).ready(function() {
         var startDate = new Date();
         var endDate = new Date();
@@ -324,7 +299,26 @@ table.on('column-visibility.dt', function(e, settings, column, state) {
                 endDate = new Date(picker.endDate.format('DD/MM/YYYY'));
                 minDate = startDate;
                 maxDate = endDate;
-                table.draw();
+                $('#complaint').DataTable( {
+                    initComplete: function () {
+                        $.fn.dataTable.ext.search.push(function( settings, data, dataIndex ){
+                            var min = minDate;
+                            var max = maxDate;
+                            console.log(min)
+                            console.log(max)
+                            var date = new Date(data[5]);
+                            if (
+                                ( min === null && max === null ) ||
+                                ( min === null && date <= max ) ||
+                                ( min <= date   && max === null ) ||
+                                ( min <= date   && date <= max )
+                            ) {
+                                return true;
+                            }
+                            return false;
+                        });
+                    }
+                });
             });
 
             $('input[name="datefilter"]').on('cancel.daterangepicker', function(ev, picker) {
