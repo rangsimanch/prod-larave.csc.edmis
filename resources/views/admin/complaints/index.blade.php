@@ -285,7 +285,9 @@ table.on('column-visibility.dt', function(e, settings, column, state) {
 <script>
     $(document).ready(function() {
         var minDate, maxDate;
-        var table = $('#complaint').dataTable();
+        var table = $('#complaint').DataTable({
+            searching: true,
+        });
 
         $('input[name="datefilter"]').daterangepicker({
             autoUpdateInput: false,
