@@ -324,10 +324,10 @@ table.on('column-visibility.dt', function(e, settings, column, state) {
             });
 
         });   
-
+        
         $('#datefilter').on('change', function () {
-            minDate = new Date($(datefilter).val(picker.startDate.format('DD/MM/YYYY')));
-            maxDate = new Date($(datefilter).val(picker.endDate.format('DD/MM/YYYY')));
+            minDate = startDate;
+            maxDate = endDate;
             console.log(minDate)
             console.log(maxDate)
             table.draw();
