@@ -292,14 +292,18 @@ table.on('column-visibility.dt', function(e, settings, column, state) {
             .draw();
     });
 
+    var minDate, maxDate;
+
     $.fn.dataTable.ext.search.push(function( settings, data, dataIndex ){
         console.log("Search Date")
-        let date = new Date(data[5]);
+        var min = minDate.val();
+        var max = maxDate.val();
+        var date = new Date(data[5]);
         if (
-            ( minDate === null && maxDate === null ) ||
-            ( minDate === null && date <= maxDate ) ||
-            ( minDate <= date   && maxDate === null ) ||
-            ( minDate <= date   && date <= maxDate )
+            ( min === null && max === null ) ||
+            ( min === null && date <= max ) ||
+            ( min <= date   && max === null ) ||
+            ( min <= date   && date <= max )
         ) {
             return true;
         }
@@ -309,8 +313,8 @@ table.on('column-visibility.dt', function(e, settings, column, state) {
     $.fn.dataTable.ext.errMode = 'throw';
 
     $(document).ready(function() {
-        let minDate = new Date();
-        let maxDate = new Date();
+        var startDate = new Date();
+        var endDate = new Date();
         var table = $('#complaint').DataTable();
 
         $(function() {
@@ -323,8 +327,10 @@ table.on('column-visibility.dt', function(e, settings, column, state) {
 
             $('input[name="datefilter"]').on('apply.daterangepicker', function(ev, picker) {
                 $(this).val(picker.startDate.format('DD/MM/YYYY') + ' - ' + picker.endDate.format('DD/MM/YYYY'));
-                minDate = new Date(picker.startDate);
-                maxDate = new Date(picker.endDate);
+                startDate = new Date(picker.startDate);
+                endDate = new Date(picker.endDate);
+                minDate = startDate;
+                maxDate = endDate;
                 table.draw();
             });
 
