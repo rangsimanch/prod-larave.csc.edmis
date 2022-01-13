@@ -282,7 +282,8 @@ table.on('column-visibility.dt', function(e, settings, column, state) {
 
 <script>
     var minDate, maxDate;
-    $.fn.dataTable.ext.search.push(function( settings, data, dataIndex ){
+    
+    $.fn.dataTable.ext.search.change(function( settings, data, dataIndex ){
         var min = minDate.val();
         var max = maxDate.val();
         var date = new Date(data[5]);
@@ -302,7 +303,6 @@ table.on('column-visibility.dt', function(e, settings, column, state) {
         var startDate = new Date();
         var endDate = new Date();
         var table = $('#complaint').DataTable();
-
         $(function() {
             $('input[name="datefilter"]').daterangepicker({
                 autoUpdateInput: false,
