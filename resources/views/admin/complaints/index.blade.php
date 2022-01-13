@@ -289,8 +289,8 @@ table.on('column-visibility.dt', function(e, settings, column, state) {
 
         $.fn.dataTable.ext.search.push(
             function( settings, searchData, index, rowData, counter ) {
-            var min = minDate.val();
-            var max = maxDate.val();
+            // var min = minDate.val();
+            // var max = maxDate.val();
             console.log("in func");
             // var date = new Date( data['received_date'] );
     
