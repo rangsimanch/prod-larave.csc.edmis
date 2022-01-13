@@ -283,12 +283,15 @@ table.on('column-visibility.dt', function(e, settings, column, state) {
 <script>
     $(document).ready(function() {
         var minDate, maxDate;
+        var startDate = new Date();
+        var endDate = new Date();
+        var table = $('#complaint').DataTable();
+        
         $.fn.dataTable.ext.search.push(
         function( settings, data, dataIndex ) {
             var min = minDate.val();
             var max = maxDate.val();
-            console.log(min)
-            console.log(max)
+            console.log("in func")
             var date = new Date( data['received_date'] );
     
             if (
@@ -302,9 +305,6 @@ table.on('column-visibility.dt', function(e, settings, column, state) {
             return false;
         });
 
-        var startDate = new Date();
-        var endDate = new Date();
-        var table = $('#complaint').DataTable();
         $('input[name="datefilter"]').daterangepicker({
             autoUpdateInput: false,
             showDropdowns: true,
