@@ -294,13 +294,21 @@ table.on('column-visibility.dt', function(e, settings, column, state) {
 
     $.fn.dataTable.ext.errMode = 'throw';
 
+    let startDate = new Date();
+    let endDate = new Date();
+
     $(function() {
         $('input[name="daterange"]').daterangepicker({
             opens: 'left'
         }, function(start, end, label) {
+            startDate = new Date(start.format('DD-MM-YYYY'))
+            endDate = new Date(end.format('DD-MM-YYYY'))
             // console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
         });
     });
+    console.log(startDate)
+    console.log(endDate)
+
 
 </script>
 
