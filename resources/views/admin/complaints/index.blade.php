@@ -282,29 +282,34 @@ table.on('column-visibility.dt', function(e, settings, column, state) {
 
 <script>
     var minDate, maxDate;
-    
-    $.fn.dataTable.ext.search.push(function( settings, data, dataIndex ){
-        var min = minDate.val();
-        var max = maxDate.val();
-        console.log(min)
-        console.log(max)
-        var date = new Date(data[5]);
-        if (
-            ( min === null && max === null ) ||
-            ( min === null && date <= max ) ||
-            ( min <= date   && max === null ) ||
-            ( min <= date   && date <= max )
-        ) {
-            return true;
-        }
-        return false;
+    var table = $('#complaint').DataTable();
+    $(document).ready(function() {
+        table.DataTable( {
+            initComplete: function () {
+                $.fn.dataTable.ext.search.push(function( settings, data, dataIndex ){
+                    var min = minDate.val();
+                    var max = maxDate.val();
+                    console.log(min)
+                    console.log(max)
+                    var date = new Date(data[5]);
+                    if (
+                        ( min === null && max === null ) ||
+                        ( min === null && date <= max ) ||
+                        ( min <= date   && max === null ) ||
+                        ( min <= date   && date <= max )
+                    ) {
+                        return true;
+                    }
+                    return false;
+                });
+            }
+        });
     });
 
 
     $(document).ready(function() {
         var startDate = new Date();
         var endDate = new Date();
-        var table = $('#complaint').DataTable();
         $(function() {
             $('input[name="datefilter"]').daterangepicker({
                 autoUpdateInput: false,
