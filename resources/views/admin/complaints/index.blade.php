@@ -303,11 +303,37 @@ table.on('column-visibility.dt', function(e, settings, column, state) {
         }, function(start, end, label) {
             minDate = new Date(start);
             maxDate = new Date(end);
-            console.log("A new date selection was made: " + start.format('DD-MM-YYYY') + ' to ' + end.format('DD-MM-YYYY'));
-            console.log(minDate);
-            console.log(maxDate);
+            // console.log("A new date selection was made: " + start.format('DD-MM-YYYY') + ' to ' + end.format('DD-MM-YYYY'));
+            // console.log(minDate);
+            // console.log(maxDate);
         });
     });
+
+    // DataTables initialisation
+    var table = $('#complaintTable').DataTable();
+ 
+    // Refilter the table
+    $('input[name="daterange"]').on('change', function () {
+        table.draw();
+    });
+
+    $.fn.dataTable.ext.search.push(
+    function( settings, data, dataIndex ) {
+        var min = minDate;
+        var max = maxDate;
+        var date = new Date( data[5] );
+ 
+        if (
+            ( min === null && max === null ) ||
+            ( min === null && date <= max ) ||
+            ( min <= date   && max === null ) ||
+            ( min <= date   && date <= max )
+        ) {
+            return true;
+        }
+        return false;
+    }
+);
 
 
 </script>
