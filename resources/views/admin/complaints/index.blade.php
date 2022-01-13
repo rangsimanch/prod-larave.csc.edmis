@@ -319,8 +319,8 @@ table.on('column-visibility.dt', function(e, settings, column, state) {
                 endDate = new Date(picker.endDate);
                 minDate = startDate;
                 maxDate = endDate;
-                console(minDate)
-                console(maxDate)
+                console.log(minDate);
+                console.log(maxDate);
                 table.draw();
             });
 
