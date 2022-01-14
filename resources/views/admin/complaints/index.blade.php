@@ -288,7 +288,8 @@ table.on('column-visibility.dt', function(e, settings, column, state) {
 $(document).ready(function() {
     //DATATABLE
     //To display datatable without search and page length select, and to still have pagination work, instantiate like so
-    var oTable=$('#complaintdb').dataTable();
+    // var oTable=$('#complaintdb').dataTable();
+    let oTable = $('.datatable-Complaint').DataTable();
     //DATE RANGE
     //set global vars that are set by daterange picker, to be used by datatable
     var startdate;
@@ -305,7 +306,6 @@ $(document).ready(function() {
         },
         "opens": "right",
         format: 'DD/MM/YYYY'
-
     },
     function(start, end, label) {
     // Parse it to a moment
@@ -319,6 +319,8 @@ $(document).ready(function() {
     $('#reportrange').on('apply.daterangepicker', function(ev, picker) {
         startdate=picker.startDate.format('YYYY-MM-DD');
         enddate=picker.endDate.format('YYYY-MM-DD');
+        console.log(startdate, enddate);
+
         $.fn.dataTableExt.afnFiltering.push(
         function( oSettings, aData, iDataIndex ) {
         if(startdate!=undefined){
@@ -353,7 +355,7 @@ $(document).ready(function() {
             return false;
             }
         });
-    oTable.fnDraw();
+    oTable.draw();
     });
 });
 </script>
