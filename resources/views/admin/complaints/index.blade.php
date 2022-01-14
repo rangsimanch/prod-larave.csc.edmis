@@ -354,15 +354,13 @@ $(document).ready(function() {
            .filter(function(value, index) {
 
              var evalDate = value === "" ? 0 : parseDateValue(value);
-            //  console.log(evalDate);
              if ((isNaN(dateStart) && isNaN(dateEnd)) || (evalDate >= dateStart && evalDate <= dateEnd)) {
-                console.log("True");
+                // console.log("True");
                return true;
              }
-             console.log("False");
+            //  console.log("False");
              return false;
            });
-    //     console.log(filteredData);
          var val = "";
          for (var count = 0; count < filteredData.length; count++) {
 
@@ -370,7 +368,9 @@ $(document).ready(function() {
          }
 
          val = val.slice(0, -1);
-
+         console.log(filteredData.length);
+         console.log(val);
+         console.log(table.column(dataIdx).data());
          table.column(dataIdx)
            .search(val ? "^" + val + "$" : "^" + "-" + "$", true, false, true)
            .draw();
