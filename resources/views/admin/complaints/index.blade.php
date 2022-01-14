@@ -280,71 +280,100 @@ table.on('column-visibility.dt', function(e, settings, column, state) {
       table.columns(":visible").every(function(colIdx) {
           visibleColumnsIndexes.push(colIdx);
       });
-  })     
-}); 
-</script>
-
-
-<script>
-    $(document).ready(function() {
-        var minDate, maxDate;
-        let table = $('.datatable-Complaint').DataTable();
-
-        $('input[name="daterange"]').daterangepicker({
+  })
+  
+    $('.daterange').daterangepicker({
+            ranges: {
+                "Today": [moment(), moment()],
+                'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+                '7 last days': [moment().subtract(6, 'days'), moment()],
+                '30 last days': [moment().subtract(29, 'days'), moment()],
+                'This month': [moment().startOf('month'), moment().endOf('month')],
+                'Last month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')],
+                'Blank date': [moment("01/01/0001"), moment("01/01/00001")]
+            },
             autoUpdateInput: false,
-            showDropdowns: true,
+            opens: "left",
             locale: {
-                cancelLabel: 'Clear'
+                cancelLabel: 'Clear',
+                format: 'DD/MM/YYYY'
             }
         });
 
-        $('input[name="daterange"]').on('apply.daterangepicker', function(ev, picker) {
-            $(this).val(picker.startDate.format('DD/MM/YYYY') + ' - ' + picker.endDate.format('DD/MM/YYYY'));
-            startdate = picker.startDate.format('DD/MM/YYYY');
-            enddate = picker.endDate.format('DD/MM/YYYY');
-            $.fn.dataTableExt.afnFiltering.push(
-                function (oSettings, aData, iDataIndex) {
-                    if (startdate != undefined) {
-                        // 0 here is the column where my dates are.
-                        //Convert to YYYY-MM-DD format from DD/MM/YYYY
-                        var coldate = aData[5].split("/");
-                        var d = new Date(coldate[2], coldate[1] - 1, coldate[0]);
-                        var date = moment(d.toISOString());
-                        date = date.format("DD/MM/YYYY");
+    var startDate;
+    var endDate;
+    var dataIdx = 5;  
 
-                        //Remove hyphens from dates
-                        dateMin = startdate.replace("/", "");
-                        dateMax = enddate.replace("/", "");
-                        date = date.replace("/", "");
+  // Function for converting a dd/mmm/yyyy date value into a numeric string for comparison (example 01-Dec-2010 becomes 20101201
+  function parseDateValue(rawDate) {
+      var d = moment(rawDate, "DD/MM/YYYY").format('DD/MM/YYYY');
+      var dateArray = d.split("/");
+      var parsedDate = dateArray[2] + dateArray[1] + dateArray[0];
+      return parsedDate;
+  }
 
-                        console.log(dateMin, dateMax, date);
+  //filter on daterange
+  $(".daterange").on('apply.daterangepicker', function (ev, picker) {
+    //   ev.preventDefault();
+      //if blank date option was selected
+      if ((picker.startDate.format('DD/MM/YYYY') == "01/01/0001") && (picker.endDate.format('DD/MM/YYYY')) == "01/01/0001") {
+          $(this).val('Blank');
+          val = "^$";
+          table.column(dataIdx)
+             .search(val, true, false, true)
+             .draw();
+      }
+      else {
+          //set field value
+          $(this).val(picker.startDate.format('DD/MM/YYYY') + ' - ' + picker.endDate.format('DD/MM/YYYY'));
+          //run date filter
+          startDate = picker.startDate.format('DD/MM/YYYY');
+          endDate = picker.endDate.format('DD/MM/YYYY');
+          var dateStart = parseDateValue(startDate);
+          var dateEnd = parseDateValue(endDate);
 
-                        // run through cases to filter results
-                        if (dateMin == "" && date <= dateMax) {
-                            return true;
-                        }
-                        else if (dateMin == "" && date <= dateMax) {
-                            return true;
-                        }
-                        else if (dateMin <= date && "" == dateMax) {
-                            return true;
-                        }
-                        else if (dateMin <= date && date <= dateMax) {
-                            return true;
-                        }
+          var filteredData = table
+                  .column(dataIdx)
+                  .data()
+                  .filter(function (value, index) {
 
-                        // all failed
-                        return false;
-                    }
-                }
-            );
-            table.draw();
-        });
+                      var evalDate = value === "" ? 0 : parseDateValue(value);
+                      console.log(dateStart);
+                      console.log(dateEnd);
+                      console.log(evalDate);
 
-        $('input[name="daterange"]').on('cancel.daterangepicker', function(ev, picker) {
-            $(this).val('');
-        });
+                      if ((isNaN(dateStart) && isNaN(dateEnd)) || (evalDate >= dateStart && evalDate <= dateEnd)) {
+                          return true;
+                      }
+                      return false;
+                  });
+          var val = "";
+          
+          console.log(filteredData.length);
+
+          for (var count = 0; count < filteredData.length; count++) {
+              val += filteredData[count] + "|";
+          }
+
+          val = val.slice(0, -1);
+          console.log(val);
+
+          table.column(dataIdx)
+                .search(val, true, false, true)
+                .draw();
+        }
     });
+    $(".daterange").on('cancel.daterangepicker', function (ev, picker) {
+        ev.preventDefault();
+        $(this).val('');
+        table.column(dataIdx)
+                .search("")
+                .draw();
+    });
+     
+  }); 
 </script>
+
+
 
 @endsection
