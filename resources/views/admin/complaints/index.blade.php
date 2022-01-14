@@ -340,7 +340,8 @@
                     .column(dataIdx)
                     .data()
                     .filter(function (value, index) {
-                        var evalDate = value === "" ? 0 : parseDateValue(value.format('DD/MM/YYYY'));
+                        var evalDate = value === "" ? 0 : parseDateValue(value);
+                        console.log(value, index)
                         if ((isNaN(dateStart) && isNaN(dateEnd)) || (evalDate >= dateStart && evalDate <= dateEnd)) {
                             return true;
                         }
