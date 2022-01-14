@@ -314,8 +314,16 @@ table.on('column-visibility.dt', function(e, settings, column, state) {
 
   //filter on daterange
   $(".daterange").on('apply.daterangepicker', function (ev, picker) {
-    //   ev.preventDefault();
-    
+      ev.preventDefault();
+      //if blank date option was selected
+      if ((picker.startDate.format('DD/MM/YYYY') == "01/01/0001") && (picker.endDate.format('DD/MM/YYYY')) == "01/01/0001") {
+          $(this).val('Blank');
+          val = "^$";
+          table.column(dataIdx)
+             .search(val, true, false, true)
+             .draw();
+      }
+      else {
           //set field value
           $(this).val(picker.startDate.format('DD/MM/YYYY') + ' - ' + picker.endDate.format('DD/MM/YYYY'));
           //run date filter
@@ -330,10 +338,7 @@ table.on('column-visibility.dt', function(e, settings, column, state) {
                   .filter(function (value, index) {
 
                       var evalDate = value === "" ? 0 : parseDateValue(value);
-                      console.log(dateStart);
-                      console.log(dateEnd);
-                      console.log(evalDate);
-
+                      
                       if ((isNaN(dateStart) && isNaN(dateEnd)) || (evalDate >= dateStart && evalDate <= dateEnd)) {
                           return true;
                       }
@@ -353,7 +358,7 @@ table.on('column-visibility.dt', function(e, settings, column, state) {
           table.column(dataIdx)
                 .search(val, true, false, true)
                 .draw();
-        
+        }
     });
     $(".daterange").on('cancel.daterangepicker', function (ev, picker) {
         // ev.preventDefault();
