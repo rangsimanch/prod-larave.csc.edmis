@@ -316,6 +316,14 @@
         return parsedDate;
     }
 
+    function covertDateValue(text) {
+        let year = text.slice(0, 4);
+        let month = text.slice(4, 6);
+        let day = text.slice(6, 8);
+        var parsedDate = year + "-" + month + "-" + day;
+        return parsedDate;
+    }
+
     //filter on daterange
     $(".daterange").on('apply.daterangepicker', function (ev, picker) {
         ev.preventDefault();
@@ -348,10 +356,9 @@
                     });
             var val = "";
             for (var count = 0; count < filteredData.length; count++) {
-                var filterDate = parseDateValue(filteredData[count]);
-                let sDate = filterDate.toString();
+                var filterDate = new Date(covertDateValue(parseDateValue(filteredData[count])));
                 console.log(filterDate);
-                val += sDate + "|";
+                val += filterDate + "|";
             }
             val = val.slice(0, -1);
             table.column(dataIdx)
