@@ -280,106 +280,14 @@ table.on('column-visibility.dt', function(e, settings, column, state) {
       table.columns(":visible").every(function(colIdx) {
           visibleColumnsIndexes.push(colIdx);
       });
-  })
-  
-    $('.daterange').daterangepicker({
-            ranges: {
-                "Today": [moment(), moment()],
-                'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
-                '7 last days': [moment().subtract(6, 'days'), moment()],
-                '30 last days': [moment().subtract(29, 'days'), moment()],
-                'This month': [moment().startOf('month'), moment().endOf('month')],
-                'Last month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')],
-                'Blank date': [moment("01/01/0001"), moment("01/01/00001")]
-            },
-            autoUpdateInput: false,
-            opens: "left",
-            locale: {
-                cancelLabel: 'Clear',
-                format: 'DD/MM/YYYY'
-            }
-        });
-
-    var startDate;
-    var endDate;
-    var dataIdx = 5;  
-
-  // Function for converting a dd/mmm/yyyy date value into a numeric string for comparison (example 01-Dec-2010 becomes 20101201
-  function parseDateValue(rawDate) {
-      var d = moment(rawDate, "DD/MM/YYYY").format('DD/MM/YYYY');
-      var dateArray = d.split("/");
-      var parsedDate = dateArray[2] + dateArray[1] + dateArray[0];
-      return parsedDate;
-  }
-
-  //filter on daterange
-  $(".daterange").on('apply.daterangepicker', function (ev, picker) {
-
-      ev.preventDefault();
-      //if blank date option was selected
-      if ((picker.startDate.format('DD/MM/YYYY') == "01/01/0001") && (picker.endDate.format('DD/MM/YYYY')) == "01/01/0001") {
-          $(this).val('Blank');
-          val = "^$";
-          table.column(dataIdx)
-             .search(val, true, false, true)
-             .draw();
-      }
-      else {
-          //set field value
-          $(this).val(picker.startDate.format('DD/MM/YYYY') + ' - ' + picker.endDate.format('DD/MM/YYYY'));
-          //run date filter
-          startDate = picker.startDate.format('DD/MM/YYYY');
-          endDate = picker.endDate.format('DD/MM/YYYY');
-          var dateStart = parseDateValue(startDate);
-          var dateEnd = parseDateValue(endDate);
-
-          var filteredData = table
-                  .column(dataIdx)
-                  .data()
-                  .filter(function (value, index) {
-
-                      var evalDate = value === "" ? 0 : parseDateValue(value);
-                      console.log(dateStart);
-                      console.log(dateEnd);
-                      console.log(evalDate);
-
-                      if ((isNaN(dateStart) && isNaN(dateEnd)) || (evalDate >= dateStart && evalDate <= dateEnd)) {
-                          return true;
-                      }
-                      return false;
-                  });
-          var val = "";
-          
-          console.log(filteredData.length);
-
-          for (var count = 0; count < filteredData.length; count++) {
-              val += filteredData[count] + "|";
-          }
-
-          val = val.slice(0, -1);
-          console.log(val);
-
-          table.column(dataIdx)
-                .search(val, true, false, true)
-                .draw();
-        }
-    });
-    $(".daterange").on('cancel.daterangepicker', function (ev, picker) {
-        ev.preventDefault();
-        $(this).val('');
-        table.column(dataIdx)
-                .search("")
-                .draw();
-    });
-     
-  }); 
-</script>
+  })     
+// }); 
+// </script>
 
 
-<!-- <script>
-    $(document).ready(function() {
+// <script>
+//     $(document).ready(function() {
         var minDate, maxDate;
-        var table = $('#complaint').DataTable();
 
         $('input[name="datefilter"]').daterangepicker({
             autoUpdateInput: false,
@@ -391,8 +299,8 @@ table.on('column-visibility.dt', function(e, settings, column, state) {
 
         $('input[name="datefilter"]').on('apply.daterangepicker', function(ev, picker) {
             $(this).val(picker.startDate.format('DD/MM/YYYY') + ' - ' + picker.endDate.format('DD/MM/YYYY'));
-            startdate = picker.startDate.format('YYYY-MM-DD');
-            enddate = picker.endDate.format('YYYY-MM-DD');
+            startdate = picker.startDate.format('DD/MM/YYYY');
+            enddate = picker.endDate.format('DD/MM/YYYY');
             $.fn.dataTableExt.afnFiltering.push(
                 function (oSettings, aData, iDataIndex) {
                     if (startdate != undefined) {
@@ -437,6 +345,6 @@ table.on('column-visibility.dt', function(e, settings, column, state) {
         });
     });
 });
-</script> -->
+</script>
 
 @endsection
