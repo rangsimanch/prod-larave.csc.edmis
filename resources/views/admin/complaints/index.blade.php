@@ -188,188 +188,188 @@
 @parent
 <script>
     $(function () {
-  let dtButtons = $.extend(true, [], $.fn.dataTable.defaults.buttons)
-@can('complaint_delete')
-  let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
-  let deleteButton = {
-    text: deleteButtonTrans,
-    url: "{{ route('admin.complaints.massDestroy') }}",
-    className: 'btn-danger',
-    action: function (e, dt, node, config) {
-      var ids = $.map(dt.rows({ selected: true }).data(), function (entry) {
-          return entry.id
-      });
+        let dtButtons = $.extend(true, [], $.fn.dataTable.defaults.buttons)
+        @can('complaint_delete')
+        let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
+        let deleteButton = {
+            text: deleteButtonTrans,
+            url: "{{ route('admin.complaints.massDestroy') }}",
+            className: 'btn-danger',
+            action: function (e, dt, node, config) {
+            var ids = $.map(dt.rows({ selected: true }).data(), function (entry) {
+                return entry.id
+            });
 
-      if (ids.length === 0) {
-        alert('{{ trans('global.datatables.zero_selected') }}')
+            if (ids.length === 0) {
+                alert('{{ trans('global.datatables.zero_selected') }}')
 
-        return
-      }
-
-      if (confirm('{{ trans('global.areYouSure') }}')) {
-        $.ajax({
-          headers: {'x-csrf-token': _token},
-          method: 'POST',
-          url: config.url,
-          data: { ids: ids, _method: 'DELETE' }})
-          .done(function () { location.reload() })
-      }
-    }
-  }
-  dtButtons.push(deleteButton)
-@endcan
-
-  let dtOverrideGlobals = {
-    buttons: dtButtons,
-    processing: true,
-    serverSide: true,
-    retrieve: true,
-    responsive: true,
-    colReorder: true,
-    aaSorting: [],
-    ajax: "{{ route('admin.complaints.index') }}",
-    columns: [
-    { data: 'placeholder', name: 'placeholder' },
-{ data: 'status', name: 'status' },
-{ data: 'construction_contract_code', name: 'construction_contract.code' },
-{ data: 'document_number', name: 'document_number' },
-{ data: 'complaint_recipient_code', name: 'complaint_recipient.code' },
-{ data: 'received_date', name: 'received_date'},
-{ data: 'source_code', name: 'source_code' },
-{ data: 'file_attachment_create', name: 'file_attachment_create', sortable: false, searchable: false },
-{ data: 'complainant', name: 'complainant' },
-{ data: 'complainant_tel', name: 'complainant_tel' },
-{ data: 'complainant_detail', name: 'complainant_detail' },
-{ data: 'complaint_description', name: 'complaint_description' },
-{ data: 'type_code', name: 'type_code' },
-{ data: 'impact_code', name: 'impact_code' },
-{ data: 'operator_name', name: 'operator.name' },
-{ data: 'action_detail', name: 'action_detail' },
-{ data: 'progress_file', name: 'progress_file', sortable: false, searchable: false },
-{ data: 'action_date', name: 'action_date' },
-{ data: 'actions', name: '{{ trans('global.actions') }}' }
-    ],
-    orderCellsTop: true,
-    order: [[ 5, 'desc' ]],
-    pageLength: 10,
-    processing: true,
-    serverSide: true,
-  };
-  let table = $('.datatable-Complaint').DataTable(dtOverrideGlobals);
-  $('a[data-toggle="tab"]').on('shown.bs.tab click', function(e){
-      $($.fn.dataTable.tables(true)).DataTable()
-          .columns.adjust();
-  });
-  
-let visibleColumnsIndexes = null;
-$('.datatable thead').on('input', '.search', function () {
-      let strict = $(this).attr('strict') || false
-      let value = strict && this.value ? "^" + this.value + "$" : this.value
-
-      let index = $(this).parent().index()
-      if (visibleColumnsIndexes !== null) {
-        index = visibleColumnsIndexes[index]
-      }
-
-      table
-        .column(index)
-        .search(value, strict)
-        .draw()
-  });
-table.on('column-visibility.dt', function(e, settings, column, state) {
-      visibleColumnsIndexes = []
-      table.columns(":visible").every(function(colIdx) {
-          visibleColumnsIndexes.push(colIdx);
-      });
-  })  
-}); 
-</script>
-
-
-<script>
-    $(function () {
-     $('.daterange').daterangepicker({
-            ranges: {
-                "Today": [moment(), moment()],
-                'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
-                '7 last days': [moment().subtract(6, 'days'), moment()],
-                '30 last days': [moment().subtract(29, 'days'), moment()],
-                'This month': [moment().startOf('month'), moment().endOf('month')],
-                'Last month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
-            },
-            autoUpdateInput: false,
-            opens: "left",
-            locale: {
-                cancelLabel: 'Clear',
-                format: 'DD/MM/YYYY'
+                return
             }
+
+            if (confirm('{{ trans('global.areYouSure') }}')) {
+                $.ajax({
+                headers: {'x-csrf-token': _token},
+                method: 'POST',
+                url: config.url,
+                data: { ids: ids, _method: 'DELETE' }})
+                .done(function () { location.reload() })
+            }
+            }
+        }
+        dtButtons.push(deleteButton)
+        @endcan
+
+        let dtOverrideGlobals = {
+            buttons: dtButtons,
+            processing: true,
+            serverSide: true,
+            retrieve: true,
+            responsive: true,
+            colReorder: true,
+            aaSorting: [],
+            ajax: "{{ route('admin.complaints.index') }}",
+            columns: [
+                { data: 'placeholder', name: 'placeholder' },
+                { data: 'status', name: 'status' },
+                { data: 'construction_contract_code', name: 'construction_contract.code' },
+                { data: 'document_number', name: 'document_number' },
+                { data: 'complaint_recipient_code', name: 'complaint_recipient.code' },
+                { data: 'received_date', name: 'received_date'},
+                { data: 'source_code', name: 'source_code' },
+                { data: 'file_attachment_create', name: 'file_attachment_create', sortable: false, searchable: false },
+                { data: 'complainant', name: 'complainant' },
+                { data: 'complainant_tel', name: 'complainant_tel' },
+                { data: 'complainant_detail', name: 'complainant_detail' },
+                { data: 'complaint_description', name: 'complaint_description' },
+                { data: 'type_code', name: 'type_code' },
+                { data: 'impact_code', name: 'impact_code' },
+                { data: 'operator_name', name: 'operator.name' },
+                { data: 'action_detail', name: 'action_detail' },
+                { data: 'progress_file', name: 'progress_file', sortable: false, searchable: false },
+                { data: 'action_date', name: 'action_date' },
+                { data: 'actions', name: '{{ trans('global.actions') }}' }
+            ],
+            orderCellsTop: true,
+            order: [[ 5, 'desc' ]],
+            pageLength: 10,
+            processing: true,
+        };
+        let table = $('.datatable-Complaint').DataTable(dtOverrideGlobals);
+        $('a[data-toggle="tab"]').on('shown.bs.tab click', function(e){
+            $($.fn.dataTable.tables(true)).DataTable()
+                .columns.adjust();
         });
+        let visibleColumnsIndexes = null;
+        $('.datatable thead').on('input', '.search', function () {
+            let strict = $(this).attr('strict') || false
+            let value = strict && this.value ? "^" + this.value + "$" : this.value
+
+            let index = $(this).parent().index()
+            if (visibleColumnsIndexes !== null) {
+                index = visibleColumnsIndexes[index]
+            }
+            table
+                .column(index)
+                .search(value, strict)
+                .draw()
+        });
+        table.on('column-visibility.dt', function(e, settings, column, state) {
+            visibleColumnsIndexes = []
+            table.columns(":visible").every(function(colIdx) {
+                visibleColumnsIndexes.push(colIdx);
+            });
+        }) 
+         
+        $('.daterange').daterangepicker({
+        ranges: {
+            "Today": [moment(), moment()],
+            'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+            '7 last days': [moment().subtract(6, 'days'), moment()],
+            '30 last days': [moment().subtract(29, 'days'), moment()],
+            'This month': [moment().startOf('month'), moment().endOf('month')],
+            'Last month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+        }
+        ,
+        autoUpdateInput: false,
+        opens: "left",
+        locale: {
+            cancelLabel: 'Clear',
+            format: 'DD-MMM-YYYY'
+        }
+    });
 
     var startDate;
     var endDate;
-    let table = $('.datatable-Complaint').DataTable();
-    var dataIdx = 5;  
+    var dataIdx = 5;  //current data column to work with
 
-  // Function for converting a dd/mmm/yyyy date value into a numeric string for comparison (example 01-Dec-2010 becomes 20101201
-  function parseDateValue(rawDate) {
-      var d = moment(rawDate, "DD/MM/YYYY").format('DD-MM-YYYY');
-      var dateArray = d.split("-");
-      var parsedDate = dateArray[2] + dateArray[1] + dateArray[0];
-      return parsedDate;
-  }
 
-  //filter on daterange
-  $(".daterange").on('apply.daterangepicker', function (ev, picker) {
-      ev.preventDefault();
-      //if blank date option was selected
-      if ((picker.startDate.format('DD/MM/YYYY') == "01/01/0001") && (picker.endDate.format('DD/MM/YYYY')) == "01/01/0001") {
-          $(this).val('');
-          val = "^$";
-          table.column(dataIdx)
-             .search(val, true, false, true)
-             .draw();
-      }
-      else {
-          //set field value
-          $(this).val(picker.startDate.format('DD/MM/YYYY') + ' - ' + picker.endDate.format('DD/MM/YYYY'));
-          //run date filter
-          startDate = picker.startDate.format('DD/MM/YYYY');
-          endDate = picker.endDate.format('DD/MM/YYYY');
-          var dateStart = parseDateValue(startDate);
-          var dateEnd = parseDateValue(endDate);
+    $("#mytable_wrapper thead").on("mousedown", "th", function (event) {
+        var visIdx = $(this).parent().children().index($(this));
+        dataIdx = table.column.index('fromVisible', visIdx);
+    });
 
-          var filteredData = table
-                  .column(dataIdx)
-                  .data()
-                  .filter(function (value, index) {
+    // Function for converting a dd/mmm/yyyy date value into a numeric string for comparison (example 01-Dec-2010 becomes 20101201
+    function parseDateValue(rawDate) {
+        var d = moment(rawDate, "DD-MMM-YYYY").format('DD-MM-YYYY');
+        var dateArray = d.split("-");
+        var parsedDate = dateArray[2] + dateArray[1] + dateArray[0];
+        return parsedDate;
+    }
 
-                      var evalDate = value === "" ? 0 : parseDateValue(value);
-                      if ((isNaN(dateStart) && isNaN(dateEnd)) || (evalDate >= dateStart && evalDate <= dateEnd)) {
-                          return true;
-                      }
-                      return false;
-                  });
-          var val = "";
-          console.log(filteredData.length);
+    //filter on daterange
+    $(".daterange").on('apply.daterangepicker', function (ev, picker) {
+        ev.preventDefault();
+        //if blank date option was selected
+        if ((picker.startDate.format('DD-MMM-YYYY') == "01-Jan-0001") && (picker.endDate.format('DD-MMM-YYYY')) == "01-Jan-0001") {
+            $(this).val('Blank');
+            val = "^$";
+            table.column(dataIdx)
+               .search(val, true, false, true)
+               .draw();
 
-          for (var count = 0; count < filteredData.length; count++) {
-              val += filteredData[count] + "|";
-          }
-          console.log(val);
-          val = val.slice(0, -1);
-          table.column(dataIdx)
+        }
+        else {
+            //set field value
+            $(this).val(picker.startDate.format('DD-MMM-YYYY') + ' to ' + picker.endDate.format('DD-MMM-YYYY'));
+            //run date filter
+            startDate = picker.startDate.format('DD-MMM-YYYY');
+            endDate = picker.endDate.format('DD-MMM-YYYY');
+
+            var dateStart = parseDateValue(startDate);
+            var dateEnd = parseDateValue(endDate);
+            var filteredData = table
+                    .column(dataIdx)
+                    .data()
+                    .filter(function (value, index) {
+
+                        var evalDate = value === "" ? 0 : parseDateValue(value);
+                        if ((isNaN(dateStart) && isNaN(dateEnd)) || (evalDate >= dateStart && evalDate <= dateEnd)) {
+
+                            return true;
+                        }
+                        return false;
+                    });
+            var val = "";
+            for (var count = 0; count < filteredData.length; count++) {
+                val += filteredData[count] + "|";
+            }
+            val = val.slice(0, -1);
+            table.column(dataIdx)
                 .search(val ? "^" + val + "$" : "^" + "-" + "$", true, false, true)
                 .draw();
-        }
-    });
-    $(".daterange").on('cancel.daterangepicker', function (ev, picker) {
-        ev.preventDefault();
-        $(this).val('');
-        table.column(dataIdx)
+            }
+        });
+
+
+        $(".daterange").on('cancel.daterangepicker', function (ev, picker) {
+            ev.preventDefault();
+            $(this).val('');
+            table.column(dataIdx)
                 .search("")
                 .draw();
         });
-    });
+    }); 
+
 </script>
 
 
