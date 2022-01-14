@@ -322,8 +322,8 @@
     //filter on daterange
     $(".daterange").on('apply.daterangepicker', function (ev, picker) {
         ev.preventDefault();
-        var filteredData;
-        var val;
+        var filteredData = null;
+        var val = "";
         //if blank date option was selected
         if ((picker.startDate.format('DD/MM/YYYY') == "01/01/0001") && (picker.endDate.format('DD/MM/YYYY')) == "01/01/0001") {
             $(this).val('');
