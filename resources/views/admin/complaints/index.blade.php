@@ -296,14 +296,13 @@ $(document).ready(function() {
     //instantiate datepicker and choose your format of the dates
     $('#reportrange').daterangepicker({
         ranges: {
-           "Aujourd'hui": [moment(), moment()],
-           'Hier': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
-           'Les 7 derniers jours': [moment().subtract(6, 'days'), moment()],
-           'Les 30 derniers jours': [moment().subtract(29, 'days'), moment()],
-           'Ce mois-ci': [moment().startOf('month'), moment().endOf('month')],
-           'Le mois dernier': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
-        }
-    ,
+            'Today': [moment(), moment()],
+            'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+            'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+            'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+            'This Month': [moment().startOf('month'), moment().endOf('month')],
+            'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+        },
         "opens": "right",
         format: 'DD/MM/YYYY'
 
@@ -335,7 +334,7 @@ $(document).ready(function() {
             dateMax=enddate.replace(/-/g, "");
             date=date.replace(/-/g, "");
 
-            //console.log(dateMin, dateMax, date);
+            console.log(dateMin, dateMax, date);
 
             // run through cases to filter results
             if ( dateMin == "" && date <= dateMax){
