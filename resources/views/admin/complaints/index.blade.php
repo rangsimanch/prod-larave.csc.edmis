@@ -365,20 +365,21 @@ $(document).ready(function() {
              }
              return false;
            });
-        console.log(filteredData);
-         var val = "";
-         for (var count = 0; count < filteredData.length; count++) {
+    //     console.log(filteredData);
+    //      var val = "";
+    //      for (var count = 0; count < filteredData.length; count++) {
 
-           val += filteredData[count] + "|";
-         }
+    //        val += filteredData[count] + "|";
+    //      }
 
-         val = val.slice(0, -1);
+    //      val = val.slice(0, -1);
 
 
-         table.column(dataIdx)
-           .search(val ? "^" + val + "$" : "^" + "-" + "$", true, false, true)
-           .draw();
-       }
+    //      table.column(dataIdx)
+    //        .search(val ? "^" + val + "$" : "^" + "-" + "$", true, false, true)
+    //        .draw();
+    //    }
+       table.draw();
      });
 
 
