@@ -308,13 +308,8 @@ $(document).ready(function() {
 
      var startDate;
      var endDate;
-     var dataIdx; //current data column to work with
+     var dataIdx = 5 //current data column to work with
 
-
-     $("#datatableComplaint_wrapper thead").on("mousedown", "th", function(event) {
-       var visIdx = $(this).parent().children().index($(this));
-       dataIdx = table.column.index('fromVisible', visIdx);
-     });
 
 
 
