@@ -380,6 +380,7 @@ $(document).ready(function() {
     //        .draw();
     //    }
        table.draw();
+       }
      });
 
 
