@@ -340,9 +340,9 @@ table.on('column-visibility.dt', function(e, settings, column, state) {
 
                       var evalDate = value === "" ? 0 : parseDateValue(value);
                       if ((isNaN(dateStart) && isNaN(dateEnd)) || (evalDate >= dateStart && evalDate <= dateEnd)) {
-                          return false;
+                          return true;
                       }
-                      return true;
+                      return false;
                   });
           var val = "";
           for (var count = 0; count < filteredData.length; count++) {
@@ -355,7 +355,7 @@ table.on('column-visibility.dt', function(e, settings, column, state) {
 
 
           table.column(dataIdx)
-                .search(val, true, false, true)
+                .search(val)
                 .draw();
         }
     });
