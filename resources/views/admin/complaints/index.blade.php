@@ -290,7 +290,7 @@ table.on('column-visibility.dt', function(e, settings, column, state) {
         var minDate, maxDate;
         let table = $('.datatable-Complaint').DataTable();
 
-        $('input[name="datefilter"]').daterangepicker({
+        $('input[name="daterange"]').daterangepicker({
             autoUpdateInput: false,
             showDropdowns: true,
             locale: {
@@ -298,7 +298,7 @@ table.on('column-visibility.dt', function(e, settings, column, state) {
             }
         });
 
-        $('input[name="datefilter"]').on('apply.daterangepicker', function(ev, picker) {
+        $('input[name="daterange"]').on('apply.daterangepicker', function(ev, picker) {
             $(this).val(picker.startDate.format('DD/MM/YYYY') + ' - ' + picker.endDate.format('DD/MM/YYYY'));
             startdate = picker.startDate.format('DD/MM/YYYY');
             enddate = picker.endDate.format('DD/MM/YYYY');
@@ -341,7 +341,7 @@ table.on('column-visibility.dt', function(e, settings, column, state) {
             table.draw();
         });
 
-        $('input[name="datefilter"]').on('cancel.daterangepicker', function(ev, picker) {
+        $('input[name="daterange"]').on('cancel.daterangepicker', function(ev, picker) {
             $(this).val('');
         });
     });
