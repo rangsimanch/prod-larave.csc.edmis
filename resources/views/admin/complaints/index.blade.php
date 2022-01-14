@@ -294,7 +294,7 @@
         opens: "left",
         locale: {
             cancelLabel: 'Clear',
-            format: 'DD/MM/YYYY'
+            format: 'YYYY-MM-DD'
         }
     });
 
