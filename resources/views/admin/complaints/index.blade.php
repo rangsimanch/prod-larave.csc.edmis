@@ -323,6 +323,7 @@
         if ((picker.startDate.format('DD/MM/YYYY') == "01/01/0001") && (picker.endDate.format('DD/MM/YYYY')) == "01/01/0001") {
             $(this).val('');
             val = "^$";
+            console.log("Blank")
             table.column(dataIdx)
                .search(val, true, false, true)
                .draw();
