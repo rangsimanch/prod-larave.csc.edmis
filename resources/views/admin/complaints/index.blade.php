@@ -348,7 +348,7 @@
                     });
             var val = "";
             for (var count = 0; count < filteredData.length; count++) {
-                var filterDate = parseDateValue(filteredData[count]);
+                var filterDate = new Date(parseDateValue(filteredData[count]));
                 let sDate = filterDate.toString();
                 console.log(filterDate);
                 val += sDate + "|";
