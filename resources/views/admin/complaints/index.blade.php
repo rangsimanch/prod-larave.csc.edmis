@@ -223,6 +223,7 @@
     processing: true,
     serverSide: true,
     retrieve: true,
+    responsive: true,
     aaSorting: [],
     ajax: "{{ route('admin.complaints.index') }}",
     columns: [
@@ -284,31 +285,6 @@ table.on('column-visibility.dt', function(e, settings, column, state) {
 
 <script>
     $(document).ready(function() {
-
-        $.fn.dataTable.ext.search.push(
-            function(settings, data, dataIndex) {
-                var min = start;
-                var max = end;
-                var startDate = new Date(data[5]);
-                console.log(min);
-                console.log(max);
-                
-                if (min == null && max == null) {
-                    return true;
-                }
-                if (min == null && startDate <= max) {
-                    return true;
-                }
-                if (max == null && startDate >= min) {
-                    return true;
-                }
-                if (startDate <= max && startDate >= min) {
-                    return true;
-                }
-                return false;
-            }
-        );
-
         var minDate, maxDate;
         var table = $('#complaint').DataTable();
 
@@ -324,15 +300,29 @@ table.on('column-visibility.dt', function(e, settings, column, state) {
             $(this).val(picker.startDate.format('DD/MM/YYYY') + ' - ' + picker.endDate.format('DD/MM/YYYY'));
             start = picker.startDate;
             end = picker.endDate;
-            table.draw();
-            $.fn.dataTable.ext.search.pop();
-        });
-
-        $('input[name="datefilter"]').on('change', function(){
-            table.draw();
-        });
-
-        $('input[name="datefilter"]').on('keyup', function(){
+            $.fn.dataTableExt.afnFiltering.push(
+                function(settings, data, dataIndex) {
+                    var min = start;
+                    var max = end;
+                    var startDate = new Date(data[5]);
+                    console.log(min);
+                    console.log(max);
+                    
+                    if (min == null && max == null) {
+                        return true;
+                    }
+                    if (min == null && startDate <= max) {
+                        return true;
+                    }
+                    if (max == null && startDate >= min) {
+                        return true;
+                    }
+                    if (startDate <= max && startDate >= min) {
+                        return true;
+                    }
+                    return false;
+                }
+            );
             table.draw();
         });
 
