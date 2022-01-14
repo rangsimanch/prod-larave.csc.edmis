@@ -341,13 +341,10 @@
                     .data()
                     .filter(function (value, index) {
                         var evalDate = value === "" ? 0 : parseDateValue(value);
-                        
                         if ((isNaN(dateStart) && isNaN(dateEnd)) || (evalDate >= dateStart && evalDate <= dateEnd)) {
-                            console.log(value, index)
                             return true;
                         }
-                        console.log("False")
-                        return false;
+                        // return false;
                     });
             var val = "";
             for (var count = 0; count < filteredData.length; count++) {
