@@ -228,7 +228,7 @@
     aaSorting: [],
     ajax: "{{ route('admin.complaints.index') }}",
     columns: [
-{ data: 'placeholder', name: 'placeholder' },
+    { data: 'placeholder', name: 'placeholder' },
 { data: 'status', name: 'status' },
 { data: 'construction_contract_code', name: 'construction_contract.code' },
 { data: 'document_number', name: 'document_number' },
@@ -341,7 +341,7 @@ $(document).ready(function() {
 
        } else {
          //set field value
-         $(this).val(picker.startDate.format('DD/MM/YYYY') + ' to ' + picker.endDate.format('DD/MM/YYYY'));
+         $(this).val(picker.startDate.format('DD-MMM-YYYY') + ' to ' + picker.endDate.format('DD-MMM-YYYY'));
 
 
 
