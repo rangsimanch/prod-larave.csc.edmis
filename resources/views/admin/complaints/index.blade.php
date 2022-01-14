@@ -287,6 +287,7 @@ table.on('column-visibility.dt', function(e, settings, column, state) {
 
    $(function () {
      //instantiate datepicker and choose your format of the dates
+     let table = $('.datatable-Complaint').DataTable(dtOverrideGlobals);
         $('.daterange').daterangepicker({
             ranges: {
                 "Today": [moment(), moment()],
@@ -372,45 +373,17 @@ table.on('column-visibility.dt', function(e, settings, column, state) {
           table.column(dataIdx)
                 .search(val ? "^" + val + "$" : "^" + "-" + "$", true, false, true)
                 .draw();
-      }
-  });
-  $(".daterange").on('cancel.daterangepicker', function (ev, picker) {
-      ev.preventDefault();
-      $(this).val('');
-      table.column(dataIdx)
-            .search("")
-            .draw();
-
-   
-
-
-
-  });
+        }
+    });
+    $(".daterange").on('cancel.daterangepicker', function (ev, picker) {
+        ev.preventDefault();
+        $(this).val('');
+        table.column(dataIdx)
+                .search("")
+                .draw();
+    });
      
-         
-      //hide unnecessary columns
-      var column = table.columns($('.HideColumn'));
-      // Toggle the visibility
-      column.visible(!column.visible());
-
-      // Apply the search
-      $.each($('.input-filter', table.table().header()), function () {
-          var column = table.column($(this).index());
-          //onsole.log(column);
-          $('input', this).on('keyup change', function () {
-              if (column.search() !== this.value) {
-                  column
-                      .search(this.value)
-                      .draw();
-              }
-          });
-      });
-     
-
-  
-       
-
-  }); /////////////////////// end of Datatable function
+  }); 
 </script>
 
 
