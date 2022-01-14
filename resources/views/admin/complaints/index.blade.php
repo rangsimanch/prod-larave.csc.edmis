@@ -283,12 +283,8 @@ table.on('column-visibility.dt', function(e, settings, column, state) {
           visibleColumnsIndexes.push(colIdx);
       });
   })
-});
-
-   $(function () {
-     //instantiate datepicker and choose your format of the dates
-     let table = $('.datatable-Complaint').DataTable(dtOverrideGlobals);
-        $('.daterange').daterangepicker({
+  
+    $('.daterange').daterangepicker({
             ranges: {
                 "Today": [moment(), moment()],
                 'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
