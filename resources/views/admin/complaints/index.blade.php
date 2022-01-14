@@ -329,14 +329,14 @@
         }
         else {
             //set field value
-            $(this).val(picker.startDate.format('DD/MM/YYYY') + ' To ' + picker.endDate.format('DD/MM/YYYY'));
+            $(this).val(picker.startDate.format('DD/MM/YYYY') + ' - ' + picker.endDate.format('DD/MM/YYYY'));
             //run date filter
             startDate = picker.startDate.format('DD/MM/YYYY');
             endDate = picker.endDate.format('DD/MM/YYYY');
 
             var dateStart = parseDateValue(startDate);
             var dateEnd = parseDateValue(endDate);
-            var filteredData = table
+            let filteredData = table
                     .column(dataIdx)
                     .data()
                     .filter(function (value, index) {
