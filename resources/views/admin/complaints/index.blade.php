@@ -294,7 +294,7 @@
         opens: "left",
         locale: {
             cancelLabel: 'Clear',
-            format: 'DD-MMM-YYYY'
+            format: 'DD/MM/YYYY'
         }
     });
 
@@ -310,8 +310,8 @@
 
     // Function for converting a dd/mmm/yyyy date value into a numeric string for comparison (example 01-Dec-2010 becomes 20101201
     function parseDateValue(rawDate) {
-        var d = moment(rawDate, "DD-MMM-YYYY").format('DD-MM-YYYY');
-        var dateArray = d.split("-");
+        var d = moment(rawDate, "DD/MM/YYYY");
+        var dateArray = d.split("/");
         var parsedDate = dateArray[2] + dateArray[1] + dateArray[0];
         return parsedDate;
     }
@@ -320,8 +320,8 @@
     $(".daterange").on('apply.daterangepicker', function (ev, picker) {
         ev.preventDefault();
         //if blank date option was selected
-        if ((picker.startDate.format('DD-MMM-YYYY') == "01-Jan-0001") && (picker.endDate.format('DD-MMM-YYYY')) == "01-Jan-0001") {
-            $(this).val('Blank');
+        if ((picker.startDate.format('DD/MM/YYYY') == "01/01/0001") && (picker.endDate.format('DD/MM/YYYY')) == "01/01/0001") {
+            $(this).val('');
             val = "^$";
             table.column(dataIdx)
                .search(val, true, false, true)
@@ -329,10 +329,10 @@
         }
         else {
             //set field value
-            $(this).val(picker.startDate.format('DD-MMM-YYYY') + ' to ' + picker.endDate.format('DD-MMM-YYYY'));
+            $(this).val(picker.startDate.format('DD/MM/YYYY') + ' To ' + picker.endDate.format('DD/MM/YYYY'));
             //run date filter
-            startDate = picker.startDate.format('DD-MMM-YYYY');
-            endDate = picker.endDate.format('DD-MMM-YYYY');
+            startDate = picker.startDate.format('DD/MM/YYYY');
+            endDate = picker.endDate.format('DD/MM/YYYY');
 
             var dateStart = parseDateValue(startDate);
             var dateEnd = parseDateValue(endDate);
@@ -354,9 +354,10 @@
             table.column(dataIdx)
                 .search(val ? "^" + val + "$" : "^" + "-" + "$", true, false, true)
                 .draw();
-            }
+            
             console.log(filteredData.length);
             console.log(val ? "^" + val + "$" : "^" + "-" + "$");
+            }
         });
 
         $(".daterange").on('cancel.daterangepicker', function (ev, picker) {
