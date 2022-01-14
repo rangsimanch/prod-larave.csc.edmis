@@ -280,9 +280,15 @@ table.on('column-visibility.dt', function(e, settings, column, state) {
       table.columns(":visible").every(function(colIdx) {
           visibleColumnsIndexes.push(colIdx);
       });
-  })
-  
-    $('.daterange').daterangepicker({
+  })  
+}); 
+</script>
+
+
+<script>
+    $(function () {
+    var table = $('.datatable-Complaint').DataTable();
+     $('.daterange').daterangepicker({
             ranges: {
                 "Today": [moment(), moment()],
                 'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
@@ -366,11 +372,9 @@ table.on('column-visibility.dt', function(e, settings, column, state) {
         table.column(dataIdx)
                 .search("")
                 .draw();
+        });
     });
-     
-  }); 
 </script>
-
 
 
 @endsection
