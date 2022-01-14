@@ -289,7 +289,7 @@ $(document).ready(function() {
     //DATATABLE
     //To display datatable without search and page length select, and to still have pagination work, instantiate like so
     var oTable= $('.datatable-Complaint').dataTable();
-    console.log(oTable[5])
+    console.log(oTable)
     //DATE RANGE
     //set global vars that are set by daterange picker, to be used by datatable
     var startdate;
