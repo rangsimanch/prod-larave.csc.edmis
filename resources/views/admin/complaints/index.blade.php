@@ -348,7 +348,9 @@
                     });
             var val = "";
             for (var count = 0; count < filteredData.length; count++) {
-                val += filteredData[count].format('YYYY-MM-DD') + "|";
+                var filterDate = new Date(filteredData[count]).format('YYYY-MM-DD');
+                let sDate = filterDate.toString();
+                val += sDate + "|";
             }
             val = val.slice(0, -1);
             table.column(dataIdx)
