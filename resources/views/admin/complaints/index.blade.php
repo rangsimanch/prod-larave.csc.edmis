@@ -279,7 +279,7 @@
                 visibleColumnsIndexes.push(colIdx);
             });
         }) 
-         
+
         $('.daterange').daterangepicker({
         ranges: {
             "Today": [moment(), moment()],
@@ -326,7 +326,6 @@
             table.column(dataIdx)
                .search(val, true, false, true)
                .draw();
-
         }
         else {
             //set field value
@@ -344,7 +343,6 @@
 
                         var evalDate = value === "" ? 0 : parseDateValue(value);
                         if ((isNaN(dateStart) && isNaN(dateEnd)) || (evalDate >= dateStart && evalDate <= dateEnd)) {
-
                             return true;
                         }
                         return false;
@@ -358,6 +356,9 @@
                 .search(val ? "^" + val + "$" : "^" + "-" + "$", true, false, true)
                 .draw();
             }
+            console.log(filteredData.length);
+            console.log(val ? "^" + val + "$" : "^" + "-" + "$");
+
         });
 
 
