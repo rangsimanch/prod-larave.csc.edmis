@@ -341,7 +341,7 @@ $(document).ready(function() {
 
        } else {
          //set field value
-         $(this).val(picker.startDate.format('DD-MMM-YYYY') + ' to ' + picker.endDate.format('DD-MMM-YYYY'));
+         $(this).val(picker.startDate.format('DD/MM/YYYY') + ' to ' + picker.endDate.format('DD/MM/YYYY'));
 
 
 
@@ -365,6 +365,7 @@ $(document).ready(function() {
              return false;
            });
 
+        console.log(dateStart, dateEnd, filteredData)
 
          var val = "";
          for (var count = 0; count < filteredData.length; count++) {
