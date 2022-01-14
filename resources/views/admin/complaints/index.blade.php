@@ -292,7 +292,7 @@ table.on('column-visibility.dt', function(e, settings, column, state) {
                 '30 last days': [moment().subtract(29, 'days'), moment()],
                 'This month': [moment().startOf('month'), moment().endOf('month')],
                 'Last month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')],
-                'Blank date': [moment("0001/01/01"), moment("0001/01/01")]
+                'Blank date': [moment("01/01/0001"), moment("01/01/00001")]
             },
             autoUpdateInput: false,
             opens: "left",
@@ -364,6 +364,10 @@ table.on('column-visibility.dt', function(e, settings, column, state) {
           }
 
           val = val.slice(0, -1);
+
+          console.log(dataIdx)
+          console.log(val)
+          console.log(val ? "^" + val + "$" : "^" + "-" + "$")
 
 
           table.column(dataIdx)
