@@ -300,7 +300,8 @@
 
     var startDate;
     var endDate;
-    var dataIdx = 5;  //current data column to work with
+    let dataIdx = 5;  //current data column to work with
+    var filteredData;
 
 
     $("#mytable_wrapper thead").on("mousedown", "th", function (event) {
@@ -320,14 +321,14 @@
     $(".daterange").on('apply.daterangepicker', function (ev, picker) {
         ev.preventDefault();
         //if blank date option was selected
-        // if ((picker.startDate.format('DD/MM/YYYY') == "01/01/0001") && (picker.endDate.format('DD/MM/YYYY')) == "01/01/0001") {
-        //     $(this).val('');
-        //     val = "^$";
-        //     table.column(dataIdx)
-        //        .search(val, true, false, true)
-        //        .draw();
-        // }
-        // else {
+        if ((picker.startDate.format('DD/MM/YYYY') == "01/01/0001") && (picker.endDate.format('DD/MM/YYYY')) == "01/01/0001") {
+            $(this).val('');
+            val = "^$";
+            table.column(dataIdx)
+               .search(val, true, false, true)
+               .draw();
+        }
+        else {
             //set field value
             $(this).val(picker.startDate.format('DD/MM/YYYY') + ' - ' + picker.endDate.format('DD/MM/YYYY'));
             //run date filter
@@ -336,7 +337,7 @@
 
             var dateStart = parseDateValue(startDate);
             var dateEnd = parseDateValue(endDate);
-            let filteredData = table
+            filteredData = table
                     .column(dataIdx)
                     .data()
                     .filter(function (value, index) {
@@ -357,7 +358,7 @@
             
             console.log(filteredData.length);
             console.log(val ? "^" + val + "$" : "^" + "-" + "$");
-            // }
+            }
         });
 
         $(".daterange").on('cancel.daterangepicker', function (ev, picker) {
