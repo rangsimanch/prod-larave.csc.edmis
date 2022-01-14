@@ -364,7 +364,7 @@ table.on('column-visibility.dt', function(e, settings, column, state) {
         }
     });
     $(".daterange").on('cancel.daterangepicker', function (ev, picker) {
-        ev.preventDefault();
+        // ev.preventDefault();
         $(this).val('');
         table.column(dataIdx)
                 .search("")
