@@ -225,6 +225,7 @@
     serverSide: true,
     retrieve: true,
     responsive: true,
+    colReorder: true,
     aaSorting: [],
     ajax: "{{ route('admin.complaints.index') }}",
     columns: [
@@ -324,7 +325,7 @@ table.on('column-visibility.dt', function(e, settings, column, state) {
       //if blank date option was selected
       if ((picker.startDate.format('DD/MM/YYYY') == "01/01/0001") && (picker.endDate.format('DD/MM/YYYY')) == "01/01/0001") {
           $(this).val('Blank');
-          val = "^$";
+          var val = "^$";
           table.column(dataIdx)
              .search(val, true, false, true)
              .draw();
