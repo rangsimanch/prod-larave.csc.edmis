@@ -302,7 +302,7 @@ $(document).ready(function() {
        opens: "left",
        locale: {
          cancelLabel: 'Clear',
-         format: 'DD/MM/YYYY'
+         format: 'DD-MM-YYYY'
        }
      });
 
@@ -316,9 +316,8 @@ $(document).ready(function() {
 
      // Function for converting a dd/mmm/yyyy date value into a numeric string for comparison (example 01-Dec-2010 becomes 20101201
      function parseDateValue(rawDate) {
-
-       var d = moment(rawDate, "DD/MM/YYYY").format('DD/MM/YYYY');
-       var dateArray = d.split("-");
+       var d = moment(rawDate, "DD-MM-YYYY").format('DD/MM/YYYY');
+       var dateArray = d.split("/");
        var parsedDate = dateArray[2] + dateArray[1] + dateArray[0];
        return parsedDate;
      }
@@ -329,10 +328,9 @@ $(document).ready(function() {
 
      //filter on daterange
      $(".daterange").on('apply.daterangepicker', function(ev, picker) {
-
        ev.preventDefault();
        //if blank date option was selected
-       if ((picker.startDate.format('DD/MM/YYYY') == "01/01/0001") && (picker.endDate.format('DD/MM/YYYY')) == "01/01/0001") {
+       if ((picker.startDate.format('DD-MM-YYYY') == "01-01-0001") && (picker.endDate.format('DD-MM-YYYY')) == "01-01-0001") {
          $(this).val('Blank');
          val = "^$";
          table.column(dataIdx)
@@ -343,11 +341,9 @@ $(document).ready(function() {
          //set field value
          $(this).val(picker.startDate.format('DD/MM/YYYY') + ' to ' + picker.endDate.format('DD/MM/YYYY'));
 
-
-
          //run date filter
-         startDate = picker.startDate.format('DD/MM/YYYY');
-         endDate = picker.endDate.format('DD/MM/YYYY');
+         startDate = picker.startDate.format('DD-MM-YYYY');
+         endDate = picker.endDate.format('DD-MM-YYYY');
 
          var dateStart = parseDateValue(startDate);
          var dateEnd = parseDateValue(endDate);
@@ -374,6 +370,7 @@ $(document).ready(function() {
          }
 
          val = val.slice(0, -1);
+
          table.column(dataIdx)
            .search(val ? "^" + val + "$" : "^" + "-" + "$", true, false, true)
            .draw();
