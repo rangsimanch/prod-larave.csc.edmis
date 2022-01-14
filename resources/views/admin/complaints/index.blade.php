@@ -282,23 +282,7 @@
 
         var minDate, maxDate;
         // Custom filtering function which will search data in column four between two values
-        $.fn.dataTable.ext.search.push(
-            function( settings, data, dataIndex ) {
-                var min = minDate.val();
-                var max = maxDate.val();
-                var date = new Date( data[5] );
         
-                if (
-                    ( min === null && max === null ) ||
-                    ( min === null && date <= max ) ||
-                    ( min <= date   && max === null ) ||
-                    ( min <= date   && date <= max )
-                ) {
-                    return true;
-                }
-                return false;
-            }
-        );
         $('.daterange').daterangepicker({
             ranges: {
                 "Today": [moment(), moment()],
@@ -321,6 +305,23 @@
             $(this).val(picker.startDate.format('DD/MM/YYYY') + ' - ' + picker.endDate.format('DD/MM/YYYY'));
             mindate = picker.startDate.format('YYYY-MM-DD');
             maxdate = picker.endDate.format('YYYY-MM-DD');
+            $.fn.dataTable.ext.search.push(
+            function( settings, data, dataIndex ) {
+                    var min = minDate.val();
+                    var max = maxDate.val();
+                    var date = new Date( data[5] );
+            
+                    if (
+                        ( min === null && max === null ) ||
+                        ( min === null && date <= max ) ||
+                        ( min <= date   && max === null ) ||
+                        ( min <= date   && date <= max )
+                    ) {
+                        return true;
+                    }
+                    return false;
+                }
+            );
         });
 
 
