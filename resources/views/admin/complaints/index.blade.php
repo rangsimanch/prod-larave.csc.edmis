@@ -340,11 +340,11 @@
                     .column(dataIdx)
                     .data()
                     .filter(function (value, index) {
-                        var evalDate = value === "" ? 0 : parseDateValue(value);
-                        // if ((isNaN(dateStart) && isNaN(dateEnd)) || (evalDate >= dateStart && evalDate <= dateEnd)) {
-                        //     return true;
-                        // }
-                        // return false;
+                        var evalDate = value === "" ? 0 : parseDateValue(value.format('DD/MM/YYYY'));
+                        if ((isNaN(dateStart) && isNaN(dateEnd)) || (evalDate >= dateStart && evalDate <= dateEnd)) {
+                            return true;
+                        }
+                        return false;
                     });
             var val = "";
             for (var count = 0; count < filteredData.length; count++) {
