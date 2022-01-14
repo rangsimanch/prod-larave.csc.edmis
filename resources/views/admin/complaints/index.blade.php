@@ -287,7 +287,7 @@ table.on('column-visibility.dt', function(e, settings, column, state) {
 <script>
 $(document).ready(function() {
     //instantiate datepicker and choose your format of the dates
-    var table = $('.datatable-Complaint').DataTable();
+    let table = $('.datatable-Complaint').DataTable();
     $('.daterange').daterangepicker({
        ranges: {
          "Today": [moment(), moment()],
@@ -310,10 +310,6 @@ $(document).ready(function() {
      var endDate;
      var dataIdx = 5 //current data column to work with
 
-
-
-
-
      // Function for converting a dd/mmm/yyyy date value into a numeric string for comparison (example 01-Dec-2010 becomes 20101201
      function parseDateValue(rawDate) {
        var d = moment(rawDate, "DD-MM-YYYY").format('DD/MM/YYYY');
@@ -322,17 +318,9 @@ $(document).ready(function() {
        return parsedDate;
      }
 
-
-
-
-
      //filter on daterange
      $(".daterange").on('apply.daterangepicker', function(ev, picker) {
        ev.preventDefault();
-       $(this).val('');
-       table.column(dataIdx)
-         .search("")
-         .draw();
        //if blank date option was selected
        if ((picker.startDate.format('DD-MM-YYYY') == "01-01-0001") && (picker.endDate.format('DD-MM-YYYY')) == "01-01-0001") {
          $(this).val('Blank');
@@ -356,13 +344,10 @@ $(document).ready(function() {
            .column(dataIdx)
            .data()
            .filter(function(value, index) {
-
              var evalDate = value === "" ? 0 : parseDateValue(value);
              if ((isNaN(dateStart) && isNaN(dateEnd)) || (evalDate >= dateStart && evalDate <= dateEnd)) {
-                // console.log("True");
                return true;
              }
-            //  console.log("False");
              return false;
            });
          var val = "";
@@ -372,9 +357,9 @@ $(document).ready(function() {
          }
 
          val = val.slice(0, -1);
-         console.log(filteredData.length);
-         console.log(val);
-         console.log(table.column(dataIdx).data());
+        //  console.log(filteredData.length);
+        //  console.log(val);
+        //  console.log(table.column(dataIdx).data());
          table.column(dataIdx)
            .search(val ? "^" + val + "$" : "^" + "-" + "$", true, false, true)
            .draw();
