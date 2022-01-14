@@ -292,13 +292,13 @@ table.on('column-visibility.dt', function(e, settings, column, state) {
                 '30 last days': [moment().subtract(29, 'days'), moment()],
                 'This month': [moment().startOf('month'), moment().endOf('month')],
                 'Last month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')],
-                'Blank date': [moment("0001-01-01"), moment("0001-01-01")]
+                'Blank date': [moment("0001/01/01"), moment("0001/01/01")]
             },
             autoUpdateInput: false,
             opens: "left",
             locale: {
                 cancelLabel: 'Clear',
-                format: 'DD-MMM-YYYY'
+                format: 'DD/MM/YYYY'
             }
         });
 
@@ -316,8 +316,8 @@ table.on('column-visibility.dt', function(e, settings, column, state) {
   // Function for converting a dd/mmm/yyyy date value into a numeric string for comparison (example 01-Dec-2010 becomes 20101201
   function parseDateValue(rawDate) {
 
-      var d = moment(rawDate, "DD-MMM-YYYY").format('DD-MM-YYYY');
-      var dateArray = d.split("-");
+      var d = moment(rawDate, "DD/MM/YYYY").format('DD/MM/YYYY');
+      var dateArray = d.split("/");
       var parsedDate = dateArray[2] + dateArray[1] + dateArray[0];
       return parsedDate;
   }
@@ -327,7 +327,7 @@ table.on('column-visibility.dt', function(e, settings, column, state) {
 
       ev.preventDefault();
       //if blank date option was selected
-      if ((picker.startDate.format('DD-MMM-YYYY') == "01-Jan-0001") && (picker.endDate.format('DD-MMM-YYYY')) == "01-Jan-0001") {
+      if ((picker.startDate.format('DD/MM/YYYY') == "01/01/0001") && (picker.endDate.format('DD/MM/YYYY')) == "01/01/0001") {
           $(this).val('Blank');
           val = "^$";
           table.column(dataIdx)
@@ -336,10 +336,10 @@ table.on('column-visibility.dt', function(e, settings, column, state) {
       }
       else {
           //set field value
-          $(this).val(picker.startDate.format('DD-MMM-YYYY') + ' to ' + picker.endDate.format('DD-MMM-YYYY'));
+          $(this).val(picker.startDate.format('DD/MM/YYYY') + ' - ' + picker.endDate.format('DD/MM/YYYY'));
           //run date filter
-          startDate = picker.startDate.format('DD-MMM-YYYY');
-          endDate = picker.endDate.format('DD-MMM-YYYY');
+          startDate = picker.startDate.format('DD/MM/YYYY');
+          endDate = picker.endDate.format('DD/MM/YYYY');
           var dateStart = parseDateValue(startDate);
           var dateEnd = parseDateValue(endDate);
 
