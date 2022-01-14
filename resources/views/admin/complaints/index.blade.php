@@ -322,6 +322,9 @@
     //filter on daterange
     $(".daterange").on('apply.daterangepicker', function (ev, picker) {
         ev.preventDefault();
+        table
+            .clear()
+            .draw();
         //if blank date option was selected
         if ((picker.startDate.format('DD/MM/YYYY') == "01/01/0001") && (picker.endDate.format('DD/MM/YYYY')) == "01/01/0001") {
             $(this).val('');
@@ -340,11 +343,10 @@
             var dateStart = parseDateValue(startDate);
             var dateEnd = parseDateValue(endDate);
             
-            var filteredData = table.ajax.reload()
+            var filteredData = table
                     .column(dataIdx)
                     .data()
                     .filter(function (value, index) {
-                        console.log("Workling")
                         var evalDate = value === "" ? 0 : parseDateValue(value);
                         if ((isNaN(dateStart) && isNaN(dateEnd)) || (evalDate >= dateStart && evalDate <= dateEnd)) {
                             return true;
