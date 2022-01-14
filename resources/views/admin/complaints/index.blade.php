@@ -323,7 +323,6 @@
         if ((picker.startDate.format('DD/MM/YYYY') == "01/01/0001") && (picker.endDate.format('DD/MM/YYYY')) == "01/01/0001") {
             $(this).val('');
             val = "^$";
-            console.log("Blank")
             table.column(dataIdx)
                .search(val, true, false, true)
                .draw();
@@ -341,7 +340,7 @@
                     .column(dataIdx)
                     .data()
                     .filter(function (value, index) {
-                        var evalDate = value === "" ? 0 : parseDateValue(value);
+                        var evalDate = parseDateValue(value);
                         console.log(value, index)
                         if ((isNaN(dateStart) && isNaN(dateEnd)) || (evalDate >= dateStart && evalDate <= dateEnd)) {
                             return true;
