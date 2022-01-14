@@ -322,6 +322,7 @@
     //filter on daterange
     $(".daterange").on('apply.daterangepicker', function (ev, picker) {
         ev.preventDefault();
+        $(this).val('');
         table.column(dataIdx)
                 .search('')
                 .draw();
