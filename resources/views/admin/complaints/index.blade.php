@@ -351,11 +351,11 @@ table.on('column-visibility.dt', function(e, settings, column, state) {
 
           val = val.slice(0, -1);
           console.log(filteredData.length);
-          console.log(val ? "^" + val + "$" : "^" + "-" + "$");
+          console.log(val ? val + "$" : "^" + "-")
 
 
           table.column(dataIdx)
-                .search(val ? "" + val + "$" : "^" + "-" + "", true, false, true)
+                .search(val ? "^" + val + "$" : "^" + "-" + "$", true, false, true)
                 .draw();
         }
     });
