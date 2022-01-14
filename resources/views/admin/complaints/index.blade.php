@@ -374,7 +374,7 @@
                 .draw();
         });
 
-        $(".daterange").on('onclick', function (ev, picker) {
+        $(".daterange").on('show.daterangepicker', function (ev, picker) {
             ev.preventDefault();
             table.column(dataIdx)
                 .search('')
