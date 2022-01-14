@@ -360,7 +360,7 @@ table.on('column-visibility.dt', function(e, settings, column, state) {
           console.log(val);
 
           table.column(dataIdx)
-                .search(val ? "^" + val + "$" : "^" + "-" + "$", true, false, true)
+                .search(val, true, false, true)
                 .draw();
         }
     });
