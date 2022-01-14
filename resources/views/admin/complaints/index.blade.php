@@ -343,7 +343,8 @@ table.on('column-visibility.dt', function(e, settings, column, state) {
                   .data()
                   .filter(function (value, index) {
 
-                      var evalDate = value === "" ? 0 : parseDateValue(value);
+                    //   var evalDate = value === "" ? 0 : parseDateValue(value);
+                      var evalDate = parseDateValue(value)
                       
                       if ((isNaN(dateStart) && isNaN(dateEnd)) || (evalDate >= dateStart && evalDate <= dateEnd)) {
                           return true;
