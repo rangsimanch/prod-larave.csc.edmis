@@ -280,7 +280,7 @@ table.on('column-visibility.dt', function(e, settings, column, state) {
       table.columns(":visible").every(function(colIdx) {
           visibleColumnsIndexes.push(colIdx);
       });
-  })     
+  });     
 // }); 
 // </script>
 
@@ -344,7 +344,6 @@ table.on('column-visibility.dt', function(e, settings, column, state) {
             $(this).val('');
         });
     });
-// });
 </script>
 
 @endsection
