@@ -336,7 +336,7 @@ table.on('column-visibility.dt', function(e, settings, column, state) {
                     }
                 }
             );
-            table.fnDraw();
+            table.draw();
         });
 
         $('input[name="datefilter"]').on('cancel.daterangepicker', function(ev, picker) {
