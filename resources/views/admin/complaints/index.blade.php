@@ -321,7 +321,6 @@
 
     //filter on daterange
     $(".daterange").on('apply.daterangepicker', function (ev, picker) {
-        table.draw();
         ev.preventDefault();
         //if blank date option was selected
         if ((picker.startDate.format('DD/MM/YYYY') == "01/01/0001") && (picker.endDate.format('DD/MM/YYYY')) == "01/01/0001") {
@@ -370,6 +369,13 @@
         $(".daterange").on('cancel.daterangepicker', function (ev, picker) {
             ev.preventDefault();
             $(this).val('');
+            table.column(dataIdx)
+                .search('')
+                .draw();
+        });
+
+        $(".daterange").on('onclick', function (ev, picker) {
+            ev.preventDefault();
             table.column(dataIdx)
                 .search('')
                 .draw();
