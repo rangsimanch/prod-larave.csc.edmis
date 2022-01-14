@@ -338,7 +338,11 @@ table.on('column-visibility.dt', function(e, settings, column, state) {
                   .data()
                   .filter(function (value, index) {
 
-                      var evalDate = parseDateValue(value);
+                      var evalDate = value === "" ? 0 : parseDateValue(value);
+                      console.log(dateStart);
+                      console.log(dateEnd);
+                      console.log(evalDate);
+
                       if ((isNaN(dateStart) && isNaN(dateEnd)) || (evalDate >= dateStart && evalDate <= dateEnd)) {
                           return true;
                       }
@@ -350,12 +354,9 @@ table.on('column-visibility.dt', function(e, settings, column, state) {
           }
 
           val = val.slice(0, -1);
-          console.log(filteredData.length);
-          console.log(val)
-
 
           table.column(dataIdx)
-                .search(val)
+                .search(val ? "^" + val + "$" : "^" + "-" + "$", true, false, true)
                 .draw();
         }
     });
