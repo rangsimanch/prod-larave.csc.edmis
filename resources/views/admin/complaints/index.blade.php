@@ -357,7 +357,7 @@
             var val = "";
             for (var count = 0; count < filteredData.length; count++) {
                 var filterDate = new Date(covertDateValue(parseDateValue(filteredData[count])));
-                let searchData = filterDate.getFullYear() + "-" + (filterDate.getMonth() + 1) + "-" + filterDate.getDate();
+                let searchData = filterDate.getFullYear() + "-" + ("0" + (filterDate.getMonth() + 1)).slice(-2) + "-" + ("0" + filterDate.getDate()).slice(-2);
                 val += searchData + "|";
             }
             val = val.slice(0, -1);
