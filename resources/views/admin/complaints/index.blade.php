@@ -254,7 +254,7 @@
             pageLength: 10,
             processing: true,
         };
-        let table = $('.datatable-Complaint').DataTable(dtOverrideGlobals);
+        var table = $('.datatable-Complaint').DataTable(dtOverrideGlobals);
         $('a[data-toggle="tab"]').on('shown.bs.tab click', function(e){
             $($.fn.dataTable.tables(true)).DataTable()
                 .columns.adjust();
@@ -340,7 +340,6 @@
                     .column(dataIdx)
                     .data()
                     .filter(function (value, index) {
-
                         var evalDate = value === "" ? 0 : parseDateValue(value);
                         if ((isNaN(dateStart) && isNaN(dateEnd)) || (evalDate >= dateStart && evalDate <= dateEnd)) {
                             return true;
@@ -358,9 +357,7 @@
             }
             console.log(filteredData.length);
             console.log(val ? "^" + val + "$" : "^" + "-" + "$");
-
         });
-
 
         $(".daterange").on('cancel.daterangepicker', function (ev, picker) {
             ev.preventDefault();
