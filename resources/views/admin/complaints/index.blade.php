@@ -261,7 +261,6 @@
   });
   
 let visibleColumnsIndexes = null;
-var dataIdx;  
 $('.datatable thead').on('input', '.search', function () {
       let strict = $(this).attr('strict') || false
       let value = strict && this.value ? "^" + this.value + "$" : this.value
@@ -269,7 +268,6 @@ $('.datatable thead').on('input', '.search', function () {
       let index = $(this).parent().index()
       if (visibleColumnsIndexes !== null) {
         index = visibleColumnsIndexes[index]
-        dataIdx = index
       }
 
       table
@@ -302,8 +300,9 @@ table.on('column-visibility.dt', function(e, settings, column, state) {
             }
         });
 
-  var startDate;
-  var endDate;
+    var startDate;
+    var endDate;
+    var dataIdx = 5;  
 
   // Function for converting a dd/mmm/yyyy date value into a numeric string for comparison (example 01-Dec-2010 becomes 20101201
   function parseDateValue(rawDate) {
