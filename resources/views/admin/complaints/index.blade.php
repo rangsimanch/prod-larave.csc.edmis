@@ -364,7 +364,7 @@
             ev.preventDefault();
             $(this).val('');
             table.column(dataIdx)
-                .search("")
+                .search("^20/01/2022|11/01/2022$")
                 .draw();
         });
     }); 
