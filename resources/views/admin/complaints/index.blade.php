@@ -349,7 +349,7 @@ table.on('column-visibility.dt', function(e, settings, column, state) {
                       if ((isNaN(dateStart) && isNaN(dateEnd)) || (evalDate >= dateStart && evalDate <= dateEnd)) {
                           return true;
                       }
-                      return false;
+                      return true;
                   });
           var val = "";
           
