@@ -357,9 +357,9 @@ $(document).ready(function() {
          }
 
          val = val.slice(0, -1);
-        //  console.log(filteredData.length);
-        //  console.log(val);
-        //  console.log(table.column(dataIdx).data());
+         console.log(filteredData.length);
+         console.log(val);
+         console.log(table.column(dataIdx).data());
          table.column(dataIdx)
            .search(val ? "^" + val + "$" : "^" + "/" + "$", true, false, true)
            .draw();
