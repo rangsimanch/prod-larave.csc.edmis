@@ -355,8 +355,8 @@
                 .search(val ? "^" + val + "$" : "^" + "-" + "$", true, false, true)
                 .draw();
             
-            // console.log(filteredData.length);
-            // console.log(val ? "^" + val + "$" : "^" + "-" + "$");
+            console.log(filteredData.length);
+            console.log(val ? "^" + val + "$" : "^" + "-" + "$");
             }
         });
 
