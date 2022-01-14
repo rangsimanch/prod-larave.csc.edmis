@@ -315,7 +315,7 @@ table.on('column-visibility.dt', function(e, settings, column, state) {
                         dateMax = enddate.replace(/-/g, "");
                         date = date.replace(/-/g, "");
 
-                        //console.log(dateMin, dateMax, date);
+                        console.log(dateMin, dateMax, date);
 
                         // run through cases to filter results
                         if (dateMin == "" && date <= dateMax) {
