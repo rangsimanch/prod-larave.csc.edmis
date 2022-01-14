@@ -325,7 +325,7 @@ table.on('column-visibility.dt', function(e, settings, column, state) {
       //if blank date option was selected
       if ((picker.startDate.format('DD/MM/YYYY') == "01/01/0001") && (picker.endDate.format('DD/MM/YYYY')) == "01/01/0001") {
           $(this).val('Blank');
-          var val = "^$";
+          val = "^$";
           table.column(dataIdx)
              .search(val, true, false, true)
              .draw();
@@ -350,7 +350,7 @@ table.on('column-visibility.dt', function(e, settings, column, state) {
                       }
                       return false;
                   });
-          var val = "";
+        val = "";
           console.log(filteredData.length);
 
           for (var count = 0; count < filteredData.length; count++) {
