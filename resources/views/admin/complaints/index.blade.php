@@ -349,11 +349,15 @@ table.on('column-visibility.dt', function(e, settings, column, state) {
                       return false;
                   });
           var val = "";
+          
+          console.log(filteredData.length);
+
           for (var count = 0; count < filteredData.length; count++) {
               val += filteredData[count] + "|";
           }
 
           val = val.slice(0, -1);
+          console.log(val);
 
           table.column(dataIdx)
                 .search(val ? "^" + val + "$" : "^" + "-" + "$", true, false, true)
