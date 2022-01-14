@@ -326,7 +326,7 @@ $(document).ready(function() {
         if(startdate!=undefined){
             // 1 here is the column where my dates are.
             //Convert to YYYY-MM-DD format from DD/MM/YYYY
-            var coldate = aData[5].split("/");
+            var coldate = aData[4].split("/");
             var d = new Date(coldate[2], coldate[1]-1 , coldate[0]);
             var date = moment(d.toISOString());
             date =    date.format("YYYY-MM-DD");
