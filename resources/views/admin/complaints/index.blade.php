@@ -344,15 +344,15 @@
                         if ((isNaN(dateStart) && isNaN(dateEnd)) || (evalDate >= dateStart && evalDate <= dateEnd)) {
                             return true;
                         }
-                        // return false;
+                        return false;
                     });
-            var val = "";
+            var val = '';
             for (var count = 0; count < filteredData.length; count++) {
                 val += filteredData[count] + "|";
             }
             val = val.slice(0, -1);
             table.column(dataIdx)
-                .search(val ? "^" + val + "$" : "^" + "-" + "$", true, false, true)
+                .search(val ? "^" + val + "$" : "^" + "-" + "$", true, false)
                 .draw();
             
             console.log(filteredData.length);
@@ -364,7 +364,7 @@
             ev.preventDefault();
             $(this).val('');
             table.column(dataIdx)
-                .search('20/01/2022|11/01/2022',true, false, true)
+                .search('')
                 .draw();
         });
     }); 
