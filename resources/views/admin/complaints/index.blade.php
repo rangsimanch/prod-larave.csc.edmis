@@ -310,7 +310,7 @@
 
     // Function for converting a dd/mmm/yyyy date value into a numeric string for comparison (example 01-Dec-2010 becomes 20101201
     function parseDateValue(rawDate) {
-        var d = moment(rawDate, "DD/MM/YYYY").format("YYYY-MM-DD");
+        var d = moment(rawDate, "DD/MM/YYYY").format("DD/MM/YYYY");
         var dateArray = d.split("/");
         var parsedDate = dateArray[2] + dateArray[1] + dateArray[0];
         return parsedDate;
@@ -331,8 +331,8 @@
             //set field value
             $(this).val(picker.startDate.format('DD/MM/YYYY') + ' - ' + picker.endDate.format('DD/MM/YYYY'));
             //run date filter
-            startDate = picker.startDate.format('YYYY-MM-DD');
-            endDate = picker.endDate.format('YYYY-MM-DD');
+            startDate = picker.startDate.format('DD/MM/YYYY');
+            endDate = picker.endDate.format('DD/MM/YYYY');
 
             var dateStart = parseDateValue(startDate);
             var dateEnd = parseDateValue(endDate);
