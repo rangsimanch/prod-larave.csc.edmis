@@ -280,6 +280,7 @@
             });
         }) 
 
+        // date range
         $('.daterange').daterangepicker({
         ranges: {
             "Today": [moment(), moment()],
@@ -298,15 +299,9 @@
         }
     });
 
-    var startDate;
-    var endDate;
+    let startDate;
+    let endDate;
     let dataIdx = 5;  //current data column to work with
-
-
-    $("#mytable_wrapper thead").on("mousedown", "th", function (event) {
-        var visIdx = $(this).parent().children().index($(this));
-        dataIdx = table.column.index('fromVisible', visIdx);
-    });
 
     // Function for converting a dd/mmm/yyyy date value into a numeric string for comparison (example 01-Dec-2010 becomes 20101201
     function parseDateValue(rawDate) {
