@@ -324,7 +324,7 @@
             $(this).val('');
             val = "^$";
             table.column(dataIdx)
-               .search(val, true, false, true)
+               .search(val, true, false)
                .draw();
         }
         else {
@@ -364,7 +364,7 @@
             ev.preventDefault();
             $(this).val('');
             table.column(dataIdx)
-                .search("20/01/2022|11/01/2022",true, false)
+                .search('20/01/2022|11/01/2022',true, false, true)
                 .draw();
         });
     }); 
