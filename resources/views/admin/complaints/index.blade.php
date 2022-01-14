@@ -113,7 +113,7 @@
                                     </select>
                                 </td>
                                 <td>
-                                    <input type="text" style="width: 100px; font-size: 10px;" name="reportrange" id="reportrange" class="form-control" value="">
+                                    <input type="text" name="daterange" id="daterange" class="form-control daterange" value="">
                                     <!-- <input id="reportrange" type="text" name="reportrange" value="" autocomplete="off" placeholder="Select Period.."/> -->
                                     <!-- <input type="date" class="form-control filter-input" data-column="5"/> -->
                                 </td>
@@ -286,77 +286,120 @@ table.on('column-visibility.dt', function(e, settings, column, state) {
 
 <script>
 $(document).ready(function() {
-    //DATATABLE
-    //To display datatable without search and page length select, and to still have pagination work, instantiate like so
-    var oTable= $('.datatable-Complaint').dataTable();
-    console.log(oTable)
-    //DATE RANGE
-    //set global vars that are set by daterange picker, to be used by datatable
-    var startdate;
-    var enddate;
     //instantiate datepicker and choose your format of the dates
-    $('#reportrange').daterangepicker({
-        ranges: {
-            'Today': [moment(), moment()],
-            'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
-            'Last 7 Days': [moment().subtract(6, 'days'), moment()],
-            'Last 30 Days': [moment().subtract(29, 'days'), moment()],
-            'This Month': [moment().startOf('month'), moment().endOf('month')],
-            'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
-        },
-        "opens": "right",
-        format: 'DD/MM/YYYY'
-    },
-    function(start, end, label) {
-    // Parse it to a moment
-    var s = moment(start.toISOString());
-    var e = moment(end.toISOString());
-    startdate = s.format("YYYY-MM-DD");
-    enddate = e.format("YYYY-MM-DD");
-    });
+    var table = $('.datatable-Complaint').DataTable();
+    $('.daterange').daterangepicker({
+       ranges: {
+         "Today": [moment(), moment()],
+         'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+         '7 last days': [moment().subtract(6, 'days'), moment()],
+         '30 last days': [moment().subtract(29, 'days'), moment()],
+         'This month': [moment().startOf('month'), moment().endOf('month')],
+         'Last month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')],
+         'Blank date': [moment("0001-01-01"), moment("0001-01-01")]
+       },
+       autoUpdateInput: false,
+       opens: "left",
+       locale: {
+         cancelLabel: 'Clear',
+         format: 'DD-MMM-YYYY'
+       }
+     });
 
-    //Filter the datatable on the datepicker apply event with reportage 1
-    $('#reportrange').on('apply.daterangepicker', function(ev, picker) {
-        startdate=picker.startDate.format('YYYY-MM-DD');
-        enddate=picker.endDate.format('YYYY-MM-DD');
-        console.log(startdate, enddate);
+     var startDate;
+     var endDate;
+     var dataIdx; //current data column to work with
 
-        $.fn.dataTableExt.afnFiltering.push(
-        function( oSettings, aData, iDataIndex ) {
-        if(startdate!=undefined){
-            // 1 here is the column where my dates are.
-            //Convert to YYYY-MM-DD format from DD/MM/YYYY
-            var coldate = aData[5].split("/");
-            var d = new Date(coldate[2], coldate[1]-1 , coldate[0]);
-            var date = moment(d.toISOString());
-            date =    date.format("YYYY-MM-DD");
 
-            //Remove hyphens from dates
-            dateMin=startdate.replace(/-/g, "");
-            dateMax=enddate.replace(/-/g, "");
-            date=date.replace(/-/g, "");
+     $("#mytable_wrapper thead").on("mousedown", "th", function(event) {
+       var visIdx = $(this).parent().children().index($(this));
+       dataIdx = table.column.index('fromVisible', visIdx);
+     });
 
-            console.log(dateMin, dateMax, date);
 
-            // run through cases to filter results
-            if ( dateMin == "" && date <= dateMax){
-                return true;
-            }
-            else if ( dateMin =="" && date <= dateMax ){
-                return true;
-            }
-            else if ( dateMin <= date && "" == dateMax ){
-                return true;
-            }
-            else if ( dateMin <= date && date <= dateMax ){
-                return true;
-            }
-            // all failed
-            return false;
-            }
-        });
-    oTable.fnDraw();
-    });
+
+
+     // Function for converting a dd/mmm/yyyy date value into a numeric string for comparison (example 01-Dec-2010 becomes 20101201
+     function parseDateValue(rawDate) {
+
+       var d = moment(rawDate, "DD-MMM-YYYY").format('DD-MM-YYYY');
+       var dateArray = d.split("-");
+       var parsedDate = dateArray[2] + dateArray[1] + dateArray[0];
+       return parsedDate;
+     }
+
+
+
+
+
+     //filter on daterange
+     $(".daterange").on('apply.daterangepicker', function(ev, picker) {
+
+       ev.preventDefault();
+
+
+
+       //if blank date option was selected
+       if ((picker.startDate.format('DD-MMM-YYYY') == "01-Jan-0001") && (picker.endDate.format('DD-MMM-YYYY')) == "01-Jan-0001") {
+         $(this).val('Blank');
+
+
+         val = "^$";
+
+         table.column(dataIdx)
+           .search(val, true, false, true)
+           .draw();
+
+       } else {
+         //set field value
+         $(this).val(picker.startDate.format('DD-MMM-YYYY') + ' to ' + picker.endDate.format('DD-MMM-YYYY'));
+
+
+
+         //run date filter
+         startDate = picker.startDate.format('DD-MMM-YYYY');
+         endDate = picker.endDate.format('DD-MMM-YYYY');
+
+         var dateStart = parseDateValue(startDate);
+         var dateEnd = parseDateValue(endDate);
+
+         var filteredData = table
+           .column(dataIdx)
+           .data()
+           .filter(function(value, index) {
+
+             var evalDate = value === "" ? 0 : parseDateValue(value);
+             if ((isNaN(dateStart) && isNaN(dateEnd)) || (evalDate >= dateStart && evalDate <= dateEnd)) {
+
+               return true;
+             }
+             return false;
+           });
+
+
+         var val = "";
+         for (var count = 0; count < filteredData.length; count++) {
+
+           val += filteredData[count] + "|";
+         }
+
+         val = val.slice(0, -1);
+
+
+         table.column(dataIdx)
+           .search(val ? "^" + val + "$" : "^" + "-" + "$", true, false, true)
+           .draw();
+       }
+     });
+
+
+     $(".daterange").on('cancel.daterangepicker', function(ev, picker) {
+       ev.preventDefault();
+       $(this).val('');
+       table.column(dataIdx)
+         .search("")
+         .draw();
+     });
 });
 </script>
 
