@@ -21,7 +21,7 @@
                     {{ trans('cruds.complaint.title_singular') }} {{ trans('global.list') }}
                 </div>
                 <div class="panel-body">
-                    <table id="complaint" class=" table table-bordered table-striped table-hover ajaxTable datatable datatable-Complaint">
+                    <table id="complaintdb" class=" table table-bordered table-striped table-hover ajaxTable datatable datatable-Complaint">
                         <thead>
                             <tr>
                                 <th width="10">
@@ -113,7 +113,7 @@
                                     </select>
                                 </td>
                                 <td>
-                                    <input id="datefilter" type="text" name="datefilter" value="" autocomplete="off" placeholder="Select Period.."/>
+                                    <input id="reportrange" type="text" name="reportrange" value="" autocomplete="off" placeholder="Select Period.."/>
                                     <!-- <input type="date" class="form-control filter-input" data-column="5"/> -->
                                 </td>
                                 <td>
@@ -284,6 +284,117 @@ table.on('column-visibility.dt', function(e, settings, column, state) {
 </script>
 
 <script>
+$(document).ready(function() {
+//DATATABLE
+//To display datatable without search and page length select, and to still have pagination work, instantiate like so
+var oTable=$('#complaintdb').dataTable({
+	
+	"sDom":"tp",
+	"pageLength": 10,
+	"pagination":true,
+		// Date Sorting
+	columnDefs: [
+       { type: 'date-eu', targets: ([1,6])}
+     ],
+	 //// order table onload
+"order": [[ 1, 'desc' ]],
+	});
+//DATE RANGE
+//set global vars that are set by daterange picker, to be used by datatable
+var startdate;
+var enddate;
+//instantiate datepicker and choose your format of the dates
+$('#reportrange').daterangepicker({
+        ranges: {
+           "Aujourd'hui": [moment(), moment()],
+           'Hier': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+           'Les 7 derniers jours': [moment().subtract(6, 'days'), moment()],
+           'Les 30 derniers jours': [moment().subtract(29, 'days'), moment()],
+           'Ce mois-ci': [moment().startOf('month'), moment().endOf('month')],
+           'Le mois dernier': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+        }
+,
+    "opens": "right",
+	format: 'DD/MM/YYYY'
+
+},
+function(start, end,label) {
+// Parse it to a moment
+var s = moment(start.toISOString());
+var e = moment(end.toISOString());
+startdate = s.format("YYYY-MM-DD");
+enddate = e.format("YYYY-MM-DD");
+});
+
+//Filter the datatable on the datepicker apply event with reportage 1
+$('#reportrange').on('apply.daterangepicker', function(ev, picker) {
+startdate=picker.startDate.format('YYYY-MM-DD');
+enddate=picker.endDate.format('YYYY-MM-DD');
+$.fn.dataTableExt.afnFiltering.push(
+function( oSettings, aData, iDataIndex ) {
+if(startdate!=undefined){
+// 1 here is the column where my dates are.
+//Convert to YYYY-MM-DD format from DD/MM/YYYY
+var coldate = aData[5].split("/");
+var d = new Date(coldate[2], coldate[1]-1 , coldate[0]);
+var date = moment(d.toISOString());
+date =    date.format("YYYY-MM-DD");
+
+//Remove hyphens from dates
+dateMin=startdate.replace(/-/g, "");
+dateMax=enddate.replace(/-/g, "");
+date=date.replace(/-/g, "");
+
+//console.log(dateMin, dateMax, date);
+
+// run through cases to filter results
+if ( dateMin == "" && date <= dateMax){
+return true;
+}
+else if ( dateMin =="" && date <= dateMax ){
+return true;
+}
+else if ( dateMin <= date && "" == dateMax ){
+return true;
+}
+else if ( dateMin <= date && date <= dateMax ){
+return true;
+}
+
+// all failed
+return false;
+}
+}
+);
+oTable.fnDraw();
+});
+
+$('#reportrange2').daterangepicker({
+        ranges: {
+           "Aujourd'hui": [moment(), moment()],
+           'Hier': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+           'Les 7 derniers jours': [moment().subtract(6, 'days'), moment()],
+           'Les 30 derniers jours': [moment().subtract(29, 'days'), moment()],
+           'Ce mois-ci': [moment().startOf('month'), moment().endOf('month')],
+           'Le mois dernier': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+        }
+,
+    "opens": "right",
+	format: 'DD/MM/YYYY'
+
+},
+function(start, end,label) {
+// Parse it to a moment
+var s = moment(start.toISOString());
+var e = moment(end.toISOString());
+startdate = s.format("YYYY-MM-DD");
+enddate = e.format("YYYY-MM-DD");
+});
+
+</script>
+
+
+<!-- <script>
     $(document).ready(function() {
         var minDate, maxDate;
         var table = $('#complaint').DataTable();
@@ -343,6 +454,7 @@ table.on('column-visibility.dt', function(e, settings, column, state) {
             $(this).val('');
         });
     });
-</script>
+});
+</script> -->
 
 @endsection
