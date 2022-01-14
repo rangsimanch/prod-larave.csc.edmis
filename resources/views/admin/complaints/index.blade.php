@@ -340,7 +340,7 @@
             var dateStart = parseDateValue(startDate);
             var dateEnd = parseDateValue(endDate);
             
-            var filteredData = table.reload()
+            var filteredData = table.ajax.reload()
                     .column(dataIdx)
                     .data()
                     .filter(function (value, index) {
