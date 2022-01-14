@@ -309,6 +309,7 @@
             function( settings, data, dataIndex ) {
                     var min = minDate.val();
                     var max = maxDate.val();
+                    console.log("Working")
                     var date = new Date( data[5] );
             
                     if (
