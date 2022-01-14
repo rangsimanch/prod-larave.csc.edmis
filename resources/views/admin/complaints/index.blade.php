@@ -358,28 +358,25 @@ $(document).ready(function() {
            .filter(function(value, index) {
 
              var evalDate = value === "" ? 0 : parseDateValue(value);
-             console.log(evalDate);
+            //  console.log(evalDate);
              if ((isNaN(dateStart) && isNaN(dateEnd)) || (evalDate >= dateStart && evalDate <= dateEnd)) {
-
+                console.log("True");
                return true;
              }
+             console.log("False");
              return false;
            });
     //     console.log(filteredData);
-    //      var val = "";
-    //      for (var count = 0; count < filteredData.length; count++) {
+         var val = "";
+         for (var count = 0; count < filteredData.length; count++) {
 
-    //        val += filteredData[count] + "|";
-    //      }
+           val += filteredData[count] + "|";
+         }
 
-    //      val = val.slice(0, -1);
-
-
-    //      table.column(dataIdx)
-    //        .search(val ? "^" + val + "$" : "^" + "-" + "$", true, false, true)
-    //        .draw();
-    //    }
-       table.column(dataIdx).draw();
+         val = val.slice(0, -1);
+         table.column(dataIdx)
+           .search(val ? "^" + val + "$" : "^" + "-" + "$", true, false, true)
+           .draw();
        }
      });
 
