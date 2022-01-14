@@ -358,14 +358,13 @@ $(document).ready(function() {
            .filter(function(value, index) {
 
              var evalDate = value === "" ? 0 : parseDateValue(value);
+             console.log(evalDate);
              if ((isNaN(dateStart) && isNaN(dateEnd)) || (evalDate >= dateStart && evalDate <= dateEnd)) {
 
                return true;
              }
              return false;
            });
-
-        console.log(dateStart, dateEnd, filteredData)
 
          var val = "";
          for (var count = 0; count < filteredData.length; count++) {
