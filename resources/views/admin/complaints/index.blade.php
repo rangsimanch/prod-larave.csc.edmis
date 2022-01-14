@@ -365,7 +365,7 @@ $(document).ready(function() {
              }
              return false;
            });
-
+        console.log(filteredData);
          var val = "";
          for (var count = 0; count < filteredData.length; count++) {
 
