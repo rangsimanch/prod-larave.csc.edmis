@@ -288,7 +288,6 @@ table.on('column-visibility.dt', function(e, settings, column, state) {
 
 <script>
     $(function () {
-    var table = $('.datatable-Complaint').DataTable();
      $('.daterange').daterangepicker({
             ranges: {
                 "Today": [moment(), moment()],
@@ -296,8 +295,7 @@ table.on('column-visibility.dt', function(e, settings, column, state) {
                 '7 last days': [moment().subtract(6, 'days'), moment()],
                 '30 last days': [moment().subtract(29, 'days'), moment()],
                 'This month': [moment().startOf('month'), moment().endOf('month')],
-                'Last month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')],
-                'Blank date': [moment("01/01/0001"), moment("01/01/00001")]
+                'Last month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
             },
             autoUpdateInput: false,
             opens: "left",
@@ -309,6 +307,7 @@ table.on('column-visibility.dt', function(e, settings, column, state) {
 
     var startDate;
     var endDate;
+    var table = $('.datatable-Complaint').DataTable();
     var dataIdx = 5;  
 
   // Function for converting a dd/mmm/yyyy date value into a numeric string for comparison (example 01-Dec-2010 becomes 20101201
@@ -324,7 +323,7 @@ table.on('column-visibility.dt', function(e, settings, column, state) {
       ev.preventDefault();
       //if blank date option was selected
       if ((picker.startDate.format('DD/MM/YYYY') == "01/01/0001") && (picker.endDate.format('DD/MM/YYYY')) == "01/01/0001") {
-          $(this).val('Blank');
+          $(this).val('');
           val = "^$";
           table.column(dataIdx)
              .search(val, true, false, true)
@@ -350,7 +349,7 @@ table.on('column-visibility.dt', function(e, settings, column, state) {
                       }
                       return false;
                   });
-        val = "";
+          var val = "";
           console.log(filteredData.length);
 
           for (var count = 0; count < filteredData.length; count++) {
