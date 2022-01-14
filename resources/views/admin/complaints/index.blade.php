@@ -379,7 +379,7 @@ $(document).ready(function() {
     //        .search(val ? "^" + val + "$" : "^" + "-" + "$", true, false, true)
     //        .draw();
     //    }
-       table.draw();
+       table.column(dataIdx).draw();
        }
      });
 
