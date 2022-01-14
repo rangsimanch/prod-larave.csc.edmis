@@ -301,7 +301,6 @@
     var startDate;
     var endDate;
     let dataIdx = 5;  //current data column to work with
-    var filteredData;
 
 
     $("#mytable_wrapper thead").on("mousedown", "th", function (event) {
@@ -337,15 +336,15 @@
 
             var dateStart = parseDateValue(startDate);
             var dateEnd = parseDateValue(endDate);
-            filteredData = table
+            var filteredData = table
                     .column(dataIdx)
                     .data()
                     .filter(function (value, index) {
                         var evalDate = value === "" ? 0 : parseDateValue(value);
-                        if ((isNaN(dateStart) && isNaN(dateEnd)) || (evalDate >= dateStart && evalDate <= dateEnd)) {
-                            return true;
-                        }
-                        return false;
+                        // if ((isNaN(dateStart) && isNaN(dateEnd)) || (evalDate >= dateStart && evalDate <= dateEnd)) {
+                        //     return true;
+                        // }
+                        // return false;
                     });
             var val = "";
             for (var count = 0; count < filteredData.length; count++) {
