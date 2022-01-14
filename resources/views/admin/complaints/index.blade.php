@@ -322,6 +322,8 @@
     //filter on daterange
     $(".daterange").on('apply.daterangepicker', function (ev, picker) {
         ev.preventDefault();
+        var filteredData;
+        var val;
         //if blank date option was selected
         if ((picker.startDate.format('DD/MM/YYYY') == "01/01/0001") && (picker.endDate.format('DD/MM/YYYY')) == "01/01/0001") {
             $(this).val('');
@@ -339,8 +341,8 @@
 
             var dateStart = parseDateValue(startDate);
             var dateEnd = parseDateValue(endDate);
-            
-            var filteredData = table
+
+            filteredData = table
                     .column(dataIdx)
                     .data()
                     .filter(function (value, index) {
@@ -350,7 +352,7 @@
                         }
                         return false;
                     });
-            var val = "";
+            val = "";
             for (var count = 0; count < filteredData.length; count++) {
                 var filterDate = new Date(covertDateValue(parseDateValue(filteredData[count])));
                 let searchData = filterDate.getFullYear() + "-" + ("0" + (filterDate.getMonth() + 1)).slice(-2) + "-" + ("0" + filterDate.getDate()).slice(-2);
