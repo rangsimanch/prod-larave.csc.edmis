@@ -312,8 +312,8 @@ table.on('column-visibility.dt', function(e, settings, column, state) {
 
   // Function for converting a dd/mmm/yyyy date value into a numeric string for comparison (example 01-Dec-2010 becomes 20101201
   function parseDateValue(rawDate) {
-      var d = moment(rawDate, "DD/MM/YYYY").format('DD/MM/YYYY');
-      var dateArray = d.split("/");
+      var d = moment(rawDate, "DD/MM/YYYY").format('DD-MM-YYYY');
+      var dateArray = d.split("-");
       var parsedDate = dateArray[2] + dateArray[1] + dateArray[0];
       return parsedDate;
   }
@@ -343,32 +343,27 @@ table.on('column-visibility.dt', function(e, settings, column, state) {
                   .data()
                   .filter(function (value, index) {
 
-                    //   var evalDate = value === "" ? 0 : parseDateValue(value);
-                      var evalDate = parseDateValue(value)
-                      
+                      var evalDate = value === "" ? 0 : parseDateValue(value);
                       if ((isNaN(dateStart) && isNaN(dateEnd)) || (evalDate >= dateStart && evalDate <= dateEnd)) {
                           return true;
                       }
-                      return true;
+                      return false;
                   });
           var val = "";
-          
           console.log(filteredData.length);
 
           for (var count = 0; count < filteredData.length; count++) {
               val += filteredData[count] + "|";
           }
-
-          val = val.slice(0, -1);
           console.log(val);
-
+          val = val.slice(0, -1);
           table.column(dataIdx)
                 .search(val ? "^" + val + "$" : "^" + "-" + "$", true, false, true)
                 .draw();
         }
     });
     $(".daterange").on('cancel.daterangepicker', function (ev, picker) {
-        // ev.preventDefault();
+        ev.preventDefault();
         $(this).val('');
         table.column(dataIdx)
                 .search("")
