@@ -280,14 +280,15 @@ table.on('column-visibility.dt', function(e, settings, column, state) {
       table.columns(":visible").every(function(colIdx) {
           visibleColumnsIndexes.push(colIdx);
       });
-  });     
-// }); 
-// </script>
+  })     
+}); 
+</script>
 
 
-// <script>
-//     $(document).ready(function() {
+<script>
+    $(document).ready(function() {
         var minDate, maxDate;
+        let table = $('.datatable-Complaint').DataTable();
 
         $('input[name="datefilter"]').daterangepicker({
             autoUpdateInput: false,
@@ -309,12 +310,12 @@ table.on('column-visibility.dt', function(e, settings, column, state) {
                         var coldate = aData[5].split("/");
                         var d = new Date(coldate[2], coldate[1] - 1, coldate[0]);
                         var date = moment(d.toISOString());
-                        date = date.format("YYYY-MM-DD");
+                        date = date.format("DD/MM/YYYY");
 
                         //Remove hyphens from dates
-                        dateMin = startdate.replace(/-/g, "");
-                        dateMax = enddate.replace(/-/g, "");
-                        date = date.replace(/-/g, "");
+                        dateMin = startdate.replace("/", "");
+                        dateMax = enddate.replace("/", "");
+                        date = date.replace("/", "");
 
                         console.log(dateMin, dateMax, date);
 
@@ -344,6 +345,7 @@ table.on('column-visibility.dt', function(e, settings, column, state) {
             $(this).val('');
         });
     });
+});
 </script>
 
 @endsection
