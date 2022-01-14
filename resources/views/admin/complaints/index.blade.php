@@ -346,10 +346,8 @@
                             console.log(value, index)
                             return true;
                         }
-                        else{
-                            console.log("False")
-                            return false;
-                        }
+                        console.log("False")
+                        return false;
                     });
             var val = "";
             for (var count = 0; count < filteredData.length; count++) {
