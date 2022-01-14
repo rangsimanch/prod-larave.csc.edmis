@@ -294,7 +294,7 @@
         opens: "left",
         locale: {
             cancelLabel: 'Clear',
-            format: 'YYYY-MM-DD'
+            format: 'DD/MM/YYYY'
         }
     });
 
@@ -346,9 +346,9 @@
                         }
                         return false;
                     });
-            var val = '';
+            var val = "";
             for (var count = 0; count < filteredData.length; count++) {
-                val += filteredData[count] + "|";
+                val += filteredData[count].format('YYYY-MM-DD') + "|";
             }
             val = val.slice(0, -1);
             table.column(dataIdx)
