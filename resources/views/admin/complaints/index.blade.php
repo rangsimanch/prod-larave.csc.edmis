@@ -350,7 +350,7 @@
             for (var count = 0; count < filteredData.length; count++) {
                 var filterDate = new Date(filteredData[count]);
                 let sDate = filterDate.toString();
-                console.log(filterDate, sDate);
+                console.log(filterDate);
                 val += sDate + "|";
             }
             val = val.slice(0, -1);
@@ -358,8 +358,8 @@
                 .search(val ? "^" + val + "$" : "^" + "-" + "$", true, false)
                 .draw();
             
-            console.log(filteredData.length);
-            console.log(val ? "^" + val + "$" : "^" + "-" + "$");
+            // console.log(filteredData.length);
+            // console.log(val ? "^" + val + "$" : "^" + "-" + "$");
             }
         });
 
