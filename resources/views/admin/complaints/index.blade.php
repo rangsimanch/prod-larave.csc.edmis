@@ -357,16 +357,16 @@
             var val = "";
             for (var count = 0; count < filteredData.length; count++) {
                 var filterDate = new Date(covertDateValue(parseDateValue(filteredData[count])));
-                console.log(filterDate);
-                val += filterDate + "|";
+                var searchDate = filterDate.format('YYYY-MM-DD').toString();
+                val += searchDate + "|";
             }
             val = val.slice(0, -1);
             table.column(dataIdx)
                 .search(val ? "^" + val + "$" : "^" + "-" + "$", true, false)
                 .draw();
             
-            // console.log(filteredData.length);
-            // console.log(val ? "^" + val + "$" : "^" + "-" + "$");
+            console.log(filteredData.length);
+            console.log(val ? "^" + val + "$" : "^" + "-" + "$");
             }
         });
 
