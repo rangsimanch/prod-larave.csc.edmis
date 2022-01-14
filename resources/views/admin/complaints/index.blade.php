@@ -305,17 +305,8 @@ table.on('column-visibility.dt', function(e, settings, column, state) {
   var startDate;
   var endDate;
 
-  $("#mytable_wrapper thead").on("mousedown", "th", function (event) {
-      var visIdx = $(this).parent().children().index($(this));
-      dataIdx = table.column.index('fromVisible', visIdx);
-  });
-
-
-
-
   // Function for converting a dd/mmm/yyyy date value into a numeric string for comparison (example 01-Dec-2010 becomes 20101201
   function parseDateValue(rawDate) {
-
       var d = moment(rawDate, "DD/MM/YYYY").format('DD/MM/YYYY');
       var dateArray = d.split("/");
       var parsedDate = dateArray[2] + dateArray[1] + dateArray[0];
