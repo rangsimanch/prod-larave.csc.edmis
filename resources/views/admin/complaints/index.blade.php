@@ -288,8 +288,8 @@ table.on('column-visibility.dt', function(e, settings, column, state) {
 $(document).ready(function() {
     //DATATABLE
     //To display datatable without search and page length select, and to still have pagination work, instantiate like so
-    // var oTable=$('#complaintdb').dataTable();
-    let oTable = $('.datatable-Complaint').DataTable();
+    var oTable= $('.datatable-Complaint').dataTable();
+    console.log(oTable[5])
     //DATE RANGE
     //set global vars that are set by daterange picker, to be used by datatable
     var startdate;
@@ -320,13 +320,13 @@ $(document).ready(function() {
         startdate=picker.startDate.format('YYYY-MM-DD');
         enddate=picker.endDate.format('YYYY-MM-DD');
         console.log(startdate, enddate);
-        $.fn.dataTable.ext.search.push(
-        // $.fn.dataTableExt.afnFiltering.push(
+
+        $.fn.dataTableExt.afnFiltering.push(
         function( oSettings, aData, iDataIndex ) {
         if(startdate!=undefined){
             // 1 here is the column where my dates are.
             //Convert to YYYY-MM-DD format from DD/MM/YYYY
-            var coldate = aData[4].split("/");
+            var coldate = aData[5].split("/");
             var d = new Date(coldate[2], coldate[1]-1 , coldate[0]);
             var date = moment(d.toISOString());
             date =    date.format("YYYY-MM-DD");
@@ -355,7 +355,7 @@ $(document).ready(function() {
             return false;
             }
         });
-    oTable.draw();
+    oTable.fnDraw();
     });
 });
 </script>
