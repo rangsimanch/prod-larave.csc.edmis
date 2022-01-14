@@ -344,6 +344,7 @@
                     .column(dataIdx)
                     .data()
                     .filter(function (value, index) {
+                        console.log("Workling")
                         var evalDate = value === "" ? 0 : parseDateValue(value);
                         if ((isNaN(dateStart) && isNaN(dateEnd)) || (evalDate >= dateStart && evalDate <= dateEnd)) {
                             return true;
@@ -367,7 +368,7 @@
         });
 
         $(".daterange").on('cancel.daterangepicker', function (ev, picker) {
-            // ev.preventDefault();
+            ev.preventDefault();
             $(this).val('');
             table.column(dataIdx)
                 .search('')
