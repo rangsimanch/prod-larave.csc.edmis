@@ -332,6 +332,7 @@
         }
         else {
             //set field value
+            console.log("else")
             $(this).val(picker.startDate.format('DD/MM/YYYY') + ' - ' + picker.endDate.format('DD/MM/YYYY'));
             //run date filter
             startDate = picker.startDate.format('DD/MM/YYYY');
