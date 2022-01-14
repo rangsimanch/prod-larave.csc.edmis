@@ -21,7 +21,7 @@
                     {{ trans('cruds.complaint.title_singular') }} {{ trans('global.list') }}
                 </div>
                 <div class="panel-body">
-                    <table id="complaintdb" class=" table table-bordered table-striped table-hover ajaxTable datatable datatable-Complaint">
+                    <table id="datatableComplaint" class=" table table-bordered table-striped table-hover ajaxTable datatable datatable-Complaint">
                         <thead>
                             <tr>
                                 <th width="10">
@@ -113,7 +113,7 @@
                                     </select>
                                 </td>
                                 <td>
-                                    <input type="text" name="daterange" id="daterange" class="form-control daterange" value="">
+                                    <input type="text" name="daterange" id="daterange" class="form-control daterange" value="" autocomplete="off" placeholder="Select Period..">
                                     <!-- <input id="reportrange" type="text" name="reportrange" value="" autocomplete="off" placeholder="Select Period.."/> -->
                                     <!-- <input type="date" class="form-control filter-input" data-column="5"/> -->
                                 </td>
@@ -311,7 +311,7 @@ $(document).ready(function() {
      var dataIdx; //current data column to work with
 
 
-     $("#mytable_wrapper thead").on("mousedown", "th", function(event) {
+     $("#datatableComplaint_wrapper thead").on("mousedown", "th", function(event) {
        var visIdx = $(this).parent().children().index($(this));
        dataIdx = table.column.index('fromVisible', visIdx);
      });
@@ -336,23 +336,17 @@ $(document).ready(function() {
      $(".daterange").on('apply.daterangepicker', function(ev, picker) {
 
        ev.preventDefault();
-
-
-
        //if blank date option was selected
        if ((picker.startDate.format('DD-MMM-YYYY') == "01-Jan-0001") && (picker.endDate.format('DD-MMM-YYYY')) == "01-Jan-0001") {
          $(this).val('Blank');
-
-
          val = "^$";
-
          table.column(dataIdx)
            .search(val, true, false, true)
            .draw();
 
        } else {
          //set field value
-         $(this).val(picker.startDate.format('DD-MMM-YYYY') + ' to ' + picker.endDate.format('DD-MMM-YYYY'));
+         $(this).val(picker.startDate.format('DD/MM/YYYY') + ' to ' + picker.endDate.format('DD/MM/YYYY'));
 
 
 
