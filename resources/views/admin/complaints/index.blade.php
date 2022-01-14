@@ -340,12 +340,15 @@
                     .column(dataIdx)
                     .data()
                     .filter(function (value, index) {
-                        var evalDate = parseDateValue(value);
-                        console.log(value, index)
+                        var evalDate = value === "" ? 0 : parseDateValue(value);
+                        
                         if ((isNaN(dateStart) && isNaN(dateEnd)) || (evalDate >= dateStart && evalDate <= dateEnd)) {
                             return true;
+                            console.log(value, index)
                         }
-                        return false;
+                        else{
+                            return false;
+                        }
                     });
             var val = "";
             for (var count = 0; count < filteredData.length; count++) {
