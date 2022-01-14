@@ -288,17 +288,7 @@ table.on('column-visibility.dt', function(e, settings, column, state) {
 $(document).ready(function() {
     //DATATABLE
     //To display datatable without search and page length select, and to still have pagination work, instantiate like so
-    var oTable=$('#complaintdb').dataTable({
-        "sDom":"tp",
-        "pageLength": 10,
-        "pagination":true,
-            // Date Sorting
-        columnDefs: [
-        { type: 'date-eu', targets: ([1,6])}
-        ],
-        //// order table onload
-    "order": [[ 1, 'desc' ]],
-	});
+    var oTable=$('#complaintdb').dataTable();
     //DATE RANGE
     //set global vars that are set by daterange picker, to be used by datatable
     var startdate;
