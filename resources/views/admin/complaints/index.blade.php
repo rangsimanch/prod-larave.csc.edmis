@@ -320,8 +320,8 @@ $(document).ready(function() {
         startdate=picker.startDate.format('YYYY-MM-DD');
         enddate=picker.endDate.format('YYYY-MM-DD');
         console.log(startdate, enddate);
-
-        $.fn.dataTableExt.afnFiltering.push(
+        $.fn.dataTable.ext.search.push(
+        // $.fn.dataTableExt.afnFiltering.push(
         function( oSettings, aData, iDataIndex ) {
         if(startdate!=undefined){
             // 1 here is the column where my dates are.
