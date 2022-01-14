@@ -298,32 +298,45 @@ table.on('column-visibility.dt', function(e, settings, column, state) {
 
         $('input[name="datefilter"]').on('apply.daterangepicker', function(ev, picker) {
             $(this).val(picker.startDate.format('DD/MM/YYYY') + ' - ' + picker.endDate.format('DD/MM/YYYY'));
-            start = picker.startDate;
-            end = picker.endDate;
+            startdate = picker.startDate.format('YYYY-MM-DD');
+            enddate = picker.endDate.format('YYYY-MM-DD');
             $.fn.dataTableExt.afnFiltering.push(
-                function(settings, data, dataIndex) {
-                    var min = start;
-                    var max = end;
-                    var startDate = new Date(data[5]);
-                    console.log(min);
-                    console.log(max);
-                    
-                    if (min == null && max == null) {
-                        return true;
+                function (oSettings, aData, iDataIndex) {
+                    if (startdate != undefined) {
+                        // 0 here is the column where my dates are.
+                        //Convert to YYYY-MM-DD format from DD/MM/YYYY
+                        var coldate = aData[5].split("/");
+                        var d = new Date(coldate[2], coldate[1] - 1, coldate[0]);
+                        var date = moment(d.toISOString());
+                        date = date.format("YYYY-MM-DD");
+
+                        //Remove hyphens from dates
+                        dateMin = startdate.replace(/-/g, "");
+                        dateMax = enddate.replace(/-/g, "");
+                        date = date.replace(/-/g, "");
+
+                        //console.log(dateMin, dateMax, date);
+
+                        // run through cases to filter results
+                        if (dateMin == "" && date <= dateMax) {
+                            return true;
+                        }
+                        else if (dateMin == "" && date <= dateMax) {
+                            return true;
+                        }
+                        else if (dateMin <= date && "" == dateMax) {
+                            return true;
+                        }
+                        else if (dateMin <= date && date <= dateMax) {
+                            return true;
+                        }
+
+                        // all failed
+                        return false;
                     }
-                    if (min == null && startDate <= max) {
-                        return true;
-                    }
-                    if (max == null && startDate >= min) {
-                        return true;
-                    }
-                    if (startDate <= max && startDate >= min) {
-                        return true;
-                    }
-                    return false;
                 }
             );
-            table.draw();
+            table.fnDraw();
         });
 
         $('input[name="datefilter"]').on('cancel.daterangepicker', function(ev, picker) {
