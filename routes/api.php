@@ -187,18 +187,6 @@ Route::group(['prefix' => 'v1', 'as' => 'api.', 'namespace' => 'Api\V1\Admin', '
     Route::post('request-for-informations/media', 'RequestForInformationApiController@storeMedia')->name('request-for-informations.storeMedia');
     Route::apiResource('request-for-informations', 'RequestForInformationApiController');
 
-    // Site Warning Notices
-    Route::post('site-warning-notices/media', 'SiteWarningNoticeApiController@storeMedia')->name('site-warning-notices.storeMedia');
-    Route::apiResource('site-warning-notices', 'SiteWarningNoticeApiController');
-
-    // Non Conformance Notices
-    Route::post('non-conformance-notices/media', 'NonConformanceNoticeApiController@storeMedia')->name('non-conformance-notices.storeMedia');
-    Route::apiResource('non-conformance-notices', 'NonConformanceNoticeApiController');
-
-    // Non Conformance Reports
-    Route::post('non-conformance-reports/media', 'NonConformanceReportApiController@storeMedia')->name('non-conformance-reports.storeMedia');
-    Route::apiResource('non-conformance-reports', 'NonConformanceReportApiController');
-
     // Boq Items
     Route::apiResource('boq-items', 'BoqItemApiController');
 
@@ -243,4 +231,16 @@ Route::group(['prefix' => 'v1', 'as' => 'api.', 'namespace' => 'Api\V1\Admin', '
      // Announcements
     Route::post('announcements/media', 'AnnouncementsApiController@storeMedia')->name('announcements.storeMedia');
     Route::apiResource('announcements', 'AnnouncementsApiController');
+
+    // Swn
+    Route::post('swns/media', 'SwnApiController@storeMedia')->name('swns.storeMedia');
+    Route::apiResource('swns', 'SwnApiController');
+
+    // Ncn
+    Route::post('ncns/media', 'NcnApiController@storeMedia')->name('ncns.storeMedia');
+    Route::apiResource('ncns', 'NcnApiController');
+
+    // Ncr
+    Route::post('ncrs/media', 'NcrApiController@storeMedia')->name('ncrs.storeMedia');
+    Route::apiResource('ncrs', 'NcrApiController');
 });

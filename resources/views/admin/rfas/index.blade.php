@@ -162,7 +162,7 @@
                                 </th>
                                 <th>
                                     {{ trans('cruds.rfa.fields.submit_date') }}
-
+                                    
                                     <input type="date" class="form-control filter-input"
                                     placeholder="Search for summit date..." data-column="20"/>
                                 </th>

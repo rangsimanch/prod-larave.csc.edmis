@@ -17,6 +17,9 @@ class GlobalSearchController extends Controller
         'BoQ'                  => 'cruds.boQ.title',
         'DepartmentDocument'   => 'cruds.departmentDocument.title',
         'ContractAndComponent' => 'cruds.contractAndComponent.title',
+        'Swn'                  => 'cruds.swn.title',
+        'Ncn'                  => 'cruds.ncn.title',
+        'Ncr'                  => 'cruds.ncr.title',
     ];
 
     public function search(Request $request)
@@ -29,7 +32,6 @@ class GlobalSearchController extends Controller
 
         $term           = $search['term'];
         $searchableData = [];
-
         foreach ($this->models as $model => $translation) {
             $modelClass = 'App\\' . $model;
             $query      = $modelClass::query();
@@ -48,11 +50,9 @@ class GlobalSearchController extends Controller
                 $parsedData['model']  = trans($translation);
                 $parsedData['fields'] = $fields;
                 $formattedFields      = [];
-
                 foreach ($fields as $field) {
                     $formattedFields[$field] = Str::title(str_replace('_', ' ', $field));
                 }
-
                 $parsedData['fields_formated'] = $formattedFields;
 
                 $parsedData['url'] = url('/admin/' . Str::plural(Str::snake($model, '-')) . '/' . $result->id . '/edit');

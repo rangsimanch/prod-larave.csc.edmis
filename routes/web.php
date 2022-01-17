@@ -429,23 +429,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::get('request-for-informations/{rfi}/createReportRFI','RequestForInformationController@createReportRFI')->name('request-for-informations.createReportRFI');
     Route::resource('request-for-informations', 'RequestForInformationController');
 
-    // Site Warning Notices
-    Route::delete('site-warning-notices/destroy', 'SiteWarningNoticeController@massDestroy')->name('site-warning-notices.massDestroy');
-    Route::post('site-warning-notices/media', 'SiteWarningNoticeController@storeMedia')->name('site-warning-notices.storeMedia');
-    Route::post('site-warning-notices/ckmedia', 'SiteWarningNoticeController@storeCKEditorImages')->name('site-warning-notices.storeCKEditorImages');
-    Route::resource('site-warning-notices', 'SiteWarningNoticeController');
-    
-    // Non Conformance Notices
-    Route::delete('non-conformance-notices/destroy', 'NonConformanceNoticeController@massDestroy')->name('non-conformance-notices.massDestroy');
-    Route::post('non-conformance-notices/media', 'NonConformanceNoticeController@storeMedia')->name('non-conformance-notices.storeMedia');
-    Route::post('non-conformance-notices/ckmedia', 'NonConformanceNoticeController@storeCKEditorImages')->name('non-conformance-notices.storeCKEditorImages');
-    Route::resource('non-conformance-notices', 'NonConformanceNoticeController');
 
-    // Non Conformance Reports
-    Route::delete('non-conformance-reports/destroy', 'NonConformanceReportController@massDestroy')->name('non-conformance-reports.massDestroy');
-    Route::post('non-conformance-reports/media', 'NonConformanceReportController@storeMedia')->name('non-conformance-reports.storeMedia');
-    Route::post('non-conformance-reports/ckmedia', 'NonConformanceReportController@storeCKEditorImages')->name('non-conformance-reports.storeCKEditorImages');
-    Route::resource('non-conformance-reports', 'NonConformanceReportController');
+    
 
     // Boq Items
     Route::delete('boq-items/destroy', 'BoqItemController@massDestroy')->name('boq-items.massDestroy');
@@ -518,6 +503,28 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::post('complaints/parse-csv-import', 'ComplaintController@parseCsvImport')->name('complaints.parseCsvImport');
     Route::post('complaints/process-csv-import', 'ComplaintController@processCsvImport')->name('complaints.processCsvImport');
     Route::resource('complaints', 'ComplaintController');
+
+     // Swn
+     Route::delete('swns/destroy', 'SwnController@massDestroy')->name('swns.massDestroy');
+     Route::post('swns/media', 'SwnController@storeMedia')->name('swns.storeMedia');
+     Route::post('swns/ckmedia', 'SwnController@storeCKEditorImages')->name('swns.storeCKEditorImages');
+     Route::resource('swns', 'SwnController');
+ 
+     // Ncn
+     Route::delete('ncns/destroy', 'NcnController@massDestroy')->name('ncns.massDestroy');
+     Route::post('ncns/media', 'NcnController@storeMedia')->name('ncns.storeMedia');
+     Route::post('ncns/ckmedia', 'NcnController@storeCKEditorImages')->name('ncns.storeCKEditorImages');
+     Route::post('ncns/parse-csv-import', 'NcnController@parseCsvImport')->name('ncns.parseCsvImport');
+     Route::post('ncns/process-csv-import', 'NcnController@processCsvImport')->name('ncns.processCsvImport');
+     Route::resource('ncns', 'NcnController');
+ 
+     // Ncr
+     Route::delete('ncrs/destroy', 'NcrController@massDestroy')->name('ncrs.massDestroy');
+     Route::post('ncrs/media', 'NcrController@storeMedia')->name('ncrs.storeMedia');
+     Route::post('ncrs/ckmedia', 'NcrController@storeCKEditorImages')->name('ncrs.storeCKEditorImages');
+     Route::post('ncrs/parse-csv-import', 'NcrController@parseCsvImport')->name('ncrs.parseCsvImport');
+     Route::post('ncrs/process-csv-import', 'NcrController@processCsvImport')->name('ncrs.processCsvImport');
+     Route::resource('ncrs', 'NcrController');
 
     
 

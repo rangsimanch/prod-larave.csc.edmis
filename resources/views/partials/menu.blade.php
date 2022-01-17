@@ -34,6 +34,7 @@
                     </a>
                 </li>
             @endcan
+            
             @can('request_for_information_access')
                 <li class="{{ request()->is('admin/request-for-informations') || request()->is('admin/request-for-informations/*') ? 'active' : '' }}">
                     <a href="{{ route("admin.request-for-informations.index") }}">
@@ -44,41 +45,45 @@
                     </a>
                 </li>
             @endcan
-            @can('site_warning_notice_access')
-                <li class="{{ request()->is('admin/site-warning-notices') || request()->is('admin/site-warning-notices/*') ? 'active' : '' }}">
-                    <a href="{{ route("admin.site-warning-notices.index") }}">
+
+            @can('swn_access')
+                <li class="{{ request()->is("admin/swns") || request()->is("admin/swns/*") ? "active" : "" }}">
+                    <a href="{{ route("admin.swns.index") }}">
                         <i class="fa-fw fas fa-exclamation-triangle">
 
                         </i>
-                        <span>{{ trans('cruds.siteWarningNotice.title') }}</span>
+                        <span>{{ trans('cruds.swn.title') }}</span>
+
                     </a>
                 </li>
             @endcan
-            @can('non_conformance_notice_access')
-                <li class="{{ request()->is('admin/non-conformance-notices') || request()->is('admin/non-conformance-notices/*') ? 'active' : '' }}">
-                    <a href="{{ route("admin.non-conformance-notices.index") }}">
-                        <i class="fa-fw fas fa-file-signature">
+            @can('ncn_access')
+                <li class="{{ request()->is("admin/ncns") || request()->is("admin/ncns/*") ? "active" : "" }}">
+                    <a href="{{ route("admin.ncns.index") }}">
+                        <i class="fa-fw fas fa-exclamation-triangle">
 
                         </i>
-                        <span>{{ trans('cruds.nonConformanceNotice.title') }}</span>
+                        <span>{{ trans('cruds.ncn.title') }}</span>
+
                     </a>
                 </li>
             @endcan
-            @can('non_conformance_report_access')
-                <li class="{{ request()->is('admin/non-conformance-reports') || request()->is('admin/non-conformance-reports/*') ? 'active' : '' }}">
-                    <a href="{{ route("admin.non-conformance-reports.index") }}">
-                        <i class="fa-fw fas fa-file-signature">
+            @can('ncr_access')
+                <li class="{{ request()->is("admin/ncrs") || request()->is("admin/ncrs/*") ? "active" : "" }}">
+                    <a href="{{ route("admin.ncrs.index") }}">
+                        <i class="fa-fw fas fa-exclamation-triangle">
 
                         </i>
-                        <span>{{ trans('cruds.nonConformanceReport.title') }}</span>
+                        <span>{{ trans('cruds.ncr.title') }}</span>
+
                     </a>
                 </li>
             @endcan
+           
             @can('request_document_setting')
                 <li class="treeview">
                     <a href="#">
                         <i class="fa-fw fas fa-cog">
-
                         </i>
                         <span>{{ trans('cruds.requestForApproval.title') }}</span>
                         <span class="pull-right-container"><i class="fa fa-fw fa-angle-left pull-right"></i></span>
