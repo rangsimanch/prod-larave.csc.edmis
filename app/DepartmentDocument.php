@@ -12,7 +12,7 @@ use Spatie\MediaLibrary\Models\Media;
 
 class DepartmentDocument extends Model implements HasMedia
 {
-    use SoftDeletes, MultiTenantModelTrait, HasMediaTrait, Auditable;
+    use SoftDeletes, HasMediaTrait, Auditable;
 
     public $table = 'department_documents';
 
