@@ -99,7 +99,7 @@
       { data: 'placeholder', name: 'placeholder' },
 { data: 'document_name', name: 'document_name' },
 { data: 'tag', name: 'tags.tag_name' },
-{ data: 'construction_contract_code', name: 'construction_contract.code' },
+{ data: 'construction_contract_code', name: 'construction_contract.code' , visible: false},
 { data: 'download', name: 'download', sortable: false, searchable: false },
 { data: 'example_file', name: 'example_file', sortable: false, searchable: false },
 { data: 'actions', name: '{{ trans('global.actions') }}' }
