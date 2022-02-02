@@ -177,6 +177,7 @@
     orderCellsTop: true,
     order: [[ 4, 'desc' ]],
     pageLength: 25,
+    lengthMenu: [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
   };
   let table = $('.datatable-AddLetter').DataTable(dtOverrideGlobals);
   $('a[data-toggle="tab"]').on('shown.bs.tab click', function(e){
