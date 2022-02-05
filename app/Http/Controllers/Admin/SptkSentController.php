@@ -30,7 +30,8 @@ class SptkSentController extends Controller
 
             $table->editColumn('actions', function ($row) {
                 $viewGate      = 'add_letter_show';
-                $editGate      = 'can_not_show';
+                // $editGate      = 'can_not_show';
+                $editGate      = 'add_letter_edit';
                 $deleteGate    = 'add_letter_delete';
                 $crudRoutePart = 'add-letters';
 
