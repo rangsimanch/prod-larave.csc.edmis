@@ -509,8 +509,8 @@ class RequestForInformationController extends Controller
         }
 
         if($rfi->construction_contract->code == "C4-6"){
-            $issue_by = 'นายเติมพงษ์ เหมาะสุวรรณ และนายปริญญา พรสวัสดิ์';
-            $issuer_jobtitle = 'กรรมการผู้มีอำนาจ';
+            $issue_by = 'นายธีรพงษ์ วิธีเจริญ';
+            $issuer_jobtitle = 'ผู้รับมอบอำนาจ';
             $issue_position_lf = 190;
             $issue_position_lf_sub = 438;
             $constructor_name = 'Unique Engineering and Construction Public Company Limited';
