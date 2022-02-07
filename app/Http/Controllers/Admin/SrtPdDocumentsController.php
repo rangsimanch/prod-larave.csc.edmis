@@ -54,21 +54,21 @@ class SrtPdDocumentsController extends Controller
                 ));
             });
 
-            $table->editColumn('refer_documents.file_upload_2', function ($row) {
-                if (!$row->refer_documents->file_upload_2) {
-                    return '';
-                }
+            // $table->editColumn('refer_documents.file_upload_2', function ($row) {
+            //     if (!$row->refer_documents->file_upload_2) {
+            //         return '';
+            //     }
 
-                $links = [];
+            //     $links = [];
 
-                $refer_doc = $row->refer_documents ? $row->refer_documents->document_number : '';
+            //     $refer_doc = $row->refer_documents ? $row->refer_documents->document_number : '';
 
-                foreach ($row->refer_documents->file_upload_2 as $media) {
-                    $links[] = '<a href="' . $media->getUrl() . '" target="_blank">' . $refer_doc . '</a>';
-                }
+            //     foreach ($row->refer_documents->file_upload_2 as $media) {
+            //         $links[] = '<a href="' . $media->getUrl() . '" target="_blank">' . $refer_doc . '</a>';
+            //     }
 
-                return implode(', ', $links);
-            });
+            //     return implode(', ', $links);
+            // });
 
 
             $table->editColumn('id', function ($row) {
@@ -102,24 +102,24 @@ class SrtPdDocumentsController extends Controller
             $table->editColumn('note', function ($row) {
                 return $row->note ? $row->note : "";
             });
-            $table->editColumn('file_upload', function ($row) {
-                // if (!$row->file_upload) {
-                //     return '';
-                // }
 
-                if (!$row->refer_documents->file_upload_3) {
+            $table->editColumn('file_upload', function ($row) {
+                if (!$row->file_upload) {
                     return '';
                 }
 
                 $links = [];
-
-                // foreach ($row->file_upload as $media) {
-                //     $links[] = '<a href="' . $media->getUrl() . '" target="_blank">' . trans('global.downloadFile') . '</a>';
-                // }
-
-                foreach ($row->refer_documents->file_upload_3 as $media) {
+                foreach ($row->file_upload as $media) {
                     $links[] = '<a href="' . $media->getUrl() . '" target="_blank">' . trans('global.downloadFile') . '</a>';
                 }
+
+
+                // if (!$row->refer_documents->file_upload_3) {
+                //     return '';
+                // }
+                // foreach ($row->refer_documents->file_upload_3 as $media) {
+                //     $links[] = '<a href="' . $media->getUrl() . '" target="_blank">' . trans('global.downloadFile') . '</a>';
+                // }
 
                 return implode(', ', $links);
             });
@@ -128,7 +128,7 @@ class SrtPdDocumentsController extends Controller
                 return $row->to_text ? $row->to_text : "";
             });
 
-            $table->rawColumns(['actions', 'placeholder', 'refer_documents', 'operator', 'file_upload', 'refer_documents.file_upload_2']);
+            $table->rawColumns(['actions', 'placeholder', 'refer_documents', 'operator', 'file_upload']);
 
             return $table->make(true);
         }
@@ -228,74 +228,74 @@ class SrtPdDocumentsController extends Controller
         }
 
         //Default
-        // $media = $srtPdDocument->file_upload->pluck('file_name')->toArray();
+        $media = $srtPdDocument->file_upload->pluck('file_name')->toArray();
 
-        // foreach ($request->input('file_upload', []) as $file) {
-        //     if (count($media) === 0 || !in_array($file, $media)) {
-        //         $srtPdDocument->addMedia(storage_path('tmp/uploads/' . $file))->toMediaCollection('file_upload');
-        //     }
-        // }
+        foreach ($request->input('file_upload', []) as $file) {
+            if (count($media) === 0 || !in_array($file, $media)) {
+                $srtPdDocument->addMedia(storage_path('tmp/uploads/' . $file))->toMediaCollection('file_upload');
+            }
+        }
 
         //Create SrtInputDocument Object
-        $srtInputDocument = SrtInputDocument::find($request->refer_documents_id);
-        //Link Media to file_upload_2
-        $media = $srtInputDocument->file_upload_3->pluck('file_name')->toArray();
-        //Merger PDF
+        // $srtInputDocument = SrtInputDocument::find($request->refer_documents_id);
+        // //Link Media to file_upload_2
+        // $media = $srtInputDocument->file_upload_3->pluck('file_name')->toArray();
+        // //Merger PDF
 
-        if(count($request->input('file_upload', [])) > 0){
-            // Complete Files
-            if($data['save_for'] == "Closed"){
-                $CompleteMerger = PDFMerger::init();
-                $fileUpload_1 = $srtInputDocument->getMedia('file_upload')->first();
-                $fileUpload_2 = $srtInputDocument->getMedia('file_upload_2')->first();
-                $CompleteMerger->addPDF($fileUpload_1->getPath());
-                $CompleteMerger->addPDF($fileUpload_2->getPath());
-                foreach ($request->input('file_upload', []) as $file) {
-                    if (count($media) === 0 || !in_array($file, $media)) {
-                        $CompleteMerger->addPDF(storage_path('tmp/uploads/' . $file), 'all');  
-                    }
-                }
-                $CompleteMerger->merge();
-                $CompleteMerger->save(storage_path('tmp/uploads/mergerPdf_Completed.pdf'), "file");
-                $srtInputDocument->addMedia(storage_path('tmp/uploads/mergerPdf_Completed.pdf'))->toMediaCollection('complete_file');
-            }
+        // if(count($request->input('file_upload', [])) > 0){
+        //     // Complete Files
+        //     if($data['save_for'] == "Closed"){
+        //         $CompleteMerger = PDFMerger::init();
+        //         $fileUpload_1 = $srtInputDocument->getMedia('file_upload')->first();
+        //         $fileUpload_2 = $srtInputDocument->getMedia('file_upload_2')->first();
+        //         $CompleteMerger->addPDF($fileUpload_1->getPath());
+        //         $CompleteMerger->addPDF($fileUpload_2->getPath());
+        //         foreach ($request->input('file_upload', []) as $file) {
+        //             if (count($media) === 0 || !in_array($file, $media)) {
+        //                 $CompleteMerger->addPDF(storage_path('tmp/uploads/' . $file), 'all');  
+        //             }
+        //         }
+        //         $CompleteMerger->merge();
+        //         $CompleteMerger->save(storage_path('tmp/uploads/mergerPdf_Completed.pdf'), "file");
+        //         $srtInputDocument->addMedia(storage_path('tmp/uploads/mergerPdf_Completed.pdf'))->toMediaCollection('complete_file');
+        //     }
 
-            $pdfMerger = PDFMerger::init();
-            //Merge PDF in Dropzone
-            foreach ($request->input('file_upload', []) as $file) {
-                if (count($media) === 0 || !in_array($file, $media)) {
-                    $pdfMerger->addPDF(storage_path('tmp/uploads/' . $file), 'all');  
-                }
-            }
-            $pdfMerger->merge();
-            //Save to tmp
-            $pdfMerger->save(storage_path('tmp/uploads/mergerPdf_03.pdf'), "file");
-            //Delete Dropzone file on tmp 
-            foreach ($request->input('file_upload', []) as $file) {
-                if (count($media) === 0 || !in_array($file, $media)) {
-                    File::delete(storage_path('tmp/uploads/' . $file));
-                }
-            }
-            //Add media to SrtInputDocument Collection (file_upload_2)
-            $srtInputDocument->addMedia(storage_path('tmp/uploads/mergerPdf_03.pdf'))->toMediaCollection('file_upload_3');
-        }else{
-            $CompleteMerger = PDFMerger::init();
-            $fileUpload_1 = $srtInputDocument->getMedia('file_upload')->first();
-            $fileUpload_2 = $srtInputDocument->getMedia('file_upload_2')->first();
-            $CompleteMerger->addPDF($fileUpload_1->getPath());
-            $CompleteMerger->addPDF($fileUpload_2->getPath());
-            $CompleteMerger->merge();
-            $CompleteMerger->save(storage_path('tmp/uploads/mergerPdf_Completed.pdf'), "file");
-            $srtInputDocument->addMedia(storage_path('tmp/uploads/mergerPdf_Completed.pdf'))->toMediaCollection('complete_file');
-        }
-        //Delete Function on SrtInputDocument Collection (file_upload_2)
-        if (count($srtInputDocument->file_upload_3) > 0) {
-            foreach ($srtInputDocument->file_upload_3 as $media) {
-                if (!in_array($media->file_name, $request->input('file_upload', []))) {
-                    $media->delete();
-                }
-            }
-        }
+        //     $pdfMerger = PDFMerger::init();
+        //     //Merge PDF in Dropzone
+        //     foreach ($request->input('file_upload', []) as $file) {
+        //         if (count($media) === 0 || !in_array($file, $media)) {
+        //             $pdfMerger->addPDF(storage_path('tmp/uploads/' . $file), 'all');  
+        //         }
+        //     }
+        //     $pdfMerger->merge();
+        //     //Save to tmp
+        //     $pdfMerger->save(storage_path('tmp/uploads/mergerPdf_03.pdf'), "file");
+        //     //Delete Dropzone file on tmp 
+        //     foreach ($request->input('file_upload', []) as $file) {
+        //         if (count($media) === 0 || !in_array($file, $media)) {
+        //             File::delete(storage_path('tmp/uploads/' . $file));
+        //         }
+        //     }
+        //     //Add media to SrtInputDocument Collection (file_upload_2)
+        //     $srtInputDocument->addMedia(storage_path('tmp/uploads/mergerPdf_03.pdf'))->toMediaCollection('file_upload_3');
+        // }else{
+        //     $CompleteMerger = PDFMerger::init();
+        //     $fileUpload_1 = $srtInputDocument->getMedia('file_upload')->first();
+        //     $fileUpload_2 = $srtInputDocument->getMedia('file_upload_2')->first();
+        //     $CompleteMerger->addPDF($fileUpload_1->getPath());
+        //     $CompleteMerger->addPDF($fileUpload_2->getPath());
+        //     $CompleteMerger->merge();
+        //     $CompleteMerger->save(storage_path('tmp/uploads/mergerPdf_Completed.pdf'), "file");
+        //     $srtInputDocument->addMedia(storage_path('tmp/uploads/mergerPdf_Completed.pdf'))->toMediaCollection('complete_file');
+        // }
+        // //Delete Function on SrtInputDocument Collection (file_upload_2)
+        // if (count($srtInputDocument->file_upload_3) > 0) {
+        //     foreach ($srtInputDocument->file_upload_3 as $media) {
+        //         if (!in_array($media->file_name, $request->input('file_upload', []))) {
+        //             $media->delete();
+        //         }
+        //     }
+        // }
 
         return redirect()->route('admin.srt-pd-documents.index');
     }

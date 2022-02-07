@@ -30,9 +30,9 @@
                                 <th>
                                     {{ trans('cruds.srtPdDocument.fields.refer_documents') }}
                                 </th>
-                                <th>
+                                <!-- <th>
                                     {{ trans('cruds.srtPdDocument.fields.refer_documents') }}
-                                </th>
+                                </th> -->
                                 <th>
                                     {{ trans('cruds.srtInputDocument.fields.subject') }}
                                 </th>
@@ -64,8 +64,8 @@
                             <tr>
                                 <td>
                                 </td>
-                                <td>
-                                </td>
+                                <!-- <td>
+                                </td> -->
                                 <td>
                                     <select class="search">
                                         <option value>{{ trans('global.all') }}</option>
@@ -159,7 +159,7 @@
     columns: [
       { data: 'placeholder', name: 'placeholder' },
 { data: 'id', name: 'id', visible: false},
-{ data: 'refer_documents.file_upload_2', name: 'refer_documents.file_upload_2', sortable: false, searchable: false },
+// { data: 'refer_documents.file_upload_2', name: 'refer_documents.file_upload_2', sortable: false, searchable: false },
 { data: 'refer_documents.subject', name: 'refer_documents.subject' },
 { data: 'process_date', name: 'process_date' },
 { data: 'special_command', name: 'special_command' },
@@ -167,7 +167,7 @@
 { data: 'to_text', name: 'to_text' },
 { data: 'practice_notes', name: 'practice_notes' },
 { data: 'note', name: 'note' },
-{ data: 'file_upload', name: 'file_upload', sortable: false, searchable: false },
+{ data: 'file_upload', name: 'file_upload', sortable: false, searchable: false ,visble: false},
 { data: 'actions', name: '{{ trans('global.actions') }}' }
     ],
     orderCellsTop: true,

@@ -145,18 +145,6 @@ Dropzone.options.fileUploadDropzone = {
       }
       $('form').find('input[name="file_upload[]"][value="' + name + '"]').remove()
     },
-//     init: function () {
-// @if(isset($srtPdDocument) && $srtPdDocument->refer_documents->file_upload_3)
-//           var files =
-//             {!! json_encode($srtPdDocument->refer_documents->file_upload_3) !!}
-//               for (var i in files) {
-//               var file = files[i]
-//               this.options.addedfile.call(this, file)
-//               file.previewElement.classList.add('dz-complete')
-//               $('form').append('<input type="hidden" name="file_upload[]" value="' + file.file_name + '">')
-//             }
-// @endif
-//     },
      error: function (file, response) {
          if ($.type(response) === 'string') {
              var message = response //dropzone sends it's own error messages in string
