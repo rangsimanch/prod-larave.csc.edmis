@@ -1240,7 +1240,7 @@ class RfaController extends Controller
         if($rfa->construction_contract->code == "C4-6"){
             $issue_by = '( นายธีรพงษ์ วิธีเจริญ )';
             $issuer_jobtitle = 'ผู้รับมอบอำนาจ';
-            $issue_position_lf = 190;
+            $issue_position_lf = 230;
             $issue_position_lf_sub = 438;
             $constructor_name = 'Unique Engineering and Construction Public Company Limited';
             $constructor_code = 'UNIQUE';
@@ -1254,7 +1254,7 @@ class RfaController extends Controller
             $signature_size_h = 50;
             $signature_size_w = 50;
             $signature_position_top = 415;
-            $signature_position_left = 320;
+            $signature_position_left = 278;
             $stamp_size_h = 120;
             $stamp_size_w = 120;
             $contract_name = 'Contract ' . $rfa->construction_contract->code . ' : ' . $rfa->construction_contract->name;
