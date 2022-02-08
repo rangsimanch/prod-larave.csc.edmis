@@ -1241,7 +1241,7 @@ class RfaController extends Controller
             $issue_by = '( นายธีรพงษ์ วิธีเจริญ )';
             $issuer_jobtitle = 'ผู้รับมอบอำนาจ';
             $issue_position_lf = 255;
-            $issue_position_lf_sub = 468;
+            $issue_position_lf_sub = 489;
             $constructor_name = 'Unique Engineering and Construction Public Company Limited';
             $constructor_code = 'UNIQUE';
             $logo_path = public_path('png-asset/UNIQUE_logo.png');
