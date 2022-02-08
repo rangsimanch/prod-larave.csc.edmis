@@ -1248,13 +1248,13 @@ class RfaController extends Controller
             $logo_h = 40;
             $logo_w = 40;
             $logo_top = 109;
-            $logo_left = 720;
+            $logo_left = 690;
             $stamp_path =  '';
             $signature_path =  '';
             $signature_size_h = 50;
             $signature_size_w = 50;
             $signature_position_top = 415;
-            $signature_position_left = 278;
+            $signature_position_left = 300;
             $stamp_size_h = 120;
             $stamp_size_w = 120;
             $contract_name = 'Contract ' . $rfa->construction_contract->code . ' : ' . $rfa->construction_contract->name;
