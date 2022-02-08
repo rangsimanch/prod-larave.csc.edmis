@@ -1248,7 +1248,7 @@ class RfaController extends Controller
             $logo_h = 40;
             $logo_w = 40;
             $logo_top = 109;
-            $logo_left = 690;
+            $logo_left = 701;
             $stamp_path =  '';
             $signature_path =  '';
             $signature_size_h = 50;
