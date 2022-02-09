@@ -288,6 +288,7 @@ Dropzone.options.fileAttachmentDropzone = {
     url: '{{ route('admin.ncns.storeMedia') }}',
     maxFilesize: 500, // MB
     addRemoveLinks: true,
+    acceptedFiles: '.pdf',
     headers: {
       'X-CSRF-TOKEN': "{{ csrf_token() }}"
     },

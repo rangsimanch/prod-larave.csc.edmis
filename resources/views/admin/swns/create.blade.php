@@ -245,6 +245,7 @@ Dropzone.options.documentAttachmentDropzone = {
     url: '{{ route('admin.swns.storeMedia') }}',
     maxFilesize: 500, // MB
     addRemoveLinks: true,
+    acceptedFiles: '.pdf',
     headers: {
       'X-CSRF-TOKEN': "{{ csrf_token() }}"
     },
