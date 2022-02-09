@@ -427,11 +427,13 @@ class SwnController extends Controller
         $html .= "<div style=\"font-size: 16px; padding-right:90px; position:absolute;top:270px;left:235px;\">" . $ref_doc  . "</div>";
         $html .= "<div style=\"font-size: 18px; font-weight: bold; padding-right:80px; position:absolute;top:335px;left:100px;\">" . "Description(Content details):"  . "</div>";
         $html .= "<div style=\"font-size: 16px; padding-right:80px; position:absolute;top:338px;left:120px;\">" . $description  . "</div>";
-       
-        $html .= "<div style=\"font-size: 14px; font-weight: bold; position:absolute;top:606px;left:130px;\">( " . $issuer_name  . " )</div>";
+        if($issuer_name != '')
+            $html .= "<div style=\"font-size: 14px; font-weight: bold; position:absolute;top:606px;left:130px;\">( " . $issuer_name  . " )</div>";
         // $html .= "<div style=\"font-size: 14px; font-weight: bold; position:absolute;top:620px;left:135px;\">" . $issuer_position  . "</div>";
-        $html .= "<div style=\"font-size: 14px; font-weight: bold; position:absolute;top:606px;left:340px;\">( " . $qa_name  . " )</div>";
-        $html .= "<div style=\"font-size: 14px; font-weight: bold; position:absolute;top:606px;left:592px;\">( " . $cos_name  . " )</div>";
+        if($qa_name != '')
+            $html .= "<div style=\"font-size: 14px; font-weight: bold; position:absolute;top:606px;left:340px;\">( " . $qa_name  . " )</div>";
+        if($cos_name != '')
+            $html .= "<div style=\"font-size: 14px; font-weight: bold; position:absolute;top:606px;left:592px;\">( " . $cos_name  . " )</div>";
         
         $html .= "<div style=\"font-size: 14px; position:absolute;top:643px;left:137px;\">" . $submit_date  . "</div>";
         $html .= "<div style=\"font-size: 14px; position:absolute;top:643px;left:345px;\">" . $submit_date  . "</div>";
