@@ -506,7 +506,7 @@ class SwnController extends Controller
 
         foreach($swn->document_attachment as $attacment){ 
             try{
-                $pagecount = $mpdf->SetSourceFile(public_path($attacment->getUrl()));
+                $pagecount = $mpdf->SetSourceFile(public_path($attacment->getPath()));
                 for($page = 1; $page <= $pagecount; $page++){
                     $mpdf->AddPage();
                     $tplId = $mpdf->importPage($page);
