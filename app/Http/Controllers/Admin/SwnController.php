@@ -519,7 +519,7 @@ class SwnController extends Controller
         }
         
         
-        $filename =  "SWN-" . $swn->dept_code->code . substr($document_number,-8);
+        $filename =  "SWN-" . $swn->dept_code->code ?? '' . substr($document_number,-8);
         // Output a PDF file directly to the browser
         return $mpdf->Output($filename,"I");
     }
