@@ -56,9 +56,9 @@ class NcrController extends Controller
                 return $row->construction_contract ? $row->construction_contract->code : '';
             });
 
-            $table->addColumn('corresponding_ncn_document_number', function ($row) {
-                return $row->corresponding_ncn ? $row->corresponding_ncn->document_number : '';
-            });
+            // $table->addColumn('corresponding_ncn_document_number', function ($row) {
+            //     return $row->corresponding_ncn ? $row->corresponding_ncn->document_number : '';
+            // });
 
             $table->editColumn('document_number', function ($row) {
                 return $row->document_number ? $row->document_number : '';
@@ -116,7 +116,7 @@ class NcrController extends Controller
                 return $row->leader ? $row->leader->name : '';
             });
 
-            $table->rawColumns(['actions', 'placeholder', 'construction_contract', 'corresponding_ncn', 'file_attachment', 'prepared_by', 'contractor_manager', 'issue_by', 'construction_specialist', 'related_specialist', 'leader', 'documents_status']);
+            $table->rawColumns(['actions', 'placeholder', 'construction_contract', 'file_attachment', 'prepared_by', 'contractor_manager', 'issue_by', 'construction_specialist', 'related_specialist', 'leader', 'documents_status']);
 
             return $table->make(true);
         }

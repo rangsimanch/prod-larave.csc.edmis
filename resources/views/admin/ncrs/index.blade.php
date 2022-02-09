@@ -36,9 +36,7 @@
                                 <th>
                                     {{ trans('cruds.ncr.fields.construction_contract') }}
                                 </th>
-                                <th>
-                                    {{ trans('cruds.ncr.fields.corresponding_ncn') }}
-                                </th>
+                               
                                 <th>
                                     {{ trans('cruds.ncr.fields.document_number') }}
                                 </th>
@@ -89,14 +87,7 @@
                                         @endforeach
                                     </select>
                                 </td>
-                                <td>
-                                    <select class="search">
-                                        <option value>{{ trans('global.all') }}</option>
-                                        @foreach($ncns as $key => $item)
-                                            <option value="{{ $item->document_number }}">{{ $item->document_number }}</option>
-                                        @endforeach
-                                    </select>
-                                </td>
+                                
                                 <td>
                                     <input class="search" type="text" placeholder="{{ trans('global.search') }}">
                                 </td>
@@ -215,7 +206,6 @@
 { data: 'actions', name: '{{ trans('global.actions') }}' },
 { data: 'documents_status', name: 'documents_status' },
 { data: 'construction_contract_code', name: 'construction_contract.code' },
-{ data: 'corresponding_ncn_document_number', name: 'corresponding_ncn.document_number' },
 { data: 'document_number', name: 'document_number' },
 { data: 'acceptance_date', name: 'acceptance_date' },
 { data: 'file_attachment', name: 'file_attachment', sortable: false, searchable: false },
