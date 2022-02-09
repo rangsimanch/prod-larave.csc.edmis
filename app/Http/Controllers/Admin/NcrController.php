@@ -93,7 +93,7 @@ class NcrController extends Controller
                 else if(Ncr::DOCUMENTS_STATUS_SELECT[$row->documents_status] == 'Accepted and Closed case.'){
                     return sprintf('<p style="color:#28B463"><b>%s</b></p>',$row->documents_status ? Ncr::DOCUMENTS_STATUS_SELECT[$row->documents_status] : '');
                 }
-                else if(Ncr::DOCUMENTS_STATUS_SELECT[$row->documents_status] == 'ejected and need further action.'){
+                else if(Ncr::DOCUMENTS_STATUS_SELECT[$row->documents_status] == 'Rejected and need further action.'){
                     return sprintf('<p style="color:#E74C3C"><b>%s</b></p>',$row->documents_status ? Ncr::DOCUMENTS_STATUS_SELECT[$row->documents_status] : '');
                 }
                 else{
