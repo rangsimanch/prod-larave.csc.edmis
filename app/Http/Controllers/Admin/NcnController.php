@@ -405,7 +405,7 @@ class NcnController extends Controller
             $filename =  "NCN-" . $ncn->dept_code->code  . substr($document_number,-8);
         }
         else{
-            $filename =  "NCN-" . $issue_date  . substr($document_number,-8);
+            $filename =  "NCN_Report";
         }
         return $mpdf->Output($filename,"I");
     }
