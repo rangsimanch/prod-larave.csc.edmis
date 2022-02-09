@@ -518,8 +518,13 @@ class SwnController extends Controller
             }
         }
         
-        
-        $filename =  "SWN-" . $swn->dept_code->code ?? '' . substr($document_number,-8);
+        if($swn->dept_code->code ?? '' != ''){
+            $filename =  "SWN-" . $swn->dept_code->code  . substr($document_number,-8);
+        }
+        else{
+            $filename =  "SWN-" . $submit_date  . substr($document_number,-8);
+
+        }
         // Output a PDF file directly to the browser
         return $mpdf->Output($filename,"I");
     }
