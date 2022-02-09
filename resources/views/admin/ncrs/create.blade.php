@@ -147,70 +147,7 @@
                             <span class="help-block">{{ trans('cruds.ncr.fields.contractor_manager_helper') }}</span>
                         </div>
                         
-                        <legend><a onclick="HideSection(1)" id="element1"><i class="bi bi-eye"></i></a> Section 3 : Disposition on Corrective Action Result </legend>
-                        <div id="section1">
-                            <div class="form-group {{ $errors->has('documents_status') ? 'has-error' : '' }}">
-                                <label>{{ trans('cruds.ncr.fields.documents_status') }}</label>
-                                <select class="form-control" name="documents_status" id="documents_status">
-                                    <option value disabled {{ old('documents_status', null) === null ? 'selected' : '' }}>{{ trans('global.pleaseSelect') }}</option>
-                                    @foreach(App\Ncr::DOCUMENTS_STATUS_SELECT as $key => $label)
-                                        <option value="{{ $key }}" {{ old('documents_status', '') === (string) $key ? 'selected' : '' }}>{{ $label }}</option>
-                                    @endforeach
-                                </select>
-                                @if($errors->has('documents_status'))
-                                    <span class="help-block" role="alert">{{ $errors->first('documents_status') }}</span>
-                                @endif
-                                <span class="help-block">{{ trans('cruds.ncr.fields.documents_status_helper') }}</span>
-                            </div>
-                            <div class="form-group {{ $errors->has('issue_by') ? 'has-error' : '' }}">
-                                <label for="issue_by_id">{{ trans('cruds.ncr.fields.issue_by') }}</label>
-                                <select class="form-control select2" name="issue_by_id" id="issue_by_id">
-                                    @foreach($issue_bies as $id => $entry)
-                                        <option value="{{ $id }}" {{ old('issue_by_id') == $id ? 'selected' : '' }}>{{ $entry }}</option>
-                                    @endforeach
-                                </select>
-                                @if($errors->has('issue_by'))
-                                    <span class="help-block" role="alert">{{ $errors->first('issue_by') }}</span>
-                                @endif
-                                <span class="help-block">{{ trans('cruds.ncr.fields.issue_by_helper') }}</span>
-                            </div>
-                            <div class="form-group {{ $errors->has('construction_specialist') ? 'has-error' : '' }}">
-                                <label for="construction_specialist_id">{{ trans('cruds.ncr.fields.construction_specialist') }}</label>
-                                <select class="form-control select2" name="construction_specialist_id" id="construction_specialist_id">
-                                    @foreach($construction_specialists as $id => $entry)
-                                        <option value="{{ $id }}" {{ old('construction_specialist_id') == $id ? 'selected' : '' }}>{{ $entry }}</option>
-                                    @endforeach
-                                </select>
-                                @if($errors->has('construction_specialist'))
-                                    <span class="help-block" role="alert">{{ $errors->first('construction_specialist') }}</span>
-                                @endif
-                                <span class="help-block">{{ trans('cruds.ncr.fields.construction_specialist_helper') }}</span>
-                            </div>
-                            <div class="form-group {{ $errors->has('related_specialist') ? 'has-error' : '' }}">
-                                <label for="related_specialist_id">{{ trans('cruds.ncr.fields.related_specialist') }}</label>
-                                <select class="form-control select2" name="related_specialist_id" id="related_specialist_id">
-                                    @foreach($related_specialists as $id => $entry)
-                                        <option value="{{ $id }}" {{ old('related_specialist_id') == $id ? 'selected' : '' }}>{{ $entry }}</option>
-                                    @endforeach
-                                </select>
-                                @if($errors->has('related_specialist'))
-                                    <span class="help-block" role="alert">{{ $errors->first('related_specialist') }}</span>
-                                @endif
-                                <span class="help-block">{{ trans('cruds.ncr.fields.related_specialist_helper') }}</span>
-                            </div>
-                            <div class="form-group {{ $errors->has('leader') ? 'has-error' : '' }}">
-                                <label for="leader_id">{{ trans('cruds.ncr.fields.leader') }}</label>
-                                <select class="form-control select2" name="leader_id" id="leader_id">
-                                    @foreach($leaders as $id => $entry)
-                                        <option value="{{ $id }}" {{ old('leader_id') == $id ? 'selected' : '' }}>{{ $entry }}</option>
-                                    @endforeach
-                                </select>
-                                @if($errors->has('leader'))
-                                    <span class="help-block" role="alert">{{ $errors->first('leader') }}</span>
-                                @endif
-                                <span class="help-block">{{ trans('cruds.ncr.fields.leader_helper') }}</span>
-                            </div>
-                        </div>
+                        
                         <div class="form-group">
                             <button class="btn btn-danger" type="submit">
                                 {{ trans('global.save') }}
@@ -528,30 +465,5 @@ Dropzone.options.fileAttachmentDropzone = {
      }
 }
 
-var section1 = document.getElementById("section1");
-section1.style.display = "none";
-function HideSection(idElement) {
-    var element = document.getElementById('element' + idElement);
-    if (idElement === 1 ) {
-        if (element.innerHTML === '<i class="bi bi-eye"></i>') 					
-            element.innerHTML = '<i class="bi bi-eye-slash-fill"></i>';
-        else {
-            element.innerHTML = '<i class="bi bi-eye"></i>';
-        }
-        if(idElement === 1){
-        	var section = document.getElementById("section1");
-            if (section.style.display === "none") {
-                section.style.display = "block";
-            } else {
-                section.style.display = "none";
-            }
-        }
-    }
-}
-
-const select2 = document.getElementsByClassName("select2");
-for (let i = 0; i < select2.length; i++) {
-    select2[i].style.cssText = 'width:100%!important;';
-}
 </script>
 @endsection
