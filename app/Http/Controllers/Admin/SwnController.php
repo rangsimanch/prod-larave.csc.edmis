@@ -410,7 +410,7 @@ class SwnController extends Controller
         $review_status = $swn->review_status ?? '';
         $auditing_status = $swn->auditing_status ?? '';
 
-        $html = "<div style=\"font-size: 16px; font-weight: bold; color:#1F4E78; position:absolute;top:139px;left:100px;\">" . $contract_name  . "</div>";
+        $html = "<div style=\"font-size: 16px; font-weight: bold; color:#1F4E78; position:absolute;top:139px;left:130px;\">" . $contract_name  . "</div>";
         $html .= "<div style=\"font-size: 18px; position:absolute;top:190px;left:120px;\">" . $send_to  . "</div>";
         $html .= "<div style=\"font-size: 18px; position:absolute;top:190px;left:370px;\">" . $submit_date  . "</div>";
         $html .= "<div style=\"font-size: 16px; position:absolute;top:190px;left:520px;\">" . $document_number  . "</div>";
