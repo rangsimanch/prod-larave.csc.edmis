@@ -25,13 +25,13 @@ class UpdateSwnRequest extends FormRequest
                 'string',
                 'required',
             ],
-            'document_number' => [
-                'string',
+            'dept_code_id' => [
                 'required',
+                'integer',
             ],
             'submit_date' => [
+                'required',
                 'date_format:' . config('panel.date_format'),
-                'nullable',
             ],
             'location' => [
                 'string',
@@ -42,6 +42,10 @@ class UpdateSwnRequest extends FormRequest
             ],
             'description_image' => [
                 'array',
+            ],
+            'issue_by_id' => [
+                'required',
+                'integer',
             ],
             'rootcase_image' => [
                 'array',

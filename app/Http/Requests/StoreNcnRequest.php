@@ -21,17 +21,21 @@ class StoreNcnRequest extends FormRequest
                 'required',
                 'integer',
             ],
-            'document_number' => [
-                'string',
+            'dept_code_id' => [
                 'required',
-            ],
-            'issue_date' => [
-                'date_format:' . config('panel.date_format'),
-                'nullable',
+                'integer',
             ],
             'title' => [
                 'string',
                 'required',
+            ],
+            'issue_date' => [
+                'required',
+                'date_format:' . config('panel.date_format'),
+            ],
+            'document_number' => [
+                'string',
+                'nullable',
             ],
             'description_image' => [
                 'array',

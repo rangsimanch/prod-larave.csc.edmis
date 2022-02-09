@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use App\ConstructionContract;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
+
 use App\Http\Controllers\Traits\CsvImportTrait;
 use App\Http\Controllers\Traits\MediaUploadingTrait;
 use App\Http\Requests\MassDestroyNcrRequest;
@@ -82,7 +84,21 @@ class NcrController extends Controller
             });
 
             $table->editColumn('documents_status', function ($row) {
-                return $row->documents_status ? Ncr::DOCUMENTS_STATUS_SELECT[$row->documents_status] : '';
+                if (Ncr::DOCUMENTS_STATUS_SELECT[$row->documents_status] == 'New'){
+                    return sprintf('<p style="color:#003399"><b>%s</b></p>',$row->documents_status ? Ncr::DOCUMENTS_STATUS_SELECT[$row->documents_status] : '');
+                }
+                else if(Ncr::DOCUMENTS_STATUS_SELECT[$row->documents_status] == 'Reply'){
+                    return sprintf('<p style="color:#ff9900"><b>%s</b></p>',$row->documents_status ? Ncr::DOCUMENTS_STATUS_SELECT[$row->documents_status] : '');
+                }
+                else if(Ncr::DOCUMENTS_STATUS_SELECT[$row->documents_status] == 'Accepted and Closed case.'){
+                    return sprintf('<p style="color:#28B463"><b>%s</b></p>',$row->documents_status ? Ncr::DOCUMENTS_STATUS_SELECT[$row->documents_status] : '');
+                }
+                else if(Ncr::DOCUMENTS_STATUS_SELECT[$row->documents_status] == 'ejected and need further action.'){
+                    return sprintf('<p style="color:#E74C3C"><b>%s</b></p>',$row->documents_status ? Ncr::DOCUMENTS_STATUS_SELECT[$row->documents_status] : '');
+                }
+                else{
+                    return $row->documents_status ? Ncr::DOCUMENTS_STATUS_SELECT[$row->documents_status] : '';
+                }
             });
             $table->addColumn('issue_by_name', function ($row) {
                 return $row->issue_by ? $row->issue_by->name : '';
@@ -100,7 +116,7 @@ class NcrController extends Controller
                 return $row->leader ? $row->leader->name : '';
             });
 
-            $table->rawColumns(['actions', 'placeholder', 'construction_contract', 'corresponding_ncn', 'file_attachment', 'prepared_by', 'contractor_manager', 'issue_by', 'construction_specialist', 'related_specialist', 'leader']);
+            $table->rawColumns(['actions', 'placeholder', 'construction_contract', 'corresponding_ncn', 'file_attachment', 'prepared_by', 'contractor_manager', 'issue_by', 'construction_specialist', 'related_specialist', 'leader', 'documents_status']);
 
             return $table->make(true);
         }
@@ -117,9 +133,20 @@ class NcrController extends Controller
     {
         abort_if(Gate::denies('ncr_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $construction_contracts = ConstructionContract::pluck('code', 'id')->prepend(trans('global.pleaseSelect'), '');
-
-        $corresponding_ncns = Ncn::pluck('document_number', 'id')->prepend(trans('global.pleaseSelect'), '');
+        if(Auth::id() != 1){
+            $construction_contracts = ConstructionContract::where('id',session('construction_contract_id'))->pluck('code', 'id')->prepend(trans('global.pleaseSelect'), '');
+        }
+        else{
+            $construction_contracts = ConstructionContract::pluck('code', 'id')->prepend(trans('global.pleaseSelect'), '');
+        }
+        if(Auth::id() != 1){
+            $corresponding_ncns = Ncn::where('construction_contract_id', session('construction_contract_id'))
+            ->where('documents_status', '1')
+            ->pluck('document_number', 'id')->prepend(trans('global.pleaseSelect'), '');
+        }   
+        else{
+            $corresponding_ncns = Ncn::where('documents_status', '1')->pluck('document_number', 'id')->prepend(trans('global.pleaseSelect'), '');
+        }
 
         $prepared_bies = User::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
@@ -138,8 +165,15 @@ class NcrController extends Controller
 
     public function store(StoreNcrRequest $request)
     {
-        $ncr = Ncr::create($request->all());
+        $data = $request->all();
+        $ncnNumber = Ncn::where("id",$data['corresponding_ncn_id'])->value('document_number');
+        $data['document_number'] = str_replace("NCN", "NCR", $ncnNumber);
+        $data['documents_status'] = '2';
 
+        $ncr = Ncr::create($data);
+
+        $ncn = Ncn::where("id",$data['corresponding_ncn_id'])->update(['documents_status' => '2']);
+        
         foreach ($request->input('rootcase_image', []) as $file) {
             $ncr->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('rootcase_image');
         }
@@ -167,9 +201,19 @@ class NcrController extends Controller
     {
         abort_if(Gate::denies('ncr_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $construction_contracts = ConstructionContract::pluck('code', 'id')->prepend(trans('global.pleaseSelect'), '');
+        if(Auth::id() != 1){
+            $construction_contracts = ConstructionContract::where('id',session('construction_contract_id'))->pluck('code', 'id')->prepend(trans('global.pleaseSelect'), '');
+        }
+        else{
+            $construction_contracts = ConstructionContract::pluck('code', 'id')->prepend(trans('global.pleaseSelect'), '');
+        }
 
-        $corresponding_ncns = Ncn::pluck('document_number', 'id')->prepend(trans('global.pleaseSelect'), '');
+        if(Auth::id() != 1){
+            $corresponding_ncns = Ncn::where('construction_contract_id', session('construction_contract_id'))->pluck('document_number', 'id')->prepend(trans('global.pleaseSelect'), '');
+        }   
+        else{
+            $corresponding_ncns = Ncn::pluck('document_number', 'id')->prepend(trans('global.pleaseSelect'), '');
+        }
 
         $prepared_bies = User::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
@@ -190,7 +234,11 @@ class NcrController extends Controller
 
     public function update(UpdateNcrRequest $request, Ncr $ncr)
     {
+        $data = $request->all();
+
         $ncr->update($request->all());
+        $ncn = Ncn::where("id",$ncr->corresponding_ncn_id)->update(['documents_status' => $data['documents_status']]);
+
 
         if (count($ncr->rootcase_image) > 0) {
             foreach ($ncr->rootcase_image as $media) {

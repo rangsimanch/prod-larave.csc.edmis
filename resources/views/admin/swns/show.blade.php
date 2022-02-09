@@ -35,10 +35,10 @@
                                 </tr>
                                 <tr>
                                     <th>
-                                        {{ trans('cruds.swn.fields.document_number') }}
+                                        {{ trans('cruds.swn.fields.dept_code') }}
                                     </th>
                                     <td>
-                                        {{ $swn->document_number }}
+                                        {{ $swn->dept_code->code ?? '' }}
                                     </td>
                                 </tr>
                                 <tr>
@@ -103,6 +103,14 @@
                                 </tr>
                                 <tr>
                                     <th>
+                                        {{ trans('cruds.swn.fields.related_specialist') }}
+                                    </th>
+                                    <td>
+                                        {{ $swn->related_specialist->name ?? '' }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
                                         {{ trans('cruds.swn.fields.review_status') }}
                                     </th>
                                     <td>
@@ -111,18 +119,10 @@
                                 </tr>
                                 <tr>
                                     <th>
-                                        {{ trans('cruds.swn.fields.documents_status') }}
+                                        {{ trans('cruds.swn.fields.construction_specialist') }}
                                     </th>
                                     <td>
-                                        {{ App\Swn::DOCUMENTS_STATUS_SELECT[$swn->documents_status] ?? '' }}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th>
-                                        {{ trans('cruds.swn.fields.related_specialist') }}
-                                    </th>
-                                    <td>
-                                        {{ $swn->related_specialist->name ?? '' }}
+                                        {{ $swn->construction_specialist->name ?? '' }}
                                     </td>
                                 </tr>
                                 <tr>
@@ -135,10 +135,18 @@
                                 </tr>
                                 <tr>
                                     <th>
-                                        {{ trans('cruds.swn.fields.construction_specialist') }}
+                                        {{ trans('cruds.swn.fields.auditing_status') }}
                                     </th>
                                     <td>
-                                        {{ $swn->construction_specialist->name ?? '' }}
+                                        {{ App\Swn::AUDITING_STATUS_SELECT[$swn->auditing_status] ?? '' }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        {{ trans('cruds.swn.fields.documents_status') }}
+                                    </th>
+                                    <td>
+                                        {{ App\Swn::DOCUMENTS_STATUS_SELECT[$swn->documents_status] ?? '' }}
                                     </td>
                                 </tr>
                             </tbody>

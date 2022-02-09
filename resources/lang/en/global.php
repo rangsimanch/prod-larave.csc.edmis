@@ -12,6 +12,8 @@ return [
     'delete'                               => 'Delete',
     'downloadFile'                         => 'Download file',
     'edit'                                 => 'Update',
+    'review'                               => 'Review',
+    'auditing'                             => 'Auditing',
     'revision'                             =>  'Revision',
     'emailVerificationSuccess'             => 'User email verified successfully',
     'entries'                              => 'Entries',

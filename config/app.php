@@ -162,6 +162,7 @@ return [
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
         niklasravnsborg\LaravelPdf\PdfServiceProvider::class,
+        Laravel\Passport\PassportServiceProvider::class,
 
         /*
          * Package Service Providers...

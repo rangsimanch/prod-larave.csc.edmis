@@ -17,14 +17,6 @@ class UpdateNcrRequest extends FormRequest
     public function rules()
     {
         return [
-            'construction_contract_id' => [
-                'required',
-                'integer',
-            ],
-            'document_number' => [
-                'string',
-                'nullable',
-            ],
             'acceptance_date' => [
                 'date_format:' . config('panel.date_format'),
                 'nullable',

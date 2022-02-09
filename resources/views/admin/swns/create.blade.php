@@ -11,7 +11,8 @@
                 <div class="panel-body">
                     <form method="POST" action="{{ route("admin.swns.store") }}" enctype="multipart/form-data">
                         @csrf
-                        <legend> Section 1 : Warning Notice Details </legend>
+                        
+                        <legend>Section 1 : Warning Notice Details</legend>
                         <div class="form-group {{ $errors->has('construction_contract') ? 'has-error' : '' }}">
                             <label class="required" for="construction_contract_id">{{ trans('cruds.swn.fields.construction_contract') }}</label>
                             <select class="form-control select2" name="construction_contract_id" id="construction_contract_id" required>
@@ -32,22 +33,27 @@
                             @endif
                             <span class="help-block">{{ trans('cruds.swn.fields.title_helper') }}</span>
                         </div>
-                        <div class="form-group {{ $errors->has('document_number') ? 'has-error' : '' }}">
-                            <label class="required" for="document_number">{{ trans('cruds.swn.fields.document_number') }}</label>
-                            <input class="form-control" type="text" name="document_number" id="document_number" value="{{ old('document_number', '') }}" required>
-                            @if($errors->has('document_number'))
-                                <span class="help-block" role="alert">{{ $errors->first('document_number') }}</span>
+                        <div class="form-group {{ $errors->has('dept_code') ? 'has-error' : '' }}">
+                            <label class="required" for="dept_code_id">{{ trans('cruds.swn.fields.dept_code') }}</label>
+                            <select class="form-control select2" name="dept_code_id" id="dept_code_id" required>
+                                @foreach($dept_codes as $id => $entry)
+                                    <option value="{{ $id }}" {{ old('dept_code_id') == $id ? 'selected' : '' }}>{{ $entry }}</option>
+                                @endforeach
+                            </select>
+                            @if($errors->has('dept_code'))
+                                <span class="help-block" role="alert">{{ $errors->first('dept_code') }}</span>
                             @endif
-                            <span class="help-block">{{ trans('cruds.swn.fields.document_number_helper') }}</span>
+                            <span class="help-block">{{ trans('cruds.swn.fields.dept_code_helper') }}</span>
                         </div>
                         <div class="form-group {{ $errors->has('submit_date') ? 'has-error' : '' }}">
-                            <label for="submit_date">{{ trans('cruds.swn.fields.submit_date') }}</label>
-                            <input class="form-control date" type="text" name="submit_date" id="submit_date" value="{{ old('submit_date') }}">
+                            <label class="required" for="submit_date">{{ trans('cruds.swn.fields.submit_date') }}</label>
+                            <input class="form-control date" type="text" name="submit_date" id="submit_date" value="{{ old('submit_date') }}" required>
                             @if($errors->has('submit_date'))
                                 <span class="help-block" role="alert">{{ $errors->first('submit_date') }}</span>
                             @endif
                             <span class="help-block">{{ trans('cruds.swn.fields.submit_date_helper') }}</span>
                         </div>
+
                         <div class="form-group {{ $errors->has('location') ? 'has-error' : '' }}">
                             <label for="location">{{ trans('cruds.swn.fields.location') }}</label>
                             <input class="form-control" type="text" name="location" id="location" value="{{ old('location', '') }}">
@@ -104,8 +110,8 @@
                             <span class="help-block">{{ trans('cruds.swn.fields.description_image_helper') }}</span>
                         </div>
                         <div class="form-group {{ $errors->has('issue_by') ? 'has-error' : '' }}">
-                            <label for="issue_by_id">{{ trans('cruds.swn.fields.issue_by') }}</label>
-                            <select class="form-control select2" name="issue_by_id" id="issue_by_id">
+                            <label class="required" for="issue_by_id">{{ trans('cruds.swn.fields.issue_by') }}</label>
+                            <select class="form-control select2" name="issue_by_id" id="issue_by_id" required>
                                 @foreach($issue_bies as $id => $entry)
                                     <option value="{{ $id }}" {{ old('issue_by_id') == $id ? 'selected' : '' }}>{{ $entry }}</option>
                                 @endforeach
@@ -114,104 +120,6 @@
                                 <span class="help-block" role="alert">{{ $errors->first('issue_by') }}</span>
                             @endif
                             <span class="help-block">{{ trans('cruds.swn.fields.issue_by_helper') }}</span>
-                        </div>
-                        
-                        <br> </br>
-                        <legend> Section 2 : Response & Corrective Action by Contractor </legend>
-                        <div class="form-group {{ $errors->has('root_case') ? 'has-error' : '' }}">
-                            <label for="root_case">{{ trans('cruds.swn.fields.root_case') }}</label>
-                            <textarea class="form-control ckeditor" name="root_case" id="root_case">{!! old('root_case') !!}</textarea>
-                            @if($errors->has('root_case'))
-                                <span class="help-block" role="alert">{{ $errors->first('root_case') }}</span>
-                            @endif
-                            <span class="help-block">{{ trans('cruds.swn.fields.root_case_helper') }}</span>
-                        </div>
-                        <div class="form-group {{ $errors->has('rootcase_image') ? 'has-error' : '' }}">
-                            <label for="rootcase_image">{{ trans('cruds.swn.fields.rootcase_image') }}</label>
-                            <div class="needsclick dropzone" id="rootcase_image-dropzone">
-                            </div>
-                            @if($errors->has('rootcase_image'))
-                                <span class="help-block" role="alert">{{ $errors->first('rootcase_image') }}</span>
-                            @endif
-                            <span class="help-block">{{ trans('cruds.swn.fields.rootcase_image_helper') }}</span>
-                        </div>
-                        <div class="form-group {{ $errors->has('containment_action') ? 'has-error' : '' }}">
-                            <label for="containment_action">{{ trans('cruds.swn.fields.containment_action') }}</label>
-                            <textarea class="form-control ckeditor" name="containment_action" id="containment_action">{!! old('containment_action') !!}</textarea>
-                            @if($errors->has('containment_action'))
-                                <span class="help-block" role="alert">{{ $errors->first('containment_action') }}</span>
-                            @endif
-                            <span class="help-block">{{ trans('cruds.swn.fields.containment_action_helper') }}</span>
-                        </div>
-                        <div class="form-group {{ $errors->has('containment_image') ? 'has-error' : '' }}">
-                            <label for="containment_image">{{ trans('cruds.swn.fields.containment_image') }}</label>
-                            <div class="needsclick dropzone" id="containment_image-dropzone">
-                            </div>
-                            @if($errors->has('containment_image'))
-                                <span class="help-block" role="alert">{{ $errors->first('containment_image') }}</span>
-                            @endif
-                            <span class="help-block">{{ trans('cruds.swn.fields.containment_image_helper') }}</span>
-                        </div>
-                        <div class="form-group {{ $errors->has('corrective') ? 'has-error' : '' }}">
-                            <label for="corrective">{{ trans('cruds.swn.fields.corrective') }}</label>
-                            <textarea class="form-control ckeditor" name="corrective" id="corrective">{!! old('corrective') !!}</textarea>
-                            @if($errors->has('corrective'))
-                                <span class="help-block" role="alert">{{ $errors->first('corrective') }}</span>
-                            @endif
-                            <span class="help-block">{{ trans('cruds.swn.fields.corrective_helper') }}</span>
-                        </div>
-                        <div class="form-group {{ $errors->has('corrective_image') ? 'has-error' : '' }}">
-                            <label for="corrective_image">{{ trans('cruds.swn.fields.corrective_image') }}</label>
-                            <div class="needsclick dropzone" id="corrective_image-dropzone">
-                            </div>
-                            @if($errors->has('corrective_image'))
-                                <span class="help-block" role="alert">{{ $errors->first('corrective_image') }}</span>
-                            @endif
-                            <span class="help-block">{{ trans('cruds.swn.fields.corrective_image_helper') }}</span>
-                        </div>
-                        <div class="form-group {{ $errors->has('responsible') ? 'has-error' : '' }}">
-                            <label for="responsible_id">{{ trans('cruds.swn.fields.responsible') }}</label>
-                            <select class="form-control select2" name="responsible_id" id="responsible_id">
-                                @foreach($responsibles as $id => $entry)
-                                    <option value="{{ $id }}" {{ old('responsible_id') == $id ? 'selected' : '' }}>{{ $entry }}</option>
-                                @endforeach
-                            </select>
-                            @if($errors->has('responsible'))
-                                <span class="help-block" role="alert">{{ $errors->first('responsible') }}</span>
-                            @endif
-                            <span class="help-block">{{ trans('cruds.swn.fields.responsible_helper') }}</span>
-                        </div>
-
-                        <br> </br>
-                        <legend> Section 3 : Review and Judgement on Proposed Contractor's Action by CSC </legend>
-                        <div class="form-group {{ $errors->has('review_status') ? 'has-error' : '' }}">
-                            <label>{{ trans('cruds.swn.fields.review_status') }}</label>
-                            <select class="form-control" name="review_status" id="review_status">
-                                <option value disabled {{ old('review_status', null) === null ? 'selected' : '' }}>{{ trans('global.pleaseSelect') }}</option>
-                                @foreach(App\Swn::REVIEW_STATUS_SELECT as $key => $label)
-                                    <option value="{{ $key }}" {{ old('review_status', '') === (string) $key ? 'selected' : '' }}>{{ $label }}</option>
-                                @endforeach
-                            </select>
-                            @if($errors->has('review_status'))
-                                <span class="help-block" role="alert">{{ $errors->first('review_status') }}</span>
-                            @endif
-                            <span class="help-block">{{ trans('cruds.swn.fields.review_status_helper') }}</span>
-                        </div>
-
-                        <br> </br>
-                        <legend> Section 4 : Disposition after Auditing Actions </legend>
-                        <div class="form-group {{ $errors->has('documents_status') ? 'has-error' : '' }}">
-                            <label>{{ trans('cruds.swn.fields.documents_status') }}</label>
-                            <select class="form-control" name="documents_status" id="documents_status">
-                                <option value disabled {{ old('documents_status', null) === null ? 'selected' : '' }}>{{ trans('global.pleaseSelect') }}</option>
-                                @foreach(App\Swn::DOCUMENTS_STATUS_SELECT as $key => $label)
-                                    <option value="{{ $key }}" {{ old('documents_status', '') === (string) $key ? 'selected' : '' }}>{{ $label }}</option>
-                                @endforeach
-                            </select>
-                            @if($errors->has('documents_status'))
-                                <span class="help-block" role="alert">{{ $errors->first('documents_status') }}</span>
-                            @endif
-                            <span class="help-block">{{ trans('cruds.swn.fields.documents_status_helper') }}</span>
                         </div>
                         <div class="form-group {{ $errors->has('related_specialist') ? 'has-error' : '' }}">
                             <label for="related_specialist_id">{{ trans('cruds.swn.fields.related_specialist') }}</label>
@@ -225,18 +133,6 @@
                             @endif
                             <span class="help-block">{{ trans('cruds.swn.fields.related_specialist_helper') }}</span>
                         </div>
-                        <div class="form-group {{ $errors->has('leader') ? 'has-error' : '' }}">
-                            <label for="leader_id">{{ trans('cruds.swn.fields.leader') }}</label>
-                            <select class="form-control select2" name="leader_id" id="leader_id">
-                                @foreach($leaders as $id => $entry)
-                                    <option value="{{ $id }}" {{ old('leader_id') == $id ? 'selected' : '' }}>{{ $entry }}</option>
-                                @endforeach
-                            </select>
-                            @if($errors->has('leader'))
-                                <span class="help-block" role="alert">{{ $errors->first('leader') }}</span>
-                            @endif
-                            <span class="help-block">{{ trans('cruds.swn.fields.leader_helper') }}</span>
-                        </div>
                         <div class="form-group {{ $errors->has('construction_specialist') ? 'has-error' : '' }}">
                             <label for="construction_specialist_id">{{ trans('cruds.swn.fields.construction_specialist') }}</label>
                             <select class="form-control select2" name="construction_specialist_id" id="construction_specialist_id">
@@ -248,6 +144,19 @@
                                 <span class="help-block" role="alert">{{ $errors->first('construction_specialist') }}</span>
                             @endif
                             <span class="help-block">{{ trans('cruds.swn.fields.construction_specialist_helper') }}</span>
+                        </div>
+                        <div class="form-group {{ $errors->has('documents_status') ? 'has-error' : '' }}" hidden>
+                            <label>{{ trans('cruds.swn.fields.documents_status') }}</label>
+                            <select class="form-control" name="documents_status" id="documents_status">
+                                <option value disabled {{ old('documents_status', null) === null ? 'selected' : '' }}>{{ trans('global.pleaseSelect') }}</option>
+                                @foreach(App\Swn::DOCUMENTS_STATUS_SELECT as $key => $label)
+                                    <option value="{{ $key }}" {{ old('documents_status', '1') === (string) $key ? 'selected' : '' }}>{{ $label }}</option>
+                                @endforeach
+                            </select>
+                            @if($errors->has('documents_status'))
+                                <span class="help-block" role="alert">{{ $errors->first('documents_status') }}</span>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.swn.fields.documents_status_helper') }}</span>
                         </div>
                         <div class="form-group">
                             <button class="btn btn-danger" type="submit">
@@ -625,5 +534,6 @@ Dropzone.options.correctiveImageDropzone = {
          return _results
      }
 }
+
 </script>
 @endsection

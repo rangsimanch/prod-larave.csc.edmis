@@ -24,14 +24,21 @@ class Swn extends Model implements HasMedia
     ];
 
     public const DOCUMENTS_STATUS_SELECT = [
-        '1' => 'Accepted and Closed case.',
-        '2' => 'Rejected and need further action.',
+        '1' => 'New',
+        '2' => 'Reply',
+        '3' => 'Review',
+        '4' => 'Done',
     ];
 
     public const REVIEW_STATUS_SELECT = [
         '1' => 'Accepted',
         '2' => 'Rejected',
         '3' => 'Conditional Accepted with required addition',
+    ];
+
+    public const AUDITING_STATUS_SELECT = [
+        '1' => 'Accepted and Closed case.',
+        '2' => 'Rejected and need further action.',
     ];
 
     public $table = 'swns';
@@ -59,8 +66,11 @@ class Swn extends Model implements HasMedia
     protected $fillable = [
         'construction_contract_id',
         'title',
-        'document_number',
+        'dept_code_id',
         'submit_date',
+        'review_date',
+        'auditing_date',
+        'document_number',
         'location',
         'reply_ncr',
         'ref_doc',
@@ -70,11 +80,12 @@ class Swn extends Model implements HasMedia
         'containment_action',
         'corrective',
         'responsible_id',
-        'review_status',
-        'documents_status',
         'related_specialist_id',
-        'leader_id',
+        'review_status',
         'construction_specialist_id',
+        'leader_id',
+        'auditing_status',
+        'documents_status',
         'created_at',
         'updated_at',
         'deleted_at',
@@ -90,6 +101,31 @@ class Swn extends Model implements HasMedia
     public function construction_contract()
     {
         return $this->belongsTo(ConstructionContract::class, 'construction_contract_id');
+    }
+
+    public function dept_code()
+    {
+        return $this->belongsTo(Department::class, 'dept_code_id');
+    }
+
+    public function getAuditingDateAttribute($value)
+    {
+        return $value ? Carbon::parse($value)->format(config('panel.date_format')) : null;
+    }
+
+    public function setAuditingDateAttribute($value)
+    {
+        $this->attributes['auditing_date'] = $value ? Carbon::createFromFormat(config('panel.date_format'), $value)->format('Y-m-d') : null;
+    }
+
+    public function getReviewDateAttribute($value)
+    {
+        return $value ? Carbon::parse($value)->format(config('panel.date_format')) : null;
+    }
+
+    public function setReviewDateAttribute($value)
+    {
+        $this->attributes['review_date'] = $value ? Carbon::createFromFormat(config('panel.date_format'), $value)->format('Y-m-d') : null;
     }
 
     public function getSubmitDateAttribute($value)
@@ -170,14 +206,14 @@ class Swn extends Model implements HasMedia
         return $this->belongsTo(User::class, 'related_specialist_id');
     }
 
-    public function leader()
-    {
-        return $this->belongsTo(User::class, 'leader_id');
-    }
-
     public function construction_specialist()
     {
         return $this->belongsTo(User::class, 'construction_specialist_id');
+    }
+
+    public function leader()
+    {
+        return $this->belongsTo(User::class, 'leader_id');
     }
 
     public function team()

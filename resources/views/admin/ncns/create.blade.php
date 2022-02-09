@@ -11,8 +11,7 @@
                 <div class="panel-body">
                     <form method="POST" action="{{ route("admin.ncns.store") }}" enctype="multipart/form-data">
                         @csrf
-
-                        <legend> Section 1 : Subject / Problem and Description </legend>
+                        <legend> Section 1 : Subject / Problem and Description by CSC </legend>
                         <div class="form-group {{ $errors->has('construction_contract') ? 'has-error' : '' }}">
                             <label class="required" for="construction_contract_id">{{ trans('cruds.ncn.fields.construction_contract') }}</label>
                             <select class="form-control select2" name="construction_contract_id" id="construction_contract_id" required>
@@ -25,22 +24,6 @@
                             @endif
                             <span class="help-block">{{ trans('cruds.ncn.fields.construction_contract_helper') }}</span>
                         </div>
-                        <div class="form-group {{ $errors->has('document_number') ? 'has-error' : '' }}">
-                            <label class="required" for="document_number">{{ trans('cruds.ncn.fields.document_number') }}</label>
-                            <input class="form-control" type="text" name="document_number" id="document_number" value="{{ old('document_number', '') }}" required>
-                            @if($errors->has('document_number'))
-                                <span class="help-block" role="alert">{{ $errors->first('document_number') }}</span>
-                            @endif
-                            <span class="help-block">{{ trans('cruds.ncn.fields.document_number_helper') }}</span>
-                        </div>
-                        <div class="form-group {{ $errors->has('issue_date') ? 'has-error' : '' }}">
-                            <label for="issue_date">{{ trans('cruds.ncn.fields.issue_date') }}</label>
-                            <input class="form-control date" type="text" name="issue_date" id="issue_date" value="{{ old('issue_date') }}">
-                            @if($errors->has('issue_date'))
-                                <span class="help-block" role="alert">{{ $errors->first('issue_date') }}</span>
-                            @endif
-                            <span class="help-block">{{ trans('cruds.ncn.fields.issue_date_helper') }}</span>
-                        </div>
                         <div class="form-group {{ $errors->has('title') ? 'has-error' : '' }}">
                             <label class="required" for="title">{{ trans('cruds.ncn.fields.title') }}</label>
                             <input class="form-control" type="text" name="title" id="title" value="{{ old('title', '') }}" required>
@@ -49,6 +32,27 @@
                             @endif
                             <span class="help-block">{{ trans('cruds.ncn.fields.title_helper') }}</span>
                         </div>
+                        <div class="form-group {{ $errors->has('dept_code') ? 'has-error' : '' }}">
+                            <label class="required" for="dept_code_id">{{ trans('cruds.ncn.fields.dept_code') }}</label>
+                            <select class="form-control select2" name="dept_code_id" id="dept_code_id" required>
+                                @foreach($dept_codes as $id => $entry)
+                                    <option value="{{ $id }}" {{ old('dept_code_id') == $id ? 'selected' : '' }}>{{ $entry }}</option>
+                                @endforeach
+                            </select>
+                            @if($errors->has('dept_code'))
+                                <span class="help-block" role="alert">{{ $errors->first('dept_code') }}</span>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.ncn.fields.dept_code_helper') }}</span>
+                        </div>
+                        <div class="form-group {{ $errors->has('issue_date') ? 'has-error' : '' }}">
+                            <label class="required" for="issue_date">{{ trans('cruds.ncn.fields.issue_date') }}</label>
+                            <input class="form-control date" type="text" name="issue_date" id="issue_date" value="{{ old('issue_date') }}" required>
+                            @if($errors->has('issue_date'))
+                                <span class="help-block" role="alert">{{ $errors->first('issue_date') }}</span>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.ncn.fields.issue_date_helper') }}</span>
+                        </div>
+                        
                         <div class="form-group {{ $errors->has('description') ? 'has-error' : '' }}">
                             <label for="description">{{ trans('cruds.ncn.fields.description') }}</label>
                             <textarea class="form-control ckeditor" name="description" id="description">{!! old('description') !!}</textarea>
@@ -99,19 +103,7 @@
                             @endif
                             <span class="help-block">{{ trans('cruds.ncn.fields.acceptance_date_helper') }}</span>
                         </div>
-                        <div class="form-group {{ $errors->has('documents_status') ? 'has-error' : '' }}">
-                            <label>{{ trans('cruds.ncn.fields.documents_status') }}</label>
-                            <select class="form-control" name="documents_status" id="documents_status">
-                                <option value disabled {{ old('documents_status', null) === null ? 'selected' : '' }}>{{ trans('global.pleaseSelect') }}</option>
-                                @foreach(App\Ncn::DOCUMENTS_STATUS_SELECT as $key => $label)
-                                    <option value="{{ $key }}" {{ old('documents_status', '') === (string) $key ? 'selected' : '' }}>{{ $label }}</option>
-                                @endforeach
-                            </select>
-                            @if($errors->has('documents_status'))
-                                <span class="help-block" role="alert">{{ $errors->first('documents_status') }}</span>
-                            @endif
-                            <span class="help-block">{{ trans('cruds.ncn.fields.documents_status_helper') }}</span>
-                        </div>
+                       
                         <div class="form-group {{ $errors->has('issue_by') ? 'has-error' : '' }}">
                             <label for="issue_by_id">{{ trans('cruds.ncn.fields.issue_by') }}</label>
                             <select class="form-control select2" name="issue_by_id" id="issue_by_id">
@@ -123,18 +115,6 @@
                                 <span class="help-block" role="alert">{{ $errors->first('issue_by') }}</span>
                             @endif
                             <span class="help-block">{{ trans('cruds.ncn.fields.issue_by_helper') }}</span>
-                        </div>
-                        <div class="form-group {{ $errors->has('related_specialist') ? 'has-error' : '' }}">
-                            <label for="related_specialist_id">{{ trans('cruds.ncn.fields.related_specialist') }}</label>
-                            <select class="form-control select2" name="related_specialist_id" id="related_specialist_id">
-                                @foreach($related_specialists as $id => $entry)
-                                    <option value="{{ $id }}" {{ old('related_specialist_id') == $id ? 'selected' : '' }}>{{ $entry }}</option>
-                                @endforeach
-                            </select>
-                            @if($errors->has('related_specialist'))
-                                <span class="help-block" role="alert">{{ $errors->first('related_specialist') }}</span>
-                            @endif
-                            <span class="help-block">{{ trans('cruds.ncn.fields.related_specialist_helper') }}</span>
                         </div>
                         <div class="form-group {{ $errors->has('leader') ? 'has-error' : '' }}">
                             <label for="leader_id">{{ trans('cruds.ncn.fields.leader') }}</label>
@@ -160,6 +140,7 @@
                             @endif
                             <span class="help-block">{{ trans('cruds.ncn.fields.construction_specialist_helper') }}</span>
                         </div>
+                        
                         <div class="form-group">
                             <button class="btn btn-danger" type="submit">
                                 {{ trans('global.save') }}

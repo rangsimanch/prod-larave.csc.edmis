@@ -7,6 +7,10 @@
                 <a class="btn btn-success" href="{{ route('admin.swns.create') }}">
                     {{ trans('global.add') }} {{ trans('cruds.swn.title_singular') }}
                 </a>
+                <button class="btn btn-warning" data-toggle="modal" data-target="#csvImportModal">
+                    {{ trans('global.app_csvImport') }}
+                </button>
+                @include('csvImport.modal', ['model' => 'Swn', 'route' => 'admin.swns.parseCsvImport'])
             </div>
         </div>
     @endcan
@@ -17,11 +21,20 @@
                     {{ trans('cruds.swn.title_singular') }} {{ trans('global.list') }}
                 </div>
                 <div class="panel-body">
-                    <table class=" table table-bordered table-striped table-hover ajaxTable datatable datatable-Swn">
+                    <table class=" table table-bordered table-striped table-hover ajaxTable datatable datatable-Swn text-center">
                         <thead>
                             <tr>
                                 <th width="10">
 
+                                </th>
+                                <th>
+                                    Action
+                                </th>
+                                <th>
+                                    Report
+                                </th>
+                                <th>
+                                    {{ trans('cruds.swn.fields.documents_status') }}
                                 </th>
                                 <th>
                                     {{ trans('cruds.swn.fields.construction_contract') }}
@@ -30,10 +43,10 @@
                                     {{ trans('cruds.swn.fields.title') }}
                                 </th>
                                 <th>
-                                    {{ trans('cruds.swn.fields.document_number') }}
+                                    {{ trans('cruds.swn.fields.submit_date') }}
                                 </th>
                                 <th>
-                                    {{ trans('cruds.swn.fields.submit_date') }}
+                                    {{ trans('cruds.swn.fields.document_number') }}
                                 </th>
                                 <th>
                                     {{ trans('cruds.swn.fields.document_attachment') }}
@@ -45,26 +58,38 @@
                                     {{ trans('cruds.swn.fields.responsible') }}
                                 </th>
                                 <th>
-                                    {{ trans('cruds.swn.fields.review_status') }}
-                                </th>
-                                <th>
-                                    {{ trans('cruds.swn.fields.documents_status') }}
-                                </th>
-                                <th>
                                     {{ trans('cruds.swn.fields.related_specialist') }}
                                 </th>
                                 <th>
-                                    {{ trans('cruds.swn.fields.leader') }}
+                                    {{ trans('cruds.swn.fields.review_status') }}
                                 </th>
                                 <th>
                                     {{ trans('cruds.swn.fields.construction_specialist') }}
                                 </th>
                                 <th>
-                                    &nbsp;
+                                    {{ trans('cruds.swn.fields.leader') }}
                                 </th>
+                                <th>
+                                    {{ trans('cruds.swn.fields.auditing_status') }}
+                                </th>
+                                
+                                
                             </tr>
                             <tr>
                                 <td>
+                                </td>
+                                <td>
+                                </td>
+                                
+                                <td>
+                                </td>
+                                <td>
+                                    <select class="search" strict="true">
+                                        <option value>{{ trans('global.all') }}</option>
+                                        @foreach(App\Swn::DOCUMENTS_STATUS_SELECT as $key => $item)
+                                            <option value="{{ $key }}">{{ $item }}</option>
+                                        @endforeach
+                                    </select>
                                 </td>
                                 <td>
                                     <select class="search">
@@ -78,13 +103,20 @@
                                     <input class="search" type="text" placeholder="{{ trans('global.search') }}">
                                 </td>
                                 <td>
+                                    <input type="text" name="daterange" id="daterange" class="form-control daterange" value="" autocomplete="off" placeholder="Select Period..">
+                                </td>
+                                <td>
                                     <input class="search" type="text" placeholder="{{ trans('global.search') }}">
                                 </td>
                                 <td>
-                                    <input type="text" name="daterange" id="daterange" class="form-control daterange" value="" autocomplete="off" placeholder="Select Period..">
-
                                 </td>
                                 <td>
+                                    <select class="search">
+                                        <option value>{{ trans('global.all') }}</option>
+                                        @foreach($users as $key => $item)
+                                            <option value="{{ $item->name }}">{{ $item->name }}</option>
+                                        @endforeach
+                                    </select>
                                 </td>
                                 <td>
                                     <select class="search">
@@ -111,39 +143,30 @@
                                     </select>
                                 </td>
                                 <td>
+                                    <select class="search">
+                                        <option value>{{ trans('global.all') }}</option>
+                                        @foreach($users as $key => $item)
+                                            <option value="{{ $item->name }}">{{ $item->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </td>
+                                <td>
+                                    <select class="search">
+                                        <option value>{{ trans('global.all') }}</option>
+                                        @foreach($users as $key => $item)
+                                            <option value="{{ $item->name }}">{{ $item->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </td>
+                                <td>
                                     <select class="search" strict="true">
                                         <option value>{{ trans('global.all') }}</option>
-                                        @foreach(App\Swn::DOCUMENTS_STATUS_SELECT as $key => $item)
+                                        @foreach(App\Swn::AUDITING_STATUS_SELECT as $key => $item)
                                             <option value="{{ $key }}">{{ $item }}</option>
                                         @endforeach
                                     </select>
                                 </td>
-                                <td>
-                                    <select class="search">
-                                        <option value>{{ trans('global.all') }}</option>
-                                        @foreach($users as $key => $item)
-                                            <option value="{{ $item->name }}">{{ $item->name }}</option>
-                                        @endforeach
-                                    </select>
-                                </td>
-                                <td>
-                                    <select class="search">
-                                        <option value>{{ trans('global.all') }}</option>
-                                        @foreach($users as $key => $item)
-                                            <option value="{{ $item->name }}">{{ $item->name }}</option>
-                                        @endforeach
-                                    </select>
-                                </td>
-                                <td>
-                                    <select class="search">
-                                        <option value>{{ trans('global.all') }}</option>
-                                        @foreach($users as $key => $item)
-                                            <option value="{{ $item->name }}">{{ $item->name }}</option>
-                                        @endforeach
-                                    </select>
-                                </td>
-                                <td>
-                                </td>
+                                
                             </tr>
                         </thead>
                     </table>
@@ -200,22 +223,24 @@
     ajax: "{{ route('admin.swns.index') }}",
     columns: [
       { data: 'placeholder', name: 'placeholder' },
+{ data: 'actions', name: '{{ trans('global.actions') }}' },
+{ data: 'cover_sheet', name: 'cover_sheet'},
+{ data: 'documents_status', name: 'documents_status' },
 { data: 'construction_contract_code', name: 'construction_contract.code' },
 { data: 'title', name: 'title' },
-{ data: 'document_number', name: 'document_number' },
 { data: 'submit_date', name: 'submit_date' },
-{ data: 'document_attachment', name: 'document_attachment', sortable: false, searchable: false },
+{ data: 'document_number', name: 'document_number' },
+{ data: 'document_attachment', name: 'document_attachment', sortable: false, searchable: false , visible: false},
 { data: 'issue_by_name', name: 'issue_by.name' },
 { data: 'responsible_name', name: 'responsible.name' },
-{ data: 'review_status', name: 'review_status' },
-{ data: 'documents_status', name: 'documents_status' },
 { data: 'related_specialist_name', name: 'related_specialist.name' },
-{ data: 'leader_name', name: 'leader.name' },
+{ data: 'review_status', name: 'review_status' },
 { data: 'construction_specialist_name', name: 'construction_specialist.name' },
-{ data: 'actions', name: '{{ trans('global.actions') }}' }
+{ data: 'leader_name', name: 'leader.name' },
+{ data: 'auditing_status', name: 'auditing_status' },
     ],
     orderCellsTop: true,
-    order: [[ 4, 'desc' ]],
+    order: [[ 3, 'desc' ]],
     pageLength: 25,
   };
   let table = $('.datatable-Swn').DataTable(dtOverrideGlobals);
@@ -246,8 +271,7 @@ table.on('column-visibility.dt', function(e, settings, column, state) {
       });
   })
 
-
-// date range filter
+// date range
 $('.daterange').daterangepicker({
         ranges: {
             "Today": [moment(), moment()],
@@ -268,7 +292,7 @@ $('.daterange').daterangepicker({
 
     let startDate;
     let endDate;
-    let dataIdx = 4;  //current data column to work with
+    let dataIdx = 6;  //current data column to work with
 
     // Function for converting a dd/mmm/yyyy date value into a numeric string for comparison (example 01-Dec-2010 becomes 20101201
     function parseDateValue(rawDate) {
@@ -348,6 +372,8 @@ $('.daterange').daterangepicker({
                 .draw();
         });
     }); 
+
+
 
 </script>
 @endsection

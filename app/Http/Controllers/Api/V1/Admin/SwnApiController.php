@@ -20,7 +20,7 @@ class SwnApiController extends Controller
     {
         abort_if(Gate::denies('swn_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new SwnResource(Swn::with(['construction_contract', 'issue_by', 'responsible', 'related_specialist', 'leader', 'construction_specialist', 'team'])->get());
+        return new SwnResource(Swn::with(['construction_contract', 'dept_code', 'issue_by', 'responsible', 'related_specialist', 'construction_specialist', 'leader', 'team'])->get());
     }
 
     public function store(StoreSwnRequest $request)
@@ -56,7 +56,7 @@ class SwnApiController extends Controller
     {
         abort_if(Gate::denies('swn_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new SwnResource($swn->load(['construction_contract', 'issue_by', 'responsible', 'related_specialist', 'leader', 'construction_specialist', 'team']));
+        return new SwnResource($swn->load(['construction_contract', 'dept_code', 'issue_by', 'responsible', 'related_specialist', 'construction_specialist', 'leader', 'team']));
     }
 
     public function update(UpdateSwnRequest $request, Swn $swn)

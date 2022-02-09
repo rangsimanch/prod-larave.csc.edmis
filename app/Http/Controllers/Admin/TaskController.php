@@ -383,7 +383,8 @@ class TaskController extends Controller
 
                 $mpdf->WriteHTML($html); 
             }
-            return $mpdf->Output();
+            $filename =  $reportType . " " . $StartDate . " to " .  $EndDate . " " . $recordby;
+            return $mpdf->Output($filename, "Is");
             // return redirect()->back() ->with('alert', $tasks);
         }
         else{

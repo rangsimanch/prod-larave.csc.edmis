@@ -21,11 +21,17 @@
                     {{ trans('cruds.ncr.title_singular') }} {{ trans('global.list') }}
                 </div>
                 <div class="panel-body">
-                    <table class=" table table-bordered table-striped table-hover ajaxTable datatable datatable-Ncr">
+                    <table class=" table table-bordered table-striped table-hover ajaxTable datatable datatable-Ncr text-center">
                         <thead>
                             <tr>
                                 <th width="10">
 
+                                </th>
+                                <th>
+                                    Action
+                                </th>
+                                <th>
+                                    {{ trans('cruds.ncr.fields.documents_status') }}
                                 </th>
                                 <th>
                                     {{ trans('cruds.ncr.fields.construction_contract') }}
@@ -49,9 +55,6 @@
                                     {{ trans('cruds.ncr.fields.contractor_manager') }}
                                 </th>
                                 <th>
-                                    {{ trans('cruds.ncr.fields.documents_status') }}
-                                </th>
-                                <th>
                                     {{ trans('cruds.ncr.fields.issue_by') }}
                                 </th>
                                 <th>
@@ -63,12 +66,20 @@
                                 <th>
                                     {{ trans('cruds.ncr.fields.leader') }}
                                 </th>
-                                <th>
-                                    &nbsp;
-                                </th>
+                                
                             </tr>
                             <tr>
                                 <td>
+                                </td>
+                                <td>
+                                </td>
+                                <td>
+                                    <select class="search" strict="true">
+                                        <option value>{{ trans('global.all') }}</option>
+                                        @foreach(App\Ncr::DOCUMENTS_STATUS_SELECT as $key => $item)
+                                            <option value="{{ $key }}">{{ $item }}</option>
+                                        @endforeach
+                                    </select>
                                 </td>
                                 <td>
                                     <select class="search">
@@ -111,14 +122,7 @@
                                         @endforeach
                                     </select>
                                 </td>
-                                <td>
-                                    <select class="search" strict="true">
-                                        <option value>{{ trans('global.all') }}</option>
-                                        @foreach(App\Ncr::DOCUMENTS_STATUS_SELECT as $key => $item)
-                                            <option value="{{ $key }}">{{ $item }}</option>
-                                        @endforeach
-                                    </select>
-                                </td>
+                                
                                 <td>
                                     <select class="search">
                                         <option value>{{ trans('global.all') }}</option>
@@ -151,8 +155,7 @@
                                         @endforeach
                                     </select>
                                 </td>
-                                <td>
-                                </td>
+                                
                             </tr>
                         </thead>
                     </table>
@@ -209,6 +212,8 @@
     ajax: "{{ route('admin.ncrs.index') }}",
     columns: [
       { data: 'placeholder', name: 'placeholder' },
+{ data: 'actions', name: '{{ trans('global.actions') }}' },
+{ data: 'documents_status', name: 'documents_status' },
 { data: 'construction_contract_code', name: 'construction_contract.code' },
 { data: 'corresponding_ncn_document_number', name: 'corresponding_ncn.document_number' },
 { data: 'document_number', name: 'document_number' },
@@ -216,12 +221,10 @@
 { data: 'file_attachment', name: 'file_attachment', sortable: false, searchable: false },
 { data: 'prepared_by_name', name: 'prepared_by.name' },
 { data: 'contractor_manager_name', name: 'contractor_manager.name' },
-{ data: 'documents_status', name: 'documents_status' },
 { data: 'issue_by_name', name: 'issue_by.name' },
 { data: 'construction_specialist_name', name: 'construction_specialist.name' },
 { data: 'related_specialist_name', name: 'related_specialist.name' },
 { data: 'leader_name', name: 'leader.name' },
-{ data: 'actions', name: '{{ trans('global.actions') }}' }
     ],
     orderCellsTop: true,
     order: [[ 4, 'desc' ]],

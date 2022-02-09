@@ -27,10 +27,18 @@
                                 </tr>
                                 <tr>
                                     <th>
-                                        {{ trans('cruds.ncn.fields.document_number') }}
+                                        {{ trans('cruds.ncn.fields.title') }}
                                     </th>
                                     <td>
-                                        {{ $ncn->document_number }}
+                                        {{ $ncn->title }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        {{ trans('cruds.ncn.fields.dept_code') }}
+                                    </th>
+                                    <td>
+                                        {{ $ncn->dept_code->code ?? '' }}
                                     </td>
                                 </tr>
                                 <tr>
@@ -39,14 +47,6 @@
                                     </th>
                                     <td>
                                         {{ $ncn->issue_date }}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th>
-                                        {{ trans('cruds.ncn.fields.title') }}
-                                    </th>
-                                    <td>
-                                        {{ $ncn->title }}
                                     </td>
                                 </tr>
                                 <tr>
@@ -103,14 +103,6 @@
                                 </tr>
                                 <tr>
                                     <th>
-                                        {{ trans('cruds.ncn.fields.related_specialist') }}
-                                    </th>
-                                    <td>
-                                        {{ $ncn->related_specialist->name ?? '' }}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th>
                                         {{ trans('cruds.ncn.fields.leader') }}
                                     </th>
                                     <td>
@@ -123,6 +115,14 @@
                                     </th>
                                     <td>
                                         {{ $ncn->construction_specialist->name ?? '' }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        {{ trans('cruds.ncn.fields.related_specialist') }}
+                                    </th>
+                                    <td>
+                                        {{ $ncn->related_specialist->name ?? '' }}
                                     </td>
                                 </tr>
                             </tbody>

@@ -505,17 +505,21 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::resource('complaints', 'ComplaintController');
 
      // Swn
-     Route::delete('swns/destroy', 'SwnController@massDestroy')->name('swns.massDestroy');
-     Route::post('swns/media', 'SwnController@storeMedia')->name('swns.storeMedia');
-     Route::post('swns/ckmedia', 'SwnController@storeCKEditorImages')->name('swns.storeCKEditorImages');
-     Route::resource('swns', 'SwnController');
- 
+    Route::delete('swns/destroy', 'SwnController@massDestroy')->name('swns.massDestroy');
+    Route::post('swns/media', 'SwnController@storeMedia')->name('swns.storeMedia');
+    Route::post('swns/ckmedia', 'SwnController@storeCKEditorImages')->name('swns.storeCKEditorImages');
+    Route::post('swns/parse-csv-import', 'SwnController@parseCsvImport')->name('swns.parseCsvImport');
+    Route::post('swns/process-csv-import', 'SwnController@processCsvImport')->name('swns.processCsvImport');
+    Route::get('swns/{swn}/createReportSWN','SwnController@createReportSWN')->name('swn.createReportSWN');
+    Route::resource('swns', 'SwnController');
+
      // Ncn
      Route::delete('ncns/destroy', 'NcnController@massDestroy')->name('ncns.massDestroy');
      Route::post('ncns/media', 'NcnController@storeMedia')->name('ncns.storeMedia');
      Route::post('ncns/ckmedia', 'NcnController@storeCKEditorImages')->name('ncns.storeCKEditorImages');
      Route::post('ncns/parse-csv-import', 'NcnController@parseCsvImport')->name('ncns.parseCsvImport');
      Route::post('ncns/process-csv-import', 'NcnController@processCsvImport')->name('ncns.processCsvImport');
+     Route::get('ncns/{ncn}/createReportNCN','NcnController@createReportNCN')->name('ncn.createReportNCN');
      Route::resource('ncns', 'NcnController');
  
      // Ncr

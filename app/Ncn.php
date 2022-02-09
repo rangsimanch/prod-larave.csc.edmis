@@ -19,15 +19,17 @@ class Ncn extends Model implements HasMedia
     use Auditable;
 
     public const DOCUMENTS_STATUS_SELECT = [
-        '1' => 'Accepted and Closed case.',
-        '2' => 'Rejected and need further action.',
+        '1' => 'New',
+        '2' => 'Reply',
+        '3' => 'Accepted and Closed case.',
+        '4' => 'Rejected and need further action.',
     ];
 
     public $table = 'ncns';
 
     public static $searchable = [
-        'document_number',
         'title',
+        'document_number',
     ];
 
     protected $appends = [
@@ -45,18 +47,19 @@ class Ncn extends Model implements HasMedia
 
     protected $fillable = [
         'construction_contract_id',
-        'document_number',
-        'issue_date',
+        'dept_code_id',
         'title',
+        'issue_date',
+        'document_number',
         'description',
         'attachment_description',
         'pages_of_attachment',
         'acceptance_date',
         'documents_status',
         'issue_by_id',
-        'related_specialist_id',
         'leader_id',
         'construction_specialist_id',
+        'related_specialist_id',
         'created_at',
         'updated_at',
         'deleted_at',
@@ -72,6 +75,11 @@ class Ncn extends Model implements HasMedia
     public function construction_contract()
     {
         return $this->belongsTo(ConstructionContract::class, 'construction_contract_id');
+    }
+
+    public function dept_code()
+    {
+        return $this->belongsTo(Department::class, 'dept_code_id');
     }
 
     public function getIssueDateAttribute($value)
@@ -116,11 +124,6 @@ class Ncn extends Model implements HasMedia
         return $this->belongsTo(User::class, 'issue_by_id');
     }
 
-    public function related_specialist()
-    {
-        return $this->belongsTo(User::class, 'related_specialist_id');
-    }
-
     public function leader()
     {
         return $this->belongsTo(User::class, 'leader_id');
@@ -129,6 +132,11 @@ class Ncn extends Model implements HasMedia
     public function construction_specialist()
     {
         return $this->belongsTo(User::class, 'construction_specialist_id');
+    }
+
+    public function related_specialist()
+    {
+        return $this->belongsTo(User::class, 'related_specialist_id');
     }
 
     public function team()

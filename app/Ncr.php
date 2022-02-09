@@ -19,8 +19,9 @@ class Ncr extends Model implements HasMedia
     use Auditable;
 
     public const DOCUMENTS_STATUS_SELECT = [
-        '1' => 'Agreed',
-        '2' => 'Required additional details / Actions as follwing',
+        '2' => 'Reply',
+        '3' => 'Accepted and Closed case.',
+        '4' => 'Rejected and need further action.',
     ];
 
     public $table = 'ncrs';
@@ -90,6 +91,16 @@ class Ncr extends Model implements HasMedia
     public function setAcceptanceDateAttribute($value)
     {
         $this->attributes['acceptance_date'] = $value ? Carbon::createFromFormat(config('panel.date_format'), $value)->format('Y-m-d') : null;
+    }
+
+    public function getReviewDateAttribute($value)
+    {
+        return $value ? Carbon::parse($value)->format(config('panel.date_format')) : null;
+    }
+
+    public function setReviewDateAttribute($value)
+    {
+        $this->attributes['review_date'] = $value ? Carbon::createFromFormat(config('panel.date_format'), $value)->format('Y-m-d') : null;
     }
 
     public function getRootcaseImageAttribute()

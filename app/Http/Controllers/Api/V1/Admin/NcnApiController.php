@@ -20,7 +20,7 @@ class NcnApiController extends Controller
     {
         abort_if(Gate::denies('ncn_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new NcnResource(Ncn::with(['construction_contract', 'issue_by', 'related_specialist', 'leader', 'construction_specialist', 'team'])->get());
+        return new NcnResource(Ncn::with(['construction_contract', 'dept_code', 'issue_by', 'leader', 'construction_specialist', 'related_specialist', 'team'])->get());
     }
 
     public function store(StoreNcnRequest $request)
@@ -44,7 +44,7 @@ class NcnApiController extends Controller
     {
         abort_if(Gate::denies('ncn_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new NcnResource($ncn->load(['construction_contract', 'issue_by', 'related_specialist', 'leader', 'construction_specialist', 'team']));
+        return new NcnResource($ncn->load(['construction_contract', 'dept_code', 'issue_by', 'leader', 'construction_specialist', 'related_specialist', 'team']));
     }
 
     public function update(UpdateNcnRequest $request, Ncn $ncn)
