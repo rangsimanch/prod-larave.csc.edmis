@@ -391,7 +391,7 @@ class NcnController extends Controller
 
         foreach($ncn->file_attachment as $attacment){ 
             try{
-                $pagecount = $mpdf->SetSourceFile(public_path($attacment->getUrl()));
+                $pagecount = $mpdf->SetSourceFile($attacment->getPath());
                 for($page = 1; $page <= $pagecount; $page++){
                     $mpdf->AddPage();
                     $tplId = $mpdf->importPage($page);
@@ -401,10 +401,12 @@ class NcnController extends Controller
                 print "Creating an mPDF object failed with" . $e->getMessage();
             }
         }
-
-        $filename =  "NCN-" . $ncn->dept_code->code . substr($document_number,-8);
-
-
+        if($swn->dept_code->code ?? '' != ''){
+            $filename =  "NCN-" . $ncn->dept_code->code  . substr($document_number,-8);
+        }
+        else{
+            $filename =  "NCN-" . $submit_date  . substr($document_number,-8);
+        }
         return $mpdf->Output($filename,"I");
     }
 }

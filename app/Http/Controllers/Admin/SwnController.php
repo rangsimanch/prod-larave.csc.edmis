@@ -530,7 +530,6 @@ class SwnController extends Controller
         }
         else{
             $filename =  "SWN-" . $submit_date  . substr($document_number,-8);
-
         }
         // Output a PDF file directly to the browser
         return $mpdf->Output($filename,"I");
