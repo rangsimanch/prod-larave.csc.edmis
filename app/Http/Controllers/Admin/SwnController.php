@@ -450,8 +450,10 @@ class SwnController extends Controller
             $html .= "<div style=\"font-size: 18px; font-weight: bold; position:absolute;top:715px;left:334px;\">" . "X"  . "</div>";
         }
 
-        $html .= "<div style=\"font-size: 14px; font-weight: bold; position:absolute;top:810px;left:147px;\">( " . $issuer_name  . " )</div>";
-        $html .= "<div style=\"font-size: 14px; font-weight: bold; position:absolute;top:810px;left:583px;\">( " . $qa_name  . " )</div>";
+        if($issuer_name != '')
+            $html .= "<div style=\"font-size: 14px; font-weight: bold; position:absolute;top:810px;left:147px;\">( " . $issuer_name  . " )</div>";
+        if($qa_name != '')
+            $html .= "<div style=\"font-size: 14px; font-weight: bold; position:absolute;top:810px;left:583px;\">( " . $qa_name  . " )</div>";
 
         $html .= "<div style=\"font-size: 14px; position:absolute;top:835px;left:160px;\">" . $review_date  . "</div>";
         $html .= "<div style=\"font-size: 14px; position:absolute;top:835px;left:605px;\">" . $review_date  . "</div>";
@@ -464,9 +466,12 @@ class SwnController extends Controller
         }
 
         // Auditing Section
-        $html .= "<div style=\"font-size: 14px; font-weight: bold; position:absolute;top:960px;left:150px;\">( " . $issuer_name  . " )</div>";
-        $html .= "<div style=\"font-size: 14px; font-weight: bold; position:absolute;top:960px;left:345px;\">( " . $qa_name  . " )</div>";
-        $html .= "<div style=\"font-size: 14px; font-weight: bold; position:absolute;top:960px;left:583px;\">( " . $cos_name  . " )</div>";
+        if($issuer_name != '')
+            $html .= "<div style=\"font-size: 14px; font-weight: bold; position:absolute;top:960px;left:150px;\">( " . $issuer_name  . " )</div>";
+        if($qa_name != '')
+            $html .= "<div style=\"font-size: 14px; font-weight: bold; position:absolute;top:960px;left:345px;\">( " . $qa_name  . " )</div>";
+        if($cos_name != '')
+            $html .= "<div style=\"font-size: 14px; font-weight: bold; position:absolute;top:960px;left:583px;\">( " . $cos_name  . " )</div>";
 
         $html .= "<div style=\"font-size: 14px; position:absolute;top:985px;left:160px;\">" . $auditing_date  . "</div>";
         $html .= "<div style=\"font-size: 14px; position:absolute;top:985px;left:360px;\">" . $auditing_date  . "</div>";
