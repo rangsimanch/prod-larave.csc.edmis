@@ -16,7 +16,7 @@ class HomeController
         $date = new DateTime();
         $today = $date->format('Y-m-d');
         if(Auth::id() != 1){
-        $chart = (new LarapexChart)->pieChart()
+        $chart = (new LarapexChart)->barhart()
             ->setTitle('RFA')
             ->addData([
                 \App\Rfa::where('construction_contract_id', '=', session('construction_contract_id'))
