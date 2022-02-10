@@ -524,14 +524,8 @@ class SwnController extends Controller
                 print "Creating an mPDF object failed with" . $e->getMessage();
             }
         }
-        
-        if($swn->dept_code->code ?? '' != ''){
-            $filename =  "SWN-" . $swn->dept_code->code  . substr($document_number,-8);
-        }
-        else{
-            $filename =  "SWN-" . $submit_date  . substr($document_number,-8);
-        }
+    
         // Output a PDF file directly to the browser
-        return $mpdf->Output($filename,"I");
+        return $mpdf->Output();
     }
 }
