@@ -1066,7 +1066,7 @@ return [
         'sent_date_helper'             => ' ',
         'receiver'                     => 'Receiver',
         'receiver_helper'              => ' ',
-        'received_date'                => 'Received Date',
+        'received_date'                => 'CSC Received Date',
         'received_date_helper'         => ' ',
         'letter_upload'                => 'Letter Upload',
         'letter_upload_helper'         => ' ',

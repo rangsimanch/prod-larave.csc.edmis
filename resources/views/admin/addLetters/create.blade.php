@@ -84,6 +84,14 @@
                             @endif
                             <span class="help-block">{{ trans('cruds.addLetter.fields.receiver_helper') }}</span>
                         </div>
+                        <div class="form-group {{ $errors->has('received_date') ? 'has-error' : '' }}">
+                            <label class="required" for="received_date">{{ trans('cruds.addLetter.fields.received_date') }}</label>
+                            <input class="form-control date" type="text" name="sent_date" id="received_date" value="{{ old('received_date') }}" required>
+                            @if($errors->has('received_date'))
+                                <span class="help-block" role="alert">{{ $errors->first('received_date') }}</span>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.addLetter.fields.received_date_helper') }}</span>
+                        </div>
                         <div class="form-group {{ $errors->has('cc_tos') ? 'has-error' : '' }}">
                             <label for="cc_tos">{{ trans('cruds.addLetter.fields.cc_to') }}</label>
                             <div style="padding-bottom: 4px">
