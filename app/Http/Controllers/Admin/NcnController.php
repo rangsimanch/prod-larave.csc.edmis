@@ -402,11 +402,11 @@ class NcnController extends Controller
             }
         }
         if($swn->dept_code->code ?? '' != ''){
-            $filename =  "NCN-" . $ncn->dept_code->code  . substr($document_number,-8);
+            $filename =  "NCN-" . str_replace(".","",$subject) . ".pdf";;
         }
         else{
-            $filename =  "NCN_Report";
+            $filename =  "NCN_Report.pdf";
         }
-        return $mpdf->Output($filename,"I");
+        return $mpdf->Output($filename , 'I');
     }
 }
