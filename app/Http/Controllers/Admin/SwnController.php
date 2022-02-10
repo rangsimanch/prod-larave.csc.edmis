@@ -530,6 +530,6 @@ class SwnController extends Controller
     
         // Output a PDF file directly to the browser
         $filename = "SWN-" . str_replace(".","",$subject) . ".pdf";
-        return $mpdf->Output();
+        return $mpdf->Output($filename, 'I');
     }
 }
