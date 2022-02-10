@@ -143,7 +143,7 @@ class NcnController extends Controller
             $construction_contracts = ConstructionContract::pluck('code', 'id')->prepend(trans('global.pleaseSelect'), '');
         }
 
-        $dept_codes = Department::pluck('code', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $dept_codes = Department::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $issue_bies = User::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
@@ -209,7 +209,7 @@ class NcnController extends Controller
             $construction_contracts = ConstructionContract::pluck('code', 'id')->prepend(trans('global.pleaseSelect'), '');
         }
 
-        $dept_codes = Department::pluck('code', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $dept_codes = Department::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $issue_bies = User::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
