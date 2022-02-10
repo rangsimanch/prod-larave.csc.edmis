@@ -21,11 +21,19 @@ class HomeController
             ->addData([
                 \App\Rfa::where('construction_contract_id', '=', session('construction_contract_id'))
                     ->whereDate('submit_date', '=', $today)->count(),
+                    \App\Rfa::where('document_status_id', '=', '1')
+                    ->whereDate('submit_date', '=', $today)->count(),
+                    \App\Rfa::where('document_status_id', '=', '2')
+                    ->whereDate('submit_date', '=', $today)->count(),
+                    \App\Rfa::where('document_status_id', '=', '3')
+                    ->whereDate('submit_date', '=', $today)->count(),
+                    \App\Rfa::where('document_status_id', '=', '4')
+                    ->whereDate('submit_date', '=', $today)->count(),
                 
                 ])
-            ->setColors(['#ffc63b'])
-            ->setLabels(['RFA Count']
-            );
+            ->setColors(['#008FFB','#00E396','#feb019','#ff455f','#775dd0'])
+            ->setXAxis(['Summary', 'New', 'Distribute', 'Reviwed', 'Done'])
+            ->setGrid();
         }
         else{
             $chart = (new LarapexChart)->barChart()
