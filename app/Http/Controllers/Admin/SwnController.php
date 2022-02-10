@@ -517,7 +517,7 @@ class SwnController extends Controller
                 for($page = 1; $page <= $pagecount; $page++){
                     // $mpdf->AddPage();
                     $tplId = $mpdf->importPage($page);
-                    $size = $pdf->getTemplateSize($tplId);
+                    $size = $mpdf->getTemplateSize($tplId);
                     $mpdf->AddPage($size['orientation']);
                     // $mpdf->UseTemplate($tplId);
                     $mpdf->UseTemplate($tplId, 0, 0, $size['width'], $size['height'], true);
