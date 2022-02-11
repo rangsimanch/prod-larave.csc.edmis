@@ -1,3 +1,4 @@
+<link href="{{ asset('/css/custom.css') }}" rel="stylesheet"> 
 @extends('layouts.admin')
 @section('content')
 <div class="content">
