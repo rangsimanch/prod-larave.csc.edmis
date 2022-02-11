@@ -461,9 +461,6 @@ table.on('column-visibility.dt', function(e, settings, column, state) {
           visibleColumnsIndexes.push(colIdx);
       });
   })
-});
-
-
 // date range
 $('.daterange').daterangepicker({
         ranges: {
@@ -485,7 +482,7 @@ $('.daterange').daterangepicker({
 
     let startDate;
     let endDate;
-    let dataIdx = 2;  //current data column to work with
+    let dataIdx = 6;  //current data column to work with
 
     // Function for converting a dd/mmm/yyyy date value into a numeric string for comparison (example 01-Dec-2010 becomes 20101201
     function parseDateValue(rawDate) {
@@ -564,6 +561,8 @@ $('.daterange').daterangepicker({
                 .search('')
                 .draw();
         });
-    }); 
+
+});
+
 </script>
 @endsection
