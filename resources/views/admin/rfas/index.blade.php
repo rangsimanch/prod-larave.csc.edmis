@@ -59,9 +59,6 @@
                                     {{ trans('cruds.rfa.fields.title') }}
                                 </th>
                                 <th>
-                                    {{ trans('cruds.rfa.fields.title_cn') }}
-                                </th>
-                                <th>
                                     {{ trans('cruds.rfa.fields.origin_number') }}
                                 </th>
                                 <th>
@@ -198,9 +195,7 @@
                                 <td>
                                     <input class="search" type="text" placeholder="{{ trans('global.search') }}">
                                 </td>
-                                <td>
-                                    <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                                </td>
+                               
                                 <td>
                                     <input class="search" type="text" placeholder="{{ trans('global.search') }}">
                                 </td>
@@ -402,7 +397,6 @@
 { data: 'worktype', name: 'worktype' },
 { data: 'title_eng', name: 'title_eng' },
 { data: 'title', name: 'title' },
-{ data: 'title_cn', name: 'title_cn' , visible: false},
 { data: 'origin_number', name: 'origin_number' },
 { data: 'document_number', name: 'document_number' },
 { data: 'type.type_code', name: 'type.type_code' },
