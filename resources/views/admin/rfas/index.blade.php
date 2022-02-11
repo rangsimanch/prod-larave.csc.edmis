@@ -31,7 +31,7 @@
                                     Action
                                 </th>
                                 <th>
-                                    {{ trans('cruds.rfa.fields.created_at') }}
+                                    {{ trans('cruds.rfa.fields.submit_date') }}
                                 </th>
                                 <th>
                                     {{ trans('cruds.rfa.fields.cover_sheet') }}
@@ -81,9 +81,7 @@
                                 <th>
                                     {{ trans('cruds.rfa.fields.rfa_code') }}
                                 </th>
-                                <th>
-                                    {{ trans('cruds.rfa.fields.submit_date') }}
-                                </th>
+                                
                                 <th>
                                     {{ trans('cruds.rfa.fields.review_time') }}
                                 </th>   
@@ -143,6 +141,9 @@
                                 </th>
                                 <th>
                                     {{ trans('cruds.rfa.fields.updated_at') }}
+                                </th>
+                                <th>
+                                    {{ trans('cruds.rfa.fields.created_at') }}
                                 </th>
                                
                             </tr>
@@ -313,8 +314,6 @@
                                 <td>
                                 </td>
                                 <td>
-                                </td>
-                                <td>
                                     <select class="search">
                                         <option value>{{ trans('global.all') }}</option>
                                         @foreach($users as $key => $item)
@@ -334,6 +333,8 @@
                                 </td>
                                 <td>
                                     <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                                </td>
+                                <td>
                                 </td>
                             </tr>
                         </thead>
@@ -392,7 +393,7 @@
     columns: [
       { data: 'placeholder', name: 'placeholder' },
 { data: 'actions', name: '{{ trans('global.actions') }}' },
-{ data: 'created_at', name: 'created_at' },
+{ data: 'submit_date', name: 'submit_date' },
 { data: 'cover_sheet', name: 'cover_sheet' ,sortable: false},
 { data: 'file_upload_1', name: 'file_upload_1', sortable: false, searchable: false},
 { data: 'document_status_status_name', name: 'document_status.status_name'},
@@ -408,7 +409,6 @@
 { data: 'wbs_level_3_wbs_level_3_code', name: 'wbs_level_3.wbs_level_3_code' },
 { data: 'wbs_level_4_wbs_level_4_code', name: 'wbs_level_4.wbs_level_4_code' },
 { data: 'rfa_code', name: 'rfa_code' ,visible: false},
-{ data: 'submit_date', name: 'submit_date' },
 { data: 'review_time', name: 'review_time' ,visible: false},
 { data: 'issueby_name', name: 'issueby.name' ,visible: false},
 { data: 'assign_name', name: 'assign.name' ,visible: false},
@@ -429,6 +429,8 @@
 { data: 'reviewed_by_name', name: 'reviewed_by.name' ,visible: false},
 { data: 'submittals_file', name: 'submittals_file', sortable: false, searchable: false ,visible: false},
 { data: 'updated_at', name: 'updated_at' , visible: false},
+{ data: 'created_at', name: 'created_at' },
+
     ],
     orderCellsTop: true,
     order: [[ 2, 'desc' ]],
