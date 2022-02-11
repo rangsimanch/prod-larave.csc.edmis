@@ -37,14 +37,15 @@
                                     {{ trans('cruds.rfa.fields.cover_sheet') }}
                                 </th>
                                 <th>
+                                    {{ trans('cruds.rfa.fields.file_upload_1') }}
+                                </th>
+                                <th>
                                     {{ trans('cruds.rfa.fields.document_status') }}
                                 </th>
                                 <th>
                                     {{ trans('cruds.rfa.fields.construction_contract') }}
                                 </th>
-                                <th>
-                                    {{ trans('cruds.rfa.fields.file_upload_1') }}
-                                </th>
+                                
                                 <th>
                                     {{ trans('cruds.rfa.fields.boq') }}
                                 </th>
@@ -155,6 +156,8 @@
                                 <td>
                                 </td>
                                 <td>
+                                <td>
+                                </td>
                                     <select class="search">
                                         <option value>{{ trans('global.all') }}</option>
                                         @foreach($rfa_document_statuses as $key => $item)
@@ -170,8 +173,7 @@
                                         @endforeach
                                     </select>
                                 </td>
-                                <td>
-                                </td>
+                                
                                 
                                 <td>
                                     <select class="search">
@@ -392,9 +394,9 @@
 { data: 'actions', name: '{{ trans('global.actions') }}' },
 { data: 'created_at', name: 'created_at' },
 { data: 'cover_sheet', name: 'cover_sheet' },
+{ data: 'file_upload_1', name: 'file_upload_1', sortable: false, searchable: false},
 { data: 'document_status_status_name', name: 'document_status.status_name'},
 { data: 'construction_contract_code', name: 'construction_contract.code' },
-{ data: 'file_upload_1', name: 'file_upload_1', sortable: false, searchable: false , visible: false},
 { data: 'boq_name', name: 'boq.name' },
 { data: 'worktype', name: 'worktype' },
 { data: 'title_eng', name: 'title_eng' },
