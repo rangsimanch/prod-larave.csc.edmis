@@ -394,7 +394,7 @@
       { data: 'placeholder', name: 'placeholder' },
 { data: 'actions', name: '{{ trans('global.actions') }}' ,searchable: false},
 { data: 'submit_date', name: 'submit_date' },
-{ data: 'cover_sheet', name: 'cover_sheet' ,sortable: false},
+{ data: 'cover_sheet', name: 'cover_sheet' ,sortable: false, searchable: false},
 { data: 'file_upload_1', name: 'file_upload_1', sortable: false, searchable: false},
 { data: 'document_status_status_name', name: 'document_status.status_name'},
 { data: 'construction_contract_code', name: 'construction_contract.code' },
