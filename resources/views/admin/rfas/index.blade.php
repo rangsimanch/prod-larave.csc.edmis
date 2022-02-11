@@ -491,6 +491,7 @@ $('.daterange').daterangepicker({
         var d = moment(rawDate, "DD/MM/YYYY").format("DD/MM/YYYY");
         var dateArray = d.split("/");
         var parsedDate = dateArray[2] + dateArray[1] + dateArray[0];
+        console.log(parsedDate);
         return parsedDate;
     }
 
