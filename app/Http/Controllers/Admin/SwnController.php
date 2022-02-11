@@ -424,7 +424,7 @@ class SwnController extends Controller
             $html .= "<div style=\"font-size: 18px;font-weight: bold; position:absolute;top:260px;left:632px;\">" . "X"  . "</div>";
         }
         $html .= "<div style=\"font-size: 18px; font-weight: bold; position:absolute;top:287px;left:230px;\"> : </div>";
-        $html .= "<div style=\"font-size: 16px; padding-right:90px; position:absolute;top:270px;left:235px;\">" . $ref_doc  . "</div>";
+        $html .= "<div style=\"font-size: 16px; padding-right:80px; position:absolute;top:270px;left:235px;\">" . $ref_doc  . "</div>";
         $html .= "<div style=\"font-size: 18px; font-weight: bold; padding-right:80px; position:absolute;top:335px;left:100px;\">" . "Description(Content details):"  . "</div>";
         $html .= "<div style=\"font-size: 16px; padding-right:80px; position:absolute;top:338px;left:120px;\">" . $description  . "</div>";
         if($issuer_name != '')
@@ -485,10 +485,10 @@ class SwnController extends Controller
             $mpdf->SetDocTemplate(public_path('pdf-asset/SWN_Template_Attachment.pdf'),true);  
             $mpdf->AddPage('P','','','','',35,'',80,55);
              
-            $html = "<div style=\"font-size: 16px; font-weight: bold; color:#1F4E78; position:absolute;top:139px;left:368px;\">" . $contract_name  . "</div>";
-            $html .= "<div style=\"font-size: 18px; position:absolute;top:190px;left:120px;\">" . $send_to  . "</div>";
-            $html .= "<div style=\"font-size: 18px; position:absolute;top:190px;left:370px;\">" . $submit_date  . "</div>";
-            $html .= "<div style=\"font-size: 16px; position:absolute;top:190px;left:520px;\">" . $document_number  . "</div>";
+            $html = "<div style=\"font-size: 16px; font-weight: bold; color:#1F4E78; position:absolute;top:143px;left:140px;\">" . $contract_name  . "</div>";
+        $html .= "<div style=\"font-size: 18px; position:absolute;top:190px;left:120px;\">" . $send_to  . "</div>";
+        $html .= "<div style=\"font-size: 18px; position:absolute;top:190px;left:370px;\">" . $submit_date  . "</div>";
+        $html .= "<div style=\"font-size: 16px; position:absolute;top:190px;left:520px;\">" . $document_number  . "</div>";
             for($index = 0; $index < $count_image; $index++){
                 try{
                     $allowed = array('gif', 'png', 'jpg', 'jpeg', 'JPG', 'JPEG', 'PNG');
