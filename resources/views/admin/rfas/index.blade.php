@@ -499,7 +499,6 @@ $('.daterange').daterangepicker({
         let month = text.slice(4, 6);
         let day = text.slice(6, 8);
         var parsedDate = year + "-" + month + "-" + day;
-        console.log(parsedDate);
         return parsedDate;
     }
 
@@ -523,7 +522,7 @@ $('.daterange').daterangepicker({
 
             var dateStart = parseDateValue(startDate);
             var dateEnd = parseDateValue(endDate);
-            
+            console.log(dateStart)
             var filteredData = table
                     .column(dataIdx)
                     .data()
