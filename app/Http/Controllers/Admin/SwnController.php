@@ -429,7 +429,7 @@ class SwnController extends Controller
         $html .= "<div style=\"font-size: 16px; padding-right:80px; position:absolute;top:338px;left:120px;\">" . $description  . "</div>";
         if($issuer_name != '')
             $html .= "<div style=\"font-size: 14px; font-weight: bold; position:absolute;top:606px;left:130px;\">( " . $issuer_name  . " )</div>";
-        // $html .= "<div style=\"font-size: 14px; font-weight: bold; position:absolute;top:620px;left:135px;\">" . $issuer_position  . "</div>";
+        $html .= "<div style=\"font-size: 14px; font-weight: bold; position:absolute;top:620px;left:135px;\">" . $issuer_position  . "</div>";
         if($qa_name != '')
             $html .= "<div style=\"font-size: 14px; font-weight: bold; position:absolute;top:606px;left:340px;\">( " . $qa_name  . " )</div>";
         if($cos_name != '')
