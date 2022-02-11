@@ -522,7 +522,6 @@ $('.daterange').daterangepicker({
 
             var dateStart = parseDateValue(startDate);
             var dateEnd = parseDateValue(endDate);
-            console.log(dateStart)
             var filteredData = table
                     .column(dataIdx)
                     .data()
@@ -533,6 +532,7 @@ $('.daterange').daterangepicker({
                         }
                         return false;
                     });
+            console.log(filteredData)
             var val = "";
             for (var count = 0; count < filteredData.length; count++) {
                 var filterDate = new Date(covertDateValue(parseDateValue(filteredData[count])));
