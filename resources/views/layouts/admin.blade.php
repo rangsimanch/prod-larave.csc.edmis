@@ -118,7 +118,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/admin-lte/2.4.3/css/AdminLTE.min.css" rel="stylesheet" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/iCheck/1.0.2/skins/all.css" rel="stylesheet" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
-    <link href="{{ URL::asset('css/custom.css') }}" rel="stylesheet" />
+    <link rel="stylesheet" href="<?php echo asset('css/custom.css')?>" type="text/css"> 
     <link href="https://fonts.googleapis.com/css?family=Nunito&display=swap" rel="stylesheet"> 
     {{-- <link href="{{ asset('css/custom.css') }}" rel="stylesheet" /> --}}
     {{-- <link href="{{ asset('css/bootstrap/bootstrap.css') }}" rel="stylesheet" /> --}}
