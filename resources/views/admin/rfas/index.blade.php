@@ -484,7 +484,7 @@ $('.daterange').daterangepicker({
 
     let startDate;
     let endDate;
-    let dataIdx = 2;  //current data column to work with
+    let dataIdx = 3;  //current data column to work with
 
     // Function for converting a dd/mmm/yyyy date value into a numeric string for comparison (example 01-Dec-2010 becomes 20101201
     function parseDateValue(rawDate) {
