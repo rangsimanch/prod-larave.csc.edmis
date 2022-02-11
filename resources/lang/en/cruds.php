@@ -315,7 +315,7 @@ return [
             'reviewed_by_helper'            => '',
             'submittals_file'               =>  'Submittals File',
             'submittals_file_helper'        =>  '',
-            'boq'                           => 'BoQ (Bill of Quantities)',
+            'boq'                           => 'BoQ',
             'boq_helper'                    => ' ',
             'wbs_level_one'                 => 'Wbs Level One',
             'wbs_level_one_helper'          => ' ',

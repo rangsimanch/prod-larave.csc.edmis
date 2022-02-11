@@ -16,6 +16,7 @@ use App\Http\Requests\UpdateRfaRequest;
 use App\Http\Requests\RevisionRfaRequest;
 use App\Wbslevelfour;
 use App\WbsLevelThree;
+use App\WbslevelOne;
 use App\Rfa;
 use App\RfaCommentStatus;
 use App\RfaDocumentStatus;
@@ -37,274 +38,579 @@ class RfaController extends Controller
 {
     use MediaUploadingTrait, CsvImportTrait;
 
+    // public function index(Request $request)
+    // {
+    //     if ($request->ajax()) {
+    //         $query = Rfa::with(['type', 'construction_contract','boq','wbs_level_3', 'wbs_level_4', 'issueby', 'assign',  'action_by', 'comment_by', 'information_by', 'comment_status', 'for_status', 'document_status', 'create_by_user', 'distribute_by', 'update_by_user', 'approve_by_user', 'reviewed_by', 'team'])->select(sprintf('%s.*', (new Rfa)->table));
+    //         $table = Datatables::of($query);
+
+    //         $table->addColumn('placeholder', '&nbsp;');
+
+
+    //         $table->addColumn('date_counter', '&nbsp;');
+    //         $table->editColumn('date_counter', function ($row) {
+    //             $get_target_date = str_replace('/', '-', $row->target_date ? $row->target_date : "");
+    //             $str_to_date = strtotime($get_target_date);
+    //             $format_date = date('m/d/Y',$str_to_date);
+    //             $target_date = new DateTime($format_date);
+                
+    //             $cur_date = new DateTime();
+
+    //             $document_status_id = $row->document_status ? $row->document_status->id : '';
+
+    //             $counter_date = $cur_date->diff($target_date)->format("%a");
+
+    //             if(!strcmp($document_status_id, '1')){
+    //                 return '';
+    //             }
+    //             else if(!strcmp($document_status_id, '4')){
+    //                 return '';
+    //             }
+    //             else{
+    //                 if($counter_date < 1000){
+    //                     return $counter_date + 2 . ' Days';
+    //                 }
+    //                 else{
+    //                     return sprintf('Time Out');
+    //                 }
+    //             }
+    //             //return $cur_date->format("d/m/Y");
+    //         });
+
+    //         $table->addColumn('actions', '&nbsp;');
+
+    //         // $table->editColumn('actions', function ($row) {
+
+    //         //     $viewGate      = 'rfa_show';
+    //         //     $crudRoutePart = 'rfas';
+
+    //         //     if(!strcmp( $row->check_revision ? $row->check_revision : '' ,"f")){
+    //         //         $revisionGate  = 'rfa_revision';
+    //         //     }else{
+    //         //         $revisionGate  = 'rfa_not_revision';
+    //         //     }
+
+        
+    //         //     $constructor = $row->issueby ? $row->issueby->id : '';
+    //         //     $manager = $row->assign ? $row->assign->id : '';
+    //         //     $engineer = $row->action_by ? $row->action_by->id : '';
+
+    //         //     $document_status_id = $row->document_status ? $row->document_status->id : '';
+    //         //     $sign_status = $row->cec_sign ? $row->cec_sign : '';
+    //         //     $stamp_status = $row->cec_stamp ? $row->cec_stamp : '';
+
+
+    //         //     //  EDIT ALL PERMISSION
+    //         //     if(!Gate::denies('rfa_edit_all')){
+    //         //         $editGate      = 'rfa_edit';
+    //         //         $deleteGate    = 'rfa_delete';
+    //         //                 return view('partials.datatablesActions', compact(
+    //         //                     'viewGate',
+    //         //                     'editGate',
+    //         //                     'deleteGate',
+    //         //                     'revisionGate',
+    //         //                     'crudRoutePart',
+    //         //                     'row'
+    //         //                 ));
+    //         //     }
+    //         //     else{
+    //         //         /////////////// New Status ///////////////
+    //         //         if(!strcmp($document_status_id, '1')){
+    //         //             //Before CEC Sign and Stamp 
+    //         //             if(strcmp($sign_status, '2') == '0' or strcmp($stamp_status, '2') == '0' ){
+    //         //                 //Check Permission CEC Manager and CEC Admin
+    //         //                 if (!strcmp($constructor,Auth::id()) || !Gate::denies('rfa_cec_sign') ){
+    //         //                         $editGate      = 'rfa_edit';
+    //         //                         $deleteGate    = 'rfa_delete';
+    //         //                         return view('partials.datatablesActions', compact(
+    //         //                             'viewGate',
+    //         //                             'editGate',
+    //         //                             'deleteGate',
+    //         //                             'revisionGate',
+    //         //                             'crudRoutePart',
+    //         //                             'row'
+    //         //                         ));
+    //         //                 }
+                     
+    //         //                 else{
+    //         //                     $editGate      = 'rfa_not_edit';
+    //         //                     $deleteGate    = 'rfa_not_delete';
+    //         //                     return view('partials.datatablesActions', compact(
+    //         //                         'viewGate',
+    //         //                         'editGate',
+    //         //                         'deleteGate',
+    //         //                         'revisionGate',
+    //         //                         'crudRoutePart',
+    //         //                         'row'
+    //         //                     ));
+    //         //                 }
+    //         //             }
+    //         //         //After CEC Sign and Stamp
+    //         //             else {
+    //         //                 //Check CSC Manager
+    //         //                 if ( strcmp(Auth::id(),'61') == 0){
+    //         //                     $editGate      = 'rfa_edit';
+    //         //                     $deleteGate    = 'rfa_delete';
+    //         //                     return view('partials.datatablesActions', compact(
+    //         //                         'viewGate',
+    //         //                         'editGate',
+    //         //                         'deleteGate',
+    //         //                         'revisionGate',
+    //         //                         'crudRoutePart',
+    //         //                         'row'
+    //         //                     ));
+    //         //                 }
+    //         //                 else{
+    //         //                     $editGate      = 'rfa_not_edit';
+    //         //                     $deleteGate    = 'rfa_not_delete';
+    //         //                     return view('partials.datatablesActions', compact(
+    //         //                         'viewGate',
+    //         //                         'editGate',
+    //         //                         'deleteGate',
+    //         //                         'revisionGate',
+    //         //                         'crudRoutePart',
+    //         //                         'row'
+    //         //                     ));
+    //         //                 }
+    //         //             }
+    //         //         }
+
+    //         //         // /////////////// Distribute Status ///////////////
+    //         //         elseif(strcmp($document_status_id, '2') == 0){
+    //         //             //Check Engineer and Specialist
+    //         //             if (strcmp($engineer,Auth::id()) == 0 ){
+    //         //                 $editGate      = 'rfa_edit';
+    //         //                 $deleteGate    = 'rfa_delete';
+    //         //                 return view('partials.datatablesActions', compact(
+    //         //                     'viewGate',
+    //         //                     'editGate',
+    //         //                     'deleteGate',
+    //         //                     'revisionGate',
+    //         //                     'crudRoutePart',
+    //         //                     'row'
+    //         //                 ));
+    //         //             }
+    //         //             else{
+    //         //                 $editGate      = 'rfa_not_edit';
+    //         //                 $deleteGate    = 'rfa_not_delete';
+    //         //                 return view('partials.datatablesActions', compact(
+    //         //                     'viewGate',
+    //         //                     'editGate',
+    //         //                     'deleteGate',
+    //         //                     'revisionGate',
+    //         //                     'crudRoutePart',
+    //         //                     'row'
+    //         //                 ));
+    //         //             }
+    //         //         }
+                
+    //         //         // /////////////// Reviewed Status ///////////////
+    //         //         else if(strcmp($document_status_id, '3') == 0){
+    //         //         //Check CSC Manager
+    //         //            if ( strcmp(Auth::id(),'61') == 0){
+    //         //                 $editGate      = 'rfa_edit';
+    //         //                 $deleteGate    = 'rfa_delete';
+    //         //                 return view('partials.datatablesActions', compact(
+    //         //                     'viewGate',
+    //         //                     'editGate',
+    //         //                     'deleteGate',
+    //         //                     'revisionGate',
+    //         //                     'crudRoutePart',
+    //         //                     'row'
+    //         //                 ));
+    //         //             }
+    //         //             else{
+    //         //                 $editGate      = 'rfa_not_edit';
+    //         //                 $deleteGate    = 'rfa_not_delete';
+    //         //                 return view('partials.datatablesActions', compact(
+    //         //                     'viewGate',
+    //         //                     'editGate',
+    //         //                     'deleteGate',
+    //         //                     'revisionGate',
+    //         //                     'crudRoutePart',
+    //         //                     'row'
+    //         //                 ));
+    //         //             }
+    //         //         }
+
+    //         //         else{
+    //         //             $editGate      = 'rfa_not_edit';
+    //         //             $deleteGate    = 'rfa_not_delete';
+    //         //             return view('partials.datatablesActions', compact(
+    //         //                 'viewGate',
+    //         //                 'editGate',
+    //         //                 'deleteGate',
+    //         //                 'revisionGate',
+    //         //                 'crudRoutePart',
+    //         //                 'row'
+    //         //             ));
+        
+    //         //         }    
+
+    //         //     }
+
+    //         // });
+
+    //         $table->editColumn('actions', function ($row) {
+    //             // if($row->document_status->id != 4){
+    //                 $viewGate      = 'rfa_show';
+    //                 $editGate      = 'rfa_edit';
+    //                 $deleteGate    = 'rfa_delete';
+    //                 $crudRoutePart = 'rfas';
+
+    //                 return view('partials.datatablesActions', compact(
+    //                     'viewGate',
+    //                     'editGate',
+    //                     'deleteGate',
+    //                     'crudRoutePart',
+    //                     'row'
+    //                 ));
+    //             // }else
+    //             // {
+    //             //     $viewGate      = 'rfa_show';
+    //             //     $editGate      = 'rfa_not_edit';
+    //             //     $deleteGate    = 'rfa_delete';
+    //             //     $crudRoutePart = 'rfas';
+
+    //             //     return view('partials.datatablesActions', compact(
+    //             //         'viewGate',
+    //             //         'editGate',
+    //             //         'deleteGate',
+    //             //         'crudRoutePart',
+    //             //         'row'
+    //             //     ));
+    //             // }
+    //         });
+            
+
+    //         $table->editColumn('title_eng', function ($row) {
+    //             return $row->title_eng ? $row->title_eng : "";
+    //         });
+    //         $table->editColumn('title', function ($row) {
+    //             return $row->title ? $row->title : "";
+    //         });
+    //         $table->editColumn('title_cn', function ($row) {
+    //             return $row->title_cn ? $row->title_cn : "";
+    //         });
+    //         $table->editColumn('origin_number', function ($row) {
+    //             return $row->origin_number ? $row->origin_number : "";
+    //         });
+    //         $table->editColumn('document_number', function ($row) {
+    //             return $row->document_number ? $row->document_number : "";
+    //         });
+    //         $table->editColumn('rfa_code', function ($row) {
+    //             return $row->rfa_code ? $row->rfa_code : "";
+    //         });
+    //         $table->addColumn('type_type_name', function ($row) {
+    //             return $row->type ? $row->type->type_name : '';
+    //         });
+    //         $table->editColumn('review_time', function ($row) {
+    //             return $row->review_time ? $row->review_time : "";
+    //         });
+
+    //         $table->editColumn('type.type_code', function ($row) {
+    //             return $row->type ? (is_string($row->type) ? $row->type : $row->type->type_code) : '';
+    //         });
+    //         $table->editColumn('worktype', function ($row) {
+    //             return $row->worktype ? Rfa::WORKTYPE_SELECT[$row->worktype] : '';
+    //         });
+    //         $table->addColumn('construction_contract_code', function ($row) {
+    //             return $row->construction_contract ? $row->construction_contract->code : '';
+    //         });
+
+    //         $table->addColumn('wbs_level_3_wbs_level_3_code', function ($row) {
+    //             return $row->wbs_level_3 ? $row->wbs_level_3->wbs_level_3_code : '';
+    //         });
+
+    //         $table->editColumn('cover_sheet', function ($row) {
+    //             $cover_sheet = [];
+    //             $rfa_id =  $row->id;
+    //             $cover_sheet[] = '<a class="btn btn-default" href="' . route('admin.rfas.createReportRFA',$row->id) .'" target="_blank">
+    //             Cover Sheet </a>';
+    //             return implode(' ', $cover_sheet);
+    //         });
+
+    //         $table->editColumn('wbs_level_3.wbs_level_3_name', function ($row) {
+    //             return $row->wbs_level_3 ? (is_string($row->wbs_level_3) ? $row->wbs_level_3 : $row->wbs_level_3->wbs_level_3_name) : '';
+    //         });
+    //         $table->addColumn('wbs_level_4_wbs_level_4_code', function ($row) {
+    //             return $row->wbs_level_4 ? $row->wbs_level_4->wbs_level_4_code : '';
+    //         });
+
+    //         $table->editColumn('wbs_level_4.wbs_level_4_name', function ($row) {
+    //             return $row->wbs_level_4 ? (is_string($row->wbs_level_4) ? $row->wbs_level_4 : $row->wbs_level_4->wbs_level_4_name) : '';
+    //         });
+
+    //         $table->addColumn('issueby_name', function ($row) {
+    //             return $row->issueby ? $row->issueby->name : '';
+    //         });
+            
+
+    //         $table->addColumn('assign_name', function ($row) {
+    //             return $row->assign ? $row->assign->name : '';
+    //         });
+
+    //         $table->addColumn('action_by_name', function ($row) {
+    //             return $row->action_by ? $row->action_by->name : '';
+    //         });
+
+    //         $table->editColumn('file_upload_1', function ($row) {
+    //             if (!$row->file_upload_1) {
+    //                 return '';
+    //             }
+
+    //             $links = [];
+    //             foreach ($row->file_upload_1 as $media) {
+    //                 $links[] = '<a href="' . $media->getUrl() . '" target="_blank">' . trans('global.downloadFile') . '</a>';
+    //             }
+
+    //             return implode(', ', $links);
+    //         });
+
+    //         $table->editColumn('submittals_file', function ($row) {
+    //             if (!$row->submittals_file) {
+    //                 return '';
+    //             }
+
+    //             $links = [];
+
+    //             foreach ($row->submittals_file as $media) {
+    //                 $links[] = '<a href="' . $media->getUrl() . '" target="_blank">' . trans('global.downloadFile') . '</a>';
+    //             }
+
+    //             return implode(', ', $links);
+    //         });
+
+    //         $table->editColumn('commercial_file_upload', function ($row) {
+    //             if (!$row->commercial_file_upload) {
+    //                 return '';
+    //             }
+
+    //             $links = [];
+
+    //             foreach ($row->commercial_file_upload as $media) {
+    //                 $links[] = '<a href="' . $media->getUrl() . '" target="_blank">' . trans('global.downloadFile') . '</a>';
+    //             }
+
+    //             return implode(', ', $links);
+    //         });
+
+    //         $table->addColumn('comment_by_name', function ($row) {
+    //             return $row->comment_by ? $row->comment_by->name : '';
+    //         });
+
+    //         $table->addColumn('information_by_name', function ($row) {
+    //             return $row->information_by ? $row->information_by->name : '';
+    //         });
+
+    //         $table->editColumn('note_2', function ($row) {
+    //             return $row->note_2 ? $row->note_2 : "";
+    //         });
+    //         $table->addColumn('comment_status_name', function ($row) {
+    //             return $row->comment_status ? $row->comment_status->name : '';
+    //         });
+
+    //         $table->editColumn('note_3', function ($row) {
+    //             return $row->note_3 ? $row->note_3 : "";
+    //         });
+    //         $table->editColumn('document_file_upload', function ($row) {
+    //             if (!$row->document_file_upload) {
+    //                 return '';
+    //             }
+
+    //             $links = [];
+
+    //             foreach ($row->document_file_upload as $media) {
+    //                 $links[] = '<a href="' . $media->getUrl() . '" target="_blank">' . trans('global.downloadFile') . '</a>';
+    //             }
+
+    //             return implode(', ', $links);
+    //         });
+    //         $table->editColumn('document_ref', function ($row) {
+    //             return $row->document_ref ? $row->document_ref : "";
+    //         });
+    //         $table->addColumn('for_status_name', function ($row) {
+    //             return $row->for_status ? $row->for_status->name : '';
+    //         });
+
+
+    //         $table->editColumn('note_4', function ($row) {
+    //             return $row->note_4 ? $row->note_4 : "";
+    //         });
+
+    //         $table->addColumn('document_status_status_name', function ($row) {
+    //                 if ($row->document_status->status_name == 'New'){
+    //                     return sprintf('<p style="color:#003399"><b>%s</b></p>',$row->document_status ? $row->document_status->status_name : '');
+    //                 }
+    //                 else if($row->document_status->status_name == 'Distributed'){
+    //                     return sprintf('<p style="color:#ff9900"><b>%s</b></p>',$row->document_status ? $row->document_status->status_name : '');
+    //                 }
+    //                 else if($row->document_status->status_name == 'Reviewed'){
+    //                     return sprintf('<p style="color:#6600cc"><b>%s</b></p>',$row->document_status ? $row->document_status->status_name : '');
+    //                 }
+    //                 else if($row->document_status->status_name == 'Done'){
+    //                     return sprintf('<p style="color:#009933"><b>%s</b></p>',$row->document_status ? $row->document_status->status_name : '');
+    //                 }
+    //                 else{
+    //                     return $row->document_status ? $row->document_status->status_name : '';
+    //                 }
+
+                
+    //         });
+
+    //         $table->addColumn('create_by_user_name', function ($row) {
+    //             return $row->create_by_user ? $row->create_by_user->name : '';
+    //         });
+
+    //         $table->addColumn('update_by_user_name', function ($row) {
+    //             return $row->update_by_user ? $row->update_by_user->name : '';
+    //         });
+
+    //         $table->addColumn('approve_by_user_name', function ($row) {
+    //             return $row->approve_by_user ? $row->approve_by_user->name : '';
+    //         });
+
+    //         $table->addColumn('team_code', function ($row) {
+    //             return $row->team ? $row->team->code : '';
+    //         });
+
+    //         $table->addColumn('check_revision', function ($row) {
+    //             return $row->check_revision ? $row->check_revision : '';
+    //         });
+
+    //         $table->addColumn('boq_name', function ($row) {
+    //             return $row->boq ? $row->boq->name : '';
+    //         });
+
+    //         $table->editColumn('qty_page', function ($row) {
+    //             return $row->qty_page ? $row->qty_page : "";
+    //         });
+    //         $table->editColumn('spec_ref_no', function ($row) {
+    //             return $row->spec_ref_no ? $row->spec_ref_no : "";
+    //         });
+    //         $table->editColumn('clause', function ($row) {
+    //             return $row->clause ? $row->clause : "";
+    //         });
+    //         $table->editColumn('contract_drawing_no', function ($row) {
+    //             return $row->contract_drawing_no ? $row->contract_drawing_no : "";
+    //         });
+
+    //         $table->addColumn('reviewed_by_name', function ($row) {
+    //             return $row->reviewed_by ? $row->reviewed_by->name : '';
+    //         });
+
+    //         $table->rawColumns(['actions','boq', 'placeholder', 'type', 'construction_contract', 'wbs_level_3', 'wbs_level_4', 
+    //         'issueby', 'assign', 'file_upload_1', 'comment_by', 'information_by', 'comment_status', 'for_status', 'document_status', 
+    //         'action_by', 'create_by_user', 'update_by_user', 'approve_by_user', 'commercial_file_upload', 'document_file_upload', 
+    //         'team', 'check_revision','reviewed_by','document_status_status_name','submittals_file', 'cover_sheet']);
+
+    //         return $table->make(true);
+    //     }
+
+    //     $boqs =  BoQ::all()->sortBy('id')->pluck('name')->unique();
+    //     $document_status =  RfaDocumentStatus::all()->sortBy('status_name')->pluck('status_name')->unique();
+    //     $types = Rfatype::all()->sortBy('type_code')->pluck('type_code')->unique();
+    //     $work_types = Rfa::all()->sortBy('worktype')->pluck('worktype')->unique();
+    //     $construction_contracts = ConstructionContract::all()->sortBy('code')->pluck('code')->unique();
+    //     $wbs_level_3s = WbsLevelThree::all()->sortBy('wbs_level_3_code')->pluck('wbs_level_3_code')->unique();
+    //     $wbs_level_4s = Wbslevelfour::all()->sortBy('wbs_level_4_code')->pluck('wbs_level_4_code')->unique();
+    //     $submit_dates = Rfa::all()->sortBy('submit_date')->pluck('submit_date')->unique();
+    //     $receive_dates = Rfa::all()->sortBy('receive_date')->pluck('receive_date')->unique();
+    //     $comment_statuses = RfaCommentStatus::all()->sortBy('name')->pluck('name')->unique();
+    //     $for_statuses = RfaCommentStatus::all()->sortBy('name')->pluck('name')->unique();
+    //     $teams = Team::all()->sortBy('code')->pluck('code')->unique();
+
+
+    //     return view('admin.rfas.index',compact('boqs','document_status','types','work_types','construction_contracts','wbs_level_3s','wbs_level_4s','submit_dates','receive_dates','comment_statuses','for_statuses','teams'));
+    // }
+
+
     public function index(Request $request)
     {
+        abort_if(Gate::denies('rfa_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         if ($request->ajax()) {
-            $query = Rfa::with(['type', 'construction_contract','boq','wbs_level_3', 'wbs_level_4', 'issueby', 'assign',  'action_by', 'comment_by', 'information_by', 'comment_status', 'for_status', 'document_status', 'create_by_user', 'distribute_by', 'update_by_user', 'approve_by_user', 'reviewed_by', 'team'])->select(sprintf('%s.*', (new Rfa)->table));
+            $query = Rfa::with(['document_status', 'boq', 'type', 'construction_contract', 'wbs_level_3', 'wbs_level_4', 'issueby', 'assign', 'action_by', 'comment_by', 'information_by', 'comment_status', 'for_status', 'create_by_user', 'distribute_by', 'reviewed_by', 'wbs_level_one', 'team'])->select(sprintf('%s.*', (new Rfa())->table));
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
-
-
-            $table->addColumn('date_counter', '&nbsp;');
-            $table->editColumn('date_counter', function ($row) {
-                $get_target_date = str_replace('/', '-', $row->target_date ? $row->target_date : "");
-                $str_to_date = strtotime($get_target_date);
-                $format_date = date('m/d/Y',$str_to_date);
-                $target_date = new DateTime($format_date);
-                
-                $cur_date = new DateTime();
-
-                $document_status_id = $row->document_status ? $row->document_status->id : '';
-
-                $counter_date = $cur_date->diff($target_date)->format("%a");
-
-                if(!strcmp($document_status_id, '1')){
-                    return '';
-                }
-                else if(!strcmp($document_status_id, '4')){
-                    return '';
-                }
-                else{
-                    if($counter_date < 1000){
-                        return $counter_date + 2 . ' Days';
-                    }
-                    else{
-                        return sprintf('Time Out');
-                    }
-                }
-                //return $cur_date->format("d/m/Y");
-            });
-
             $table->addColumn('actions', '&nbsp;');
 
-            // $table->editColumn('actions', function ($row) {
-
-            //     $viewGate      = 'rfa_show';
-            //     $crudRoutePart = 'rfas';
-
-            //     if(!strcmp( $row->check_revision ? $row->check_revision : '' ,"f")){
-            //         $revisionGate  = 'rfa_revision';
-            //     }else{
-            //         $revisionGate  = 'rfa_not_revision';
-            //     }
-
-        
-            //     $constructor = $row->issueby ? $row->issueby->id : '';
-            //     $manager = $row->assign ? $row->assign->id : '';
-            //     $engineer = $row->action_by ? $row->action_by->id : '';
-
-            //     $document_status_id = $row->document_status ? $row->document_status->id : '';
-            //     $sign_status = $row->cec_sign ? $row->cec_sign : '';
-            //     $stamp_status = $row->cec_stamp ? $row->cec_stamp : '';
-
-
-            //     //  EDIT ALL PERMISSION
-            //     if(!Gate::denies('rfa_edit_all')){
-            //         $editGate      = 'rfa_edit';
-            //         $deleteGate    = 'rfa_delete';
-            //                 return view('partials.datatablesActions', compact(
-            //                     'viewGate',
-            //                     'editGate',
-            //                     'deleteGate',
-            //                     'revisionGate',
-            //                     'crudRoutePart',
-            //                     'row'
-            //                 ));
-            //     }
-            //     else{
-            //         /////////////// New Status ///////////////
-            //         if(!strcmp($document_status_id, '1')){
-            //             //Before CEC Sign and Stamp 
-            //             if(strcmp($sign_status, '2') == '0' or strcmp($stamp_status, '2') == '0' ){
-            //                 //Check Permission CEC Manager and CEC Admin
-            //                 if (!strcmp($constructor,Auth::id()) || !Gate::denies('rfa_cec_sign') ){
-            //                         $editGate      = 'rfa_edit';
-            //                         $deleteGate    = 'rfa_delete';
-            //                         return view('partials.datatablesActions', compact(
-            //                             'viewGate',
-            //                             'editGate',
-            //                             'deleteGate',
-            //                             'revisionGate',
-            //                             'crudRoutePart',
-            //                             'row'
-            //                         ));
-            //                 }
-                     
-            //                 else{
-            //                     $editGate      = 'rfa_not_edit';
-            //                     $deleteGate    = 'rfa_not_delete';
-            //                     return view('partials.datatablesActions', compact(
-            //                         'viewGate',
-            //                         'editGate',
-            //                         'deleteGate',
-            //                         'revisionGate',
-            //                         'crudRoutePart',
-            //                         'row'
-            //                     ));
-            //                 }
-            //             }
-            //         //After CEC Sign and Stamp
-            //             else {
-            //                 //Check CSC Manager
-            //                 if ( strcmp(Auth::id(),'61') == 0){
-            //                     $editGate      = 'rfa_edit';
-            //                     $deleteGate    = 'rfa_delete';
-            //                     return view('partials.datatablesActions', compact(
-            //                         'viewGate',
-            //                         'editGate',
-            //                         'deleteGate',
-            //                         'revisionGate',
-            //                         'crudRoutePart',
-            //                         'row'
-            //                     ));
-            //                 }
-            //                 else{
-            //                     $editGate      = 'rfa_not_edit';
-            //                     $deleteGate    = 'rfa_not_delete';
-            //                     return view('partials.datatablesActions', compact(
-            //                         'viewGate',
-            //                         'editGate',
-            //                         'deleteGate',
-            //                         'revisionGate',
-            //                         'crudRoutePart',
-            //                         'row'
-            //                     ));
-            //                 }
-            //             }
-            //         }
-
-            //         // /////////////// Distribute Status ///////////////
-            //         elseif(strcmp($document_status_id, '2') == 0){
-            //             //Check Engineer and Specialist
-            //             if (strcmp($engineer,Auth::id()) == 0 ){
-            //                 $editGate      = 'rfa_edit';
-            //                 $deleteGate    = 'rfa_delete';
-            //                 return view('partials.datatablesActions', compact(
-            //                     'viewGate',
-            //                     'editGate',
-            //                     'deleteGate',
-            //                     'revisionGate',
-            //                     'crudRoutePart',
-            //                     'row'
-            //                 ));
-            //             }
-            //             else{
-            //                 $editGate      = 'rfa_not_edit';
-            //                 $deleteGate    = 'rfa_not_delete';
-            //                 return view('partials.datatablesActions', compact(
-            //                     'viewGate',
-            //                     'editGate',
-            //                     'deleteGate',
-            //                     'revisionGate',
-            //                     'crudRoutePart',
-            //                     'row'
-            //                 ));
-            //             }
-            //         }
-                
-            //         // /////////////// Reviewed Status ///////////////
-            //         else if(strcmp($document_status_id, '3') == 0){
-            //         //Check CSC Manager
-            //            if ( strcmp(Auth::id(),'61') == 0){
-            //                 $editGate      = 'rfa_edit';
-            //                 $deleteGate    = 'rfa_delete';
-            //                 return view('partials.datatablesActions', compact(
-            //                     'viewGate',
-            //                     'editGate',
-            //                     'deleteGate',
-            //                     'revisionGate',
-            //                     'crudRoutePart',
-            //                     'row'
-            //                 ));
-            //             }
-            //             else{
-            //                 $editGate      = 'rfa_not_edit';
-            //                 $deleteGate    = 'rfa_not_delete';
-            //                 return view('partials.datatablesActions', compact(
-            //                     'viewGate',
-            //                     'editGate',
-            //                     'deleteGate',
-            //                     'revisionGate',
-            //                     'crudRoutePart',
-            //                     'row'
-            //                 ));
-            //             }
-            //         }
-
-            //         else{
-            //             $editGate      = 'rfa_not_edit';
-            //             $deleteGate    = 'rfa_not_delete';
-            //             return view('partials.datatablesActions', compact(
-            //                 'viewGate',
-            //                 'editGate',
-            //                 'deleteGate',
-            //                 'revisionGate',
-            //                 'crudRoutePart',
-            //                 'row'
-            //             ));
-        
-            //         }    
-
-            //     }
-
-            // });
-
             $table->editColumn('actions', function ($row) {
-                // if($row->document_status->id != 4){
-                    $viewGate      = 'rfa_show';
-                    $editGate      = 'rfa_edit';
-                    $deleteGate    = 'rfa_delete';
-                    $crudRoutePart = 'rfas';
+                $viewGate = 'rfa_show';
+                $editGate = 'rfa_edit';
+                $deleteGate = 'rfa_delete';
+                $crudRoutePart = 'rfas';
 
-                    return view('partials.datatablesActions', compact(
-                        'viewGate',
-                        'editGate',
-                        'deleteGate',
-                        'crudRoutePart',
-                        'row'
-                    ));
-                // }else
-                // {
-                //     $viewGate      = 'rfa_show';
-                //     $editGate      = 'rfa_not_edit';
-                //     $deleteGate    = 'rfa_delete';
-                //     $crudRoutePart = 'rfas';
-
-                //     return view('partials.datatablesActions', compact(
-                //         'viewGate',
-                //         'editGate',
-                //         'deleteGate',
-                //         'crudRoutePart',
-                //         'row'
-                //     ));
-                // }
+                return view('partials.datatablesActions', compact(
+                'viewGate',
+                'editGate',
+                'deleteGate',
+                'crudRoutePart',
+                'row'
+            ));
             });
-            
+
+            $table->editColumn('cover_sheet', function ($row) {
+                $cover_sheet = [];
+                $rfa_id =  $row->id;
+                $cover_sheet[] = '<a style="font-size:12px" class="btn btn-default" href="' . route('admin.rfas.createReportRFA',$row->id) .'" target="_blank">
+                            RFA<br>Report </a>';
+                return implode(' ', $cover_sheet);
+            });
+
+            $table->addColumn('document_status_status_name', function ($row) {
+                if ($row->document_status->status_name == 'New')
+                    return sprintf('<p style="color:#003399"><b>%s</b></p>',$row->document_status ? $row->document_status->status_name : '');              
+                else if($row->document_status->status_name == 'Distributed')
+                    return sprintf('<p style="color:#ff9900"><b>%s</b></p>',$row->document_status ? $row->document_status->status_name : '');        
+                else if($row->document_status->status_name == 'Reviewed')
+                    return sprintf('<p style="color:#6600cc"><b>%s</b></p>',$row->document_status ? $row->document_status->status_name : '');
+                else if($row->document_status->status_name == 'Done')
+                    return sprintf('<p style="color:#009933"><b>%s</b></p>',$row->document_status ? $row->document_status->status_name : '');
+                else
+                    return $row->document_status ? $row->document_status->status_name : '';
+            });
+    
+            $table->editColumn('file_upload_1', function ($row) {
+                if (!$row->file_upload_1) {
+                    return '';
+                }
+                $links = [];
+                foreach ($row->file_upload_1 as $media) {
+                    $links[] = '<a href="' . $media->getUrl() . '" target="_blank">' . trans('global.downloadFile') . '</a>';
+                }
+
+                return implode(', ', $links);
+            });
+            $table->addColumn('boq_name', function ($row) {
+                return $row->boq ? $row->boq->name : '';
+            });
 
             $table->editColumn('title_eng', function ($row) {
-                return $row->title_eng ? $row->title_eng : "";
+                return $row->title_eng ? $row->title_eng : '';
             });
             $table->editColumn('title', function ($row) {
-                return $row->title ? $row->title : "";
+                return $row->title ? $row->title : '';
             });
             $table->editColumn('title_cn', function ($row) {
-                return $row->title_cn ? $row->title_cn : "";
+                return $row->title_cn ? $row->title_cn : '';
             });
             $table->editColumn('origin_number', function ($row) {
-                return $row->origin_number ? $row->origin_number : "";
+                return $row->origin_number ? $row->origin_number : '';
             });
             $table->editColumn('document_number', function ($row) {
-                return $row->document_number ? $row->document_number : "";
+                return $row->document_number ? $row->document_number : '';
             });
             $table->editColumn('rfa_code', function ($row) {
-                return $row->rfa_code ? $row->rfa_code : "";
+                return $row->rfa_code ? $row->rfa_code : '';
+            });
+
+            $table->editColumn('review_time', function ($row) {
+                return $row->review_time ? $row->review_time : '';
             });
             $table->addColumn('type_type_name', function ($row) {
                 return $row->type ? $row->type->type_name : '';
-            });
-            $table->editColumn('review_time', function ($row) {
-                return $row->review_time ? $row->review_time : "";
             });
 
             $table->editColumn('type.type_code', function ($row) {
@@ -317,16 +623,11 @@ class RfaController extends Controller
                 return $row->construction_contract ? $row->construction_contract->code : '';
             });
 
+            $table->editColumn('construction_contract.name', function ($row) {
+                return $row->construction_contract ? (is_string($row->construction_contract) ? $row->construction_contract : $row->construction_contract->name) : '';
+            });
             $table->addColumn('wbs_level_3_wbs_level_3_code', function ($row) {
                 return $row->wbs_level_3 ? $row->wbs_level_3->wbs_level_3_code : '';
-            });
-
-            $table->editColumn('cover_sheet', function ($row) {
-                $cover_sheet = [];
-                $rfa_id =  $row->id;
-                $cover_sheet[] = '<a class="btn btn-default" href="' . route('admin.rfas.createReportRFA',$row->id) .'" target="_blank">
-                Cover Sheet </a>';
-                return implode(' ', $cover_sheet);
             });
 
             $table->editColumn('wbs_level_3.wbs_level_3_name', function ($row) {
@@ -339,11 +640,9 @@ class RfaController extends Controller
             $table->editColumn('wbs_level_4.wbs_level_4_name', function ($row) {
                 return $row->wbs_level_4 ? (is_string($row->wbs_level_4) ? $row->wbs_level_4 : $row->wbs_level_4->wbs_level_4_name) : '';
             });
-
             $table->addColumn('issueby_name', function ($row) {
                 return $row->issueby ? $row->issueby->name : '';
             });
-            
 
             $table->addColumn('assign_name', function ($row) {
                 return $row->assign ? $row->assign->name : '';
@@ -351,47 +650,6 @@ class RfaController extends Controller
 
             $table->addColumn('action_by_name', function ($row) {
                 return $row->action_by ? $row->action_by->name : '';
-            });
-
-            $table->editColumn('file_upload_1', function ($row) {
-                if (!$row->file_upload_1) {
-                    return '';
-                }
-
-                $links = [];
-                foreach ($row->file_upload_1 as $media) {
-                    $links[] = '<a href="' . $media->getUrl() . '" target="_blank">' . trans('global.downloadFile') . '</a>';
-                }
-
-                return implode(', ', $links);
-            });
-
-            $table->editColumn('submittals_file', function ($row) {
-                if (!$row->submittals_file) {
-                    return '';
-                }
-
-                $links = [];
-
-                foreach ($row->submittals_file as $media) {
-                    $links[] = '<a href="' . $media->getUrl() . '" target="_blank">' . trans('global.downloadFile') . '</a>';
-                }
-
-                return implode(', ', $links);
-            });
-
-            $table->editColumn('commercial_file_upload', function ($row) {
-                if (!$row->commercial_file_upload) {
-                    return '';
-                }
-
-                $links = [];
-
-                foreach ($row->commercial_file_upload as $media) {
-                    $links[] = '<a href="' . $media->getUrl() . '" target="_blank">' . trans('global.downloadFile') . '</a>';
-                }
-
-                return implode(', ', $links);
             });
 
             $table->addColumn('comment_by_name', function ($row) {
@@ -402,125 +660,72 @@ class RfaController extends Controller
                 return $row->information_by ? $row->information_by->name : '';
             });
 
-            $table->editColumn('note_2', function ($row) {
-                return $row->note_2 ? $row->note_2 : "";
-            });
             $table->addColumn('comment_status_name', function ($row) {
                 return $row->comment_status ? $row->comment_status->name : '';
-            });
-
-            $table->editColumn('note_3', function ($row) {
-                return $row->note_3 ? $row->note_3 : "";
-            });
-            $table->editColumn('document_file_upload', function ($row) {
-                if (!$row->document_file_upload) {
-                    return '';
-                }
-
-                $links = [];
-
-                foreach ($row->document_file_upload as $media) {
-                    $links[] = '<a href="' . $media->getUrl() . '" target="_blank">' . trans('global.downloadFile') . '</a>';
-                }
-
-                return implode(', ', $links);
-            });
-            $table->editColumn('document_ref', function ($row) {
-                return $row->document_ref ? $row->document_ref : "";
-            });
-            $table->addColumn('for_status_name', function ($row) {
-                return $row->for_status ? $row->for_status->name : '';
-            });
-
-
-            $table->editColumn('note_4', function ($row) {
-                return $row->note_4 ? $row->note_4 : "";
-            });
-
-            $table->addColumn('document_status_status_name', function ($row) {
-                    if ($row->document_status->status_name == 'New'){
-                        return sprintf('<p style="color:#003399"><b>%s</b></p>',$row->document_status ? $row->document_status->status_name : '');
-                    }
-                    else if($row->document_status->status_name == 'Distributed'){
-                        return sprintf('<p style="color:#ff9900"><b>%s</b></p>',$row->document_status ? $row->document_status->status_name : '');
-                    }
-                    else if($row->document_status->status_name == 'Reviewed'){
-                        return sprintf('<p style="color:#6600cc"><b>%s</b></p>',$row->document_status ? $row->document_status->status_name : '');
-                    }
-                    else if($row->document_status->status_name == 'Done'){
-                        return sprintf('<p style="color:#009933"><b>%s</b></p>',$row->document_status ? $row->document_status->status_name : '');
-                    }
-                    else{
-                        return $row->document_status ? $row->document_status->status_name : '';
-                    }
-
-                
             });
 
             $table->addColumn('create_by_user_name', function ($row) {
                 return $row->create_by_user ? $row->create_by_user->name : '';
             });
 
-            $table->addColumn('update_by_user_name', function ($row) {
-                return $row->update_by_user ? $row->update_by_user->name : '';
+            $table->editColumn('incoming_number', function ($row) {
+                return $row->incoming_number ? $row->incoming_number : '';
+            });
+            $table->editColumn('outgoing_number', function ($row) {
+                return $row->outgoing_number ? $row->outgoing_number : '';
             });
 
-            $table->addColumn('approve_by_user_name', function ($row) {
-                return $row->approve_by_user ? $row->approve_by_user->name : '';
-            });
+            $table->editColumn('commercial_file_upload', function ($row) {
+                if (!$row->commercial_file_upload) {
+                    return '';
+                }
+                $links = [];
+                foreach ($row->commercial_file_upload as $media) {
+                    $links[] = '<a href="' . $media->getUrl() . '" target="_blank">' . trans('global.downloadFile') . '</a>';
+                }
 
-            $table->addColumn('team_code', function ($row) {
-                return $row->team ? $row->team->code : '';
+                return implode(', ', $links);
             });
-
-            $table->addColumn('check_revision', function ($row) {
-                return $row->check_revision ? $row->check_revision : '';
-            });
-
-            $table->addColumn('boq_name', function ($row) {
-                return $row->boq ? $row->boq->name : '';
-            });
-
-            $table->editColumn('qty_page', function ($row) {
-                return $row->qty_page ? $row->qty_page : "";
-            });
-            $table->editColumn('spec_ref_no', function ($row) {
-                return $row->spec_ref_no ? $row->spec_ref_no : "";
-            });
-            $table->editColumn('clause', function ($row) {
-                return $row->clause ? $row->clause : "";
-            });
-            $table->editColumn('contract_drawing_no', function ($row) {
-                return $row->contract_drawing_no ? $row->contract_drawing_no : "";
+            $table->addColumn('distribute_by_name', function ($row) {
+                return $row->distribute_by ? $row->distribute_by->name : '';
             });
 
             $table->addColumn('reviewed_by_name', function ($row) {
                 return $row->reviewed_by ? $row->reviewed_by->name : '';
             });
 
-            $table->rawColumns(['actions','boq', 'placeholder', 'type', 'construction_contract', 'wbs_level_3', 'wbs_level_4', 
-            'issueby', 'assign', 'file_upload_1', 'comment_by', 'information_by', 'comment_status', 'for_status', 'document_status', 
-            'action_by', 'create_by_user', 'update_by_user', 'approve_by_user', 'commercial_file_upload', 'document_file_upload', 
-            'team', 'check_revision','reviewed_by','document_status_status_name','submittals_file', 'cover_sheet']);
+            $table->editColumn('submittals_file', function ($row) {
+                if (!$row->submittals_file) {
+                    return '';
+                }
+                $links = [];
+                foreach ($row->submittals_file as $media) {
+                    $links[] = '<a href="' . $media->getUrl() . '" target="_blank">' . trans('global.downloadFile') . '</a>';
+                }
+
+                return implode(', ', $links);
+            });
+            $table->addColumn('wbs_level_one_name', function ($row) {
+                return $row->wbs_level_one ? $row->wbs_level_one->name : '';
+            });
+
+            $table->rawColumns(['actions', 'placeholder', 'document_status', 'file_upload_1', 'boq', 'type', 'construction_contract', 'wbs_level_3', 'wbs_level_4', 'issueby', 'assign', 'action_by', 'comment_by', 'information_by', 'comment_status', 'create_by_user', 'commercial_file_upload', 'distribute_by', 'reviewed_by', 'submittals_file', 'wbs_level_one','document_status_status_name','cover_sheet']);
 
             return $table->make(true);
         }
 
-        $boqs =  BoQ::all()->sortBy('id')->pluck('name')->unique();
-        $document_status =  RfaDocumentStatus::all()->sortBy('status_name')->pluck('status_name')->unique();
-        $types = Rfatype::all()->sortBy('type_code')->pluck('type_code')->unique();
-        $work_types = Rfa::all()->sortBy('worktype')->pluck('worktype')->unique();
-        $construction_contracts = ConstructionContract::all()->sortBy('code')->pluck('code')->unique();
-        $wbs_level_3s = WbsLevelThree::all()->sortBy('wbs_level_3_code')->pluck('wbs_level_3_code')->unique();
-        $wbs_level_4s = Wbslevelfour::all()->sortBy('wbs_level_4_code')->pluck('wbs_level_4_code')->unique();
-        $submit_dates = Rfa::all()->sortBy('submit_date')->pluck('submit_date')->unique();
-        $receive_dates = Rfa::all()->sortBy('receive_date')->pluck('receive_date')->unique();
-        $comment_statuses = RfaCommentStatus::all()->sortBy('name')->pluck('name')->unique();
-        $for_statuses = RfaCommentStatus::all()->sortBy('name')->pluck('name')->unique();
-        $teams = Team::all()->sortBy('code')->pluck('code')->unique();
+        $rfa_document_statuses  = RfaDocumentStatus::get();
+        $bo_qs                  = BoQ::get();
+        $rfatypes               = Rfatype::get();
+        $construction_contracts = ConstructionContract::get();
+        $wbs_level_threes       = WbsLevelThree::get();
+        $wbslevelfours          = Wbslevelfour::get();
+        $users                  = User::get();
+        $rfa_comment_statuses   = RfaCommentStatus::get();
+        $wbs_level_ones         = WbsLevelOne::get();
+        $teams                  = Team::get();
 
-
-        return view('admin.rfas.index',compact('boqs','document_status','types','work_types','construction_contracts','wbs_level_3s','wbs_level_4s','submit_dates','receive_dates','comment_statuses','for_statuses','teams'));
+        return view('admin.rfas.index', compact('rfa_document_statuses', 'bo_qs', 'rfatypes', 'construction_contracts', 'wbs_level_threes', 'wbslevelfours', 'users', 'rfa_comment_statuses', 'wbs_level_ones', 'teams'));
     }
     
     function fetch(Request $request){
@@ -1376,11 +1581,7 @@ class RfaController extends Controller
                     ]);
                   } catch (\Mpdf\MpdfException $e) {
                       print "Creating an mPDF object failed with" . $e->getMessage();
-                  }
-
-        
-        
-          
+                  }   
         //RFA Page
         $pagecount = $mpdf->SetSourceFile(public_path('pdf-asset/RFA-Form_empty_V.5.pdf'));
         $tplId = $mpdf->ImportPage($pagecount);
@@ -1683,7 +1884,22 @@ class RfaController extends Controller
 
         $mpdf->WriteHTML($html);
 
-    
+        foreach($rfa->file_upload_1 as $attacment){ 
+            try{
+                $pagecount = $mpdf->SetSourceFile($attacment->getPath());
+                for($page = 1; $page <= $pagecount; $page++){
+                    // $mpdf->AddPage();
+                    $tplId = $mpdf->importPage($page);
+                    $size = $mpdf->getTemplateSize($tplId);
+                    $mpdf->AddPage($size['orientation']);
+                    // $mpdf->UseTemplate($tplId);
+                    $mpdf->UseTemplate($tplId, 0, 0, $size['width'], $size['height'], true);
+
+                }         
+            }catch(exeption $e){
+                print "Creating an mPDF object failed with" . $e->getMessage();
+            }
+        }
         
 
         return $mpdf->Output();
