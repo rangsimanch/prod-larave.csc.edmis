@@ -263,7 +263,7 @@ class SwnController extends Controller
         if($state == '2'){
             $data['documents_status'] = '3';
         }
-        if($state == '1'){
+        if($data['responsible_id'] != "" && $state == '1'){
             $data['documents_status'] = '2';
         }    
     
