@@ -430,7 +430,7 @@
 { data: 'updated_at', name: 'updated_at' , visible: false},
     ],
     orderCellsTop: true,
-    order: [[ 5, 'desc' ]],
+    order: [[ 2, 'desc' ]],
     pageLength: 100,
   };
   let table = $('.datatable-Rfa').DataTable(dtOverrideGlobals);
