@@ -691,7 +691,6 @@ if(documents_status == "1"){
     section4.style.display = "none";
     element4.innerHTML = '<i class="bi bi-eye-slash-fill"></i>';
 
-    $("#responsible_id").attr('required', '');    //turns required on
 }
 
 if(documents_status == "2"){
