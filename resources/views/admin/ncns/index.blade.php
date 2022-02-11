@@ -211,7 +211,7 @@
     ],
     orderCellsTop: true,
     order: [[ 3, 'desc' ]],
-    pageLength: 25,
+    pageLength: 50,
   };
   let table = $('.datatable-Ncn').DataTable(dtOverrideGlobals);
   $('a[data-toggle="tab"]').on('shown.bs.tab click', function(e){

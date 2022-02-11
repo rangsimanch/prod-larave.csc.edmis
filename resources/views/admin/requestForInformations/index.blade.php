@@ -281,7 +281,7 @@
     ],
     orderCellsTop: true,
     order: [[ 2, 'desc' ]],
-    pageLength: 10,
+    pageLength: 50,
   };
   let table = $('.datatable-RequestForInformation').DataTable(dtOverrideGlobals);
   $('a[data-toggle="tab"]').on('shown.bs.tab click', function(e){
