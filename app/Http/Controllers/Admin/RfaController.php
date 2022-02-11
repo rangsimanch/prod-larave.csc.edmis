@@ -1884,11 +1884,9 @@ class RfaController extends Controller
 
         $mpdf->WriteHTML($html);
 
-        $pdf = new FPDI();
-
         foreach($rfa->file_upload_1 as $attacment){ 
             try{
-                $pagecount = $pdf->setSourceFile($attacment->getPath());
+                $pagecount = $mpdf->SetSourceFile($attacment->getPath());
                 for($page = 1; $page <= $pagecount; $page++){
                     // $mpdf->AddPage();
                     $tplId = $mpdf->importPage($page);
