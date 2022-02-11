@@ -156,8 +156,8 @@
                                 <td>
                                 </td>
                                 <td>
-                                <td>
                                 </td>
+                                <td>
                                     <select class="search">
                                         <option value>{{ trans('global.all') }}</option>
                                         @foreach($rfa_document_statuses as $key => $item)
@@ -173,7 +173,6 @@
                                         @endforeach
                                     </select>
                                 </td>
-                                
                                 
                                 <td>
                                     <select class="search">
