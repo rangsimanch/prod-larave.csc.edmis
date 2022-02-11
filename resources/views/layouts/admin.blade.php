@@ -119,9 +119,8 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/iCheck/1.0.2/skins/all.css" rel="stylesheet" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
     <link href="{{ asset('css/custom.css') }}" rel="stylesheet" />
-    {{-- <!-- <link href="https://fonts.googleapis.com/css?family:Source+Sans+Pro0,300i,400,400i,600,600i,700&display=swap&subset=latin-ext" rel="stylesheet" /> --> --}}
     <link href="https://fonts.googleapis.com/css?family=Nunito&display=swap" rel="stylesheet"> 
-    <link href="{{ asset('css/custom.css') }}" rel="stylesheet" />
+    {{-- <link href="{{ asset('css/custom.css') }}" rel="stylesheet" /> --}}
     {{-- <link href="{{ asset('css/bootstrap/bootstrap.css') }}" rel="stylesheet" /> --}}
 
     <link href="https://unpkg.com/bootstrap-table@1.15.5/dist/bootstrap-table.min.css" rel="stylesheet">
