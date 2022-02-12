@@ -231,6 +231,9 @@
     serverSide: true,
     retrieve: true,
     aaSorting: [],
+    columnDefs: [
+            { width: 200, targets: 7 }
+        ],
     ajax: "{{ route('admin.rfas.index') }}",
     columns: [
       { data: 'placeholder', name: 'placeholder' },
@@ -256,9 +259,7 @@
     orderCellsTop: true,
     order: [[ 2, 'desc' ]],
     pageLength: 10,
-    columnDefs: [
-    { width: "5%", targets: 7 }
-  ]
+    
   };
   let table = $('.datatable-Rfa').DataTable(dtOverrideGlobals);
   $('a[data-toggle="tab"]').on('shown.bs.tab click', function(e){
