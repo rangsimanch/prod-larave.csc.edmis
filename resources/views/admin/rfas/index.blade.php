@@ -240,7 +240,7 @@
 { data: 'file_upload_1', name: 'file_upload_1', sortable: false, searchable: false},
 { data: 'document_status_status_name', name: 'document_status.status_name'},
 { data: 'construction_contract_code', name: 'construction_contract.code' },
-{ data: 'boq_name', name: 'boq.name', width: '20%' },
+{ data: 'boq_name', name: 'boq.name'},
 { data: 'worktype', name: 'worktype' },
 { data: 'title_eng', name: 'title_eng' },
 { data: 'title', name: 'title' },
@@ -256,6 +256,9 @@
     orderCellsTop: true,
     order: [[ 2, 'desc' ]],
     pageLength: 10,
+    columnDefs: [
+    { width: "5%", targets: 7 }
+  ]
   };
   let table = $('.datatable-Rfa').DataTable(dtOverrideGlobals);
   $('a[data-toggle="tab"]').on('shown.bs.tab click', function(e){
