@@ -1,5 +1,10 @@
 @extends('layouts.admin')
 @section('content')
+<style> 
+    .rfatable {
+      column-width: 100px;
+    }
+</style>
 <div class="content">
     @can('rfa_create')
         <div style="margin-bottom: 10px;" class="row">
@@ -21,7 +26,7 @@
                     {{ trans('cruds.rfa.title_singular') }} {{ trans('global.list') }}
                 </div>
                 <div class="panel-body">
-                    <table class=" table table-bordered table-striped table-hover ajaxTable datatable datatable-Rfa text-center">
+                    <table class=" table table-bordered table-striped table-hover ajaxTable datatable datatable-Rfa rfatable text-center">
                         <thead>
                             <tr>
                                 <th width="10">
@@ -231,9 +236,6 @@
     serverSide: true,
     retrieve: true,
     aaSorting: [],
-    columnDefs: [
-            { width: 20, targets: 7 }
-        ],
     ajax: "{{ route('admin.rfas.index') }}",
     columns: [
       { data: 'placeholder', name: 'placeholder' },
