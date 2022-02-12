@@ -383,7 +383,6 @@
     processing: true,
     serverSide: true,
     retrieve: true,
-    stateSave: true,
     aaSorting: [],
     ajax: "{{ route('admin.rfas.index') }}",
     columns: [
@@ -429,7 +428,7 @@
     ],
     orderCellsTop: true,
     order: [[ 2, 'desc' ]],
-    pageLength: 50,
+    pageLength: 10,
   };
   let table = $('.datatable-Rfa').DataTable(dtOverrideGlobals);
   $('a[data-toggle="tab"]').on('shown.bs.tab click', function(e){
