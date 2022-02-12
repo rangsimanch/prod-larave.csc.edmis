@@ -583,8 +583,8 @@ class RfaController extends Controller
 
                 return implode(', ', $links);
             });
-            $table->addColumn('boq_name', function ($row) {
-                return $row->boq ? $row->boq->name : '';
+            $table->addColumn('boq_code', function ($row) {
+                return $row->boq ? $row->boq->code : '';
             });
 
             $table->editColumn('title_eng', function ($row) {

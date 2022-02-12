@@ -1,10 +1,5 @@
 @extends('layouts.admin')
 @section('content')
-<style> 
-    .rfatable {
-      column-width: 100px;
-    }
-</style>
 <div class="content">
     @can('rfa_create')
         <div style="margin-bottom: 10px;" class="row">
@@ -26,7 +21,7 @@
                     {{ trans('cruds.rfa.title_singular') }} {{ trans('global.list') }}
                 </div>
                 <div class="panel-body">
-                    <table class=" table table-bordered table-striped table-hover ajaxTable datatable datatable-Rfa rfatable text-center">
+                    <table class=" table table-bordered table-striped table-hover ajaxTable datatable datatable-Rfa text-center">
                         <thead>
                             <tr>
                                 <th width="10">
@@ -122,7 +117,7 @@
                                     <select class="search">
                                         <option value>{{ trans('global.all') }}</option>
                                         @foreach($bo_qs as $key => $item)
-                                            <option value="{{ $item->name }}">{{ $item->name }}</option>
+                                            <option value="{{ $item->code }}">{{ $item->code }}</option>
                                         @endforeach
                                     </select>
                                 </td>
@@ -245,7 +240,7 @@
 { data: 'file_upload_1', name: 'file_upload_1', sortable: false, searchable: false},
 { data: 'document_status_status_name', name: 'document_status.status_name'},
 { data: 'construction_contract_code', name: 'construction_contract.code' },
-{ data: 'boq_name', name: 'boq.name'},
+{ data: 'boq_code', name: 'boq.code'},
 { data: 'worktype', name: 'worktype' },
 { data: 'title_eng', name: 'title_eng' },
 { data: 'title', name: 'title' },
