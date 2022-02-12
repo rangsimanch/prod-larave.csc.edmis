@@ -74,73 +74,15 @@
                                
                                 <th>
                                     {{ trans('cruds.rfa.fields.wbs_level_4') }}
-                                </th>
-                                <th>
-                                    {{ trans('cruds.rfa.fields.rfa_code') }}
-                                </th>
-                                
-                                <th>
-                                    {{ trans('cruds.rfa.fields.review_time') }}
-                                </th>   
+                                </th> 
                                 <th>
                                     {{ trans('cruds.rfa.fields.issueby') }}
-                                </th>
-                                <th>
-                                    {{ trans('cruds.rfa.fields.assign') }}
-                                </th>
-                                <th>
-                                    {{ trans('cruds.rfa.fields.action_by') }}
-                                </th>
-                                <th>
-                                    {{ trans('cruds.rfa.fields.comment_by') }}
-                                </th>
-                                <th>
-                                    {{ trans('cruds.rfa.fields.information_by') }}
-                                </th>
-                                <th>
-                                    {{ trans('cruds.rfa.fields.receive_date') }}
                                 </th>
                                 <th>
                                     {{ trans('cruds.rfa.fields.comment_status') }}
                                 </th>
                                 <th>
-                                    {{ trans('cruds.rfa.fields.create_by_user') }}
-                                </th>
-                                <th>
-                                    {{ trans('cruds.rfa.fields.incoming_number') }}
-                                </th>
-                                <th>
-                                    {{ trans('cruds.rfa.fields.outgoing_number') }}
-                                </th>
-                                <th>
-                                    {{ trans('cruds.rfa.fields.distribute_date') }}
-                                </th>
-                                <th>
-                                    {{ trans('cruds.rfa.fields.process_date') }}
-                                </th>
-                                <th>
-                                    {{ trans('cruds.rfa.fields.outgoing_date') }}
-                                </th>
-                                <th>
-                                    {{ trans('cruds.rfa.fields.final_date') }}
-                                </th>
-                                <th>
                                     {{ trans('cruds.rfa.fields.commercial_file_upload') }}
-                                </th>
-                                <th>
-                                    {{ trans('cruds.rfa.fields.distribute_by') }}
-                                </th>
-                                <th>
-                                    {{ trans('cruds.rfa.fields.reviewed_by') }}
-                                </th>
-                                <th>
-                                    {{ trans('cruds.rfa.fields.submittals_file') }}
-                                </th>
-                                <th>
-                                    {{ trans('cruds.rfa.fields.updated_at') }}
-                                </th>
-                                <th>
-                                    {{ trans('cruds.rfa.fields.created_at') }}
                                 </th>
                                
                             </tr>
@@ -227,15 +169,7 @@
                                         @endforeach
                                     </select>
                                 </td>
-                                <td>
-                                    <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                                </td>
-                                <td>
-                                </td>
-                                <td>
-                                    <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                                </td>
-                            
+                               
                                 <td>
                                     <select class="search">
                                         <option value>{{ trans('global.all') }}</option>
@@ -243,40 +177,6 @@
                                             <option value="{{ $item->name }}">{{ $item->name }}</option>
                                         @endforeach
                                     </select>
-                                </td>
-                                <td>
-                                    <select class="search">
-                                        <option value>{{ trans('global.all') }}</option>
-                                        @foreach($users as $key => $item)
-                                            <option value="{{ $item->name }}">{{ $item->name }}</option>
-                                        @endforeach
-                                    </select>
-                                </td>
-                                <td>
-                                    <select class="search">
-                                        <option value>{{ trans('global.all') }}</option>
-                                        @foreach($users as $key => $item)
-                                            <option value="{{ $item->name }}">{{ $item->name }}</option>
-                                        @endforeach
-                                    </select>
-                                </td>
-                                <td>
-                                    <select class="search">
-                                        <option value>{{ trans('global.all') }}</option>
-                                        @foreach($users as $key => $item)
-                                            <option value="{{ $item->name }}">{{ $item->name }}</option>
-                                        @endforeach
-                                    </select>
-                                </td>
-                                <td>
-                                    <select class="search">
-                                        <option value>{{ trans('global.all') }}</option>
-                                        @foreach($users as $key => $item)
-                                            <option value="{{ $item->name }}">{{ $item->name }}</option>
-                                        @endforeach
-                                    </select>
-                                </td>
-                                <td>
                                 </td>
                                 <td>
                                     <select class="search">
@@ -285,49 +185,6 @@
                                             <option value="{{ $item->name }}">{{ $item->name }}</option>
                                         @endforeach
                                     </select>
-                                </td>
-                                <td>
-                                    <select class="search">
-                                        <option value>{{ trans('global.all') }}</option>
-                                        @foreach($users as $key => $item)
-                                            <option value="{{ $item->name }}">{{ $item->name }}</option>
-                                        @endforeach
-                                    </select>
-                                </td>
-                                <td>
-                                    <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                                </td>
-                                <td>
-                                    <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                                </td>
-                                <td>
-                                </td>
-                                <td>
-                                </td>
-                                <td>
-                                </td>
-                                <td>
-                                </td>
-                                <td>
-                                    <select class="search">
-                                        <option value>{{ trans('global.all') }}</option>
-                                        @foreach($users as $key => $item)
-                                            <option value="{{ $item->name }}">{{ $item->name }}</option>
-                                        @endforeach
-                                    </select>
-                                </td>
-                                <td>
-                                    <select class="search">
-                                        <option value>{{ trans('global.all') }}</option>
-                                        @foreach($users as $key => $item)
-                                            <option value="{{ $item->name }}">{{ $item->name }}</option>
-                                        @endforeach
-                                    </select>
-                                </td>
-                                <td>
-                                </td>
-                                <td>
-                                    <input class="search" type="text" placeholder="{{ trans('global.search') }}">
                                 </td>
                                 <td>
                                 </td>
@@ -402,28 +259,9 @@
 { data: 'type.type_code', name: 'type.type_code' },
 { data: 'wbs_level_3_wbs_level_3_code', name: 'wbs_level_3.wbs_level_3_code' },
 { data: 'wbs_level_4_wbs_level_4_code', name: 'wbs_level_4.wbs_level_4_code' },
-{ data: 'rfa_code', name: 'rfa_code' ,visible: false},
-{ data: 'review_time', name: 'review_time' ,visible: false},
-{ data: 'issueby_name', name: 'issueby.name' ,visible: false},
-{ data: 'assign_name', name: 'assign.name' ,visible: false},
-{ data: 'action_by_name', name: 'action_by.name' ,visible: false},
-{ data: 'comment_by_name', name: 'comment_by.name' ,visible: false},
-{ data: 'information_by_name', name: 'information_by.name' ,visible: false},
-{ data: 'receive_date', name: 'receive_date' ,visible: false},
+{ data: 'issueby_name', name: 'issueby.name' },
 { data: 'comment_status_name', name: 'comment_status.name' },
-{ data: 'create_by_user_name', name: 'create_by_user.name' ,visible: false},
-{ data: 'incoming_number', name: 'incoming_number' ,visible: false},
-{ data: 'outgoing_number', name: 'outgoing_number' ,visible: false},
-{ data: 'distribute_date', name: 'distribute_date' ,visible: false},
-{ data: 'process_date', name: 'process_date' ,visible: false},
-{ data: 'outgoing_date', name: 'outgoing_date' ,visible: false},
-{ data: 'final_date', name: 'final_date' ,visible: false},
 { data: 'commercial_file_upload', name: 'commercial_file_upload', sortable: false, searchable: false },
-{ data: 'distribute_by_name', name: 'distribute_by.name' ,visible: false},
-{ data: 'reviewed_by_name', name: 'reviewed_by.name' ,visible: false},
-{ data: 'submittals_file', name: 'submittals_file', sortable: false, searchable: false ,visible: false},
-{ data: 'updated_at', name: 'updated_at' , visible: false},
-{ data: 'created_at', name: 'created_at' },
 
     ],
     orderCellsTop: true,
