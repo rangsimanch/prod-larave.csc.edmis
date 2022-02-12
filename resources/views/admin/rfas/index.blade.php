@@ -232,7 +232,7 @@
     retrieve: true,
     aaSorting: [],
     columnDefs: [
-            { width: 200, targets: 7 }
+            { width: 100, targets: 7 }
         ],
     ajax: "{{ route('admin.rfas.index') }}",
     columns: [
