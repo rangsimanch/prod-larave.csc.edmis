@@ -231,6 +231,9 @@
     serverSide: true,
     retrieve: true,
     aaSorting: [],
+    columnDefs: [
+        {"className": "dt-center", "targets": "_all"}
+      ],
     ajax: "{{ route('admin.rfas.index') }}",
     columns: [
       { data: 'placeholder', name: 'placeholder' },
