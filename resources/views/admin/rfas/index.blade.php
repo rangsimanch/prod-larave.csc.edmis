@@ -75,9 +75,7 @@
                                 <th>
                                     {{ trans('cruds.rfa.fields.wbs_level_4') }}
                                 </th> 
-                                <th>
-                                    {{ trans('cruds.rfa.fields.issueby') }}
-                                </th>
+
                                 <th>
                                     {{ trans('cruds.rfa.fields.comment_status') }}
                                 </th>
@@ -173,14 +171,6 @@
                                 <td>
                                     <select class="search">
                                         <option value>{{ trans('global.all') }}</option>
-                                        @foreach($users as $key => $item)
-                                            <option value="{{ $item->name }}">{{ $item->name }}</option>
-                                        @endforeach
-                                    </select>
-                                </td>
-                                <td>
-                                    <select class="search">
-                                        <option value>{{ trans('global.all') }}</option>
                                         @foreach($rfa_comment_statuses as $key => $item)
                                             <option value="{{ $item->name }}">{{ $item->name }}</option>
                                         @endforeach
@@ -259,7 +249,6 @@
 { data: 'type.type_code', name: 'type.type_code' },
 { data: 'wbs_level_3_wbs_level_3_code', name: 'wbs_level_3.wbs_level_3_code' },
 { data: 'wbs_level_4_wbs_level_4_code', name: 'wbs_level_4.wbs_level_4_code' },
-{ data: 'issueby_name', name: 'issueby.name' },
 { data: 'comment_status_name', name: 'comment_status.name' },
 { data: 'commercial_file_upload', name: 'commercial_file_upload', sortable: false, searchable: false },
 
