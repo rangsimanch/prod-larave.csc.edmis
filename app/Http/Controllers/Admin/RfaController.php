@@ -715,7 +715,7 @@ class RfaController extends Controller
         }
 
         $rfa_document_statuses  = RfaDocumentStatus::get();
-        $bo_qs                  = BoQ::get();
+        $bo_qs                  = BoQ::orderBy('code', 'asc')->get();
         $rfatypes               = Rfatype::get();
         $construction_contracts = ConstructionContract::get();
         $wbs_level_threes       = WbsLevelThree::get();
