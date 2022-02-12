@@ -383,6 +383,7 @@
     processing: true,
     serverSide: true,
     retrieve: true,
+    stateSave: true,
     aaSorting: [],
     ajax: "{{ route('admin.rfas.index') }}",
     columns: [
