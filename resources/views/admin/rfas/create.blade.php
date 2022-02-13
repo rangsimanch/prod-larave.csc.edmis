@@ -297,7 +297,6 @@
 @endsection
 
 @section('scripts')
-@section('scripts')
 <script>
     $(document).ready(function () {
   function SimpleUploadAdapter(editor) {
@@ -367,6 +366,7 @@ Dropzone.options.fileUpload1Dropzone = {
     url: '{{ route('admin.rfas.storeMedia') }}',
     maxFilesize: 700, // MB
     addRemoveLinks: true,
+    acceptedFiles: '.pdf',
     headers: {
       'X-CSRF-TOKEN': "{{ csrf_token() }}"
     },

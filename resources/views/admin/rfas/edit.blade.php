@@ -103,6 +103,15 @@
                             @endif
                             <span class="help-block">{{ trans('cruds.rfa.fields.work_file_upload_helper') }}</span>
                         </div>
+                        <div class="form-group {{ $errors->has('file_upload_1') ? 'has-error' : '' }}">
+                            <label for="file_upload_1">{{ trans('cruds.rfa.fields.file_upload_1') }}</label>
+                            <div class="needsclick dropzone" id="file_upload_1-dropzone">
+                            </div>
+                            @if($errors->has('file_upload_1'))
+                                <span class="help-block" role="alert">{{ $errors->first('file_upload_1') }}</span>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.rfa.fields.file_upload_1_helper') }}</span>
+                        </div>
                         @endif
 
                         <!-- IF STATUS WORKING -->
