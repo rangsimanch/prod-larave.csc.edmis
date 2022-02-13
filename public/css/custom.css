@@ -107,5 +107,9 @@ table.dataTable thead .sorting_desc {
   .select3:hover::after {
     color: #f39c12;
   }
+
+  .newly {
+    background-color: rgb(0, 225, 255) !important;
+  }
   
   
