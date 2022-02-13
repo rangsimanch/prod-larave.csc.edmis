@@ -90,7 +90,7 @@
                                 <td>
                                 </td>
                                 <td>
-                                    <input type="text" name="daterange" id="daterange" class="form-control daterange" value="" autocomplete="off" placeholder="Select Period..">
+                                    {{-- <input type="text" name="daterange" id="daterange" class="form-control daterange" value="" autocomplete="off" placeholder="Select Period.."> --}}
                                 </td>
                                 <td>
                                 </td>
