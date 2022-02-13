@@ -1136,7 +1136,7 @@ class RfaController extends Controller
                     }
                 }
             }
-    
+
             $media = $rfa->work_file_upload->pluck('file_name')->toArray();
     
             foreach ($request->input('work_file_upload', []) as $file) {
@@ -1144,6 +1144,23 @@ class RfaController extends Controller
                     $rfa->addMedia(storage_path('tmp/uploads/' . $file))->toMediaCollection('work_file_upload');
                 }
             }
+                                //
+            if (count($rfa->file_upload_1) > 0) {
+                foreach ($rfa->file_upload_1 as $media) {
+                    if (!in_array($media->file_name, $request->input('file_upload_1', []))) {
+                        $media->delete();
+                    }
+                }
+            }
+
+            $media = $rfa->file_upload_1->pluck('file_name')->toArray();
+    
+            foreach ($request->input('file_upload_1', []) as $file) {
+                if (count($media) === 0 || !in_array($file, $media)) {
+                    $rfa->addMedia(storage_path('tmp/uploads/' . $file))->toMediaCollection('file_upload_1');
+                }
+            }
+
         }
 
         else if($rfa->document_status_id == 2){
