@@ -82,4 +82,5 @@ class Announcement extends Model implements HasMedia
     {
         return $this->belongsTo(Team::class, 'team_id');
     }
+
 }

@@ -7,7 +7,7 @@
 <div style="background-color: #e9d8a6; padding-top: 10px;">
     <legend>
         <marquee direction = "left" style="font-size: 18px; font-family: 'Sarabun', sans-serif ;color: black;" onmouseover="this.stop();" onmouseout="this.start();">
-            {{!! str_replace('{', '', strip_tags($announce)) !!}}
+            {!! strip_tags($announce_text, '<a>') !!}
         </marquee>
     </legend>
 </div>

@@ -92,6 +92,7 @@ class AnnouncementsController extends Controller
 
     public function store(StoreAnnouncementRequest $request)
     {
+        
         $announcement = Announcement::create($request->all());
         $announcement->announce_contracts()->sync($request->input('announce_contracts', []));
         foreach ($request->input('attachments', []) as $file) {

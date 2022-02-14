@@ -11,6 +11,8 @@ use ArielMejiaDev\LarapexCharts\LarapexChart;
 use App\Announcement;
 
 
+
+
 class HomeController
 {
     public function index()
@@ -48,19 +50,18 @@ class HomeController
                 ->setXAxis(['Summary', 'New', 'Distribute', 'Reviwed', 'Done'])
                 ->setGrid();
         }
-
-        $activeAnnounce_description =  Announcement::where('start_date', '<=', $today)->where('end_date', '>=', $today)->pluck('description');
-        $activeAnnounce_title = Announcement::where('start_date', '<=', $today)->where('end_date', '>=', $today)->pluck('title');
-        $announce = "";
-        for($x = 0; $x < sizeof($activeAnnounce_description); $x++){
-            $announce .= $activeAnnounce_description[$x];
-            if($x != sizeof($activeAnnounce_description)-1){
-                $announce .= " | ";
-            }
+       
+        $announce_text = "";
+        $blank_space = "&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;";
+        $modelAnnouncements = Announcement::where('start_date', '<=', $today)->where('end_date', '>=', $today)->get(); 
+        foreach($modelAnnouncements as $activeAnnouncement){
+            if(count($activeAnnouncement->attachments) > 0)
+                $announce_text .= '<a href="' . $activeAnnouncement->attachments[0]->getUrl() . '" target="_blank">'  . $activeAnnouncement->description . "</a>" . $blank_space;
+            else
+                $announce_text .= $activeAnnouncement->description . $blank_space;
         }
-
-        $announce = str_replace("\r","",$announce);
-
-        return view('home', compact('chart','today','announce'));
+        
+        return view('home', compact('chart','today','announce_text'));
     }
+
 }
