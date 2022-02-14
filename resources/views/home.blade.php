@@ -6,9 +6,9 @@
 
 @if($announce_text != "")
 <div  class="row">
-    <div class="col-md-3 text-center justify" style="background-color: #DD4B39; ;border-color: #DD4B39; border-style:solid; border-width:2px;">
+    <div class="col-md-3 text-center justify" style="background-color: #DD4B39; ;border-color: #ffe5d9; border-style:solid; border-width:2px;">
         <b style="font-size: 18px; color: white"><i>
-            <span class="glyphicon glyphicon-bullhorn" aria-hidden="true"></span>&nbsp; ANNOUNCEMENTS :<i></b>
+            <span class="glyphicon glyphicon-bullhorn" aria-hidden="true"></span>&nbsp; ANNOUNCEMENTS<i></b>
     </div>
     <div class="col-md-9" style="background-color: #ffe5d9;">
         <marquee direction = "left" style="font-size: 18px; font-family: 'Sarabun', sans-serif ;color: black;" onmouseover="this.stop();" onmouseout="this.start();">
