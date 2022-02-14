@@ -8,6 +8,8 @@ use App\Complaint;
 use DateTime;
 use Illuminate\Support\Facades\Auth;
 use ArielMejiaDev\LarapexCharts\LarapexChart;
+use App\Announcement;
+
 
 class HomeController
 {
@@ -15,6 +17,7 @@ class HomeController
     {
         $date = new DateTime();
         $today = $date->format('Y-m-d');
+
         if(Auth::id() != 1){
         $chart = (new LarapexChart)->pieChart()
             ->setTitle('RFA')
@@ -45,6 +48,19 @@ class HomeController
                 ->setXAxis(['Summary', 'New', 'Distribute', 'Reviwed', 'Done'])
                 ->setGrid();
         }
-        return view('home', compact('chart','today'));
+
+        $activeAnnounce_description =  Announcement::where('start_date', '<=', $today)->where('end_date', '>=', $today)->pluck('description');
+        $activeAnnounce_title = Announcement::where('start_date', '<=', $today)->where('end_date', '>=', $today)->pluck('title');
+        $announce = "";
+        for($x = 0; $x < sizeof($activeAnnounce_description); $x++){
+            $announce .= $activeAnnounce_description[$x];
+            if($x != sizeof($activeAnnounce_description)-1){
+                $announce .= " | ";
+            }
+        }
+
+        $announce = str_replace("\r","",$announce);
+
+        return view('home', compact('chart','today','announce'));
     }
 }
