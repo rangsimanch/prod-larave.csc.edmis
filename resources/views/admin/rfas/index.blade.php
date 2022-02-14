@@ -31,7 +31,7 @@
                                     Action
                                 </th>
                                 <th>
-                                    {{ trans('cruds.rfa.fields.submit_date') }}
+                                    {{ trans('cruds.rfa.fields.created_at') }}
                                 </th>
                                 <th>
                                     {{ trans('cruds.rfa.fields.cover_sheet') }}
@@ -75,7 +75,9 @@
                                 <th>
                                     {{ trans('cruds.rfa.fields.wbs_level_4') }}
                                 </th> 
-
+                                <th>
+                                    {{ trans('cruds.rfa.fields.submit_date') }}
+                                </th>
                                 <th>
                                     {{ trans('cruds.rfa.fields.comment_status') }}
                                 </th>
@@ -167,7 +169,8 @@
                                         @endforeach
                                     </select>
                                 </td>
-                               
+                                <td>
+                                </td>
                                 <td>
                                     <select class="search">
                                         <option value>{{ trans('global.all') }}</option>
@@ -235,7 +238,7 @@
     columns: [
       { data: 'placeholder', name: 'placeholder' },
 { data: 'actions', name: '{{ trans('global.actions') }}' ,searchable: false},
-{ data: 'submit_date', name: 'submit_date' },
+{ data: 'created_at', name: 'created_at'},
 { data: 'cover_sheet', name: 'cover_sheet' ,sortable: false, searchable: false},
 { data: 'file_upload_1', name: 'file_upload_1', sortable: false, searchable: false},
 { data: 'document_status_status_name', name: 'document_status.status_name'},
@@ -249,6 +252,7 @@
 { data: 'type.type_code', name: 'type.type_code' },
 { data: 'wbs_level_3_wbs_level_3_code', name: 'wbs_level_3.wbs_level_3_code' },
 { data: 'wbs_level_4_wbs_level_4_code', name: 'wbs_level_4.wbs_level_4_code' },
+{ data: 'submit_date', name: 'submit_date' },
 { data: 'comment_status_name', name: 'comment_status.name' },
 { data: 'commercial_file_upload', name: 'commercial_file_upload', sortable: false, searchable: false },
 
