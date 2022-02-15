@@ -71,7 +71,7 @@ class CscInboxController extends Controller
                 // else{
                 //     return $row->title ? $row->title : "";
                 // }
-                return $row->letter_type ? AddLetter::LETTER_TYPE_SELECT[$row->letter_type] : '';
+                return $row->title ? $row->title : "";
 
             });
             $table->editColumn('letter_no', function ($row) {
