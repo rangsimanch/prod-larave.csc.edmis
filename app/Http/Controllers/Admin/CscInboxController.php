@@ -2,32 +2,40 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
-use Gate;
-use Illuminate\Http\Request;
-use Symfony\Component\HttpFoundation\Response;
-
 use App\AddLetter;
 use App\ConstructionContract;
+use App\Http\Controllers\Controller;
+use App\Http\Controllers\Traits\CsvImportTrait;
+use App\Http\Controllers\Traits\MediaUploadingTrait;
+use App\Http\Requests\MassDestroyAddLetterRequest;
+use App\Http\Requests\StoreAddLetterRequest;
+use App\Http\Requests\UpdateAddLetterRequest;
 use App\Team;
 use App\User;
-use Yajra\DataTables\Facades\DataTables;
+use Gate;
+use Illuminate\Http\Request;
 use Spatie\MediaLibrary\Models\Media;
+use Symfony\Component\HttpFoundation\Response;
+use Yajra\DataTables\Facades\DataTables;
+
+use DateTime;
 use Illuminate\Support\Facades\Auth;
 
 
 class CscInboxController extends Controller
 {
+    use MediaUploadingTrait, CsvImportTrait;
+
     public function index(Request $request)
     {
         abort_if(Gate::denies('csc_inbox_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         if ($request->ajax()) {
             $query = AddLetter::with(['sender', 'receiver', 'cc_tos', 'construction_contract', 'create_by', 'receive_by', 'team'])
-            ->select(sprintf('%s.*', (new AddLetter)->table))
             ->whereHas('cc_tos', function($q) {
                 $q->where('team_id', 3);
-            })
-            ->orWhere('receiver_id',3);
+            })->orWhere('receiver_id',3)
+            ->select(sprintf('%s.*', (new AddLetter)->table));
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
@@ -35,12 +43,7 @@ class CscInboxController extends Controller
 
             $table->editColumn('actions', function ($row) {
                 $viewGate      = 'add_letter_show';
-                if($row->receiver->code == "CSC"){
-                    $editGate      = 'add_letter_edit';
-                }
-                else{
-                    $editGate      = 'can_not_show';
-                }
+                $editGate      = 'add_letter_edit';
                 $deleteGate    = 'add_letter_delete';
                 $crudRoutePart = 'add-letters';
 
@@ -53,57 +56,22 @@ class CscInboxController extends Controller
                 ));
             });
 
-
             $table->editColumn('letter_type', function ($row) {
-                // if($row->receiver->code == "CSC" && $row->mask_as_received == 0){
-                //     return sprintf("<p style=\"color:blue\"><b>%s</b></p>",$row->letter_type ? AddLetter::LETTER_TYPE_SELECT[$row->letter_type] : '');
-                // }
-                // else{
-                //     return $row->letter_type ? AddLetter::LETTER_TYPE_SELECT[$row->letter_type] : '';
-                // }
                 return $row->letter_type ? AddLetter::LETTER_TYPE_SELECT[$row->letter_type] : '';
-
             });
             $table->editColumn('title', function ($row) {
-                // if($row->receiver->code == "CSC" && $row->mask_as_received == 0){
-                //     return sprintf("<p style=\"color:blue\"><b>%s</b></p>",$row->title ? $row->title : "");
-                // }
-                // else{
-                //     return $row->title ? $row->title : "";
-                // }
                 return $row->title ? $row->title : "";
-
             });
             $table->editColumn('letter_no', function ($row) {
-                // if($row->receiver->code == "CSC" && $row->mask_as_received == 0){
-                //     return sprintf("<p style=\"color:blue\"><b>%s</b></p>",$row->letter_no ? $row->letter_no : "");
-                // }
-                // else{
-                //     return $row->letter_no ? $row->letter_no : "";
-                // }
                 return $row->letter_no ? $row->letter_no : "";
-
             });
 
             $table->addColumn('sender_code', function ($row) {
-                // if($row->receiver->code == "CSC" && $row->mask_as_received == 0){
-                //     return sprintf("<p style=\"color:blue\"><b>%s</b></p>",$row->sender ? $row->sender->code : '');
-                // }
-                // else{
-                //     return $row->sender ? $row->sender->code : '';
-                // }
                 return $row->sender ? $row->sender->code : '';
             });
 
             $table->addColumn('receiver_code', function ($row) {
-                // if($row->receiver->code == "CSC" && $row->mask_as_received == 0){
-                //     return sprintf("<p style=\"color:blue\"><b>%s</b></p>",$row->receiver ? $row->receiver->code : '');
-                // }
-                // else{
-                //     return $row->receiver ? $row->receiver->code : '';
-                // }
                 return $row->receiver ? $row->receiver->code : '';
-
             });
 
             $table->editColumn('cc_to', function ($row) {
@@ -116,14 +84,7 @@ class CscInboxController extends Controller
                 return implode(' ', $labels);
             });
             $table->addColumn('construction_contract_code', function ($row) {
-                // if($row->receiver->code == "CSC" && $row->mask_as_received == 0){
-                //     return sprintf("<p style=\"color:blue\"><b>%s</b></p>",$row->construction_contract ? $row->construction_contract->code : '');
-                // }
-                // else{
-                //     return $row->construction_contract ? $row->construction_contract->code : '';
-                // }
                 return $row->construction_contract ? $row->construction_contract->code : '';
-
             });
 
             $table->editColumn('letter_upload', function ($row) {
@@ -140,19 +101,7 @@ class CscInboxController extends Controller
                 return implode(', ', $links);
             });
 
-            $table->editColumn('mask_as_received', function ($row) {
-                if($row->mask_as_received == 1){
-                    $mask_check = "Marked";
-                }
-                else{
-                    $mask_check = "Not Marked";
-                }
-                return $mask_check;
-            });
-
-            $table->rawColumns(['actions', 'placeholder', 
-            'letter_type', 'title', 'letter_no', 'sender_code', 'receiver_code' ,'construction_contract_code',
-            'sender','receiver', 'cc_to', 'construction_contract', 'letter_upload', 'mask_as_received']);
+            $table->rawColumns(['actions', 'placeholder', 'receiver', 'cc_to', 'construction_contract', 'letter_upload', 'sender']);
 
             return $table->make(true);
         }
@@ -160,12 +109,12 @@ class CscInboxController extends Controller
         $teams                  = Team::get();
         $teams                  = Team::get();
         $teams                  = Team::get();
-        $construction_contracts = ConstructionContract::where('id',session('construction_contract_id'))->get();
+        $construction_contracts = ConstructionContract::get();
         $users                  = User::get();
         $users                  = User::get();
         $teams                  = Team::get();
 
-        session(['previous-url' => route('admin.csc-inboxes.index')]);
+        session(['previous-url' => request()->url()]);
         return view('admin.cscInboxes.index', compact('teams', 'teams', 'teams', 'construction_contracts', 'users', 'users', 'teams'));
     }
 }
