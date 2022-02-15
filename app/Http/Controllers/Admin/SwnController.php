@@ -414,19 +414,17 @@ class SwnController extends Controller
         $html .= "<div style=\"font-size: 18px; position:absolute;top:190px;left:120px;\">" . $send_to  . "</div>";
         $html .= "<div style=\"font-size: 18px; position:absolute;top:190px;left:370px;\">" . $submit_date  . "</div>";
         $html .= "<div style=\"font-size: 16px; position:absolute;top:190px;left:520px;\">" . $document_number  . "</div>";
-        $html .= "<div style=\"font-size: 14px; position:absolute;top:238px;left:200px;\">" . $subject  . "</div>";
-        $html .= "<div style=\"font-size: 18px; position:absolute;top:261px;left:145px;\">" . $location  . "</div>";
+        $html .= "<div style=\"font-size: 15px; padding-right:80px; position:absolute;top:241px;left:200px;\">" . $subject  . "</div>";
+        $html .= "<div style=\"font-size: 16px; position:absolute;top:303px;left:150px;\">" . $location  . "</div>";
         
         if($reply_ncr == "Yes"){
-            $html .= "<div style=\"font-size: 18px;font-weight: bold; position:absolute;top:260px;left:572px;\">" . "X"  . "</div>";
+            $html .= "<div style=\"font-size: 18px;font-weight: bold; position:absolute;top:301px;left:609px;\">" . "X"  . "</div>";
         }
         if($reply_ncr == "No"){
-            $html .= "<div style=\"font-size: 18px;font-weight: bold; position:absolute;top:260px;left:632px;\">" . "X"  . "</div>";
+            $html .= "<div style=\"font-size: 18px;font-weight: bold; position:absolute;top:301px;left:663px;\">" . "X"  . "</div>";
         }
-        $html .= "<div style=\"font-size: 18px; font-weight: bold; position:absolute;top:287px;left:230px;\"> : </div>";
-        $html .= "<div style=\"font-size: 12px; LINE-HEIGHT:12px; padding-right:80px; position:absolute;top:276px;left:240px;\">" . $ref_doc  . "</div>";
-        $html .= "<div style=\"font-size: 18px; font-weight: bold; padding-right:80px; position:absolute;top:335px;left:100px;\">" . "Description(Content details):"  . "</div>";
-        $html .= "<div style=\"font-size: 16px; padding-right:80px; position:absolute;top:338px;left:120px;\">" . $description  . "</div>";
+        $html .= "<div style=\"font-size: 12px; LINE-HEIGHT:12px; padding-right:80px; position:absolute;top:316px;left:240px;\">" . $ref_doc  . "</div>";
+        $html .= "<div style=\"font-size: 16px; padding-right:80px; position:absolute;top:380px;left:120px;\">" . $description  . "</div>";
         if($issuer_name != '')
             $html .= "<div style=\"font-size: 14px; font-weight: bold; position:absolute;top:606px;left:130px;\">( " . $issuer_name  . " )</div>";
         $html .= "<div style=\"font-size: 14px; font-weight: bold; position:absolute;top:620px;left:135px;\">" . $issuer_position  . "</div>";
