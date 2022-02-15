@@ -55,46 +55,56 @@ class CscInboxController extends Controller
 
 
             $table->editColumn('letter_type', function ($row) {
-                if($row->receiver->code == "CSC" && $row->mask_as_received == 0){
-                    return sprintf("<p style=\"color:blue\"><b>%s</b></p>",$row->letter_type ? AddLetter::LETTER_TYPE_SELECT[$row->letter_type] : '');
-                }
-                else{
-                    return $row->letter_type ? AddLetter::LETTER_TYPE_SELECT[$row->letter_type] : '';
-                }
+                // if($row->receiver->code == "CSC" && $row->mask_as_received == 0){
+                //     return sprintf("<p style=\"color:blue\"><b>%s</b></p>",$row->letter_type ? AddLetter::LETTER_TYPE_SELECT[$row->letter_type] : '');
+                // }
+                // else{
+                //     return $row->letter_type ? AddLetter::LETTER_TYPE_SELECT[$row->letter_type] : '';
+                // }
+                return $row->letter_type ? AddLetter::LETTER_TYPE_SELECT[$row->letter_type] : '';
+
             });
             $table->editColumn('title', function ($row) {
-                if($row->receiver->code == "CSC" && $row->mask_as_received == 0){
-                    return sprintf("<p style=\"color:blue\"><b>%s</b></p>",$row->title ? $row->title : "");
-                }
-                else{
-                    return $row->title ? $row->title : "";
-                }
+                // if($row->receiver->code == "CSC" && $row->mask_as_received == 0){
+                //     return sprintf("<p style=\"color:blue\"><b>%s</b></p>",$row->title ? $row->title : "");
+                // }
+                // else{
+                //     return $row->title ? $row->title : "";
+                // }
+                return $row->letter_type ? AddLetter::LETTER_TYPE_SELECT[$row->letter_type] : '';
+
             });
             $table->editColumn('letter_no', function ($row) {
-                if($row->receiver->code == "CSC" && $row->mask_as_received == 0){
-                    return sprintf("<p style=\"color:blue\"><b>%s</b></p>",$row->letter_no ? $row->letter_no : "");
-                }
-                else{
-                    return $row->letter_no ? $row->letter_no : "";
-                }
+                // if($row->receiver->code == "CSC" && $row->mask_as_received == 0){
+                //     return sprintf("<p style=\"color:blue\"><b>%s</b></p>",$row->letter_no ? $row->letter_no : "");
+                // }
+                // else{
+                //     return $row->letter_no ? $row->letter_no : "";
+                // }
+                return $row->letter_type ? AddLetter::LETTER_TYPE_SELECT[$row->letter_type] : '';
+
             });
 
             $table->addColumn('sender_code', function ($row) {
-                if($row->receiver->code == "CSC" && $row->mask_as_received == 0){
-                    return sprintf("<p style=\"color:blue\"><b>%s</b></p>",$row->sender ? $row->sender->code : '');
-                }
-                else{
-                    return $row->sender ? $row->sender->code : '';
-                }
+                // if($row->receiver->code == "CSC" && $row->mask_as_received == 0){
+                //     return sprintf("<p style=\"color:blue\"><b>%s</b></p>",$row->sender ? $row->sender->code : '');
+                // }
+                // else{
+                //     return $row->sender ? $row->sender->code : '';
+                // }
+                return $row->letter_type ? AddLetter::LETTER_TYPE_SELECT[$row->letter_type] : '';
+
             });
 
             $table->addColumn('receiver_code', function ($row) {
-                if($row->receiver->code == "CSC" && $row->mask_as_received == 0){
-                    return sprintf("<p style=\"color:blue\"><b>%s</b></p>",$row->receiver ? $row->receiver->code : '');
-                }
-                else{
-                    return $row->receiver ? $row->receiver->code : '';
-                }
+                // if($row->receiver->code == "CSC" && $row->mask_as_received == 0){
+                //     return sprintf("<p style=\"color:blue\"><b>%s</b></p>",$row->receiver ? $row->receiver->code : '');
+                // }
+                // else{
+                //     return $row->receiver ? $row->receiver->code : '';
+                // }
+                return $row->letter_type ? AddLetter::LETTER_TYPE_SELECT[$row->letter_type] : '';
+
             });
 
             $table->editColumn('cc_to', function ($row) {
@@ -107,12 +117,14 @@ class CscInboxController extends Controller
                 return implode(' ', $labels);
             });
             $table->addColumn('construction_contract_code', function ($row) {
-                if($row->receiver->code == "CSC" && $row->mask_as_received == 0){
-                    return sprintf("<p style=\"color:blue\"><b>%s</b></p>",$row->construction_contract ? $row->construction_contract->code : '');
-                }
-                else{
-                    return $row->construction_contract ? $row->construction_contract->code : '';
-                }
+                // if($row->receiver->code == "CSC" && $row->mask_as_received == 0){
+                //     return sprintf("<p style=\"color:blue\"><b>%s</b></p>",$row->construction_contract ? $row->construction_contract->code : '');
+                // }
+                // else{
+                //     return $row->construction_contract ? $row->construction_contract->code : '';
+                // }
+                return $row->letter_type ? AddLetter::LETTER_TYPE_SELECT[$row->letter_type] : '';
+
             });
 
             $table->editColumn('letter_upload', function ($row) {
