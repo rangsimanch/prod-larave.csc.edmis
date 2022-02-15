@@ -32,9 +32,7 @@ class CscInboxController extends Controller
 
         if ($request->ajax()) {
             $query = AddLetter::with(['sender', 'receiver', 'cc_tos', 'construction_contract', 'create_by', 'receive_by', 'team'])
-            ->whereHas('cc_tos', function($q) {
-                $q->where('team_id', 3);
-            })->orWhere('receiver_id',3)
+            ->orWhere('receiver_id',3)
             ->select(sprintf('%s.*', (new AddLetter)->table));
             $table = Datatables::of($query);
 
