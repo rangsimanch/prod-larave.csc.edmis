@@ -196,7 +196,6 @@
     orderCellsTop: true,
     order: [[ 5, 'desc' ]],
     pageLength: 25,
-    sPaginationType: "listbox",
 
   };
   let table = $('.datatable-AddLetter').DataTable(dtOverrideGlobals);
