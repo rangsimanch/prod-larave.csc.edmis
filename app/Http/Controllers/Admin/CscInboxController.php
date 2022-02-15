@@ -81,7 +81,7 @@ class CscInboxController extends Controller
                 // else{
                 //     return $row->letter_no ? $row->letter_no : "";
                 // }
-                return $row->letter_type ? AddLetter::LETTER_TYPE_SELECT[$row->letter_type] : '';
+                return $row->letter_no ? $row->letter_no : "";
 
             });
 
@@ -92,8 +92,7 @@ class CscInboxController extends Controller
                 // else{
                 //     return $row->sender ? $row->sender->code : '';
                 // }
-                return $row->letter_type ? AddLetter::LETTER_TYPE_SELECT[$row->letter_type] : '';
-
+                return $row->sender ? $row->sender->code : '';
             });
 
             $table->addColumn('receiver_code', function ($row) {
@@ -103,7 +102,7 @@ class CscInboxController extends Controller
                 // else{
                 //     return $row->receiver ? $row->receiver->code : '';
                 // }
-                return $row->letter_type ? AddLetter::LETTER_TYPE_SELECT[$row->letter_type] : '';
+                return $row->receiver ? $row->receiver->code : '';
 
             });
 
@@ -123,7 +122,7 @@ class CscInboxController extends Controller
                 // else{
                 //     return $row->construction_contract ? $row->construction_contract->code : '';
                 // }
-                return $row->letter_type ? AddLetter::LETTER_TYPE_SELECT[$row->letter_type] : '';
+                return $row->construction_contract ? $row->construction_contract->code : '';
 
             });
 
