@@ -122,6 +122,31 @@
                                 @endif
                                 <span class="help-block">{{ trans('cruds.swn.fields.issue_by_helper') }}</span>
                             </div>
+                            <div class="form-group {{ $errors->has('related_specialist') ? 'has-error' : '' }}">
+                                <label for="related_specialist_id">{{ trans('cruds.swn.fields.related_specialist') }}</label>
+                                <select class="form-control select2" name="related_specialist_id" id="related_specialist_id">
+                                    @foreach($related_specialists as $id => $entry)
+                                        <option value="{{ $id }}" {{ (old('related_specialist_id') ? old('related_specialist_id') : $swn->related_specialist->id ?? '') == $id ? 'selected' : '' }}>{{ $entry }}</option>
+                                    @endforeach
+                                </select>
+                                @if($errors->has('related_specialist'))
+                                    <span class="help-block" role="alert">{{ $errors->first('related_specialist') }}</span>
+                                @endif
+                                <span class="help-block">{{ trans('cruds.swn.fields.related_specialist_helper') }}</span>
+                            </div>
+                            <div class="form-group {{ $errors->has('construction_specialist') ? 'has-error' : '' }}">
+                                <label for="construction_specialist_id">{{ trans('cruds.swn.fields.construction_specialist') }}</label>
+                                <select class="form-control select2" name="construction_specialist_id" id="construction_specialist_id">
+                                    @foreach($construction_specialists as $id => $entry)
+                                        <option value="{{ $id }}" {{ (old('construction_specialist_id') ? old('construction_specialist_id') : $swn->construction_specialist->id ?? '') == $id ? 'selected' : '' }}>{{ $entry }}</option>
+                                    @endforeach
+                                </select>
+                                @if($errors->has('construction_specialist'))
+                                    <span class="help-block" role="alert">{{ $errors->first('construction_specialist') }}</span>
+                                @endif
+                                <span class="help-block">{{ trans('cruds.swn.fields.construction_specialist_helper') }}</span>
+                            </div>
+                           
                         </div>
                         
                         
@@ -195,18 +220,6 @@
 
                         <legend><a onclick="HideSection(3)" id="element3"><i class="bi bi-eye"></i></a><b>  Section 3 : Review and Judgement on Proposed Contractor's Action by CSC</b></legend>
                         <div id="section3">
-                            <div class="form-group {{ $errors->has('related_specialist') ? 'has-error' : '' }}">
-                                <label for="related_specialist_id">{{ trans('cruds.swn.fields.related_specialist') }}</label>
-                                <select class="form-control select2" name="related_specialist_id" id="related_specialist_id">
-                                    @foreach($related_specialists as $id => $entry)
-                                        <option value="{{ $id }}" {{ (old('related_specialist_id') ? old('related_specialist_id') : $swn->related_specialist->id ?? '') == $id ? 'selected' : '' }}>{{ $entry }}</option>
-                                    @endforeach
-                                </select>
-                                @if($errors->has('related_specialist'))
-                                    <span class="help-block" role="alert">{{ $errors->first('related_specialist') }}</span>
-                                @endif
-                                <span class="help-block">{{ trans('cruds.swn.fields.related_specialist_helper') }}</span>
-                            </div>
                             <div class="form-group {{ $errors->has('review_date') ? 'has-error' : '' }}">
                                 <label class="required" for="review_date">{{ trans('cruds.swn.fields.review_date') }}</label>
                                 <input class="form-control date" type="text" name="review_date" id="review_date" value="{{ old('review_date', $swn->review_date) }}">
@@ -232,30 +245,6 @@
 
                         <legend><a onclick="HideSection(4)" id="element4"><i class="bi bi-eye"></i></a><b>  Section 4 : Disposition after Auditing Actions(Judge the status after Auditing the actual actions)</b></legend>
                         <div id="section4">
-                            <div class="form-group {{ $errors->has('construction_specialist') ? 'has-error' : '' }}">
-                                <label for="construction_specialist_id">{{ trans('cruds.swn.fields.construction_specialist') }}</label>
-                                <select class="form-control select2" name="construction_specialist_id" id="construction_specialist_id">
-                                    @foreach($construction_specialists as $id => $entry)
-                                        <option value="{{ $id }}" {{ (old('construction_specialist_id') ? old('construction_specialist_id') : $swn->construction_specialist->id ?? '') == $id ? 'selected' : '' }}>{{ $entry }}</option>
-                                    @endforeach
-                                </select>
-                                @if($errors->has('construction_specialist'))
-                                    <span class="help-block" role="alert">{{ $errors->first('construction_specialist') }}</span>
-                                @endif
-                                <span class="help-block">{{ trans('cruds.swn.fields.construction_specialist_helper') }}</span>
-                            </div>
-                            <div class="form-group {{ $errors->has('leader') ? 'has-error' : '' }}">
-                                <label for="leader_id">{{ trans('cruds.swn.fields.leader') }}</label>
-                                <select class="form-control select2" name="leader_id" id="leader_id">
-                                    @foreach($leaders as $id => $entry)
-                                        <option value="{{ $id }}" {{ (old('leader_id') ? old('leader_id') : $swn->leader->id ?? '') == $id ? 'selected' : '' }}>{{ $entry }}</option>
-                                    @endforeach
-                                </select>
-                                @if($errors->has('leader'))
-                                    <span class="help-block" role="alert">{{ $errors->first('leader') }}</span>
-                                @endif
-                                <span class="help-block">{{ trans('cruds.swn.fields.leader_helper') }}</span>
-                            </div>
                             <div class="form-group {{ $errors->has('auditing_date') ? 'has-error' : '' }}">
                                 <label class="required" for="auditing_date">{{ trans('cruds.swn.fields.auditing_date') }}</label>
                                 <input class="form-control date" type="text" name="auditing_date" id="auditing_date" value="{{ old('auditing_date', $swn->auditing_date) }}">
