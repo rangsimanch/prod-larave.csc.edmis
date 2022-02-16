@@ -406,7 +406,7 @@ class SwnController extends Controller
         $issuer_name = $swn->issue_by->name ?? '';
         $issuer_position = $swn->issue_by->jobtitle->name ?? '';
         $qa_name = $swn->related_specialist->name ?? '';
-        $cos_name = $swn->leader->name ?? '';
+        $cos_name = $swn->construction_specialist->name ?? '';
         $review_status = $swn->review_status ?? '';
         $auditing_status = $swn->auditing_status ?? '';
 
