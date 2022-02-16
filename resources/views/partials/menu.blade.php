@@ -480,7 +480,6 @@
                                 </ul>
                             </li>
                         @endif
-                        @if(Auth::user()->team_id == 3)
                             <li class="treeview">
                                 <a href="#">
                                     <i class="fa-fw fas fa-envelope">
@@ -514,7 +513,6 @@
                                     @endcan
                                 </ul>
                             </li>
-                        @endif
                         @if(Auth::user()->team_id == 4)
                             <li class="treeview">
                                 <a href="#">
