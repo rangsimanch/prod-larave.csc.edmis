@@ -406,11 +406,14 @@ class SwnController extends Controller
         $issuer_name = $swn->issue_by->name ?? '';
         $issuer_position = $swn->issue_by->jobtitle->name ?? '';
         $qa_name = $swn->related_specialist->name ?? '';
+        $qa_position = "Quality Assurance Specialist";
         $cos_name = $swn->construction_specialist->name ?? '';
+        $cos_position = "Construction Specialist";
+
         $review_status = $swn->review_status ?? '';
         $auditing_status = $swn->auditing_status ?? '';
 
-        $html = "<div style=\"font-size: 16px; font-weight: bold; color:#1F4E78; position:absolute;top:143px;left:140px;\">" . $contract_name  . "</div>";
+        $html = "<div style=\"font-size: 16px; text-align: center; font-weight: bold; color:#1F4E78; padding-top:82px;\">" . $contract_name  . "</div>";
         $html .= "<div style=\"font-size: 18px; position:absolute;top:190px;left:120px;\">" . $send_to  . "</div>";
         $html .= "<div style=\"font-size: 18px; position:absolute;top:190px;left:370px;\">" . $submit_date  . "</div>";
         $html .= "<div style=\"font-size: 16px; position:absolute;top:190px;left:520px;\">" . $document_number  . "</div>";
@@ -425,14 +428,18 @@ class SwnController extends Controller
         }
         $html .= "<div style=\"font-size: 12px; LINE-HEIGHT:12px; padding-right:80px; position:absolute;top:316px;left:240px;\">" . $ref_doc  . "</div>";
         $html .= "<div style=\"font-size: 16px; padding-right:80px; position:absolute;top:380px;left:120px;\">" . $description  . "</div>";
-        if($issuer_name != '')
-            $html .= "<div style=\"font-size: 14px; font-weight: bold; position:absolute;top:606px;left:130px;\">( " . $issuer_name  . " )</div>";
-        $html .= "<div style=\"font-size: 14px; font-weight: bold; position:absolute;top:620px;left:135px;\">" . $issuer_position  . "</div>";
-        if($qa_name != '')
-            $html .= "<div style=\"font-size: 14px; font-weight: bold; position:absolute;top:606px;left:340px;\">( " . $qa_name  . " )</div>";
-        if($cos_name != '')
-            $html .= "<div style=\"font-size: 14px; font-weight: bold; position:absolute;top:606px;left:592px;\">( " . $cos_name  . " )</div>";
-        
+        if($issuer_name != ''){
+            $html .= "<div style=\"font-size: 13px; font-weight: bold; position:absolute;top:606px;left:130px;\">( " . $issuer_name  . " )</div>";
+            $html .= "<div style=\"font-size: 13px; font-weight: bold; position:absolute;top:620px;left:135px;\">" . $issuer_position  . "</div>";
+        }
+        if($qa_name != ''){
+            $html .= "<div style=\"font-size: 13px; font-weight: bold; position:absolute;top:606px;left:340px;\">( " . $qa_name  . " )</div>";
+            $html .= "<div style=\"font-size: 13px; font-weight: bold; position:absolute;top:620px;left:345px;\">" . $qa_position  . "</div>";
+        }
+        if($cos_name != ''){
+            $html .= "<div style=\"font-size: 13px; font-weight: bold; position:absolute;top:606px;left:592px;\">( " . $cos_name  . " )</div>";
+            $html .= "<div style=\"font-size: 13px; font-weight: bold; position:absolute;top:620px;left:597px;\">" . $cos_position  . "</div>";
+        }
         $html .= "<div style=\"font-size: 14px; position:absolute;top:643px;left:137px;\">" . $submit_date  . "</div>";
         $html .= "<div style=\"font-size: 14px; position:absolute;top:643px;left:345px;\">" . $submit_date  . "</div>";
         $html .= "<div style=\"font-size: 14px; position:absolute;top:643px;left:599px;\">" . $submit_date  . "</div>";
@@ -448,11 +455,16 @@ class SwnController extends Controller
             $html .= "<div style=\"font-size: 18px; font-weight: bold; position:absolute;top:715px;left:334px;\">" . "X"  . "</div>";
         }
 
-        if($issuer_name != '')
-            $html .= "<div style=\"font-size: 14px; font-weight: bold; position:absolute;top:810px;left:147px;\">( " . $issuer_name  . " )</div>";
-        if($qa_name != '')
-            $html .= "<div style=\"font-size: 14px; font-weight: bold; position:absolute;top:810px;left:583px;\">( " . $qa_name  . " )</div>";
+        if($issuer_name != ''){
+            $html .= "<div style=\"font-size: 13px; font-weight: bold; position:absolute;top:809px;left:147px;\">( " . $issuer_name  . " )</div>";
+            $html .= "<div style=\"font-size: 13px; font-weight: bold; position:absolute;top:820px;left:155px;\">" . $issuer_position  . "</div>";
 
+        }
+        if($qa_name != ''){
+            $html .= "<div style=\"font-size: 13px; font-weight: bold; position:absolute;top:809px;left:583px;\">( " . $qa_name  . " )</div>";
+            $html .= "<div style=\"font-size: 13px; font-weight: bold; position:absolute;top:820px;left:586px;\">" . $qa_position  . " </div>";
+
+        }
         $html .= "<div style=\"font-size: 14px; position:absolute;top:835px;left:160px;\">" . $review_date  . "</div>";
         $html .= "<div style=\"font-size: 14px; position:absolute;top:835px;left:605px;\">" . $review_date  . "</div>";
 
@@ -464,13 +476,21 @@ class SwnController extends Controller
         }
 
         // Auditing Section
-        if($issuer_name != '')
-            $html .= "<div style=\"font-size: 14px; font-weight: bold; position:absolute;top:960px;left:150px;\">( " . $issuer_name  . " )</div>";
-        if($qa_name != '')
-            $html .= "<div style=\"font-size: 14px; font-weight: bold; position:absolute;top:960px;left:345px;\">( " . $qa_name  . " )</div>";
-        if($cos_name != '')
-            $html .= "<div style=\"font-size: 14px; font-weight: bold; position:absolute;top:960px;left:583px;\">( " . $cos_name  . " )</div>";
+        if($issuer_name != ''){
+            $html .= "<div style=\"font-size: 13px; font-weight: bold; position:absolute;top:956px;left:150px;\">( " . $issuer_name  . " )</div>";
+            $html .= "<div style=\"font-size: 13px; font-weight: bold; position:absolute;top:973px;left:155px;\">" . $issuer_position  . "</div>";
 
+        }
+        if($qa_name != ''){
+            $html .= "<div style=\"font-size: 13px; font-weight: bold; position:absolute;top:956px;left:345px;\">( " . $qa_name  . " )</div>";
+            $html .= "<div style=\"font-size: 13px; font-weight: bold; position:absolute;top:972px;left:354px;\">" . $qa_position  . "</div>";
+
+        }
+        if($cos_name != ''){
+            $html .= "<div style=\"font-size: 13px; font-weight: bold; position:absolute;top:960px;left:583px;\">( " . $cos_name  . " )</div>";
+            $html .= "<div style=\"font-size: 13px; font-weight: bold; position:absolute;top:972px;left:591px;\">" . $cos_position  . "</div>";
+            
+        }
         $html .= "<div style=\"font-size: 14px; position:absolute;top:985px;left:160px;\">" . $auditing_date  . "</div>";
         $html .= "<div style=\"font-size: 14px; position:absolute;top:985px;left:360px;\">" . $auditing_date  . "</div>";
         $html .= "<div style=\"font-size: 14px; position:absolute;top:985px;left:600px;\">" . $auditing_date  . "</div>";
@@ -481,12 +501,16 @@ class SwnController extends Controller
         $count_image = count($swn->description_image);
         if($count_image > 0){
             $mpdf->SetDocTemplate(public_path('pdf-asset/SWN_Template_Attachment.pdf'),true);  
-            $mpdf->AddPage('P','','','','',35,'',80,55);
-             
-            $html = "<div style=\"font-size: 16px; font-weight: bold; color:#1F4E78; position:absolute;top:143px;left:140px;\">" . $contract_name  . "</div>";
-        $html .= "<div style=\"font-size: 18px; position:absolute;top:190px;left:120px;\">" . $send_to  . "</div>";
-        $html .= "<div style=\"font-size: 18px; position:absolute;top:190px;left:370px;\">" . $submit_date  . "</div>";
-        $html .= "<div style=\"font-size: 16px; position:absolute;top:190px;left:520px;\">" . $document_number  . "</div>";
+            $footer_text = "<div style=\"text-align: right; font-size:18px; font-weight: bold;\">" . $document_number . "</div>";
+            $mpdf->SetHTMLFooter($footer_text);
+            $mpdf->AddPage('P','','','','','','',50,55);
+            $html = "";   
+            // $html = "<div style=\"font-size: 16px; text-align: center; font-weight: bold; color:#1F4E78;\">" . $contract_name  . "</div>";
+            // $html .= "<div style=\"font-size: 18px; position:absolute;top:190px;left:120px;\">" . $send_to  . "</div>";
+            // $html .= "<div style=\"font-size: 18px; position:absolute;top:190px;left:370px;\">" . $submit_date  . "</div>";
+            // $html .= "<div style=\"font-size: 16px; position:absolute;top:190px;left:520px;\">" . $document_number  . "</div>";
+            // $html .= "<div style=\"font-size: 16px; padding-top:120px;\"></div>";
+
             for($index = 0; $index < $count_image; $index++){
                 try{
                     $allowed = array('gif', 'png', 'jpg', 'jpeg', 'JPG', 'JPEG', 'PNG');
@@ -497,7 +521,7 @@ class SwnController extends Controller
                         })
                         ->encode('data-url');
 
-                        $html .= "<img width=\"". "30%" ."\" height=\"". "30%" ."\" src=\"" 
+                        $html .= "<img style=\"padding-left:90px;\" width=\"". "30%" ."\" height=\"". "30%" ."\" src=\"" 
                             . $img
                             . "\">  ";
                     }
