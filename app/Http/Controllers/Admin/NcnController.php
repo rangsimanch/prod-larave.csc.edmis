@@ -345,7 +345,7 @@ class NcnController extends Controller
         $html .= "<div style=\"padding-right:120px;font-size: 14px; position:absolute;top:731px;left:105px\">" . $attachment_description  . "</div>";
         $html .= "<div style=\"padding-right:120px;font-size: 14px; position:absolute;top:780px;left:260px\">" . $pages_of_attachment  .  " จำนวน-แผ่น" . "</div>";
         $html .= "<div style=\"font-size: 14px; font-weight: bold; position:absolute;top:805px;left:153px\">" . $textbox1  . "</div>";
-        $html .= "<div style=\"font-size: 14px; font-weight: bold; position:absolute;top:805px;left:370px\">" . $textbox2  . "</div>";
+        $html .= "<div style=\"font-size: 14px; font-weight: bold; position:absolute;top:805px;left:375px\">" . $textbox2  . "</div>";
         $html .= "<div style=\"font-size: 14px; font-weight: bold; position:absolute;top:805px;left:533px\">" . $textbox3  . "</div>";
         $html .= "<div style=\"font-size: 12px; font-weight: bold; position:absolute;top:848px;left:110px\">" . $issuer  . "</div>";
         $html .= "<div style=\"font-size: 12px; font-weight: bold; position:absolute;top:848px;left:325px\">" . $cos  . "</div>";
