@@ -309,14 +309,14 @@ class NcnController extends Controller
         $dept_code = $ncn->dept_code->code ?? '';
         if($dept_code == "G"){
             $pagecount = $mpdf->SetSourceFile(public_path('pdf-asset/NCN_Thai_Form.pdf'));
-            $textbox1 = "CSC Issuer";
-            $textbox2 = "CSC Construction Specialist";
+            $textbox1 = "CSC's Issuer";
+            $textbox2 = "CSC COS";
             $textbox3 = "CSC Project / Team Leader";
         }
         else{
             $pagecount = $mpdf->SetSourceFile(public_path('pdf-asset/NCN_Chinese_Form.pdf'));
-            $textbox1 = "CSC Issuer";
-            $textbox2 = "CSC's Director of " . $dept_code . " Dept.";
+            $textbox1 = "CSC's Issuer";
+            $textbox2 = "CSC's COS";
             $textbox3 = "The Director of S&Q Dept. of CSC";
         }
         $tplId = $mpdf->ImportPage($pagecount);
