@@ -719,8 +719,8 @@ class RfaController extends Controller
         $bo_qs                  = BoQ::orderBy('code', 'asc')->get();
         $rfatypes               = Rfatype::get();
         $construction_contracts = ConstructionContract::where('id','!=',15)->get();
-        $wbs_level_threes       = WbsLevelThree::get();
-        $wbslevelfours          = Wbslevelfour::get();
+        $wbs_level_threes       = WbsLevelThree::orderBy('code', 'asc')->get();
+        $wbslevelfours          = Wbslevelfour::orderBy('code', 'asc')->get();
         $users                  = User::get();
         $rfa_comment_statuses   = RfaCommentStatus::get();
         $wbs_level_ones         = WbsLevelOne::get();
