@@ -99,7 +99,7 @@
                                 <td>
                                 </td>
                                 <td>
-                                    <select class="search">
+                                    <select class="search" style="width:70%">
                                         <option value>{{ trans('global.all') }}</option>
                                         @foreach($rfa_document_statuses as $key => $item)
                                             <option value="{{ $item->status_name }}">{{ $item->status_name }}</option>
@@ -107,7 +107,7 @@
                                     </select>
                                 </td>
                                 <td>
-                                    <select class="search">
+                                    <select class="search" style="width:50%">
                                         <option value>{{ trans('global.all') }}</option>
                                         @foreach($construction_contracts as $key => $item)
                                             <option value="{{ $item->code }}">{{ $item->code }}</option>
@@ -116,7 +116,7 @@
                                 </td>
                                 
                                 <td>
-                                    <select class="search">
+                                    <select class="search" style="width:70%">
                                         <option value>{{ trans('global.all') }}</option>
                                         @foreach($bo_qs as $key => $item)
                                             <option value="{{ $item->name }}">{{ $item->name }}</option>
@@ -288,6 +288,13 @@ table.on('column-visibility.dt', function(e, settings, column, state) {
           visibleColumnsIndexes.push(colIdx);
       });
   })
+ 
+  $('table th').resizable({
+    handles: 'e',
+    stop: function(e, ui) {
+      $(this).width(ui.size.width);
+    }
+  });
 
   // date range
 $('.daterange').daterangepicker({
@@ -389,6 +396,7 @@ $('.daterange').daterangepicker({
                 .search('')
                 .draw();
         });
+
 });
 
 </script>
