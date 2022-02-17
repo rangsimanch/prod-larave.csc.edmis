@@ -144,7 +144,7 @@
                                     <input class="search" type="text" placeholder="{{ trans('global.search') }}">
                                 </td>
                                 <td>
-                                    <select class="search select2">
+                                    <select class="search">
                                         <option value>{{ trans('global.all') }}</option>
                                         @foreach($rfatypes as $key => $item)
                                             <option value="{{ $item->type_code }}">{{ $item->type_code }}</option>
@@ -152,7 +152,7 @@
                                     </select>
                                 </td>
                                 <td>
-                                    <select class="search select2">
+                                    <select class="search">
                                         <option value>{{ trans('global.all') }}</option>
                                         @foreach($wbs_level_threes as $key => $item)
                                             <option value="{{ $item->wbs_level_3_code }}">{{ $item->wbs_level_3_code }}</option>
@@ -161,7 +161,7 @@
                                 </td>
                                 
                                 <td>
-                                    <select class="search select2">
+                                    <select class="search">
                                         <option value>{{ trans('global.all') }}</option>
                                         @foreach($wbslevelfours as $key => $item)
                                             <option value="{{ $item->wbs_level_4_code }}">{{ $item->wbs_level_4_code }}</option>
