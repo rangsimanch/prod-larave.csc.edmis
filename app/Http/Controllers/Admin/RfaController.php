@@ -584,8 +584,8 @@ class RfaController extends Controller
 
                 return implode(', ', $links);
             });
-            $table->addColumn('boq_code', function ($row) {
-                return $row->boq ? $row->boq->code : '';
+            $table->addColumn('boq_name', function ($row) {
+                return $row->boq ? $row->boq->name : '';
             });
 
             $table->editColumn('title_eng', function ($row) {
@@ -718,7 +718,7 @@ class RfaController extends Controller
         $rfa_document_statuses  = RfaDocumentStatus::get();
         $bo_qs                  = BoQ::orderBy('code', 'asc')->get();
         $rfatypes               = Rfatype::get();
-        $construction_contracts = ConstructionContract::get();
+        $construction_contracts = ConstructionContract::where('id','!=',15)->get();
         $wbs_level_threes       = WbsLevelThree::get();
         $wbslevelfours          = Wbslevelfour::get();
         $users                  = User::get();
@@ -757,9 +757,6 @@ class RfaController extends Controller
 
         //Contract Check
             //Check is Admin
-            
-
-        
             
         $wbs_level_3s = WbsLevelThree::all()->pluck('wbs_level_3_code', 'id')->prepend(trans('global.pleaseSelect'), '');
 

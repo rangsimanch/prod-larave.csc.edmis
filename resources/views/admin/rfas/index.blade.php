@@ -243,7 +243,7 @@
 { data: 'file_upload_1', name: 'file_upload_1', sortable: false, searchable: false},
 { data: 'document_status_status_name', name: 'document_status.status_name'},
 { data: 'construction_contract_code', name: 'construction_contract.code' },
-{ data: 'boq_code', name: 'boq.code'},
+{ data: 'boq_name', name: 'boq.name'},
 { data: 'worktype', name: 'worktype' },
 { data: 'title_eng', name: 'title_eng' },
 { data: 'title', name: 'title' },
@@ -390,5 +390,6 @@ $('.daterange').daterangepicker({
                 .draw();
         });
 });
+
 </script>
 @endsection
