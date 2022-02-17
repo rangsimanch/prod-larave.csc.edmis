@@ -119,7 +119,7 @@
                                     <select class="search">
                                         <option value>{{ trans('global.all') }}</option>
                                         @foreach($bo_qs as $key => $item)
-                                            <option value="{{ $item->code }}">{{ $item->code }}</option>
+                                            <option value="{{ $item->name }}">{{ $item->name }}</option>
                                         @endforeach
                                     </select>
                                 </td>
