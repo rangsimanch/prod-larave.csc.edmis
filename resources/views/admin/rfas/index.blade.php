@@ -21,68 +21,68 @@
                     {{ trans('cruds.rfa.title_singular') }} {{ trans('global.list') }}
                 </div>
                 <div class="panel-body">
-                    <table class=" table table-bordered table-striped table-hover ajaxTable datatable datatable-Rfa text-center">
+                    <table class="table sticky table-bordered table-striped table-hover ajaxTable datatable datatable-Rfa text-center">
                         <thead>
                             <tr>
                                 <th width="10">
 
                                 </th>
                                 <th>
-                                    Action
+                                    <p style="font-size:12px"> Action </p>
                                 </th>
                                 <th>
-                                    {{ trans('cruds.rfa.fields.created_at') }}
+                                    <p style="font-size:12px"> {{ trans('cruds.rfa.fields.created_at') }} </p>
                                 </th>
                                 <th>
-                                    {{ trans('cruds.rfa.fields.cover_sheet') }}
+                                    <p style="font-size:12px"> {{ trans('cruds.rfa.fields.cover_sheet') }} </p>
                                 </th>
                                 <th>
-                                    {{ trans('cruds.rfa.fields.file_upload_1') }}
+                                    <p style="font-size:12px"> {{ trans('cruds.rfa.fields.file_upload_1') }} </p>
                                 </th>
                                 <th>
-                                    {{ trans('cruds.rfa.fields.document_status') }}
+                                    <p style="font-size:12px"> {{ trans('cruds.rfa.fields.document_status') }} </p>
                                 </th>
                                 <th>
-                                    {{ trans('cruds.rfa.fields.construction_contract') }}
+                                    <p style="font-size:12px"> {{ trans('cruds.rfa.fields.construction_contract') }} </p>
                                 </th>
                                 
                                 <th>
-                                    {{ trans('cruds.rfa.fields.boq') }}
+                                    <p style="font-size:12px"> {{ trans('cruds.rfa.fields.boq') }} </p>
                                 </th>
                                 <th>
-                                    {{ trans('cruds.rfa.fields.worktype') }}
+                                    <p style="font-size:12px"> {{ trans('cruds.rfa.fields.worktype') }} </p>
                                 </th> 
                                 <th>
-                                    {{ trans('cruds.rfa.fields.title_eng') }}
+                                    <p style="font-size:12px"> {{ trans('cruds.rfa.fields.title_eng') }} </p>
                                 </th>
                                 <th>
-                                    {{ trans('cruds.rfa.fields.title') }}
+                                    <p style="font-size:12px"> {{ trans('cruds.rfa.fields.title') }} </p>
                                 </th>
                                 <th>
-                                    {{ trans('cruds.rfa.fields.origin_number') }}
+                                    <p style="font-size:12px"> {{ trans('cruds.rfa.fields.origin_number') }} </p>
                                 </th>
                                 <th>
-                                    {{ trans('cruds.rfa.fields.document_number') }}
+                                    <p style="font-size:12px"> {{ trans('cruds.rfa.fields.document_number') }} </p>
                                 </th>
                                 <th>
-                                    {{ trans('cruds.rfatype.fields.type_code') }}
+                                    <p style="font-size:12px"> {{ trans('cruds.rfatype.fields.type_code') }} </p>
                                 </th>
                             
                                 <th>
-                                    {{ trans('cruds.rfa.fields.wbs_level_3') }}
+                                    <p style="font-size:12px"> {{ trans('cruds.rfa.fields.wbs_level_3') }} </p>
                                 </th>
                                
                                 <th>
-                                    {{ trans('cruds.rfa.fields.wbs_level_4') }}
+                                    <p style="font-size:12px"> {{ trans('cruds.rfa.fields.wbs_level_4') }} </p>
                                 </th> 
                                 <th>
-                                    {{ trans('cruds.rfa.fields.submit_date') }}
+                                    <p style="font-size:12px"> {{ trans('cruds.rfa.fields.submit_date') }} </p>
                                 </th>
                                 <th>
-                                    {{ trans('cruds.rfa.fields.comment_status') }}
+                                    <p style="font-size:12px"> {{ trans('cruds.rfa.fields.comment_status') }} </p>
                                 </th>
                                 <th>
-                                    {{ trans('cruds.rfa.fields.commercial_file_upload') }}
+                                    <p style="font-size:12px"> {{ trans('cruds.rfa.fields.commercial_file_upload') }} </p>
                                 </th>
                                
                             </tr>
@@ -92,7 +92,6 @@
                                 <td>
                                 </td>
                                 <td>
-                                    {{-- <input type="text" name="daterange" id="daterange" class="form-control daterange" value="" autocomplete="off" placeholder="Select Period.."> --}}
                                 </td>
                                 <td>
                                 </td>
@@ -107,7 +106,7 @@
                                     </select>
                                 </td>
                                 <td>
-                                    <select class="search" style="width:50%">
+                                    <select class="search" style="width:70%">
                                         <option value>{{ trans('global.all') }}</option>
                                         @foreach($construction_contracts as $key => $item)
                                             <option value="{{ $item->code }}">{{ $item->code }}</option>
@@ -234,6 +233,7 @@
     serverSide: true,
     retrieve: true,
     aaSorting: [],
+    fixedHeader: true,
     ajax: "{{ route('admin.rfas.index') }}",
     columns: [
       { data: 'placeholder', name: 'placeholder' },
@@ -242,13 +242,13 @@
 { data: 'cover_sheet', name: 'cover_sheet' ,sortable: false, searchable: false},
 { data: 'file_upload_1', name: 'file_upload_1', sortable: false, searchable: false},
 { data: 'document_status_status_name', name: 'document_status.status_name'},
-{ data: 'construction_contract_code', name: 'construction_contract.code' },
+{ data: 'construction_contract_code', name: 'construction_contract.code' ,sortable: false},
 { data: 'boq_name', name: 'boq.name'},
 { data: 'worktype', name: 'worktype' },
-{ data: 'title_eng', name: 'title_eng' },
-{ data: 'title', name: 'title' },
-{ data: 'origin_number', name: 'origin_number' },
-{ data: 'document_number', name: 'document_number' },
+{ data: 'title_eng', name: 'title_eng' , sortable: false},
+{ data: 'title', name: 'title' , sortable: false},
+{ data: 'origin_number', name: 'origin_number' , sortable: false},
+{ data: 'document_number', name: 'document_number' , sortable: false},
 { data: 'type.type_code', name: 'type.type_code' },
 { data: 'wbs_level_3_wbs_level_3_code', name: 'wbs_level_3.wbs_level_3_code' },
 { data: 'wbs_level_4_wbs_level_4_code', name: 'wbs_level_4.wbs_level_4_code' },
@@ -266,8 +266,9 @@
       $($.fn.dataTable.tables(true)).DataTable()
           .columns.adjust();
   });
-  
+
 let visibleColumnsIndexes = null;
+
 $('.datatable thead').on('input', '.search', function () {
       let strict = $(this).attr('strict') || false
       let value = strict && this.value ? "^" + this.value + "$" : this.value
@@ -282,120 +283,13 @@ $('.datatable thead').on('input', '.search', function () {
         .search(value, strict)
         .draw()
   });
+
 table.on('column-visibility.dt', function(e, settings, column, state) {
       visibleColumnsIndexes = []
       table.columns(":visible").every(function(colIdx) {
           visibleColumnsIndexes.push(colIdx);
       });
   })
- 
-  $('table th').resizable({
-    handles: 'e',
-    stop: function(e, ui) {
-      $(this).width(ui.size.width);
-    }
-  });
-
-  // date range
-$('.daterange').daterangepicker({
-        ranges: {
-            "Today": [moment(), moment()],
-            'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
-            '7 last days': [moment().subtract(6, 'days'), moment()],
-            '30 last days': [moment().subtract(29, 'days'), moment()],
-            'This month': [moment().startOf('month'), moment().endOf('month')],
-            'Last month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
-        }
-        ,
-        autoUpdateInput: false,
-        opens: "left",
-        locale: {
-            cancelLabel: 'Clear',
-            format: 'DD/MM/YYYY'
-        }
-    });
-
-    let startDate;
-    let endDate;
-    let dataIdx = 2;  //current data column to work with
-
-    // Function for converting a dd/mmm/yyyy date value into a numeric string for comparison (example 01-Dec-2010 becomes 20101201
-    function parseDateValue(rawDate) {
-        var d = moment(rawDate, "DD/MM/YYYY").format("DD/MM/YYYY");
-        var dateArray = d.split("/");
-        var parsedDate = dateArray[2] + dateArray[1] + dateArray[0];
-        return parsedDate;
-    }
-
-    function covertDateValue(text) {
-        let year = text.slice(0, 4);
-        let month = text.slice(4, 6);
-        let day = text.slice(6, 8);
-        var parsedDate = year + "-" + month + "-" + day;
-        return parsedDate;
-    }
-
-    //filter on daterange
-    $(".daterange").on('apply.daterangepicker', function (ev, picker) {
-        ev.preventDefault();
-        //if blank date option was selected
-        if ((picker.startDate.format('DD/MM/YYYY') == "01/01/0001") && (picker.endDate.format('DD/MM/YYYY')) == "01/01/0001") {
-            $(this).val('');
-            val = "^$";
-            table.column(dataIdx)
-               .search(val, true, false)
-               .draw();
-        }
-        else {
-            //set field value
-            $(this).val(picker.startDate.format('DD/MM/YYYY') + ' - ' + picker.endDate.format('DD/MM/YYYY'));
-            //run date filter
-            startDate = picker.startDate.format('DD/MM/YYYY');
-            endDate = picker.endDate.format('DD/MM/YYYY');
-
-            var dateStart = parseDateValue(startDate);
-            var dateEnd = parseDateValue(endDate);
-            
-            var filteredData = table
-                    .column(dataIdx)
-                    .data()
-                    .filter(function (value, index) {
-                        var evalDate = value === "" ? 0 : parseDateValue(value);
-                        if ((isNaN(dateStart) && isNaN(dateEnd)) || (evalDate >= dateStart && evalDate <= dateEnd)) {
-                            return true;
-                        }
-                        return false;
-                    });
-            var val = "";
-            for (var count = 0; count < filteredData.length; count++) {
-                var filterDate = new Date(covertDateValue(parseDateValue(filteredData[count])));
-                let searchData = filterDate.getFullYear() + "-" + ("0" + (filterDate.getMonth() + 1)).slice(-2) + "-" + ("0" + filterDate.getDate()).slice(-2);
-                val += searchData + "|";
-            }
-            val = val.slice(0, -1);
-            table.column(dataIdx)
-                .search(val ? "^" + val + "$" : "^" + "-" + "$", true, false)
-                .draw();
-            
-            console.log(filteredData.length);
-            console.log(val ? "^" + val + "$" : "^" + "-" + "$");
-            }
-        });
-
-        $(".daterange").on('cancel.daterangepicker', function (ev, picker) {
-            ev.preventDefault();
-            $(this).val('');
-            table.column(dataIdx)
-                .search('')
-                .draw();
-        });
-
-        $(".daterange").on('show.daterangepicker', function (ev, picker) {
-            ev.preventDefault();
-            table.column(dataIdx)
-                .search('')
-                .draw();
-        });
 
 });
 
