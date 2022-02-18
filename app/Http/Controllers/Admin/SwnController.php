@@ -393,7 +393,7 @@ class SwnController extends Controller
         $mpdf->UseTemplate($tplId);      
         // Setting Data
         $contract_name = 'Contract ' . $swn->construction_contract->code . ' : ' . $swn->construction_contract->name;
-        $send_to = "Civil's Project Manager";
+        $send_to = "Project Manager";
         $submit_date = $swn->submit_date ?? '';
         $review_date = $swn->review_date ?? '';
         $auditing_date = $swn->auditing_date ?? '';
