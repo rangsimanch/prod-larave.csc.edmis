@@ -308,19 +308,22 @@ class NcnController extends Controller
         // Check Report
         $dept_code = $ncn->dept_code->code ?? '';
         if($dept_code == "G"){
-            $pagecount = $mpdf->SetSourceFile(public_path('pdf-asset/NCN_Thai_Form.pdf'));
+            // $pagecount = $mpdf->SetSourceFile(public_path('pdf-asset/NCN_Thai_Form.pdf'));
+            $mpdf->SetDocTemplate(public_path('pdf-asset/NCN_Thai_Form.pdf'),true);
             $textbox1 = "CSC's Issuer";
             $textbox2 = "CSC COS";
             $textbox3 = "CSC Project / Team Leader";
         }
         else{
-            $pagecount = $mpdf->SetSourceFile(public_path('pdf-asset/NCN_Chinese_Form.pdf'));
+            // $pagecount = $mpdf->SetSourceFile(public_path('pdf-asset/NCN_Chinese_Form.pdf'));
+            $mpdf->SetDocTemplate(public_path('pdf-asset/NCN_Chinese_Form.pdf'),true);
             $textbox1 = "CSC's Issuer";
             $textbox2 = "CSC's COS";
             $textbox3 = "The Director of S&Q Dept. of CSC";
         }
-        $tplId = $mpdf->ImportPage($pagecount);
-        $mpdf->UseTemplate($tplId);
+        // $tplId = $mpdf->ImportPage($pagecount);
+        // $mpdf->UseTemplate($tplId);
+        $mpdf->AddPage('P','','','','','','',55,120);
 
         // Setting Data
         $project_name = "(Section 1 Bangkok - Nakhon Ratchasima)";
@@ -341,7 +344,6 @@ class NcnController extends Controller
         $html = "<div style=\"font-size: 13px; text-align: center; font-weight: bold; color:#1F4E78; padding-top:25px;\">" . $project_name  . " " . $contract_name  ."</div>";
         $html .= "<div style=\"font-size: 14px; font-weight: bold; color:#FFFFFF; position:absolute;top:115px;left:532px;\">" . $document_number  . "</div>";
         $html .= "<div style=\"padding-right:120px; font-size: 18px; font-weight: bold; position:absolute;top:175px;left:105px;\">" . $subject  . "</div>";
-        $html .= "<div style=\"padding-right:120px; font-size: 18px; position:absolute;top:180px;left:105px\">" . $description  . "</div>";
         $html .= "<div style=\"padding-right:120px;font-size: 14px; position:absolute;top:731px;left:105px\">" . $attachment_description  . "</div>";
         $html .= "<div style=\"padding-right:120px;font-size: 14px; position:absolute;top:780px;left:260px\">" . $pages_of_attachment  .  " จำนวน-แผ่น" . "</div>";
         $html .= "<div style=\"font-size: 14px; font-weight: bold; position:absolute;top:805px;left:153px\">" . $textbox1  . "</div>";
@@ -353,9 +355,15 @@ class NcnController extends Controller
         $html .= "<div style=\"font-size: 12px; position:absolute;top:893px;left:125px\">" . $issue_date  . "</div>";
         $html .= "<div style=\"font-size: 12px; position:absolute;top:893px;left:340px\">" . $issue_date  . "</div>";
         $html .= "<div style=\"font-size: 12px; position:absolute;top:893px;left:555px\">" . $issue_date  . "</div>";
+
+        $mpdf->SetHTMLHeader($html,'0',true);
+        $html = "<div style=\" padding-left: 80px; padding-right:80px; padding-bottom:-15px; \">";
+        $html .= "<div style=\"padding-right:120px; font-size: 14px; position:absolute;top:195px;left:105px\">" . $description  . "</div>";
+        $html .= "</div>";
+        
         $mpdf->WriteHTML($html);
-
-
+        $html = "";   
+        $mpdf->SetHTMLHeader($html,'0',true);
         //Attachment
         // Image Attacment
         $count_image = count($ncn->description_image);
@@ -364,8 +372,6 @@ class NcnController extends Controller
             $footer_text = "<div style=\"text-align: right; font-size:18px; font-weight: bold;\">" . $document_number . "</div>";
             $mpdf->AddPage('P','','','','','','',50,55);
             $mpdf->SetHTMLFooter($footer_text);
-
-            $html = "";   
             for($index = 0; $index < $count_image; $index++){
                 try{
                     $allowed = array('gif', 'png', 'jpg', 'jpeg', 'JPG', 'JPEG', 'PNG');
