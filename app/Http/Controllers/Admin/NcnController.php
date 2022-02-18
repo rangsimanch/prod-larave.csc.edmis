@@ -394,6 +394,7 @@ class NcnController extends Controller
             $mpdf->SetDocTemplate("");  
         }
         $mpdf->SetHTMLHeader($html,'0',true);
+        $mpdf->SetDocTemplate("");  
         foreach($ncn->file_attachment as $attacment){ 
             try{
                 $pagecount = $mpdf->SetSourceFile($attacment->getPath());
