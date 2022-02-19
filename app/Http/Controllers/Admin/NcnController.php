@@ -13,6 +13,7 @@ use App\Http\Requests\MassDestroyNcnRequest;
 use App\Http\Requests\StoreNcnRequest;
 use App\Http\Requests\UpdateNcnRequest;
 use App\Ncn;
+use App\Ncr;
 use App\Team;
 use App\User;
 use Gate;
@@ -382,7 +383,7 @@ class NcnController extends Controller
                         })
                         ->encode('data-url');
 
-                        $html .= "<img style=\"padding-left:90px;\" width=\"". "30%" ."\" height=\"". "30%" ."\" src=\"" 
+                        $html .= "<img style=\"padding-left:90px; padding-top:100px\" width=\"". "30%" ."\" height=\"". "30%" ."\" src=\"" 
                             . $img
                             . "\">  ";
                     }
@@ -393,8 +394,10 @@ class NcnController extends Controller
             $mpdf->WriteHTML($html);
             $mpdf->SetDocTemplate("");  
         }
+        $html="";
         $mpdf->SetHTMLHeader($html,'0',true);
         $mpdf->SetDocTemplate("");  
+
         foreach($ncn->file_attachment as $attacment){ 
             try{
                 $pagecount = $mpdf->SetSourceFile($attacment->getPath());
@@ -407,7 +410,26 @@ class NcnController extends Controller
                 print "Creating an mPDF object failed with" . $e->getMessage();
             }
         }
-        if($swn->dept_code->code ?? '' != ''){
+
+        $ncrs = Ncr::where('corresponding_ncn_id',$ncn->id)->get();
+        $mpdf->SetHTMLFooter($html,'0',true);
+        foreach($ncrs as $ncr){
+            foreach($ncr->file_attachment as $attachment){
+                try{
+                    $pagecount = $mpdf->SetSourceFile($attachment->getPath());
+                    for($page = 1; $page <= $pagecount; $page++){
+                        $mpdf->AddPage();
+                        $tplId = $mpdf->importPage($page);
+                        $mpdf->UseTemplate($tplId);
+                    }         
+                }catch(exeption $e){
+                    print "Creating an mPDF object failed with" . $e->getMessage();
+                }
+            }
+        }
+
+
+        if($ncn->dept_code->code ?? '' != ''){
             $filename =  "NCN-" . str_replace(".","",$subject) . ".pdf";;
         }
         else{

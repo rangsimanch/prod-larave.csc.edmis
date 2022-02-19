@@ -260,11 +260,8 @@ class SwnController extends Controller
         if($state == '3'){
             $data['documents_status'] = '4';
         }
-        if($state == '2'){
-            $data['documents_status'] = '3';
-        }
         if($data['responsible_id'] != "" && $state == '1'){
-            $data['documents_status'] = '2';
+            $data['documents_status'] = '3';
         }    
     
         $swn->update($data);
@@ -338,6 +335,21 @@ class SwnController extends Controller
                 $swn->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('corrective_image');
             }
         }
+
+        if (count($swn->reply_document) > 0) {
+            foreach ($swn->reply_document as $media) {
+                if (!in_array($media->file_name, $request->input('reply_document', []))) {
+                    $media->delete();
+                }
+            }
+        }
+        $media = $swn->reply_document->pluck('file_name')->toArray();
+        foreach ($request->input('reply_document', []) as $file) {
+            if (count($media) === 0 || !in_array($file, $media)) {
+                $swn->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('reply_document');
+            }
+        }
+
 
         return redirect()->route('admin.swns.index');
     }
@@ -533,9 +545,26 @@ class SwnController extends Controller
             $mpdf->SetDocTemplate("");  
         }
 
-        foreach($swn->document_attachment as $attacment){ 
+        foreach($swn->document_attachment as $attachment){ 
             try{
-                $pagecount = $mpdf->SetSourceFile($attacment->getPath());
+                $pagecount = $mpdf->SetSourceFile($attachment->getPath());
+                for($page = 1; $page <= $pagecount; $page++){
+                    // $mpdf->AddPage();
+                    $tplId = $mpdf->importPage($page);
+                    $size = $mpdf->getTemplateSize($tplId);
+                    $mpdf->AddPage($size['orientation']);
+                    // $mpdf->UseTemplate($tplId);
+                    $mpdf->UseTemplate($tplId, 0, 0, $size['width'], $size['height'], true);
+
+                }         
+            }catch(exeption $e){
+                print "Creating an mPDF object failed with" . $e->getMessage();
+            }
+        }
+
+        foreach($swn->reply_document as $attachment){ 
+            try{
+                $pagecount = $mpdf->SetSourceFile($attachment->getPath());
                 for($page = 1; $page <= $pagecount; $page++){
                     // $mpdf->AddPage();
                     $tplId = $mpdf->importPage($page);

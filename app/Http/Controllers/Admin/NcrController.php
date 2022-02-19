@@ -168,11 +168,10 @@ class NcrController extends Controller
         $data = $request->all();
         $ncnNumber = Ncn::where("id",$data['corresponding_ncn_id'])->value('document_number');
         $data['document_number'] = str_replace("NCN", "NCR", $ncnNumber);
-        $data['documents_status'] = '2';
 
         $ncr = Ncr::create($data);
 
-        $ncn = Ncn::where("id",$data['corresponding_ncn_id'])->update(['documents_status' => '2']);
+        $ncn = Ncn::where("id",$data['corresponding_ncn_id'])->update(['documents_status' => $data['documents_status']]);
         
         foreach ($request->input('rootcase_image', []) as $file) {
             $ncr->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('rootcase_image');

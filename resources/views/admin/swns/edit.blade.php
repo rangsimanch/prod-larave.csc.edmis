@@ -13,7 +13,7 @@
                         @method('PUT')
                         @csrf
 
-                        <legend><a onclick="HideSection(1)" id="element1"><i class="bi bi-eye"></i></a><b>  Section 1 : Warning Notice Details</b></legend>
+                        <legend><a onclick="HideSection(1)" id="element1"><i class="bi bi-eye"></i></a><b>  Section I : Warning Notice Details</b></legend>
                         <div id="section1">
                             <div class="form-group {{ $errors->has('construction_contract') ? 'has-error' : '' }}">
                                 <label class="required" for="construction_contract_id">{{ trans('cruds.swn.fields.construction_contract') }}</label>
@@ -150,59 +150,20 @@
                         </div>
                         
                         
-                        <legend><a onclick="HideSection(2)" id="element2"><i class="bi bi-eye"></i></a><b>  Section 2 : Responce & Corrective Action by Contractor</b></legend>
+                        <legend><a onclick="HideSection(2)" id="element2"><i class="bi bi-eye"></i></a><b>  Section II : Responce & Corrective Action by Contractor / Review and Judgement by CSC</b></legend>
                         <div id="section2">
-                            <div class="form-group {{ $errors->has('root_case') ? 'has-error' : '' }}">
-                                <label for="root_case">{{ trans('cruds.swn.fields.root_case') }}</label>
-                                <textarea class="form-control ckeditor" name="root_case" id="root_case">{!! old('root_case', $swn->root_case) !!}</textarea>
-                                @if($errors->has('root_case'))
-                                    <span class="help-block" role="alert">{{ $errors->first('root_case') }}</span>
-                                @endif
-                                <span class="help-block">{{ trans('cruds.swn.fields.root_case_helper') }}</span>
-                            </div>
-                            <div class="form-group {{ $errors->has('rootcase_image') ? 'has-error' : '' }}">
-                                <label for="rootcase_image">{{ trans('cruds.swn.fields.rootcase_image') }}</label>
-                                <div class="needsclick dropzone" id="rootcase_image-dropzone">
+                            
+                            <div class="form-group {{ $errors->has('reply_document') ? 'has-error' : '' }}">
+                                <label for="reply_document">{{ trans('cruds.swn.fields.reply_document') }}</label>
+                                <div class="needsclick dropzone" id="reply_document-dropzone">
                                 </div>
-                                @if($errors->has('rootcase_image'))
-                                    <span class="help-block" role="alert">{{ $errors->first('rootcase_image') }}</span>
+                                @if($errors->has('reply_document'))
+                                    <span class="help-block" role="alert">{{ $errors->first('reply_document') }}</span>
                                 @endif
-                                <span class="help-block">{{ trans('cruds.swn.fields.rootcase_image_helper') }}</span>
+                                <span class="help-block">{{ trans('cruds.swn.fields.reply_document_helper') }}</span>
                             </div>
-                            <div class="form-group {{ $errors->has('containment_action') ? 'has-error' : '' }}">
-                                <label for="containment_action">{{ trans('cruds.swn.fields.containment_action') }}</label>
-                                <textarea class="form-control ckeditor" name="containment_action" id="containment_action">{!! old('containment_action', $swn->containment_action) !!}</textarea>
-                                @if($errors->has('containment_action'))
-                                    <span class="help-block" role="alert">{{ $errors->first('containment_action') }}</span>
-                                @endif
-                                <span class="help-block">{{ trans('cruds.swn.fields.containment_action_helper') }}</span>
-                            </div>
-                            <div class="form-group {{ $errors->has('containment_image') ? 'has-error' : '' }}">
-                                <label for="containment_image">{{ trans('cruds.swn.fields.containment_image') }}</label>
-                                <div class="needsclick dropzone" id="containment_image-dropzone">
-                                </div>
-                                @if($errors->has('containment_image'))
-                                    <span class="help-block" role="alert">{{ $errors->first('containment_image') }}</span>
-                                @endif
-                                <span class="help-block">{{ trans('cruds.swn.fields.containment_image_helper') }}</span>
-                            </div>
-                            <div class="form-group {{ $errors->has('corrective') ? 'has-error' : '' }}">
-                                <label for="corrective">{{ trans('cruds.swn.fields.corrective') }}</label>
-                                <textarea class="form-control ckeditor" name="corrective" id="corrective">{!! old('corrective', $swn->corrective) !!}</textarea>
-                                @if($errors->has('corrective'))
-                                    <span class="help-block" role="alert">{{ $errors->first('corrective') }}</span>
-                                @endif
-                                <span class="help-block">{{ trans('cruds.swn.fields.corrective_helper') }}</span>
-                            </div>
-                            <div class="form-group {{ $errors->has('corrective_image') ? 'has-error' : '' }}">
-                                <label for="corrective_image">{{ trans('cruds.swn.fields.corrective_image') }}</label>
-                                <div class="needsclick dropzone" id="corrective_image-dropzone">
-                                </div>
-                                @if($errors->has('corrective_image'))
-                                    <span class="help-block" role="alert">{{ $errors->first('corrective_image') }}</span>
-                                @endif
-                                <span class="help-block">{{ trans('cruds.swn.fields.corrective_image_helper') }}</span>
-                            </div>
+                           
+                           
                             <div class="form-group {{ $errors->has('responsible') ? 'has-error' : '' }}">
                                 <label class="required" for="responsible_id">{{ trans('cruds.swn.fields.responsible') }}</label>
                                 <select class="form-control select2" name="responsible_id" id="responsible_id">
@@ -215,19 +176,7 @@
                                 @endif
                                 <span class="help-block">{{ trans('cruds.swn.fields.responsible_helper') }}</span>
                             </div>
-                        </div>
 
-
-                        <legend><a onclick="HideSection(3)" id="element3"><i class="bi bi-eye"></i></a><b>  Section 3 : Review and Judgement on Proposed Contractor's Action by CSC</b></legend>
-                        <div id="section3">
-                            <div class="form-group {{ $errors->has('review_date') ? 'has-error' : '' }}">
-                                <label class="required" for="review_date">{{ trans('cruds.swn.fields.review_date') }}</label>
-                                <input class="form-control date" type="text" name="review_date" id="review_date" value="{{ old('review_date', $swn->review_date) }}">
-                                @if($errors->has('review_date'))
-                                    <span class="help-block" role="alert">{{ $errors->first('review_date') }}</span>
-                                @endif
-                                <span class="help-block">{{ trans('cruds.swn.fields.review_date_helper') }}</span>
-                            </div>
                             <div class="form-group {{ $errors->has('review_status') ? 'has-error' : '' }}">
                                 <label class="required">{{ trans('cruds.swn.fields.review_status') }}</label>
                                 <select class="form-control" name="review_status" id="review_status">
@@ -241,9 +190,19 @@
                                 @endif
                                 <span class="help-block">{{ trans('cruds.swn.fields.review_status_helper') }}</span>
                             </div>
+                
+                            <div class="form-group {{ $errors->has('review_date') ? 'has-error' : '' }}">
+                                <label class="required" for="review_date">{{ trans('cruds.swn.fields.review_date') }}</label>
+                                <input class="form-control date" type="text" name="review_date" id="review_date" value="{{ old('review_date', $swn->review_date) }}">
+                                @if($errors->has('review_date'))
+                                    <span class="help-block" role="alert">{{ $errors->first('review_date') }}</span>
+                                @endif
+                                <span class="help-block">{{ trans('cruds.swn.fields.review_date_helper') }}</span>
+                            </div>
+                           
                         </div>
 
-                        <legend><a onclick="HideSection(4)" id="element4"><i class="bi bi-eye"></i></a><b>  Section 4 : Disposition after Auditing Actions(Judge the status after Auditing the actual actions)</b></legend>
+                        <legend><a onclick="HideSection(4)" id="element4"><i class="bi bi-eye"></i></a><b>  Section III : Disposition after Auditing Actions(Judge the status after Auditing the actual actions)</b></legend>
                         <div id="section4">
                             <div class="form-group {{ $errors->has('auditing_date') ? 'has-error' : '' }}">
                                 <label class="required" for="auditing_date">{{ trans('cruds.swn.fields.auditing_date') }}</label>
@@ -482,16 +441,14 @@ Dropzone.options.descriptionImageDropzone = {
     var uploadedRootcaseImageMap = {}
 Dropzone.options.rootcaseImageDropzone = {
     url: '{{ route('admin.swns.storeMedia') }}',
-    maxFilesize: 500, // MB
-    acceptedFiles: '.jpeg,.jpg,.png,.gif',
+    maxFilesize: 5000, // MB
+    acceptedFiles: '.pdf',
     addRemoveLinks: true,
     headers: {
       'X-CSRF-TOKEN': "{{ csrf_token() }}"
     },
     params: {
-      size: 500,
-      width: 4096,
-      height: 4096
+      size: 500
     },
     success: function (file, response) {
       $('form').append('<input type="hidden" name="rootcase_image[]" value="' + response.name + '">')
@@ -670,10 +627,10 @@ if(documents_status == "1"){
     section1.style.display = "none";
     element1.innerHTML = '<i class="bi bi-eye-slash-fill"></i>';
     
-    var section3 = document.getElementById("section3");
-    var element3 = document.getElementById('element3');
-    section3.style.display = "none";
-    element3.innerHTML = '<i class="bi bi-eye-slash-fill"></i>';
+    // var section3 = document.getElementById("section3");
+    // var element3 = document.getElementById('element3');
+    // section3.style.display = "none";
+    // element3.innerHTML = '<i class="bi bi-eye-slash-fill"></i>';
 
     var section4 = document.getElementById("section4");
     var element4 = document.getElementById('element4');
@@ -714,10 +671,10 @@ if(documents_status == "3"){
     section2.style.display = "none";
     element2.innerHTML = '<i class="bi bi-eye-slash-fill"></i>';
 
-    var section3 = document.getElementById("section3");
-    var element3 = document.getElementById('element3');
-    section3.style.display = "none";
-    element3.innerHTML = '<i class="bi bi-eye-slash-fill"></i>';
+    // var section3 = document.getElementById("section3");
+    // var element3 = document.getElementById('element3');
+    // section3.style.display = "none";
+    // element3.innerHTML = '<i class="bi bi-eye-slash-fill"></i>';
 
     $("#responsible_id").attr('required', '');    //turns required on
     $("#review_status").attr('required', '');    //turns required on
@@ -735,10 +692,10 @@ if(documents_status == "4"){
     section2.style.display = "none";
     element2.innerHTML = '<i class="bi bi-eye-slash-fill"></i>';
 
-    var section3 = document.getElementById("section3");
-    var element3 = document.getElementById('element3');
-    section3.style.display = "none";
-    element3.innerHTML = '<i class="bi bi-eye-slash-fill"></i>';
+    // var section3 = document.getElementById("section3");
+    // var element3 = document.getElementById('element3');
+    // section3.style.display = "none";
+    // element3.innerHTML = '<i class="bi bi-eye-slash-fill"></i>';
 
     var section4 = document.getElementById("section4");
     var element4 = document.getElementById('element4');
@@ -789,5 +746,62 @@ function HideSection(idElement) {
     }
 }
 
+</script>
+
+<script>
+    var uploadedReplyDocumentMap = {}
+Dropzone.options.replyDocumentDropzone = {
+    url: '{{ route('admin.swns.storeMedia') }}',
+    maxFilesize: 5000, // MB
+    addRemoveLinks: true,
+    headers: {
+      'X-CSRF-TOKEN': "{{ csrf_token() }}"
+    },
+    params: {
+      size: 5000
+    },
+    success: function (file, response) {
+      $('form').append('<input type="hidden" name="reply_document[]" value="' + response.name + '">')
+      uploadedReplyDocumentMap[file.name] = response.name
+    },
+    removedfile: function (file) {
+      file.previewElement.remove()
+      var name = ''
+      if (typeof file.file_name !== 'undefined') {
+        name = file.file_name
+      } else {
+        name = uploadedReplyDocumentMap[file.name]
+      }
+      $('form').find('input[name="reply_document[]"][value="' + name + '"]').remove()
+    },
+    init: function () {
+@if(isset($swn) && $swn->reply_document)
+          var files =
+            {!! json_encode($swn->reply_document) !!}
+              for (var i in files) {
+              var file = files[i]
+              this.options.addedfile.call(this, file)
+              file.previewElement.classList.add('dz-complete')
+              $('form').append('<input type="hidden" name="reply_document[]" value="' + file.file_name + '">')
+            }
+@endif
+    },
+     error: function (file, response) {
+         if ($.type(response) === 'string') {
+             var message = response //dropzone sends it's own error messages in string
+         } else {
+             var message = response.errors.file
+         }
+         file.previewElement.classList.add('dz-error')
+         _ref = file.previewElement.querySelectorAll('[data-dz-errormessage]')
+         _results = []
+         for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+             node = _ref[_i]
+             _results.push(node.textContent = message)
+         }
+
+         return _results
+     }
+}
 </script>
 @endsection

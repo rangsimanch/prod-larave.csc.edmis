@@ -87,14 +87,6 @@
                                 </tr>
                                 <tr>
                                     <th>
-                                        {{ trans('cruds.ncr.fields.contractor_manager') }}
-                                    </th>
-                                    <td>
-                                        {{ $ncr->contractor_manager->name ?? '' }}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th>
                                         {{ trans('cruds.ncr.fields.documents_status') }}
                                     </th>
                                     <td>
@@ -103,26 +95,10 @@
                                 </tr>
                                 <tr>
                                     <th>
-                                        {{ trans('cruds.ncr.fields.issue_by') }}
-                                    </th>
-                                    <td>
-                                        {{ $ncr->issue_by->name ?? '' }}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th>
                                         {{ trans('cruds.ncr.fields.construction_specialist') }}
                                     </th>
                                     <td>
                                         {{ $ncr->construction_specialist->name ?? '' }}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th>
-                                        {{ trans('cruds.ncr.fields.related_specialist') }}
-                                    </th>
-                                    <td>
-                                        {{ $ncr->related_specialist->name ?? '' }}
                                     </td>
                                 </tr>
                                 <tr>

@@ -61,6 +61,7 @@ class Swn extends Model implements HasMedia
         'rootcase_image',
         'containment_image',
         'corrective_image',
+        'reply_document',
     ];
 
     protected $fillable = [
@@ -224,5 +225,10 @@ class Swn extends Model implements HasMedia
     public function create_by_construction_contract_id()
     {
         return $this->belongsTo(ConstructionContract::class, 'construction_contract_id');
+    }
+
+    public function getReplyDocumentAttribute()
+    {
+        return $this->getMedia('reply_document');
     }
 }
