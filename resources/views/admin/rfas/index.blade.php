@@ -234,7 +234,6 @@
     retrieve: true,
     aaSorting: [],
     fixedHeader: true,
-    stateSave: true,
     ajax: "{{ route('admin.rfas.index') }}",
     columns: [
       { data: 'placeholder', name: 'placeholder' },
