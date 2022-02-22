@@ -301,12 +301,16 @@ class NcnController extends Controller
         try {
             $mpdf = new \Mpdf\Mpdf([
                 'tempDir' =>  public_path('tmp'), 
-                'default_font' => 'sarabun_new'
+                // 'default_font' => 'sarabun_new',
+                'mode' => '+aCJK',
+                "autoScriptToLang" => true,
+                "autoLangToFont" => true,
+                
             ]);
           } catch (\Mpdf\MpdfException $e) {
               print "Creating an mPDF object failed with" . $e->getMessage();
           }
-        // $mpdf = new \Mpdf\Mpdf();
+
         // Check Report
         $dept_code = $ncn->dept_code->code ?? '';
         if($dept_code == "G"){
@@ -343,24 +347,24 @@ class NcnController extends Controller
         $cos = $ncn->construction_specialist->name ?? '';
         $related_specialist = $ncn->related_specialist->name ?? '';
 
-        $html = "<div style=\"font-size: 13px; text-align: center; font-weight: bold; color:#1F4E78; padding-top:25px;\">" . $project_name  . " " . $contract_name  ."</div>";
-        $html .= "<div style=\"font-size: 14px; font-weight: bold; color:#FFFFFF; position:absolute;top:115px;left:532px;\">" . $document_number  . "</div>";
+        $html = "<div style=\"font-size: 9px; text-align: center; font-weight: bold; color:#1F4E78; padding-top:25px;\">" . $project_name  . " " . $contract_name  ."</div>";
+        $html .= "<div style=\"font-size: 9px; font-weight: bold; color:#FFFFFF; position:absolute;top:117px;left:532px;\">" . $document_number  . "</div>";
         $html .= "<div style=\"padding-right:120px; font-size: 18px; font-weight: bold; position:absolute;top:175px;left:105px;\">" . $subject  . "</div>";
-        $html .= "<div style=\"padding-right:120px;font-size: 14px; position:absolute;top:731px;left:105px\">" . $attachment_description  . "</div>";
-        $html .= "<div style=\"padding-right:120px;font-size: 14px; position:absolute;top:780px;left:260px\">" . $pages_of_attachment  .  " จำนวน-แผ่น" . "</div>";
-        $html .= "<div style=\"font-size: 14px; font-weight: bold; position:absolute;top:805px;left:153px\">" . $textbox1  . "</div>";
-        $html .= "<div style=\"font-size: 14px; font-weight: bold; position:absolute;top:805px;left:375px\">" . $textbox2  . "</div>";
-        $html .= "<div style=\"font-size: 14px; font-weight: bold; position:absolute;top:805px;left:533px\">" . $textbox3  . "</div>";
-        $html .= "<div style=\"font-size: 12px; font-weight: bold; position:absolute;top:848px;left:110px\">" . $issuer  . "</div>";
-        $html .= "<div style=\"font-size: 12px; font-weight: bold; position:absolute;top:848px;left:325px\">" . $cos  . "</div>";
-        $html .= "<div style=\"font-size: 12px; font-weight: bold; position:absolute;top:848px;left:540\">" . $leader  . "</div>";
-        $html .= "<div style=\"font-size: 12px; position:absolute;top:893px;left:125px\">" . $issue_date  . "</div>";
-        $html .= "<div style=\"font-size: 12px; position:absolute;top:893px;left:340px\">" . $issue_date  . "</div>";
-        $html .= "<div style=\"font-size: 12px; position:absolute;top:893px;left:555px\">" . $issue_date  . "</div>";
+        $html .= "<div style=\"padding-right:120px;font-size: 10px; position:absolute;top:735px;left:105px\">" . $attachment_description  . "</div>";
+        $html .= "<div style=\"padding-right:120px;font-size: 10px; position:absolute;top:782px;left:260px\">" . $pages_of_attachment  .  " จำนวน-แผ่น" . "</div>";
+        $html .= "<div style=\"font-size: 10px; font-weight: bold; position:absolute;top:805px;left:153px\">" . $textbox1  . "</div>";
+        $html .= "<div style=\"font-size: 10px; font-weight: bold; position:absolute;top:805px;left:375px\">" . $textbox2  . "</div>";
+        $html .= "<div style=\"font-size: 10px; font-weight: bold; position:absolute;top:805px;left:528px\">" . $textbox3  . "</div>";
+        $html .= "<div style=\"font-size: 10px;  position:absolute;top:848px;left:110px\">" . $issuer  . "</div>";
+        $html .= "<div style=\"font-size: 10px;  position:absolute;top:848px;left:325px\">" . $cos  . "</div>";
+        $html .= "<div style=\"font-size: 10px;  position:absolute;top:848px;left:540\">" . $leader  . "</div>";
+        $html .= "<div style=\"font-size: 10px; position:absolute;top:893px;left:125px\">" . $issue_date  . "</div>";
+        $html .= "<div style=\"font-size: 10px; position:absolute;top:893px;left:340px\">" . $issue_date  . "</div>";
+        $html .= "<div style=\"font-size: 10px; position:absolute;top:893px;left:555px\">" . $issue_date  . "</div>";
 
         $mpdf->SetHTMLHeader($html,'0',true);
         $html = "<div style=\" padding-left: 80px; padding-right:40px; padding-bottom:-15px; \">";
-        $html .= "<div style=\"font-size: 14px; position:absolute;top:195px;left:105px;LINE-HEIGHT:14px;\">" . $description  . "</div>";
+        $html .= "<div style=\"font-size: 12px; position:absolute;top:195px;left:105px;LINE-HEIGHT:20px;\">" . $description  . "</div>";
         $html .= "</div>";
         
         $mpdf->WriteHTML($html);
