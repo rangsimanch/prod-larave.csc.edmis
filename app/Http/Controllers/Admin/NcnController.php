@@ -298,14 +298,15 @@ class NcnController extends Controller
     }
 
     public function createReportNCN(ncn $ncn){
-        try {
-            $mpdf = new \Mpdf\Mpdf([
-                'tempDir' =>  public_path('tmp'), 
-                'default_font' => 'sarabun_new'
-            ]);
-          } catch (\Mpdf\MpdfException $e) {
-              print "Creating an mPDF object failed with" . $e->getMessage();
-          }
+        // try {
+        //     $mpdf = new \Mpdf\Mpdf([
+        //         'tempDir' =>  public_path('tmp'), 
+        //         'default_font' => 'sarabun_new'
+        //     ]);
+        //   } catch (\Mpdf\MpdfException $e) {
+        //       print "Creating an mPDF object failed with" . $e->getMessage();
+        //   }
+        $mpdf = new \Mpdf\Mpdf();
         // Check Report
         $dept_code = $ncn->dept_code->code ?? '';
         if($dept_code == "G"){
