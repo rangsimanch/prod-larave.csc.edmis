@@ -260,6 +260,10 @@
     orderCellsTop: true,
     order: [[ 2, 'desc' ]],
     pageLength: 10,
+    aLengthMenu: [
+        [5, 10, 25, 50, 100, 200, -1],
+        [5, 10, 25, 50, 100, 200, "All"]
+    ],
   };
   let table = $('.datatable-Rfa').DataTable(dtOverrideGlobals)
   $('a[data-toggle="tab"]').on('shown.bs.tab click', function(e){
