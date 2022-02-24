@@ -188,6 +188,10 @@
     orderCellsTop: true,
     order: [[ 2, 'desc' ]],
     pageLength: 25,
+    aLengthMenu: [
+        [5, 10, 25, 50, 100, 200, 1000],
+        [5, 10, 25, 50, 100, 200, 1000]
+    ],
   };
   let table = $('.datatable-Ncr').DataTable(dtOverrideGlobals);
   $('a[data-toggle="tab"]').on('shown.bs.tab click', function(e){

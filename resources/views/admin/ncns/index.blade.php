@@ -212,6 +212,10 @@
     orderCellsTop: true,
     order: [[ 3, 'desc' ]],
     pageLength: 50,
+    aLengthMenu: [
+        [5, 10, 25, 50, 100, 200, 1000],
+        [5, 10, 25, 50, 100, 200, 1000]
+    ],
   };
   let table = $('.datatable-Ncn').DataTable(dtOverrideGlobals);
   $('a[data-toggle="tab"]').on('shown.bs.tab click', function(e){
