@@ -405,7 +405,7 @@ class SwnController extends Controller
         // $tplId = $mpdf->ImportPage($pagecount);
         // $mpdf->UseTemplate($tplId);      
         $mpdf->SetDocTemplate(public_path('pdf-asset/SWN_Template_Section_1.pdf'),true);
-        $mpdf->AddPage('P','','','','','','',105,140);
+        $mpdf->AddPage('P','','','','','','',107,140);
 
 
         // Setting Data
