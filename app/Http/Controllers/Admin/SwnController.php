@@ -444,7 +444,6 @@ class SwnController extends Controller
             $html .= "<div style=\"font-size: 18px;font-weight: bold; position:absolute;top:301px;left:663px;\">" . "X"  . "</div>";
         }
         $html .= "<div style=\"font-size: 12px; padding-right:80px; position:absolute;top:316px;left:240px;\">" . $ref_doc  . "</div>";
-        $html .= "<div style=\"font-size: 16px; padding-right:80px; position:absolute;top:380px;left:120px;\">" . $description  . "</div>";
         if($issuer_name != ''){
             $html .= "<div style=\"font-size: 13px; font-weight: bold; position:absolute;top:606px;left:130px;\">( " . $issuer_name  . " )</div>";
             $html .= "<div style=\"font-size: 13px; font-weight: bold; position:absolute;top:620px;left:135px;\">" . $issuer_position  . "</div>";
@@ -511,9 +510,17 @@ class SwnController extends Controller
         $html .= "<div style=\"font-size: 14px; position:absolute;top:985px;left:160px;\">" . $auditing_date  . "</div>";
         $html .= "<div style=\"font-size: 14px; position:absolute;top:985px;left:360px;\">" . $auditing_date  . "</div>";
         $html .= "<div style=\"font-size: 14px; position:absolute;top:985px;left:600px;\">" . $auditing_date  . "</div>";
+       
+        $mpdf->SetHTMLHeader($html,'0',true);
+        $html = "<div style=\" padding-left: 80px; padding-right:40px; padding-bottom:-15px; \">";
+        $html .= "<div style=\"font-size: 16px; padding-right:80px; position:absolute;top:380px;left:120px;\">" . $description  . "</div>";
+        $html .= "</div>";
+       
         $mpdf->WriteHTML($html);
+        $html = "";   
+        $mpdf->SetHTMLHeader($html,'0',true);
         
-        
+
         // Image Attacment
         $count_image = count($swn->description_image);
         if($count_image > 0){
