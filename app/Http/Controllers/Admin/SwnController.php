@@ -400,9 +400,14 @@ class SwnController extends Controller
           } catch (\Mpdf\MpdfException $e) {
               print "Creating an mPDF object failed with" . $e->getMessage();
           }
-        $pagecount = $mpdf->SetSourceFile(public_path('pdf-asset/SWN_Template_Section_1.pdf'));
-        $tplId = $mpdf->ImportPage($pagecount);
-        $mpdf->UseTemplate($tplId);      
+        // $pagecount = $mpdf->SetSourceFile(public_path('pdf-asset/SWN_Template_Section_1.pdf'));
+
+        // $tplId = $mpdf->ImportPage($pagecount);
+        // $mpdf->UseTemplate($tplId);      
+        $mpdf->SetDocTemplate(public_path('pdf-asset/SWN_Template_Section_1.pdf'),true);
+        $mpdf->AddPage('P','','','','','','',55,130);
+
+
         // Setting Data
         $contract_name = 'Contract ' . $swn->construction_contract->code . ' : ' . $swn->construction_contract->name;
         $send_to = "Project Manager";
@@ -438,7 +443,7 @@ class SwnController extends Controller
         if($reply_ncr == "No"){
             $html .= "<div style=\"font-size: 18px;font-weight: bold; position:absolute;top:301px;left:663px;\">" . "X"  . "</div>";
         }
-        $html .= "<div style=\"font-size: 12px; LINE-HEIGHT:12px; padding-right:80px; position:absolute;top:316px;left:240px;\">" . $ref_doc  . "</div>";
+        $html .= "<div style=\"font-size: 12px; padding-right:80px; position:absolute;top:316px;left:240px;\">" . $ref_doc  . "</div>";
         $html .= "<div style=\"font-size: 16px; padding-right:80px; position:absolute;top:380px;left:120px;\">" . $description  . "</div>";
         if($issuer_name != ''){
             $html .= "<div style=\"font-size: 13px; font-weight: bold; position:absolute;top:606px;left:130px;\">( " . $issuer_name  . " )</div>";
@@ -508,7 +513,7 @@ class SwnController extends Controller
         $html .= "<div style=\"font-size: 14px; position:absolute;top:985px;left:600px;\">" . $auditing_date  . "</div>";
         $mpdf->WriteHTML($html);
         
-
+        
         // Image Attacment
         $count_image = count($swn->description_image);
         if($count_image > 0){
