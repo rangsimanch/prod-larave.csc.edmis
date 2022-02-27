@@ -261,10 +261,9 @@
     order: [[ 2, 'desc' ]],
     pageLength: 10,
     aLengthMenu: [
-        [5, 10, 25, 50, 100, 1000, 20000],
-        [5, 10, 25, 50, 100, 1000, 20000]
+        [5, 10, 25, 50, 100, 1000, 5000],
+        [5, 10, 25, 50, 100, 1000, 5000]
     ],
-    iDisplayLength: -1
   };
   let table = $('.datatable-Rfa').DataTable(dtOverrideGlobals)
   $('a[data-toggle="tab"]').on('shown.bs.tab click', function(e){
