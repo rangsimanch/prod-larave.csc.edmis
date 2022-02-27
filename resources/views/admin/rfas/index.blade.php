@@ -261,8 +261,8 @@
     order: [[ 2, 'desc' ]],
     pageLength: 10,
     aLengthMenu: [
-        [5, 10, 25, 50, 100, 200, 1000],
-        [5, 10, 25, 50, 100, 200, 1000]
+        [5, 10, 25, 50, 100, 200, 1000, -1],
+        [5, 10, 25, 50, 100, 200, 1000, "all"]
     ],
   };
   let table = $('.datatable-Rfa').DataTable(dtOverrideGlobals)
