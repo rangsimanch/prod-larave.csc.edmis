@@ -262,8 +262,9 @@
     pageLength: 10,
     aLengthMenu: [
         [5, 10, 25, 50, 100, 200, 1000, -1],
-        [5, 10, 25, 50, 100, 200, 1000, "all"]
+        [5, 10, 25, 50, 100, 200, 1000, "ALL"]
     ],
+    iDisplayLength: -1
   };
   let table = $('.datatable-Rfa').DataTable(dtOverrideGlobals)
   $('a[data-toggle="tab"]').on('shown.bs.tab click', function(e){
