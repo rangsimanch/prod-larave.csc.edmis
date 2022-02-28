@@ -30,9 +30,6 @@
                                 <th>
                                     {{ trans('cruds.srtPdDocument.fields.refer_documents') }}
                                 </th>
-                                <!-- <th>
-                                    {{ trans('cruds.srtPdDocument.fields.refer_documents') }}
-                                </th> -->
                                 <th>
                                     {{ trans('cruds.srtInputDocument.fields.subject') }}
                                 </th>
@@ -158,7 +155,8 @@
     ajax: "{{ route('admin.srt-pd-documents.index') }}",
     columns: [
       { data: 'placeholder', name: 'placeholder' },
-{ data: 'id', name: 'id', visible: false},
+{ data: 'refer_documents.document_number', name: 'refer_documents.document_number' },
+// { data: 'id', name: 'id', visible: false},
 // { data: 'refer_documents.file_upload_2', name: 'refer_documents.file_upload_2', sortable: false, searchable: false },
 { data: 'refer_documents.subject', name: 'refer_documents.subject' },
 { data: 'process_date', name: 'process_date' },
