@@ -437,7 +437,7 @@ class SwnController extends Controller
         $html = "<div style=\"font-size: 10px; text-align: center; font-weight: bold; color:#1F4E78; padding-top:82px;\">" . $contract_name  . "</div>";
         $html .= "<div style=\"font-size: 12px; position:absolute;top:195px;left:120px;\">" . $send_to  . "</div>";
         $html .= "<div style=\"font-size: 12px; position:absolute;top:195px;left:370px;\">" . $submit_date  . "</div>";
-        $html .= "<div style=\"font-size: 10px; position:absolute;top:195px;left:515px;\">" . $document_number  . "</div>";
+        $html .= "<div style=\"font-size: 10px; position:absolute;top:195px;left:510px;\">" . $document_number  . "</div>";
         $html .= "<div style=\"font-size: 12px; padding-right:80px; position:absolute;top:244px;left:200px;\">" . $subject  . "</div>";
         $html .= "<div style=\"font-size: 12px; position:absolute;top:305px;left:150px;\">" . $location  . "</div>";
         
