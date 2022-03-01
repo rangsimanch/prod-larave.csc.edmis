@@ -395,7 +395,11 @@ class SwnController extends Controller
         try {
             $mpdf = new \Mpdf\Mpdf([
                 'tempDir' =>  public_path('tmp'), 
-                'default_font' => 'sarabun_new'
+                // 'default_font' => 'sarabun_new',
+                'mode' => '+aCJK',
+                "autoScriptToLang" => true,
+                "autoLangToFont" => true,
+                
             ]);
           } catch (\Mpdf\MpdfException $e) {
               print "Creating an mPDF object failed with" . $e->getMessage();
@@ -430,90 +434,90 @@ class SwnController extends Controller
         $review_status = $swn->review_status ?? '';
         $auditing_status = $swn->auditing_status ?? '';
 
-        $html = "<div style=\"font-size: 16px; text-align: center; font-weight: bold; color:#1F4E78; padding-top:82px;\">" . $contract_name  . "</div>";
-        $html .= "<div style=\"font-size: 18px; position:absolute;top:190px;left:120px;\">" . $send_to  . "</div>";
-        $html .= "<div style=\"font-size: 18px; position:absolute;top:190px;left:370px;\">" . $submit_date  . "</div>";
-        $html .= "<div style=\"font-size: 16px; position:absolute;top:190px;left:520px;\">" . $document_number  . "</div>";
-        $html .= "<div style=\"font-size: 15px; padding-right:80px; position:absolute;top:241px;left:200px;\">" . $subject  . "</div>";
-        $html .= "<div style=\"font-size: 16px; position:absolute;top:303px;left:150px;\">" . $location  . "</div>";
+        $html = "<div style=\"font-size: 10px; text-align: center; font-weight: bold; color:#1F4E78; padding-top:82px;\">" . $contract_name  . "</div>";
+        $html .= "<div style=\"font-size: 12px; position:absolute;top:195px;left:120px;\">" . $send_to  . "</div>";
+        $html .= "<div style=\"font-size: 12px; position:absolute;top:195px;left:370px;\">" . $submit_date  . "</div>";
+        $html .= "<div style=\"font-size: 10px; position:absolute;top:195px;left:520px;\">" . $document_number  . "</div>";
+        $html .= "<div style=\"font-size: 12px; padding-right:80px; position:absolute;top:244px;left:200px;\">" . $subject  . "</div>";
+        $html .= "<div style=\"font-size: 12px; position:absolute;top:305px;left:150px;\">" . $location  . "</div>";
         
         if($reply_ncr == "Yes"){
-            $html .= "<div style=\"font-size: 18px;font-weight: bold; position:absolute;top:301px;left:609px;\">" . "X"  . "</div>";
+            $html .= "<div style=\"font-size: 18px;font-weight: bold; position:absolute;top:299px;left:607px;\">" . "X"  . "</div>";
         }
         if($reply_ncr == "No"){
-            $html .= "<div style=\"font-size: 18px;font-weight: bold; position:absolute;top:301px;left:663px;\">" . "X"  . "</div>";
+            $html .= "<div style=\"font-size: 18px;font-weight: bold; position:absolute;top:299px;left:660px;\">" . "X"  . "</div>";
         }
-        $html .= "<div style=\"font-size: 12px; padding-right:80px; position:absolute;top:316px;left:240px;\">" . $ref_doc  . "</div>";
+        $html .= "<div style=\"font-size: 10px; padding-right:80px; position:absolute;top:320px;left:240px;\">" . $ref_doc  . "</div>";
         if($issuer_name != ''){
-            $html .= "<div style=\"font-size: 13px; font-weight: bold; position:absolute;top:606px;left:130px;\">( " . $issuer_name  . " )</div>";
-            $html .= "<div style=\"font-size: 13px; font-weight: bold; position:absolute;top:620px;left:135px;\">" . $issuer_position  . "</div>";
+            $html .= "<div style=\"font-size: 8px; font-weight: bold; position:absolute;top:606px;left:135px;\">( " . $issuer_name  . " )</div>";
+            $html .= "<div style=\"font-size: 8px; font-weight: bold; position:absolute;top:625px;left:135px;\">" . $issuer_position  . "</div>";
         }
         if($qa_name != ''){
-            $html .= "<div style=\"font-size: 13px; font-weight: bold; position:absolute;top:606px;left:340px;\">( " . $qa_name  . " )</div>";
-            $html .= "<div style=\"font-size: 13px; font-weight: bold; position:absolute;top:620px;left:345px;\">" . $qa_position  . "</div>";
+            $html .= "<div style=\"font-size: 8px; font-weight: bold; position:absolute;top:606px;left:345px;\">( " . $qa_name  . " )</div>";
+            $html .= "<div style=\"font-size: 8px; font-weight: bold; position:absolute;top:625px;left:345px;\">" . $qa_position  . "</div>";
         }
         if($cos_name != ''){
-            $html .= "<div style=\"font-size: 13px; font-weight: bold; position:absolute;top:606px;left:592px;\">( " . $cos_name  . " )</div>";
-            $html .= "<div style=\"font-size: 13px; font-weight: bold; position:absolute;top:620px;left:597px;\">" . $cos_position  . "</div>";
+            $html .= "<div style=\"font-size: 8px; font-weight: bold; position:absolute;top:606px;left:597px;\">( " . $cos_name  . " )</div>";
+            $html .= "<div style=\"font-size: 8px; font-weight: bold; position:absolute;top:625px;left:597px;\">" . $cos_position  . "</div>";
         }
-        $html .= "<div style=\"font-size: 14px; position:absolute;top:643px;left:137px;\">" . $submit_date  . "</div>";
-        $html .= "<div style=\"font-size: 14px; position:absolute;top:643px;left:345px;\">" . $submit_date  . "</div>";
-        $html .= "<div style=\"font-size: 14px; position:absolute;top:643px;left:599px;\">" . $submit_date  . "</div>";
+        $html .= "<div style=\"font-size: 8px; position:absolute;top:648px;left:137px;\">" . $submit_date  . "</div>";
+        $html .= "<div style=\"font-size: 8px; position:absolute;top:648px;left:345px;\">" . $submit_date  . "</div>";
+        $html .= "<div style=\"font-size: 8px; position:absolute;top:648px;left:599px;\">" . $submit_date  . "</div>";
 
         // Review Section
         if($review_status == "1"){
-            $html .= "<div style=\"font-size: 18px; font-weight: bold; position:absolute;top:715px;left:104px;\">" . "X"  . "</div>";
+            $html .= "<div style=\"font-size: 16px; font-weight: bold; position:absolute;top:715px;left:102px;\">" . "X"  . "</div>";
         }
         if($review_status == "2"){
-            $html .= "<div style=\"font-size: 18px; font-weight: bold; position:absolute;top:715px;left:214px;\">" . "X"  . "</div>";
+            $html .= "<div style=\"font-size: 16px; font-weight: bold; position:absolute;top:715px;left:212px;\">" . "X"  . "</div>";
         }
         if($review_status == "3"){
-            $html .= "<div style=\"font-size: 18px; font-weight: bold; position:absolute;top:715px;left:334px;\">" . "X"  . "</div>";
+            $html .= "<div style=\"font-size: 16px; font-weight: bold; position:absolute;top:715px;left:332px;\">" . "X"  . "</div>";
         }
 
         if($issuer_name != ''){
-            $html .= "<div style=\"font-size: 13px; font-weight: bold; position:absolute;top:809px;left:147px;\">( " . $issuer_name  . " )</div>";
-            $html .= "<div style=\"font-size: 13px; font-weight: bold; position:absolute;top:820px;left:155px;\">" . $issuer_position  . "</div>";
+            $html .= "<div style=\"font-size: 8px; font-weight: bold; position:absolute;top:809px;left:155px;\">( " . $issuer_name  . " )</div>";
+            $html .= "<div style=\"font-size: 8px; font-weight: bold; position:absolute;top:825px;left:155px;\">" . $issuer_position  . "</div>";
 
         }
         if($qa_name != ''){
-            $html .= "<div style=\"font-size: 13px; font-weight: bold; position:absolute;top:809px;left:583px;\">( " . $qa_name  . " )</div>";
-            $html .= "<div style=\"font-size: 13px; font-weight: bold; position:absolute;top:820px;left:586px;\">" . $qa_position  . " </div>";
+            $html .= "<div style=\"font-size: 8px; font-weight: bold; position:absolute;top:809px;left:586px;\">( " . $qa_name  . " )</div>";
+            $html .= "<div style=\"font-size: 8px; font-weight: bold; position:absolute;top:825px;left:586px;\">" . $qa_position  . " </div>";
 
         }
-        $html .= "<div style=\"font-size: 14px; position:absolute;top:835px;left:160px;\">" . $review_date  . "</div>";
-        $html .= "<div style=\"font-size: 14px; position:absolute;top:835px;left:605px;\">" . $review_date  . "</div>";
+        $html .= "<div style=\"font-size: 8px; position:absolute;top:840px;left:160px;\">" . $review_date  . "</div>";
+        $html .= "<div style=\"font-size: 8px; position:absolute;top:840px;left:605px;\">" . $review_date  . "</div>";
 
         if($auditing_status == "1"){
-            $html .= "<div style=\"font-size: 18px; font-weight: bold; position:absolute;top:885px;left:104px;\">" . "X"  . "</div>";
+            $html .= "<div style=\"font-size: 16px; font-weight: bold; position:absolute;top:886px;left:102px;\">" . "X"  . "</div>";
         }
         if($auditing_status == "2"){
-            $html .= "<div style=\"font-size: 18px; font-weight: bold; position:absolute;top:910px;left:104px;\">" . "X"  . "</div>";
+            $html .= "<div style=\"font-size: 16px; font-weight: bold; position:absolute;top:911px;left:102px;\">" . "X"  . "</div>";
         }
 
         // Auditing Section
         if($issuer_name != ''){
-            $html .= "<div style=\"font-size: 13px; font-weight: bold; position:absolute;top:956px;left:150px;\">( " . $issuer_name  . " )</div>";
-            $html .= "<div style=\"font-size: 13px; font-weight: bold; position:absolute;top:973px;left:155px;\">" . $issuer_position  . "</div>";
+            $html .= "<div style=\"font-size: 8px; font-weight: bold; position:absolute;top:956px;left:155px;\">( " . $issuer_name  . " )</div>";
+            $html .= "<div style=\"font-size: 8px; font-weight: bold; position:absolute;top:975px;left:155px;\">" . $issuer_position  . "</div>";
 
         }
         if($qa_name != ''){
-            $html .= "<div style=\"font-size: 13px; font-weight: bold; position:absolute;top:956px;left:345px;\">( " . $qa_name  . " )</div>";
-            $html .= "<div style=\"font-size: 13px; font-weight: bold; position:absolute;top:972px;left:354px;\">" . $qa_position  . "</div>";
+            $html .= "<div style=\"font-size: 8px; font-weight: bold; position:absolute;top:956px;left:354px;\">( " . $qa_name  . " )</div>";
+            $html .= "<div style=\"font-size: 8px; font-weight: bold; position:absolute;top:975px;left:354px;\">" . $qa_position  . "</div>";
 
         }
         if($cos_name != ''){
-            $html .= "<div style=\"font-size: 13px; font-weight: bold; position:absolute;top:960px;left:583px;\">( " . $cos_name  . " )</div>";
-            $html .= "<div style=\"font-size: 13px; font-weight: bold; position:absolute;top:972px;left:591px;\">" . $cos_position  . "</div>";
+            $html .= "<div style=\"font-size: 8px; font-weight: bold; position:absolute;top:960px;left:591px;\">( " . $cos_name  . " )</div>";
+            $html .= "<div style=\"font-size: 8px; font-weight: bold; position:absolute;top:975px;left:591px;\">" . $cos_position  . "</div>";
             
         }
-        $html .= "<div style=\"font-size: 14px; position:absolute;top:985px;left:160px;\">" . $auditing_date  . "</div>";
-        $html .= "<div style=\"font-size: 14px; position:absolute;top:985px;left:360px;\">" . $auditing_date  . "</div>";
-        $html .= "<div style=\"font-size: 14px; position:absolute;top:985px;left:600px;\">" . $auditing_date  . "</div>";
+        $html .= "<div style=\"font-size: 8px; position:absolute;top:990px;left:160px;\">" . $auditing_date  . "</div>";
+        $html .= "<div style=\"font-size: 8px; position:absolute;top:990px;left:360px;\">" . $auditing_date  . "</div>";
+        $html .= "<div style=\"font-size: 8px; position:absolute;top:990px;left:600px;\">" . $auditing_date  . "</div>";
        
         $mpdf->SetHTMLHeader($html,'0',true);
         $html = "<div style=\" padding-left: 80px; padding-right:40px; padding-bottom:-15px; \">";
-        $html .= "<div style=\"font-size: 16px; padding-right:80px; position:absolute;top:380px;left:120px;\">" . $description  . "</div>";
+        $html .= "<div style=\"font-size: 10px; padding-right:80px; position:absolute;top:380px;left:120px;\">" . $description  . "</div>";
         $html .= "</div>";
        
         $mpdf->WriteHTML($html);
