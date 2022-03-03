@@ -355,9 +355,32 @@ class NcnController extends Controller
         $html .= "<div style=\"font-size: 10px; font-weight: bold; position:absolute;top:805px;left:153px\">" . $textbox1  . "</div>";
         $html .= "<div style=\"font-size: 10px; font-weight: bold; position:absolute;top:805px;left:375px\">" . $textbox2  . "</div>";
         $html .= "<div style=\"font-size: 10px; font-weight: bold; position:absolute;top:805px;left:528px\">" . $textbox3  . "</div>";
-        $html .= "<div style=\"font-size: 10px;  position:absolute;top:848px;left:110px\">" . $issuer  . "</div>";
-        $html .= "<div style=\"font-size: 10px;  position:absolute;top:848px;left:325px\">" . $cos  . "</div>";
-        $html .= "<div style=\"font-size: 10px;  position:absolute;top:848px;left:540\">" . $leader  . "</div>";
+        
+        if($issuer != ''){
+            if(!is_null($ncn->issue_by->signature)){
+                $html .= "<div style=\"font-weight: bold; position:absolute;top:810;left:150px;\">
+                <img width=\"30%\" height=\"20%\" src=\"" . $ncn->issue_by->signature->getPath()
+                . "\"></div>";
+            }
+            $html .= "<div style=\"font-size: 10px;  position:absolute;top:848px;left:110px\">" . $issuer  . "</div>";
+        }
+        if($cos != ''){
+            if(!is_null($ncn->construction_specialist->signature)){
+                $html .= "<div style=\"font-weight: bold; position:absolute;top:810;left:365px;\">
+                <img width=\"35%\" height=\"25%\" src=\"" . $ncn->construction_specialist->signature->getPath()
+                . "\"></div>";
+            }
+            $html .= "<div style=\"font-size: 10px;  position:absolute;top:848px;left:325px\">" . $cos  . "</div>";
+        }
+        if($leader != ''){
+            if(!is_null($ncn->leader->signature)){
+                $html .= "<div style=\"font-weight: bold; position:absolute;top:810;left:585px;\">
+                <img width=\"45%\" height=\"35%\" src=\"" . $ncn->leader->signature->getPath()
+                . "\"></div>";
+            }
+            $html .= "<div style=\"font-size: 10px;  position:absolute;top:848px;left:540\">" . $leader  . "</div>";
+        }
+
         $html .= "<div style=\"font-size: 10px; position:absolute;top:893px;left:125px\">" . $issue_date  . "</div>";
         $html .= "<div style=\"font-size: 10px; position:absolute;top:893px;left:340px\">" . $issue_date  . "</div>";
         $html .= "<div style=\"font-size: 10px; position:absolute;top:893px;left:555px\">" . $issue_date  . "</div>";

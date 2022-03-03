@@ -13,3 +13,16 @@ yarn-error.log
 storage/tmp/uploads/5e353ab014020_RFA-0001.pdf
 storage/tmp/uploads/5e35a52a38733_RFA-0001.pdf
 *.json
+public/tmp/mpdf/ttfontdata/dejavuserifcondensed.cw.dat
+public/tmp/mpdf/ttfontdata/dejavuserifcondensed.gid.dat
+public/tmp/mpdf/ttfontdata/dejavuserifcondensedB.cw.dat
+public/tmp/mpdf/ttfontdata/dejavuserifcondensedB.gid.dat
+public/tmp/mpdf/ttfontdata/garuda.cgm
+public/tmp/mpdf/ttfontdata/garuda.cw
+public/tmp/mpdf/ttfontdata/garuda.cw.dat
+public/tmp/mpdf/ttfontdata/garuda.gid.dat
+public/tmp/mpdf/ttfontdata/garuda.GSUBGPOStables.dat
+public/tmp/mpdf/ttfontdata/garuda.ps.z
+public/tmp/mpdf/ttfontdata/garudaB.cw.dat
+public/tmp/mpdf/ttfontdata/garudaB.gid.dat
+public/tmp/mpdf/ttfontdata/garudaB.GSUBGPOStables.dat
