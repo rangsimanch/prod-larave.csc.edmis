@@ -461,7 +461,7 @@ class SwnController extends Controller
         if($qa_name != ''){
             if(!is_null($swn->related_specialist->signature)){
                 $html .= "<div style=\"font-weight: bold; position:absolute;top:570;left:360px;\">
-                <img width=\"35%\" height=\"35%\" src=\"" . $swn->related_specialist->signature->getPath()
+                <img width=\"35%\" height=\"25%\" src=\"" . $swn->related_specialist->signature->getPath()
                 . "\"></div>";
             }
             $html .= "<div style=\"font-size: 8px; font-weight: bold; position:absolute;top:606px;left:345px;\">( " . $qa_name  . " )</div>";
