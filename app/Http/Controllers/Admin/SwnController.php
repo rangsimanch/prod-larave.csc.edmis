@@ -451,7 +451,7 @@ class SwnController extends Controller
         if($issuer_name != ''){
             if(!is_null($swn->issue_by->signature)){
                 $html .= "<div style=\"font-weight: bold; position:absolute;top:570;left:145px;\">
-                <img width=\"30%\" height=\"25%\" src=\"" . $swn->issue_by->signature->getPath()
+                <img width=\"30%\" height=\"20%\" src=\"" . $swn->issue_by->signature->getPath()
                 . "\"></div>";
             }
             $html .= "<div style=\"font-size: 8px; font-weight: bold; position:absolute;top:606px;left:135px;\">( " . $issuer_name  . " )</div>";
@@ -461,7 +461,7 @@ class SwnController extends Controller
         if($qa_name != ''){
             if(!is_null($swn->related_specialist->signature)){
                 $html .= "<div style=\"font-weight: bold; position:absolute;top:570;left:360px;\">
-                <img width=\"35%\" height=\"30%\" src=\"" . $swn->related_specialist->signature->getPath()
+                <img width=\"35%\" height=\"35%\" src=\"" . $swn->related_specialist->signature->getPath()
                 . "\"></div>";
             }
             $html .= "<div style=\"font-size: 8px; font-weight: bold; position:absolute;top:606px;left:345px;\">( " . $qa_name  . " )</div>";
@@ -471,7 +471,7 @@ class SwnController extends Controller
         if($cos_name != ''){
             if(!is_null($swn->construction_specialist->signature)){
                 $html .= "<div style=\"font-weight: bold; position:absolute;top:570;left:615;\">
-                <img  width=\"50%\" height=\"45%\" src=\"" . $swn->construction_specialist->signature->getPath()
+                <img  width=\"50%\" height=\"40%\" src=\"" . $swn->construction_specialist->signature->getPath()
                 . "\"></div>";
             }
             $html .= "<div style=\"font-size: 8px; font-weight: bold; position:absolute;top:606px;left:597px;\">( " . $cos_name  . " )</div>";
@@ -495,7 +495,7 @@ class SwnController extends Controller
         if($issuer_name != ''){
             if(!is_null($swn->issue_by->signature)){
                 $html .= "<div style=\"font-weight: bold; position:absolute;top:775;left:160px;\">
-                <img width=\"30%\" height=\"25%\" src=\"" . $swn->issue_by->signature->getPath()
+                <img width=\"30%\" height=\"20%\" src=\"" . $swn->issue_by->signature->getPath()
                 . "\"></div>";
             }
             $html .= "<div style=\"font-size: 8px; font-weight: bold; position:absolute;top:809px;left:155px;\">( " . $issuer_name  . " )</div>";
@@ -505,7 +505,7 @@ class SwnController extends Controller
         if($qa_name != ''){
             if(!is_null($swn->related_specialist->signature)){
                 $html .= "<div style=\"font-weight: bold; position:absolute;top:770;left:590px;\">
-                <img width=\"50%\" height=\"45%\" src=\"" . $swn->related_specialist->signature->getPath()
+                <img width=\"50%\" height=\"40%\" src=\"" . $swn->related_specialist->signature->getPath()
                 . "\"></div>";
             }
             $html .= "<div style=\"font-size: 8px; font-weight: bold; position:absolute;top:809px;left:586px;\">( " . $qa_name  . " )</div>";
@@ -526,7 +526,7 @@ class SwnController extends Controller
         if($issuer_name != ''){
             if(!is_null($swn->issue_by->signature)){
                 $html .= "<div style=\"font-weight: bold; position:absolute;top:923;left:160px;\">
-                <img width=\"30%\" height=\"25%\" src=\"" . $swn->issue_by->signature->getPath()
+                <img width=\"30%\" height=\"20%\" src=\"" . $swn->issue_by->signature->getPath()
                 . "\"></div>";
             }
             $html .= "<div style=\"font-size: 8px; font-weight: bold; position:absolute;top:956px;left:155px;\">( " . $issuer_name  . " )</div>";
@@ -536,7 +536,7 @@ class SwnController extends Controller
         if($qa_name != ''){
             if(!is_null($swn->related_specialist->signature)){
                 $html .= "<div style=\"font-weight: bold; position:absolute;top:923;left:360px;\">
-                <img width=\"35%\" height=\"30%\" src=\"" . $swn->related_specialist->signature->getPath()
+                <img width=\"35%\" height=\"25%\" src=\"" . $swn->related_specialist->signature->getPath()
                 . "\"></div>";
             }
             $html .= "<div style=\"font-size: 8px; font-weight: bold; position:absolute;top:956px;left:354px;\">( " . $qa_name  . " )</div>";
@@ -546,7 +546,7 @@ class SwnController extends Controller
         if($cos_name != ''){
             if(!is_null($swn->construction_specialist->signature)){
                 $html .= "<div style=\"font-weight: bold; position:absolute;top:923;left:595px;\">
-                <img  width=\"50%\" height=\"45%\" src=\"" . $swn->construction_specialist->signature->getPath()
+                <img  width=\"50%\" height=\"40%\" src=\"" . $swn->construction_specialist->signature->getPath()
                 . "\"></div>";
             }
             $html .= "<div style=\"font-size: 8px; font-weight: bold; position:absolute;top:960px;left:591px;\">( " . $cos_name  . " )</div>";
