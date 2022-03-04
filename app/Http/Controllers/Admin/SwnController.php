@@ -427,9 +427,9 @@ class SwnController extends Controller
         $issuer_name = $swn->issue_by->name ?? '';
         $issuer_position = $swn->issue_by->jobtitle->name ?? '';
         $qa_name = $swn->related_specialist->name ?? '';
-        $qa_position = "Quality Assurance Specialist";
+        $qa_position = $swn->related_specialist->jobtitle->name ?? '';
         $cos_name = $swn->construction_specialist->name ?? '';
-        $cos_position = "Construction Specialist";
+        $cos_position = $swn->construction_specialist->jobtitle->name ?? '';
 
         $review_status = $swn->review_status ?? '';
         $auditing_status = $swn->auditing_status ?? '';
