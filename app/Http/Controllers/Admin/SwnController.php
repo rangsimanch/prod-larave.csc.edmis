@@ -600,9 +600,8 @@ class SwnController extends Controller
                 }
             }
             $mpdf->WriteHTML($html);
-            $mpdf->SetDocTemplate("");  
         }
-
+        $mpdf->SetDocTemplate(""); 
         foreach($swn->document_attachment as $attachment){ 
             try{
                 $pagecount = $mpdf->SetSourceFile($attachment->getPath());
