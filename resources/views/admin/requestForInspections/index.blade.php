@@ -91,7 +91,7 @@
                                 </td>
 
                                 <td>
-                                    <select class="search">
+                                    <select class="search" style="width:70%">
                                         <option value>{{ trans('global.all') }}</option>
                                         @foreach($bo_qs as $key => $item)
                                             <option value="{{ $item->name }}">{{ $item->name }}</option>
