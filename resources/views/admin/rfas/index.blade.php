@@ -292,8 +292,6 @@ table.on('column-visibility.dt', function(e, settings, column, state) {
           visibleColumnsIndexes.push(colIdx);
       });
   })
-
-table.state.clear();
 });
 
 </script>
