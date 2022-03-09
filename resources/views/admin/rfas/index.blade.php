@@ -233,7 +233,6 @@
     serverSide: true,
     retrieve: true,
     aaSorting: [],
-    fixedHeader: true,
     ajax: "{{ route('admin.rfas.index') }}",
     columns: [
       { data: 'placeholder', name: 'placeholder' },
@@ -255,13 +254,13 @@
 { data: 'submit_date', name: 'submit_date' },
 { data: 'comment_status_name', name: 'comment_status.name' },
 { data: 'commercial_file_upload', name: 'commercial_file_upload', sortable: false, searchable: false },
-    ],
+],
     orderCellsTop: true,
     order: [[ 2, 'desc' ]],
     pageLength: 10,
     aLengthMenu: [
-        [5, 10, 25, 50, 100, 1000],
-        [5, 10, 25, 50, 100, 1000]
+        [5, 10, 25, 50, 100, 200, 1000],
+        [5, 10, 25, 50, 100, 200, 1000]
     ],
   };
   let table = $('.datatable-Rfa').DataTable(dtOverrideGlobals)
