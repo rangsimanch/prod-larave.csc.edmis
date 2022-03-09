@@ -241,7 +241,7 @@
     ],
     orderCellsTop: true,
     order: [[ 3, 'desc' ]],
-    pageLength: 50,
+    pageLength: 10,
     aLengthMenu: [
         [5, 10, 25, 50, 100, 200, 1000],
         [5, 10, 25, 50, 100, 200, 1000]

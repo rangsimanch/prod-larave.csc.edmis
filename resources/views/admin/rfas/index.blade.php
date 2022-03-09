@@ -255,14 +255,13 @@
 { data: 'submit_date', name: 'submit_date' },
 { data: 'comment_status_name', name: 'comment_status.name' },
 { data: 'commercial_file_upload', name: 'commercial_file_upload', sortable: false, searchable: false },
-
     ],
     orderCellsTop: true,
     order: [[ 2, 'desc' ]],
     pageLength: 10,
     aLengthMenu: [
-        [5, 10, 25, 50, 100, 1000, 15000],
-        [5, 10, 25, 50, 100, 1000, "ALL"]
+        [5, 10, 25, 50, 100, 1000],
+        [5, 10, 25, 50, 100, 1000]
     ],
   };
   let table = $('.datatable-Rfa').DataTable(dtOverrideGlobals)
