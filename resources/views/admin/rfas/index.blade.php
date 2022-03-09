@@ -293,6 +293,7 @@ table.on('column-visibility.dt', function(e, settings, column, state) {
       });
   })
 
+table.state.clear();
 });
 
 </script>
