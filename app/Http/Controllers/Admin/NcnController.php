@@ -347,6 +347,10 @@ class NcnController extends Controller
         $cos = $ncn->construction_specialist->name ?? '';
         $related_specialist = $ncn->related_specialist->name ?? '';
 
+        if($ncn->related_specialist->id == 64){
+            $textbox3 = "Head of measurement Department";
+        }
+
         $html = "<div style=\"font-size: 9px; text-align: center; font-weight: bold; color:#1F4E78; padding-top:25px;\">" . $project_name  . " " . $contract_name  ."</div>";
         $html .= "<div style=\"font-size: 9px; font-weight: bold; color:#FFFFFF; position:absolute;top:117px;left:532px;\">" . $document_number  . "</div>";
         $html .= "<div style=\"padding-right:120px; font-size: 18px; font-weight: bold; position:absolute;top:175px;left:105px;\">" . $subject  . "</div>";
