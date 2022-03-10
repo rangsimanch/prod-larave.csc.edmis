@@ -493,7 +493,7 @@ class SwnController extends Controller
         }
 
         if($issuer_name != ''){
-            if(!is_null($review_status)){
+            if($review_status == "1" || $review_status == "2" || $review_status == "3"){
                 if(!is_null($swn->issue_by->signature)){
                     $html .= "<div style=\"font-weight: bold; position:absolute;top:775;left:160px;\">
                     <img width=\"30%\" height=\"20%\" src=\"" . $swn->issue_by->signature->getPath()
@@ -505,7 +505,7 @@ class SwnController extends Controller
 
         }
         if($qa_name != ''){
-            if(!is_null($review_status)){
+            if($review_status == "1" || $review_status == "2" || $review_status == "3"){
                 if(!is_null($swn->related_specialist->signature)){
                     $html .= "<div style=\"font-weight: bold; position:absolute;top:770;left:590px;\">
                     <img width=\"50%\" height=\"40%\" src=\"" . $swn->related_specialist->signature->getPath()
@@ -528,7 +528,7 @@ class SwnController extends Controller
 
         // Auditing Section
         if($issuer_name != ''){
-            if(!is_null($auditing_status)){
+            if($auditing_status == "1" || $auditing_status == "2"){
                 if(!is_null($swn->issue_by->signature)){
                     $html .= "<div style=\"font-weight: bold; position:absolute;top:923;left:160px;\">
                     <img width=\"30%\" height=\"20%\" src=\"" . $swn->issue_by->signature->getPath()
@@ -540,7 +540,7 @@ class SwnController extends Controller
 
         }
         if($qa_name != ''){
-            if(!is_null($auditing_status)){
+            if($auditing_status == "1" || $auditing_status == "2"){
                 if(!is_null($swn->related_specialist->signature)){
                     $html .= "<div style=\"font-weight: bold; position:absolute;top:923;left:360px;\">
                     <img width=\"35%\" height=\"25%\" src=\"" . $swn->related_specialist->signature->getPath()
@@ -552,7 +552,7 @@ class SwnController extends Controller
 
         }
         if($cos_name != ''){
-            if(!is_null($auditing_status)){
+            if($auditing_status == "1" || $auditing_status == "2"){
                 if(!is_null($swn->construction_specialist->signature)){
                     $html .= "<div style=\"font-weight: bold; position:absolute;top:923;left:595px;\">
                     <img  width=\"50%\" height=\"40%\" src=\"" . $swn->construction_specialist->signature->getPath()
