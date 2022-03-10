@@ -347,7 +347,7 @@ class NcnController extends Controller
         $cos = $ncn->construction_specialist->name ?? '';
         $related_specialist = $ncn->related_specialist->name ?? '';
 
-        if($ncn->related_specialist->id == 64){
+        if($related_specialist == "Yan Lizhou"){
             $textbox3 = "Head of measurement Department";
         }
 
