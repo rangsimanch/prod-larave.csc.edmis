@@ -439,7 +439,7 @@ class SwnController extends Controller
         $html .= "<div style=\"font-size: 12px; position:absolute;top:195px;left:370px;\">" . $submit_date  . "</div>";
         $html .= "<div style=\"font-size: 10px; position:absolute;top:195px;left:510px;\">" . $document_number  . "</div>";
         $html .= "<div style=\"font-size: 12px; padding-right:80px; position:absolute;top:244px;left:200px;\">" . $subject  . "</div>";
-        $html .= "<div style=\"font-size: 12px; position:absolute;top:305px;left:150px;\">" . $location  . "</div>";
+        $html .= "<div style=\"font-size: 8px; position:absolute;top:299px;left:150px;\">" . $location  . "</div>";
         
         if($reply_ncr == "Yes"){
             $html .= "<div style=\"font-size: 18px;font-weight: bold; position:absolute;top:299px;left:607px;\">" . "X"  . "</div>";
