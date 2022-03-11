@@ -354,7 +354,7 @@ class NcnController extends Controller
         $html = "<div style=\"font-size: 9px; text-align: center; font-weight: bold; color:#1F4E78; padding-top:25px;\">" . $project_name  . " " . $contract_name  ."</div>";
         $html .= "<div style=\"font-size: 9px; font-weight: bold; color:#FFFFFF; position:absolute;top:117px;left:532px;\">" . $document_number  . "</div>";
         $html .= "<div style=\"padding-right:120px; font-size: 12px; font-weight: bold; position:absolute;top:175px;left:105px;\">" . $subject  . "</div>";
-        $html .= "<div style=\"padding-right:120px;font-size: 10px; position:absolute;top:740px;left:105px\">" . $attachment_description  . "</div>";
+        $html .= "<div style=\"padding-right:120px;font-size: 10px; position:absolute;top:750px;left:105px\">" . $attachment_description  . "</div>";
         $html .= "<div style=\"padding-right:120px;font-size: 10px; position:absolute;top:782px;left:260px\">" . $pages_of_attachment  .  " จำนวน-แผ่น" . "</div>";
         $html .= "<div style=\"font-size: 10px; font-weight: bold; position:absolute;top:805px;left:153px\">" . $textbox1  . "</div>";
         $html .= "<div style=\"font-size: 10px; font-weight: bold; position:absolute;top:805px;left:375px\">" . $textbox2  . "</div>";
