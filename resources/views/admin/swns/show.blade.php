@@ -149,6 +149,18 @@
                                         {{ App\Swn::DOCUMENTS_STATUS_SELECT[$swn->documents_status] ?? '' }}
                                     </td>
                                 </tr>
+                                <tr>
+                                    <th>
+                                        {{ trans('cruds.swn.fields.rootcase_image') }}
+                                    </th>
+                                    <td>
+                                        @foreach($swn->rootcase_image as $key => $media)
+                                            <a href="{{ $media->getUrl() }}" target="_blank">
+                                                {{ trans('global.view_file') }}
+                                            </a>
+                                        @endforeach
+                                    </td>
+                                </tr>
                             </tbody>
                         </table>
                         <div class="form-group">
