@@ -419,8 +419,10 @@ class SwnController extends Controller
         $review_date = $swn->review_date ?? '';
         $auditing_date = $swn->auditing_date ?? '';
         $document_number = 'Ref No.' . $swn->document_number;
-        $subject = $swn->title ?? '';
-        $location = $swn->location ?? '';
+        $subject = str_replace("：", ":", $swn->title ?? '');
+        $subject = str_replace("、", ",", $subject);
+        $location = str_replace("：", ":", $swn->location ?? '');
+        $location = str_replace("、", ",", $location);
         $reply_ncr = $swn->reply_ncr ?? '';
         $ref_doc = $swn->ref_doc ?? '';
         $description = str_replace("：", ":", $swn->description ?? '');
