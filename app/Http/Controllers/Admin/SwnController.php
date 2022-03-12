@@ -475,7 +475,7 @@ class SwnController extends Controller
                 . "\"></div>";
             }
             $html .= "<div style=\"font-size: 8px; font-weight: bold; position:absolute;top:606px;left:597px;\">( " . $cos_name  . " )</div>";
-            $html .= "<div style=\"font-size: 8px; font-weight: bold; padding-right:50px; position:absolute;top:625px;left:597px;\">" . $cos_position  . "</div>";
+            $html .= "<div style=\"font-size: 8px; font-weight: bold; padding-right:55px; position:absolute;top:625px;left:597px;\">" . $cos_position  . "</div>";
         }
         $html .= "<div style=\"font-size: 8px; position:absolute;top:648px;left:137px;\">" . $submit_date  . "</div>";
         $html .= "<div style=\"font-size: 8px; position:absolute;top:648px;left:345px;\">" . $submit_date  . "</div>";
@@ -513,7 +513,7 @@ class SwnController extends Controller
                 }
             }
             $html .= "<div style=\"font-size: 8px; font-weight: bold; position:absolute;top:809px;left:586px;\">( " . $qa_name  . " )</div>";
-            $html .= "<div style=\"font-size: 8px; font-weight: bold; position:absolute;top:825px;left:586px;\">" . $qa_position  . " </div>";
+            $html .= "<div style=\"font-size: 8px; font-weight: bold; padding-right:55px; position:absolute;top:825px;left:586px;\">" . $qa_position  . " </div>";
 
         }
         $html .= "<div style=\"font-size: 8px; position:absolute;top:840px;left:160px;\">" . $review_date  . "</div>";
@@ -560,7 +560,7 @@ class SwnController extends Controller
                 }
             }
             $html .= "<div style=\"font-size: 8px; font-weight: bold; position:absolute;top:960px;left:591px;\">( " . $cos_name  . " )</div>";
-            $html .= "<div style=\"font-size: 8px; font-weight: bold; position:absolute;top:975px;left:591px;\">" . $cos_position  . "</div>";
+            $html .= "<div style=\"font-size: 8px; padding-right:55px; font-weight: bold; position:absolute;top:975px;left:591px;\">" . $cos_position  . "</div>";
             
         }
         $html .= "<div style=\"font-size: 8px; position:absolute;top:990px;left:160px;\">" . $auditing_date  . "</div>";
