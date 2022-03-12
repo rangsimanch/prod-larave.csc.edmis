@@ -536,7 +536,7 @@ class SwnController extends Controller
                 }
             }
             $html .= "<div style=\"font-size: 8px; font-weight: bold; position:absolute;top:956px;left:155px;\">( " . $issuer_name  . " )</div>";
-            $html .= "<div style=\"font-size: 8px; font-weight: bold; position:absolute;top:975px;left:155px;\">" . $issuer_position  . "</div>";
+            $html .= "<div style=\"font-size: 8px; position:absolute;top:975px;left:155px;\">" . $issuer_position  . "</div>";
 
         }
         if($qa_name != ''){
@@ -548,7 +548,7 @@ class SwnController extends Controller
                 }
             }
             $html .= "<div style=\"font-size: 8px; font-weight: bold; position:absolute;top:956px;left:354px;\">( " . $qa_name  . " )</div>";
-            $html .= "<div style=\"font-size: 8px; font-weight: bold; position:absolute;top:975px;left:354px;\">" . $qa_position  . "</div>";
+            $html .= "<div style=\"font-size: 8px; position:absolute;top:975px;left:354px;\">" . $qa_position  . "</div>";
 
         }
         if($cos_name != ''){
@@ -560,7 +560,7 @@ class SwnController extends Controller
                 }
             }
             $html .= "<div style=\"font-size: 8px; font-weight: bold; position:absolute;top:960px;left:591px;\">( " . $cos_name  . " )</div>";
-            $html .= "<div style=\"font-size: 8px; padding-right:55px; font-weight: bold; position:absolute;top:975px;left:591px;\">" . $cos_position  . "</div>";
+            $html .= "<div style=\"font-size: 8px; padding-right:55px; position:absolute;top:975px;left:591px;\">" . $cos_position  . "</div>";
             
         }
         $html .= "<div style=\"font-size: 8px; position:absolute;top:990px;left:160px;\">" . $auditing_date  . "</div>";
