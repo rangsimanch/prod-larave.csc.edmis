@@ -151,10 +151,10 @@
                                 </tr>
                                 <tr>
                                     <th>
-                                        {{ trans('cruds.swn.fields.rootcase_image') }}
+                                        {{ trans('cruds.swn.fields.reply_document') }}
                                     </th>
                                     <td>
-                                        @foreach($swn->rootcase_image as $key => $media)
+                                        @foreach($swn->reply_document as $key => $media)
                                             <a href="{{ $media->getUrl() }}" target="_blank">
                                                 {{ trans('global.view_file') }}
                                             </a>
