@@ -423,8 +423,8 @@ class SwnController extends Controller
         $location = $swn->location ?? '';
         $reply_ncr = $swn->reply_ncr ?? '';
         $ref_doc = $swn->ref_doc ?? '';
-        $description = str_replace("、", ",", $swn->description ?? '');
         $description = str_replace("：", ":", $swn->description ?? '');
+        $description = str_replace("、", ",", $swn->description ?? '');
         $issuer_name = $swn->issue_by->name ?? '';
         $issuer_position = $swn->issue_by->jobtitle->name ?? '';
         $qa_name = $swn->related_specialist->name ?? '';
