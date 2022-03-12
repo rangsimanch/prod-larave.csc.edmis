@@ -475,7 +475,7 @@ class SwnController extends Controller
                 . "\"></div>";
             }
             $html .= "<div style=\"font-size: 8px; font-weight: bold; position:absolute;top:606px;left:597px;\">( " . $cos_name  . " )</div>";
-            $html .= "<div style=\"font-size: 8px; font-weight: bold; padding-right:40px; position:absolute;top:625px;left:597px;\">" . $cos_position  . "</div>";
+            $html .= "<div style=\"font-size: 8px; font-weight: bold; padding-right:50px; position:absolute;top:625px;left:597px;\">" . $cos_position  . "</div>";
         }
         $html .= "<div style=\"font-size: 8px; position:absolute;top:648px;left:137px;\">" . $submit_date  . "</div>";
         $html .= "<div style=\"font-size: 8px; position:absolute;top:648px;left:345px;\">" . $submit_date  . "</div>";
