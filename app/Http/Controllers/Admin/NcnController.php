@@ -305,8 +305,6 @@ class NcnController extends Controller
                 'mode' => '+aCJK',
                 "autoScriptToLang" => true,
                 "autoLangToFont" => true,
-                "allow_charset_conversion" => true,
-                "charset_in" => 'UTF-8'
                 
             ]);
           } catch (\Mpdf\MpdfException $e) {
@@ -352,6 +350,8 @@ class NcnController extends Controller
         if($related_specialist == "Yan Lizhou"){
             $textbox3 = "Head of measurement Department";
         }
+        $html = iconv('UTF-8', 'UTF-8//IGNORE', $html);
+        $html = iconv('UTF-8', 'UTF-8//TRANSLIT', $html);
 
         $html = "<div style=\"font-size: 9px; text-align: center; font-weight: bold; color:#1F4E78; padding-top:25px;\">" . $project_name  . " " . $contract_name  ."</div>";
         $html .= "<div style=\"font-size: 9px; font-weight: bold; color:#FFFFFF; position:absolute;top:117px;left:532px;\">" . $document_number  . "</div>";
