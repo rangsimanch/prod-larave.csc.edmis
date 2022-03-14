@@ -572,7 +572,7 @@ class SwnController extends Controller
        
         $mpdf->SetHTMLHeader($html,'0',true);
         $html = "<div style=\" padding-left: 80px; padding-right:40px; padding-bottom:-15px; \">";
-        $html .= "<div style=\"font-size: 10px; padding-right:50px; position:absolute;top:380px;left:110px;\">" . $description  . "</div>";
+        $html .= "<div style=\"font-size: 10px; padding-right:50px; position:absolute;top:380px;left:110px;LINE-HEIGHT:18px;\">" . $description  . "</div>";
         $html .= "</div>";
        
         $mpdf->WriteHTML($html);
