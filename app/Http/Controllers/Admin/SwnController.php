@@ -399,6 +399,8 @@ class SwnController extends Controller
                 'mode' => '+aCJK',
                 "autoScriptToLang" => true,
                 "autoLangToFont" => true,
+                "allow_charset_conversion" => true,
+                "charset_in" => 'UTF-8',
                 
             ]);
           } catch (\Mpdf\MpdfException $e) {
@@ -408,6 +410,7 @@ class SwnController extends Controller
 
         // $tplId = $mpdf->ImportPage($pagecount);
         // $mpdf->UseTemplate($tplId);      
+        $mpdf->SetAutoFont();
         $mpdf->SetDocTemplate(public_path('pdf-asset/SWN_Template_Section_1.pdf'),true);
         $mpdf->AddPage('P','','','','','','',107,140);
 
@@ -436,9 +439,6 @@ class SwnController extends Controller
 
         $review_status = $swn->review_status ?? '';
         $auditing_status = $swn->auditing_status ?? '';
-
-        $html = iconv('UTF-8', 'UTF-8//IGNORE', $html);
-        $html = iconv('UTF-8', 'UTF-8//TRANSLIT', $html);
 
         $html = "<div style=\"font-size: 10px; text-align: center; font-weight: bold; color:#1F4E78; padding-top:82px;\">" . $contract_name  . "</div>";
         $html .= "<div style=\"font-size: 12px; position:absolute;top:195px;left:120px;\">" . $send_to  . "</div>";
