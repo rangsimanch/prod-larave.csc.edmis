@@ -329,7 +329,7 @@ class NcnController extends Controller
         }
         // $tplId = $mpdf->ImportPage($pagecount);
         // $mpdf->UseTemplate($tplId);
-        $mpdf->AddPage('P','','','','','','',55,130);
+        $mpdf->AddPage('P','','','','','','',60,130);
 
         // Setting Data
         $project_name = "(Section 1 Bangkok - Nakhon Ratchasima)";
@@ -391,7 +391,7 @@ class NcnController extends Controller
 
         $mpdf->SetHTMLHeader($html,'0',true);
         $html = "<div style=\" padding-left: 80px; padding-right:40px; padding-bottom:-15px; \">";
-        $html .= "<div style=\"font-size: 12px; position:absolute;top:225px;left:105px;LINE-HEIGHT:20px;\">" . $description  . "</div>";
+        $html .= "<div style=\"font-size: 12px; position:absolute;top:220px;left:105px;LINE-HEIGHT:20px;\">" . $description  . "</div>";
         $html .= "</div>";
         
         $mpdf->WriteHTML($html);
