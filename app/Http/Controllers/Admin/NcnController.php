@@ -305,6 +305,8 @@ class NcnController extends Controller
                 'mode' => '+aCJK',
                 "autoScriptToLang" => true,
                 "autoLangToFont" => true,
+                "allow_charset_conversion" => true,
+                "charset_in" => 'UTF-8'
                 
             ]);
           } catch (\Mpdf\MpdfException $e) {
