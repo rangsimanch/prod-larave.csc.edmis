@@ -176,6 +176,7 @@
                                         @foreach($rfa_comment_statuses as $key => $item)
                                             <option value="{{ $item->name }}">{{ $item->name }}</option>
                                         @endforeach
+                                            <option value="Approve">Approved & Approved as Note</option>
                                     </select>
                                 </td>
                                 <td>
