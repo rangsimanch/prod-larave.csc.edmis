@@ -305,9 +305,6 @@ class NcnController extends Controller
                 'mode' => '+aCJK',
                 "autoScriptToLang" => true,
                 "autoLangToFont" => true,
-                "allow_charset_conversion" => true,
-                "charset_in" => 'UTF-8',
-                
             ]);
           } catch (\Mpdf\MpdfException $e) {
               print "Creating an mPDF object failed with" . $e->getMessage();
@@ -331,7 +328,6 @@ class NcnController extends Controller
         }
         // $tplId = $mpdf->ImportPage($pagecount);
         // $mpdf->UseTemplate($tplId);
-        $mpdf->SetAutoFont();
         $mpdf->AddPage('P','','','','','','',60,130);
 
         // Setting Data
