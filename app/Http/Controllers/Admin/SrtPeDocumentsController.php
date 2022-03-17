@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\ConstructionContract;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Traits\CsvImportTrait;
@@ -53,7 +54,6 @@ class SrtPeDocumentsController extends Controller
                 ));
             });
 
-
             $table->editColumn('id', function ($row) {
                 return $row->id ? $row->id : "";
             });
@@ -85,14 +85,33 @@ class SrtPeDocumentsController extends Controller
             $table->editColumn('note', function ($row) {
                 return $row->note ? $row->note : "";
             });
+            $table->editColumn('file_upload', function ($row) {
+                // if (!$row->file_upload) {
+                //     return '';
+                // }
 
-           
+                if (!$row->refer_documents->file_upload_4) {
+                    return '';
+                }
+
+                $links = [];
+
+                // foreach ($row->file_upload as $media) {
+                //     $links[] = '<a href="' . $media->getUrl() . '" target="_blank">' . trans('global.downloadFile') . '</a>';
+                // }
+
+                foreach ($row->refer_documents->file_upload_4 as $media) {
+                    $links[] = '<a href="' . $media->getUrl() . '" target="_blank">' . trans('global.downloadFile') . '</a>';
+                }
+
+                return implode(', ', $links);
+            });
 
             $table->editColumn('to_text', function ($row) {
                 return $row->to_text ? $row->to_text : "";
             });
 
-            $table->rawColumns(['actions', 'placeholder', 'refer_documents', 'operator']);
+            $table->rawColumns(['actions', 'placeholder', 'refer_documents', 'operator', 'file_upload', 'refer_documents.file_upload_3']);
 
             return $table->make(true);
         }
@@ -108,9 +127,12 @@ class SrtPeDocumentsController extends Controller
     {
         abort_if(Gate::denies('srt_pe_document_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-      
-        $refer_documents = SrtInputDocument::all()->pluck('document_number', 'id')->prepend(trans('global.pleaseSelect'), '');
-        
+        if(Auth::id() != 1){
+            $refer_documents = SrtInputDocument::where('construction_contract_id',session('construction_contract_id'))->pluck('codocument_numberde', 'id')->prepend(trans('global.pleaseSelect'), '');
+        }
+        else{
+            $refer_documents = SrtInputDocument::all()->pluck('document_number', 'id')->prepend(trans('global.pleaseSelect'), '');
+        }
         $operators = User::where('team_id','1')->pluck('name', 'id');
 
         return view('admin.srtPeDocuments.create', compact('refer_documents', 'operators'));
