@@ -62,8 +62,6 @@
                                 <td>
                                 </td>
                                 <td>
-                                </td>
-                                <td>
                                     <select class="search">
                                         <option value>{{ trans('global.all') }}</option>
                                         @foreach($srt_input_documents as $key => $item)
