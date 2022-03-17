@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Traits\CsvImportTrait;
 use App\Http\Controllers\Traits\MediaUploadingTrait;
@@ -148,7 +149,7 @@ class SrtPeDocumentsController extends Controller
             $refer_documents = SrtInputDocument::all()->pluck('document_number', 'id')->prepend(trans('global.pleaseSelect'), '');
         }
         $operators = User::where('team_id','1')->pluck('name', 'id');
-        
+
         return view('admin.srtPeDocuments.create', compact('refer_documents', 'operators'));
     }
 
