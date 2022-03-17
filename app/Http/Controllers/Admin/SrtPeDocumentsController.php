@@ -59,12 +59,12 @@ class SrtPeDocumentsController extends Controller
                 return $row->id ? $row->id : "";
             });
             
-            $table->editColumn('refer_documents.document_number', function ($row) {
-                return $row->refer_documents->document_number ? $row->refer_documents->document_number : '';
+            $table->addColumn('refer_documents_document_number', function ($row) {
+                return $row->refer_documents ? $row->refer_documents->document_number : '';
             });
 
             $table->editColumn('refer_documents.subject', function ($row) {
-                return $row->refer_documents->subject ? $row->refer_documents->subject : '';
+                return $row->refer_documents ? (is_string($row->refer_documents) ? $row->refer_documents : $row->refer_documents->subject) : '';
             });
 
             $table->editColumn('special_command', function ($row) {
@@ -87,23 +87,23 @@ class SrtPeDocumentsController extends Controller
                 return $row->note ? $row->note : "";
             });
             $table->editColumn('file_upload', function ($row) {
-                if (!$row->file_upload) {
-                    return '';
-                }
-
-                // if (!$row->refer_documents->file_upload_4) {
+                // if (!$row->file_upload) {
                 //     return '';
                 // }
 
-                $links = [];
-
-                foreach ($row->file_upload as $media) {
-                    $links[] = '<a href="' . $media->getUrl() . '" target="_blank">' . trans('global.downloadFile') . '</a>';
+                if (!$row->refer_documents->file_upload_4) {
+                    return '';
                 }
 
-                // foreach ($row->refer_documents->file_upload_4 as $media) {
+                $links = [];
+
+                // foreach ($row->file_upload as $media) {
                 //     $links[] = '<a href="' . $media->getUrl() . '" target="_blank">' . trans('global.downloadFile') . '</a>';
                 // }
+
+                foreach ($row->refer_documents->file_upload_4 as $media) {
+                    $links[] = '<a href="' . $media->getUrl() . '" target="_blank">' . trans('global.downloadFile') . '</a>';
+                }
 
                 return implode(', ', $links);
             });
