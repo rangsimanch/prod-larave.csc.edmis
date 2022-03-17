@@ -60,13 +60,11 @@ class SrtPeDocumentsController extends Controller
             });
             
             $table->editColumn('refer_documents_document_number', function ($row) {
-                $document_number = $row->refer_documents->document_number;
-                return $document_number;
+                return $row->refer_documents ? $row->refer_documents->document_number : '';
             });
 
             $table->editColumn('refer_documents.subject', function ($row) {
-                $document_subject = $row->refer_documents->subject;
-                return $document_subject;
+                return $row->refer_documents ? (is_string($row->refer_documents) ? $row->refer_documents : $row->refer_documents->subject) : '';
             });
 
             $table->editColumn('special_command', function ($row) {
