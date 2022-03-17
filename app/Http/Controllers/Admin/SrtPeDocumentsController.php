@@ -59,12 +59,12 @@ class SrtPeDocumentsController extends Controller
                 return $row->id ? $row->id : "";
             });
             
-            $table->editColumn('document_number', function ($row) {
+            $table->addColumn('document_number', function ($row) {
                 $document_number = SrtInputDocument::where('id',$row->refer_documents)->get();
                 return $document_number->document_number;
             });
 
-            $table->editColumn('subject', function ($row) {
+            $table->addColumn('subject', function ($row) {
                 $subject = SrtInputDocument::where('id',$row->refer_documents)->get();
                 return $subject->subject;
             });
