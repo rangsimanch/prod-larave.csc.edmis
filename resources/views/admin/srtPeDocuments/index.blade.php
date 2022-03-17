@@ -27,9 +27,6 @@
                                 <th width="10">
 
                                 </th>
-                                {{-- <th>
-                                    {{ trans('cruds.srtPeDocument.fields.refer_documents') }}
-                                </th> --}}
                                 <th>
                                     {{ trans('cruds.srtPeDocument.fields.refer_documents') }}
                                 </th>
@@ -96,8 +93,6 @@
                                 </td>
                                 <td>
                                     <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                                </td>
-                                <td>
                                 </td>
                                 <td>
                                 </td>
