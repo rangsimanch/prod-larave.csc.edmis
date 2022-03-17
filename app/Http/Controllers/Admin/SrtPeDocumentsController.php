@@ -59,7 +59,7 @@ class SrtPeDocumentsController extends Controller
                 return $row->id ? $row->id : "";
             });
             
-            $table->editColumn('refer_documents_document_number', function ($row) {
+            $table->editColumn('refer_documents.document_number', function ($row) {
                 return $row->refer_documents->document_number ? $row->refer_documents->document_number : '';
             });
 
