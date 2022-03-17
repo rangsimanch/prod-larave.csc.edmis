@@ -13,7 +13,10 @@ use Spatie\MediaLibrary\Models\Media;
 
 class SrtPeDocument extends Model implements HasMedia
 {
-    use SoftDeletes, MultiTenantModelTrait, HasMediaTrait, Auditable;
+    use SoftDeletes;
+    use MultiTenantModelTrait;
+    use HasMediaTrait;
+    use Auditable;
 
     public $table = 'srt_pe_documents';
 
@@ -64,11 +67,6 @@ class SrtPeDocument extends Model implements HasMedia
         $this->addMediaConversion('preview')->fit('crop', 120, 120);
     }
 
-    public function construction_contract()
-    {
-        return $this->belongsTo(ConstructionContract::class, 'construction_contract_id');
-    }
-
     public function refer_documents()
     {
         return $this->belongsTo(SrtInputDocument::class, 'refer_documents_id');
@@ -102,6 +100,16 @@ class SrtPeDocument extends Model implements HasMedia
     public function getFileUploadAttribute()
     {
         return $this->getMedia('file_upload');
+    }
+
+    public function to_department()
+    {
+        return $this->belongsTo(SrtDepartment::class, 'to_department_id');
+    }
+
+    public function construction_contract()
+    {
+        return $this->belongsTo(ConstructionContract::class, 'construction_contract_id');
     }
 
     public function team()
