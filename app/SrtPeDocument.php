@@ -14,7 +14,7 @@ use Spatie\MediaLibrary\Models\Media;
 class SrtPeDocument extends Model implements HasMedia
 {
     use SoftDeletes;
-    use MultiTenantModelTrait;
+    // use MultiTenantModelTrait;
     use HasMediaTrait;
     use Auditable;
 
