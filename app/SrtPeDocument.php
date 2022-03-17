@@ -14,7 +14,7 @@ use Spatie\MediaLibrary\Models\Media;
 class SrtPeDocument extends Model implements HasMedia
 {
     use SoftDeletes;
-    use MultiTenantModelTrait;
+    // use MultiTenantModelTrait;
     use HasMediaTrait;
     use Auditable;
 
@@ -117,8 +117,4 @@ class SrtPeDocument extends Model implements HasMedia
         return $this->belongsTo(Team::class, 'team_id');
     }
     
-    public function create_by_construction_contract_id()
-    {
-        return $this->belongsTo(ConstructionContract::class, 'construction_contract_id');
-    }
 }
