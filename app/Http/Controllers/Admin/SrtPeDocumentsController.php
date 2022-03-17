@@ -33,7 +33,7 @@ class SrtPeDocumentsController extends Controller
         abort_if(Gate::denies('srt_pe_document_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
-            $query = SrtPeDocument::with(['refer_documents','construction_contract', 'operators', 'team'])
+            $query = SrtPeDocument::with(['refer_documents', 'operators', 'team'])
             ->select(sprintf('%s.*', (new SrtPeDocument)->table));
             $table = Datatables::of($query);
 
