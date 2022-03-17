@@ -34,7 +34,6 @@ class SrtPeDocumentsController extends Controller
 
         if ($request->ajax()) {
             $query = SrtPeDocument::with(['refer_documents','construction_contract', 'operators', 'team'])
-            ->where('construction_contract',session('construction_contract_id'))
             ->select(sprintf('%s.*', (new SrtPeDocument)->table));
             $table = Datatables::of($query);
 
