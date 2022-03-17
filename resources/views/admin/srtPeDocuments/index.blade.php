@@ -51,9 +51,7 @@
                                 <th>
                                     {{ trans('cruds.srtPeDocument.fields.note') }}
                                 </th>
-                                <th>
-                                    {{ trans('cruds.srtPeDocument.fields.file_upload') }}
-                                </th>
+                              
                                 <th>
                                     &nbsp;
                                 </th>
