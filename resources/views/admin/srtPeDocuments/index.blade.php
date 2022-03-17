@@ -95,6 +95,8 @@
                                 </td>
                                 <td>
                                 </td>
+                                <td>
+                                </td>
                             </tr>
                         </thead>
                     </table>
@@ -159,6 +161,7 @@
 { data: 'to_text', name: 'to_text' },
 { data: 'practice_notes', name: 'practice_notes' },
 { data: 'note', name: 'note' },
+{ data: 'file_upload', name: 'file_upload', sortable: false, searchable: false },
 { data: 'actions', name: '{{ trans('global.actions') }}' }
     ],
     orderCellsTop: true,
