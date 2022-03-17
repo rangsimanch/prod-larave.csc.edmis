@@ -153,8 +153,8 @@
     ajax: "{{ route('admin.srt-pe-documents.index') }}",
     columns: [
       { data: 'placeholder', name: 'placeholder' },
-{ data: 'document_number', name: 'document_number' },
-{ data: 'subject', name: 'subject' },
+      { data: 'refer_documents.document_number', name: 'refer_documents.document_number', sortable: false, searchable: false },
+{ data: 'refer_documents.subject', name: 'refer_documents.subject' },
 { data: 'process_date', name: 'process_date' },
 { data: 'special_command', name: 'special_command' },
 { data: 'finished_date', name: 'finished_date' },

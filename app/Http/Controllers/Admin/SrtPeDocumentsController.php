@@ -55,18 +55,16 @@ class SrtPeDocumentsController extends Controller
                 ));
             });
 
+            $table->addColumn('refer_documents_document_number', function ($row) {
+                return $row->refer_documents ? $row->refer_documents->document_number : '';
+            });
+
             $table->editColumn('id', function ($row) {
                 return $row->id ? $row->id : "";
             });
-            
-            $table->addColumn('document_number', function ($row) {
-                $document_number = SrtInputDocument::where('id',$row->refer_documents)->get();
-                return $document_number->document_number ? $document_number->document_number : '';
-            });
 
-            $table->addColumn('subject', function ($row) {
-                $subject = SrtInputDocument::where('id',$row->refer_documents)->get();
-                return $subject->subject ? $subject->subject : '' ;
+            $table->editColumn('refer_documents.subject', function ($row) {
+                return $row->refer_documents ? (is_string($row->refer_documents) ? $row->refer_documents : $row->refer_documents->subject) : '';
             });
 
             $table->editColumn('special_command', function ($row) {
@@ -114,7 +112,7 @@ class SrtPeDocumentsController extends Controller
                 return $row->to_text ? $row->to_text : "";
             });
 
-            $table->rawColumns(['actions', 'placeholder', 'document_number', 'subject', 'operator', 'file_upload', 'refer_documents.file_upload_3']);
+            $table->rawColumns(['actions', 'placeholder', 'refer_documents', 'operator', 'file_upload', 'refer_documents.file_upload_3']);
 
             return $table->make(true);
         }
