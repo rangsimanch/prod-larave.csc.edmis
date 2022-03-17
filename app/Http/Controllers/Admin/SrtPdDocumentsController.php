@@ -144,9 +144,13 @@ class SrtPdDocumentsController extends Controller
     {
         abort_if(Gate::denies('srt_pd_document_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $refer_documents = SrtInputDocument::all()->pluck('document_number', 'id')->prepend(trans('global.pleaseSelect'), '');
-
-        $operators = User::all()->pluck('name', 'id');
+        if(Auth::id() != 1){
+            $refer_documents = SrtInputDocument::where('construction_contract_id',session('construction_contract_id'))->pluck('codocument_numberde', 'id')->prepend(trans('global.pleaseSelect'), '');
+        }
+        else{
+            $refer_documents = SrtInputDocument::all()->pluck('document_number', 'id')->prepend(trans('global.pleaseSelect'), '');
+        }
+        $operators = User::where('team_id','1')->pluck('name', 'id');
 
         return view('admin.srtPdDocuments.create', compact('refer_documents', 'operators'));
     }
