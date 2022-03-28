@@ -303,6 +303,14 @@ class RequestForInformationController extends Controller
         
         $requestForInformation->update($data);
         
+        if (count($requestForInformation->file_upload) > 0) {
+            foreach ($requestForInformation->file_upload as $media) {
+                if (!in_array($media->file_name, $request->input('file_upload', []))) {
+                    $media->delete();
+                }
+            }
+        }
+
         $media = $requestForInformation->file_upload->pluck('file_name')->toArray();
 
         foreach ($request->input('file_upload', []) as $file) {
@@ -310,7 +318,6 @@ class RequestForInformationController extends Controller
                 $requestForInformation->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('file_upload');
             }
         }
-
         return redirect()->route('admin.request-for-informations.index');
     }
 
