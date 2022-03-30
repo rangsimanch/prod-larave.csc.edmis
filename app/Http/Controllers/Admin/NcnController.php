@@ -312,86 +312,155 @@ class NcnController extends Controller
 
         // Check Report
         $dept_code = $ncn->dept_code->code ?? '';
-        if($dept_code == "G"){
-            // $pagecount = $mpdf->SetSourceFile(public_path('pdf-asset/NCN_Thai_Form.pdf'));
-            $mpdf->SetDocTemplate(public_path('pdf-asset/NCN_Thai_Form.pdf'),true);
-            $textbox1 = "CSC's Issuer";
-            $textbox2 = "CSC COS";
-            $textbox3 = "CSC Project / Team Leader";
+        $ncn_id = $ncn->id;
+
+        if($ncn_id <= 93){
+            if($dept_code == "G"){
+                // $pagecount = $mpdf->SetSourceFile(public_path('pdf-asset/NCN_Thai_Form.pdf'));
+                $mpdf->SetDocTemplate(public_path('pdf-asset/NCN_Thai_Form.pdf'),true);
+                $textbox1 = "CSC's Issuer";
+                $textbox2 = "CSC COS";
+                $textbox3 = "CSC Project / Team Leader";
+            }
+            else{
+                // $pagecount = $mpdf->SetSourceFile(public_path('pdf-asset/NCN_Chinese_Form.pdf'));
+                $mpdf->SetDocTemplate(public_path('pdf-asset/NCN_Chinese_Form.pdf'),true);
+
+                $textbox1 = "CSC's Issuer";
+                $textbox2 = "CSC's COS";
+                $textbox3 = "The Director of S&Q Dept. of CSC";
+            }
+            $mpdf->AddPage('P','','','','','','',60,130);
+        
         }
         else{
-            // $pagecount = $mpdf->SetSourceFile(public_path('pdf-asset/NCN_Chinese_Form.pdf'));
-            $mpdf->SetDocTemplate(public_path('pdf-asset/NCN_Chinese_Form.pdf'),true);
-            $textbox1 = "CSC's Issuer";
-            $textbox2 = "CSC's COS";
-            $textbox3 = "The Director of S&Q Dept. of CSC";
+            $mpdf->SetDocTemplate(public_path('pdf-asset/NCN_New_Form.pdf'),true);
+            $mpdf->AddPage('P','','','','','','',50,130);
         }
         // $tplId = $mpdf->ImportPage($pagecount);
         // $mpdf->UseTemplate($tplId);
-        $mpdf->AddPage('P','','','','','','',60,130);
 
         // Setting Data
         $project_name = "(Section 1 Bangkok - Nakhon Ratchasima)";
+        $contract_code = $ncn->construction_contract->code ?? '';
         $contract_name = 'Contract ' . $ncn->construction_contract->code . ' : ' . $ncn->construction_contract->name;
+        $contract_header = $project_name . " " . $contract_name;
         $document_number ="Ref No." .  $ncn->document_number;
         $subject = "Subject : " . $ncn->title ?? '';
         $description = $ncn->description ?? '';
         $issue_date = $ncn->issue_date ?? '';
         $dept_name = $ncn->dept_code->name ?? '';
         $issuer = $ncn->issue_by->name ?? '';
+        $issuer_jobtitile = $ncn->issue_by->jobtitle->name ?? '';
         $attachment_description = $ncn->attachment_description ?? '';
         $pages_of_attachment = $ncn->pages_of_attachment ?? '';
         $acceptance_date = $ncn->acceptance_date ?? '';
         $leader = $ncn->leader->name ?? '';
+        $leader_jobtitle = $ncn->leader->jobtitle->name ?? '';
+
         $cos = $ncn->construction_specialist->name ?? '';
+        $cos_jobtitle = $ncn->construction_specialist->jobtitle->name ?? '';
         $related_specialist = $ncn->related_specialist->name ?? '';
 
         if($related_specialist == "Yan Lizhou"){
             $textbox3 = "Head of measurement Department";
         }
 
-        $html = "<div style=\"font-size: 9px; text-align: center; font-weight: bold; color:#1F4E78; padding-top:25px;\">" . $project_name  . " " . $contract_name  ."</div>";
-        $html .= "<div style=\"font-size: 9px; font-weight: bold; color:#FFFFFF; position:absolute;top:117px;left:532px;\">" . $document_number  . "</div>";
-        $html .= "<div style=\"padding-right:120px; font-size: 12px; font-weight: bold; position:absolute;top:175px;left:105px;\">" . $subject  . "</div>";
-        $html .= "<div style=\"padding-right:120px;font-size: 10px; position:absolute;top:750px;left:105px\">" . $attachment_description  . "</div>";
-        $html .= "<div style=\"padding-right:120px;font-size: 10px; position:absolute;top:782px;left:260px\">" . $pages_of_attachment  .  " จำนวน-แผ่น" . "</div>";
-        $html .= "<div style=\"font-size: 10px; font-weight: bold; position:absolute;top:805px;left:153px\">" . $textbox1  . "</div>";
-        $html .= "<div style=\"font-size: 10px; font-weight: bold; position:absolute;top:805px;left:375px\">" . $textbox2  . "</div>";
-        $html .= "<div style=\"font-size: 10px; font-weight: bold; position:absolute;top:805px;left:528px\">" . $textbox3  . "</div>";
-        
-        if($issuer != ''){
-            if(!is_null($ncn->issue_by->signature)){
-                $html .= "<div style=\"font-weight: bold; position:absolute;top:810;left:150px;\">
-                <img width=\"30%\" height=\"20%\" src=\"" . $ncn->issue_by->signature->getPath()
-                . "\"></div>";
+        if($ncn_id <= 93){
+            $header_len = strlen($contract_header);
+            $header_center = (690/2) - ($header_len * 2.5);
+            $html = "<div style=\"font-size: 9px; color:#1F4E78; position:fixed;top:55px;left:". $header_center . "\">" . $contract_header  ."</div>";
+            $html .= "<div style=\"font-size: 9px; font-weight: bold; color:#FFFFFF; position:absolute;top:117px;left:532px;\">" . $document_number  . "</div>";
+            $html .= "<div style=\"padding-right:120px; font-size: 12px; font-weight: bold; position:absolute;top:175px;left:105px;\">" . $subject  . "</div>";
+            $html .= "<div style=\"padding-right:120px;font-size: 10px; position:absolute;top:750px;left:105px\">" . $attachment_description  . "</div>";
+            $html .= "<div style=\"padding-right:120px;font-size: 10px; position:absolute;top:782px;left:260px\">" . $pages_of_attachment  .  " จำนวน-แผ่น" . "</div>";
+            $html .= "<div style=\"font-size: 10px; font-weight: bold; position:absolute;top:805px;left:153px\">" . $textbox1  . "</div>";
+            $html .= "<div style=\"font-size: 10px; font-weight: bold; position:absolute;top:805px;left:375px\">" . $textbox2  . "</div>";
+            $html .= "<div style=\"font-size: 10px; font-weight: bold; position:absolute;top:805px;left:528px\">" . $textbox3  . "</div>";
+            
+            if($issuer != ''){
+                if(!is_null($ncn->issue_by->signature)){
+                    $html .= "<div style=\"font-weight: bold; position:absolute;top:810;left:150px;\">
+                    <img width=\"30%\" height=\"20%\" src=\"" . $ncn->issue_by->signature->getPath()
+                    . "\"></div>";
+                }
+                $html .= "<div style=\"font-size: 10px;  position:absolute;top:848px;left:110px\">" . $issuer  . "</div>";
             }
-            $html .= "<div style=\"font-size: 10px;  position:absolute;top:848px;left:110px\">" . $issuer  . "</div>";
-        }
-        if($cos != ''){
-            if(!is_null($ncn->construction_specialist->signature)){
-                $html .= "<div style=\"font-weight: bold; position:absolute;top:810;left:365px;\">
-                <img width=\"35%\" height=\"25%\" src=\"" . $ncn->construction_specialist->signature->getPath()
-                . "\"></div>";
+            if($cos != ''){
+                if(!is_null($ncn->construction_specialist->signature)){
+                    $html .= "<div style=\"font-weight: bold; position:absolute;top:810;left:365px;\">
+                    <img width=\"35%\" height=\"25%\" src=\"" . $ncn->construction_specialist->signature->getPath()
+                    . "\"></div>";
+                }
+                $html .= "<div style=\"font-size: 10px;  position:absolute;top:848px;left:325px\">" . $cos  . "</div>";
             }
-            $html .= "<div style=\"font-size: 10px;  position:absolute;top:848px;left:325px\">" . $cos  . "</div>";
-        }
-        if($leader != ''){
-            if(!is_null($ncn->leader->signature)){
-                $html .= "<div style=\"font-weight: bold; position:absolute;top:810;left:585px;\">
-                <img width=\"45%\" height=\"35%\" src=\"" . $ncn->leader->signature->getPath()
-                . "\"></div>";
+            if($leader != ''){
+                if(!is_null($ncn->leader->signature)){
+                    $html .= "<div style=\"font-weight: bold; position:absolute;top:810;left:585px;\">
+                    <img width=\"45%\" height=\"35%\" src=\"" . $ncn->leader->signature->getPath()
+                    . "\"></div>";
+                }
+                $html .= "<div style=\"font-size: 10px;  position:absolute;top:848px;left:540\">" . $leader  . "</div>";
             }
-            $html .= "<div style=\"font-size: 10px;  position:absolute;top:848px;left:540\">" . $leader  . "</div>";
-        }
 
-        $html .= "<div style=\"font-size: 10px; position:absolute;top:893px;left:125px\">" . $issue_date  . "</div>";
-        $html .= "<div style=\"font-size: 10px; position:absolute;top:893px;left:340px\">" . $issue_date  . "</div>";
-        $html .= "<div style=\"font-size: 10px; position:absolute;top:893px;left:555px\">" . $issue_date  . "</div>";
+            $html .= "<div style=\"font-size: 10px; position:absolute;top:893px;left:125px\">" . $issue_date  . "</div>";
+            $html .= "<div style=\"font-size: 10px; position:absolute;top:893px;left:340px\">" . $issue_date  . "</div>";
+            $html .= "<div style=\"font-size: 10px; position:absolute;top:893px;left:555px\">" . $issue_date  . "</div>";
 
-        $mpdf->SetHTMLHeader($html,'0',true);
-        $html = "<div style=\" padding-left: 80px; padding-right:40px; padding-bottom:-15px; \">";
-        $html .= "<div style=\"font-size: 12px; position:absolute;top:220px;left:105px;LINE-HEIGHT:20px;\">" . $description  . "</div>";
-        $html .= "</div>";
+            $mpdf->SetHTMLHeader($html,'0',true);
+            $html = "<div style=\" padding-left: 80px; padding-right:40px; padding-bottom:-15px; \">";
+            $html .= "<div style=\"font-size: 12px; position:absolute;top:220px;left:105px;LINE-HEIGHT:20px;\">" . $description  . "</div>";
+            $html .= "</div>";
+        }
+        else{
+            $header_len = strlen($contract_header);
+            $header_center = (690/2) - ($header_len * 2.5);
+            $html = "<div style=\"font-size: 9px; font-weight: bold; color:#1F4E78; position:fixed;top:45px;left:". $header_center . "\">" . $contract_header  ."</div>";
+            $html .= "<div style=\"font-size: 9px; font-weight: bold; color:#FFFFFF; position:absolute;top:98px;left:532px;\">" . $document_number  . "</div>";
+            $html .= "<div style=\"padding-right:120px; font-size: 12px; font-weight: bold; position:absolute;top:150px;left:105px;\">" . $subject  . "</div>";
+            $html .= "<div style=\"padding-right:120px;font-size: 10px; position:absolute;top:650px;left:105px\">" . $attachment_description  . "</div>";
+            $html .= "<div style=\"padding-right:120px;font-size: 10px; position:absolute;top:691px;left:340px\">" . $pages_of_attachment  .  "</div>";
+           
+            if($issuer != ''){
+                if(!is_null($ncn->issue_by->signature)){
+                    $html .= "<div style=\"font-weight: bold; position:absolute;top:725;left:230px;\">
+                    <img width=\"30%\" height=\"20%\" src=\"" . $ncn->issue_by->signature->getPath()
+                    . "\"></div>";
+                }
+                $html .= "<div style=\"font-size: 10px;  position:absolute;top:768px;left:185px\">" . $issuer  . "</div>";
+                $html .= "<div style=\"font-size: 10px;  position:absolute;top:785px;left:227px\">" . $issuer_jobtitile  . "</div>";
+                $html .= "<div style=\"font-size: 10px; position:absolute;top:802px;left:227px\">" . $issue_date  . "</div>";
+            }
+            if($cos != ''){
+                if(!is_null($ncn->construction_specialist->signature)){
+                    $html .= "<div style=\"font-weight: bold; position:absolute;top:880;left:535px;\">
+                    <img width=\"40%\" height=\"30%\" src=\"" . $ncn->construction_specialist->signature->getPath()
+                    . "\"></div>";
+                }
+                $html .= "<div style=\"font-weight: bold; font-size: 9px; position:absolute;top:857px;left:625px\">" . $contract_code  . "</div>";
+                $html .= "<div style=\"font-size: 10px;  position:absolute;top:917px;left:480px\">" . $cos  . "</div>";
+                $html .= "<div style=\"font-size: 10px;  position:absolute;top:935px;left:525px\">" . $cos_jobtitle  . "</div>";
+                $html .= "<div style=\"font-size: 10px; position:absolute;top:953px;left:525px\">" . $issue_date  . "</div>";
+                
+            }
+            if($leader != ''){
+                if(!is_null($ncn->leader->signature)){
+                    $html .= "<div style=\"font-weight: bold; position:absolute;top:725;left:535px;\">
+                    <img width=\"45%\" height=\"35%\" src=\"" . $ncn->leader->signature->getPath()
+                    . "\"></div>";
+                }
+                $html .= "<div style=\"font-size: 10px;  position:absolute;top:771px;left:480\">" . $leader  . "</div>";
+                $html .= "<div style=\"font-size: 10px;  position:absolute;top:790px;left:520px\">" . $leader_jobtitle . "</div>";
+                $html .= "<div style=\"font-size: 10px; position:absolute;top:808px;left:520px\">" . $issue_date  . "</div>";
+            }
+
+
+            $mpdf->SetHTMLHeader($html,'0',true);
+            $html = "<div style=\" padding-left: 80px; padding-right:40px; padding-bottom:-15px; \">";
+            $html .= "<div style=\"font-size: 12px; position:absolute;top:220px;left:105px;LINE-HEIGHT:20px;\">" . $description  . "</div>";
+            $html .= "</div>";
+
+        }
         
         $mpdf->WriteHTML($html);
         $html = "";   
