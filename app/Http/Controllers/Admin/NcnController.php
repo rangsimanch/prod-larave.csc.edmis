@@ -367,10 +367,10 @@ class NcnController extends Controller
         }
 
         if($ncn_id <= 93){
-            $header_len = strlen($contract_header);
-            $header_center = (690/2) - ($header_len * 2.5);
-            $html = "<div style=\"font-size: 9px; color:#1F4E78; position:fixed;top:55px;left:". $header_center . "\">" . $contract_header  ."</div>";
-            $html .= "<div style=\"font-size: 9px; font-weight: bold; color:#FFFFFF; position:absolute;top:117px;left:532px;\">" . $document_number  . "</div>";
+            // $header_len = strlen($contract_header);
+            // $header_center = (690/2) - ($header_len * 2.5);
+            // $html = "<div style=\"font-size: 9px; color:#1F4E78; position:fixed;top:55px;left:". $header_center . "\">" . $contract_header  ."</div>";
+            $html = "<div style=\"font-size: 9px; font-weight: bold; color:#FFFFFF; position:absolute;top:117px;left:532px;\">" . $document_number  . "</div>";
             $html .= "<div style=\"padding-right:120px; font-size: 12px; font-weight: bold; position:absolute;top:175px;left:105px;\">" . $subject  . "</div>";
             $html .= "<div style=\"padding-right:120px;font-size: 10px; position:absolute;top:750px;left:105px\">" . $attachment_description  . "</div>";
             $html .= "<div style=\"padding-right:120px;font-size: 10px; position:absolute;top:782px;left:260px\">" . $pages_of_attachment  .  " จำนวน-แผ่น" . "</div>";
@@ -413,10 +413,10 @@ class NcnController extends Controller
             $html .= "</div>";
         }
         else{
-            $header_len = strlen($contract_header);
-            $header_center = (690/2) - ($header_len * 2.5);
-            $html = "<div style=\"font-size: 9px; font-weight: bold; color:#1F4E78; position:fixed;top:45px;left:". $header_center . "\">" . $contract_header  ."</div>";
-            $html .= "<div style=\"font-size: 9px; font-weight: bold; color:#FFFFFF; position:absolute;top:98px;left:532px;\">" . $document_number  . "</div>";
+            // $header_len = strlen($contract_header);
+            // $header_center = (690/2) - ($header_len * 2.5);
+            // $html = "<div style=\"font-size: 9px; font-weight: bold; color:#1F4E78; position:fixed;top:45px;left:". $header_center . "\">" . $contract_header  ."</div>";
+            $html = "<div style=\"font-size: 9px; font-weight: bold; color:#FFFFFF; position:absolute;top:98px;left:532px;\">" . $document_number  . "</div>";
             $html .= "<div style=\"padding-right:120px; font-size: 12px; font-weight: bold; position:absolute;top:150px;left:105px;\">" . $subject  . "</div>";
             $html .= "<div style=\"padding-right:120px;font-size: 10px; position:absolute;top:650px;left:105px\">" . $attachment_description  . "</div>";
             $html .= "<div style=\"padding-right:120px;font-size: 10px; position:absolute;top:691px;left:340px\">" . $pages_of_attachment  .  "</div>";
