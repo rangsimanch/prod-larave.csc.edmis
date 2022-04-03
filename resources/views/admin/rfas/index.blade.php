@@ -49,6 +49,11 @@
                                 <th>
                                     <p style="font-size:12px"> {{ trans('cruds.rfa.fields.boq') }} </p>
                                 </th>
+
+                                <th>
+                                    <p style="font-size:12px"> {{ trans('cruds.rfa.fields.boq_sub') }} </p>
+                                </th>
+
                                 <th>
                                     <p style="font-size:12px"> {{ trans('cruds.rfa.fields.worktype') }} </p>
                                 </th> 
@@ -114,6 +119,14 @@
                                     </select>
                                 </td>
                                 
+                                <td>
+                                    <select class="search" style="width:70%">
+                                        <option value>{{ trans('global.all') }}</option>
+                                        @foreach($bo_qs as $key => $item)
+                                            <option value="{{ $item->name }}">{{ $item->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </td>
                                 <td>
                                     <select class="search" style="width:70%">
                                         <option value>{{ trans('global.all') }}</option>
@@ -244,6 +257,7 @@
 { data: 'document_status_status_name', name: 'document_status.status_name'},
 { data: 'construction_contract_code', name: 'construction_contract.code' ,sortable: false},
 { data: 'boq_name', name: 'boq.name'},
+{ data: 'boq_sub', name: 'boq_sub.name'},
 { data: 'worktype', name: 'worktype' },
 { data: 'title_eng', name: 'title_eng' , sortable: false},
 { data: 'title', name: 'title' , sortable: false},

@@ -588,6 +588,10 @@ class RfaController extends Controller
                 return $row->boq ? $row->boq->name : '';
             });
 
+            $table->addColumn('boq_sub', function ($row) {
+                return $row->boq_sub ? $row->boq_sub->name : '';
+            });
+
             $table->editColumn('title_eng', function ($row) {
                 return $row->title_eng ? $row->title_eng : '';
             });
@@ -710,7 +714,7 @@ class RfaController extends Controller
                 return $row->wbs_level_one ? $row->wbs_level_one->name : '';
             });
 
-            $table->rawColumns(['actions', 'placeholder', 'document_status', 'file_upload_1', 'boq', 'type', 'construction_contract', 'wbs_level_3', 'wbs_level_4', 'issueby', 'assign', 'action_by', 'comment_by', 'information_by', 'comment_status', 'create_by_user', 'commercial_file_upload', 'distribute_by', 'reviewed_by', 'submittals_file', 'wbs_level_one','document_status_status_name','cover_sheet']);
+            $table->rawColumns(['actions', 'placeholder', 'document_status', 'file_upload_1', 'boq','boq_sub', 'type', 'construction_contract', 'wbs_level_3', 'wbs_level_4', 'issueby', 'assign', 'action_by', 'comment_by', 'information_by', 'comment_status', 'create_by_user', 'commercial_file_upload', 'distribute_by', 'reviewed_by', 'submittals_file', 'wbs_level_one','document_status_status_name','cover_sheet']);
 
             return $table->make(true);
         }
@@ -917,7 +921,6 @@ class RfaController extends Controller
             else{
                 $construction_contracts = ConstructionContract::all()->pluck('code', 'id')->prepend(trans('global.pleaseSelect'), '');
             }
-
         $wbs_level_3s = WbsLevelThree::all()->pluck('wbs_level_3_name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $wbs_level_4s = Wbslevelfour::all()->pluck('wbs_level_4_name', 'id')->prepend(trans('global.pleaseSelect'), '');
@@ -942,7 +945,10 @@ class RfaController extends Controller
 
         $boqs = BoQ::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        return view('admin.rfas.create', compact('document_statuses', 'types', 'construction_contracts', 'wbs_level_3s', 'wbs_level_4s', 'issuebies', 'assigns', 'action_bies', 'comment_bies', 'information_bies', 'comment_statuses', 'for_statuses', 'reviewed_bies', 'boqs'));
+        $boq_subs = BoQ::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+
+
+        return view('admin.rfas.create', compact('document_statuses', 'types', 'construction_contracts', 'wbs_level_3s', 'wbs_level_4s', 'issuebies', 'assigns', 'action_bies', 'comment_bies', 'information_bies', 'comment_statuses', 'for_statuses', 'reviewed_bies', 'boqs', 'boq_subs'));
     }
 
     public function store(StoreRfaRequest $request)
@@ -1089,7 +1095,7 @@ class RfaController extends Controller
             $action_bies = User::where('team_id',3)->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
             $comment_bies = User::where('team_id',3)->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
             $information_bies = User::where('team_id',3)->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
-
+            
             $rfa->load('action_by', 'comment_by', 'information_by');
 
             return view('admin.rfas.edit', compact('construction_contracts', 'action_bies', 'comment_bies', 'information_bies', 'rfa'));
@@ -1533,6 +1539,8 @@ class RfaController extends Controller
         
 
         $bill = $rfa->boq->name ?? '';
+        $bill_sub = $rfa->boq_sub->name ?? '';
+
         $title_th = $rfa->title ?? '';
         $title_en = wordwrap($rfa->title_eng ?? '',300,"<br>\n");
         $document_number = $rfa->document_number ?? '';
@@ -1638,7 +1646,7 @@ class RfaController extends Controller
 
         //Title
         $html .= "<div style=\"font-size: 12px; position:absolute;top:168px;left:55px;\">" . 'Bill :' . "</div>";
-        $html .= "<div style=\"font-size: 14px; position:absolute;top:168px;left:80px;\">" . $bill . '.' . "</div>";
+        $html .= "<div style=\"font-size: 12px; position:absolute;top:170px;left:80px;\">" . $bill . ', ' . $bill_sub . "</div>";
 
         $html .= "<div style=\"font-size: 14px; position:absolute;top:184px;left:55px;\">" . 'Title :' . "</div>";
         if(strlen($title_en) > 210){

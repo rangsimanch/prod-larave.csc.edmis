@@ -79,6 +79,7 @@ class Rfa extends Model implements HasMedia
     protected $fillable = [
         'cec_sign',
         'cec_stamp',
+        'boq_sub_id',
         'purpose_for',
         'bill',
         'title',
@@ -170,6 +171,11 @@ class Rfa extends Model implements HasMedia
     public function type()
     {
         return $this->belongsTo(Rfatype::class, 'type_id');
+    }
+
+    public function boq_sub()
+    {
+        return $this->belongsTo(BoQ::class, 'boq_sub_id');
     }
 
     public function construction_contract()

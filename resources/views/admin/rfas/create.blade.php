@@ -44,6 +44,19 @@
                             <span class="help-block">{{ trans('cruds.rfa.fields.boq_helper') }}</span>
                         </div>
 
+                        <div class="form-group {{ $errors->has('boq_sub') ? 'has-error' : '' }}">
+                            <label for="boq_sub_id">{{ trans('cruds.rfa.fields.boq_sub') }}</label>
+                            <select class="form-control select2" name="boq_sub_id" id="boq_sub_id">
+                                @foreach($boq_subs as $id => $entry)
+                                    <option value="{{ $id }}" {{ old('boq_sub_id') == $id ? 'selected' : '' }}>{{ $entry }}</option>
+                                @endforeach
+                            </select>
+                            @if($errors->has('boq_sub'))
+                                <span class="help-block" role="alert">{{ $errors->first('boq_sub') }}</span>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.rfa.fields.boq_sub_helper') }}</span>
+                        </div>
+
                         <div class="form-group {{ $errors->has('title_eng') ? 'has-error' : '' }}">
                             <label for="title_eng">{{ trans('cruds.rfa.fields.title_eng') }}</label>
                             <input class="form-control" type="text" name="title_eng" id="title_eng" value="{{ old('title_eng', '') }}">
