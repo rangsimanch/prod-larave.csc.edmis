@@ -264,7 +264,7 @@ class TaskController extends Controller
                     $html .= "<div style=\"text-align: center; font-weight: bold; font-size: 26px;\">Contract Section No. : " . $contract_code . ' ' . $contract_name  . "</div>";      
                     $html .= "<div style=\"text-align: center; font-weight: bold; font-size: 26px;\">Supervision mileage chainage : DK 000 + 300 to DK 253 + 000 Section </div>";        
                     $html .= "<div style=\"text-align: center; font-weight: bold; font-size: 30px;\">BANGKOK-NAKHON RATCHASIMA HIGH SPEED RAILWAY</div>";        
-                    $html .= "<div style=\"text-align: center; font-weight: bold; font-size: 22px;\">Supevision Unit : Chaina Railway International Corporation and Chaina Railway Design Group</div>";   
+                    $html .= "<div style=\"text-align: center; font-weight: bold; font-size: 22px;\">Supervision Unit : Chaina Railway International Corporation and Chaina Railway Design Group</div>";   
                     $html .= "<div style=\"text-align: center; font-weight: bold; font-size: 22px;\">Thailand Railway Project Department of the Consortium</div>";        
                     $html .= "<br></br><div style=\"text-align: center; font-weight: bold; font-size: 24px;\">By ". $recordby ."</div>";        
                     $html .= "<div style=\"text-align: center; font-weight: bold; font-size: 23px;\">". $jobtitle ."</div>";        
