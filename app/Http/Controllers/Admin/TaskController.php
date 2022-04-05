@@ -300,7 +300,7 @@ class TaskController extends Controller
                 $due_date = $task->due_date ?? ''; 
                 $weather = $task->weather ?? '';
                 if(is_null($weather)){
-                    $weather = "Cloudy";
+                    $weather = "Clouds";
                 }
                 $temperature = $task->temperature ?? '';
                 if(is_null($temperature)){
