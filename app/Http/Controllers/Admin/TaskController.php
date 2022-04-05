@@ -303,7 +303,7 @@ class TaskController extends Controller
                     $weather = "Cloudy";
                 }
                 $temperature = $task->temperature ?? '';
-                if(isnull($temperature)){
+                if(is_null($temperature)){
                     $temperature = rand(2850, 3350) / 100;
                 }
                 $activity_name = $task->name ?? '';
