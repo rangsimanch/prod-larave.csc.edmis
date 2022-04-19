@@ -39,6 +39,10 @@ class StoreAddLetterRequest extends FormRequest
                 'required',
                 'date_format:' . config('panel.date_format'),
             ],
+            'received_date'                => [
+                'required',
+                'date_format:' . config('panel.date_format'),
+            ],
             'receiver_id'              => [
                 'required',
                 'integer',
