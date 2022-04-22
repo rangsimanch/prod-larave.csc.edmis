@@ -251,7 +251,8 @@
             ],
             orderCellsTop: true,
             order: [[ 5, 'desc' ]],
-            pageLength: 10,
+            pageLength: 25,
+            lengthMenu: [[10, 25, 50, 100, 1000, -1], [10, 25, 50, 100, 1000, "All"]],
             processing: true,
         };
         var table = $('.datatable-Complaint').DataTable(dtOverrideGlobals);
