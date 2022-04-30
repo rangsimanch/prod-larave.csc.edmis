@@ -56,12 +56,9 @@ class HomeController
         $modelAnnouncements = Announcement::where('start_date', '<=', $today)->where('end_date', '>=', $today)->orderBy('id', 'DESC')->get(); 
         foreach($modelAnnouncements as $activeAnnouncement){
             if(count($activeAnnouncement->attachments) > 0){
-                $announce_text .= '<a href="' . $activeAnnouncement->attachments[0]->getUrl() . '" target="_blank">'  . $activeAnnouncement->description . '</a>' . $blank_space;
+                $announce_text .= '<a href="' . $activeAnnouncement->attachments[0]->getUrl() . '" target="_blank">'  . $activeAnnouncement->title . '</a>' . $blank_space;
             }else{
-                if(strlen($activeAnnouncement->description) > 0)
-                    $announce_text .= $activeAnnouncement->description . $blank_space;
-                else
-                    $announce_text .= $activeAnnouncement->title . $blank_space;
+                $announce_text .= $activeAnnouncement->title . $blank_space;
             }
         }
         
