@@ -52,7 +52,7 @@ class HomeController
         }
        
         $announce_text = "";
-        $blank_space = '&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;';
+        $blank_space = '&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; | &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;';
         $modelAnnouncements = Announcement::where('start_date', '<=', $today)->where('end_date', '>=', $today)->orderBy('id', 'DESC')->get(); 
         foreach($modelAnnouncements as $activeAnnouncement){
             if(count($activeAnnouncement->attachments) > 0){
