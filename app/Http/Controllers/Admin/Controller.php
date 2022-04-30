@@ -58,7 +58,10 @@ class HomeController
             if(count($activeAnnouncement->attachments) > 0){
                 $announce_text .= '<a href="' . $activeAnnouncement->attachments[0]->getUrl() . '" target="_blank">'  . $activeAnnouncement->description . '</a>' . $blank_space;
             }else{
-                $announce_text .= $activeAnnouncement->description . $blank_space;
+                if(strlen($activeAnnouncement->description) > 0)
+                    $announce_text .= $activeAnnouncement->description . $blank_space;
+                else
+                    $announce_text .= $activeAnnouncement->title . $blank_space;
             }
         }
         
