@@ -370,15 +370,18 @@ class TaskController extends Controller
                                 }
 
                                 if(in_array(pathinfo(public_path($task->attachment[$index]->getUrl()),PATHINFO_EXTENSION),$allowed)){
-                                    $img_string = Image::make($task->attachment[$index]->getPath());
-                                    $img = (string) $img_string->orientate()->resize(null, 180, function ($constraint) {
-                                        $constraint->aspectRatio();
-                                    })
-                                    ->encode('data-url');
+                                    if(file_exists(Image::make($task->attachment[$index]->getPath()))){
+                                        $img_string = Image::make($task->attachment[$index]->getPath());
+                                        $img = (string) $img_string->orientate()->resize(null, 180, function ($constraint) {
+                                            $constraint->aspectRatio();
+                                        })
+                                        ->encode('data-url');
 
-                                    $html .= "<img width=\"". $img_wh ."\" height=\"". $img_wh ."\" src=\"" 
-                                        . $img
-                                        . "\"> ";
+                                        $html .= "<img width=\"". $img_wh ."\" height=\"". $img_wh ."\" src=\"" 
+                                            . $img
+                                            . "\"> ";
+                                    }
+                                    
                                 }
                             }
                             $index++;
