@@ -367,7 +367,7 @@ class TaskController extends Controller
                                 }
 
                                 if(in_array(pathinfo(public_path($task->attachment[$index]->getUrl()),PATHINFO_EXTENSION),$allowed)){
-                                    $handle = explode(var_export(get_headers($task->attachment[$index]->getUrl()), true), ",");
+                                    $handle = var_export(get_headers($task->attachment[$index]->getUrl()), true);
                                     // $img = (string) Image::make($task->attachment[$index]->getPath())->orientate()->resize(null, 180, function ($constraint) {
                                     //     $constraint->aspectRatio();
                                     // })
@@ -376,7 +376,7 @@ class TaskController extends Controller
                                     // $html .= "<img width=\"". $img_wh ."\" height=\"". $img_wh ."\" src=\"" 
                                     //     . $img
                                     //     . "\"> ";
-                                    $html .= " --> " . print_r($handle);
+                                    $html .= " --> " . substr($handle, 10);
                                 }
                             }
                             $index++;
