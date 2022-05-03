@@ -367,29 +367,7 @@ class TaskController extends Controller
                                 }
 
                                 if(in_array(pathinfo(public_path($task->attachment[$index]->getUrl()),PATHINFO_EXTENSION),$allowed)){
-                                    $str = print_r(get_headers($task->attachment[$index]->getUrl()), true);
-                                    $keys = array();
-                                    $values = array();
-                                    $output = array();
-                                    if( substr($str, 0, 5) == 'Array' ) {
-                                        $array_contents = substr($str, 7, -2);
-                                        $array_contents = str_replace(array('[', ']', '=>'), array('#!#', '#?#', ''), $array_contents);
-                                        $array_fields = explode("#!#", $array_contents);
-
-                                        for($i = 0; $i < count($array_fields); $i++ ) {
-                                            if( $i != 0 ) {
-                                                $bits = explode('#?#', $array_fields[$i]);
-                                                if( $bits[0] != '' ) $output[$bits[0]] = $bits[1];
-                                            }
-                                        }
-                                        $arr_handle = $output;
-                                        if(substr($arr_handle[0], -2) == "OK"){
-                                            $html .= substr($arr_handle[0], -2);
-                                        }
-
-                                    } else {
-                                        return $arr_handle = null;
-                                    }
+                                    $handle = var_export(get_headers($task->attachment[$index]->getUrl()), true);
                                     // $img = (string) Image::make($task->attachment[$index]->getPath())->orientate()->resize(null, 180, function ($constraint) {
                                     //     $constraint->aspectRatio();
                                     // })
@@ -398,6 +376,7 @@ class TaskController extends Controller
                                     // $html .= "<img width=\"". $img_wh ."\" height=\"". $img_wh ."\" src=\"" 
                                     //     . $img
                                     //     . "\"> ";
+                                    $html .= " --> " . sizeof($handle);
                                 }
                             }
                             $index++;
