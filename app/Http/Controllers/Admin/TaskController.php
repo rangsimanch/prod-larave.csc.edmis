@@ -368,15 +368,18 @@ class TaskController extends Controller
 
                                 if(in_array(pathinfo(public_path($task->attachment[$index]->getUrl()),PATHINFO_EXTENSION),$allowed)){
                                     $handle = var_export(get_headers($task->attachment[$index]->getUrl()), true);
-                                    // $img = (string) Image::make($task->attachment[$index]->getPath())->orientate()->resize(null, 180, function ($constraint) {
-                                    //     $constraint->aspectRatio();
-                                    // })
-                                    // ->encode('data-url');
+                                    $file_status = substr($handle, 29,2);
+                                    if($file_status == "OK"){
+                                        $img = (string) Image::make($task->attachment[$index]->getPath())
+                                        ->orientate()->resize(null, 180, function ($constraint) {
+                                        $constraint->aspectRatio();})->encode('data-url');
+                                        
+                                        $html .= "<img width=\"". $img_wh ."\" height=\"". $img_wh ."\" src=\"" 
+                                            . $img
+                                            . "\"> ";
 
-                                    // $html .= "<img width=\"". $img_wh ."\" height=\"". $img_wh ."\" src=\"" 
-                                    //     . $img
-                                    //     . "\"> ";
-                                    $html .= " --> " . substr($handle, 29,2);
+                                    }
+                                   
                                 }
                             }
                             $index++;
