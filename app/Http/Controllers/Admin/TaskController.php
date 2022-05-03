@@ -152,30 +152,6 @@ class TaskController extends Controller
         return view('admin.tasks.createReport', compact('create_by_users', 'contracts'));
     }
 
-    private function text_to_array($str) {
-        $keys = array();
-        $values = array();
-        $output = array();
-
-      	if( substr($str, 0, 5) == 'Array' ) {
-            $array_contents = substr($str, 7, -2);
-            $array_contents = str_replace(array('[', ']', '=>'), array('#!#', '#?#', ''), $array_contents);
-            $array_fields = explode("#!#", $array_contents);
-
-            for($i = 0; $i < count($array_fields); $i++ ) {
-                if( $i != 0 ) {
-                    $bits = explode('#?#', $array_fields[$i]);
-                    if( $bits[0] != '' ) $output[$bits[0]] = $bits[1];
-                }
-            }
-            return $output;
-        } else {
-            echo 'The given parameter is not an array.';
-            return null;
-        }
-
-    }
-
     public function createReportTask(CreateReportTaskRequest $request){
         
         $ebits = ini_get('error_reporting');
@@ -236,9 +212,6 @@ class TaskController extends Controller
                 $contract_code =  'All work of the whole line';
                 $contract_name =  '';
             }
-
-
-
             $dateType = '';
             
             // Report Type
@@ -395,7 +368,25 @@ class TaskController extends Controller
 
                                 if(in_array(pathinfo(public_path($task->attachment[$index]->getUrl()),PATHINFO_EXTENSION),$allowed)){
                                     $handle = print_r(get_headers($task->attachment[$index]->getUrl()), true);
-                                    $arrHandle = text_to_array($handle);
+                                    $keys = array();
+                                    $values = array();
+                                    $output = array();
+                                    if( substr($str, 0, 5) == 'Array' ) {
+                                        $array_contents = substr($str, 7, -2);
+                                        $array_contents = str_replace(array('[', ']', '=>'), array('#!#', '#?#', ''), $array_contents);
+                                        $array_fields = explode("#!#", $array_contents);
+
+                                        for($i = 0; $i < count($array_fields); $i++ ) {
+                                            if( $i != 0 ) {
+                                                $bits = explode('#?#', $array_fields[$i]);
+                                                if( $bits[0] != '' ) $output[$bits[0]] = $bits[1];
+                                            }
+                                        }
+                                        $arr_handle = $output;
+                                    } else {
+                                        echo 'The given parameter is not an array.';
+                                        return $arr_handle = null;
+                                    }
                                     // $img = (string) Image::make($task->attachment[$index]->getPath())->orientate()->resize(null, 180, function ($constraint) {
                                     //     $constraint->aspectRatio();
                                     // })
@@ -404,7 +395,7 @@ class TaskController extends Controller
                                     // $html .= "<img width=\"". $img_wh ."\" height=\"". $img_wh ."\" src=\"" 
                                     //     . $img
                                     //     . "\"> ";
-                                    $html .= " --> " . sizeof($arrHandle);
+                                    $html .= " --> " . sizeof($arr_handle);
                                 }
                             }
                             $index++;
