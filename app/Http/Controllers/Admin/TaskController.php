@@ -383,20 +383,21 @@ class TaskController extends Controller
                                             }
                                         }
                                         $arr_handle = $output;
+                                        if(substr($arr_handle[0], -2) == "OK"){
+                                            $html .= substr($arr_handle[0], -2);
+                                        }
+
                                     } else {
-                                        echo 'The given parameter is not an array.';
                                         return $arr_handle = null;
                                     }
-                                    if(substr($arr_handle[0], -2) == "OK"){
-                                        $img = (string) Image::make($task->attachment[$index]->getPath())->orientate()->resize(null, 180, function ($constraint) {
-                                            $constraint->aspectRatio();
-                                        })
-                                        ->encode('data-url');
+                                    // $img = (string) Image::make($task->attachment[$index]->getPath())->orientate()->resize(null, 180, function ($constraint) {
+                                    //     $constraint->aspectRatio();
+                                    // })
+                                    // ->encode('data-url');
 
-                                        $html .= "<img width=\"". $img_wh ."\" height=\"". $img_wh ."\" src=\"" 
-                                            . $img
-                                            . "\"> ";
-                                    }
+                                    // $html .= "<img width=\"". $img_wh ."\" height=\"". $img_wh ."\" src=\"" 
+                                    //     . $img
+                                    //     . "\"> ";
                                 }
                             }
                             $index++;
