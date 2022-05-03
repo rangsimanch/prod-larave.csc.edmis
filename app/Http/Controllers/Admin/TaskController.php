@@ -387,15 +387,16 @@ class TaskController extends Controller
                                         echo 'The given parameter is not an array.';
                                         return $arr_handle = null;
                                     }
-                                    // $img = (string) Image::make($task->attachment[$index]->getPath())->orientate()->resize(null, 180, function ($constraint) {
-                                    //     $constraint->aspectRatio();
-                                    // })
-                                    // ->encode('data-url');
+                                    if(substr($arr_handle[0], -2) == "OK"){
+                                        $img = (string) Image::make($task->attachment[$index]->getPath())->orientate()->resize(null, 180, function ($constraint) {
+                                            $constraint->aspectRatio();
+                                        })
+                                        ->encode('data-url');
 
-                                    // $html .= "<img width=\"". $img_wh ."\" height=\"". $img_wh ."\" src=\"" 
-                                    //     . $img
-                                    //     . "\"> ";
-                                    $html .= " --> " . $arr_handle[0];
+                                        $html .= "<img width=\"". $img_wh ."\" height=\"". $img_wh ."\" src=\"" 
+                                            . $img
+                                            . "\"> ";
+                                    }
                                 }
                             }
                             $index++;
