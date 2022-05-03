@@ -293,17 +293,17 @@ class TaskController extends Controller
                 $description_set = str_split($description, 1500);
                 
                 $wind = $task->wind ?? '';
-                if(is_null($wind)){
+                if($wind == ''){
                     $wind = rand(150, 300) / 100;
                 }
                 $wind .=   ' m/sec';
                 $due_date = $task->due_date ?? ''; 
                 $weather = $task->weather ?? '';
-                if(is_null($weather)){
+                if($weather == ''){
                     $weather = "Clouds";
                 }
                 $temperature = $task->temperature ?? '';
-                if(is_null($temperature)){
+                if($temperature == ''){
                     $temperature = rand(2850, 3350) / 100;
                 }
                 $activity_name = $task->name ?? '';
