@@ -152,6 +152,30 @@ class TaskController extends Controller
         return view('admin.tasks.createReport', compact('create_by_users', 'contracts'));
     }
 
+    private function text_to_array($str) {
+        $keys = array();
+        $values = array();
+        $output = array();
+
+      	if( substr($str, 0, 5) == 'Array' ) {
+            $array_contents = substr($str, 7, -2);
+            $array_contents = str_replace(array('[', ']', '=>'), array('#!#', '#?#', ''), $array_contents);
+            $array_fields = explode("#!#", $array_contents);
+
+            for($i = 0; $i < count($array_fields); $i++ ) {
+                if( $i != 0 ) {
+                    $bits = explode('#?#', $array_fields[$i]);
+                    if( $bits[0] != '' ) $output[$bits[0]] = $bits[1];
+                }
+            }
+            return $output;
+        } else {
+            echo 'The given parameter is not an array.';
+            return null;
+        }
+
+    }
+
     public function createReportTask(CreateReportTaskRequest $request){
         
         $ebits = ini_get('error_reporting');
@@ -402,31 +426,6 @@ class TaskController extends Controller
             return redirect()->back() ->with('alert', "No activity on date range");
         }
     }
-
-    function text_to_array($str) {
-        $keys = array();
-        $values = array();
-        $output = array();
-
-      	if( substr($str, 0, 5) == 'Array' ) {
-            $array_contents = substr($str, 7, -2);
-            $array_contents = str_replace(array('[', ']', '=>'), array('#!#', '#?#', ''), $array_contents);
-            $array_fields = explode("#!#", $array_contents);
-
-            for($i = 0; $i < count($array_fields); $i++ ) {
-                if( $i != 0 ) {
-                    $bits = explode('#?#', $array_fields[$i]);
-                    if( $bits[0] != '' ) $output[$bits[0]] = $bits[1];
-                }
-            }
-            return $output;
-        } else {
-            echo 'The given parameter is not an array.';
-            return null;
-        }
-
-    }
-
 
     public function create()
     {
