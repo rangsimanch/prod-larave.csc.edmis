@@ -367,7 +367,7 @@ class TaskController extends Controller
                                 }
 
                                 if(in_array(pathinfo(public_path($task->attachment[$index]->getUrl()),PATHINFO_EXTENSION),$allowed)){
-                                    $handle = print_r(get_headers($task->attachment[$index]->getUrl()), true);
+                                    $str = print_r(get_headers($task->attachment[$index]->getUrl()), true);
                                     $keys = array();
                                     $values = array();
                                     $output = array();
