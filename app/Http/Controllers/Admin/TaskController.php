@@ -376,7 +376,7 @@ class TaskController extends Controller
                                     // $html .= "<img width=\"". $img_wh ."\" height=\"". $img_wh ."\" src=\"" 
                                     //     . $img
                                     //     . "\"> ";
-                                    $html .= " --> " . $handle;
+                                    // $html .= " --> " . $handle;
                                 }
                             }
                             $index++;
