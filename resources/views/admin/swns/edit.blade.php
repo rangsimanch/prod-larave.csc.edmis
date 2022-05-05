@@ -389,8 +389,8 @@ Dropzone.options.descriptionImageDropzone = {
     },
     params: {
       size: 500,
-      width: 4096,
-      height: 4096
+      width: 8192,
+      height: 8192
     },
     success: function (file, response) {
       $('form').append('<input type="hidden" name="description_image[]" value="' + response.name + '">')

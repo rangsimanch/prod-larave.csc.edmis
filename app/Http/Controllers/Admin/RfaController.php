@@ -1866,8 +1866,6 @@ class RfaController extends Controller
             $index = 1;
             $mpdf->WriteHTML($html);
 
-    
-
             foreach($submittalsRfa as $submittal){
                 //purpose for HERE!!
                 if($index%8 == 0){ 
