@@ -176,9 +176,9 @@ class SwnController extends Controller
         $dept_code = Department::where('id', '=', $data['dept_code_id'])->value('code');
         $submit_date = $data['submit_date'];
         $code_year = substr($submit_date,-4);
-        $legth_of_doc = (int)Swn::where('construction_contract_id' ,'=' ,$data['construction_contract_id'])->count(); 
+        $prev_doc_code = Swn::where('construction_contract_id' ,'=' ,$data['construction_contract_id'])->orderBy('id','desc')->limit(1)->value('document_number');
+        $legth_of_doc = (int)substr(substr($prev_doc_code,-3),0,3);
         if($legth_of_doc != 0){
-            $prev_doc_code = Swn::where('construction_contract_id' ,'=' ,$data['construction_contract_id'])->orderBy('id','desc')->limit(1)->value('document_number');
             $prev_year = substr(substr($prev_doc_code,-8),0,4);
             if(strcmp($prev_year,$code_year)){
                 $legth_of_doc = 1;
