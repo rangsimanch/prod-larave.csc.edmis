@@ -257,6 +257,17 @@
                                 </a>
                             </li>
                         @endcan
+                        @can('srt_dpd_document_access')
+                        <li class="{{ request()->is("admin/srt-dpd-documents") || request()->is("admin/srt-dpd-documents/*") ? "active" : "" }}">
+                            <a href="{{ route("admin.srt-dpd-documents.index") }}">
+                                <i class="fa-fw fas fa-building">
+
+                                </i>
+                                <span>{{ trans('cruds.srtDpdDocument.title') }}</span>
+
+                            </a>
+                        </li>
+                        @endcan
                         @can('srt_pe_document_access')
                             <li class="{{ request()->is("admin/srt-pe-documents") || request()->is("admin/srt-pe-documents/*") ? "active" : "" }}">
                                 <a href="{{ route("admin.srt-pe-documents.index") }}">
@@ -289,6 +300,17 @@
 
                                 </a>
                             </li>
+                        @endcan
+                        @can('srt_department_access')
+                        <li class="{{ request()->is("admin/srt-departments") || request()->is("admin/srt-departments/*") ? "active" : "" }}">
+                            <a href="{{ route("admin.srt-departments.index") }}">
+                                <i class="fa-fw fas fa-cogs">
+
+                                </i>
+                                <span>{{ trans('cruds.srtDepartment.title') }}</span>
+
+                            </a>
+                        </li>
                         @endcan
                         @can('srt_document_status_access')
                             <li class="{{ request()->is("admin/srt-document-statuses") || request()->is("admin/srt-document-statuses/*") ? "active" : "" }}">
@@ -483,7 +505,6 @@
                             <li class="treeview">
                                 <a href="#">
                                     <i class="fa-fw fas fa-envelope">
-
                                     </i>
                                     <span>{{ trans('cruds.letterCsc.title') }}</span>
                                     <span class="pull-right-container"><i class="fa fa-fw fa-angle-left pull-right"></i></span>
@@ -513,6 +534,38 @@
                                     @endcan
                                 </ul>
                             </li>
+                        @can('crdc_inbox_access')
+                            <li class="treeview">
+                                <a href="#">
+                                    <i class="fa-fw fas fa-envelope">
+                                    </i>
+                                    <span>{{ trans('cruds.letterCrdc.title') }}</span>
+                                    <span class="pull-right-container"><i class="fa fa-fw fa-angle-left pull-right"></i></span>
+                                </a>
+                                <ul class="treeview-menu">
+                                        <li class="{{ request()->is("admin/crdc-inboxes") || request()->is("admin/crdc-inboxes/*") ? "active" : "" }}">
+                                            <a href="{{ route("admin.crdc-inboxes.index") }}">
+                                                <i class="fa-fw far fa-envelope">
+
+                                                </i>
+                                                <span>{{ trans('cruds.crdcInbox.title') }}</span>
+
+                                            </a>
+                                        </li>
+                                    @can('crdc_sent_access')
+                                        <li class="{{ request()->is("admin/crdc-sents") || request()->is("admin/crdc-sents/*") ? "active" : "" }}">
+                                            <a href="{{ route("admin.crdc-sents.index") }}">
+                                                <i class="fa-fw far fa-share-square">
+
+                                                </i>
+                                                <span>{{ trans('cruds.crdcSent.title') }}</span>
+
+                                            </a>
+                                        </li>
+                                    @endcan
+                                </ul>
+                            </li>
+                        @endcan
                         @if(Auth::user()->team_id == 4)
                             <li class="treeview">
                                 <a href="#">
@@ -794,7 +847,17 @@
                                 </ul>
                             </li>
                         @endif
+                    @can('letter_subject_type_access')
+                        <li class="{{ request()->is("admin/letter-subject-types") || request()->is("admin/letter-subject-types/*") ? "active" : "" }}">
+                            <a href="{{ route("admin.letter-subject-types.index") }}">
+                                <i class="fa-fw fas fa-cogs">
 
+                                </i>
+                                <span>{{ trans('cruds.letterSubjectType.title') }}</span>
+
+                            </a>
+                        </li>
+                    @endcan
                     </ul>
                 </li>
             @endcan

@@ -1,6 +1,11 @@
 <?php
 
 Route::redirect('/', '/login');
+Route::get('dashboard-menu',function(){
+    return view('auth.dashboard-menu');
+})->name('dashboard-menu');
+
+
 Route::get('/home', function () {
     if (session('status')) {
         return redirect()->route('admin.home')->with('status', session('status'));
@@ -258,12 +263,24 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::post('add-letters/process-csv-import', 'AddLetterController@processCsvImport')->name('add-letters.processCsvImport');
     Route::resource('add-letters', 'AddLetterController');
 
+    // Letter Subject Type
+    Route::delete('letter-subject-types/destroy', 'LetterSubjectTypeController@massDestroy')->name('letter-subject-types.massDestroy');
+    Route::post('letter-subject-types/parse-csv-import', 'LetterSubjectTypeController@parseCsvImport')->name('letter-subject-types.parseCsvImport');
+    Route::post('letter-subject-types/process-csv-import', 'LetterSubjectTypeController@processCsvImport')->name('letter-subject-types.processCsvImport');
+    Route::resource('letter-subject-types', 'LetterSubjectTypeController');
+
      // Announcements
      Route::delete('announcements/destroy', 'AnnouncementsController@massDestroy')->name('announcements.massDestroy');
      Route::post('announcements/media', 'AnnouncementsController@storeMedia')->name('announcements.storeMedia');
      Route::post('announcements/ckmedia', 'AnnouncementsController@storeCKEditorImages')->name('announcements.storeCKEditorImages');
      Route::resource('announcements', 'AnnouncementsController');
 
+   // Crdc Inboxes
+   Route::resource('crdc-inboxes', 'CrdcInboxController', ['except' => ['create', 'store', 'edit', 'update', 'show', 'destroy']]);
+
+   // Crdc Sent
+   Route::resource('crdc-sents', 'CrdcSentController', ['except' => ['create', 'store', 'edit', 'update', 'show', 'destroy']]);
+   
    // Srt Inboxes
    Route::resource('srt-inboxes', 'SrtInboxController', ['except' => ['create', 'store', 'edit', 'update', 'show', 'destroy']]);
 
@@ -492,6 +509,18 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
      Route::post('srt-others/ckmedia', 'SrtOtherController@storeCKEditorImages')->name('srt-others.storeCKEditorImages');
      Route::resource('srt-others', 'SrtOtherController');
 
+      // Srt Department
+    Route::delete('srt-departments/destroy', 'SrtDepartmentController@massDestroy')->name('srt-departments.massDestroy');
+    Route::resource('srt-departments', 'SrtDepartmentController');
+
+    // Srt Dpd Documents
+    Route::delete('srt-dpd-documents/destroy', 'SrtDpdDocumentsController@massDestroy')->name('srt-dpd-documents.massDestroy');
+    Route::post('srt-dpd-documents/media', 'SrtDpdDocumentsController@storeMedia')->name('srt-dpd-documents.storeMedia');
+    Route::post('srt-dpd-documents/ckmedia', 'SrtDpdDocumentsController@storeCKEditorImages')->name('srt-dpd-documents.storeCKEditorImages');
+    Route::post('srt-dpd-documents/parse-csv-import', 'SrtDpdDocumentsController@parseCsvImport')->name('srt-dpd-documents.parseCsvImport');
+    Route::post('srt-dpd-documents/process-csv-import', 'SrtDpdDocumentsController@processCsvImport')->name('srt-dpd-documents.processCsvImport');
+    Route::resource('srt-dpd-documents', 'SrtDpdDocumentsController');
+    
     // Organizations
     Route::delete('organizations/destroy', 'OrganizationController@massDestroy')->name('organizations.massDestroy');
     Route::resource('organizations', 'OrganizationController');

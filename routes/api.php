@@ -244,4 +244,11 @@ Route::group(['prefix' => 'v1', 'as' => 'api.', 'namespace' => 'Api\V1\Admin', '
     // Ncr
     Route::post('ncrs/media', 'NcrApiController@storeMedia')->name('ncrs.storeMedia');
     Route::apiResource('ncrs', 'NcrApiController');
+
+     // Srt Department
+     Route::apiResource('srt-departments', 'SrtDepartmentApiController');
+
+     // Srt Dpd Documents
+     Route::post('srt-dpd-documents/media', 'SrtDpdDocumentsApiController@storeMedia')->name('srt-dpd-documents.storeMedia');
+     Route::apiResource('srt-dpd-documents', 'SrtDpdDocumentsApiController');
 });

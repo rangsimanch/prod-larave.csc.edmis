@@ -23,6 +23,34 @@
                             @endif
                             <span class="help-block">{{ trans('cruds.addLetter.fields.letter_type_helper') }}</span>
                         </div>
+                        <div class="form-group {{ $errors->has('objective') ? 'has-error' : '' }}">
+                            <label class="required">{{ trans('cruds.addLetter.fields.objective') }}</label>
+                            <select class="form-control" name="objective" id="objective" required>
+                                @foreach(App\AddLetter::OBJECTIVE_SELECT as $key => $label)
+                                    <option value="{{ $key }}" {{ old('objective', '') === (string) $key ? 'selected' : '' }}>{{ $label }}</option>
+                                @endforeach
+                            </select>
+                            @if($errors->has('objective'))
+                                <span class="help-block" role="alert">{{ $errors->first('objective') }}</span>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.addLetter.fields.objective_helper') }}</span>
+                        </div>
+                        <div class="form-group {{ $errors->has('topic_categories') ? 'has-error' : '' }}">
+                            <label for="topic_categories">{{ trans('cruds.addLetter.fields.topic_category') }}</label>
+                            <div style="padding-bottom: 4px">
+                                <span class="btn btn-info btn-xs select-all" style="border-radius: 0">{{ trans('global.select_all') }}</span>
+                                <span class="btn btn-info btn-xs deselect-all" style="border-radius: 0">{{ trans('global.deselect_all') }}</span>
+                            </div>
+                            <select class="form-control select2" name="topic_categories[]" id="topic_categories" multiple>
+                                @foreach($topic_categories as $id => $topic_category)
+                                    <option value="{{ $id }}" {{ in_array($id, old('topic_categories', [])) ? 'selected' : '' }}>{{ $topic_category }}</option>
+                                @endforeach
+                            </select>
+                            @if($errors->has('topic_categories'))
+                                <span class="help-block" role="alert">{{ $errors->first('topic_categories') }}</span>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.addLetter.fields.topic_category_helper') }}</span>
+                        </div>
                         <div class="form-group {{ $errors->has('title') ? 'has-error' : '' }}">
                             <label class="required" for="title">{{ trans('cruds.addLetter.fields.title') }}</label>
                             <input class="form-control" type="text" name="title" id="title" value="{{ old('title', '') }}" required>
@@ -131,6 +159,38 @@
                             @endif
                             <span class="help-block">{{ trans('cruds.addLetter.fields.letter_upload_helper') }}</span>
                         </div>
+                        <legend>
+                            สำหรับเอกสารที่มีการติดตาม
+                        </legend>
+                        <div class="form-group {{ $errors->has('responsible') ? 'has-error' : '' }}">
+                            <label for="responsible_id">{{ trans('cruds.addLetter.fields.responsible') }}</label>
+                            <select class="form-control select2" name="responsible_id" id="responsible_id">
+                                @foreach($responsibles as $id => $entry)
+                                    <option value="{{ $id }}" {{ old('responsible_id') == $id ? 'selected' : '' }}>{{ $entry }}</option>
+                                @endforeach
+                            </select>
+                            @if($errors->has('responsible'))
+                                <span class="help-block" role="alert">{{ $errors->first('responsible') }}</span>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.addLetter.fields.responsible_helper') }}</span>
+                        </div>
+                        <div class="form-group {{ $errors->has('start_date') ? 'has-error' : '' }}">
+                            <label for="start_date">{{ trans('cruds.addLetter.fields.start_date') }}</label>
+                            <input class="form-control date" type="text" name="start_date" id="start_date" value="{{ old('start_date') }}">
+                            @if($errors->has('start_date'))
+                                <span class="help-block" role="alert">{{ $errors->first('start_date') }}</span>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.addLetter.fields.start_date_helper') }}</span>
+                        </div>
+                        <div class="form-group {{ $errors->has('complete_date') ? 'has-error' : '' }}">
+                            <label for="complete_date">{{ trans('cruds.addLetter.fields.complete_date') }}</label>
+                            <input class="form-control date" type="text" name="complete_date" id="complete_date" value="{{ old('complete_date') }}">
+                            @if($errors->has('complete_date'))
+                                <span class="help-block" role="alert">{{ $errors->first('complete_date') }}</span>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.addLetter.fields.complete_date_helper') }}</span>
+                        </div>
+                        
                         <div class="form-row">
                             <button class="btn btn-success" type="submit" name="save_form" id="save_form" data-flag="0">
                                 {{ trans('global.save') }}

@@ -31,6 +31,9 @@
                                     {{ trans('cruds.addLetter.fields.letter_type') }}
                                 </th>
                                 <th>
+                                    {{ trans('cruds.addLetter.fields.topic_category') }}
+                                </th>
+                                <th>
                                     {{ trans('cruds.addLetter.fields.title') }}
                                 </th>
                                 <th>
@@ -55,6 +58,18 @@
                                     {{ trans('cruds.addLetter.fields.letter_upload') }}
                                 </th>
                                 <th>
+                                    {{ trans('cruds.addLetter.fields.responsible') }}
+                                </th>
+                                <th>
+                                    {{ trans('cruds.addLetter.fields.start_date') }}
+                                </th>
+                                <th>
+                                    {{ trans('cruds.addLetter.fields.complete_date') }}
+                                </th>
+                                <th>
+                                    {{ trans('cruds.addLetter.fields.processing_time') }}
+                                </th>
+                                <th>
                                     &nbsp;
                                 </th>
                             </tr>
@@ -66,6 +81,14 @@
                                         <option value>{{ trans('global.all') }}</option>
                                         @foreach(App\AddLetter::LETTER_TYPE_SELECT as $key => $item)
                                             <option value="{{ $key }}">{{ $item }}</option>
+                                        @endforeach
+                                    </select>
+                                </td>
+                                <td>
+                                    <select class="search">
+                                        <option value>{{ trans('global.all') }}</option>
+                                        @foreach($letter_subject_types as $key => $item)
+                                            <option value="{{ $item->subject_name }}">{{ $item->subject_name }}</option>
                                         @endforeach
                                     </select>
                                 </td>
@@ -104,6 +127,21 @@
                                     </select>
                                 </td>
                                 <td>
+                                </td>
+                                <td>
+                                    <select class="search">
+                                        <option value>{{ trans('global.all') }}</option>
+                                        @foreach($users as $key => $item)
+                                            <option value="{{ $item->name }}">{{ $item->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </td>
+                                <td>
+                                </td>
+                                <td>
+                                </td>
+                                <td>
+                                    <input class="search" type="text" placeholder="{{ trans('global.search') }}">
                                 </td>
                                 <td>
                                 </td>
@@ -164,6 +202,7 @@
     columns: [
       { data: 'placeholder', name: 'placeholder' },
 { data: 'letter_type', name: 'letter_type' },
+{ data: 'topic_category', name: 'topic_categories.subject_name' },
 { data: 'title', name: 'title' },
 { data: 'letter_no', name: 'letter_no' },
 { data: 'sent_date', name: 'sent_date' },
@@ -172,12 +211,19 @@
 { data: 'cc_to', name: 'cc_tos.code' },
 { data: 'construction_contract_code', name: 'construction_contract.code' },
 { data: 'letter_upload', name: 'letter_upload', sortable: false, searchable: false },
+{ data: 'responsible_name', name: 'responsible.name' },
+{ data: 'start_date', name: 'start_date' },
+{ data: 'complete_date', name: 'complete_date' },
+{ data: 'processing_time', name: 'processing_time' },
 { data: 'actions', name: '{{ trans('global.actions') }}' }
     ],
     orderCellsTop: true,
-    order: [[ 4, 'desc' ]],
+    order: [[ 5, 'desc' ]],
     pageLength: 25,
-    lengthMenu: [[10, 25, 50, 100, 1000, -1], [10, 25, 50, 100, 1000, "All"]],
+    aLengthMenu: [
+        [5, 10, 25, 50, 100, 200, 1000],
+        [5, 10, 25, 50, 100, 200, 1000]
+    ],
   };
   let table = $('.datatable-AddLetter').DataTable(dtOverrideGlobals);
   $('a[data-toggle="tab"]').on('shown.bs.tab click', function(e){

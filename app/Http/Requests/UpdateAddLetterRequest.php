@@ -17,9 +17,75 @@ class UpdateAddLetterRequest extends FormRequest
     public function rules()
     {
         return [
+            'letter_type' => [
+                'required',
+            ],
+            'topic_categories.*' => [
+                'integer',
+            ],
+            'topic_categories' => [
+                'array',
+            ],
+            'title' => [
+                'string',
+                'required',
+            ],
+            'letter_no' => [
+                'string',
+                'required',
+            ],
+            'speed_class' => [
+                'required',
+            ],
+            'objective' => [
+                'required',
+            ],
+            'sender_id' => [
+                'required',
+                'integer',
+            ],
+            'sent_date' => [
+                'required',
+                'date_format:' . config('panel.date_format'),
+            ],
+            'receiver_id' => [
+                'required',
+                'integer',
+            ],
             'received_date' => [
                 'date_format:' . config('panel.date_format'),
                 'nullable',
+            ],
+            'cc_tos.*' => [
+                'integer',
+            ],
+            'cc_tos' => [
+                'array',
+            ],
+            'construction_contract_id' => [
+                'required',
+                'integer',
+            ],
+            'letter_upload' => [
+                'array',
+                'required',
+            ],
+            'letter_upload.*' => [
+                'required',
+            ],
+            'start_date' => [
+                'date_format:' . config('panel.date_format'),
+                'nullable',
+            ],
+            'complete_date' => [
+                'date_format:' . config('panel.date_format'),
+                'nullable',
+            ],
+            'processing_time' => [
+                'nullable',
+                'integer',
+                'min:-2147483648',
+                'max:2147483647',
             ],
         ];
     }

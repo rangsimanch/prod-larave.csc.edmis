@@ -27,6 +27,16 @@
                                 </tr>
                                 <tr>
                                     <th>
+                                        {{ trans('cruds.addLetter.fields.topic_category') }}
+                                    </th>
+                                    <td>
+                                        @foreach($addLetter->topic_categories as $key => $topic_category)
+                                            <span class="label label-info">{{ $topic_category->subject_name }}</span>
+                                        @endforeach
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
                                         {{ trans('cruds.addLetter.fields.title') }}
                                     </th>
                                     <td>
@@ -157,6 +167,38 @@
                                     </th>
                                     <td>
                                         {{ $addLetter->note }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        {{ trans('cruds.addLetter.fields.responsible') }}
+                                    </th>
+                                    <td>
+                                        {{ $addLetter->responsible->name ?? '' }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        {{ trans('cruds.addLetter.fields.start_date') }}
+                                    </th>
+                                    <td>
+                                        {{ $addLetter->start_date }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        {{ trans('cruds.addLetter.fields.complete_date') }}
+                                    </th>
+                                    <td>
+                                        {{ $addLetter->complete_date }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        {{ trans('cruds.addLetter.fields.processing_time') }}
+                                    </th>
+                                    <td>
+                                        {{ $addLetter->processing_time }}
                                     </td>
                                 </tr>
                             </tbody>

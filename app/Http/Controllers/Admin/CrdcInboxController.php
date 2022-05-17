@@ -16,15 +16,15 @@ use Spatie\MediaLibrary\Models\Media;
 use Illuminate\Support\Facades\Auth;
 
 
-class CscInboxController extends Controller
+class CrdcInboxController extends Controller
 {
     public function index(Request $request)
     {
-        abort_if(Gate::denies('csc_inbox_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('crdc_inbox_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         if ($request->ajax()) {
             $query = AddLetter::with(['sender', 'receiver', 'cc_tos', 'construction_contract', 'create_by', 'receive_by', 'team'])
             ->select(sprintf('%s.*', (new AddLetter)->table))
-            ->orWhere('receiver_id',3);
+            ->orWhere('receiver_id',17);
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
@@ -32,7 +32,7 @@ class CscInboxController extends Controller
 
             $table->editColumn('actions', function ($row) {
                 $viewGate      = 'add_letter_show';
-                if($row->receiver->code == "CSC"){
+                if($row->receiver->code == "CRDC"){
                     $editGate      = 'add_letter_edit';
                 }
                 else{
@@ -182,7 +182,7 @@ class CscInboxController extends Controller
         $users                  = User::get();
         $teams                  = Team::get();
 
-        session(['previous-url' => route('admin.csc-inboxes.index')]);
-        return view('admin.cscInboxes.index', compact('letter_subject_types','teams', 'teams', 'teams', 'construction_contracts', 'users', 'users', 'teams'));
+        session(['previous-url' => route('admin.crdc-inboxes.index')]);
+        return view('admin.crdcInboxes.index', compact('letter_subject_types', 'teams', 'teams', 'teams', 'construction_contracts', 'users', 'users', 'teams'));
     }
 }

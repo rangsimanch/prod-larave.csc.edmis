@@ -20,16 +20,16 @@ class AddLetterApiController extends Controller
     {
         abort_if(Gate::denies('add_letter_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new AddLetterResource(AddLetter::with(['sender', 'receiver', 'cc_tos', 'construction_contract', 'create_by', 'receive_by', 'team'])->get());
+        return new AddLetterResource(AddLetter::with(['topic_categories', 'sender', 'receiver', 'cc_tos', 'construction_contract', 'create_by', 'receive_by', 'responsible', 'team'])->get());
     }
 
     public function store(StoreAddLetterRequest $request)
     {
         $addLetter = AddLetter::create($request->all());
+        $addLetter->topic_categories()->sync($request->input('topic_categories', []));
         $addLetter->cc_tos()->sync($request->input('cc_tos', []));
-
-        if ($request->input('letter_upload', false)) {
-            $addLetter->addMedia(storage_path('tmp/uploads/' . $request->input('letter_upload')))->toMediaCollection('letter_upload');
+        foreach ($request->input('letter_upload', []) as $file) {
+            $addLetter->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('letter_upload');
         }
 
         return (new AddLetterResource($addLetter))
@@ -41,24 +41,26 @@ class AddLetterApiController extends Controller
     {
         abort_if(Gate::denies('add_letter_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new AddLetterResource($addLetter->load(['sender', 'receiver', 'cc_tos', 'construction_contract', 'create_by', 'receive_by', 'team']));
+        return new AddLetterResource($addLetter->load(['topic_categories', 'sender', 'receiver', 'cc_tos', 'construction_contract', 'create_by', 'receive_by', 'responsible', 'team']));
     }
 
     public function update(UpdateAddLetterRequest $request, AddLetter $addLetter)
     {
         $addLetter->update($request->all());
+        $addLetter->topic_categories()->sync($request->input('topic_categories', []));
         $addLetter->cc_tos()->sync($request->input('cc_tos', []));
-
-        if ($request->input('letter_upload', false)) {
-            if (!$addLetter->letter_upload || $request->input('letter_upload') !== $addLetter->letter_upload->file_name) {
-                if ($addLetter->letter_upload) {
-                    $addLetter->letter_upload->delete();
+        if (count($addLetter->letter_upload) > 0) {
+            foreach ($addLetter->letter_upload as $media) {
+                if (!in_array($media->file_name, $request->input('letter_upload', []))) {
+                    $media->delete();
                 }
-
-                $addLetter->addMedia(storage_path('tmp/uploads/' . $request->input('letter_upload')))->toMediaCollection('letter_upload');
             }
-        } elseif ($addLetter->letter_upload) {
-            $addLetter->letter_upload->delete();
+        }
+        $media = $addLetter->letter_upload->pluck('file_name')->toArray();
+        foreach ($request->input('letter_upload', []) as $file) {
+            if (count($media) === 0 || !in_array($file, $media)) {
+                $addLetter->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('letter_upload');
+            }
         }
 
         return (new AddLetterResource($addLetter))

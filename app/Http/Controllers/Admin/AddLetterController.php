@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use Carbon\Carbon;
 use App\AddLetter;
 use App\ConstructionContract;
 use App\Http\Controllers\Controller;
@@ -10,6 +11,7 @@ use App\Http\Controllers\Traits\MediaUploadingTrait;
 use App\Http\Requests\MassDestroyAddLetterRequest;
 use App\Http\Requests\StoreAddLetterRequest;
 use App\Http\Requests\UpdateAddLetterRequest;
+use App\LetterSubjectType;
 use App\Team;
 use App\User;
 use Gate;
@@ -55,6 +57,14 @@ class AddLetterController extends Controller
             $table->editColumn('letter_type', function ($row) {
                 return $row->letter_type ? AddLetter::LETTER_TYPE_SELECT[$row->letter_type] : '';
             });
+            $table->editColumn('topic_category', function ($row) {
+                $labels = [];
+                foreach ($row->topic_categories as $topic_category) {
+                    $labels[] = sprintf('<span class="label label-info label-many">%s</span>', $topic_category->subject_name);
+                }
+
+                return implode(' ', $labels);
+            });
             $table->editColumn('title', function ($row) {
                 return $row->title ? $row->title : "";
             });
@@ -92,12 +102,19 @@ class AddLetterController extends Controller
 
                 return implode(', ', $links);
             });
+            $table->addColumn('responsible_name', function ($row) {
+                return $row->responsible ? $row->responsible->name : '';
+            });
 
-            $table->rawColumns(['actions', 'placeholder', 'receiver', 'cc_to', 'construction_contract', 'letter_upload']);
+            $table->editColumn('processing_time', function ($row) {
+                return $row->processing_time ? $row->processing_time : '';
+            });
+
+            $table->rawColumns(['actions', 'placeholder', 'topic_category', 'receiver', 'cc_to', 'construction_contract', 'letter_upload', 'responsible']);
 
             return $table->make(true);
         }
-
+        $letter_subject_types   = LetterSubjectType::get();
         $teams                  = Team::get();
         $teams                  = Team::get();
         $teams                  = Team::get();
@@ -107,13 +124,14 @@ class AddLetterController extends Controller
         $teams                  = Team::get();
 
         session(['previous-url' => request()->url()]);
-        return view('admin.addLetters.index', compact('teams', 'teams', 'teams', 'construction_contracts', 'users', 'users', 'teams'));
+        return view('admin.addLetters.index', compact('letter_subject_types', 'teams', 'teams', 'teams', 'construction_contracts', 'users', 'users', 'teams'));
     }
 
     public function create()
     {
         abort_if(Gate::denies('add_letter_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
+        $topic_categories = LetterSubjectType::pluck('subject_name', 'id');
 
         $receivers = Team::all()->pluck('code', 'id')->prepend(trans('global.pleaseSelect'), '');
 
@@ -132,13 +150,27 @@ class AddLetterController extends Controller
             $senders = Team::all()->pluck('code', 'id');
         }
 
-        return view('admin.addLetters.create', compact('senders', 'receivers', 'cc_tos', 'construction_contracts'));
+        $responsibles = User::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+
+        return view('admin.addLetters.create', compact('cc_tos', 'construction_contracts', 'receivers', 'responsibles', 'senders', 'topic_categories'));
     }
 
     public function store(StoreAddLetterRequest $request)
     {
         $data = $request->all();
-        $data['objective'] = 'เพื่อทราบ';
+        $start_date = $data['start_date'];
+        $complete_date = $data['complete_date'];
+
+        if($start_date != "" && $complete_date != ""){
+            $start_date = \DateTime::createFromFormat('d/m/Y', $data['start_date']);
+            $complete_date = \DateTime::createFromFormat('d/m/Y', $data['complete_date']);
+            $diff = date_diff($start_date, $complete_date);
+            $data['processing_time'] = $diff->format("%a days");
+        }
+        else{
+            $data['processing_time'] = "-" ;   
+        }
+        // $data['objective'] = 'เพื่อทราบ';
         $data['create_by_id'] = auth()->id();
         
         //Add letter ISO Number HERE!
@@ -161,6 +193,8 @@ class AddLetterController extends Controller
     {
         abort_if(Gate::denies('add_letter_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
+        $topic_categories = LetterSubjectType::pluck('subject_name', 'id');
+
         if(Auth::id() != 1){
             $construction_contracts = ConstructionContract::where('id',session('construction_contract_id'))->pluck('code', 'id');
             // $senders = Team::where('id',auth()->user()->team_id)->pluck('code', 'id');
@@ -176,9 +210,11 @@ class AddLetterController extends Controller
 
         $cc_tos = Team::pluck('code', 'id');
 
+        $responsibles = User::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+
         $addLetter->load('sender', 'receiver', 'cc_tos', 'construction_contract', 'create_by', 'receive_by', 'team');
 
-        return view('admin.addLetters.edit', compact('addLetter', 'cc_tos', 'construction_contracts', 'receivers', 'senders'));
+        return view('admin.addLetters.edit', compact('addLetter', 'cc_tos', 'construction_contracts', 'receivers', 'responsibles', 'senders', 'topic_categories'));
     }
     
     public function update(UpdateAddLetterRequest $request, AddLetter $addLetter)
@@ -188,6 +224,18 @@ class AddLetterController extends Controller
             $data['receive_by_id'] = auth()->id();
             $received_date = new DateTime();
             $data['received_date'] = $received_date->format("d/m/Y");
+        }
+        $start_date = $data['start_date'];
+        $complete_date = $data['complete_date'];
+
+        if($start_date != "" && $complete_date != ""){
+            $start_date = \DateTime::createFromFormat('d/m/Y', $data['start_date']);
+            $complete_date = \DateTime::createFromFormat('d/m/Y', $data['complete_date']);
+            $diff = date_diff($start_date, $complete_date);
+            $data['processing_time'] = $diff->format("%a days");
+        }
+        else{
+            $data['processing_time'] = "-" ;   
         }
         $addLetter->update($data);
         $addLetter->cc_tos()->sync($request->input('cc_tos', []));

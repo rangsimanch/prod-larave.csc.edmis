@@ -18,7 +18,7 @@
         <div class="col-lg-12">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    {{ trans('cruds.cscInbox.title_singular') }} {{ trans('global.list') }}
+                    {{ trans('cruds.crdcInbox.title_singular') }} {{ trans('global.list') }}
                 </div>
                 <div class="panel-body">
                     <table class=" table table-bordered table-striped table-hover ajaxTable datatable datatable-AddLetter">
@@ -198,7 +198,7 @@
     serverSide: true,
     retrieve: true,
     aaSorting: [],
-    ajax: "{{ route('admin.csc-inboxes.index') }}",
+    ajax: "{{ route('admin.crdc-inboxes.index') }}",
     columns: [
       { data: 'placeholder', name: 'placeholder' },
 { data: 'letter_type', name: 'letter_type' },
