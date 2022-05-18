@@ -172,7 +172,6 @@ class CscInboxController extends Controller
             return $table->make(true);
         }
 
-        $letter_subject_types   = LetterSubjectType::get();
         $teams                  = Team::get();
         $teams                  = Team::get();
         $teams                  = Team::get();

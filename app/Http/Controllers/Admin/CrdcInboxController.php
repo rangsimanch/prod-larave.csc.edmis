@@ -7,6 +7,7 @@ use Gate;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 use App\LetterSubjectType;
+
 use App\AddLetter;
 use App\ConstructionContract;
 use App\Team;
@@ -172,7 +173,6 @@ class CrdcInboxController extends Controller
             return $table->make(true);
         }
 
-        $letter_subject_types   = LetterSubjectType::get();
         $teams                  = Team::get();
         $teams                  = Team::get();
         $teams                  = Team::get();
@@ -183,6 +183,6 @@ class CrdcInboxController extends Controller
         $teams                  = Team::get();
 
         session(['previous-url' => route('admin.crdc-inboxes.index')]);
-        return view('admin.crdcInboxes.index', compact('letter_subject_types', 'teams', 'teams', 'teams', 'construction_contracts', 'users', 'users', 'teams'));
+        return view('admin.crdcInboxes.index', compact('teams', 'teams', 'teams', 'construction_contracts', 'users', 'users', 'teams'));
     }
 }
