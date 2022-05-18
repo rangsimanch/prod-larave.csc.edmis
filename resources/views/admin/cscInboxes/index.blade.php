@@ -30,7 +30,9 @@
                                 <th>
                                     {{ trans('cruds.addLetter.fields.letter_type') }}
                                 </th>
-                              
+                                <th>
+                                    {{ trans('cruds.addLetter.fields.topic_category') }}
+                                </th>
                                 <th>
                                     {{ trans('cruds.addLetter.fields.title') }}
                                 </th>
@@ -82,7 +84,14 @@
                                         @endforeach
                                     </select>
                                 </td>
-                               
+                                <td>
+                                    <select class="search">
+                                        <option value>{{ trans('global.all') }}</option>
+                                        @foreach($letter_subject_types as $key => $item)
+                                            <option value="{{ $item->subject_name }}">{{ $item->subject_name }}</option>
+                                        @endforeach
+                                    </select>
+                                </td>
                                 <td>
                                     <input class="search" type="text" placeholder="{{ trans('global.search') }}">
                                 </td>
@@ -193,6 +202,7 @@
     columns: [
       { data: 'placeholder', name: 'placeholder' },
 { data: 'letter_type', name: 'letter_type' },
+{ data: 'topic_category', name: 'topic_categories.subject_name' },
 { data: 'title', name: 'title' },
 { data: 'letter_no', name: 'letter_no' },
 { data: 'sent_date', name: 'sent_date' },

@@ -114,7 +114,6 @@ class CrdcSentController extends Controller
 
             return $table->make(true);
         }
-
         $letter_subject_types   = LetterSubjectType::get();
         $teams                  = Team::get();
         $teams                  = Team::get();
@@ -126,6 +125,6 @@ class CrdcSentController extends Controller
         $teams                  = Team::get();
         
         session(['previous-url' => route('admin.crdc-sents.index')]);
-        return view('admin.crdcSents.index', compact('letter_subject_types', 'teams', 'teams', 'teams', 'construction_contracts', 'users', 'users', 'teams'));
+        return view('admin.crdcSents.index', compact('letter_subject_types','teams', 'teams', 'teams', 'construction_contracts', 'users', 'users', 'teams'));
     }
 }

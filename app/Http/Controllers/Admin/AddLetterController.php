@@ -57,14 +57,14 @@ class AddLetterController extends Controller
             $table->editColumn('letter_type', function ($row) {
                 return $row->letter_type ? AddLetter::LETTER_TYPE_SELECT[$row->letter_type] : '';
             });
-            // $table->editColumn('topic_category', function ($row) {
-            //     $labels = [];
-            //     foreach ($row->topic_categories as $topic_category) {
-            //         $labels[] = sprintf('<span class="label label-info label-many">%s</span>', $topic_category->subject_name);
-            //     }
+            $table->editColumn('topic_category', function ($row) {
+                $labels = [];
+                foreach ($row->topic_categories as $topic_category) {
+                    $labels[] = sprintf('<span class="label label-info label-many">%s</span>', $topic_category->subject_name);
+                }
 
-            //     return implode(' ', $labels);
-            // });
+                return implode(' ', $labels);
+            });
             $table->editColumn('title', function ($row) {
                 return $row->title ? $row->title : "";
             });
@@ -124,7 +124,7 @@ class AddLetterController extends Controller
         $teams                  = Team::get();
 
         session(['previous-url' => request()->url()]);
-        return view('admin.addLetters.index', compact('teams', 'teams', 'teams', 'construction_contracts', 'users', 'users', 'teams'));
+        return view('admin.addLetters.index', compact('letter_subject_types', 'teams', 'teams', 'teams', 'construction_contracts', 'users', 'users', 'teams'));
     }
 
     public function create()
