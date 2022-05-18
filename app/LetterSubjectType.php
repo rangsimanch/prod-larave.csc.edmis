@@ -10,7 +10,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class LetterSubjectType extends Model
 {
     use SoftDeletes;
-    use MultiTenantModelTrait;
     use Auditable;
 
     public $table = 'letter_subject_types';
