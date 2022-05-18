@@ -331,7 +331,7 @@ class TaskController extends Controller
                 
                
                 try{
-                    $allowed = array('gif', 'png', 'jpg', 'jpeg', 'JPG', 'JPEG', 'PNG');
+                    $allowed = array('gif', 'png', 'jpg', 'jpeg', 'JPG', 'JPEG');
 
                     if(count($task['attachment'])  > 0){
                         $index = 0;
