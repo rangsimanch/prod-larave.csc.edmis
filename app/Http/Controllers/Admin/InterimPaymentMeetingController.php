@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\ConstructionContract;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Traits\MediaUploadingTrait;
 use App\Http\Requests\MassDestroyInterimPaymentMeetingRequest;
@@ -87,7 +88,12 @@ class InterimPaymentMeetingController extends Controller
     {
         abort_if(Gate::denies('interim_payment_meeting_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $construction_contracts = ConstructionContract::pluck('code', 'id')->prepend(trans('global.pleaseSelect'), '');
+        if(Auth::id() != 1){
+            $construction_contracts = ConstructionContract::where('id',session('construction_contract_id'))->pluck('code', 'id')->prepend(trans('global.pleaseSelect'), '');
+        }
+        else{
+            $construction_contracts = ConstructionContract::all()->pluck('code', 'id')->prepend(trans('global.pleaseSelect'), '');
+        }
 
         return view('admin.interimPaymentMeetings.create', compact('construction_contracts'));
     }
@@ -111,7 +117,12 @@ class InterimPaymentMeetingController extends Controller
     {
         abort_if(Gate::denies('interim_payment_meeting_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $construction_contracts = ConstructionContract::pluck('code', 'id')->prepend(trans('global.pleaseSelect'), '');
+        if(Auth::id() != 1){
+            $construction_contracts = ConstructionContract::where('id',session('construction_contract_id'))->pluck('code', 'id')->prepend(trans('global.pleaseSelect'), '');
+        }
+        else{
+            $construction_contracts = ConstructionContract::all()->pluck('code', 'id')->prepend(trans('global.pleaseSelect'), '');
+        }
 
         $interimPaymentMeeting->load('construction_contract', 'team');
 
