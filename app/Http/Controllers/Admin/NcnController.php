@@ -325,7 +325,6 @@ class NcnController extends Controller
             else{
                 // $pagecount = $mpdf->SetSourceFile(public_path('pdf-asset/NCN_Chinese_Form.pdf'));
                 $mpdf->SetDocTemplate(public_path('pdf-asset/NCN_Chinese_Form.pdf'),true);
-
                 $textbox1 = "CSC's Issuer";
                 $textbox2 = "CSC's COS";
                 $textbox3 = "The Director of S&Q Dept. of CSC";

@@ -559,6 +559,17 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
      Route::post('ncrs/process-csv-import', 'NcrController@processCsvImport')->name('ncrs.processCsvImport');
      Route::resource('ncrs', 'NcrController');
 
+      // Interim Payment Meeting
+    Route::delete('interim-payment-meetings/destroy', 'InterimPaymentMeetingController@massDestroy')->name('interim-payment-meetings.massDestroy');
+    Route::post('interim-payment-meetings/media', 'InterimPaymentMeetingController@storeMedia')->name('interim-payment-meetings.storeMedia');
+    Route::post('interim-payment-meetings/ckmedia', 'InterimPaymentMeetingController@storeCKEditorImages')->name('interim-payment-meetings.storeCKEditorImages');
+    Route::resource('interim-payment-meetings', 'InterimPaymentMeetingController');
+
+    // Srt External Agency Documents
+    Route::delete('srt-external-agency-documents/destroy', 'SrtExternalAgencyDocumentsController@massDestroy')->name('srt-external-agency-documents.massDestroy');
+    Route::post('srt-external-agency-documents/media', 'SrtExternalAgencyDocumentsController@storeMedia')->name('srt-external-agency-documents.storeMedia');
+    Route::post('srt-external-agency-documents/ckmedia', 'SrtExternalAgencyDocumentsController@storeCKEditorImages')->name('srt-external-agency-documents.storeCKEditorImages');
+    Route::resource('srt-external-agency-documents', 'SrtExternalAgencyDocumentsController');
     
 
     Route::get('system-calendar', 'SystemCalendarController@index')->name('systemCalendar');

@@ -290,6 +290,17 @@
                                 </a>
                             </li>
                         @endcan
+                        @can('srt_external_agency_document_access')
+                        <li class="{{ request()->is("admin/srt-external-agency-documents") || request()->is("admin/srt-external-agency-documents/*") ? "active" : "" }}">
+                            <a href="{{ route("admin.srt-external-agency-documents.index") }}">
+                                <i class="fa-fw fas fa-door-open">
+
+                                </i>
+                                <span>{{ trans('cruds.srtExternalAgencyDocument.title') }}</span>
+
+                                </a>
+                            </li>
+                        @endcan
                         @can('srt_other_access')
                             <li class="{{ request()->is("admin/srt-others") || request()->is("admin/srt-others/*") ? "active" : "" }}">
                                 <a href="{{ route("admin.srt-others.index") }}">
@@ -932,6 +943,17 @@
 
                                                 </i>
                                                 <span>{{ trans('cruds.meetingWeekly.title') }}</span>
+                                            </a>
+                                        </li>
+                                    @endcan
+                                    @can('interim_payment_meeting_access')
+                                    <li class="{{ request()->is("admin/interim-payment-meetings") || request()->is("admin/interim-payment-meetings/*") ? "active" : "" }}">
+                                        <a href="{{ route("admin.interim-payment-meetings.index") }}">
+                                            <i class="fa-fw fas fa-file-invoice">
+
+                                            </i>
+                                            <span>{{ trans('cruds.interimPaymentMeeting.title') }}</span>
+
                                             </a>
                                         </li>
                                     @endcan

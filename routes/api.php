@@ -251,4 +251,12 @@ Route::group(['prefix' => 'v1', 'as' => 'api.', 'namespace' => 'Api\V1\Admin', '
      // Srt Dpd Documents
      Route::post('srt-dpd-documents/media', 'SrtDpdDocumentsApiController@storeMedia')->name('srt-dpd-documents.storeMedia');
      Route::apiResource('srt-dpd-documents', 'SrtDpdDocumentsApiController');
+
+      // Interim Payment Meeting
+    Route::post('interim-payment-meetings/media', 'InterimPaymentMeetingApiController@storeMedia')->name('interim-payment-meetings.storeMedia');
+    Route::apiResource('interim-payment-meetings', 'InterimPaymentMeetingApiController');
+
+    // Srt External Agency Documents
+    Route::post('srt-external-agency-documents/media', 'SrtExternalAgencyDocumentsApiController@storeMedia')->name('srt-external-agency-documents.storeMedia');
+    Route::apiResource('srt-external-agency-documents', 'SrtExternalAgencyDocumentsApiController');
 });
