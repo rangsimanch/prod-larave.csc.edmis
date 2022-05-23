@@ -452,7 +452,7 @@ class SwnController extends Controller
         if($reply_ncr == "No"){
             $html .= "<div style=\"font-size: 18px;font-weight: bold; position:absolute;top:299px;left:660px;\">" . "X"  . "</div>";
         }
-        $html .= "<div style=\"font-size: 10px; padding-right:80px; position:absolute;top:320px;left:240px;\">" . $ref_doc  . "</div>";
+        $html .= "<div style=\"font-size: 8px; padding-right:80px; position:absolute;top:320px;left:240px;\">" . $ref_doc  . "</div>";
         if($issuer_name != ''){
             if(!is_null($swn->issue_by->signature)){
                 $html .= "<div style=\"font-weight: bold; position:absolute;top:570;left:145px;\">
