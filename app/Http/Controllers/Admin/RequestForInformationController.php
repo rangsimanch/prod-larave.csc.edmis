@@ -527,7 +527,7 @@ class RequestForInformationController extends Controller
 
         }
 
-        if($rfi->construction_contract->code == "C4-6"){
+        if($rfi->construction_contract->code == "C4-6" || $rfi->construction_contract->code == "C4-2"){
             $issue_by = 'นายธีรพงษ์ วิธีเจริญ';
             $issuer_jobtitle = 'ผู้รับมอบอำนาจ';
             $issue_position_lf = 255;
