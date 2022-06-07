@@ -380,7 +380,7 @@ class RequestForInformationController extends Controller
         $signature_size_w = 0;
         $signature_position_top = 0;
         $signature_position_left = 0;
-        
+
         if($rfi->construction_contract->code == "C2-1"){
             $issue_by = 'Sitthichai Pimsawat';
             $issuer_jobtitle = 'ผู้จัดการโครงการ';
@@ -591,9 +591,10 @@ class RequestForInformationController extends Controller
         $html = "<div style=\"font-size: 13px; font-weight: bold; position:absolute;top:90px;left:300px;\">" . $contract_name . "</div>";
         
         // Logo
-        $html .= "<div style=\"font-size: 14px; position:absolute;top:". $logo_top ."px;left:". $logo_left ."px;\">
-        <img src=\"". $logo_path ."\" width=\"". $logo_w ."px\" higth=\"". $logo_h ."px\"> </div>";
-
+        if($logo_path != '') {
+            $html .= "<div style=\"font-size: 14px; position:absolute;top:". $logo_top ."px;left:". $logo_left ."px;\">
+            <img src=\"". $logo_path ."\" width=\"". $logo_w ."px\" higth=\"". $logo_h ."px\"> </div>";
+        }
         $html .= "<div style=\"font-size: 13px; position:absolute;top:110px;left:615px;\">" . $constructor_code . '.' . "</div>";
         $html .= "<div style=\"font-size: 8px; position:absolute;top:155px;left:580px;\">" . $constructor_name  . '.' . "</div>";
 
