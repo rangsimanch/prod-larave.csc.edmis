@@ -362,6 +362,8 @@ class RequestForInformationController extends Controller
     {
         $rfi->load('construction_contract', 'to', 'wbs_level_4', 'wbs_level_5', 'request_by', 'authorised_rep', 'response_organization', 'document_type', 'team');
        
+        $contract_name = 'Contract ' . $rfi->construction_contract->code . ' : ' . $rfi->construction_contract->name;
+
         if($rfi->construction_contract->code == "C2-1"){
             $issue_by = 'Sitthichai Pimsawat';
             $issuer_jobtitle = 'ผู้จัดการโครงการ';
@@ -380,7 +382,6 @@ class RequestForInformationController extends Controller
             $signature_size_w = 40;
             $signature_position_top = 410;
             $signature_position_left = 280;
-            $contract_name = 'Contract ' . $rfi->construction_contract->code . ' : ' . $rfi->construction_contract->name;
         }
 
         if($rfi->construction_contract->code == "C3-2"){
@@ -401,7 +402,6 @@ class RequestForInformationController extends Controller
             $signature_size_w = 55;
             $signature_position_top = 400;
             $signature_position_left = 280;
-            $contract_name = 'Contract ' . $rfi->construction_contract->code . ' : ' . $rfi->construction_contract->name;
 
         }
 
@@ -423,7 +423,6 @@ class RequestForInformationController extends Controller
             $signature_size_w = 60;
             $signature_position_top = 400;
             $signature_position_left = 280;
-            $contract_name = 'Contract ' . $rfi->construction_contract->code . ' : ' . $rfi->construction_contract->name;
 
         }
 
@@ -445,7 +444,6 @@ class RequestForInformationController extends Controller
             $signature_size_w = 60;
             $signature_position_top = 394;
             $signature_position_left = 280;
-            $contract_name = 'Contract ' . $rfi->construction_contract->code . ' : ' . $rfi->construction_contract->name;
 
         }
 
@@ -467,7 +465,6 @@ class RequestForInformationController extends Controller
             $signature_size_w = 60;
             $signature_position_top = 410;
             $signature_position_left = 275;
-            $contract_name = 'Contract ' . $rfi->construction_contract->code . ' : ' . $rfi->construction_contract->name;
 
         }
 
@@ -489,7 +486,6 @@ class RequestForInformationController extends Controller
             $signature_size_w = 60;
             $signature_position_top = 394;
             $signature_position_left = 260;
-            $contract_name = 'Contract ' . $rfi->construction_contract->code . ' : ' . $rfi->construction_contract->name;
 
         }
 
@@ -511,7 +507,6 @@ class RequestForInformationController extends Controller
             $signature_size_w = 60;
             $signature_position_top = 394;
             $signature_position_left = 280;
-            $contract_name = 'Contract ' . $rfi->construction_contract->code . ' : ' . $rfi->construction_contract->name;
 
         }
 
@@ -533,7 +528,6 @@ class RequestForInformationController extends Controller
             $signature_size_w = 50;
             $signature_position_top = 400;
             $signature_position_left = 278;
-            $contract_name = 'Contract ' . $rfi->construction_contract->code . ' : ' . $rfi->construction_contract->name;
 
         }
 
@@ -555,7 +549,6 @@ class RequestForInformationController extends Controller
             $signature_size_w = 50;
             $signature_position_top = 400;
             $signature_position_left = 278;
-            $contract_name = 'Contract ' . $rfi->construction_contract->code . ' : ' . $rfi->construction_contract->name;
         }
 
         $rfi_no = $rfi->originator_code;
