@@ -363,7 +363,24 @@ class RequestForInformationController extends Controller
         $rfi->load('construction_contract', 'to', 'wbs_level_4', 'wbs_level_5', 'request_by', 'authorised_rep', 'response_organization', 'document_type', 'team');
        
         $contract_name = 'Contract ' . $rfi->construction_contract->code . ' : ' . $rfi->construction_contract->name;
-
+        $issue_by = '';
+        $issuer_jobtitle = '';
+        $issue_position_lf = 0;
+        $issue_position_lf_sub = 0;
+        $constructor_name = '';
+        $constructor_code = '';
+        $logo_path =  '';
+        $logo_h = 0;
+        $logo_w = 0;
+        $logo_top = 0;
+        $logo_left = 0;
+        $stamp_path =  '';
+        $signature_path =  '';
+        $signature_size_h = 0;
+        $signature_size_w = 0;
+        $signature_position_top = 0;
+        $signature_position_left = 0;
+        
         if($rfi->construction_contract->code == "C2-1"){
             $issue_by = 'Sitthichai Pimsawat';
             $issuer_jobtitle = 'ผู้จัดการโครงการ';
