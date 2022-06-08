@@ -240,7 +240,7 @@
 { data: 'auditing_status', name: 'auditing_status' },
     ],
     orderCellsTop: true,
-    order: [[ 3, 'desc' ]],
+    order: [[ 6, 'desc' ]],
     pageLength: 10,
     aLengthMenu: [
         [5, 10, 25, 50, 100, 200, 1000],
