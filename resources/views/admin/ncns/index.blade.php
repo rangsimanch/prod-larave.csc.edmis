@@ -210,7 +210,7 @@
 { data: 'related_specialist_name', name: 'related_specialist.name' },
     ],
     orderCellsTop: true,
-    order: [[ 3, 'desc' ]],
+    order: [[ 3, 'asc' ]],
     pageLength: 50,
     aLengthMenu: [
         [5, 10, 25, 50, 100, 200, 1000],
