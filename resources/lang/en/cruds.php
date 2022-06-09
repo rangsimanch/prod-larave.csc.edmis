@@ -2481,7 +2481,7 @@ return [
             'related_specialist_helper'      => ' ',
             'leader'                         => 'The Director',
             'leader_helper'                  => ' ',
-            'construction_specialist'        => 'The Project Engineer (PE)',
+            'construction_specialist'        => 'Deputy Chief Engineer',
             'construction_specialist_helper' => ' ',
             'created_at'                     => 'Created at',
             'created_at_helper'              => ' ',
