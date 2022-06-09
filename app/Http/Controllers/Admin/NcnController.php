@@ -332,8 +332,13 @@ class NcnController extends Controller
             $mpdf->AddPage('P','','','','','','',60,130);
         
         }
-        else{
+        if($ncn_id > 93 && $ncn_id <= 180){
             $mpdf->SetDocTemplate(public_path('pdf-asset/NCN_New_Form.pdf'),true);
+            $mpdf->AddPage('P','','','','','','',50,130);
+        }
+        
+        if($ncn_id > 180){
+            $mpdf->SetDocTemplate(public_path('pdf-asset/NCN_New_Deputy_Form.pdf'),true);
             $mpdf->AddPage('P','','','','','','',50,130);
         }
         // $tplId = $mpdf->ImportPage($pagecount);
@@ -442,17 +447,18 @@ class NcnController extends Controller
                 $html .= "<div style=\"font-size: 10px; position:absolute;top:953px;left:525px\">" . $issue_date  . "</div>";
                 
             }
-            if($leader != ''){
-                if(!is_null($ncn->leader->signature)){
-                    $html .= "<div style=\"font-weight: bold; position:absolute;top:725;left:535px;\">
-                    <img width=\"45%\" height=\"35%\" src=\"" . $ncn->leader->signature->getPath()
-                    . "\"></div>";
+            if($ncn_id < 180){
+                if($leader != ''){
+                    if(!is_null($ncn->leader->signature)){
+                        $html .= "<div style=\"font-weight: bold; position:absolute;top:725;left:535px;\">
+                        <img width=\"45%\" height=\"35%\" src=\"" . $ncn->leader->signature->getPath()
+                        . "\"></div>";
+                    }
+                    $html .= "<div style=\"font-size: 10px;  position:absolute;top:771px;left:480\">" . $leader  . "</div>";
+                    $html .= "<div style=\"font-size: 10px;  position:absolute;top:790px;left:520px\">" . $leader_jobtitle . "</div>";
                 }
-                $html .= "<div style=\"font-size: 10px;  position:absolute;top:771px;left:480\">" . $leader  . "</div>";
-                $html .= "<div style=\"font-size: 10px;  position:absolute;top:790px;left:520px\">" . $leader_jobtitle . "</div>";
-                $html .= "<div style=\"font-size: 10px; position:absolute;top:808px;left:520px\">" . $issue_date  . "</div>";
             }
-
+            $html .= "<div style=\"font-size: 10px; position:absolute;top:808px;left:520px\">" . $issue_date  . "</div>";
 
             $mpdf->SetHTMLHeader($html,'0',true);
             $html = "<div style=\" padding-left: 80px; padding-right:40px; padding-bottom:-15px; \">";
