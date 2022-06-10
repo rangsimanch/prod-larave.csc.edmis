@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\ConstructionContract;
 use App\Department;
 use Illuminate\Support\Facades\Auth;
+use DB;
 
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Traits\CsvImportTrait;
