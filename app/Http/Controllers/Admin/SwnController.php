@@ -6,7 +6,6 @@ use App\ConstructionContract;
 use App\Department;
 use Illuminate\Support\Facades\Auth;
 use DB;
-
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Traits\CsvImportTrait;
 use App\Http\Controllers\Traits\MediaUploadingTrait;
@@ -177,7 +176,8 @@ class SwnController extends Controller
         $dept_code = Department::where('id', '=', $data['dept_code_id'])->value('code');
         $submit_date = $data['submit_date'];
         $code_year = substr($submit_date,-4);
-        $prev_doc_code = Ncn::where('construction_contract_id' ,'=' ,$data['construction_contract_id'])->where(DB::raw('YEAR(submit_date)'), '=', $code_year)
+        // $prev_doc_code = Swn::where('construction_contract_id' ,'=' ,$data['construction_contract_id'])->orderBy('id','desc')->limit(1)->value('document_number');
+        $prev_doc_code = Swn::where('construction_contract_id' ,'=' ,$data['construction_contract_id'])->where(DB::raw('YEAR(submit_date)'), '=', $code_year)
         ->orderBy('id','desc')->limit(1)->value('document_number');
         $legth_of_doc = (int)substr(substr($prev_doc_code,-3),0,3);
         if($legth_of_doc != 0){
