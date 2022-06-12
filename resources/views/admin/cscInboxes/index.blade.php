@@ -28,6 +28,9 @@
 
                                 </th>
                                 <th>
+                                    Actions
+                                </th>
+                                <th>
                                     {{ trans('cruds.addLetter.fields.letter_type') }}
                                 </th>
                                 <th>
@@ -43,7 +46,7 @@
                                     {{ trans('cruds.addLetter.fields.sent_date') }}
                                 </th>
                                 <th>
-                                    {{ trans('cruds.addLetter.fields.receiver') }}
+                                    {{ trans('cruds.addLetter.fields.sender') }}
                                 </th>
                                 <th>
                                     {{ trans('cruds.addLetter.fields.received_date') }}
@@ -69,11 +72,11 @@
                                 <th>
                                     {{ trans('cruds.addLetter.fields.processing_time') }}
                                 </th>
-                                <th>
-                                    &nbsp;
-                                </th>
+                               
                             </tr>
                             <tr>
+                                <td>
+                                </td>
                                 <td>
                                 </td>
                                 <td>
@@ -143,8 +146,7 @@
                                 <td>
                                     <input class="search" type="text" placeholder="{{ trans('global.search') }}">
                                 </td>
-                                <td>
-                                </td>
+                                
                             </tr>
                         </thead>
                     </table>
@@ -201,12 +203,13 @@
     ajax: "{{ route('admin.csc-inboxes.index') }}",
     columns: [
       { data: 'placeholder', name: 'placeholder' },
+{ data: 'actions', name: '{{ trans('global.actions') }}' },
 { data: 'letter_type', name: 'letter_type' },
 { data: 'topic_category', name: 'topic_categories.subject_name' },
 { data: 'title', name: 'title' },
 { data: 'letter_no', name: 'letter_no' },
 { data: 'sent_date', name: 'sent_date' },
-{ data: 'receiver_code', name: 'receiver.code' },
+{ data: 'sender_code', name: 'sender.code' },
 { data: 'received_date', name: 'received_date' },
 { data: 'cc_to', name: 'cc_tos.code' },
 { data: 'construction_contract_code', name: 'construction_contract.code' },
@@ -215,10 +218,9 @@
 { data: 'start_date', name: 'start_date' },
 { data: 'complete_date', name: 'complete_date' },
 { data: 'processing_time', name: 'processing_time' },
-{ data: 'actions', name: '{{ trans('global.actions') }}' }
     ],
     orderCellsTop: true,
-    order: [[ 5, 'desc' ]],
+    order: [[ 6, 'desc' ]],
     pageLength: 25,
     aLengthMenu: [
         [5, 10, 25, 50, 100, 200, 1000],

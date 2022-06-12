@@ -1,13 +1,16 @@
 @extends('layouts.admin')
 @section('content')
-
 <div class="content">
     @can('add_letter_create')
         <div style="margin-bottom: 10px;" class="row">
             <div class="col-lg-12">
                 <a class="btn btn-success" href="{{ route('admin.add-letters.create') }}">
-                    {{ trans('cruds.addLetter.title_singular') }}
+                    {{ trans('global.add') }} {{ trans('cruds.addLetter.title_singular') }}
                 </a>
+                <button class="btn btn-warning" data-toggle="modal" data-target="#csvImportModal">
+                    {{ trans('global.app_csvImport') }}
+                </button>
+                @include('csvImport.modal', ['model' => 'AddLetter', 'route' => 'admin.add-letters.parseCsvImport'])
             </div>
         </div>
     @endcan
@@ -22,19 +25,22 @@
                         <thead>
                             <tr>
                                 <th width="10">
-
+                                
+                                </th>
+                                <th>
+                                    Actions
                                 </th>
                                 <th>
                                     {{ trans('cruds.addLetter.fields.letter_type') }}
+                                </th>
+                                <th>
+                                    {{ trans('cruds.addLetter.fields.topic_category') }}
                                 </th>
                                 <th>
                                     {{ trans('cruds.addLetter.fields.title') }}
                                 </th>
                                 <th>
                                     {{ trans('cruds.addLetter.fields.letter_no') }}
-                                </th>
-                                <th>
-                                    {{ trans('cruds.addLetter.fields.sender') }}
                                 </th>
                                 <th>
                                     {{ trans('cruds.addLetter.fields.sent_date') }}
@@ -55,10 +61,22 @@
                                     {{ trans('cruds.addLetter.fields.letter_upload') }}
                                 </th>
                                 <th>
-                                    &nbsp;
+                                    {{ trans('cruds.addLetter.fields.responsible') }}
                                 </th>
+                                <th>
+                                    {{ trans('cruds.addLetter.fields.start_date') }}
+                                </th>
+                                <th>
+                                    {{ trans('cruds.addLetter.fields.complete_date') }}
+                                </th>
+                                <th>
+                                    {{ trans('cruds.addLetter.fields.processing_time') }}
+                                </th>
+                                
                             </tr>
                             <tr>
+                                <td>
+                                </td>
                                 <td>
                                 </td>
                                 <td>
@@ -70,18 +88,18 @@
                                     </select>
                                 </td>
                                 <td>
-                                    <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                                </td>
-                                <td>
-                                    <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                                </td>
-                                <td>
                                     <select class="search">
                                         <option value>{{ trans('global.all') }}</option>
-                                        @foreach($teams as $key => $item)
-                                            <option value="{{ $item->code }}">{{ $item->code }}</option>
+                                        @foreach($letter_subject_types as $key => $item)
+                                            <option value="{{ $item->subject_name }}">{{ $item->subject_name }}</option>
                                         @endforeach
                                     </select>
+                                </td>
+                                <td>
+                                    <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                                </td>
+                                <td>
+                                    <input class="search" type="text" placeholder="{{ trans('global.search') }}">
                                 </td>
                                 <td>
                                 </td>
@@ -114,7 +132,21 @@
                                 <td>
                                 </td>
                                 <td>
+                                    <select class="search">
+                                        <option value>{{ trans('global.all') }}</option>
+                                        @foreach($users as $key => $item)
+                                            <option value="{{ $item->name }}">{{ $item->name }}</option>
+                                        @endforeach
+                                    </select>
                                 </td>
+                                <td>
+                                </td>
+                                <td>
+                                </td>
+                                <td>
+                                    <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                                </td>
+                                
                             </tr>
                         </thead>
                     </table>
@@ -171,23 +203,29 @@
     ajax: "{{ route('admin.tei-sents.index') }}",
     columns: [
       { data: 'placeholder', name: 'placeholder' },
+{ data: 'actions', name: '{{ trans('global.actions') }}' },
 { data: 'letter_type', name: 'letter_type' },
+{ data: 'topic_category', name: 'topic_categories.subject_name' },
 { data: 'title', name: 'title' },
 { data: 'letter_no', name: 'letter_no' },
-{ data: 'sender_code', name: 'sender.code' },
 { data: 'sent_date', name: 'sent_date' },
 { data: 'receiver_code', name: 'receiver.code' },
 { data: 'received_date', name: 'received_date' },
 { data: 'cc_to', name: 'cc_tos.code' },
 { data: 'construction_contract_code', name: 'construction_contract.code' },
 { data: 'letter_upload', name: 'letter_upload', sortable: false, searchable: false },
-{ data: 'actions', name: '{{ trans('global.actions') }}' }
+{ data: 'responsible_name', name: 'responsible.name' },
+{ data: 'start_date', name: 'start_date' },
+{ data: 'complete_date', name: 'complete_date' },
+{ data: 'processing_time', name: 'processing_time' },
     ],
     orderCellsTop: true,
-    order: [[ 5, 'desc' ]],
+    order: [[ 6, 'desc' ]],
     pageLength: 25,
-    sPaginationType: "listbox",
-
+    aLengthMenu: [
+        [5, 10, 25, 50, 100, 200, 1000],
+        [5, 10, 25, 50, 100, 200, 1000]
+    ],
   };
   let table = $('.datatable-AddLetter').DataTable(dtOverrideGlobals);
   $('a[data-toggle="tab"]').on('shown.bs.tab click', function(e){

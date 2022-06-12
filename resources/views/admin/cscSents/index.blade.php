@@ -25,7 +25,10 @@
                         <thead>
                             <tr>
                                 <th width="10">
-
+                                
+                                </th>
+                                <th>
+                                    Actions
                                 </th>
                                 <th>
                                     {{ trans('cruds.addLetter.fields.letter_type') }}
@@ -69,11 +72,11 @@
                                 <th>
                                     {{ trans('cruds.addLetter.fields.processing_time') }}
                                 </th>
-                                <th>
-                                    &nbsp;
-                                </th>
+                                
                             </tr>
                             <tr>
+                                <td>
+                                </td>
                                 <td>
                                 </td>
                                 <td>
@@ -143,8 +146,7 @@
                                 <td>
                                     <input class="search" type="text" placeholder="{{ trans('global.search') }}">
                                 </td>
-                                <td>
-                                </td>
+                                
                             </tr>
                         </thead>
                     </table>
@@ -201,6 +203,7 @@
     ajax: "{{ route('admin.csc-sents.index') }}",
     columns: [
       { data: 'placeholder', name: 'placeholder' },
+{ data: 'actions', name: '{{ trans('global.actions') }}' },
 { data: 'letter_type', name: 'letter_type' },
 { data: 'topic_category', name: 'topic_categories.subject_name' },
 { data: 'title', name: 'title' },
@@ -215,10 +218,9 @@
 { data: 'start_date', name: 'start_date' },
 { data: 'complete_date', name: 'complete_date' },
 { data: 'processing_time', name: 'processing_time' },
-{ data: 'actions', name: '{{ trans('global.actions') }}' }
     ],
     orderCellsTop: true,
-    order: [[ 5, 'desc' ]],
+    order: [[ 6, 'desc' ]],
     pageLength: 25,
     aLengthMenu: [
         [5, 10, 25, 50, 100, 200, 1000],

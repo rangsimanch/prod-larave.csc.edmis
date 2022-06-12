@@ -1,189 +1,260 @@
-<?php
+@extends('layouts.admin')
+@section('content')
+<div class="content">
+    @can('add_letter_create')
+        <div style="margin-bottom: 10px;" class="row">
+            <div class="col-lg-12">
+                <a class="btn btn-success" href="{{ route('admin.add-letters.create') }}">
+                    {{ trans('global.add') }} {{ trans('cruds.addLetter.title_singular') }}
+                </a>
+                <button class="btn btn-warning" data-toggle="modal" data-target="#csvImportModal">
+                    {{ trans('global.app_csvImport') }}
+                </button>
+                @include('csvImport.modal', ['model' => 'AddLetter', 'route' => 'admin.add-letters.parseCsvImport'])
+            </div>
+        </div>
+    @endcan
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    {{ trans('cruds.crdcInbox.title_singular') }} {{ trans('global.list') }}
+                </div>
+                <div class="panel-body">
+                    <table class=" table table-bordered table-striped table-hover ajaxTable datatable datatable-AddLetter">
+                        <thead>
+                            <tr>
+                                <th width="10">
 
-namespace App\Http\Controllers\Admin;
+                                </th>
+                                <th>
+                                    Actions
+                                </th>
+                                <th>
+                                    {{ trans('cruds.addLetter.fields.letter_type') }}
+                                </th>
+                                <th>
+                                    {{ trans('cruds.addLetter.fields.topic_category') }}
+                                </th>
+                                <th>
+                                    {{ trans('cruds.addLetter.fields.title') }}
+                                </th>
+                                <th>
+                                    {{ trans('cruds.addLetter.fields.letter_no') }}
+                                </th>
+                                <th>
+                                    {{ trans('cruds.addLetter.fields.sent_date') }}
+                                </th>
+                                <th>
+                                    {{ trans('cruds.addLetter.fields.sender') }}
+                                </th>
+                                <th>
+                                    {{ trans('cruds.addLetter.fields.received_date') }}
+                                </th>
+                                <th>
+                                    {{ trans('cruds.addLetter.fields.cc_to') }}
+                                </th>
+                                <th>
+                                    {{ trans('cruds.addLetter.fields.construction_contract') }}
+                                </th>
+                                <th>
+                                    {{ trans('cruds.addLetter.fields.letter_upload') }}
+                                </th>
+                                <th>
+                                    {{ trans('cruds.addLetter.fields.responsible') }}
+                                </th>
+                                <th>
+                                    {{ trans('cruds.addLetter.fields.start_date') }}
+                                </th>
+                                <th>
+                                    {{ trans('cruds.addLetter.fields.complete_date') }}
+                                </th>
+                                <th>
+                                    {{ trans('cruds.addLetter.fields.processing_time') }}
+                                </th>
+                               
+                            </tr>
+                            <tr>
+                                <td>
+                                </td>
+                                <td>
+                                </td>
+                                <td>
+                                    <select class="search" strict="true">
+                                        <option value>{{ trans('global.all') }}</option>
+                                        @foreach(App\AddLetter::LETTER_TYPE_SELECT as $key => $item)
+                                            <option value="{{ $key }}">{{ $item }}</option>
+                                        @endforeach
+                                    </select>
+                                </td>
+                                <td>
+                                    <select class="search">
+                                        <option value>{{ trans('global.all') }}</option>
+                                        @foreach($letter_subject_types as $key => $item)
+                                            <option value="{{ $item->subject_name }}">{{ $item->subject_name }}</option>
+                                        @endforeach
+                                    </select>
+                                </td>
+                                <td>
+                                    <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                                </td>
+                                <td>
+                                    <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                                </td>
+                                <td>
+                                </td>
+                                <td>
+                                    <select class="search">
+                                        <option value>{{ trans('global.all') }}</option>
+                                        @foreach($teams as $key => $item)
+                                            <option value="{{ $item->code }}">{{ $item->code }}</option>
+                                        @endforeach
+                                    </select>
+                                </td>
+                                <td>
+                                </td>
+                                <td>
+                                    <select class="search">
+                                        <option value>{{ trans('global.all') }}</option>
+                                        @foreach($teams as $key => $item)
+                                            <option value="{{ $item->code }}">{{ $item->code }}</option>
+                                        @endforeach
+                                    </select>
+                                </td>
+                                <td>
+                                    <select class="search">
+                                        <option value>{{ trans('global.all') }}</option>
+                                        @foreach($construction_contracts as $key => $item)
+                                            <option value="{{ $item->code }}">{{ $item->code }}</option>
+                                        @endforeach
+                                    </select>
+                                </td>
+                                <td>
+                                </td>
+                                <td>
+                                    <select class="search">
+                                        <option value>{{ trans('global.all') }}</option>
+                                        @foreach($users as $key => $item)
+                                            <option value="{{ $item->name }}">{{ $item->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </td>
+                                <td>
+                                </td>
+                                <td>
+                                </td>
+                                <td>
+                                    <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                                </td>
+                                
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
 
-use App\Http\Controllers\Controller;
-use Gate;
-use Illuminate\Http\Request;
-use Symfony\Component\HttpFoundation\Response;
-use App\LetterSubjectType;
-
-use App\AddLetter;
-use App\ConstructionContract;
-use App\Team;
-use App\User;
-use Yajra\DataTables\Facades\DataTables;
-use Spatie\MediaLibrary\Models\Media;
-use Illuminate\Support\Facades\Auth;
 
 
-class CrdcInboxController extends Controller
-{
-    public function index(Request $request)
-    {
-        abort_if(Gate::denies('crdc_inbox_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        if ($request->ajax()) {
-            $query = AddLetter::with(['sender', 'receiver', 'cc_tos', 'construction_contract', 'create_by', 'receive_by', 'team'])
-            ->select(sprintf('%s.*', (new AddLetter)->table))
-            ->orWhere('receiver_id',17);
-            $table = Datatables::of($query);
+        </div>
+    </div>
+</div>
+@endsection
+@section('scripts')
+@parent
+<script>
+    $(function () {
+  let dtButtons = $.extend(true, [], $.fn.dataTable.defaults.buttons)
+@can('add_letter_delete')
+  let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
+  let deleteButton = {
+    text: deleteButtonTrans,
+    url: "{{ route('admin.add-letters.massDestroy') }}",
+    className: 'btn-danger',
+    action: function (e, dt, node, config) {
+      var ids = $.map(dt.rows({ selected: true }).data(), function (entry) {
+          return entry.id
+      });
 
-            $table->addColumn('placeholder', '&nbsp;');
-            $table->addColumn('actions', '&nbsp;');
+      if (ids.length === 0) {
+        alert('{{ trans('global.datatables.zero_selected') }}')
 
-            $table->editColumn('actions', function ($row) {
-                $viewGate      = 'add_letter_show';
-                if($row->receiver->code == "CRDC"){
-                    $editGate      = 'add_letter_edit';
-                }
-                else{
-                    $editGate      = 'can_not_show';
-                }
-                $deleteGate    = 'add_letter_delete';
-                $crudRoutePart = 'add-letters';
+        return
+      }
 
-                return view('partials.datatablesActions', compact(
-                    'viewGate',
-                    'editGate',
-                    'deleteGate',
-                    'crudRoutePart',
-                    'row'
-                ));
-            });
-
-
-            $table->editColumn('letter_type', function ($row) {
-                // if($row->receiver->code == "CSC" && $row->mask_as_received == 0){
-                //     return sprintf("<p style=\"color:blue\"><b>%s</b></p>",$row->letter_type ? AddLetter::LETTER_TYPE_SELECT[$row->letter_type] : '');
-                // }
-                // else{
-                //     return $row->letter_type ? AddLetter::LETTER_TYPE_SELECT[$row->letter_type] : '';
-                // }
-                return $row->letter_type ? AddLetter::LETTER_TYPE_SELECT[$row->letter_type] : '';
-
-            });
-            $table->editColumn('title', function ($row) {
-                // if($row->receiver->code == "CSC" && $row->mask_as_received == 0){
-                //     return sprintf("<p style=\"color:blue\"><b>%s</b></p>",$row->title ? $row->title : "");
-                // }
-                // else{
-                //     return $row->title ? $row->title : "";
-                // }
-                return $row->title ? $row->title : "";
-
-            });
-            $table->editColumn('letter_no', function ($row) {
-                // if($row->receiver->code == "CSC" && $row->mask_as_received == 0){
-                //     return sprintf("<p style=\"color:blue\"><b>%s</b></p>",$row->letter_no ? $row->letter_no : "");
-                // }
-                // else{
-                //     return $row->letter_no ? $row->letter_no : "";
-                // }
-                return $row->letter_no ? $row->letter_no : "";
-
-            });
-
-            $table->addColumn('sender_code', function ($row) {
-                // if($row->receiver->code == "CSC" && $row->mask_as_received == 0){
-                //     return sprintf("<p style=\"color:blue\"><b>%s</b></p>",$row->sender ? $row->sender->code : '');
-                // }
-                // else{
-                //     return $row->sender ? $row->sender->code : '';
-                // }
-                return $row->sender ? $row->sender->code : '';
-
-            });
-
-            $table->addColumn('receiver_code', function ($row) {
-                // if($row->receiver->code == "CSC" && $row->mask_as_received == 0){
-                //     return sprintf("<p style=\"color:blue\"><b>%s</b></p>",$row->receiver ? $row->receiver->code : '');
-                // }
-                // else{
-                //     return $row->receiver ? $row->receiver->code : '';
-                // }
-                return $row->receiver ? $row->receiver->code : '';
-
-            });
-
-            $table->editColumn('cc_to', function ($row) {
-                $labels = [];
-
-                foreach ($row->cc_tos as $cc_to) {
-                    $labels[] = sprintf('<span class="label label-info label-many">%s</span>', $cc_to->code);
-                }
-
-                return implode(' ', $labels);
-            });
-            $table->addColumn('construction_contract_code', function ($row) {
-                // if($row->receiver->code == "CSC" && $row->mask_as_received == 0){
-                //     return sprintf("<p style=\"color:blue\"><b>%s</b></p>",$row->construction_contract ? $row->construction_contract->code : '');
-                // }
-                // else{
-                //     return $row->construction_contract ? $row->construction_contract->code : '';
-                // }
-                return $row->construction_contract ? $row->construction_contract->code : '';
-
-            });
-
-            $table->editColumn('letter_upload', function ($row) {
-                if (!$row->letter_upload) {
-                    return '';
-                }
-
-                $links = [];
-
-                foreach ($row->letter_upload as $media) {
-                    $links[] = '<a href="' . $media->getUrl() . '" target="_blank">' . trans('global.downloadFile') . '</a>';
-                }
-
-                return implode(', ', $links);
-            });
-
-            $table->editColumn('mask_as_received', function ($row) {
-                if($row->mask_as_received == 1){
-                    $mask_check = "Marked";
-                }
-                else{
-                    $mask_check = "Not Marked";
-                }
-                return $mask_check;
-            });
-
-            $table->addColumn('responsible_name', function ($row) {
-                return $row->responsible ? $row->responsible->name : '';
-            });
-
-            $table->editColumn('processing_time', function ($row) {
-                return $row->processing_time ? $row->processing_time : '';
-            });
-            $table->editColumn('topic_category', function ($row) {
-                $labels = [];
-                foreach ($row->topic_categories as $topic_category) {
-                    $labels[] = sprintf('<span class="label label-info label-many">%s</span>', $topic_category->subject_name);
-                }
-
-                return implode(' ', $labels);
-            });
-
-            $table->rawColumns(['actions', 'placeholder', 
-            'letter_type', 'title', 'letter_no', 'sender_code', 'receiver_code' ,'construction_contract_code',
-            'sender','receiver', 'cc_to', 'construction_contract', 'letter_upload', 'mask_as_received',
-            'responsible_name', 'processing_time', 'topic_category']);
-
-            return $table->make(true);
-        }
-
-        $letter_subject_types   = LetterSubjectType::get();
-        $teams                  = Team::get();
-        $teams                  = Team::get();
-        $teams                  = Team::get();
-        $construction_contracts = ConstructionContract::where('id',session('construction_contract_id'))->get();
-        // $construction_contracts = ConstructionContract::get();
-        $users                  = User::get();
-        $users                  = User::get();
-        $teams                  = Team::get();
-
-        session(['previous-url' => route('admin.crdc-inboxes.index')]);
-        return view('admin.crdcInboxes.index', compact('letter_subject_types', 'teams', 'teams', 'teams', 'construction_contracts', 'users', 'users', 'teams'));
+      if (confirm('{{ trans('global.areYouSure') }}')) {
+        $.ajax({
+          headers: {'x-csrf-token': _token},
+          method: 'POST',
+          url: config.url,
+          data: { ids: ids, _method: 'DELETE' }})
+          .done(function () { location.reload() })
+      }
     }
-}
+  }
+  dtButtons.push(deleteButton)
+@endcan
+
+  let dtOverrideGlobals = {
+    buttons: dtButtons,
+    processing: true,
+    serverSide: true,
+    retrieve: true,
+    aaSorting: [],
+    ajax: "{{ route('admin.crdc-inboxes.index') }}",
+    columns: [
+      { data: 'placeholder', name: 'placeholder' },
+{ data: 'actions', name: '{{ trans('global.actions') }}' },
+{ data: 'letter_type', name: 'letter_type' },
+{ data: 'topic_category', name: 'topic_categories.subject_name' },
+{ data: 'title', name: 'title' },
+{ data: 'letter_no', name: 'letter_no' },
+{ data: 'sent_date', name: 'sent_date' },
+{ data: 'sender_code', name: 'sender.code' },
+{ data: 'received_date', name: 'received_date' },
+{ data: 'cc_to', name: 'cc_tos.code' },
+{ data: 'construction_contract_code', name: 'construction_contract.code' },
+{ data: 'letter_upload', name: 'letter_upload', sortable: false, searchable: false },
+{ data: 'responsible_name', name: 'responsible.name' },
+{ data: 'start_date', name: 'start_date' },
+{ data: 'complete_date', name: 'complete_date' },
+{ data: 'processing_time', name: 'processing_time' },
+    ],
+    orderCellsTop: true,
+    order: [[ 6, 'desc' ]],
+    pageLength: 25,
+    aLengthMenu: [
+        [5, 10, 25, 50, 100, 200, 1000],
+        [5, 10, 25, 50, 100, 200, 1000]
+    ],
+  };
+  let table = $('.datatable-AddLetter').DataTable(dtOverrideGlobals);
+  $('a[data-toggle="tab"]').on('shown.bs.tab click', function(e){
+      $($.fn.dataTable.tables(true)).DataTable()
+          .columns.adjust();
+  });
+  
+let visibleColumnsIndexes = null;
+$('.datatable thead').on('input', '.search', function () {
+      let strict = $(this).attr('strict') || false
+      let value = strict && this.value ? "^" + this.value + "$" : this.value
+
+      let index = $(this).parent().index()
+      if (visibleColumnsIndexes !== null) {
+        index = visibleColumnsIndexes[index]
+      }
+
+      table
+        .column(index)
+        .search(value, strict)
+        .draw()
+  });
+table.on('column-visibility.dt', function(e, settings, column, state) {
+      visibleColumnsIndexes = []
+      table.columns(":visible").every(function(colIdx) {
+          visibleColumnsIndexes.push(colIdx);
+      });
+  })
+});
+
+</script>
+@endsection

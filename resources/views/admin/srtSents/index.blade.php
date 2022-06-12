@@ -25,6 +25,9 @@
 
                                 </th>
                                 <th>
+                                    Action
+                                </th>
+                                <th>
                                     {{ trans('cruds.addLetter.fields.letter_type') }}
                                 </th>
                                 <th>
@@ -54,11 +57,11 @@
                                 <th>
                                     {{ trans('cruds.addLetter.fields.letter_upload') }}
                                 </th>
-                                <th>
-                                    &nbsp;
-                                </th>
+                               
                             </tr>
                             <tr>
+                                <td>
+                                </td>
                                 <td>
                                 </td>
                                 <td>
@@ -113,8 +116,7 @@
                                 </td>
                                 <td>
                                 </td>
-                                <td>
-                                </td>
+                                
                             </tr>
                         </thead>
                     </table>
@@ -171,6 +173,7 @@
     ajax: "{{ route('admin.srt-sents.index') }}",
     columns: [
       { data: 'placeholder', name: 'placeholder' },
+{ data: 'actions', name: '{{ trans('global.actions') }}' },
 { data: 'letter_type', name: 'letter_type' },
 { data: 'title', name: 'title' },
 { data: 'letter_no', name: 'letter_no' },
@@ -181,10 +184,9 @@
 { data: 'cc_to', name: 'cc_tos.code' },
 { data: 'construction_contract_code', name: 'construction_contract.code' },
 { data: 'letter_upload', name: 'letter_upload', sortable: false, searchable: false },
-{ data: 'actions', name: '{{ trans('global.actions') }}' }
     ],
     orderCellsTop: true,
-    order: [[ 5, 'desc' ]],
+    order: [[ 6, 'desc' ]],
     pageLength: 25,
     sPaginationType: "listbox",
 

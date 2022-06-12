@@ -25,6 +25,9 @@
 
                                 </th>
                                 <th>
+                                    Action
+                                </th>
+                                <th>
                                     {{ trans('cruds.addLetter.fields.letter_type') }}
                                 </th>
                                 <th>
@@ -59,11 +62,11 @@
                                     {{ trans('cruds.addLetter.fields.mask_as_received') }}
                                 </th>
 
-                                <th>
-                                    &nbsp;
-                                </th>
+                                
                             </tr>
                             <tr>
+                                <td>
+                                </td>
                                 <td>
                                 </td>
                                 <td>
@@ -121,8 +124,7 @@
                                 <td>
                                 </td>
 
-                                <td>
-                                </td>
+                                
 
                             </tr>
                         </thead>
@@ -180,6 +182,7 @@
     ajax: "{{ route('admin.srt-inboxes.index') }}",
     columns: [
       { data: 'placeholder', name: 'placeholder' },
+{ data: 'actions', name: '{{ trans('global.actions') }}' },
 { data: 'letter_type', name: 'letter_type' },
 { data: 'title', name: 'title' },
 { data: 'letter_no', name: 'letter_no' },
@@ -191,10 +194,9 @@
 { data: 'construction_contract_code', name: 'construction_contract.code' },
 { data: 'letter_upload', name: 'letter_upload', sortable: false, searchable: false },
 { data: 'mask_as_received', name: 'mask_as_received', visible: false, disable: true },
-{ data: 'actions', name: '{{ trans('global.actions') }}' }
     ],
     orderCellsTop: true,
-    order: [[ 5, 'desc' ]],
+    order: [[ 6, 'desc' ]],
     pageLength: 25,
   };
   let table = $('.datatable-AddLetter').DataTable(dtOverrideGlobals);
