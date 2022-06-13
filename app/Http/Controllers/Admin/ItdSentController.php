@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use Gate;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
-
+use App\LetterSubjectType;
 use App\AddLetter;
 use App\ConstructionContract;
 use App\Team;
