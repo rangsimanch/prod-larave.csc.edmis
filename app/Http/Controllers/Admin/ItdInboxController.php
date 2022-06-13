@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use Gate;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
-
+use App\LetterSubjectType;
 use App\AddLetter;
 use App\ConstructionContract;
 use App\Team;
@@ -164,7 +164,6 @@ class ItdInboxController extends Controller
             'letter_type', 'title', 'letter_no', 'sender_code', 'receiver_code' ,'construction_contract_code',
             'sender','receiver', 'cc_to', 'construction_contract', 'letter_upload', 'mask_as_received',
             'responsible_name', 'processing_time', 'topic_category']);
-
             return $table->make(true);
         }
 
@@ -180,6 +179,6 @@ class ItdInboxController extends Controller
 
         session(['previous-url' => route('admin.itd-inboxes.index')]);
         return view('admin.itdInboxes.index', compact('letter_subject_types','teams', 'teams', 'teams', 'construction_contracts', 'users', 'users', 'teams'));
-       
+        
     }
 }
