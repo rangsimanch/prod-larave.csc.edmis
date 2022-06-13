@@ -144,13 +144,31 @@ class ItdInboxController extends Controller
                 return $mask_check;
             });
 
+            $table->addColumn('responsible_name', function ($row) {
+                return $row->responsible ? $row->responsible->name : '';
+            });
+
+            $table->editColumn('processing_time', function ($row) {
+                return $row->processing_time ? $row->processing_time : '';
+            });
+            $table->editColumn('topic_category', function ($row) {
+                $labels = [];
+                foreach ($row->topic_categories as $topic_category) {
+                    $labels[] = sprintf('<span class="label label-info label-many">%s</span>', $topic_category->subject_name);
+                }
+
+                return implode(' ', $labels);
+            });
+
             $table->rawColumns(['actions', 'placeholder', 
             'letter_type', 'title', 'letter_no', 'sender_code', 'receiver_code' ,'construction_contract_code',
-            'sender','receiver', 'cc_to', 'construction_contract', 'letter_upload', 'mask_as_received']);
+            'sender','receiver', 'cc_to', 'construction_contract', 'letter_upload', 'mask_as_received',
+            'responsible_name', 'processing_time', 'topic_category']);
 
             return $table->make(true);
         }
 
+        $letter_subject_types   = LetterSubjectType::get();
         $teams                  = Team::get();
         $teams                  = Team::get();
         $teams                  = Team::get();
@@ -161,7 +179,7 @@ class ItdInboxController extends Controller
         $teams                  = Team::get();
 
         session(['previous-url' => route('admin.itd-inboxes.index')]);
-        return view('admin.itdInboxes.index', compact('teams', 'teams', 'teams', 'construction_contracts', 'users', 'users', 'teams'));
-
+        return view('admin.itdInboxes.index', compact('letter_subject_types','teams', 'teams', 'teams', 'construction_contracts', 'users', 'users', 'teams'));
+       
     }
 }
