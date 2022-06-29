@@ -24,6 +24,9 @@
 
                                 </th>
                                 <th>
+                                    {{ trans('cruds.interimPayment.fields.created_at') }}
+                                </th>
+                                <th>
                                     {{ trans('cruds.interimPayment.fields.payment_period') }}
                                 </th>
                                 <th>
@@ -43,6 +46,8 @@
                                 </th>
                             </tr>
                             <tr>
+                                <td>
+                                </td>
                                 <td>
                                 </td>
                                 <td>
@@ -132,6 +137,7 @@
     ajax: "{{ route('admin.interim-payments.index') }}",
     columns: [
       { data: 'placeholder', name: 'placeholder' },
+{ data: 'created_at', name: 'created_at'},
 { data: 'payment_period', name: 'payment_period' },
 { data: 'month', name: 'month' },
 { data: 'year', name: 'year' },
@@ -140,7 +146,7 @@
 { data: 'actions', name: '{{ trans('global.actions') }}' }
     ],
     orderCellsTop: true,
-    order: [[ 3, 'desc' ]],
+    order: [[ 1, 'desc' ]],
     pageLength: 10,
   };
   let table = $('.datatable-InterimPayment').DataTable(dtOverrideGlobals);
