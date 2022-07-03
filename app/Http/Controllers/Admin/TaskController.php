@@ -386,7 +386,7 @@ class TaskController extends Controller
                                     $httpCode = curl_getinfo($handle, CURLINFO_HTTP_CODE);
                                     curl_close($handle);
 
-                                    if($httpCode == 200){
+                                    if($httpCode != 404){
                                         $img = (string) Image::make($task->attachment[$index]->getPath())
                                         ->orientate()->resize(null, 180, function ($constraint) {
                                         $constraint->aspectRatio();})->encode('data-url');
