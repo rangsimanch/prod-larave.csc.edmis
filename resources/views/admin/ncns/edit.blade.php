@@ -130,11 +130,10 @@
                         <div class="form-group {{ $errors->has('construction_specialist') ? 'has-error' : '' }}">
                             <label for="construction_specialist_id">{{ trans('cruds.ncn.fields.construction_specialist') }}</label>
                             <select class="form-control select2" name="construction_specialist_id" id="construction_specialist_id">
-                                <option value=38 selected>Theerachote Rujviphat</option>
-                                
-                                {{-- @foreach($construction_specialists as $id => $entry)
+                                {{-- <option value=38 selected>Theerachote Rujviphat</option> --}}
+                                @foreach($construction_specialists as $id => $entry)
                                     <option value="{{ $id }}" {{ (old('construction_specialist_id') ? old('construction_specialist_id') : $ncn->construction_specialist->id ?? '') == $id ? 'selected' : '' }}>{{ $entry }}</option>
-                                @endforeach --}}
+                                @endforeach
                             </select>
                             @if($errors->has('construction_specialist'))
                                 <span class="help-block" role="alert">{{ $errors->first('construction_specialist') }}</span>
