@@ -225,7 +225,7 @@ class TaskController extends Controller
                     }
                 }
                 $contract_code =  implode(",",$contract_array);
-                $dk_start = explode("+",implode("+",$dk_start));
+                $dk_start = explode("+",implode("+",$dk_start_array));
             
                 $dk_end = $dk_end_array[0];
                 $contract_name =  '';
