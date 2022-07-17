@@ -282,7 +282,7 @@ class TaskController extends Controller
                 $dk_start_sort = ksort($dk_start_array);
                 $dk_end_sort = krsort($dk_end_array);
 
-                $dk_start = $dk_start_array;
+                $dk_start = $dk_start_sort[0];
                 $dk_end = $dk_end_value[0];
                 $contract_name =  '';
             }
