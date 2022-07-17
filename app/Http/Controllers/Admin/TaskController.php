@@ -21,6 +21,7 @@ use Spatie\MediaLibrary\Models\Media;
 use Symfony\Component\HttpFoundation\Response;
 use Yajra\DataTables\Facades\DataTables;
 use App\ConstructionContract;
+use Illuminate\Support\Facades\Log;
 
 //use Request;
 
@@ -279,11 +280,8 @@ class TaskController extends Controller
                     }
                 }
                 $contract_code =  implode(",",$contract_array);
-                // $dk_start_sort = ksort($dk_start_array);
-                // $dk_end_sort = krsort($dk_end_array);
-
-                $dk_start = array_values(ksort($dk_start_array));
-                $dk_start = $dk_start[0];
+                Log::info(print_r($dk_start_array, true));
+                $dk_start = '';
                 $dk_end = '';
                 $contract_name =  '';
             }
