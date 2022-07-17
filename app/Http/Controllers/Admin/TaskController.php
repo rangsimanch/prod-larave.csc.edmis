@@ -220,13 +220,73 @@ class TaskController extends Controller
                     $dk_end = $task->construction_contract->dk_end_1 ?? '';
                     if(!in_array($contract_code, $contract_array, true)){
                         array_push($contract_array, $contract_code);
-                        array_push($dk_start_array, $dk_start);
-                        array_push($dk_end_array, $dk_end);
+                        
+                        if($contract_code == "4-1"){
+                            $dk_start_array["A"] = $dk_start;
+                            $dk_end_array["A"] = $dk_end;
+                        }
+                        if($contract_code == "4-2"){
+                            $dk_start_array["B"] = $dk_start;
+                            $dk_end_array["B"] = $dk_end;
+                        }
+                        if($contract_code == "3-3"){
+                            $dk_start_array["C"] = $dk_start;
+                            $dk_end_array["C"] = $dk_end;
+                        }
+                        if($contract_code == "4-3"){
+                            $dk_start_array["D"] = $dk_start;
+                            $dk_end_array["D"] = $dk_end;
+                        }
+                        if($contract_code == "4-4"){
+                            $dk_start_array["E"] = $dk_start;
+                            $dk_end_array["E"] = $dk_end;
+                        }
+                        if($contract_code == "4-5"){
+                            $dk_start_array["F"] = $dk_start;
+                            $dk_end_array["F"] = $dk_end;
+                        }
+                        if($contract_code == "4-6"){
+                            $dk_start_array["G"] = $dk_start;
+                            $dk_end_array["G"] = $dk_end;
+                        }
+                        if($contract_code == "4-7"){
+                            $dk_start_array["H"] = $dk_start;
+                            $dk_end_array["H"] = $dk_end;
+                        }
+                        if($contract_code == "3-1"){
+                            $dk_start_array["I"] = $dk_start;
+                            $dk_end_array["I"] = $dk_end;
+                        }
+                        if($contract_code == "3-2"){
+                            $dk_start_array["J"] = $dk_start;
+                            $dk_end_array["J"] = $dk_end;
+                        }
+                        if($contract_code == "1-1"){
+                            $dk_start_array["K"] = $dk_start;
+                            $dk_end_array["K"] = $dk_end;
+                        }
+                        if($contract_code == "3-4"){
+                            $dk_start_array["L"] = $dk_start;
+                            $dk_end_array["L"] = $dk_end;
+                        }
+                        if($contract_code == "2-1"){
+                            $dk_start_array["M"] = $dk_start;
+                            $dk_end_array["M"] = $dk_end;
+                        }
+                        if($contract_code == "3-5"){
+                            $dk_start_array["N"] = $dk_start;
+                            $dk_end_array["N"] = $dk_end;
+                        }
+
                     }
                 }
                 $contract_code =  implode(",",$contract_array);
-                $dk_start = $dk_start_array[0];
-                $dk_end = $dk_end_array[0];
+                $dk_start_sort = ksort($dk_start_array);
+                $dk_end_sort = krsort($dk_end_array);
+
+                $dk_start_arr = array(implode("", $dk_start_sort));
+                $dk_start = $dk_start_arr[0];
+                $dk_end = "";
                 $contract_name =  '';
             }
             $dateType = '';
