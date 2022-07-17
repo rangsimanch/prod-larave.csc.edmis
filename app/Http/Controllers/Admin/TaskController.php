@@ -207,8 +207,11 @@ class TaskController extends Controller
             if($data['contracts'] != -1){
                 $contract_code = $tasks->first()->construction_contract->code ?? '';
                 $contract_name = $tasks->first()->construction_contract->name ?? '';
+                $dk_start = $tasks->first()->construction_contract->dk_start ?? '';
+                $dk_end = $tasks->first()->construction_contract->dk_end ?? '';
             }
             else{
+                $contract_code_array = $task->distinct()->onstruction_contract->code;
                 $contract_code =  'All work of the whole line';
                 $contract_name =  '';
             }
