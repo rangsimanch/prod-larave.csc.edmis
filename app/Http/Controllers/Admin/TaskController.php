@@ -277,16 +277,16 @@ class TaskController extends Controller
                             $dk_start_array["N"] = $dk_start;
                             $dk_end_array["N"] = $dk_end;
                         }
-
                     }
                 }
                 $contract_code =  implode(",",$contract_array);
                 $dk_start_sort = ksort($dk_start_array);
                 $dk_end_sort = krsort($dk_end_array);
 
-                $dk_start_arr = array(implode(" ", $dk_start_sort));
+                $dk_start_value = array_values($dk_start_sort);
+                $dk_end_value = array_values($dk_end_sort);
                 $dk_start = $dk_start_arr[0];
-                $dk_end = "";
+                $dk_end = $dk_end_arr[0];
                 $contract_name =  '';
             }
             $dateType = '';
