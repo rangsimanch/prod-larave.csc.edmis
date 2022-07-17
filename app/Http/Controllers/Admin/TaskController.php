@@ -212,13 +212,20 @@ class TaskController extends Controller
             }
             else{
                 $contract_array = array();
+                $dk_start_array = array();
+                $dk_end_array = array();
                 foreach($tasks as $task){
                     $contract_code = $task->construction_contract->code ?? '';
+                    $dk_start = $task->dk_start_1 ?? '';
+                    $dk_end = $task->dk_end_1 ?? '';
                     if(!in_array($contract_code, $contract_array, true)){
                         array_push($contract_array, $contract_code);
+                        array_push($dk_start_array, $dk_start);
+                        array_push($dk_end_array, $dk_end);
                     }
                 }
-                $contract_code =  implode(" ",$contract_array);
+
+                $contract_code =  implode(" ",$dk_start);
                 $contract_name =  '';
             }
             $dateType = '';
