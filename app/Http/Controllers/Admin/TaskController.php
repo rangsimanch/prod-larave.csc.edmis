@@ -231,7 +231,7 @@ class TaskController extends Controller
                         }
                         if($contract_code == "C3-3"){
                             $dk_start_array["C"] = $dk_start;
-                            $dk_end_array["C"] = $dk_end;
+                            $dk_end_array["K"] = $dk_end;
                         }
                         if($contract_code == "C4-3"){
                             $dk_start_array["D"] = $dk_start;
@@ -239,31 +239,31 @@ class TaskController extends Controller
                         }
                         if($contract_code == "C4-4"){
                             $dk_start_array["E"] = $dk_start;
-                            $dk_end_array["E"] = $dk_end;
+                            $dk_end_array["C"] = $dk_end;
                         }
                         if($contract_code == "C4-5"){
                             $dk_start_array["F"] = $dk_start;
-                            $dk_end_array["F"] = $dk_end;
+                            $dk_end_array["E"] = $dk_end;
                         }
                         if($contract_code == "C4-6"){
                             $dk_start_array["G"] = $dk_start;
-                            $dk_end_array["G"] = $dk_end;
+                            $dk_end_array["F"] = $dk_end;
                         }
                         if($contract_code == "C4-7"){
                             $dk_start_array["H"] = $dk_start;
-                            $dk_end_array["H"] = $dk_end;
+                            $dk_end_array["G"] = $dk_end;
                         }
                         if($contract_code == "C3-1"){
                             $dk_start_array["I"] = $dk_start;
-                            $dk_end_array["I"] = $dk_end;
+                            $dk_end_array["H"] = $dk_end;
                         }
                         if($contract_code == "C3-2"){
                             $dk_start_array["J"] = $dk_start;
-                            $dk_end_array["J"] = $dk_end;
+                            $dk_end_array["I"] = $dk_end;
                         }
                         if($contract_code == "C1-1"){
                             $dk_start_array["K"] = $dk_start;
-                            $dk_end_array["K"] = $dk_end;
+                            $dk_end_array["J"] = $dk_end;
                         }
                         if($contract_code == "C3-4"){
                             $dk_start_array["L"] = $dk_start;
@@ -281,9 +281,11 @@ class TaskController extends Controller
                 }
                 $contract_code =  implode(",",$contract_array);
                 ksort($dk_start_array);
+                krsort($dk_end_array);
                 $dk_start_value = array_values($dk_start_array);
+                $dk_end_value = array_values($dk_end_array);
                 $dk_start = $dk_start_value[0];
-                $dk_end = '';
+                $dk_end = $dk_end_value[0];
                 $contract_name =  '';
             }
             $dateType = '';
