@@ -218,6 +218,11 @@ class TaskController extends Controller
                     $contract_code = $task->construction_contract->code ?? '';
                     $dk_start = $task->construction_contract->dk_start_1 ?? '';
                     $dk_end = $task->construction_contract->dk_end_1 ?? '';
+                    if(!in_array($contract_code, $contract_array, true)){
+                        array_push($contract_array, $contract_code);
+                        array_push($dk_start_array, $dk_start);
+                        array_push($dk_end_array, $dk_end);
+                    }
                 }
                 $contract_code =  implode(",",$contract_array);
                 $dk_start = $dk_start_array[0];
