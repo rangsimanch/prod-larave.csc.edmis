@@ -211,7 +211,7 @@ class TaskController extends Controller
                 $dk_end = $tasks->first()->construction_contract->dk_end ?? '';
             }
             else{
-                // $contract_code_array = $task->distinct()->onstruction_contract->code ?? '';
+                $contract_code_array = $task->distinct('construction_contract_id');
                 $contract_code =  'All work of the whole line';
                 $contract_name =  '';
             }
