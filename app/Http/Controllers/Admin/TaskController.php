@@ -216,16 +216,17 @@ class TaskController extends Controller
                 $dk_end_array = array();
                 foreach($tasks as $task){
                     $contract_code = $task->construction_contract->code ?? '';
-                    $dk_start = $task->dk_start_1 ?? '';
-                    $dk_end = $task->dk_end_1 ?? '';
+                    $dk_start = $task->construction_contract->dk_start_1 ?? '';
+                    $dk_end = $task->construction_contract->dk_end_1 ?? '';
                     if(!in_array($contract_code, $contract_array, true)){
                         array_push($contract_array, $contract_code);
-                        array_push($dk_start_array, $dk_start);
-                        array_push($dk_end_array, $dk_end);
+                        array_push($contract_array, $dk_start);
+                        array_push($contract_array, $dk_end);
                     }
                 }
-
-                $contract_code =  implode(" ",$dk_start_array);
+                $contract_code =  implode(" ",$contract_array);
+                $dk_start = $dk_start_array[0];
+                $dk_end = $dk_start_array[0];
                 $contract_name =  '';
             }
             $dateType = '';
@@ -275,7 +276,7 @@ class TaskController extends Controller
                     $html .= "<div style=\"text-align: center; font-weight: bold; font-size: 40px;\"><img src=\"". public_path('png-asset/train_cover.png') ."\"\></div>";        
                     $html .= "<br></br><div style=\"text-align: center; font-weight: bold; font-size: 40px;\"> Supervision Diary </div>";        
                     $html .= "<div style=\"text-align: center; font-weight: bold; font-size: 26px;\">Contract Section No. : " . $contract_code . ' ' . $contract_name  . "</div>";      
-                    $html .= "<div style=\"text-align: center; font-weight: bold; font-size: 26px;\">Supervision mileage chainage : DK 000 + 300 to DK 253 + 000 Section </div>";        
+                    $html .= "<div style=\"text-align: center; font-weight: bold; font-size: 26px;\">Supervision mileage chainage :". $dk_start ." to ". $dk_end ." Section </div>";        
                     $html .= "<div style=\"text-align: center; font-weight: bold; font-size: 30px;\">BANGKOK-NAKHON RATCHASIMA HIGH SPEED RAILWAY</div>";        
                     $html .= "<div style=\"text-align: center; font-weight: bold; font-size: 22px;\">Supervision Unit : Chaina Railway International Corporation and Chaina Railway Design Group</div>";   
                     $html .= "<div style=\"text-align: center; font-weight: bold; font-size: 22px;\">Thailand Railway Project Department of the Consortium</div>";        
