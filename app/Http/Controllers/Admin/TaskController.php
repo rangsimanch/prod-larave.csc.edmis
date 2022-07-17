@@ -280,8 +280,9 @@ class TaskController extends Controller
                     }
                 }
                 $contract_code =  implode(",",$contract_array);
-                Log::info(print_r($dk_start_array, true));
-                $dk_start = '';
+                ksort($dk_start_array);
+                $dk_start_value = array_values($dk_start_array);
+                $dk_start = $dk_start_value[0];
                 $dk_end = '';
                 $contract_name =  '';
             }
