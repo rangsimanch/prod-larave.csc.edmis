@@ -285,8 +285,9 @@ class TaskController extends Controller
 
                 $dk_start_value = array_values($dk_start_sort);
                 $dk_end_value = array_values($dk_end_sort);
-                $dk_start = $dk_start_arr[0];
-                $dk_end = $dk_end_arr[0];
+
+                $dk_start = $dk_start_value[0];
+                $dk_end = $dk_end_value[0];
                 $contract_name =  '';
             }
             $dateType = '';
