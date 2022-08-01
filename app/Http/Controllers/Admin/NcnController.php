@@ -363,12 +363,13 @@ class NcnController extends Controller
         $pages_of_attachment = $ncn->pages_of_attachment ?? '';
         $acceptance_date = $ncn->acceptance_date ?? '';
         $leader = $ncn->leader->name ?? '';
-        $leader_id = $ncn->leader->id ?? '';
-        $leader_jobtitle = $ncn->leader->jobtitle->name ?? '';
+       
 
         $cos = $ncn->construction_specialist->name ?? '';
         $cos_jobtitle = $ncn->construction_specialist->jobtitle->name ?? '';
+        $cos_id = $ncn->construction_specialist->id ?? '';
         $related_specialist = $ncn->related_specialist->name ?? '';
+
 
         if($related_specialist == "Yan Lizhou"){
             $textbox3 = "Head of measurement Department";
@@ -439,6 +440,16 @@ class NcnController extends Controller
                 $html .= "<div style=\"font-size: 10px;  position:absolute;top:785px;left:227px\">" . $issuer_jobtitile  . "</div>";
                 $html .= "<div style=\"font-size: 10px; position:absolute;top:802px;left:227px\">" . $issue_date  . "</div>";
             }
+
+            if($cos_id == 61){
+                $cos_form_jobtitle = "Chief Engineer";
+                $html .= "<div style=\"font-size: 9px;font-weight: bold;  position:absolute;top:860px;left:525\">" . $cos_form_jobtitle . "</div>";
+            }
+            else{
+                $cos_form_jobtitle = "Deputy Chief Engineer";
+                $html .= "<div style=\"font-size: 9px;font-weight: bold;  position:absolute;top:860px;left:505\">" . $cos_form_jobtitle . "</div>";
+            }
+
             if($cos != ''){
                 if(!is_null($ncn->construction_specialist->signature)){
                     $html .= "<div style=\"font-weight: bold; position:absolute;top:880;left:535px;\">
@@ -450,15 +461,7 @@ class NcnController extends Controller
                 $html .= "<div style=\"font-size: 10px; position:absolute;top:953px;left:525px\">" . $issue_date  . "</div>";
                 
             }
-
-            if($leader_id == 61){
-                $leader_form_jobtitle = "Chief Engineer";
-                $html .= "<div style=\"font-size: 9px;font-weight: bold;  position:absolute;top:860px;left:525\">" . $leader_form_jobtitle . "</div>";
-            }
-            else{
-                $leader_form_jobtitle = "Deputy Chief Engineer";
-                $html .= "<div style=\"font-size: 9px;font-weight: bold;  position:absolute;top:860px;left:505\">" . $leader_form_jobtitle . "</div>";
-            }
+            
             if($leader != ''){   
                 if(!is_null($ncn->leader->signature)){
                     $html .= "<div style=\"font-weight: bold; position:absolute;top:725;left:535px;\">
@@ -468,6 +471,7 @@ class NcnController extends Controller
                 $html .= "<div style=\"font-size: 10px;  position:absolute;top:771px;left:480\">" . $leader  . "</div>";
                 $html .= "<div style=\"font-size: 10px;  position:absolute;top:790px;left:520px\">" . $leader_jobtitle . "</div>";
             }
+            
             $html .= "<div style=\"font-size: 10px; position:absolute;top:808px;left:520px\">" . $issue_date  . "</div>";
 
             $mpdf->SetHTMLHeader($html,'0',true);
