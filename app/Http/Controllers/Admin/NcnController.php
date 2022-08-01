@@ -363,6 +363,8 @@ class NcnController extends Controller
         $pages_of_attachment = $ncn->pages_of_attachment ?? '';
         $acceptance_date = $ncn->acceptance_date ?? '';
         $leader = $ncn->leader->name ?? '';
+        $leader_jobtitle = $ncn->leader->jobtitle->name ?? '';
+
        
 
         $cos = $ncn->construction_specialist->name ?? '';
