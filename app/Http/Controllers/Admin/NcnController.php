@@ -363,8 +363,8 @@ class NcnController extends Controller
         $pages_of_attachment = $ncn->pages_of_attachment ?? '';
         $acceptance_date = $ncn->acceptance_date ?? '';
         $leader = $ncn->leader->name ?? '';
+        $leader_id = $ncn->leader->id ?? '';
         $leader_jobtitle = $ncn->leader->jobtitle->name ?? '';
-        $leader_form_jobtitle = "Deputy Chief Engineer";
 
         $cos = $ncn->construction_specialist->name ?? '';
         $cos_jobtitle = $ncn->construction_specialist->jobtitle->name ?? '';
@@ -451,12 +451,13 @@ class NcnController extends Controller
                 
             }
 
-            if($leader == "Li Guanghe"){
+            if($leader_id == 2){
                 $leader_form_jobtitle = "Chief Engineer";
-                $html .= "<div style=\"font-size: 9px;font-weight: bold;  position:absolute;top:860px;left:525\">" . $leader_form_jobtitle  . "</div>";
+                $html .= "<div style=\"font-size: 9px;font-weight: bold;  position:absolute;top:860px;left:525\">" . $leader_form_jobtitle . "</div>";
             }
             else{
-                $html .= "<div style=\"font-size: 9px;font-weight: bold;  position:absolute;top:860px;left:505\">" . $leader_form_jobtitle  . "</div>";
+                $leader_form_jobtitle = "Deputy Chief Engineer";
+                $html .= "<div style=\"font-size: 9px;font-weight: bold;  position:absolute;top:860px;left:505\">" . $leader_form_jobtitle . "</div>";
             }
             if($leader != ''){   
                 if(!is_null($ncn->leader->signature)){
