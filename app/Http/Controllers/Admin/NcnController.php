@@ -451,7 +451,7 @@ class NcnController extends Controller
                 
             }
 
-            if($leader_id == 2){
+            if($leader_id == 61){
                 $leader_form_jobtitle = "Chief Engineer";
                 $html .= "<div style=\"font-size: 9px;font-weight: bold;  position:absolute;top:860px;left:525\">" . $leader_form_jobtitle . "</div>";
             }
