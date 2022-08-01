@@ -341,7 +341,7 @@ class NcnController extends Controller
         }
         
         if($ncn_id > 180){
-            $mpdf->SetDocTemplate(public_path('pdf-asset/NCN_New_Deputy_Form.pdf'),true);
+            $mpdf->SetDocTemplate(public_path('pdf-asset/NCN_No_Deputy_Form.pdf'),true);
             $mpdf->AddPage('P','','','','','','',50,130);
         }
         // $tplId = $mpdf->ImportPage($pagecount);
@@ -364,6 +364,7 @@ class NcnController extends Controller
         $acceptance_date = $ncn->acceptance_date ?? '';
         $leader = $ncn->leader->name ?? '';
         $leader_jobtitle = $ncn->leader->jobtitle->name ?? '';
+        $leader_form_jobtitle = "Deputy Chief Engineer";
 
         $cos = $ncn->construction_specialist->name ?? '';
         $cos_jobtitle = $ncn->construction_specialist->jobtitle->name ?? '';
@@ -449,7 +450,15 @@ class NcnController extends Controller
                 $html .= "<div style=\"font-size: 10px; position:absolute;top:953px;left:525px\">" . $issue_date  . "</div>";
                 
             }
-            if($leader != ''){
+
+            if($leader == "Li Guanghe"){
+                $leader_form_jobtitle = "Chief Engineer";
+                $html .= "<div style=\"font-size: 9px;font-weight: bold;  position:absolute;top:860px;left:525\">" . $leader_form_jobtitle  . "</div>";
+            }
+            else{
+                $html .= "<div style=\"font-size: 9px;font-weight: bold;  position:absolute;top:860px;left:505\">" . $leader_form_jobtitle  . "</div>";
+            }
+            if($leader != ''){   
                 if(!is_null($ncn->leader->signature)){
                     $html .= "<div style=\"font-weight: bold; position:absolute;top:725;left:535px;\">
                     <img width=\"45%\" height=\"35%\" src=\"" . $ncn->leader->signature->getPath()
