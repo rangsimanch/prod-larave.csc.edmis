@@ -13,7 +13,7 @@
                         @csrf
                         <div class="form-group">
                             <label for="file_ID">File ID</label>
-                            <textarea class="form-control" id="file_ID" name="file_ID" rows="3"></textarea>
+                            <textarea class="form-control" id="file_ID" name="file_ID" rows="3" disabled></textarea>
                         </div>
                         <button type="submit" class="btn btn-primary mb-2">Confirm</button>
                     </form>
