@@ -25,7 +25,7 @@ class ProgrammerPanelController extends Controller
         $data = $request['file_ID'];
         $id_array = explode (",", $data);
         foreach($id_array as $id){
-            $path = public_path('storage') . '/' . $id;
+            $path = storage_path('app/public') . '/' . $id;
             $response = File::deleteDirectory($path);
         }
         // $files = scandir($path); //Get Directory
