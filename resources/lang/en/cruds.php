@@ -2715,4 +2715,8 @@ return [
             'team_helper'                  => ' ',
         ],
     ],
+    'programmerPanel' => [
+        'title'          => 'Programmer Panel',
+        'title_singular' => 'Programmer Panel',
+    ],
 ];
