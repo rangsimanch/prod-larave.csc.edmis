@@ -25,10 +25,12 @@ class ProgrammerPanelController extends Controller
         $data = $request['file_ID'];
         $id_array = explode (",", $data);
         foreach($id_array as $id){
-            $path = storage_path('app/public') . '/' . $id;
-            $response = File::deleteDirectory($path);
+            // $path = storage_path('app/public') . '/' . $id;
+            $path = storage_path('app/public') . '/';
+
+            // $response = File::deleteDirectory($path);
         }
-        // $files = scandir($path); //Get Directory
+        $response = scandir($path); //Get Directory
        
         return redirect()->route('admin.programmer-panels.index')->with('message', dd($response));
    }
