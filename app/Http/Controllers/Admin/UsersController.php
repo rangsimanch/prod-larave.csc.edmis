@@ -59,17 +59,17 @@ class UsersController extends Controller
                 ));
             });
 
-            $table->editColumn('img_user', function ($row) {
-                if ($photo = $row->img_user) {
-                    return sprintf(
-                        '<a href="%s" target="_blank"><img src="%s" width="50px" height="50px"></a>',
-                        $photo->url,
-                        $photo->thumbnail
-                    );
-                }
+            // $table->editColumn('img_user', function ($row) {
+            //     if ($photo = $row->img_user) {
+            //         return sprintf(
+            //             '<a href="%s" target="_blank"><img src="%s" width="50px" height="50px"></a>',
+            //             $photo->url,
+            //             $photo->thumbnail
+            //         );
+            //     }
 
-                return '';
-            });
+            //     return '';
+            // });
             $table->editColumn('name', function ($row) {
                 return $row->name ? $row->name : "";
             });
@@ -105,17 +105,17 @@ class UsersController extends Controller
 
                 return implode(' ', $labels);
             });
-            $table->editColumn('signature', function ($row) {
-                if ($photo = $row->signature) {
-                    return sprintf(
-                        '<a href="%s" target="_blank"><img src="%s" width="50px" height="50px"></a>',
-                        $photo->url,
-                        $photo->thumbnail
-                    );
-                }
+            // $table->editColumn('signature', function ($row) {
+            //     if ($photo = $row->signature) {
+            //         return sprintf(
+            //             '<a href="%s" target="_blank"><img src="%s" width="50px" height="50px"></a>',
+            //             $photo->url,
+            //             $photo->thumbnail
+            //         );
+            //     }
 
-                return '';
-            });
+            //     return '';
+            // });
             $table->editColumn('approved', function ($row) {
                 return '<input type="checkbox" disabled ' . ($row->approved ? 'checked' : null) . '>';
             });

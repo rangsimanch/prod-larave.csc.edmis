@@ -27,9 +27,7 @@
                                 <th width="10">
 
                                 </th>
-                                <th>
-                                    {{ trans('cruds.user.fields.img_user') }}
-                                </th>
+                               
                                 <th>
                                     {{ trans('cruds.user.fields.name') }}
                                 </th>
@@ -60,9 +58,7 @@
                                 <th>
                                     {{ trans('cruds.user.fields.roles') }}
                                 </th>
-                                <th>
-                                    {{ trans('cruds.user.fields.signature') }}
-                                </th>
+                            
                                 <th>
                                     {{ trans('cruds.user.fields.approved') }}
                                 </th>
@@ -74,8 +70,7 @@
                                 </th>
                             </tr>
                             <tr>
-                                <td>
-                                </td>
+                
                                 <td>
                                 </td>
                                 <td>
@@ -134,8 +129,7 @@
                                 </td>
                                 <td>
                                 </td>
-                                <td>
-                                </td>
+                               
                                 <td>
                                     <select class="search">
                                         <option value>{{ trans('global.all') }}</option>
@@ -202,7 +196,6 @@
     ajax: "{{ route('admin.users.index') }}",
     columns: [
       { data: 'placeholder', name: 'placeholder' },
-{ data: 'img_user', name: 'img_user', sortable: false, searchable: false },
 { data: 'name', name: 'name' },
 { data: 'dob', name: 'dob' },
 { data: 'organization_title_th', name: 'organization.title_th' },
@@ -213,13 +206,12 @@
 { data: 'email', name: 'email' },
 { data: 'email_verified_at', name: 'email_verified_at' },
 { data: 'roles', name: 'roles.title' },
-{ data: 'signature', name: 'signature', sortable: false, searchable: false },
 { data: 'approved', name: 'approved' },
 { data: 'construction_contract', name: 'construction_contracts.code' },
 { data: 'actions', name: '{{ trans('global.actions') }}' }
     ],
     orderCellsTop: true,
-    order: [[ 2, 'desc' ]],
+    order: [[ 1, 'desc' ]],
     pageLength: 100,
   };
   let table = $('.datatable-User').DataTable(dtOverrideGlobals);
