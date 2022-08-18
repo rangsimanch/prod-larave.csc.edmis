@@ -14,12 +14,269 @@
                     <form method="POST" action="{{ route("admin.rfas.update", [$rfa->id]) }}"  class="swa-confirm" enctype="multipart/form-data">
                         @method('PUT')
                         @csrf
+                        <div class="form-group {{ $errors->has('document_status') ? 'has-error' : '' }}" hidden>
+                            <label for="document_status_id">{{ trans('cruds.rfa.fields.document_status') }}</label>
+                            <select class="form-control select2" name="document_status_id" id="document_status_id">
+                                @foreach($document_statuses as $id => $entry)
+                                    <option value="{{ $id }}" {{ (old('document_status_id') ? old('document_status_id') : $rfa->document_status->id ?? '') == $id ? 'selected' : '' }}>{{ $id }}</option>
+                                @endforeach
+                            </select>
+                            @if($errors->has('document_status'))
+                                <span class="help-block" role="alert">{{ $errors->first('document_status') }}</span>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.rfa.fields.document_status_helper') }}</span>
+                        </div>
+
+                        <legend><a onclick="HideSection(1)" id="element1"><i class="bi bi-eye"></i></a><b>  Section I : Contractor RFA Submittal</b></legend>
+                        <div id="section1">
+                        <div class="form-group {{ $errors->has('purpose_for') ? 'has-error' : '' }}">
+                            <label>{{ trans('cruds.rfa.fields.purpose_for') }}</label>
+                            <select class="form-control" name="purpose_for" id="purpose_for">
+                                <option value disabled {{ old('purpose_for', null) === null ? 'selected' : '' }}>{{ trans('global.pleaseSelect') }}</option>
+                                @foreach(App\Rfa::PURPOSE_FOR_SELECT as $key => $label)
+                                    <option value="{{ $key }}" {{ old('purpose_for', $rfa->purpose_for) === (string) $key ? 'selected' : '' }}>{{ $label }}</option>
+                                @endforeach
+                            </select>
+                            @if($errors->has('purpose_for'))
+                                <span class="help-block" role="alert">{{ $errors->first('purpose_for') }}</span>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.rfa.fields.purpose_for_helper') }}</span>
+                        </div>
+
+                        <div class="form-group {{ $errors->has('boq') ? 'has-error' : '' }}">
+                            <label for="boq_id">{{ trans('cruds.rfa.fields.boq') }}</label>
+                            <select class="form-control select2" name="boq_id" id="boq_id">
+                                @foreach($boqs as $id => $entry)
+                                    <option value="{{ $id }}" {{ (old('boq_id') ? old('boq_id') : $rfa->boq->id ?? '') == $id ? 'selected' : '' }}>{{ $entry }}</option>
+                                @endforeach
+                            </select>
+                            @if($errors->has('boq'))
+                                <span class="help-block" role="alert">{{ $errors->first('boq') }}</span>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.rfa.fields.boq_helper') }}</span>
+                        </div>
+
+                        <div class="form-group {{ $errors->has('boq_sub') ? 'has-error' : '' }}">
+                            <label for="boq_sub_id">{{ trans('cruds.rfa.fields.boq_sub') }}</label>
+                            <select class="form-control select2" name="boq_sub_id" id="boq_sub_id">
+                                @foreach($boq_subs as $id => $entry)
+                                    <option value="{{ $id }}" {{ (old('boq_sub_id') ? old('boq_sub_id') : $rfa->boq_sub->id ?? '') == $id ? 'selected' : '' }}>{{ $entry }}</option>
+                                @endforeach
+                            </select>
+                            @if($errors->has('boq_sub'))
+                                <span class="help-block" role="alert">{{ $errors->first('boq_sub') }}</span>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.rfa.fields.boq_sub_helper') }}</span>
+                        </div>
+
+                        <div class="form-group {{ $errors->has('title_eng') ? 'has-error' : '' }}">
+                            <label for="title_eng">{{ trans('cruds.rfa.fields.title_eng') }}</label>
+                            <input class="form-control" type="text" name="title_eng" id="title_eng" value="{{ old('title_eng', $rfa->title_eng) }}">
+                            @if($errors->has('title_eng'))
+                                <span class="help-block" role="alert">{{ $errors->first('title_eng') }}</span>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.rfa.fields.title_eng_helper') }}</span>
+                        </div>
+                        <div class="form-group {{ $errors->has('title') ? 'has-error' : '' }}">
+                            <label for="title">{{ trans('cruds.rfa.fields.title') }}</label>
+                            <input class="form-control" type="text" name="title" id="title" value="{{ old('title', $rfa->title) }}">
+                            @if($errors->has('title'))
+                                <span class="help-block" role="alert">{{ $errors->first('title') }}</span>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.rfa.fields.title_helper') }}</span>
+                        </div>
+                        <div class="form-group {{ $errors->has('title_cn') ? 'has-error' : '' }}">
+                            <label for="title_cn">{{ trans('cruds.rfa.fields.title_cn') }}</label>
+                            <input class="form-control" type="text" name="title_cn" id="title_cn" value="{{ old('title_cn', $rfa->title_cn) }}">
+                            @if($errors->has('title_cn'))
+                                <span class="help-block" role="alert">{{ $errors->first('title_cn') }}</span>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.rfa.fields.title_cn_helper') }}</span>
+                        </div>
+
+                        <div class="form-group {{ $errors->has('origin_number') ? 'has-error' : '' }}">
+                            <label for="origin_number">{{ trans('cruds.rfa.fields.origin_number') }}</label>
+                            <input class="form-control" type="text" name="origin_number" id="origin_number" value="{{ old('origin_number', $rfa->origin_number) }}">
+                            @if($errors->has('origin_number'))
+                                <span class="help-block" role="alert">{{ $errors->first('origin_number') }}</span>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.rfa.fields.origin_number_helper') }}</span>
+                        </div>
+
+                        <div class="form-group {{ $errors->has('type') ? 'has-error' : '' }}">
+                            <label class="required" for="type_id">{{ trans('cruds.rfa.fields.type') }}</label>
+                            <select class="form-control select2" name="type_id" id="type_id" required>
+                                @foreach($types as $id => $entry)
+                                    <option value="{{ $id }}" {{ (old('type_id') ? old('type_id') : $rfa->type->id ?? '') == $id ? 'selected' : '' }}>{{ $entry }}</option>
+                                @endforeach
+                            </select>
+                            @if($errors->has('type'))
+                                <span class="help-block" role="alert">{{ $errors->first('type') }}</span>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.rfa.fields.type_helper') }}</span>
+                        </div>
+
+                        <div class="form-group {{ $errors->has('worktype') ? 'has-error' : '' }}">
+                            <label class="required" >{{ trans('cruds.rfa.fields.worktype') }}</label>
+                            <select class="form-control" name="worktype" id="worktype" required>
+                                <option value disabled {{ old('worktype', null) === null ? 'selected' : '' }}>{{ trans('global.pleaseSelect') }}</option>
+                                @foreach(App\Rfa::WORKTYPE_SELECT as $key => $label)
+                                    <option value="{{ $key }}" {{ old('worktype', $rfa->worktype) === (string) $key ? 'selected' : '' }}>{{ $label }}</option>
+                                @endforeach
+                            </select>
+                            @if($errors->has('worktype'))
+                                <span class="help-block" role="alert">{{ $errors->first('worktype') }}</span>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.rfa.fields.worktype_helper') }}</span>
+                        </div>
+
+                        <div class="form-group {{ $errors->has('construction_contract') ? 'has-error' : '' }}">
+                            <label class="required" for="construction_contract_id">{{ trans('cruds.rfa.fields.construction_contract') }}</label>
+                            <select class="form-control select2" name="construction_contract_id" id="construction_contract_id" required>
+                                @foreach($construction_contracts as $id => $entry)
+                                    <option value="{{ $id }}" {{ (old('construction_contract_id') ? old('construction_contract_id') : $rfa->construction_contract->id ?? '') == $id ? 'selected' : '' }}>{{ $entry }}</option>
+                                @endforeach
+                            </select>
+                            @if($errors->has('construction_contract'))
+                                <span class="help-block" role="alert">{{ $errors->first('construction_contract') }}</span>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.rfa.fields.construction_contract_helper') }}</span>
+                        </div>
+                     
+                        <div class="form-group {{ $errors->has('wbs_level_3') ? 'has-error' : '' }}">
+                            <label class="required" for="wbs_level_3_id">{{ trans('cruds.rfa.fields.wbs_level_3') }}</label>
+                            <select class="form-control select2 wbslv3" name="wbs_level_3_id" id="wbs_level_3_id" required>
+                                @foreach($wbs_level_3s as $id => $entry)
+                                    <option value="{{ $id }}" {{ (old('wbs_level_3_id') ? old('wbs_level_3_id') : $rfa->wbs_level_3->id ?? '') == $id ? 'selected' : '' }}>{{ $entry }}</option>
+                                @endforeach
+                            </select>
+                            @if($errors->has('wbs_level_3'))
+                                <span class="help-block" role="alert">{{ $errors->first('wbs_level_3') }}</span>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.rfa.fields.wbs_level_3_helper') }}</span>
+                        </div>
+                      
+                        <div class="form-group {{ $errors->has('wbs_level_4') ? 'has-error' : '' }}">
+                            <label class="required" for="wbs_level_4_id">{{ trans('cruds.rfa.fields.wbs_level_4') }}</label>
+                            <select class="form-control select2 wbslv4" name="wbs_level_4_id" id="wbs_level_4_id" required>
+                                @foreach($wbs_level_4s as $id => $entry)
+                                    <option value="{{ $wbs_level_4s }}" {{ (old('wbs_level_4_id') ? old('wbs_level_4_id') : $rfa->wbs_level_4->id ?? '') == $id ? 'selected' : '' }}>{{ $entry }}</option>
+                                @endforeach
+                            </select>
+                            @if($errors->has('wbs_level_4'))
+                                <span class="help-block" role="alert">{{ $errors->first('wbs_level_4') }}</span>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.rfa.fields.wbs_level_4_helper') }}</span>
+                        </div>
+
+                      <div class="form-group {{ $errors->has('submit_date') ? 'has-error' : '' }}">
+                          <label for="submit_date">{{ trans('cruds.rfa.fields.submit_date') }}</label>
+                          <input class="form-control date" type="text" name="submit_date" id="submit_date" value="{{ old('submit_date') }}">
+                          @if($errors->has('submit_date'))
+                              <span class="help-block" role="alert">{{ $errors->first('submit_date') }}</span>
+                          @endif
+                          <span class="help-block">{{ trans('cruds.rfa.fields.submit_date_helper') }}</span>
+                      </div>
+
+
+                      <div class="form-group {{ $errors->has('issueby') ? 'has-error' : '' }}">
+                        <label for="issueby_id">{{ trans('cruds.rfa.fields.issueby') }}</label>
+                        <select class="form-control select2" name="issueby_id" id="issueby_id">
+                            @foreach($issuebies as $id => $entry)
+                                <option value="{{ $id }}" {{ (old('issueby_id') ? old('issueby_id') : $rfa->issueby->id ?? '') == $id ? 'selected' : '' }}>{{ $entry }}</option>
+                            @endforeach
+                        </select>
+                        @if($errors->has('issueby'))
+                            <span class="help-block" role="alert">{{ $errors->first('issueby') }}</span>
+                        @endif
+                        <span class="help-block">{{ trans('cruds.rfa.fields.issueby_helper') }}</span>
+                    </div>
+
+                    <div class="form-group {{ $errors->has('assign') ? 'has-error' : '' }}">
+                        <label for="assign_id">{{ trans('cruds.rfa.fields.assign') }}</label>
+                        <select class="form-control select2" name="assign_id" id="assign_id">
+                            @foreach($assigns as $id => $entry)
+                                <option value="{{ $id }}" {{ (old('assign_id') ? old('assign_id') : $rfa->assign->id ?? '') == $id ? 'selected' : '' }}>{{ $entry }}</option>
+                            @endforeach
+                        </select>
+                        @if($errors->has('assign'))
+                            <span class="help-block" role="alert">{{ $errors->first('assign') }}</span>
+                        @endif
+                        <span class="help-block">{{ trans('cruds.rfa.fields.assign_helper') }}</span>
+                    </div>
+
+                     <div class="form-group {{ $errors->has('note_1') ? 'has-error' : '' }}">
+                            <label for="note_1">{{ trans('cruds.rfa.fields.note_1') }}</label>
+                            <textarea class="form-control ckeditor" name="note_1" id="note_1">{!! old('note_1', $rfa->note_1) !!}</textarea>
+                            @if($errors->has('note_1'))
+                                <span class="help-block" role="alert">{{ $errors->first('note_1') }}</span>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.rfa.fields.note_1_helper') }}</span>
+                    </div>
+
+                    <div class="form-group {{ $errors->has('attach_file_name') ? 'has-error' : '' }}">
+                            <label for="attach_file_name">{{ trans('cruds.rfa.fields.attach_file_name') }}</label>
+                            <input class="form-control" type="text" name="attach_file_name" id="attach_file_name" value="{{ old('attach_file_name', $rfa->attach_file_name) }}">
+                            @if($errors->has('attach_file_name'))
+                                <span class="help-block" role="alert">{{ $errors->first('attach_file_name') }}</span>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.rfa.fields.attach_file_name_helper') }}</span>
+                    </div>
+
+                    <div class="form-group {{ $errors->has('file_upload_1') ? 'has-error' : '' }}">
+                        <label for="file_upload_1">{{ trans('cruds.rfa.fields.file_upload_1') }}</label>
+                        <div class="needsclick dropzone" id="file_upload_1-dropzone">
+                        </div>
+                        @if($errors->has('file_upload_1'))
+                            <span class="help-block" role="alert">{{ $errors->first('file_upload_1') }}</span>
+                        @endif
+                        <span class="help-block">{{ trans('cruds.rfa.fields.file_upload_1_helper') }}</span>
+                    </div>
+
+                    <div class="form-group {{ $errors->has('qty_page') ? 'has-error' : '' }}">
+                        <label for="qty_page">{{ trans('cruds.rfa.fields.qty_page') }}</label>
+                        <input class="form-control" type="text" name="qty_page" id="qty_page" value="{{ old('qty_page', $rfa->qty_page) }}">
+                        @if($errors->has('qty_page'))
+                            <span class="help-block" role="alert">{{ $errors->first('qty_page') }}</span>
+                        @endif
+                        <span class="help-block">{{ trans('cruds.rfa.fields.qty_page_helper') }}</span>
+                    </div>
+
+                    <div class="form-group {{ $errors->has('spec_ref_no') ? 'has-error' : '' }}">
+                        <label for="spec_ref_no">{{ trans('cruds.rfa.fields.spec_ref_no') }}</label>
+                        <input class="form-control" type="text" name="spec_ref_no" id="spec_ref_no" value="{{ old('spec_ref_no', $rfa->spec_ref_no) }}">
+                        @if($errors->has('spec_ref_no'))
+                            <span class="help-block" role="alert">{{ $errors->first('spec_ref_no') }}</span>
+                        @endif
+                        <span class="help-block">{{ trans('cruds.rfa.fields.spec_ref_no_helper') }}</span>
+                    </div>
+
+                     <div class="form-group {{ $errors->has('clause') ? 'has-error' : '' }}">
+                            <label for="clause">{{ trans('cruds.rfa.fields.clause') }}</label>
+                            <input class="form-control" type="text" name="clause" id="clause" value="{{ old('clause', $rfa->clause) }}">
+                            @if($errors->has('clause'))
+                                <span class="help-block" role="alert">{{ $errors->first('clause') }}</span>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.rfa.fields.clause_helper') }}</span>
+                    </div>
+
+                      <div class="form-group {{ $errors->has('contract_drawing_no') ? 'has-error' : '' }}">
+                            <label for="contract_drawing_no">{{ trans('cruds.rfa.fields.contract_drawing_no') }}</label>
+                            <input class="form-control" type="text" name="contract_drawing_no" id="contract_drawing_no" value="{{ old('contract_drawing_no', $rfa->contract_drawing_no) }}">
+                            @if($errors->has('contract_drawing_no'))
+                                <span class="help-block" role="alert">{{ $errors->first('contract_drawing_no') }}</span>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.rfa.fields.contract_drawing_no_helper') }}</span>
+                     </div>
+                </div>
                         
                     <!-- IF STATUS NEW -->
-                       @if($rfa->document_status_id == 1)
-                       <legend>Incoming Distribution</legend>
+                       {{-- @if($rfa->document_status_id == 1) --}}
+                       <legend><a onclick="HideSection(2)" id="element2"><i class="bi bi-eye"></i></a><b>  Section II : Incoming Distribution</b></legend>
+                       <div id="section2">
+                       {{-- <legend>Incoming Distribution</legend> --}}
                         <div class="form-group {{ $errors->has('action_by') ? 'has-error' : '' }}">
-                            <label for="action_by_id">{{ trans('cruds.rfa.fields.action_by') }}</label>
+                            <label class="required" for="action_by_id">{{ trans('cruds.rfa.fields.action_by') }}</label>
                             <select class="form-control select2" name="action_by_id" id="action_by_id">
                                 @foreach($action_bies as $id => $action_by)
                                     <option value="{{ $id }}" {{ (old('action_by_id') ? old('action_by_id') : $rfa->action_by->id ?? '') == $id ? 'selected' : '' }}>{{ $action_by }}</option>
@@ -56,7 +313,7 @@
                         </div>
                         <div class="form-group {{ $errors->has('receive_date') ? 'has-error' : '' }}">
                             <label for="receive_date">{{ trans('cruds.rfa.fields.receive_date') }}</label>
-                            <input class="form-control date" type="text" name="receive_date" id="receive_date" value="{{ old('receive_date', $rfa->receive_date) }}">
+                            <input class="form-control date r_date" type="text" name="receive_date" id="receive_date" value="{{ old('receive_date', $rfa->receive_date) }}">
                             @if($errors->has('receive_date'))
                                 <span class="help-block" role="alert">{{ $errors->first('receive_date') }}</span>
                             @endif
@@ -103,36 +360,28 @@
                             @endif
                             <span class="help-block">{{ trans('cruds.rfa.fields.work_file_upload_helper') }}</span>
                         </div>
-                        <div class="form-group {{ $errors->has('file_upload_1') ? 'has-error' : '' }}">
-                            <label for="file_upload_1">{{ trans('cruds.rfa.fields.file_upload_1') }}</label>
-                            <div class="needsclick dropzone" id="file_upload_1-dropzone">
-                            </div>
-                            @if($errors->has('file_upload_1'))
-                                <span class="help-block" role="alert">{{ $errors->first('file_upload_1') }}</span>
-                            @endif
-                            <span class="help-block">{{ trans('cruds.rfa.fields.file_upload_1_helper') }}</span>
-                        </div>
-                        @endif
+                        {{-- @endif --}}
+                    </div>
 
                         <!-- IF STATUS WORKING -->
-                        @if($rfa->document_status_id == 2)
-                        <legend> CSC Outgoing (Specialist/Engineer) </legend>
-                        
-                        <div class="form-group {{ $errors->has('action_by') ? 'has-error' : '' }}">
-                            <label for="action_by_id">{{ trans('cruds.rfa.fields.action_by') }}</label>
-                            <select class="form-control select2" name="action_by_id" id="action_by_id" disabled>
-                                @foreach($action_bies as $id => $action_by)
-                                    <option value="{{ $id }}" {{ (old('action_by_id') ? old('action_by_id') : $rfa->action_by->id ?? '') == $id ? 'selected' : '' }}>{{ $action_by }}</option>
+                        {{-- @if($rfa->document_status_id == 2) --}}
+                        <legend><a onclick="HideSection(3)" id="element3"><i class="bi bi-eye"></i></a><b>  SECTION III : CSC Outgoing (Specialist/Engineer)</b></legend>
+                        <div id="section3">
+                        <div class="form-group {{ $errors->has('reviewed_by') ? 'has-error' : '' }}">
+                            <label for="reviewed_by_id">{{ trans('cruds.rfa.fields.reviewed_by') }}</label>
+                            <select class="form-control select2" name="reviewed_by_id" id="reviewed_by_id">
+                                @foreach($reviewed_bies as $id => $reviewed_by)
+                                    <option value="{{ $id }}" {{ ($rfa->reviewed_by ? $rfa->reviewed_by->id : old('reviewed_by_id')) == $id ? 'selected' : '' }}>{{ $reviewed_by }}</option>
                                 @endforeach
                             </select>
-                            @if($errors->has('action_by'))
-                                <span class="help-block" role="alert">{{ $errors->first('action_by') }}</span>
+                            @if($errors->has('reviewed_by'))
+                                <span class="help-block" role="alert">{{ $errors->first('reviewed_by') }}</span>
                             @endif
-                            <span class="help-block">{{ trans('cruds.rfa.fields.action_by_helper') }}</span>
+                            <span class="help-block">{{ trans('cruds.rfa.fields.reviewed_by_helper') }}</span>
                         </div>
-
+                        
                         <div class="form-group {{ $errors->has('comment_status') ? 'has-error' : '' }}">
-                            <label for="comment_status_id">{{ trans('cruds.rfa.fields.comment_status') }}</label>
+                            <label class="required" for="comment_status_id">{{ trans('cruds.rfa.fields.comment_status') }}</label>
                             <select class="form-control select2" name="comment_status_id" id="comment_status_id">
                                 @foreach($comment_statuses as $id => $comment_status)
                                     <option value="{{ $id }}" {{ ($rfa->comment_status ? $rfa->comment_status->id : old('comment_status_id')) == $id ? 'selected' : '' }}>{{ $comment_status }}</option>
@@ -152,44 +401,7 @@
                             @endif
                             <span class="help-block">{{ trans('cruds.rfa.fields.note_3_helper') }}</span>
                         </div>
-
-                        <div class="form-group {{ $errors->has('commercial_file_upload') ? 'has-error' : '' }}">
-                            <label for="commercial_file_upload">{{ trans('cruds.rfa.fields.commercial_file_upload') }}</label>
-                            <div class="needsclick dropzone" id="commercial_file_upload-dropzone"></div>
-                            @if($errors->has(''))
-                                <span class="help-block" role="alert">{{ $errors->first('') }}</span>
-                            @endif
-                            <span class="help-block">{{ trans('cruds.rfa.fields.commercial_file_upload_helper') }}</span>
-                        </div>
-                        @endif
-
-                          <!-- IF STATUS REVIEWED -->
-                        @if($rfa->document_status_id == 3 || $rfa->document_status_id == 4)
-                        <div class="form-group {{ $errors->has('reviewed_by') ? 'has-error' : '' }}">
-                            <label for="reviewed_by_id">{{ trans('cruds.rfa.fields.reviewed_by') }}</label>
-                            <select class="form-control select2" name="reviewed_by_id" id="reviewed_by_id">
-                                @foreach($reviewed_bies as $id => $reviewed_by)
-                                    <option value="{{ $id }}" {{ ($rfa->reviewed_by ? $rfa->reviewed_by->id : old('reviewed_by_id')) == $id ? 'selected' : '' }}>{{ $reviewed_by }}</option>
-                                @endforeach
-                            </select>
-                            @if($errors->has('reviewed_by'))
-                                <span class="help-block" role="alert">{{ $errors->first('reviewed_by') }}</span>
-                            @endif
-                            <span class="help-block">{{ trans('cruds.rfa.fields.reviewed_by_helper') }}</span>
-                        </div>
-
-                        <div class="form-group {{ $errors->has('comment_status') ? 'has-error' : '' }}">
-                            <label for="comment_status_id">{{ trans('cruds.rfa.fields.comment_status') }}</label>
-                            <select class="form-control select2" name="comment_status_id" id="comment_status_id">
-                                @foreach($comment_statuses as $id => $comment_status)
-                                    <option value="{{ $id }}" {{ ($rfa->comment_status ? $rfa->comment_status->id : old('comment_status_id')) == $id ? 'selected' : '' }}>{{ $comment_status }}</option>
-                                @endforeach
-                            </select>
-                            @if($errors->has('comment_status_id'))
-                                <span class="help-block" role="alert">{{ $errors->first('comment_status_id') }}</span>
-                            @endif
-                            <span class="help-block">{{ trans('cruds.rfa.fields.comment_status_helper') }}</span>
-                        </div>
+                        {{-- @endif --}}
 
                         <div class="form-group {{ $errors->has('note_4') ? 'has-error' : '' }}">
                             <label for="note_4">{{ trans('cruds.rfa.fields.note_4') }}</label>
@@ -208,7 +420,8 @@
                             <span class="help-block">{{ trans('cruds.rfa.fields.commercial_file_upload_helper') }}</span>
                         </div>
 
-                        @endif
+                        {{-- @endif --}}
+                        </div>
 
 
                         <div class="form-group">
@@ -595,131 +808,6 @@ const formatTime = (date) => {
 const date = new Date();
 $(".date_returned").val(formatDate(date));
 
-function check_stamp() {
-        
-          var str = "\"CONFIRM\"";
-            swal({
-                title: "{{ trans('global.change_box') }}",
-                text: "{{ trans('global.please_enter') }}" + str + "{{ trans('global.to_confirm') }}",
-                  type: "input",
-                  showCancelButton: true,
-                  closeOnConfirm: false,
-                  inputPlaceholder: "CONFIRM"
-              },
-                  function (inputValue) {
-                    if (inputValue === false) return false;
-                    if (inputValue === "") {
-                        swal.showInputError("You need to write something!");
-                        return false
-                    }
-                    if (inputValue == "CONFIRM") {
-                        if(document.getElementById("cec_stamp_2").checked == false){
-                            swal({
-                                title: "{{ trans('global.confirm_success') }}",
-                                text: "{{ trans('global.stamp_to_form') }}",
-                                type : "success",
-                            });
-                        }
-                        else{
-                            swal({
-                                title: "{{ trans('global.confirm_success') }}",
-                                text: "{{ trans('global.unstamp_to_form') }}",
-                                type : "success",
-                            });
-                        }
-                    }
-                    else{
-                        swal.showInputError("{{ trans('global.invalid_box') }}");
-                        if(document.getElementById("cec_stamp_2").checked == false){
-                            document.getElementById("cec_stamp_2").checked = true;
-                            document.getElementById("cec_stamp_1").checked = false;
-                        }
-                    else{
-                        document.getElementById("cec_stamp_1").checked = true;
-                        document.getElementById("cec_stamp_2").checked = false;
-                    }
-                  }
-                    return false
-                });
-        }
-
-
-        function check_sign() {
-            var str = "\"CONFIRM\"";
-            swal({
-                title: "{{ trans('global.change_box') }}",
-                text: "{{ trans('global.please_enter') }}" + str + "{{ trans('global.to_confirm') }}",
-                  type: "input",
-                  showCancelButton: true,
-                  closeOnConfirm: false,
-                  inputPlaceholder: "CONFIRM"
-              },
-                  function (inputValue) {
-                    if (inputValue === false) return false;
-                    if (inputValue === "") {
-                        swal.showInputError("You need to write something!");
-                        return false
-                    }
-                    if (inputValue == "CONFIRM") {
-                        if(document.getElementById("cec_sign_2").checked == false){
-                            swal({
-                                title: "{{ trans('global.confirm_success') }}",
-                                text: "{{ trans('global.sign_to_form') }}",
-                                type : "success",
-                            });
-                        }
-                        else{
-                            swal({
-                                title: "{{ trans('global.confirm_success') }}",
-                                text: "{{ trans('global.unsign_to_form') }}",
-                                type : "success",
-                            });
-                        }
-                    }
-                    else{
-                        swal.showInputError("{{ trans('global.invalid_box') }}");
-                        
-                        if(document.getElementById("cec_sign_2").checked == false){
-                                document.getElementById("cec_sign_2").checked = true;
-                                document.getElementById("cec_sign_1").checked = false;
-                            }
-                        else{
-                                document.getElementById("cec_sign_1").checked = true;
-                                document.getElementById("cec_sign_2").checked = false;
-                            }
-                      }
-                      return false
-                    });
-        }
-
-
-        $("#save_form").on('click',function(e) {
-    
-                event.preventDefault();
-
-                swal({
-                  title: "{{ trans('global.are_you_sure') }}",
-                  text: "{{ trans('global.verify_form') }}",
-                  type: "warning",
-                  showCancelButton: true,
-                  confirmButtonColor: "#4BB543",
-                  confirmButtonText: "{{ trans('global.yes_add') }}",
-                  cancelButtonText: "{{ trans('global.no_cancel') }}",
-                  closeOnConfirm: false,
-                  closeOnCancel: false
-                },
-            function(isConfirm){
-              if (isConfirm) {
-                   // $('.swa-confirm').attr('data-flag', '1');
-                    $('.swa-confirm').submit();
-                  } else {
-                swal("{{ trans('global.cancelled') }}", "{{trans('global.add_fail')}}", "error");  
-              }
-            });
-        });
-
-
-
 </script>
 
 <script>
@@ -833,6 +921,188 @@ Dropzone.options.workFileUploadDropzone = {
 
          return _results
      }
+}
+</script>
+
+<script type="text/javascript">
+    $('.wbslv3').change(function(){
+        if($(this).val() != ''){
+            var select = $(this).val();
+            console.log(select);
+            var _token = $('input[name="_token"]').val();
+            $.ajax({
+                url:"{{ route('admin.rfas.fetch') }}",
+                method:"POST",
+                data:{select:select , _token:_token},
+                success:function(result){
+                    //Action
+
+                    $('.wbslv4').html(result);
+                    console.log(result);
+                }
+            })
+        }
+    });
+
+
+    $('.doc_counter').change(function(){
+        if($('.r_date') != ''){
+            var parts =  document.getElementById("receive_date").value.split('/');
+            var start_date = new Date(parts[2], parts[1] - 1, parts[0]);
+            var target_date = new Date(parts[2], parts[1] - 1, parts[0]);   
+            var addDate = 0;
+            if($(this).val() == '7'){
+                var toggle_date = new Date(parts[2], parts[1] - 1, parts[0]);  
+                for(var i = 0; i < 6; i++){
+                    if(toggle_date.getDay() == '0'){
+                        i--;
+                        addDate ++;
+                    }
+                    else{
+                        addDate++;
+                    }
+                    toggle_date.setDate(toggle_date.getDate()+1);
+                    console.log(toggle_date.getDay() + ' addDate[' + addDate +']');
+                }
+                target_date.setDate(start_date.getDate() + addDate);
+            }
+            else{
+                var toggle_date = new Date(parts[2], parts[1] - 1, parts[0]);  
+                for(var i = 0; i < 13; i++){
+                    if(toggle_date.getDay() == '0'){
+                        i--;
+                        addDate ++;
+                    }
+                    else{
+                        addDate++;
+                    }
+                    toggle_date.setDate(toggle_date.getDate()+1);
+                    console.log(toggle_date.getDay() + ' addDate[' + addDate +']');
+                }
+                target_date.setDate(start_date.getDate() + addDate);
+            }
+            var dd = ("0" + (target_date.getDate()).slice(-2));
+            var mm = ("0" + (target_date.getMonth() + 1)).slice(-2);
+            var y = target_date.getFullYear();
+
+            var format_target_date = dd + '/' + mm + '/' + y;
+            document.getElementById("target_date").value = format_target_date;
+           
+        }
+    });
+
+    $('.r_date').click(function(){
+        document.getElementById("target_date").value = null;
+        document.getElementById("target_date").setText = null;
+        $('.doc_counter').prop('selectedIndex', 0);
+
+//        console.log('click');
+    });
+
+const select2 = document.getElementsByClassName("select2");
+    for (let i = 0; i < select2.length; i++) {
+        select2[i].style.cssText = 'width:100%!important;';
+    }
+
+var documents_status = document.getElementById("document_status_id").value
+if(documents_status == "1"){
+	var section1 = document.getElementById("section1");
+    var element1 = document.getElementById('element1');
+    section1.style.display = "none";
+    element1.innerHTML = '<i class="bi bi-eye-slash-fill"></i>';
+    
+    var section3 = document.getElementById("section3");
+    var element3 = document.getElementById('element3');
+    section3.style.display = "none";
+    element3.innerHTML = '<i class="bi bi-eye-slash-fill"></i>';
+
+
+    $("#action_by_id").attr('required', '');    //turns required on
+
+}
+
+if(documents_status == "2"){
+	var section1 = document.getElementById("section1");
+    var element1 = document.getElementById('element1');
+    section1.style.display = "none";
+    element1.innerHTML = '<i class="bi bi-eye-slash-fill"></i>';
+    
+    var section2 = document.getElementById("section2");
+    var element2 = document.getElementById('element2');
+    section2.style.display = "none";
+    element2.innerHTML = '<i class="bi bi-eye-slash-fill"></i>';
+
+    // $("#responsible_id").attr('required', '');    //turns required on
+    // $("#review_status").attr('required', '');    //turns required on
+    $("#comment_status_id").attr('required', '');    //turns required on
+
+
+}
+
+if(documents_status == "3" || documents_status == "4"){
+	var section1 = document.getElementById("section1");
+    var element1 = document.getElementById('element1');
+    section1.style.display = "none";
+    element1.innerHTML = '<i class="bi bi-eye-slash-fill"></i>';
+    
+    var section2 = document.getElementById("section2");
+    var element2 = document.getElementById('element2');
+    section2.style.display = "none";
+    element2.innerHTML = '<i class="bi bi-eye-slash-fill"></i>';
+
+    // var section3 = document.getElementById("section3");
+    // var element3 = document.getElementById('element3');
+    // section3.style.display = "none";
+    // element3.innerHTML = '<i class="bi bi-eye-slash-fill"></i>';
+
+    // $("#responsible_id").attr('required', '');    //turns required on
+    // $("#review_status").attr('required', '');    //turns required on
+    // $("#auditing_status").attr('required', '');    //turns required on
+    $("#comment_status_id").attr('required', '');    //turns required on
+
+}
+
+function HideSection(idElement) {
+    var element = document.getElementById('element' + idElement);
+    if (idElement === 1 || idElement === 2 || idElement === 3 || idElement === 4) {
+        if (element.innerHTML === '<i class="bi bi-eye"></i>') 					
+            element.innerHTML = '<i class="bi bi-eye-slash-fill"></i>';
+        else {
+            element.innerHTML = '<i class="bi bi-eye"></i>';
+        }
+        if(idElement === 1){
+        	var section = document.getElementById("section1");
+            if (section.style.display === "none") {
+                section.style.display = "block";
+            } else {
+                section.style.display = "none";
+            }
+        }
+        if(idElement === 2){
+        	var section = document.getElementById("section2");
+            if (section.style.display === "none") {
+                section.style.display = "block";
+            } else {
+                section.style.display = "none";
+            }
+        }
+        if(idElement === 3){
+        	var section = document.getElementById("section3");
+            if (section.style.display === "none") {
+                section.style.display = "block";
+            } else {
+                section.style.display = "none";
+            }
+        }
+        if(idElement === 4){
+        	var section = document.getElementById("section4");
+            if (section.style.display === "none") {
+                section.style.display = "block";
+            } else {
+                section.style.display = "none";
+            }
+        }
+    }
 }
 </script>
 

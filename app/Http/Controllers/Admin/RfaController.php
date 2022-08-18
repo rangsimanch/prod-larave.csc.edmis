@@ -1090,160 +1090,163 @@ class RfaController extends Controller
         else{
             $construction_contracts = ConstructionContract::all()->pluck('code', 'id')->prepend(trans('global.pleaseSelect'), '');
         }
+        $types = Rfatype::pluck('type_name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        if($rfa->document_status_id == 1){
-            $action_bies = User::where('team_id',3)->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
-            $comment_bies = User::where('team_id',3)->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
-            $information_bies = User::where('team_id',3)->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $wbs_level_3s = WbsLevelThree::all()->pluck('wbs_level_3_name', 'id')->prepend(trans('global.pleaseSelect'), '');
+
+        $wbs_level_4s = Wbslevelfour::all()->pluck('wbs_level_4_name', 'id')->prepend(trans('global.pleaseSelect'), '');
+
+        $issuebies = User::find([202,91,219,162,196])->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+
+        $assigns = User::find([61, 461, 288])->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), ''); //61->Li,  62->Liu , 461-> Ma, 288->Jiang
+
+        $action_bies = User::where('team_id',3)->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        
+        $comment_bies = User::where('team_id',3)->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+
+        $information_bies = User::where('team_id',3)->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+
+        $comment_statuses = RfaCommentStatus::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+
+        $for_statuses = RfaCommentStatus::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');  
+        
+        $document_statuses = RfaDocumentStatus::pluck('status_name', 'id')->prepend(trans('global.pleaseSelect'), '');
+
+        $reviewed_bies = User::find([39,62])->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+
+        $boqs = BoQ::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+
+        $boq_subs = BoQ::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+
+        // if($rfa->document_status_id == 1){
+        //     $action_bies = User::where('team_id',3)->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        //     $comment_bies = User::where('team_id',3)->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        //     $information_bies = User::where('team_id',3)->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
             
-            $rfa->load('action_by', 'comment_by', 'information_by');
+        //     $rfa->load('action_by', 'comment_by', 'information_by');
 
-            return view('admin.rfas.edit', compact('construction_contracts', 'action_bies', 'comment_bies', 'information_bies', 'rfa'));
-        }
-        else if($rfa->document_status_id == 2){
-            $action_bies = User::where('team_id',3)->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
-            $comment_statuses = RfaCommentStatus::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
-            $rfa->load('action_by');
-            return view('admin.rfas.edit', compact('construction_contracts', 'action_bies', 'comment_statuses', 'rfa'));
-        }
-        else if($rfa->document_status_id == 3 || $rfa->document_status_id == 4){
-            $for_statuses = RfaCommentStatus::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
-            $comment_statuses = RfaCommentStatus::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
-            $reviewed_bies = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
-            return view('admin.rfas.edit', compact('construction_contracts', 'for_statuses','comment_statuses', 'reviewed_bies', 'rfa'));
-        }
+        //     return view('admin.rfas.edit', compact('construction_contracts', 'action_bies', 'comment_bies', 'information_bies', 'rfa'));
+        // }
+        // else if($rfa->document_status_id == 2){
+        //     $action_bies = User::where('team_id',3)->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        //     $comment_statuses = RfaCommentStatus::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        //     $rfa->load('action_by');
+        //     return view('admin.rfas.edit', compact('construction_contracts', 'action_bies', 'comment_statuses', 'rfa'));
+        // }
+        // else if($rfa->document_status_id == 3 || $rfa->document_status_id == 4){
+        //     $for_statuses = RfaCommentStatus::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        //     $comment_statuses = RfaCommentStatus::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        //     $reviewed_bies = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        //     return view('admin.rfas.edit', compact('construction_contracts', 'for_statuses','comment_statuses', 'reviewed_bies', 'rfa'));
+        // }
 
+        $rfa->load('document_status', 'boq', 'boq_sub', 'type', 'construction_contract', 'wbs_level_3', 'wbs_level_4', 'issueby', 'assign', 'action_by', 'comment_by', 'information_by', 'comment_status', 'for_status', 'create_by_user', 'distribute_by', 'reviewed_by', 'wbs_level_one', 'team');
+
+        return view('admin.rfas.edit', compact('action_bies', 'assigns', 'boq_subs', 'boqs', 'comment_bies', 'comment_statuses', 'construction_contracts', 'document_statuses', 'for_statuses', 'information_bies', 'issuebies', 'reviewed_bies', 'rfa', 'types', 'wbs_level_3s', 'wbs_level_4s'));
     }
 
     public function update(UpdateRfaRequest $request, Rfa $rfa)
     {
+        $state= $request->document_status_id;
         $data['update_by_user_id'] = auth()->id();
-        if($rfa->document_status_id == 1){
-            $data['action_by_id'] = $request->action_by_id;
-            $data['comment_by_id'] = $request->comment_by_id;
-            $data['information_by_id'] = $request->information_by_id;
-            $data['receive_date'] = $request->receive_date;
-            $data['note_2'] = $request->note_2;
-            $data['target_date'] = $request->target_date;
-            $data['incoming_number'] = "IN-" . $rfa->origin_number;
+        $data['action_by_id'] = $request->action_by_id;
+        $data['comment_by_id'] = $request->comment_by_id;
+        $data['information_by_id'] = $request->information_by_id;
+        $data['receive_date'] = $request->receive_date;
+        $data['note_2'] = $request->note_2;
+        $data['target_date'] = $request->target_date;
+        $data['incoming_number'] = "IN-" . $rfa->origin_number;
+        $data['distribute_by_id'] = Auth::id();
+        $distribute_date = new DateTime();
+        $data['distribute_date'] = $distribute_date->format('d/m/Y');
+        $process_date = new DateTime();
+        $data['process_date'] = $process_date->format('d/m/Y');
+        $data['comment_status_id'] = $request->comment_status_id;
+        $data['note_3'] = $request->note_3;
+        $outgoing_date = new DateTime();
+        $data['outgoing_date'] = $outgoing_date->format('d/m/Y');
+        $data['outgoing_number'] = "OUT-" . $rfa->rfa_code;
+        $data['reviewed_by_id'] = $request->reviewed_by_id;
+        // $data['for_status_id'] = $request->for_status_id;
+        $data['note_4'] = $request->note_4;
+
+        if($data['comment_status_id'] && ($state == "2" || $state == "3") ){
+            $data['document_status_id'] = 4;
+        }
+
+        if($data['action_by_id'] != "" && $state == "1"){
             $data['document_status_id'] = 2;
-            $data['distribute_by_id'] = Auth::id();
-            $distribute_date = new DateTime();
-            $data['distribute_date'] = $distribute_date->format('d/m/Y');
-            $rfa->update($data);
-
-            if (count($rfa->work_file_upload) > 0) {
-                foreach ($rfa->work_file_upload as $media) {
-                    if (!in_array($media->file_name, $request->input('work_file_upload', []))) {
-                        $media->delete();
-                    }
-                }
-            }
-
-            $media = $rfa->work_file_upload->pluck('file_name')->toArray();
-    
-            foreach ($request->input('work_file_upload', []) as $file) {
-                if (count($media) === 0 || !in_array($file, $media)) {
-                    $rfa->addMedia(storage_path('tmp/uploads/' . $file))->toMediaCollection('work_file_upload');
-                }
-            }
-                                //
-            if (count($rfa->file_upload_1) > 0) {
-                foreach ($rfa->file_upload_1 as $media) {
-                    if (!in_array($media->file_name, $request->input('file_upload_1', []))) {
-                        $media->delete();
-                    }
-                }
-            }
-
-            $media = $rfa->file_upload_1->pluck('file_name')->toArray();
-    
-            foreach ($request->input('file_upload_1', []) as $file) {
-                if (count($media) === 0 || !in_array($file, $media)) {
-                    $rfa->addMedia(storage_path('tmp/uploads/' . $file))->toMediaCollection('file_upload_1');
-                }
-            }
-
         }
 
-        else if($rfa->document_status_id == 2){
-            $data['document_status_id'] = 3;
-            $process_date = new DateTime();
-            $data['process_date'] = $process_date->format('d/m/Y');
-            $data['comment_status_id'] = $request->comment_status_id;
-            $data['note_3'] = $request->note_3;
-            $rfa->update($data);
-            
-            if (count($rfa->commercial_file_upload) > 0) {
-                foreach ($rfa->commercial_file_upload as $media) {
-                    if (!in_array($media->file_name, $request->input('commercial_file_upload', []))) {
-                        $media->delete();
-                    }
-                }
-            }
 
-            $media = $rfa->commercial_file_upload->pluck('file_name')->toArray();
-
-            foreach ($request->input('commercial_file_upload', []) as $file) {
-                if (count($media) === 0 || !in_array($file, $media)) {
-                    $rfa->addMedia(storage_path('tmp/uploads/' . $file))->toMediaCollection('commercial_file_upload');
+        $rfa->update($data);
+        if (count($rfa->file_upload_1) > 0) {
+            foreach ($rfa->file_upload_1 as $media) {
+                if (!in_array($media->file_name, $request->input('file_upload_1', []))) {
+                    $media->delete();
                 }
             }
         }
-
-        else if($rfa->document_status_id == 3){
-            $data['document_status_id'] = 4;
-            $outgoing_date = new DateTime();
-            $data['outgoing_date'] = $outgoing_date->format('d/m/Y');
-            $data['outgoing_number'] = "OUT-" . $rfa->rfa_code;
-            $data['reviewed_by_id'] = $request->reviewed_by_id;
-            // $data['for_status_id'] = $request->for_status_id;
-            $data['comment_status_id'] = $request->comment_status_id;
-            $data['note_4'] = $request->note_4;
-            $rfa->update($data);
-
-            if (count($rfa->commercial_file_upload) > 0) {
-                foreach ($rfa->commercial_file_upload as $media) {
-                    if (!in_array($media->file_name, $request->input('commercial_file_upload', []))) {
-                        $media->delete();
-                    }
-                }
-            }
-
-            $media = $rfa->commercial_file_upload->pluck('file_name')->toArray();
-
-            foreach ($request->input('commercial_file_upload', []) as $file) {
-                if (count($media) === 0 || !in_array($file, $media)) {
-                    $rfa->addMedia(storage_path('tmp/uploads/' . $file))->toMediaCollection('commercial_file_upload');
-                }
+        $media = $rfa->file_upload_1->pluck('file_name')->toArray();
+        foreach ($request->input('file_upload_1', []) as $file) {
+            if (count($media) === 0 || !in_array($file, $media)) {
+                $rfa->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('file_upload_1');
             }
         }
 
-        else{
-            $data['document_status_id'] = 4;
-            $outgoing_date = new DateTime();
-            $data['outgoing_date'] = $outgoing_date->format('d/m/Y');
-            $data['outgoing_number'] = "OUT-" . $rfa->rfa_code;
-            $data['reviewed_by_id'] = $request->reviewed_by_id;
-            // $data['for_status_id'] = $request->for_status_id;
-            $data['comment_status_id'] = $request->comment_status_id;
-            $data['note_4'] = $request->note_4;
-            $rfa->update($data);
-
-            if (count($rfa->commercial_file_upload) > 0) {
-                foreach ($rfa->commercial_file_upload as $media) {
-                    if (!in_array($media->file_name, $request->input('commercial_file_upload', []))) {
-                        $media->delete();
-                    }
+        if (count($rfa->commercial_file_upload) > 0) {
+            foreach ($rfa->commercial_file_upload as $media) {
+                if (!in_array($media->file_name, $request->input('commercial_file_upload', []))) {
+                    $media->delete();
                 }
             }
+        }
+        $media = $rfa->commercial_file_upload->pluck('file_name')->toArray();
+        foreach ($request->input('commercial_file_upload', []) as $file) {
+            if (count($media) === 0 || !in_array($file, $media)) {
+                $rfa->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('commercial_file_upload');
+            }
+        }
 
-            $media = $rfa->commercial_file_upload->pluck('file_name')->toArray();
-
-            foreach ($request->input('commercial_file_upload', []) as $file) {
-                if (count($media) === 0 || !in_array($file, $media)) {
-                    $rfa->addMedia(storage_path('tmp/uploads/' . $file))->toMediaCollection('commercial_file_upload');
+        if (count($rfa->document_file_upload) > 0) {
+            foreach ($rfa->document_file_upload as $media) {
+                if (!in_array($media->file_name, $request->input('document_file_upload', []))) {
+                    $media->delete();
                 }
+            }
+        }
+        $media = $rfa->document_file_upload->pluck('file_name')->toArray();
+        foreach ($request->input('document_file_upload', []) as $file) {
+            if (count($media) === 0 || !in_array($file, $media)) {
+                $rfa->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('document_file_upload');
+            }
+        }
+
+        if (count($rfa->submittals_file) > 0) {
+            foreach ($rfa->submittals_file as $media) {
+                if (!in_array($media->file_name, $request->input('submittals_file', []))) {
+                    $media->delete();
+                }
+            }
+        }
+        $media = $rfa->submittals_file->pluck('file_name')->toArray();
+        foreach ($request->input('submittals_file', []) as $file) {
+            if (count($media) === 0 || !in_array($file, $media)) {
+                $rfa->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('submittals_file');
+            }
+        }
+
+        if (count($rfa->work_file_upload) > 0) {
+            foreach ($rfa->work_file_upload as $media) {
+                if (!in_array($media->file_name, $request->input('work_file_upload', []))) {
+                    $media->delete();
+                }
+            }
+        }
+        $media = $rfa->work_file_upload->pluck('file_name')->toArray();
+        foreach ($request->input('work_file_upload', []) as $file) {
+            if (count($media) === 0 || !in_array($file, $media)) {
+                $rfa->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('work_file_upload');
             }
         }
         return redirect()->route('admin.rfas.index');
