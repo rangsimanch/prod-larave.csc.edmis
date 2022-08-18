@@ -27,7 +27,7 @@ class ProgrammerPanelController extends Controller
         foreach($id_array as $id){
             $path = storage_path('app/public') . '/' . $id;
             // $path = storage_path('app/public') . '/';
-            $response = File::deleteDirectory($path);
+            // $response = File::deleteDirectory($path);
         }
         // $response = scandir($path); //Get Directory
        
