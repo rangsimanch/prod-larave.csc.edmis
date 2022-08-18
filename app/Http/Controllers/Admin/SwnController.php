@@ -601,17 +601,25 @@ class SwnController extends Controller
             for($index = 0; $index < $count_image; $index++){
                 try{
                     $allowed = array('gif', 'png', 'jpg', 'jpeg', 'JPG', 'JPEG', 'PNG');
-                    if(in_array(pathinfo(public_path($swn->description_image[$index]->getUrl()),PATHINFO_EXTENSION),$allowed)){
-                                            
-                        $img = (string) Image::make($swn->description_image[$index]->getPath())->orientate()->resize(null, 180, function ($constraint) {
-                            $constraint->aspectRatio();
-                        })
-                        ->encode('data-url');
+                    $url = public_path($swn->description_image[$index]->getUrl());
+                    $handle = curl_init($url);
+                    curl_setopt($handle,  CURLOPT_RETURNTRANSFER, TRUE);
+                    $response = curl_exec($handle);
+                    $httpCode = curl_getinfo($handle, CURLINFO_HTTP_CODE);
+                    curl_close($handle);
+                    if($httpCode != 404){
+                        if(in_array(pathinfo(public_path($swn->description_image[$index]->getUrl()),PATHINFO_EXTENSION),$allowed)){
+                                                
+                            $img = (string) Image::make($swn->description_image[$index]->getPath())->orientate()->resize(null, 180, function ($constraint) {
+                                $constraint->aspectRatio();
+                            })
+                            ->encode('data-url');
 
-                        $html .= "<img style=\"padding-left:90px;\" width=\"". "30%" ."\" height=\"". "30%" ."\" src=\"" 
-                            . $img
-                            . "\">  ";
-                    }
+                            $html .= "<img style=\"padding-left:90px;\" width=\"". "30%" ."\" height=\"". "30%" ."\" src=\"" 
+                                . $img
+                                . "\">  ";
+                        }
+                }
                 }catch(Exception $e){
                     print "Creating an mPDF object failed with" . $e->getMessage();
                 }
@@ -621,16 +629,23 @@ class SwnController extends Controller
         $mpdf->SetDocTemplate(""); 
         foreach($swn->document_attachment as $attachment){ 
             try{
-                $pagecount = $mpdf->SetSourceFile($attachment->getPath());
-                for($page = 1; $page <= $pagecount; $page++){
-                    // $mpdf->AddPage();
-                    $tplId = $mpdf->importPage($page);
-                    $size = $mpdf->getTemplateSize($tplId);
-                    $mpdf->AddPage($size['orientation']);
-                    // $mpdf->UseTemplate($tplId);
-                    $mpdf->UseTemplate($tplId, 0, 0, $size['width'], $size['height'], true);
-
-                }         
+                $url = $$attachment->getPath();
+                $handle = curl_init($url);
+                curl_setopt($handle,  CURLOPT_RETURNTRANSFER, TRUE);
+                $response = curl_exec($handle);
+                $httpCode = curl_getinfo($handle, CURLINFO_HTTP_CODE);
+                curl_close($handle);
+                if($httpCode != 404){
+                    $pagecount = $mpdf->SetSourceFile($attachment->getPath());
+                    for($page = 1; $page <= $pagecount; $page++){
+                        // $mpdf->AddPage();
+                        $tplId = $mpdf->importPage($page);
+                        $size = $mpdf->getTemplateSize($tplId);
+                        $mpdf->AddPage($size['orientation']);
+                        // $mpdf->UseTemplate($tplId);
+                        $mpdf->UseTemplate($tplId, 0, 0, $size['width'], $size['height'], true);
+                    }      
+            }   
             }catch(exeption $e){
                 print "Creating an mPDF object failed with" . $e->getMessage();
             }
@@ -638,16 +653,24 @@ class SwnController extends Controller
 
         foreach($swn->reply_document as $attachment){ 
             try{
-                $pagecount = $mpdf->SetSourceFile($attachment->getPath());
-                for($page = 1; $page <= $pagecount; $page++){
-                    // $mpdf->AddPage();
-                    $tplId = $mpdf->importPage($page);
-                    $size = $mpdf->getTemplateSize($tplId);
-                    $mpdf->AddPage($size['orientation']);
-                    // $mpdf->UseTemplate($tplId);
-                    $mpdf->UseTemplate($tplId, 0, 0, $size['width'], $size['height'], true);
+                $url = $$attachment->getPath();
+                $handle = curl_init($url);
+                curl_setopt($handle,  CURLOPT_RETURNTRANSFER, TRUE);
+                $response = curl_exec($handle);
+                $httpCode = curl_getinfo($handle, CURLINFO_HTTP_CODE);
+                curl_close($handle);
+                if($httpCode != 404){
+                    $pagecount = $mpdf->SetSourceFile($attachment->getPath());
+                    for($page = 1; $page <= $pagecount; $page++){
+                        // $mpdf->AddPage();
+                        $tplId = $mpdf->importPage($page);
+                        $size = $mpdf->getTemplateSize($tplId);
+                        $mpdf->AddPage($size['orientation']);
+                        // $mpdf->UseTemplate($tplId);
+                        $mpdf->UseTemplate($tplId, 0, 0, $size['width'], $size['height'], true);
 
-                }         
+                    }         
+                }
             }catch(exeption $e){
                 print "Creating an mPDF object failed with" . $e->getMessage();
             }
