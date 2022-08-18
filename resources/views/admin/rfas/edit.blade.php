@@ -1017,7 +1017,7 @@ if(documents_status == "1"){
     element3.innerHTML = '<i class="bi bi-eye-slash-fill"></i>';
 
 
-    $("#action_by_id").attr('required', '');    //turns required on
+    //$("#action_by_id").attr('required', '');    //turns required on
 
 }
 
@@ -1034,7 +1034,7 @@ if(documents_status == "2"){
 
     // $("#responsible_id").attr('required', '');    //turns required on
     // $("#review_status").attr('required', '');    //turns required on
-    $("#comment_status_id").attr('required', '');    //turns required on
+    //$("#comment_status_id").attr('required', '');    //turns required on
 
 
 }
@@ -1058,7 +1058,7 @@ if(documents_status == "3" || documents_status == "4"){
     // $("#responsible_id").attr('required', '');    //turns required on
     // $("#review_status").attr('required', '');    //turns required on
     // $("#auditing_status").attr('required', '');    //turns required on
-    $("#comment_status_id").attr('required', '');    //turns required on
+    // $("#comment_status_id").attr('required', '');    //turns required on
 
 }
 
