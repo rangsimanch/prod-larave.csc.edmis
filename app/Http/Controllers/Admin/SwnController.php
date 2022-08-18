@@ -629,7 +629,7 @@ class SwnController extends Controller
         $mpdf->SetDocTemplate(""); 
         foreach($swn->document_attachment as $attachment){ 
             try{
-                $url = $$attachment->getUrl();
+                $url = $attachment->getUrl();
                 $handle = curl_init($url);
                 curl_setopt($handle,  CURLOPT_RETURNTRANSFER, TRUE);
                 $response = curl_exec($handle);
@@ -653,7 +653,7 @@ class SwnController extends Controller
 
         foreach($swn->reply_document as $attachment){ 
             try{
-                $url = $$attachment->getUrl();
+                $url = $attachment->getUrl();
                 $handle = curl_init($url);
                 curl_setopt($handle,  CURLOPT_RETURNTRANSFER, TRUE);
                 $response = curl_exec($handle);
