@@ -1387,18 +1387,6 @@
                     </a>
                 </li>
             @endcan
-
-            @can('programmer_panel_access')
-            <li class="{{ request()->is("admin/programmer-panels") || request()->is("admin/programmer-panels/*") ? "active" : "" }}">
-                <a href="{{ route("admin.programmer-panels.index") }}">
-                    <i class="fa-fw fab fa-laravel">
-
-                    </i>
-                    <span>{{ trans('cruds.programmerPanel.title') }}</span>
-
-                </a>
-            </li>
-            @endcan
                         
             <li class="{{ request()->is('admin/system-calendar') || request()->is('admin/system-calendar/*') ? 'active' : '' }}">
                 <a href="{{ route("admin.systemCalendar") }}">

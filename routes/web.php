@@ -570,11 +570,6 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::post('srt-external-agency-documents/media', 'SrtExternalAgencyDocumentsController@storeMedia')->name('srt-external-agency-documents.storeMedia');
     Route::post('srt-external-agency-documents/ckmedia', 'SrtExternalAgencyDocumentsController@storeCKEditorImages')->name('srt-external-agency-documents.storeCKEditorImages');
     Route::resource('srt-external-agency-documents', 'SrtExternalAgencyDocumentsController');
-    
-    // Programmer Panel 
-    Route::post('programmer-panels/index','ProgrammerPanelController@deleteFolder')->name('programmer-panels.deleteFolder');
-    Route::delete('programmer-panels/destroy', 'ProgrammerPanelController@massDestroy')->name('programmer-panels.massDestroy');
-    Route::resource('programmer-panels', 'ProgrammerPanelController');
 
     Route::get('system-calendar', 'SystemCalendarController@index')->name('systemCalendar');
     Route::get('global-search', 'GlobalSearchController@search')->name('globalSearch');
