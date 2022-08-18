@@ -53,9 +53,6 @@
                                     {{ trans('cruds.user.fields.email') }}
                                 </th>
                                 <th>
-                                    {{ trans('cruds.user.fields.email_verified_at') }}
-                                </th>
-                                <th>
                                     {{ trans('cruds.user.fields.roles') }}
                                 </th>
                             
@@ -119,14 +116,7 @@
                                 <td>
                                     <input class="search" type="text" placeholder="{{ trans('global.search') }}">
                                 </td>
-                                <td>
-                                    <select class="search">
-                                        <option value>{{ trans('global.all') }}</option>
-                                        @foreach($roles as $key => $item)
-                                            <option value="{{ $item->title }}">{{ $item->title }}</option>
-                                        @endforeach
-                                    </select>
-                                </td>
+                               
                                 <td>
                                 </td>
                                
@@ -204,15 +194,15 @@
 { data: 'team_name', name: 'team.name' },
 { data: 'jobtitle_name', name: 'jobtitle.name' },
 { data: 'email', name: 'email' },
-{ data: 'email_verified_at', name: 'email_verified_at' },
+// { data: 'email_verified_at', name: 'email_verified_at' },
 { data: 'roles', name: 'roles.title' },
 { data: 'approved', name: 'approved' },
 { data: 'construction_contract', name: 'construction_contracts.code' },
 { data: 'actions', name: '{{ trans('global.actions') }}' }
     ],
     orderCellsTop: true,
-    order: [[ 1, 'desc' ]],
-    pageLength: 100,
+    order: [[ 1, 'asc' ]],
+    pageLength: 50,
   };
   let table = $('.datatable-User').DataTable(dtOverrideGlobals);
   $('a[data-toggle="tab"]').on('shown.bs.tab click', function(e){

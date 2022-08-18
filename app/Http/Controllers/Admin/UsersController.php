@@ -129,7 +129,7 @@ class UsersController extends Controller
                 return implode(' ', $labels);
             });
 
-            $table->rawColumns(['actions', 'placeholder', 'organization', 'img_user', 'team', 'jobtitle', 'roles', 'signature', 'approved', 'construction_contract']);
+            $table->rawColumns(['actions', 'placeholder', 'organization', 'team', 'jobtitle', 'roles', 'approved', 'construction_contract']);
 
             return $table->make(true);
         }
