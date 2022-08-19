@@ -381,7 +381,7 @@
                         </div>
                         
                         <div class="form-group {{ $errors->has('comment_status') ? 'has-error' : '' }}">
-                            <label class="required" for="comment_status_id">{{ trans('cruds.rfa.fields.comment_status') }}</label>
+                            <label for="comment_status_id">{{ trans('cruds.rfa.fields.comment_status') }}</label>
                             <select class="form-control select2" name="comment_status_id" id="comment_status_id">
                                 @foreach($comment_statuses as $id => $comment_status)
                                     <option value="{{ $id }}" {{ ($rfa->comment_status ? $rfa->comment_status->id : old('comment_status_id')) == $id ? 'selected' : '' }}>{{ $comment_status }}</option>
