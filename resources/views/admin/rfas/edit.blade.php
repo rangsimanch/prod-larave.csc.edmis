@@ -116,6 +116,7 @@
                             <span class="help-block">{{ trans('cruds.rfa.fields.type_helper') }}</span>
                         </div>
 
+                        
                         <div class="form-group {{ $errors->has('worktype') ? 'has-error' : '' }}">
                             <label>{{ trans('cruds.rfa.fields.worktype') }}</label>
                             <select class="form-control" name="worktype" id="worktype">
