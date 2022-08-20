@@ -4,8 +4,6 @@ Route::redirect('/', '/login');
 Route::get('dashboard-menu',function(){
     return view('auth.dashboard-menu');
 })->name('dashboard-menu');
-
-
 Route::get('/home', function () {
     if (session('status')) {
         return redirect()->route('admin.home')->with('status', session('status'));
@@ -16,9 +14,6 @@ Route::get('/home', function () {
 
 Auth::routes();
 
-// Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth'], 'namespace' => 'Admin'], function () {
-
-//     Route::get('/push','PushController@push')->name('push');
 Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'middleware' => ['auth']], function () {
     
     Route::get('/', 'HomeController@index')->name('home');
