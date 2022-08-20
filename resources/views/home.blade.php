@@ -2,7 +2,9 @@
 @section('content')
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@500&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300&display=swap" rel="stylesheet">
 
 @if($announce_text != "")
 <div  class="row">
@@ -24,20 +26,14 @@
         <div class="col-lg-12">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    Dashboard
+                    HOME
                 </div>
                 
                 <div class="container px-4 mx-auto">
 
-                    <div class="p-6 m-20 bg-white rounded shadow">
-                        {!! $chart->container() !!}
-                    </div>
-
-                </div>
-
-                <script src="{{ LarapexChart::cdn() }}"></script>
-
-                {{ $chart->script() }}  
+                    <center><h2 style="font-family: 'Kanit', sans-serif; line-height:45px">ประกาศปิดปรับปรุงระบบ EDMIS<br>
+                    ตั้งแต่วันที่ 20 สิงหาคม 2565 เวลา 21:00 น. ถึง วันที่ 22 สิงหาคม 2565 เวลา 07:30 น.<br>
+                    ขออภัยในความไม่สะดวก</h2></center>
                     
                 </div>
             </div>
