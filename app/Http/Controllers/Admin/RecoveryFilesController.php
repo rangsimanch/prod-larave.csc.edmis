@@ -183,6 +183,7 @@ class RecoveryFilesController extends Controller
 
                 if(count($dir_id) == 2){
                     $index = 0;
+                    $name_check = $original_name;
                     foreach($name_check as $name){
                         $name_array = explode("_", $name);
                         $name_check[$index] = $name_array[1];
