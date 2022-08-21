@@ -53,6 +53,10 @@ class RecoveryFilesController extends Controller
                 return $row->dir_name ? $row->dir_name : '';
             });
 
+            $table->editColumn('original_name', function ($row) {
+                return $row->original_name ? $row->original_name : '';
+            });
+
             $table->editColumn('recovery_success', function ($row) {
                 return $row->recovery_success ? $row->recovery_success : '';
             });
@@ -79,6 +83,7 @@ class RecoveryFilesController extends Controller
 
     public function store(StoreRecoveryFileRequest $request)
     {
+        $original_file = "";
         $success_file = "";
         $fail_file = "";
 
@@ -157,7 +162,8 @@ class RecoveryFilesController extends Controller
                 if(!file_exists(storage_path("/" . "public" . "/" . $dir_id[0]))){
                     Storage::disk('local')->putFileAs("/" . "public" . "/" . $dir_id[0], $rename_file, $original_name[0]);
                     File::delete($rename_file);
-                    $success_file .= $original_name[0] . ", ";
+                    $success_file .= $filename . ", ";
+                    $original_file .= $original_name[0] . ", ";
                 }
                 
             }

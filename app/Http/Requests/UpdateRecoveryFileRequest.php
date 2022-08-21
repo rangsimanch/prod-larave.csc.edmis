@@ -16,6 +16,10 @@ class UpdateRecoveryFileRequest extends FormRequest
 
     public function rules()
     {
-        return [];
+        return [
+        'dir_name' => [
+            'string',
+            'required',
+        ],];
     }
 }

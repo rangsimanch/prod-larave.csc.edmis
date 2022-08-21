@@ -20,6 +20,10 @@ class StoreRecoveryFileRequest extends FormRequest
             'recovery_file' => [
                 'array',
             ],
+            'dir_name' => [
+                'string',
+                'required',
+            ],
         ];
     }
 }
