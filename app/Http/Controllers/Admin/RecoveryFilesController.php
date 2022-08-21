@@ -159,6 +159,8 @@ class RecoveryFilesController extends Controller
                 
             }
             else{
+                $defualt_file = storage_path('tmp/uploads/' . basename($file));
+                File::delete($defualt_file);
                 $fail_file .= $filename . ", ";
             }
         }
