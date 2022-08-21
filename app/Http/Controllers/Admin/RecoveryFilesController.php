@@ -101,10 +101,10 @@ class RecoveryFilesController extends Controller
                 $mime_type = "text/plain";
             }
             if(strstr($extension, "jpg") || strstr($extension, "jpeg")){
-                $mime_type == "image/jpeg";
+                $mime_type = "image/jpeg";
             }
             if(strstr($extension, "zip") || strstr($extension, "xps")){
-                $mime_type == "application/zip";
+                $mime_type = "application/zip";
             }
             if(strstr($extension, "xls")){
                 $mime_type = "application/vnd.ms-excel";
@@ -145,7 +145,6 @@ class RecoveryFilesController extends Controller
                 ->where('mime_type', '=', $mime_type)
                 ->where('size', '=', $size)
                 ->pluck('file_name')->toArray();
-
 
             if(count($dir_id) == 1){
                 $defualt_file = storage_path('tmp/uploads/' . basename($file));
