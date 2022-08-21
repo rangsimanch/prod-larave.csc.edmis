@@ -176,6 +176,7 @@ class RecoveryFilesController extends Controller
         $data = $request->all();
         $data['recovery_success'] = $success_file;
         $data['recovery_fail'] = $fail_file;
+        $data['original_name'] = $original_file;
         $recoveryFile = RecoveryFile::create($data);
 
         // foreach ($request->input('recovery_file', []) as $file) {
