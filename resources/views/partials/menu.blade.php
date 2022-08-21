@@ -1387,6 +1387,31 @@
                     </a>
                 </li>
             @endcan
+
+            @can('control_panel_access')
+            <li class="treeview">
+                <a href="#">
+                    <i class="fa-fw far fa-sun">
+
+                    </i>
+                    <span>{{ trans('cruds.controlPanel.title') }}</span>
+                    <span class="pull-right-container"><i class="fa fa-fw fa-angle-left pull-right"></i></span>
+                </a>
+                <ul class="treeview-menu">
+                    @can('recovery_file_access')
+                        <li class="{{ request()->is("admin/recovery-files") || request()->is("admin/recovery-files/*") ? "active" : "" }}">
+                            <a href="{{ route("admin.recovery-files.index") }}">
+                                <i class="fa-fw fas fa-recycle">
+
+                                </i>
+                                <span>{{ trans('cruds.recoveryFile.title') }}</span>
+
+                            </a>
+                        </li>
+                    @endcan
+                </ul>
+            </li>
+            @endcan
                         
             <li class="{{ request()->is('admin/system-calendar') || request()->is('admin/system-calendar/*') ? 'active' : '' }}">
                 <a href="{{ route("admin.systemCalendar") }}">

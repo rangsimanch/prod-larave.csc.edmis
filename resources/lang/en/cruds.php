@@ -2715,8 +2715,30 @@ return [
             'team_helper'                  => ' ',
         ],
     ],
-    'programmerPanel' => [
-        'title'          => 'Programmer Panel',
-        'title_singular' => 'Programmer Panel',
+    'controlPanel' => [
+        'title'          => 'Control Panel',
+        'title_singular' => 'Control Panel',
+    ],
+    'recoveryFile' => [
+        'title'          => 'Recovery Files',
+        'title_singular' => 'Recovery File',
+        'fields'         => [
+            'id'                      => 'ID',
+            'id_helper'               => ' ',
+            'recovery_success'        => 'Recovery Success',
+            'recovery_success_helper' => ' ',
+            'recovery_fail'           => 'Recovery Fail',
+            'recovery_fail_helper'    => ' ',
+            'recovery_file'           => 'Recovery File',
+            'recovery_file_helper'    => ' ',
+            'created_at'              => 'Created at',
+            'created_at_helper'       => ' ',
+            'updated_at'              => 'Updated at',
+            'updated_at_helper'       => ' ',
+            'deleted_at'              => 'Deleted at',
+            'deleted_at_helper'       => ' ',
+            'team'                    => 'Team',
+            'team_helper'             => ' ',
+        ],
     ],
 ];

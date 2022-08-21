@@ -566,6 +566,12 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::post('srt-external-agency-documents/ckmedia', 'SrtExternalAgencyDocumentsController@storeCKEditorImages')->name('srt-external-agency-documents.storeCKEditorImages');
     Route::resource('srt-external-agency-documents', 'SrtExternalAgencyDocumentsController');
 
+    // Recovery Files
+    Route::delete('recovery-files/destroy', 'RecoveryFilesController@massDestroy')->name('recovery-files.massDestroy');
+    Route::post('recovery-files/media', 'RecoveryFilesController@storeMedia')->name('recovery-files.storeMedia');
+    Route::post('recovery-files/ckmedia', 'RecoveryFilesController@storeCKEditorImages')->name('recovery-files.storeCKEditorImages');
+    Route::resource('recovery-files', 'RecoveryFilesController');
+
     Route::get('system-calendar', 'SystemCalendarController@index')->name('systemCalendar');
     Route::get('global-search', 'GlobalSearchController@search')->name('globalSearch');
     Route::get('messenger', 'MessengerController@index')->name('messenger.index');

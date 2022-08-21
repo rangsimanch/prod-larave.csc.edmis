@@ -101,20 +101,20 @@ class TaskController extends Controller
                 return $row->create_by_user ? $row->create_by_user->name : '';
             });
 
-            $table->editColumn('img_user', function ($row) {
-                if ($photo = $row->create_by_user->img_user) {
-                    return sprintf(
-                        '<img src="%s" width="50px" height="50px" class="avatar">',
-                        $photo->url,
-                        $photo->thumbnail
-                    );
-                }
-                else{
-                    return sprintf(
-                        '<img src="https://upload.wikimedia.org/wikipedia/commons/9/9a/No_avatar.png" width="50px" height="50px" class="avatar">'
-                    );
-                }
-            });
+            // $table->editColumn('img_user', function ($row) {
+            //     if ($photo = $row->create_by_user->img_user) {
+            //         return sprintf(
+            //             '<img src="%s" width="50px" height="50px" class="avatar">',
+            //             $photo->url,
+            //             $photo->thumbnail
+            //         );
+            //     }
+            //     else{
+            //         return sprintf(
+            //             '<img src="https://upload.wikimedia.org/wikipedia/commons/9/9a/No_avatar.png" width="50px" height="50px" class="avatar">'
+            //         );
+            //     }
+            // });
 
             $table->addColumn('construction_contract_code', function ($row) {
                 return $row->construction_contract ? $row->construction_contract->code : '';
@@ -124,7 +124,7 @@ class TaskController extends Controller
                 return $row->construction_contract ? (is_string($row->construction_contract) ? $row->construction_contract : $row->construction_contract->name) : '';
             });
 
-            $table->rawColumns(['actions','img_user', 'placeholder', 'tag', 'status', 'attachment', 'create_by_user', 'construction_contract']);
+            $table->rawColumns(['actions', 'placeholder', 'tag', 'status', 'attachment', 'create_by_user', 'construction_contract']);
 
             return $table->make(true);
         }
@@ -136,7 +136,7 @@ class TaskController extends Controller
             }
             $work_type = TaskTag::all()->sortBy('name')->pluck('name')->unique();
             $status = TaskStatus::all()->sortBy('id')->pluck('name')->unique();
-            return view('admin.tasks.index',compact('create_by_user','work_type','status','img_user'));
+            return view('admin.tasks.index',compact('create_by_user','work_type','status'));
 
     }
 

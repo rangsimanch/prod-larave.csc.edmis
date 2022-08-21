@@ -206,24 +206,24 @@ Route::group(['prefix' => 'v1', 'as' => 'api.', 'namespace' => 'Api\V1\Admin', '
     Route::post('tickets/media', 'TicketApiController@storeMedia')->name('tickets.storeMedia');
     Route::apiResource('tickets', 'TicketApiController');
 
-      // Srt Pd Documents
-      Route::post('srt-pd-documents/media', 'SrtPdDocumentsApiController@storeMedia')->name('srt-pd-documents.storeMedia');
-      Route::apiResource('srt-pd-documents', 'SrtPdDocumentsApiController');
-  
-      // Srt Pe Documents
-      Route::post('srt-pe-documents/media', 'SrtPeDocumentsApiController@storeMedia')->name('srt-pe-documents.storeMedia');
-      Route::apiResource('srt-pe-documents', 'SrtPeDocumentsApiController');
-      
+    // Srt Pd Documents
+    Route::post('srt-pd-documents/media', 'SrtPdDocumentsApiController@storeMedia')->name('srt-pd-documents.storeMedia');
+    Route::apiResource('srt-pd-documents', 'SrtPdDocumentsApiController');
+
+    // Srt Pe Documents
+    Route::post('srt-pe-documents/media', 'SrtPeDocumentsApiController@storeMedia')->name('srt-pe-documents.storeMedia');
+    Route::apiResource('srt-pe-documents', 'SrtPeDocumentsApiController');
+    
       // Srt External Documents
     Route::post('srt-external-documents/media', 'SrtExternalDocumentApiController@storeMedia')->name('srt-external-documents.storeMedia');
     Route::apiResource('srt-external-documents', 'SrtExternalDocumentApiController');
 
-     // Srt Other
-     Route::post('srt-others/media', 'SrtOtherApiController@storeMedia')->name('srt-others.storeMedia');
-     Route::apiResource('srt-others', 'SrtOtherApiController');
+    // Srt Other
+    Route::post('srt-others/media', 'SrtOtherApiController@storeMedia')->name('srt-others.storeMedia');
+    Route::apiResource('srt-others', 'SrtOtherApiController');
 
-     // Organizations
-     Route::apiResource('organizations', 'OrganizationApiController');
+    // Organizations
+    Route::apiResource('organizations', 'OrganizationApiController');
 
       // Complaints
     Route::post('complaints/media', 'ComplaintApiController@storeMedia')->name('complaints.storeMedia');
@@ -245,12 +245,12 @@ Route::group(['prefix' => 'v1', 'as' => 'api.', 'namespace' => 'Api\V1\Admin', '
     Route::post('ncrs/media', 'NcrApiController@storeMedia')->name('ncrs.storeMedia');
     Route::apiResource('ncrs', 'NcrApiController');
 
-     // Srt Department
-     Route::apiResource('srt-departments', 'SrtDepartmentApiController');
+    // Srt Department
+    Route::apiResource('srt-departments', 'SrtDepartmentApiController');
 
-     // Srt Dpd Documents
-     Route::post('srt-dpd-documents/media', 'SrtDpdDocumentsApiController@storeMedia')->name('srt-dpd-documents.storeMedia');
-     Route::apiResource('srt-dpd-documents', 'SrtDpdDocumentsApiController');
+    // Srt Dpd Documents
+    Route::post('srt-dpd-documents/media', 'SrtDpdDocumentsApiController@storeMedia')->name('srt-dpd-documents.storeMedia');
+    Route::apiResource('srt-dpd-documents', 'SrtDpdDocumentsApiController');
 
       // Interim Payment Meeting
     Route::post('interim-payment-meetings/media', 'InterimPaymentMeetingApiController@storeMedia')->name('interim-payment-meetings.storeMedia');
@@ -259,4 +259,8 @@ Route::group(['prefix' => 'v1', 'as' => 'api.', 'namespace' => 'Api\V1\Admin', '
     // Srt External Agency Documents
     Route::post('srt-external-agency-documents/media', 'SrtExternalAgencyDocumentsApiController@storeMedia')->name('srt-external-agency-documents.storeMedia');
     Route::apiResource('srt-external-agency-documents', 'SrtExternalAgencyDocumentsApiController');
+    // Recovery Files
+    
+    Route::post('recovery-files/media', 'RecoveryFilesApiController@storeMedia')->name('recovery-files.storeMedia');
+    Route::apiResource('recovery-files', 'RecoveryFilesApiController');
 });
