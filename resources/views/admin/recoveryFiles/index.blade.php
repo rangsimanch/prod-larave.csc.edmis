@@ -133,7 +133,7 @@
 { data: 'actions', name: '{{ trans('global.actions') }}' }
     ],
     orderCellsTop: true,
-    order: [[ 3, 'desc' ]],
+    order: [[ 6, 'desc' ]],
     pageLength: 10,
   };
   let table = $('.datatable-RecoveryFile').DataTable(dtOverrideGlobals);

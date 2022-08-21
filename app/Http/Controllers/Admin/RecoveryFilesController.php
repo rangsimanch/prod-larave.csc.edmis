@@ -166,7 +166,7 @@ class RecoveryFilesController extends Controller
             Log::alert("File MS = " . $extension . " | " . $size . " | " . $mime_type . " | Data amount : " . count($dir_id));
             
 
-            if(count($dir_id) > 1){
+            if(count($dir_id) > 0){
                 if(count($dir_id) == 1){
                     $defualt_file = storage_path('tmp/uploads/' . basename($file));
                     $rename_file = storage_path('tmp/uploads/' . $original_name[0]);
