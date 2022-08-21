@@ -162,6 +162,10 @@ class RecoveryFilesController extends Controller
                 ->where('mime_type', '=', $mime_type)
                 ->where('size', '=', $size)
                 ->pluck('model_type')->toArray();
+            $model_id = DB::table('media')
+                ->where('mime_type', '=', $mime_type)
+                ->where('size', '=', $size)
+                ->pluck('model_id')->toArray();
 
             Log::alert("File MS = " . $extension . " | " . $size . " | " . $mime_type . " | Data amount : " . count($dir_id));
             
@@ -190,7 +194,7 @@ class RecoveryFilesController extends Controller
                         $name_check[$index] = $name_array[1];
                         $index++;
                     }
-                    if (count(array_flip($name_check)) === 1 && end($name_check) === 'true') {
+                    if ((count(array_flip($name_check)) === 1 && end($name_check) === 'true') || (count(array_flip($model_id)) === 1 && end($model_id) === 'true')) {
                         $index = 0;
                         $is_success = array();
                         foreach($dir_id as $id){    
