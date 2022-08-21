@@ -150,7 +150,7 @@ class RecoveryFilesController extends Controller
             }
             $size = filesize(storage_path('tmp/uploads/' . basename($file)));
 
-            // Log::alert("File MS = " . $extension . " | " . $size . " | " . $mime_type);
+            Log::alert("File MS = " . $extension . " | " . $size . " | " . $mime_type);
 
             $dir_id = DB::table('media')
                 ->where('mime_type', '=', $mime_type)
