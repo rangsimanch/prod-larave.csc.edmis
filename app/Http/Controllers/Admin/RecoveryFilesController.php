@@ -172,7 +172,7 @@ class RecoveryFilesController extends Controller
                     rename($defualt_file, $rename_file);
                     Log::alert($dir_id[0] . " | " . $original_name[0]);
                     if(!file_exists(storage_path("/" . "public" . "/" . $dir_id[0]))){
-                        Storage::disk('local')->putFileAs("/" . "public" . "/" . $dir_id[0],  file_get_contents($rename_file), $original_name[0]);
+                        Storage::disk('local')->putFileAs("/" . "public" . "/" . $dir_id[0], $rename_file, file_get_contents($original_name[0]));
                         File::delete($rename_file);
                         $success_file .= substr($filename, 14) . ", ";
                         $original_file .= $original_name[0] . ", ";
