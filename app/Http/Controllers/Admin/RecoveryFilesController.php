@@ -162,7 +162,7 @@ class RecoveryFilesController extends Controller
                 if(!file_exists(storage_path("/" . "public" . "/" . $dir_id[0]))){
                     Storage::disk('local')->putFileAs("/" . "public" . "/" . $dir_id[0], $rename_file, $original_name[0]);
                     File::delete($rename_file);
-                    $success_file .= $filename . ", ";
+                    $success_file .= substr($filename, 14) . ", ";
                     $original_file .= $original_name[0] . ", ";
                 }
                 
@@ -170,7 +170,7 @@ class RecoveryFilesController extends Controller
             else{
                 $defualt_file = storage_path('tmp/uploads/' . basename($file));
                 File::delete($defualt_file);
-                $fail_file .= $filename . ", ";
+                $fail_file .= substr($filename, 14) . ", ";
             }
         }
         $data = $request->all();
