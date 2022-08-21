@@ -27,6 +27,14 @@
                                 </tr>
                                 <tr>
                                     <th>
+                                        {{ trans('cruds.recoveryFile.fields.dir_name') }}
+                                    </th>
+                                    <td>
+                                        {{ $recoveryFile->dir_name }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
                                         {{ trans('cruds.recoveryFile.fields.recovery_success') }}
                                     </th>
                                     <td>

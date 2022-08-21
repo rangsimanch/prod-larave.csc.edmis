@@ -30,6 +30,7 @@ class RecoveryFile extends Model implements HasMedia
     ];
 
     protected $fillable = [
+        'dir_name',
         'recovery_success',
         'recovery_fail',
         'created_at',

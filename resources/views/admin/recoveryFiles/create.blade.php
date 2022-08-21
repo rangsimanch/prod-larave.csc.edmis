@@ -11,6 +11,15 @@
                 <div class="panel-body">
                     <form method="POST" action="{{ route("admin.recovery-files.store") }}" enctype="multipart/form-data">
                         @csrf
+                        <div class="form-group {{ $errors->has('dir_name') ? 'has-error' : '' }}">
+                            <label class="required" for="dir_name">{{ trans('cruds.recoveryFile.fields.dir_name') }}</label>
+                            <input class="form-control" type="text" name="dir_name" id="dir_name" value="{{ old('dir_name', '') }}" required>
+                            @if($errors->has('dir_name'))
+                                <span class="help-block" role="alert">{{ $errors->first('dir_name') }}</span>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.recoveryFile.fields.dir_name_helper') }}</span>
+                        </div>
+                        
                         <div class="form-group {{ $errors->has('recovery_file') ? 'has-error' : '' }}">
                             <label for="recovery_file">{{ trans('cruds.recoveryFile.fields.recovery_file') }}</label>
                             <div class="needsclick dropzone" id="recovery_file-dropzone">

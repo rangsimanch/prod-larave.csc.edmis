@@ -49,6 +49,10 @@ class RecoveryFilesController extends Controller
             ));
             });
 
+            $table->editColumn('dir_name', function ($row) {
+                return $row->dir_name ? $row->dir_name : '';
+            });
+
             $table->editColumn('recovery_success', function ($row) {
                 return $row->recovery_success ? $row->recovery_success : '';
             });

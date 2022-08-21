@@ -2725,6 +2725,8 @@ return [
         'fields'         => [
             'id'                      => 'ID',
             'id_helper'               => ' ',
+            'dir_name'                => 'Dir Name',
+            'dir_name_helper'         => ' ',
             'recovery_success'        => 'Recovery Success',
             'recovery_success_helper' => ' ',
             'recovery_fail'           => 'Recovery Fail',

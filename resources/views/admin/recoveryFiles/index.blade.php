@@ -24,6 +24,9 @@
 
                                 </th>
                                 <th>
+                                    {{ trans('cruds.recoveryFile.fields.dir_name') }}
+                                </th>
+                                <th>
                                     {{ trans('cruds.recoveryFile.fields.recovery_success') }}
                                 </th>
                                 <th>
@@ -38,6 +41,9 @@
                             </tr>
                             <tr>
                                 <td>
+                                </td>
+                                <td>
+                                    <input class="search" type="text" placeholder="{{ trans('global.search') }}">
                                 </td>
                                 <td>
                                     <input class="search" type="text" placeholder="{{ trans('global.search') }}">
@@ -106,6 +112,7 @@
     ajax: "{{ route('admin.recovery-files.index') }}",
     columns: [
       { data: 'placeholder', name: 'placeholder' },
+{ data: 'dir_name', name: 'dir_name' },
 { data: 'recovery_success', name: 'recovery_success' },
 { data: 'recovery_fail', name: 'recovery_fail' },
 { data: 'created_at', name: 'created_at' },
