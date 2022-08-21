@@ -191,7 +191,7 @@ class RecoveryFilesController extends Controller
                             $rename_file = storage_path('tmp/uploads/' . $original_name[$index]);
                             rename($defualt_file, $rename_file);
                             copy($rename_file, storage_path('tmp/uploads/' . basename($file)));
-                            Storage::disk('local')->putFileAs("/" . "public" . "/" . $id,  $rename_file, file_get_contents($original_name[$index]));
+                            Storage::disk('local')->putFileAs("/" . "public" . "/" . $id,  $rename_file, $original_name[$index]);
                             $original_file .= $original_name[$index] . ", ";
                             Log::alert($id . " : Add Success");
                             array_push($is_success,"true");
@@ -228,7 +228,7 @@ class RecoveryFilesController extends Controller
                                     $rename_file = storage_path('tmp/uploads/' . $original_name[$index]);
                                     rename($defualt_file, $rename_file);
                                     copy($rename_file, storage_path('tmp/uploads/' . basename($file)));
-                                    Storage::disk('local')->putFileAs("/" . "public" . "/" . $id,  file_get_contents($rename_file), $original_name[$index]);
+                                    Storage::disk('local')->putFileAs("/" . "public" . "/" . $id,  $rename_file, $original_name[$index]);
                                     $original_file .= $original_name[$index] . ", ";
                                     Log::alert($id . " : Add Success");
                                     array_push($is_success,"true");
