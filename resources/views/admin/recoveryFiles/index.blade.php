@@ -36,6 +36,9 @@
                                     {{ trans('cruds.recoveryFile.fields.recovery_fail') }}
                                 </th>
                                 <th>
+                                    {{ trans('cruds.recoveryFile.fields.file_counter') }}
+                                </th>
+                                <th>
                                     {{ trans('cruds.recoveryFile.fields.created_at') }}
                                 </th>
                                 <th>
@@ -44,6 +47,9 @@
                             </tr>
                             <tr>
                                 <td>
+                                </td>
+                                <td>
+                                    <input class="search" type="text" placeholder="{{ trans('global.search') }}">
                                 </td>
                                 <td>
                                     <input class="search" type="text" placeholder="{{ trans('global.search') }}">
@@ -122,6 +128,7 @@
 { data: 'original_name', name: 'original_name' },
 { data: 'recovery_success', name: 'recovery_success' },
 { data: 'recovery_fail', name: 'recovery_fail' },
+{ data: 'file_counter', name: 'file_counter' },
 { data: 'created_at', name: 'created_at' },
 { data: 'actions', name: '{{ trans('global.actions') }}' }
     ],

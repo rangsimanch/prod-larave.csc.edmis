@@ -2735,6 +2735,7 @@ return [
             'recovery_fail_helper'    => ' ',
             'recovery_file'           => 'Recovery File',
             'recovery_file_helper'    => ' ',
+            'file_counter'            => 'Success Count',
             'created_at'              => 'Created at',
             'created_at_helper'       => ' ',
             'updated_at'              => 'Updated at',

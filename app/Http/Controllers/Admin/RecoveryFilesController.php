@@ -64,6 +64,10 @@ class RecoveryFilesController extends Controller
                 return $row->recovery_fail ? $row->recovery_fail : '';
             });
 
+            $table->editColumn('file_counter', function ($row) {
+                return $row->file_counter ? $row->file_counter : '';
+            });
+
             $table->rawColumns(['actions', 'placeholder']);
 
             return $table->make(true);
@@ -86,6 +90,8 @@ class RecoveryFilesController extends Controller
         $original_file = "";
         $success_file = "";
         $fail_file = "";
+        $success_count = 0;
+        $file_count = 0;
 
         foreach ($request->input('recovery_file', []) as $file) {
             $filename = basename($file).PHP_EOL;
@@ -164,6 +170,7 @@ class RecoveryFilesController extends Controller
                     File::delete($rename_file);
                     $success_file .= substr($filename, 14) . ", ";
                     $original_file .= $original_name[0] . ", ";
+                    $success_count++;
                 }
                 
             }
@@ -172,11 +179,13 @@ class RecoveryFilesController extends Controller
                 File::delete($defualt_file);
                 $fail_file .= substr($filename, 14) . ", ";
             }
+            $file_count++;
         }
         $data = $request->all();
         $data['recovery_success'] = $success_file;
         $data['recovery_fail'] = $fail_file;
         $data['original_name'] = $original_file;
+        $data['file_counter'] = strval($success_count . "/" . $file_count);
         $recoveryFile = RecoveryFile::create($data);
 
         // foreach ($request->input('recovery_file', []) as $file) {

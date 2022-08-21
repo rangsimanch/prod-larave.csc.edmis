@@ -34,6 +34,7 @@ class RecoveryFile extends Model implements HasMedia
         'original_name',
         'recovery_success',
         'recovery_fail',
+        'file_counter',
         'created_at',
         'updated_at',
         'deleted_at',
