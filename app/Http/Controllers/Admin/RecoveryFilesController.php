@@ -192,7 +192,6 @@ class RecoveryFilesController extends Controller
                             rename($defualt_file, $rename_file);
                             copy($rename_file, storage_path('tmp/uploads/' . basename($file)));
                             Storage::disk('local')->putFileAs("/" . "public" . "/" . $id, $rename_file, $original_name[$index]);
-                            $success_file .= substr($filename, 14) . ", ";
                             $original_file .= $original_name[$index] . ", ";
                             Log::alert($id . " : Add Success");
                             array_push($is_success,"true");
@@ -203,6 +202,7 @@ class RecoveryFilesController extends Controller
                         $index++;
                     }
                     if (in_array("true", $is_success)){
+                        $success_file .= substr($filename, 14) . ", ";
                         $success_count++;
                     }
                     File::delete($rename_file);
@@ -221,18 +221,16 @@ class RecoveryFilesController extends Controller
                         if (count(array_flip($name_check)) === 1 && end($name_check) === 'true') {
                             $index = 0;
                             $is_success = array();
-
-                            $defualt_file = storage_path('tmp/uploads/' . basename($file));
-                            foreach($dir_id as $id){
-                                $rename_file = storage_path('tmp/uploads/' . $original_name[$index]);
-                                rename($defualt_file, $rename_file);
+                            foreach($dir_id as $id){    
+                                $defualt_file = storage_path('tmp/uploads/' . basename($file));
                                 Log::alert($id . " | " . $original_name[$index]);
                                 if(!file_exists(storage_path("/" . "public" . "/" . $id))){
+                                    $rename_file = storage_path('tmp/uploads/' . $original_name[$index]);
+                                    rename($defualt_file, $rename_file);
+                                    copy($rename_file, storage_path('tmp/uploads/' . basename($file)));
                                     Storage::disk('local')->putFileAs("/" . "public" . "/" . $id, $rename_file, $original_name[$index]);
-                                    $success_file .= substr($filename, 14) . ", ";
                                     $original_file .= $original_name[$index] . ", ";
                                     Log::alert($id . " : Add Success");
-                                    $defualt_file = $rename_file;
                                     array_push($is_success,"true");
                                 }
                                 else{
@@ -240,10 +238,12 @@ class RecoveryFilesController extends Controller
                                 }
                                 $index++;
                             }
-                            File::delete($rename_file);
                             if (in_array("true", $is_success)){
+                                $success_file .= substr($filename, 14) . ", ";
                                 $success_count++;
                             }
+                            File::delete($rename_file);
+                            File::delete($defualt_file);
                         }else{
                             $fail_file .= substr($filename, 14) . ", ";
                         }
@@ -251,7 +251,6 @@ class RecoveryFilesController extends Controller
                         $fail_file .= substr($filename, 14) . ", ";
                     }
                 }
-                
             }
             else{
                 $defualt_file = storage_path('tmp/uploads/' . basename($file));
