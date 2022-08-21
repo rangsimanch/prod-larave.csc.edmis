@@ -150,7 +150,7 @@ class RecoveryFilesController extends Controller
             }
             $size = filesize(storage_path('tmp/uploads/' . basename($file)));
 
-            Log::alert("File MS = " . $extension . " | " . $size . " | " . $mime_type);
+            // Log::alert("File MS = " . $extension . " | " . $size . " | " . $mime_type);
 
             $dir_id = DB::table('media')
                 ->where('mime_type', '=', $mime_type)
@@ -160,17 +160,78 @@ class RecoveryFilesController extends Controller
                 ->where('mime_type', '=', $mime_type)
                 ->where('size', '=', $size)
                 ->pluck('file_name')->toArray();
+            $model_type = DB::table('media')
+                ->where('mime_type', '=', $mime_type)
+                ->where('size', '=', $size)
+                ->pluck('model_type')->toArray();
 
-            if(count($dir_id) == 1){
-                $defualt_file = storage_path('tmp/uploads/' . basename($file));
-                $rename_file = storage_path('tmp/uploads/' . $original_name[0]);
-                rename($defualt_file, $rename_file);
-                if(!file_exists(storage_path("/" . "public" . "/" . $dir_id[0]))){
-                    Storage::disk('local')->putFileAs("/" . "public" . "/" . $dir_id[0], $rename_file, $original_name[0]);
-                    File::delete($rename_file);
-                    $success_file .= substr($filename, 14) . ", ";
-                    $original_file .= $original_name[0] . ", ";
-                    $success_count++;
+            if(count($dir_id) > 1){
+                if(count($dir_id) == 1){
+                    $defualt_file = storage_path('tmp/uploads/' . basename($file));
+                    $rename_file = storage_path('tmp/uploads/' . $original_name[0]);
+                    rename($defualt_file, $rename_file);
+                    Log::alert($dir_id[0] . " | " . $original_name[0]);
+                    if(!file_exists(storage_path("/" . "public" . "/" . $dir_id[0]))){
+                        Storage::disk('local')->putFileAs("/" . "public" . "/" . $dir_id[0], $rename_file, $original_name[0]);
+                        File::delete($rename_file);
+                        $success_file .= substr($filename, 14) . ", ";
+                        $original_file .= $original_name[0] . ", ";
+                        $success_count++;
+                        Log::alert($dir_id[0] . " : Add Success");
+                    }
+                }
+
+                if(count($dir_id) == 2){
+                    $index = 0;
+                    foreach($dir_id as $id){
+                        $defualt_file = storage_path('tmp/uploads/' . basename($file));
+                        $rename_file = storage_path('tmp/uploads/' . $original_name[$index]);
+                        rename($defualt_file, $rename_file);
+                        Log::alert($id . " | " . $original_name[$index]);
+                        if(!file_exists(storage_path("/" . "public" . "/" . $id))){
+                            Storage::disk('local')->putFileAs("/" . "public" . "/" . $id, $rename_file, $original_name[$index]);
+                            File::delete($rename_file);
+                            $success_file .= substr($filename, 14) . ", ";
+                            $original_file .= $original_name[$index] . ", ";
+                            $success_count++;
+                            Log::alert($id . " : Add Success");
+                        }
+                        $index++;
+                    }
+                }
+
+                if(count($dir_id) > 2){
+                    $name_check = $original_name;
+                    if (count(array_flip($model_type)) === 1 && end($model_type) === 'true') {
+                        $index = 0;
+                        foreach($name_check as $name){
+                            $name_array = explode("_", $name);
+                            $name_check[$index] = $name_array[1];
+                            $index++;
+                        }
+                        if (count(array_flip($name_check)) === 1 && end($name_check) === 'true') {
+                            $index = 0;
+                            foreach($dir_id as $id){
+                                $defualt_file = storage_path('tmp/uploads/' . basename($file));
+                                $rename_file = storage_path('tmp/uploads/' . $original_name[$index]);
+                                rename($defualt_file, $rename_file);
+                                Log::alert($id . " | " . $original_name[$index]);
+                                if(!file_exists(storage_path("/" . "public" . "/" . $id))){
+                                    Storage::disk('local')->putFileAs("/" . "public" . "/" . $id, $rename_file, $original_name[$index]);
+                                    File::delete($rename_file);
+                                    $success_file .= substr($filename, 14) . ", ";
+                                    $original_file .= $original_name[$index] . ", ";
+                                    $success_count++;
+                                    Log::alert($id . " : Add Success");
+                                }
+                                $index++;
+                            }
+                        }else{
+                            $fail_file .= substr($filename, 14) . ", ";
+                        }
+                    }else{
+                        $fail_file .= substr($filename, 14) . ", ";
+                    }
                 }
                 
             }
