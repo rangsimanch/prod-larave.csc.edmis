@@ -50,7 +50,7 @@
     var uploadedRecoveryFileMap = {}
 Dropzone.options.recoveryFileDropzone = {
     url: '{{ route('admin.recovery-files.storeMedia') }}',
-    maxFilesize: 10000, // MB
+    maxFilesize: 50000, // MB
     addRemoveLinks: true,
     headers: {
       'X-CSRF-TOKEN': "{{ csrf_token() }}"
