@@ -443,18 +443,6 @@ class TaskController extends Controller
                                 }
 
                                 if(in_array(pathinfo(public_path($task->attachment[$index]->getUrl()),PATHINFO_EXTENSION),$allowed)){
-                                    // $handle = var_export(get_headers($task->attachment[$index]->getUrl()), true);
-                                    // $file_status = substr($handle, 29,2);
-                                    
-                                    // if($file_status == "OK"){
-                                    //     $img = (string) Image::make($task->attachment[$index]->getPath())
-                                    //     ->orientate()->resize(null, 180, function ($constraint) {
-                                    //     $constraint->aspectRatio();})->encode('data-url');
-                                        
-                                    //     $html .= "<img width=\"". $img_wh ."\" height=\"". $img_wh ."\" src=\"" 
-                                    //         . $img
-                                    //         . "\"> ";
-                                    // }
                                     $url = $task->attachment[$index]->getUrl();
                                     $handle = curl_init($url);
                                     curl_setopt($handle,  CURLOPT_RETURNTRANSFER, TRUE);
@@ -462,7 +450,7 @@ class TaskController extends Controller
                                     $httpCode = curl_getinfo($handle, CURLINFO_HTTP_CODE);
                                     curl_close($handle);
 
-                                    if($httpCode != 404){
+                                    if($httpCode != '404'){
                                         $img = (string) Image::make($task->attachment[$index]->getPath())
                                         ->orientate()->resize(null, 180, function ($constraint) {
                                         $constraint->aspectRatio();})->encode('data-url');
