@@ -158,7 +158,7 @@ img {
 { data: 'construction_contract_code', name: 'construction_contract.code' },
 { data: 'actions', name: '{{ trans('global.actions') }}' }
     ],
-    order: [[ 6, 'desc' ]],
+    order: [[ 5, 'desc' ]],
     pageLength: 10,
   };
   $('.datatable-Task').DataTable(dtOverrideGlobals);
