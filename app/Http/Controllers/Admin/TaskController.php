@@ -307,6 +307,13 @@ class TaskController extends Controller
             try {
                 $mpdf = new \Mpdf\Mpdf([
                     'tempDir' =>  public_path('tmp'), 
+                    'fontdata'     => [
+                        'sarabun_new' => [
+                            'R' => 'THSarabunNew.ttf',
+                            'B' => 'THSarabunNew Bold.ttf',
+                            'I' => 'THSarabunNew Italic.ttf',
+                        ],
+                    ],
                     'default_font' => 'sarabun_new'
                 ]);
               } catch (\Mpdf\MpdfException $e) {
