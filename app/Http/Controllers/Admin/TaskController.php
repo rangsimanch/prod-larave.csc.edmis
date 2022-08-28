@@ -22,6 +22,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Yajra\DataTables\Facades\DataTables;
 use App\ConstructionContract;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
+use File;
 
 //use Request;
 
@@ -450,19 +452,17 @@ class TaskController extends Controller
                                 }
 
                                 if(in_array(pathinfo(public_path($task->attachment[$index]->getUrl()),PATHINFO_EXTENSION),$allowed)){
-                                    $url = $task->attachment[$index]->getUrl();
-                                    // $url = $task->attachment[$index]->getPath();
+                                    $url =  url($task->attachment[$index]->getUrl());
+                                    Log::alert("Url is : " . $url);
                                     $handle = curl_init($url);
                                     curl_setopt($handle,  CURLOPT_RETURNTRANSFER, TRUE);
                                     $response = curl_exec($handle);
                                     $httpCode = curl_getinfo($handle, CURLINFO_HTTP_CODE);
-
-                                    $responseHeaders = get_headers($url, 1);
                                     curl_close($handle);
 
-
-                                    Log::alert("Responcese Header = " . $url[0]);
-
+                                    Log::alert("Http Code : " . $httpCode);
+                                    
+                                    
                                     if($httpCode != 404){
                                         try{
                                             $url_path = $task->attachment[$index]->getPath();
