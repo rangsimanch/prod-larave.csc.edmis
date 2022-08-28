@@ -452,31 +452,16 @@ class TaskController extends Controller
                                 if(in_array(pathinfo(public_path($task->attachment[$index]->getUrl()),PATHINFO_EXTENSION),$allowed)){
                                     $url = $task->attachment[$index]->getUrl();
                                     // $url = $task->attachment[$index]->getPath();
-                                    // $handle = curl_init($url);
-                                    // curl_setopt($handle,  CURLOPT_RETURNTRANSFER, TRUE);
-                                    // $response = curl_exec($handle);
-                                    // $httpCode = curl_getinfo($handle, CURLINFO_HTTP_CODE);
-                                    // curl_close($handle);
+                                    $handle = curl_init($url);
+                                    curl_setopt($handle,  CURLOPT_RETURNTRANSFER, TRUE);
+                                    $response = curl_exec($handle);
+                                    $httpCode = curl_getinfo($handle, CURLINFO_HTTP_CODE);
 
-                                    $ch = curl_init();
-                                    $options = array(
-                                        CURLOPT_URL            => $url,
-                                        CURLOPT_RETURNTRANSFER => true,
-                                        CURLOPT_HEADER         => true,
-                                        CURLOPT_FOLLOWLOCATION => true,
-                                        CURLOPT_ENCODING       => "",
-                                        CURLOPT_AUTOREFERER    => true,
-                                        CURLOPT_CONNECTTIMEOUT => 120,
-                                        CURLOPT_TIMEOUT        => 120,
-                                        CURLOPT_MAXREDIRS      => 10,
-                                    );
-                                    curl_setopt_array( $ch, $options );
-                                    $response = curl_exec($ch); 
-                                    $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-                                    curl_close($ch);
+                                    $responseHeaders = get_headers($url, 1);
+                                    curl_close($handle);
 
-                                    Log::alert("URL = " . $url);
-                                    Log::alert("HTTP CODE = " . $httpCode);
+
+                                    Log::alert("Responcese Header = " . $url[0]);
 
                                     if($httpCode != 404){
                                         try{
