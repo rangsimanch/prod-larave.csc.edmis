@@ -1627,12 +1627,19 @@ class RfaController extends Controller
                 try {
                     $mpdf = new \Mpdf\Mpdf([
                         'tempDir' =>  public_path('tmp'), 
+                        'fontdata'     => $fontData + [
+                            'bentonsans' => [
+                                'R' => 'THSarabunNew.ttf',
+                                'B' => 'THSarabunNew Bold.ttf',
+                                'I' => 'THSarabunNew Italic.ttf',
+                            ],
+                        ],
                         'default_font' => 'sarabun_new',
                         // 'mode' => '+aCJK',
                         // "autoScriptToLang" => true,
                         // "autoLangToFont" => true,
                         // "allow_charset_conversion" => true,
-                        "charset_in" => 'UTF-8',
+                        // "charset_in" => 'UTF-8',
                     ]);
                   } catch (\Mpdf\MpdfException $e) {
                       print "Creating an mPDF object failed with" . $e->getMessage();
