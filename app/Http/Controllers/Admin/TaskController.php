@@ -460,7 +460,7 @@ class TaskController extends Controller
 
                                     Log::alert("HTTPCODE = " . $httpCode);
 
-                                    if($httpCode != 404){
+                                    if($httpCode != 404 || $httpCode != 0){
                                         try{
                                             $img = (string) Image::make($url);
                                             $img->orientate()->resize(null, 180, function ($constraint) {
