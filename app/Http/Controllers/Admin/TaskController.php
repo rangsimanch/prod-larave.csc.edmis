@@ -397,10 +397,21 @@ class TaskController extends Controller
                 $html .= "<div style=\"font-weight: bold; font-size: 20px; position:absolute;top:155px;left:300px;\">Wind : ". $wind ."</div>";
                 $html .= "<div style=\"font-weight: bold; font-size: 20px; position:absolute;top:155px;left:500px;\">Temperature : ". $temperature  ." °C</div>";
                 $html .= "<div style=\"font-weight: bold; font-size: 20px; position:absolute;top:990;left:580px;\">(". $recordby  .")</div>";
+                
                 if(!is_null($task->create_by_user->signature)){
-                    $html .= "<div style=\"font-weight: bold; position:absolute;top:930;left:630px;\">
-                            <img width=\"60%\" height=\"60%\" src=\"" . $task->create_by_user->signature->getPath()
-                            . "\"></div>";
+                    $url =  url($task->create_by_user->signature->getUrl());
+                    $handle = curl_init($url);
+                    curl_setopt($handle,  CURLOPT_RETURNTRANSFER, TRUE);
+                    $response = curl_exec($handle);
+                    $httpCode = curl_getinfo($handle, CURLINFO_HTTP_CODE);
+                    curl_close($handle);
+                    
+                    
+                    if($httpCode != 404){
+                        $html .= "<div style=\"font-weight: bold; position:absolute;top:930;left:630px;\">
+                                <img width=\"60%\" height=\"60%\" src=\"" . $task->create_by_user->signature->getPath()
+                                . "\"></div>";
+                    }
                 }
                 
                 $mpdf->SetHTMLHeader($html,'0',true);
