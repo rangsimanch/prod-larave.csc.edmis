@@ -476,6 +476,7 @@ class TaskController extends Controller
                                     curl_close($ch);
 
                                     Log::alert("URL = " . $url);
+                                    Log::alert("HTTP CODE = " . $httpCode);
 
                                     if($httpCode != 404){
                                         try{
