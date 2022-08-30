@@ -601,7 +601,7 @@ class SwnController extends Controller
             for($index = 0; $index < $count_image; $index++){
                 try{
                     $allowed = array('gif', 'png', 'jpg', 'jpeg', 'JPG', 'JPEG', 'PNG');
-                    $url = $swn->description_image[$index]->getUrl();
+                    $url =  url($swn->description_image[$index]->getUrl());
                     $handle = curl_init($url);
                     curl_setopt($handle,  CURLOPT_RETURNTRANSFER, TRUE);
                     $response = curl_exec($handle);
@@ -629,7 +629,7 @@ class SwnController extends Controller
         $mpdf->SetDocTemplate(""); 
         foreach($swn->document_attachment as $attachment){ 
             try{
-                $url = $attachment->getUrl();
+                $url = url($attachment->getUrl());
                 $handle = curl_init($url);
                 curl_setopt($handle,  CURLOPT_RETURNTRANSFER, TRUE);
                 $response = curl_exec($handle);

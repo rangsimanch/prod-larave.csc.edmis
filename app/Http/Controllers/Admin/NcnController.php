@@ -494,19 +494,29 @@ class NcnController extends Controller
             $footer_text = "<div style=\"text-align: right; font-size:18px; font-weight: bold;\">" . $document_number . "</div>";
             $mpdf->AddPage('P','','','','','','',50,55);
             $mpdf->SetHTMLFooter($footer_text);
+
+            
             for($index = 0; $index < $count_image; $index++){
                 try{
                     $allowed = array('gif', 'png', 'jpg', 'jpeg', 'JPG', 'JPEG', 'PNG');
-                    if(in_array(pathinfo(public_path($ncn->description_image[$index]->getUrl()),PATHINFO_EXTENSION),$allowed)){
-                                            
-                        $img = (string) Image::make($ncn->description_image[$index]->getPath())->orientate()->resize(null, 180, function ($constraint) {
-                            $constraint->aspectRatio();
-                        })
-                        ->encode('data-url');
+                    $url =  url($ncn->description_image[$index]->getUrl());
+                    $handle = curl_init($url);
+                    curl_setopt($handle,  CURLOPT_RETURNTRANSFER, TRUE);
+                    $response = curl_exec($handle);
+                    $httpCode = curl_getinfo($handle, CURLINFO_HTTP_CODE);
+                    curl_close($handle);
+                    if($httpCode != 404){
+                        if(in_array(pathinfo(public_path($ncn->description_image[$index]->getUrl()),PATHINFO_EXTENSION),$allowed)){
+                                                
+                            $img = (string) Image::make($ncn->description_image[$index]->getPath())->orientate()->resize(null, 180, function ($constraint) {
+                                $constraint->aspectRatio();
+                            })
+                            ->encode('data-url');
 
-                        $html .= "<img style=\"padding-left:90px; padding-top:100px\" width=\"". "30%" ."\" height=\"". "30%" ."\" src=\"" 
-                            . $img
-                            . "\">  ";
+                            $html .= "<img style=\"padding-left:90px;\" width=\"". "30%" ."\" height=\"". "30%" ."\" src=\"" 
+                                . $img
+                                . "\">  ";
+                        }
                     }
                 }catch(Exception $e){
                     print "Creating an mPDF object failed with" . $e->getMessage();
@@ -537,11 +547,19 @@ class NcnController extends Controller
         foreach($ncrs as $ncr){
             foreach($ncr->file_attachment as $attachment){
                 try{
-                    $pagecount = $mpdf->SetSourceFile($attachment->getPath());
-                    for($page = 1; $page <= $pagecount; $page++){
-                        $mpdf->AddPage();
-                        $tplId = $mpdf->importPage($page);
-                        $mpdf->UseTemplate($tplId);
+                    $url = url($attachment->getUrl());
+                    $handle = curl_init($url);
+                    curl_setopt($handle,  CURLOPT_RETURNTRANSFER, TRUE);
+                    $response = curl_exec($handle);
+                    $httpCode = curl_getinfo($handle, CURLINFO_HTTP_CODE);
+                    curl_close($handle);
+                    if($httpCode != 404){
+                        $pagecount = $mpdf->SetSourceFile($attachment->getPath());
+                        for($page = 1; $page <= $pagecount; $page++){
+                            $mpdf->AddPage();
+                            $tplId = $mpdf->importPage($page);
+                            $mpdf->UseTemplate($tplId);
+                        }
                     }         
                 }catch(exeption $e){
                     print "Creating an mPDF object failed with" . $e->getMessage();
