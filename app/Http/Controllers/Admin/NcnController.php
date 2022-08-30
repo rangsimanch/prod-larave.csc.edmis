@@ -531,7 +531,7 @@ class NcnController extends Controller
 
         foreach($ncn->file_attachment as $attacment){ 
             try{
-                $url =  url($attachment->getUrl());
+                $url =  url($attacment->getUrl());
                 $handle = curl_init($url);
                 curl_setopt($handle,  CURLOPT_RETURNTRANSFER, TRUE);
                 $response = curl_exec($handle);
