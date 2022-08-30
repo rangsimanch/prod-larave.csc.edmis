@@ -531,12 +531,20 @@ class NcnController extends Controller
 
         foreach($ncn->file_attachment as $attacment){ 
             try{
-                $pagecount = $mpdf->SetSourceFile($attacment->getPath());
-                for($page = 1; $page <= $pagecount; $page++){
-                    $mpdf->AddPage();
-                    $tplId = $mpdf->importPage($page);
-                    $mpdf->UseTemplate($tplId);
-                }         
+                $url =  url($attachment->getUrl());
+                $handle = curl_init($url);
+                curl_setopt($handle,  CURLOPT_RETURNTRANSFER, TRUE);
+                $response = curl_exec($handle);
+                $httpCode = curl_getinfo($handle, CURLINFO_HTTP_CODE);
+                curl_close($handle);
+                if($httpCode != 404){
+                    $pagecount = $mpdf->SetSourceFile($attacment->getPath());
+                    for($page = 1; $page <= $pagecount; $page++){
+                        $mpdf->AddPage();
+                        $tplId = $mpdf->importPage($page);
+                        $mpdf->UseTemplate($tplId);
+                    }         
+                }
             }catch(exeption $e){
                 print "Creating an mPDF object failed with" . $e->getMessage();
             }
