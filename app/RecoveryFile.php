@@ -13,7 +13,6 @@ use Spatie\MediaLibrary\Models\Media;
 class RecoveryFile extends Model implements HasMedia
 {
     use SoftDeletes;
-    use MultiTenantModelTrait;
     use HasMediaTrait;
     use Auditable;
 
