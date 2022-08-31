@@ -62,7 +62,21 @@ Dropzone.options.recoveryFileDropzone = {
       $('form').append('<input type="hidden" name="recovery_file[]" value="' + response.name + '">')
       uploadedRecoveryFileMap[file.name] = response.name
     },
+    renameFile: function (file) {
+        let fileName = file.name;
+        const lastDot = fileName.lastIndexOf('.');
+        const strLength = fileName.length;
+        const ext = fileName.substring(lastDot + 1);
 
+        if(strLength > 70){
+            newName = fileName.substring(0, 70);
+            result = fileName + '.' + ext;
+        }
+        else{
+            result = fileName;
+        }
+        return result;
+    },
     removedfile: function (file) {
       file.previewElement.remove()
       var name = ''
