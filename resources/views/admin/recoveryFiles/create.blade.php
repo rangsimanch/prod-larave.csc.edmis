@@ -62,6 +62,10 @@ Dropzone.options.recoveryFileDropzone = {
       $('form').append('<input type="hidden" name="recovery_file[]" value="' + response.name + '">')
       uploadedRecoveryFileMap[file.name] = response.name
     },
+    renameFile: function (file) {
+        let newName = file.name;
+        return newName.substr(0,50);
+    },
     removedfile: function (file) {
       file.previewElement.remove()
       var name = ''
@@ -100,6 +104,7 @@ Dropzone.options.recoveryFileDropzone = {
 
          return _results
      }
+     
 }
 </script>
 @endsection
