@@ -47,6 +47,10 @@
 
 @section('scripts')
 <script>
+    String.prototype.replaceAt = function(index, replacement) {
+        return this.substring(0, index) + replacement + this.substring(index + replacement.length);
+    }
+
     var uploadedRecoveryFileMap = {}
 Dropzone.options.recoveryFileDropzone = {
     url: '{{ route('admin.recovery-files.storeMedia') }}',
@@ -70,8 +74,12 @@ Dropzone.options.recoveryFileDropzone = {
         var ext = fileName.substring(lastDot + 1);
 
         if(strLength > 50){
-            newName = fileName.substring(0, 50);
-            name = fileName + '.' + ext;
+        newName = fileName.substring(0, 50);
+        lastSpace = newName.lastIndexOf(' ');
+        if(lastSpace === 49){
+            newName = newName.replaceAt(49,"_");
+        }
+        name = newName + '.' + ext;
         }
         else{
             name = fileName;
