@@ -153,18 +153,22 @@ class RecoveryFilesController extends Controller
             $dir_id = DB::table('media')
                 ->where('mime_type', '=', $mime_type)
                 ->where('size', '=', $size)
+                ->where('updated_at', '<', '2022-08-18')
                 ->pluck('id')->toArray();
             $original_name = DB::table('media')
                 ->where('mime_type', '=', $mime_type)
                 ->where('size', '=', $size)
+                ->where('updated_at', '<', '2022-08-18')
                 ->pluck('file_name')->toArray();
             $model_type = DB::table('media')
                 ->where('mime_type', '=', $mime_type)
                 ->where('size', '=', $size)
+                ->where('updated_at', '<', '2022-08-18')
                 ->pluck('model_type')->toArray();
             $model_id = DB::table('media')
                 ->where('mime_type', '=', $mime_type)
                 ->where('size', '=', $size)
+                ->where('updated_at', '<', '2022-08-18')
                 ->pluck('model_id')->toArray();
 
             Log::alert("File MS = " . $extension . " | " . $size . " | " . $mime_type . " | Data amount : " . count($dir_id));
