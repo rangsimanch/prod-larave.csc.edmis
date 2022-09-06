@@ -1,5 +1,6 @@
 @extends('layouts.admin')
 @section('content')
+
 <div class="content">
     @can('rfa_create')
         <div style="margin-bottom: 10px;" class="row">
@@ -209,6 +210,7 @@
 @section('scripts')
 @parent
 <script>
+    
     $(function () {
   let dtButtons = $.extend(true, [], $.fn.dataTable.defaults.buttons)
 @can('rfa_delete')
@@ -313,7 +315,7 @@ table.on('column-visibility.dt', function(e, settings, column, state) {
             .search($(this).val())
             .draw();
         });
-
+        
         $.fn.dataTable.ext.errMode = 'throw';
 });
 
