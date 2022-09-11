@@ -93,7 +93,7 @@ class RecoveryFilesController extends Controller
         $success_count = 0;
         $file_count = 0;
         $prefix_folder = "recup_dir.";
-        $number_of_folder = str($request["dir_name"]);
+        $number_of_folder = (string) $request["dir_name"];
         $numberFolder = (int) $number_of_folder;
         $f_start_date = '2020-01-01';
         $f_end_date = '2022-08-18';
