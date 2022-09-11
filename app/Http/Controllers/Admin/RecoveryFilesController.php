@@ -99,20 +99,20 @@ class RecoveryFilesController extends Controller
         $f_end_date = '2022-08-18';
 
         if($numberFolder >= 3500){
-            $f_start_date = '2022-05-01';
+            $f_start_date = '2022-03-01';
             $f_end_date = '2022-08-18';
         }
         if($number_of_folder >= 2000 && $number_of_folder < 3500){
-            $f_start_date = '2021-10-01';
-            $f_end_date = '2022-06-31';
+            $f_start_date = '2021-06-01';
+            $f_end_date = '2022-07-31';
         }
         if($number_of_folder >= 1000 && $number_of_folder < 2000){
-            $f_start_date = '2021-06-01';
-            $f_end_date = '2021-11-31';
+            $f_start_date = '2021-05-01';
+            $f_end_date = '2022-01-31';
         }
         if($number_of_folder >= 1 && $number_of_folder < 1000){
             $f_start_date = '2020-01-01';
-            $f_end_date = '2021-07-31';
+            $f_end_date = '2021-12-31';
         }
         foreach ($request->input('recovery_file', []) as $file) {
             $filename = basename($file).PHP_EOL;
