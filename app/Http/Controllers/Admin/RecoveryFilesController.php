@@ -296,6 +296,7 @@ class RecoveryFilesController extends Controller
             $file_count++;
         }
         $data = $request->all();
+        $data['dir_name'] = $prefix_folder . $number_of_folder;
         $data['recovery_success'] = $success_file;
         $data['recovery_fail'] = $fail_file;
         $data['original_name'] = $original_file;
