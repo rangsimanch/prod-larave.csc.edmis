@@ -3,7 +3,6 @@
 
 <style type="text/css">
 
-
 .pic
 {
      margin-top:50px; 
@@ -340,8 +339,12 @@
     <script src="https://unpkg.com/jspdf@latest/dist/jspdf.min.js"></script>
     
     {{-- DataTable Add-on --}}
+        {{-- Fixed Header --}}
     <link href="https://cdn.datatables.net/fixedheader/3.2.4/css/fixedHeader.dataTables.css" rel="stylesheet" type="text/css" />
     <script src="https://cdn.datatables.net/fixedheader/3.2.4/js/dataTables.fixedHeader.js"></script>
+        {{-- Fixed Column --}}
+    <link href="https://cdn.datatables.net/fixedcolumns/4.1.0/css/fixedColumns.dataTables.min.css" rel="stylesheet" type="text/css" />
+    <script src="https://cdn.datatables.net/fixedcolumns/4.1.0/js/dataTables.fixedColumns.min.js"></script>
 
 
 
@@ -372,6 +375,7 @@
         $(".fixedHeader-floating").scrollLeft( $(this).scrollLeft() );
     }
 });
+
 
   $.extend(true, $.fn.dataTable.Buttons.defaults.dom.button, { className: 'btn' })
   $.extend(true, $.fn.dataTable.defaults, {

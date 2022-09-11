@@ -13,7 +13,10 @@
                         @csrf
                         <div class="form-group {{ $errors->has('dir_name') ? 'has-error' : '' }}">
                             <label class="required" for="dir_name">{{ trans('cruds.recoveryFile.fields.dir_name') }}</label>
-                            <input class="form-control" type="text" name="dir_name" id="dir_name" value="{{ old('dir_name', '') }}" required>
+                            <div class="input-group">
+                                <span class="input-group-addon">recup_dir.</span>
+                                <input class="form-control" type="number" name="dir_name" id="dir_name" value="{{ old('dir_name', '') }}" required placeholder="เลขที่โฟลเดอร์">
+                            </div>
                             @if($errors->has('dir_name'))
                                 <span class="help-block" role="alert">{{ $errors->first('dir_name') }}</span>
                             @endif

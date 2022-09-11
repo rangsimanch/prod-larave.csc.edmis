@@ -92,7 +92,28 @@ class RecoveryFilesController extends Controller
         $fail_file = "";
         $success_count = 0;
         $file_count = 0;
+        $prefix_folder = "recup_dir.";
+        $number_of_folder = str($request["dir_name"]);
+        $numberFolder = (int) $number_of_folder;
+        $f_start_date = '2020-01-01';
+        $f_end_date = '2022-08-18';
 
+        if($numberFolder >= 3500){
+            $f_start_date = '2022-05-01';
+            $f_end_date = '2022-08-18';
+        }
+        if($number_of_folder >= 2000 && $number_of_folder < 3500){
+            $f_start_date = '2021-10-01';
+            $f_end_date = '2022-06-31';
+        }
+        if($number_of_folder >= 1000 && $number_of_folder < 2000){
+            $f_start_date = '2021-06-01';
+            $f_end_date = '2021-11-31';
+        }
+        if($number_of_folder >= 1 && $number_of_folder < 1000){
+            $f_start_date = '2020-01-01';
+            $f_end_date = '2021-07-31';
+        }
         foreach ($request->input('recovery_file', []) as $file) {
             $filename = basename($file).PHP_EOL;
             $tmp_ext = explode('.', $filename);
@@ -153,22 +174,26 @@ class RecoveryFilesController extends Controller
             $dir_id = DB::table('media')
                 ->where('mime_type', '=', $mime_type)
                 ->where('size', '=', $size)
-                ->where('updated_at', '<', '2022-08-18')
+                ->where('created_at', '>=', $f_start_date)
+                ->where('created_at', '<', $f_end_date)
                 ->pluck('id')->toArray();
             $original_name = DB::table('media')
                 ->where('mime_type', '=', $mime_type)
                 ->where('size', '=', $size)
-                ->where('updated_at', '<', '2022-08-18')
+                ->where('created_at', '>=', $f_start_date)
+                ->where('created_at', '<', $f_end_date)
                 ->pluck('file_name')->toArray();
             $model_type = DB::table('media')
                 ->where('mime_type', '=', $mime_type)
                 ->where('size', '=', $size)
-                ->where('updated_at', '<', '2022-08-18')
+                ->where('created_at', '>=', $f_start_date)
+                ->where('created_at', '<', $f_end_date)
                 ->pluck('model_type')->toArray();
             $model_id = DB::table('media')
                 ->where('mime_type', '=', $mime_type)
                 ->where('size', '=', $size)
-                ->where('updated_at', '<', '2022-08-18')
+                ->where('created_at', '>=', $f_start_date)
+                ->where('created_at', '<', $f_end_date)
                 ->pluck('model_id')->toArray();
 
             Log::alert("File MS = " . $extension . " | " . $size . " | " . $mime_type . " | Data amount : " . count($dir_id));
