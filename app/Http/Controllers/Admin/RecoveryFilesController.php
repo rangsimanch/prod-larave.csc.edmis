@@ -216,14 +216,14 @@ class RecoveryFilesController extends Controller
                 }
 
                 if(count($dir_id) == 2){
-                    $index = 0;
-                    $name_check = $original_name;
-                    foreach($name_check as $name){
-                        $name_array = explode("_", $name);
-                        $name_check[$index] = $name_array[1];
-                        $index++;
-                    }
-                    if ((count(array_flip($name_check)) === 1 && end($name_check) === 'true') || (count(array_flip($model_id)) === 1 && end($model_id) === 'true')) {
+                    // $index = 0;
+                    // $name_check = $original_name;
+                    // foreach($name_check as $name){
+                    //     $name_array = explode("_", $name);
+                    //     $name_check[$index] = $name_array[1];
+                    //     $index++;
+                    // }
+                    // if ((count(array_flip($name_check)) === 1 && end($name_check) === 'true') || (count(array_flip($model_id)) === 1 && end($model_id) === 'true')) {
                         $index = 0;
                         $is_success = array();
                         foreach($dir_id as $id){    
@@ -245,9 +245,9 @@ class RecoveryFilesController extends Controller
                         $success_count++;
                         File::delete($rename_file);
                         File::delete($defualt_file);
-                    }else{
-                        $fail_file .= substr($filename, 14) . ", ";
-                    }
+                    // }else{
+                    //     $fail_file .= substr($filename, 14) . ", ";
+                    // }
                 }
 
                 if(count($dir_id) > 2){
