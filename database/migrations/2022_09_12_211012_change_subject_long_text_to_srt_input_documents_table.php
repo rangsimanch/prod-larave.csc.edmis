@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddDirNameToRecoveryFilesTable extends Migration
+class ChangeSubjectLongTextToSrtInputDocumentsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,10 @@ class AddDirNameToRecoveryFilesTable extends Migration
      */
     public function up()
     {
-        Schema::table('recovery_files', function (Blueprint $table) {
-            $table->string('dir_name');
+        Schema::table('srt_input_documents', function (Blueprint $table) {
+            //
+            $table->longText('subject')->change();
+
         });
     }
 }
