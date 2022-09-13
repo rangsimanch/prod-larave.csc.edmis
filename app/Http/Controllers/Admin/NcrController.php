@@ -142,10 +142,14 @@ class NcrController extends Controller
         if(Auth::id() != 1){
             $corresponding_ncns = Ncn::where('construction_contract_id', session('construction_contract_id'))
             ->where('documents_status', '1')
+            ->orWhere('documents_status', '4')
             ->pluck('document_number', 'id')->prepend(trans('global.pleaseSelect'), '');
         }   
         else{
-            $corresponding_ncns = Ncn::where('documents_status', '1')->pluck('document_number', 'id')->prepend(trans('global.pleaseSelect'), '');
+            $corresponding_ncns = Ncn::where('documents_status', '1')
+            -orWhere('documents_status', '4')
+            ->pluck('document_number', 'id')
+            ->prepend(trans('global.pleaseSelect'), '');
         }
 
         $prepared_bies = User::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
