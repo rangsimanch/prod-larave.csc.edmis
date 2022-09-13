@@ -33,7 +33,7 @@
                             <span class="help-block">{{ trans('cruds.recoveryFile.fields.recovery_file_helper') }}</span>
                         </div>
                         <div class="form-group">
-                            <button class="btn btn-danger" type="submit">
+                            <button class="btn btn-danger" type="submit" id="save" disabled>
                                 {{ trans('global.save') }}
                             </button>
                         </div>
@@ -50,6 +50,7 @@
 
 @section('scripts')
 <script>
+
     String.prototype.replaceAt = function(index, replacement) {
         return this.substring(0, index) + replacement + this.substring(index + replacement.length);
     }
@@ -64,6 +65,9 @@ Dropzone.options.recoveryFileDropzone = {
     },
     params: {
       size: 10000
+    },
+    queuecomplete: function (file){
+        document.getElementById("save").disabled = false;
     },
     success: function (file, response) {
       $('form').append('<input type="hidden" name="recovery_file[]" value="' + response.name + '">')
@@ -98,6 +102,11 @@ Dropzone.options.recoveryFileDropzone = {
         name = uploadedRecoveryFileMap[file.name]
       }
       $('form').find('input[name="recovery_file[]"][value="' + name + '"]').remove()
+
+      var count = this.getAcceptedFiles().length;
+        if(count === 0){
+            document.getElementById("save").disabled = true;   
+        }
     },
     init: function () {
 @if(isset($recoveryFile) && $recoveryFile->recovery_file)
