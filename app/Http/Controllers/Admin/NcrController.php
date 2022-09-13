@@ -147,7 +147,7 @@ class NcrController extends Controller
         }   
         else{
             $corresponding_ncns = Ncn::where('documents_status', '1')
-            -orWhere('documents_status', '4')
+            ->orWhere('documents_status', '4')
             ->pluck('document_number', 'id')
             ->prepend(trans('global.pleaseSelect'), '');
         }
