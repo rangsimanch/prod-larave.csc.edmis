@@ -129,7 +129,7 @@
     ],
     order: [[ 1, 'desc' ]],
     pageLength: 1,
-    sPaginationType: "listbox",
+    sPaginationType: "full_numbers",
   };
   $('.datatable-DailyConstructionActivity').DataTable(dtOverrideGlobals);
     $('a[data-toggle="tab"]').on('shown.bs.tab', function(e){
