@@ -477,8 +477,8 @@ class NcnController extends Controller
             $html .= "<div style=\"font-size: 10px; position:absolute;top:808px;left:520px\">" . $issue_date  . "</div>";
 
             $mpdf->SetHTMLHeader($html,'0',true);
-            $html = "<div style=\" padding-left: 80px; padding-right:40px; padding-bottom:-20px; \">";
-            $html .= "<div style=\"font-size: 12px; position:absolute;top:230px;left:105px;LINE-HEIGHT:15px;\">" . $description  . "</div>";
+            $html = "<div style=\" padding-left: 80px; padding-right:40px; padding-bottom:-40px; \">";
+            $html .= "<div style=\"font-size: 12px; position:absolute;top:220px;left:105px;LINE-HEIGHT:20px;\">" . $description  . "</div>";
             $html .= "</div>";
 
         }
