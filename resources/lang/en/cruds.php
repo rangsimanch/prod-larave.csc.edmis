@@ -2447,6 +2447,10 @@ return [
             'dept_code_helper'               => ' ',
             'auditing_status'                => 'Auditing Status',
             'auditing_status_helper'         => ' ',
+            'conditional_accepted'           => 'Conditional Accepted (Optional)',
+            'conditional_accepted_helper'    => ' ',
+            'conditional_file_upload'        => 'Conditional File Upload (Optional)',
+            'conditional_file_upload_helper' => ' ',
         ],
     ],
     'ncn' => [

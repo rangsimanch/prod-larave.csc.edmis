@@ -25,9 +25,10 @@ class Swn extends Model implements HasMedia
 
     public const DOCUMENTS_STATUS_SELECT = [
         '1' => 'New',
-        '2' => 'Reply',
-        '3' => 'Review',
+        '2' => 'Replied',
+        '3' => 'Reviewed',
         '4' => 'Done',
+        '5' => 'Required addition'
     ];
 
     public const REVIEW_STATUS_SELECT = [
@@ -62,6 +63,7 @@ class Swn extends Model implements HasMedia
         'containment_image',
         'corrective_image',
         'reply_document',
+        'conditional_file_upload',
     ];
 
     protected $fillable = [
@@ -87,6 +89,7 @@ class Swn extends Model implements HasMedia
         'leader_id',
         'auditing_status',
         'documents_status',
+        'conditional_accepted',
         'created_at',
         'updated_at',
         'deleted_at',
@@ -195,6 +198,11 @@ class Swn extends Model implements HasMedia
         });
 
         return $files;
+    }
+
+    public function getConditionalFileUploadAttribute()
+    {
+        return $this->getMedia('conditional_file_upload');
     }
 
     public function responsible()

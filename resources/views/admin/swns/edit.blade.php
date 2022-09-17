@@ -13,7 +13,7 @@
                         @method('PUT')
                         @csrf
 
-                        <legend><a onclick="HideSection(1)" id="element1"><i class="bi bi-eye"></i></a><b>  Section I : Warning Notice Details</b></legend>
+                        <legend><a onclick="HideSection(1)" id="element1"><i class="bi bi-eye"></i></a><b>  Section 1 : Warning Notice Details</b></legend>
                         <div id="section1">
                             <div class="form-group {{ $errors->has('construction_contract') ? 'has-error' : '' }}">
                                 <label class="required" for="construction_contract_id">{{ trans('cruds.swn.fields.construction_contract') }}</label>
@@ -150,7 +150,7 @@
                         </div>
                         
                         
-                        <legend><a onclick="HideSection(2)" id="element2"><i class="bi bi-eye"></i></a><b>  Section II : Responce & Corrective Action by Contractor / Review and Judgement by CSC</b></legend>
+                        <legend><a onclick="HideSection(2)" id="element2"><i class="bi bi-eye"></i></a><b>  Section 2 : Responce & Corrective Action by Contractor </b></legend>
                         <div id="section2">
                             
                             <div class="form-group {{ $errors->has('reply_document') ? 'has-error' : '' }}">
@@ -176,7 +176,11 @@
                                 @endif
                                 <span class="help-block">{{ trans('cruds.swn.fields.responsible_helper') }}</span>
                             </div>
+                           
+                        </div>
 
+                        <legend><a onclick="HideSection(3)" id="element3"><i class="bi bi-eye"></i></a><b>  Section 3 : Review and Judgement by CSC</b></legend>
+                        <div id="section3">
                             <div class="form-group {{ $errors->has('review_status') ? 'has-error' : '' }}">
                                 <label class="required">{{ trans('cruds.swn.fields.review_status') }}</label>
                                 <select class="form-control" name="review_status" id="review_status">
@@ -199,10 +203,28 @@
                                 @endif
                                 <span class="help-block">{{ trans('cruds.swn.fields.review_date_helper') }}</span>
                             </div>
-                           
+
+                            <div class="form-group {{ $errors->has('conditional_accepted') ? 'has-error' : '' }}">
+                                <label for="conditional_accepted">{{ trans('cruds.swn.fields.conditional_accepted') }}</label>
+                                <textarea class="form-control ckeditor" name="conditional_accepted" id="conditional_accepted">{!! old('conditional_accepted', $swn->conditional_accepted) !!}</textarea>
+                                @if($errors->has('conditional_accepted'))
+                                    <span class="help-block" role="alert">{{ $errors->first('conditional_accepted') }}</span>
+                                @endif
+                                <span class="help-block">{{ trans('cruds.swn.fields.conditional_accepted_helper') }}</span>
+                            </div>
+
+                            <div class="form-group {{ $errors->has('conditional_file_upload') ? 'has-error' : '' }}">
+                                <label for="conditional_file_upload">{{ trans('cruds.swn.fields.conditional_file_upload') }}</label>
+                                <div class="needsclick dropzone" id="conditional_file_upload-dropzone">
+                                </div>
+                                @if($errors->has('conditional_file_upload'))
+                                    <span class="help-block" role="alert">{{ $errors->first('conditional_file_upload') }}</span>
+                                @endif
+                                <span class="help-block">{{ trans('cruds.swn.fields.conditional_file_upload_helper') }}</span>
+                            </div>
                         </div>
 
-                        <legend><a onclick="HideSection(4)" id="element4"><i class="bi bi-eye"></i></a><b>  Section III : Disposition after Auditing Actions(Judge the status after Auditing the actual actions)</b></legend>
+                        <legend><a onclick="HideSection(4)" id="element4"><i class="bi bi-eye"></i></a><b>  Section 4 : Disposition after Auditing Actions(Judge the status after Auditing the actual actions)</b></legend>
                         <div id="section4">
                             <div class="form-group {{ $errors->has('auditing_date') ? 'has-error' : '' }}">
                                 <label class="required" for="auditing_date">{{ trans('cruds.swn.fields.auditing_date') }}</label>
@@ -256,6 +278,63 @@
 @endsection
 
 @section('scripts')
+<script>
+    var uploadedConditionalFileUploadMap = {}
+Dropzone.options.conditionalFileUploadDropzone = {
+    url: '{{ route('admin.swns.storeMedia') }}',
+    maxFilesize: 500, // MB
+    acceptedFiles: '.pdf',
+    addRemoveLinks: true,
+    headers: {
+      'X-CSRF-TOKEN': "{{ csrf_token() }}"
+    },
+    params: {
+      size: 500
+    },
+    success: function (file, response) {
+      $('form').append('<input type="hidden" name="conditional_file_upload[]" value="' + response.name + '">')
+      uploadedConditionalFileUploadMap[file.name] = response.name
+    },
+    removedfile: function (file) {
+      file.previewElement.remove()
+      var name = ''
+      if (typeof file.file_name !== 'undefined') {
+        name = file.file_name
+      } else {
+        name = uploadedConditionalFileUploadMap[file.name]
+      }
+      $('form').find('input[name="conditional_file_upload[]"][value="' + name + '"]').remove()
+    },
+    init: function () {
+@if(isset($swn) && $swn->conditional_file_upload)
+          var files =
+            {!! json_encode($swn->conditional_file_upload) !!}
+              for (var i in files) {
+              var file = files[i]
+              this.options.addedfile.call(this, file)
+              file.previewElement.classList.add('dz-complete')
+              $('form').append('<input type="hidden" name="conditional_file_upload[]" value="' + file.file_name + '">')
+            }
+@endif
+    },
+     error: function (file, response) {
+         if ($.type(response) === 'string') {
+             var message = response //dropzone sends it's own error messages in string
+         } else {
+             var message = response.errors.file
+         }
+         file.previewElement.classList.add('dz-error')
+         _ref = file.previewElement.querySelectorAll('[data-dz-errormessage]')
+         _results = []
+         for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+             node = _ref[_i]
+             _results.push(node.textContent = message)
+         }
+
+         return _results
+     }
+}
+</script>
 <script>
     $(document).ready(function () {
   function SimpleUploadAdapter(editor) {
@@ -621,16 +700,16 @@ for (let i = 0; i < select2.length; i++) {
 }
 
 var documents_status = document.getElementById("documents_status").value
-if(documents_status == "1"){
+if(documents_status == "1" || documents_status == "5"){
 	var section1 = document.getElementById("section1");
     var element1 = document.getElementById('element1');
     section1.style.display = "none";
     element1.innerHTML = '<i class="bi bi-eye-slash-fill"></i>';
     
-    // var section3 = document.getElementById("section3");
-    // var element3 = document.getElementById('element3');
-    // section3.style.display = "none";
-    // element3.innerHTML = '<i class="bi bi-eye-slash-fill"></i>';
+    var section3 = document.getElementById("section3");
+    var element3 = document.getElementById('element3');
+    section3.style.display = "none";
+    element3.innerHTML = '<i class="bi bi-eye-slash-fill"></i>';
 
     var section4 = document.getElementById("section4");
     var element4 = document.getElementById('element4');
@@ -671,10 +750,10 @@ if(documents_status == "3"){
     section2.style.display = "none";
     element2.innerHTML = '<i class="bi bi-eye-slash-fill"></i>';
 
-    // var section3 = document.getElementById("section3");
-    // var element3 = document.getElementById('element3');
-    // section3.style.display = "none";
-    // element3.innerHTML = '<i class="bi bi-eye-slash-fill"></i>';
+    var section3 = document.getElementById("section3");
+    var element3 = document.getElementById('element3');
+    section3.style.display = "none";
+    element3.innerHTML = '<i class="bi bi-eye-slash-fill"></i>';
 
     $("#responsible_id").attr('required', '');    //turns required on
     $("#review_status").attr('required', '');    //turns required on
@@ -692,10 +771,10 @@ if(documents_status == "4"){
     section2.style.display = "none";
     element2.innerHTML = '<i class="bi bi-eye-slash-fill"></i>';
 
-    // var section3 = document.getElementById("section3");
-    // var element3 = document.getElementById('element3');
-    // section3.style.display = "none";
-    // element3.innerHTML = '<i class="bi bi-eye-slash-fill"></i>';
+    var section3 = document.getElementById("section3");
+    var element3 = document.getElementById('element3');
+    section3.style.display = "none";
+    element3.innerHTML = '<i class="bi bi-eye-slash-fill"></i>';
 
     var section4 = document.getElementById("section4");
     var element4 = document.getElementById('element4');

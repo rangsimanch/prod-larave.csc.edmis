@@ -596,7 +596,7 @@ class RequestForInformationController extends Controller
         $mpdf->UseTemplate($tplId);
 
         $html = "<div style=\"font-size: 13px; font-weight: bold; position:absolute;top:90px;left:300px;\">" . $contract_name . "</div>";
-        
+        $html .= "<div style=\"font-size: 15px; font-weight: bold; position:absolute;top:35px;left:700px;\">" . $rfi_no . "</div>";
         // Logo
         if($logo_path != '') {
             $html .= "<div style=\"font-size: 14px; position:absolute;top:". $logo_top ."px;left:". $logo_left ."px;\">

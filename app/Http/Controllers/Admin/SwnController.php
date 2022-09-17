@@ -114,10 +114,13 @@ class SwnController extends Controller
                 if (Swn::DOCUMENTS_STATUS_SELECT[$row->documents_status] == 'New'){
                     return sprintf('<p style="color:#003399"><b>%s</b></p>',$row->documents_status ? Swn::DOCUMENTS_STATUS_SELECT[$row->documents_status] : '');
                 }
-                else if(Swn::DOCUMENTS_STATUS_SELECT[$row->documents_status] == 'Reply'){
+                else if(Swn::DOCUMENTS_STATUS_SELECT[$row->documents_status] == 'Replied'){
                     return sprintf('<p style="color:#ff9900"><b>%s</b></p>',$row->documents_status ? Swn::DOCUMENTS_STATUS_SELECT[$row->documents_status] : '');
                 }
-                else if(Swn::DOCUMENTS_STATUS_SELECT[$row->documents_status] == 'Review'){
+                else if(Swn::DOCUMENTS_STATUS_SELECT[$row->documents_status] == 'Required addition'){
+                    return sprintf('<p style="color:#E74C3C"><b>%s</b></p>',$row->documents_status ? Swn::DOCUMENTS_STATUS_SELECT[$row->documents_status] : '');
+                }
+                else if(Swn::DOCUMENTS_STATUS_SELECT[$row->documents_status] == 'Reviewed'){
                     return sprintf('<p style="color:#6600cc"><b>%s</b></p>',$row->documents_status ? Swn::DOCUMENTS_STATUS_SELECT[$row->documents_status] : '');
                 }
                 else if(Swn::DOCUMENTS_STATUS_SELECT[$row->documents_status] == 'Done'){
@@ -217,6 +220,8 @@ class SwnController extends Controller
             $swn->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('corrective_image');
         }
 
+        
+
         if ($media = $request->input('ck-media', false)) {
             Media::whereIn('id', $media)->update(['model_id' => $swn->id]);
         }
@@ -259,12 +264,24 @@ class SwnController extends Controller
         $data = $request->all();
         $state = $swn->documents_status;
         
-        if($state == '3'){
+        if($state == '3' && $data['auditing_status']){
             $data['documents_status'] = '4';
         }
         if($data['responsible_id'] != "" && $state == '1'){
-            $data['documents_status'] = '3';
+            $data['documents_status'] = '2';
         }    
+        if ($state == '2'){
+            if($data['review_status'] == '1' || $data['review_status'] == '2'){
+                $data['documents_status'] = '3';
+            }
+
+            if($data['review_status'] == '3'){
+                $data['documents_status'] = '5';
+            }
+       }
+       if ($data['responsible_id'] != "" && $state == '5'){
+            $data['documents_status'] = '2';
+       }
     
         $swn->update($data);
 
@@ -352,6 +369,20 @@ class SwnController extends Controller
             }
         }
 
+        if (count($swn->conditional_file_upload) > 0) {
+            foreach ($swn->conditional_file_upload as $media) {
+                if (!in_array($media->file_name, $request->input('conditional_file_upload', []))) {
+                    $media->delete();
+                }
+            }
+        }
+        $media = $swn->conditional_file_upload->pluck('file_name')->toArray();
+        foreach ($request->input('conditional_file_upload', []) as $file) {
+            if (count($media) === 0 || !in_array($file, $media)) {
+                $swn->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('conditional_file_upload');
+            }
+        }
+
 
         return redirect()->route('admin.swns.index');
     }
@@ -413,7 +444,7 @@ class SwnController extends Controller
         // $tplId = $mpdf->ImportPage($pagecount);
         // $mpdf->UseTemplate($tplId);    
         $mpdf->SetDocTemplate(public_path('pdf-asset/SWN_Template_Section_1.pdf'),true);
-        $mpdf->AddPage('P','','','','','','',107,140);
+        $mpdf->AddPage('P','','','','','','',110,140);
 
 
         // Setting Data
@@ -440,6 +471,8 @@ class SwnController extends Controller
 
         $review_status = $swn->review_status ?? '';
         $auditing_status = $swn->auditing_status ?? '';
+
+        $conditional_accepted = $swn->conditional_accepted ?? '';
 
         $html = "<div style=\"font-size: 10px; text-align: center; font-weight: bold; color:#1F4E78; padding-top:82px;\">" . $contract_name  . "</div>";
         $html .= "<div style=\"font-size: 12px; position:absolute;top:195px;left:120px;\">" . $send_to  . "</div>";
@@ -626,6 +659,77 @@ class SwnController extends Controller
             }
             $mpdf->WriteHTML($html);
         }
+
+        $mpdf->SetDocTemplate(""); 
+        if (str_replace('<p>&nbsp;</p>', '', $conditional_accepted) != ''){
+            $mpdf->SetDocTemplate(public_path('pdf-asset/SWN_Tenplate_Section_3.pdf'),true);  
+            $footer_text = "<div style=\"text-align: right; font-size:18px; font-weight: bold;\">" . $document_number . "</div>";
+            $mpdf->SetHTMLFooter($footer_text);
+            $mpdf->AddPage('P','','','','','','',75,50);
+            $html = "<div style=\"font-size: 16px; font-weight: bold; position:absolute;top:224px;left:327px;\">" . "X"  . "</div>";
+            if($issuer_name != ''){
+                if($review_status == "1" || $review_status == "2" || $review_status == "3"){
+                    // if(!is_null($swn->issue_by->signature)){
+                    //     $html .= "<div style=\"font-weight: bold; position:absolute;top:775;left:160px;\">
+                    //     <img width=\"30%\" height=\"20%\" src=\"" . $swn->issue_by->signature->getPath()
+                    //     . "\"></div>";
+                    // }
+                }
+                $html .= "<div style=\"font-size: 8px; font-weight: bold; position:absolute;top:998px;left:155px;\">( " . $issuer_name  . " )</div>";
+                $html .= "<div style=\"font-size: 8px;  position:absolute;top:1010px;left:155px;\">" . $issuer_position  . "</div>";
+    
+            }
+            if($qa_name != ''){
+                if($review_status == "1" || $review_status == "2" || $review_status == "3"){
+                    if(!is_null($swn->related_specialist->signature)){
+                        $html .= "<div style=\"font-weight: bold; position:absolute;top:940;left:620px;\">
+                        <img width=\"50%\" height=\"40%\" src=\"" . $swn->related_specialist->signature->getPath()
+                        . "\"></div>";
+                    }
+                }
+                $html .= "<div style=\"font-size: 8px; font-weight: bold; position:absolute;top:998px;left:620px;\">( " . $qa_name  . " )</div>";
+                $html .= "<div style=\"font-size: 8px; padding-right:55px; position:absolute;top:1010px;left:620px;\">" . $qa_position  . " </div>";
+    
+            }
+            $html .= "<div style=\"font-size: 8px; position:absolute;top:1025px;left:155px;\">" . $review_date  . "</div>";
+            $html .= "<div style=\"font-size: 8px; position:absolute;top:1025px;left:620px;\">" . $review_date  . "</div>";
+
+            $mpdf->SetHTMLHeader($html,'0',true);
+            $html = "<div style=\" padding-left: 80px; padding-right:40px; padding-bottom:-15px; \">";
+            $html .= "<div style=\"font-size: 12px; padding-right:50px; position:absolute;top:350px;left:110px;LINE-HEIGHT:15px;\">" . $conditional_accepted  . "</div>";
+            $html .= "</div>";
+            
+            $mpdf->WriteHTML($html);
+            $html = "";   
+            $mpdf->SetHTMLHeader($html,'0',true);
+        }
+
+        $mpdf->SetDocTemplate(""); 
+        foreach($swn->conditional_file_upload as $attachment){ 
+            try{
+                $url = $attachment->getUrl();
+                $handle = curl_init($url);
+                curl_setopt($handle,  CURLOPT_RETURNTRANSFER, TRUE);
+                $response = curl_exec($handle);
+                $httpCode = curl_getinfo($handle, CURLINFO_HTTP_CODE);
+                curl_close($handle);
+                if($httpCode != 404){
+                    $pagecount = $mpdf->SetSourceFile($attachment->getPath());
+                    for($page = 1; $page <= $pagecount; $page++){
+                        // $mpdf->AddPage();
+                        $tplId = $mpdf->importPage($page);
+                        $size = $mpdf->getTemplateSize($tplId);
+                        $mpdf->AddPage($size['orientation']);
+                        // $mpdf->UseTemplate($tplId);
+                        $mpdf->UseTemplate($tplId, 0, 0, $size['width'], $size['height'], true);
+
+                    }         
+                }
+            }catch(exeption $e){
+                print "Creating an mPDF object failed with" . $e->getMessage();
+            }
+        }
+        
         $mpdf->SetDocTemplate(""); 
         foreach($swn->document_attachment as $attachment){ 
             try{
