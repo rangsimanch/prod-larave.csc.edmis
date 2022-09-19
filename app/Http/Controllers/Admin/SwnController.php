@@ -264,9 +264,10 @@ class SwnController extends Controller
         $data = $request->all();
         $state = $swn->documents_status;
         
-        if($state == '3' && $data['auditing_status']){
+        if($state == '3' && $request->filled('auditing_status')){
             $data['documents_status'] = '4';
         }
+
         if($data['responsible_id'] != "" && $state == '1'){
             $data['documents_status'] = '2';
         }    

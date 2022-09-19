@@ -756,8 +756,8 @@ if(documents_status == "3"){
     element3.innerHTML = '<i class="bi bi-eye-slash-fill"></i>';
 
     $("#responsible_id").attr('required', '');    //turns required on
-    $("#review_status").attr('required', '');    //turns required on
-    $("#auditing_status").attr('required', '');    //turns required on
+    // $("#review_status").attr('required', '');    //turns required on
+    // $("#auditing_status").attr('required', '');    //turns required on
 }
 
 if(documents_status == "4"){
