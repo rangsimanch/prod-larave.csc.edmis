@@ -490,11 +490,21 @@ class SwnController extends Controller
         // }
         $html .= "<div style=\"font-size: 8.5px; padding-right:80px; position:absolute;top:320px;left:240px;\">" . $ref_doc  . "</div>";
         if($issuer_name != ''){
-            if(!is_null($swn->issue_by->signature)){
-                $html .= "<div style=\"font-weight: bold; position:absolute;top:570;left:145px;\">
-                <img width=\"30%\" height=\"20%\" src=\"" . $swn->issue_by->signature->getPath()
-                . "\"></div>";
-            }
+                if(!is_null($swn->issue_by->signature)){
+                    $url =  url($swn->issue_by->signature->getUrl());
+                    $handle = curl_init($url);
+                    curl_setopt($handle,  CURLOPT_RETURNTRANSFER, TRUE);
+                    $response = curl_exec($handle);
+                    $httpCode = curl_getinfo($handle, CURLINFO_HTTP_CODE);
+                    curl_close($handle);
+                    
+                    
+                    if($httpCode != 404){
+                        $html .= "<div style=\"font-weight: bold; position:absolute;top:570;left:145px;\">
+                        <img width=\"30%\" height=\"20%\" src=\"" . $swn->issue_by->signature->getPath()
+                        . "\"></div>";
+                    }
+                }
             $html .= "<div style=\"font-size: 8px; font-weight: bold; position:absolute;top:606px;left:135px;\">( " . $issuer_name  . " )</div>";
             $html .= "<div style=\"font-size: 8px;  position:absolute;top:625px;left:135px;\">" . $issuer_position  . "</div>";
         }
@@ -511,10 +521,20 @@ class SwnController extends Controller
 
         if($cos_name != ''){
             if(!is_null($swn->construction_specialist->signature)){
-                $html .= "<div style=\"font-weight: bold; position:absolute;top:570;left:615;\">
-                <img  width=\"50%\" height=\"40%\" src=\"" . $swn->construction_specialist->signature->getPath()
-                . "\"></div>";
-            }
+                $url =  url($swn->construction_specialist->signature->getUrl());
+                $handle = curl_init($url);
+                curl_setopt($handle,  CURLOPT_RETURNTRANSFER, TRUE);
+                $response = curl_exec($handle);
+                $httpCode = curl_getinfo($handle, CURLINFO_HTTP_CODE);
+                curl_close($handle);
+                
+                
+                if($httpCode != 404){
+                        $html .= "<div style=\"font-weight: bold; position:absolute;top:570;left:615;\">
+                    <img  width=\"50%\" height=\"40%\" src=\"" . $swn->construction_specialist->signature->getPath()
+                    . "\"></div>";
+                }
+            }    
             $html .= "<div style=\"font-size: 8px; font-weight: bold; position:absolute;top:606px;left:597px;\">( " . $cos_name  . " )</div>";
             $html .= "<div style=\"font-size: 8px;  padding-right:55px; position:absolute;top:625px;left:597px;\">" . $cos_position  . "</div>";
         }
@@ -548,9 +568,19 @@ class SwnController extends Controller
         if($qa_name != ''){
             if($review_status == "1" || $review_status == "2" || $review_status == "3"){
                 if(!is_null($swn->related_specialist->signature)){
-                    $html .= "<div style=\"font-weight: bold; position:absolute;top:770;left:590px;\">
-                    <img width=\"50%\" height=\"40%\" src=\"" . $swn->related_specialist->signature->getPath()
-                    . "\"></div>";
+                    $url =  url($swn->related_specialist->signature->getUrl());
+                    $handle = curl_init($url);
+                    curl_setopt($handle,  CURLOPT_RETURNTRANSFER, TRUE);
+                    $response = curl_exec($handle);
+                    $httpCode = curl_getinfo($handle, CURLINFO_HTTP_CODE);
+                    curl_close($handle);
+                    
+                    
+                    if($httpCode != 404){
+                        $html .= "<div style=\"font-weight: bold; position:absolute;top:770;left:590px;\">
+                        <img width=\"50%\" height=\"40%\" src=\"" . $swn->related_specialist->signature->getPath()
+                        . "\"></div>";
+                    }
                 }
             }
             $html .= "<div style=\"font-size: 8px; font-weight: bold; position:absolute;top:809px;left:586px;\">( " . $qa_name  . " )</div>";
@@ -571,9 +601,19 @@ class SwnController extends Controller
         if($issuer_name != ''){
             if($auditing_status == "1" || $auditing_status == "2"){
                 if(!is_null($swn->issue_by->signature)){
-                    $html .= "<div style=\"font-weight: bold; position:absolute;top:923;left:160px;\">
-                    <img width=\"30%\" height=\"20%\" src=\"" . $swn->issue_by->signature->getPath()
-                    . "\"></div>";
+                    $url =  url($swn->issue_by->signature->getUrl());
+                    $handle = curl_init($url);
+                    curl_setopt($handle,  CURLOPT_RETURNTRANSFER, TRUE);
+                    $response = curl_exec($handle);
+                    $httpCode = curl_getinfo($handle, CURLINFO_HTTP_CODE);
+                    curl_close($handle);
+                    
+                    
+                    if($httpCode != 404){
+                        $html .= "<div style=\"font-weight: bold; position:absolute;top:923;left:160px;\">
+                        <img width=\"30%\" height=\"20%\" src=\"" . $swn->issue_by->signature->getPath()
+                        . "\"></div>";
+                    }
                 }
             }
             $html .= "<div style=\"font-size: 8px; font-weight: bold; position:absolute;top:956px;left:155px;\">( " . $issuer_name  . " )</div>";
@@ -583,9 +623,19 @@ class SwnController extends Controller
         if($qa_name != ''){
             if($auditing_status == "1" || $auditing_status == "2"){
                 if(!is_null($swn->related_specialist->signature)){
-                    $html .= "<div style=\"font-weight: bold; position:absolute;top:923;left:360px;\">
-                    <img width=\"35%\" height=\"25%\" src=\"" . $swn->related_specialist->signature->getPath()
-                    . "\"></div>";
+                    $url =  url($swn->related_specialist->signature->getUrl());
+                    $handle = curl_init($url);
+                    curl_setopt($handle,  CURLOPT_RETURNTRANSFER, TRUE);
+                    $response = curl_exec($handle);
+                    $httpCode = curl_getinfo($handle, CURLINFO_HTTP_CODE);
+                    curl_close($handle);
+                    
+                    
+                    if($httpCode != 404){
+                        $html .= "<div style=\"font-weight: bold; position:absolute;top:923;left:360px;\">
+                        <img width=\"35%\" height=\"25%\" src=\"" . $swn->related_specialist->signature->getPath()
+                        . "\"></div>";
+                    }
                 }
             }
             $html .= "<div style=\"font-size: 8px; font-weight: bold; position:absolute;top:956px;left:354px;\">( " . $qa_name  . " )</div>";
@@ -595,9 +645,19 @@ class SwnController extends Controller
         if($cos_name != ''){
             if($auditing_status == "1" || $auditing_status == "2"){
                 if(!is_null($swn->construction_specialist->signature)){
-                    $html .= "<div style=\"font-weight: bold; position:absolute;top:923;left:595px;\">
-                    <img  width=\"50%\" height=\"40%\" src=\"" . $swn->construction_specialist->signature->getPath()
-                    . "\"></div>";
+                    $url =  url($swn->construction_specialist->signature->getUrl());
+                    $handle = curl_init($url);
+                    curl_setopt($handle,  CURLOPT_RETURNTRANSFER, TRUE);
+                    $response = curl_exec($handle);
+                    $httpCode = curl_getinfo($handle, CURLINFO_HTTP_CODE);
+                    curl_close($handle);
+                    
+                    
+                    if($httpCode != 404){
+                        $html .= "<div style=\"font-weight: bold; position:absolute;top:923;left:595px;\">
+                        <img  width=\"50%\" height=\"40%\" src=\"" . $swn->construction_specialist->signature->getPath()
+                        . "\"></div>";
+                    }
                 }
             }
             $html .= "<div style=\"font-size: 8px; font-weight: bold; position:absolute;top:960px;left:591px;\">( " . $cos_name  . " )</div>";
