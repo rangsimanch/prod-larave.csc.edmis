@@ -743,7 +743,7 @@ class SwnController extends Controller
             if($qa_name != ''){
                 if($review_status == "1" || $review_status == "2" || $review_status == "3"){
                     if(!is_null($swn->related_specialist->signature)){
-                        $html .= "<div style=\"font-weight: bold; position:absolute;top:940;left:620px;\">
+                        $html .= "<div style=\"font-weight: bold; position:absolute;top:960;left:620px;\">
                         <img width=\"50%\" height=\"40%\" src=\"" . $swn->related_specialist->signature->getPath()
                         . "\"></div>";
                     }
