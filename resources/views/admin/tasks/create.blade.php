@@ -178,20 +178,20 @@ Dropzone.options.attachmentDropzone = {
      }
 }
 
-            var APIkey = '16f8160661de97305b36536356f49640';
-            var zipCode = "30130";
-            var req = new XMLHttpRequest();
-            req.open("GET", "http://api.openweathermap.org/data/2.5/weather?zip=30000,th&appid=" + APIkey, false);
-            req.send(null);
-            var weatherObj = JSON.parse(req.responseText);
-            var Weather = weatherObj.weather[0].main;
-            var TempK = weatherObj.main["temp"];
-            var TempC = TempK - 273.15;
-            var Wind = weatherObj.wind["speed"];
+    var APIkey = '16f8160661de97305b36536356f49640';
+    var zipCode = "30130";
+    var req = new XMLHttpRequest();
+    req.open("GET", "https://api.openweathermap.org/data/2.5/weather?zip=30000,th&appid=" + APIkey, false);
+    req.send(null);
+    var weatherObj = JSON.parse(req.responseText);
+    var Weather = weatherObj.weather[0].main;
+    var TempK = weatherObj.main["temp"];
+    var TempC = TempK - 273.15;
+    var Wind = weatherObj.wind["speed"];
 
-            document.getElementById('weather').value = Weather;
-            document.getElementById('temperature').value = TempC;
-            document.getElementById('wind').value = Wind;
+    document.getElementById('weather').value = Weather;
+    document.getElementById('temperature').value = TempC;
+    document.getElementById('wind').value = Wind;
 
 </script>
 @endsection
