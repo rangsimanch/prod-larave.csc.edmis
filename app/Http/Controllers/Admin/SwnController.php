@@ -737,7 +737,7 @@ class SwnController extends Controller
                     // }
                 }
                 $html .= "<div style=\"font-size: 8px; font-weight: bold; position:absolute;top:998px;left:155px;\">( " . $issuer_name  . " )</div>";
-                $html .= "<div style=\"font-size: 8px;  position:absolute;top:1010px;left:155px;\">" . $issuer_position  . "</div>";
+                $html .= "<div style=\"font-size: 6px;  position:absolute;top:1010px;left:155px;\">" . $issuer_position  . "</div>";
     
             }
             if($qa_name != ''){
@@ -749,7 +749,7 @@ class SwnController extends Controller
                     }
                 }
                 $html .= "<div style=\"font-size: 8px; font-weight: bold; position:absolute;top:998px;left:620px;\">( " . $qa_name  . " )</div>";
-                $html .= "<div style=\"font-size: 8px; padding-right:55px; position:absolute;top:1010px;left:620px;\">" . $qa_position  . " </div>";
+                $html .= "<div style=\"font-size: 6px; padding-right:55px; position:absolute;top:1010px;left:620px;\">" . $qa_position  . " </div>";
     
             }
             $html .= "<div style=\"font-size: 8px; position:absolute;top:1025px;left:155px;\">" . $review_date  . "</div>";
