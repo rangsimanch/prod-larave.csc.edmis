@@ -1673,13 +1673,13 @@ class RfaController extends Controller
             . $title_en . "</div>";
         }
         
-        $html .= "<div style=\"font-size: 12px; position:absolute;top:217px;left:55px;\">" . 'หัวข้อ :' . "</div>";
+        $html .= "<div style=\"font-size: 12px; position:absolute;top:235px;left:55px;\">" . 'หัวข้อ :' . "</div>";
         if(strlen($title_th) > 235){
-            $html .= "<div style=\"font-size: 12px; padding-right:230px; position:absolute;top:217px;left:80px; LINE-HEIGHT:16px;\">" 
+            $html .= "<div style=\"font-size: 10px; padding-right:230px; position:absolute;top:235px;left:80px; LINE-HEIGHT:16px;\">" 
             . $title_th . "</div>";
         }
         else{
-            $html .= "<div style=\"font-size: 12px; padding-right:230px; position:absolute;top:217px;left:80px; LINE-HEIGHT:16px;\">" 
+            $html .= "<div style=\"font-size: 12px; padding-right:230px; position:absolute;top:235px;left:80px; LINE-HEIGHT:16px;\">" 
             . $title_th . "</div>";
         }
         //No. Code.
