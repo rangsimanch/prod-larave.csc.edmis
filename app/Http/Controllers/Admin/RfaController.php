@@ -1645,7 +1645,7 @@ class RfaController extends Controller
                       print "Creating an mPDF object failed with" . $e->getMessage();
                   }   
         //RFA Page
-        $pagecount = $mpdf->SetSourceFile(public_path('pdf-asset/RFA-Form_empty_V.5.pdf'));
+        $pagecount = $mpdf->SetSourceFile(public_path('pdf-asset/RFA-Form_empty_V.6.pdf'));
         $tplId = $mpdf->ImportPage($pagecount);
         $mpdf->UseTemplate($tplId);        
         
@@ -1663,7 +1663,7 @@ class RfaController extends Controller
         $html .= "<div style=\"font-size: 12px; position:absolute;top:168px;left:55px;\">" . 'Bill :' . "</div>";
         $html .= "<div style=\"font-size: 12px; position:absolute;top:170px;left:80px;\">" . $bill . ', ' . $bill_sub . "</div>";
 
-        $html .= "<div style=\"font-size: 14px; position:absolute;top:184px;left:55px;\">" . 'Title :' . "</div>";
+        $html .= "<div style=\"font-size: 12px; position:absolute;top:184px;left:55px;\">" . 'Title :' . "</div>";
         if(strlen($title_en) > 210){
             $html .= "<div style=\"font-size: 10px; padding-right:240px; position:absolute;top:184px;left:80px; LINE-HEIGHT:16px;\">" 
             . $title_en . "</div>";
@@ -1673,7 +1673,7 @@ class RfaController extends Controller
             . $title_en . "</div>";
         }
         
-        $html .= "<div style=\"font-size: 14px; position:absolute;top:217px;left:55px;\">" . 'หัวข้อ :' . "</div>";
+        $html .= "<div style=\"font-size: 12px; position:absolute;top:217px;left:55px;\">" . 'หัวข้อ :' . "</div>";
         if(strlen($title_th) > 235){
             $html .= "<div style=\"font-size: 12px; padding-right:230px; position:absolute;top:217px;left:80px; LINE-HEIGHT:16px;\">" 
             . $title_th . "</div>";
@@ -1689,7 +1689,7 @@ class RfaController extends Controller
           //Date
         $html .= "<div style=\"font-size: 14px; position:absolute;top:217px;left:630px;\">" . $submit_date . "</div>";
           //Document Name
-        $html .= "<div style=\"font-size: 12px; padding-right:240px; position:absolute;top:269px;left:160px;LINE-HEIGHT:15px;\">" . $document_name . "</div>";
+        $html .= "<div style=\"font-size: 10px; padding-right:240px; position:absolute;top:285px;left:163px;LINE-HEIGHT:15px;\">" . $document_name . "</div>";
         $html .= "<div style=\"font-size: 14px; position:absolute;top:265;left:630;\">" . $qty_page . '.' . "</div>";
         
           //WBS Spec.Ref Clase. Contract No.
