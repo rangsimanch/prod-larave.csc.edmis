@@ -261,7 +261,7 @@
                         @endif
 
                         <div class="form-group">
-                            <a class="btn btn-default" href="{{ session('previous-url') }}">
+                            <a class="btn btn-default" href="{{ route('admin.home') }}">
                                 {{ trans('global.back_to_home') }}
                             </a>
 

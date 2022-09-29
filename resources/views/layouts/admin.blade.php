@@ -164,12 +164,12 @@
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">Hi.. {{ \Auth::user()->name }} <b class="caret"></b></a>
           <ul class="dropdown-menu">
             <li align="center" class="well">
-                @if(Auth::user()->img_user != '')
+                {{-- @if(Auth::user()->img_user != '')
                 <div align="center"><img class="img-responsive" style="padding:2%; width:90px; height:90px;" src="{{ \Auth::user()->img_user->getUrl('thumb') }}"/></div>
                 @else
                 <div align="center"><img class="img-responsive" style="padding:2%; width:90px; height:90px;" src="https://static.asianetnews.com/img/default-user-avatar.png"/></div>
-                @endif
-                {{-- <a href="{{ route('admin.users.edit', \Auth::id()) }}" class="btn btn-sm btn-default"><span class="glyphicon glyphicon-co"></span> Settings</a> --}}
+                @endif --}}
+                <a href="{{ route('admin.users.edit', \Auth::id()) }}" class="btn btn-sm btn-default"><span class="glyphicon glyphicon-co"></span> Settings</a>
                 <a href="#" onclick="event.preventDefault(); document.getElementById('logoutform').submit();"><span class="glyphicon glyphicon-log-out"></span> Logout</a>
             </li>
            </ul>

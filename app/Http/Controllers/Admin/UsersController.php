@@ -244,7 +244,7 @@ class UsersController extends Controller
             $user->stamp_signature->delete();
         }
 
-        return redirect(session('previous-url'));
+        return redirect()->back()->with(['message' => 'Save Successfully !']);
     }
 
     public function show(User $user)
