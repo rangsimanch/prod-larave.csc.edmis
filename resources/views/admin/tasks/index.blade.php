@@ -37,7 +37,7 @@ img {
                                 <th>
                                     {{ trans('cruds.task.fields.create_by_user') }}
 
-                                    <select class="form-control filter-select" data-column="2">
+                                    <select class="form-control filter-select" data-column="1">
                                         <option value=""> Select Employee... </option>
                                         @foreach ($create_by_user as $create_by_user)
                                             <option value="{{ $create_by_user }}"> {{ $create_by_user }} </option>
@@ -48,13 +48,13 @@ img {
                                     {{ trans('cruds.task.fields.name') }}
 
                                     <input type="text" class="form-control filter-input"
-                                    placeholder="Search for Activity..." data-column="3"/>
+                                    placeholder="Search for Activity..." data-column="2"/>
                                 </th>
                                 
                                 <th>
                                     {{ trans('cruds.task.fields.tag') }}
 
-                                    <select class="form-control filter-select" data-column="4">
+                                    <select class="form-control filter-select" data-column="3">
                                         <option value=""> Select Work Type... </option>
                                         @foreach ($work_type as $work_type)
                                             <option value="{{ $work_type }}"> {{ $work_type }} </option>
@@ -65,18 +65,18 @@ img {
                                     {{ trans('cruds.task.fields.location') }}
 
                                     <input type="text" class="form-control filter-input"
-                                    placeholder="Search for Location..." data-column="5"/>
+                                    placeholder="Search for Location..." data-column="4"/>
                                 </th>
                                 <th>
                                     {{ trans('cruds.task.fields.due_date') }}
 
                                     <input type="date" class="form-control filter-input"
-                                    placeholder="Search for Activity..." data-column="6"/>
+                                    placeholder="Search for Activity..." data-column="5"/>
                                 </th>
                                 <th>
                                     {{ trans('cruds.task.fields.status') }}
 
-                                    <select class="form-control filter-select" data-column="7">
+                                    <select class="form-control filter-select" data-column="6">
                                         <option value=""> Select Status... </option>
                                         @foreach ($status as $status)
                                             <option value="{{ $status }}"> {{ $status }} </option>
