@@ -60,6 +60,7 @@ Dropzone.options.recoveryFileDropzone = {
     url: '{{ route('admin.recovery-files.storeMedia') }}',
     maxFilesize: 50000, // MB
     addRemoveLinks: true,
+    acceptedFiles: '.pdf',
     headers: {
       'X-CSRF-TOKEN': "{{ csrf_token() }}"
     },
