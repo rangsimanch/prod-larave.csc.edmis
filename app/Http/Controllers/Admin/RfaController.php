@@ -1694,7 +1694,7 @@ class RfaController extends Controller
         
           //WBS Spec.Ref Clase. Contract No.
         $html .= "<div style=\"font-size: 14px; position:absolute;top:344px;left:225px;\">" . $wbs . "</div>";
-        $html .= "<div style=\"font-size: 14px; padding-right:230px; position:absolute;top:360px;left:250px;\">" . $spec_ref_no . "</div>";
+        $html .= "<div style=\"font-size: 12px; padding-right:230px; position:absolute;top:360px;left:247px;\">" . $spec_ref_no . "</div>";
         $html .= "<div style=\"font-size: 12px; padding-right:60px; position:absolute;top:360px;left:615px;\">" . $clause . "</div>";
         $html .= "<div style=\"font-size: 14px; position:absolute;top:376px;left:210px;\">" . $contract_drawing_no . "</div>";
           //Note
