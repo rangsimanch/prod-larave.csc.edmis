@@ -16,6 +16,18 @@ class RecoveryDashboardController extends Controller
     public function index()
     {
         abort_if(Gate::denies('recovery_dashboard_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        $counting_all = 0;
+        $date_range = '2022-08-17';
+        $query_all = DB::table('media')
+                ->where('created_at', '<=', $date_range)
+                ->pluck('id')->toArray();
+        $all_sum = number_format(count($query_all));
+        foreach($query_all as $id){
+            if(file_exists(storage_path("/app" . "/public" . "/" . $id))){
+               $counting_all += 1;
+            }
+        }
+        $count_all_format = number_format($counting_all);
         
         // PDF
         $counting_pdf = 0;
@@ -74,7 +86,7 @@ class RecoveryDashboardController extends Controller
 
 
         return view('admin.recoveryDashboards.index',compact('count_pdf_format', 'pdf_sum', 'count_rfa_format', 'rfa_sum', 
-        'count_srt_format', 'srt_sum', 'other_sum', 'count_other_format'));
+        'count_srt_format', 'srt_sum', 'other_sum', 'count_other_format', 'all_sum', 'count_all_format'));
     }
 
     public function create()

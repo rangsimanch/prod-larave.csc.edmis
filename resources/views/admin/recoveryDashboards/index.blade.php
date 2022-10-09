@@ -10,22 +10,26 @@
                 </div>
                 <div class="panel-body">
                     <p>
-                        <h2>PDF Summary Uploaded Count : 
-                            {{ $count_pdf_format }} / {{ $pdf_sum }}
+                        <h2>All File Summary Recovered:  
+                            {{ $count_all_format }} / {{ $all_sum }}
                             <br>
                         </h2>
-                        <h3>↳ Model RFA : 
+                        <h3>  PDF Summary Recovered : 
+                            {{ $count_pdf_format }} / {{ $pdf_sum }}
+                            <br>
+                        </h3>
+                        <h4>    ↳ Model RFA : 
                             {{ $count_rfa_format }} / {{ $rfa_sum }}
                             <br>
-                        </h3>
-                        <h3>↳ Model SRT : 
+                        </h4>
+                        <h4>    ↳ Model SRT : 
                             {{ $count_srt_format }} / {{ $srt_sum }}
                             <br>
-                        </h3>
-                        <h3>↳ Other : 
+                        </h4>
+                        <h4>    ↳ Other(RFI, RFN, SWN, NCN, NCR, Letter, etc.) : 
                             {{ $count_other_format }} / {{ $other_sum }}
                             <br>
-                        </h3>
+                        </h4>
                     </p>
                 </div>
             </div>
