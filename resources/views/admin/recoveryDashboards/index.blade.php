@@ -10,6 +10,8 @@
                 </div>
                 <div class="panel-body">
                     <p>
+                        <p hidden> {{ date_default_timezone_set("Asia/Bangkok") }} </p>
+                        <h5 style="color: gray"> Last updated at {{ date("Y-m-d h:i:sa") }} </h5>
                         <h2>All File Summary Recovered:  
                             {{ $count_all_format }} / {{ $all_sum }}
                             <br>
