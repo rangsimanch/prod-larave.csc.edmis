@@ -2750,4 +2750,8 @@ return [
             'team_helper'             => ' ',
         ],
     ],
+    'recoveryDashboard' => [
+        'title'          => 'Recovery Dashboard',
+        'title_singular' => 'Recovery Dashboard',
+    ],
 ];

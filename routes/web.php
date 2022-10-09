@@ -572,6 +572,10 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::post('recovery-files/ckmedia', 'RecoveryFilesController@storeCKEditorImages')->name('recovery-files.storeCKEditorImages');
     Route::resource('recovery-files', 'RecoveryFilesController');
 
+    // Recovery Dashboard
+    Route::delete('recovery-dashboards/destroy', 'RecoveryDashboardController@massDestroy')->name('recovery-dashboards.massDestroy');
+    Route::resource('recovery-dashboards', 'RecoveryDashboardController');
+
     Route::get('system-calendar', 'SystemCalendarController@index')->name('systemCalendar');
     Route::get('global-search', 'GlobalSearchController@search')->name('globalSearch');
     Route::get('messenger', 'MessengerController@index')->name('messenger.index');

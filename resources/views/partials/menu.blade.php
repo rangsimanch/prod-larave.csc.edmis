@@ -1398,6 +1398,17 @@
                     <span class="pull-right-container"><i class="fa fa-fw fa-angle-left pull-right"></i></span>
                 </a>
                 <ul class="treeview-menu">
+                    @can('recovery_dashboard_access')
+                        <li class="{{ request()->is("admin/recovery-dashboards") || request()->is("admin/recovery-dashboards/*") ? "active" : "" }}">
+                            <a href="{{ route("admin.recovery-dashboards.index") }}">
+                                <i class="fa-fw fas fa-cogs">
+
+                                </i>
+                                <span>{{ trans('cruds.recoveryDashboard.title') }}</span>
+
+                            </a>
+                        </li>
+                    @endcan
                     @can('recovery_file_access')
                         <li class="{{ request()->is("admin/recovery-files") || request()->is("admin/recovery-files/*") ? "active" : "" }}">
                             <a href="{{ route("admin.recovery-files.index") }}">
