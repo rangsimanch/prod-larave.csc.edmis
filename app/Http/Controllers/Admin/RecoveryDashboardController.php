@@ -17,7 +17,7 @@ class RecoveryDashboardController extends Controller
     {
         abort_if(Gate::denies('recovery_dashboard_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $counting_file = 0;
-        $mime_type = "application/pdf";
+        $mime_type = 'application/pdf';
         $date_range = '2022-08-17';
         $model_rfa = 'App\Rfa';
         $query_media = DB::table('media')
@@ -25,9 +25,10 @@ class RecoveryDashboardController extends Controller
                 ->where('created_at', '<=', $date_range)
                 ->where('model_type', '=', $model_rfa)
                 ->pluck('id')->toArray();
+
         foreach($query_media as $id){
-            if(file_exists(storage_path("/" . "public" . "/" . $id))){
-               $counting_file++; 
+            if(file_exists(storage_path("/app" . "/public" . "/" . $id))){
+               $counting_file += 1;
             }
         }
         
