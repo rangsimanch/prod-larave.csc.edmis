@@ -10,7 +10,18 @@
                 </div>
                 <div class="panel-body">
                     <p>
-                        {{ $counting_file }}
+                        <h2>PDF Summary Uploaded Count : 
+                            {{ $count_pdf_format }} / {{ $pdf_sum }}
+                            <br>
+                        </h2>
+                        <h3>↳ Model RFA : 
+                            {{ $count_rfa_format }} / {{ $rfa_sum }}
+                            <br>
+                        </h3>
+                        <h3>↳ Model SRT : 
+                            {{ $count_srt_format }} / {{ $srt_sum }}
+                            <br>
+                        </h3>
                     </p>
                 </div>
             </div>

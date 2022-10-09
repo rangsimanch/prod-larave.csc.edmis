@@ -16,24 +16,60 @@ class RecoveryDashboardController extends Controller
     public function index()
     {
         abort_if(Gate::denies('recovery_dashboard_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $counting_file = 0;
+        
+        // PDF
+        $counting_pdf = 0;
         $mime_type = 'application/pdf';
         $date_range = '2022-08-17';
-        $model_rfa = 'App\Rfa';
-        $query_media = DB::table('media')
+        $query_pdf = DB::table('media')
                 ->where('mime_type', '=', $mime_type)
                 ->where('created_at', '<=', $date_range)
-                ->where('model_type', '=', $model_rfa)
                 ->pluck('id')->toArray();
-
-        foreach($query_media as $id){
+    
+        $pdf_sum = number_format(count($query_pdf));
+        foreach($query_pdf as $id){
             if(file_exists(storage_path("/app" . "/public" . "/" . $id))){
-               $counting_file += 1;
+               $counting_pdf += 1;
             }
         }
-        
+        $count_pdf_format = number_format($counting_pdf);
 
-        return view('admin.recoveryDashboards.index',compact('counting_file'));
+        // RFA
+        $counting_rfa = 0;
+        $model_type = 'App\Rfa';
+        $query_rfa = DB::table('media')
+                ->where('mime_type', '=', $mime_type)
+                ->where('created_at', '<=', $date_range)
+                ->where('model_type', '=', $model_type)
+                ->pluck('id')->toArray();
+    
+        $rfa_sum = number_format(count($query_rfa));
+        foreach($query_rfa as $id){
+            if(file_exists(storage_path("/app" . "/public" . "/" . $id))){
+               $counting_rfa += 1;
+            }
+        }
+        $count_rfa_format = number_format($counting_rfa);
+
+        // SRT
+        $counting_srt = 0;
+        $model_type = "%Srt%";
+        $query_srt = DB::table('media')
+                ->where('mime_type', '=', $mime_type)
+                ->where('created_at', '<=', $date_range)
+                ->where('model_type', 'LIKE', $model_type)
+                ->pluck('id')->toArray();
+    
+        $srt_sum = number_format(count($query_srt));
+        foreach($query_srt as $id){
+            if(file_exists(storage_path("/app" . "/public" . "/" . $id))){
+               $counting_srt += 1;
+            }
+        }
+        $count_srt_format = number_format($counting_srt);
+
+
+        return view('admin.recoveryDashboards.index',compact('count_pdf_format', 'pdf_sum', 'count_rfa_format', 'rfa_sum', 'count_srt_format', 'srt_sum'));
     }
 
     public function create()
