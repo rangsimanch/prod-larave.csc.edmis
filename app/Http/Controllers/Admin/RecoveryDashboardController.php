@@ -68,8 +68,13 @@ class RecoveryDashboardController extends Controller
         }
         $count_srt_format = number_format($counting_srt);
 
+        //Other
+        $other_sum = number_format(count($query_pdf) - (count($query_rfa) + count($query_srt)));
+        $count_other_format = number_format($counting_pdf - ($counting_rfa + $counting_srt));
 
-        return view('admin.recoveryDashboards.index',compact('count_pdf_format', 'pdf_sum', 'count_rfa_format', 'rfa_sum', 'count_srt_format', 'srt_sum'));
+
+        return view('admin.recoveryDashboards.index',compact('count_pdf_format', 'pdf_sum', 'count_rfa_format', 'rfa_sum', 
+        'count_srt_format', 'srt_sum', 'other_sum', 'count_other_format'));
     }
 
     public function create()

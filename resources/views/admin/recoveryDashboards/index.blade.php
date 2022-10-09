@@ -22,6 +22,10 @@
                             {{ $count_srt_format }} / {{ $srt_sum }}
                             <br>
                         </h3>
+                        <h3>↳ Other : 
+                            {{ $count_other_format }} / {{ $other_sum }}
+                            <br>
+                        </h3>
                     </p>
                 </div>
             </div>
