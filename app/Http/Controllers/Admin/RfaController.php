@@ -1912,12 +1912,12 @@ class RfaController extends Controller
         //Circulation of Work
         if($wbslv2 == "C4-1" || $wbslv2 == "C4-2" || $wbslv2 == "C4-3" || $wbslv2 == "C4-4" || $wbslv2 == "C4-5"){ 
             $mpdf->AddPage();
-            $pagecount = $mpdf->SetSourceFile(public_path('pdf-asset/Circulation_C4.pdf'));
+            $pagecount = $mpdf->SetSourceFile(public_path('pdf-asset/Circulation_General_All_Contract.pdf'));
             $tplId = $mpdf->ImportPage($pagecount);
             $mpdf->UseTemplate($tplId);   
         }else{
             $mpdf->AddPage();
-            $pagecount = $mpdf->SetSourceFile(public_path('pdf-asset/Circulation_General_New.pdf'));
+            $pagecount = $mpdf->SetSourceFile(public_path('pdf-asset/Circulation_General_All_Contract.pdf'));
             $tplId = $mpdf->ImportPage($pagecount);
             $mpdf->UseTemplate($tplId);   
         }
