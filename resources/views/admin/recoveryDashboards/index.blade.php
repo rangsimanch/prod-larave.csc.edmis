@@ -33,6 +33,78 @@
                             <br>
                         </h4>
                     </p>
+                    <br>
+                    <br>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    RFA Files List
+                                </div>
+                                <div class="panel-body">
+                                    <table class=" table table-bordered table-striped table-hover ajaxTable datatable datatable-rfa-recovery text-center">
+                                        <thead>
+                                            <tr>
+                                                <th width="10">
+
+                                                </th>
+                                                <th>
+                                                    ID
+                                                </th>
+                                                <th>
+                                                    Title
+                                                </th>
+                                                <th>
+                                                    Document Number
+                                                </th>
+                                                <th>
+                                                    Originator Number
+                                                </th>
+                                                <th>
+                                                    Construction Contract
+                                                </th>
+                                                <th>
+                                                    Upload Field
+                                                </th>
+                                                <th>
+                                                    Created at
+                                                </th>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                </td>
+                                                <td>
+                                                </td>
+                                                <td>
+                                                    <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                                                </td>
+                                                <td>
+                                                    <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                                                </td>
+                                                <td>
+                                                    <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                                                </td>
+                                                <td>
+                                                    <select class="search">
+                                                        <option value>{{ trans('global.all') }}</option>
+                                                        @foreach($construction_contracts as $key => $item)
+                                                            <option value="{{ $item->code }}">{{ $item->code }}</option>
+                                                        @endforeach
+                                                    </select>
+                                                </td>
+                                                <td>
+
+                                                </td>
+                                                <td>
+                                                </td>
+                                            </tr>
+                                        </thead>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
             </div>
 
@@ -41,4 +113,61 @@
         </div>
     </div>
 </div>
+@endsection
+@section('scripts')
+@parent
+<script>
+    $(function () {
+        let dtButtons = $.extend(true, [], $.fn.dataTable.defaults.buttons)
+        let dtOverrideGlobals = {
+        buttons: dtButtons,
+        processing: true,
+        serverSide: true,
+        retrieve: true,
+        aaSorting: [],
+        ajax: "{{ route('admin.recovery-dashboards.index') }}",
+        columns: [
+            { data: 'placeholder', name: 'placeholder' },
+            { data: 'id', name: 'id'},
+            { data: 'title', name: 'title' },
+            { data: 'document_number', name: 'document_number' },
+            { data: 'origin_number', name: 'origin_number' },
+            { data: 'code', name: 'code' },
+            { data: 'collection_name', name: 'collection_name' },
+            { data: 'created_at', name: 'created_at' },
+        ],
+        orderCellsTop: true,
+        order: [[ 1, 'desc' ]],
+        pageLength: 10,
+        };
+        let table = $('.datatable-rfa-recovery').DataTable(dtOverrideGlobals);
+        $('a[data-toggle="tab"]').on('shown.bs.tab click', function(e){
+            $($.fn.dataTable.tables(true)).DataTable()
+                .columns.adjust();
+        });
+        let visibleColumnsIndexes = null;
+
+        $('.datatable thead').on('input', '.search', function () {
+            let strict = $(this).attr('strict') || false
+            let value = strict && this.value ? "^" + this.value + "$" : this.value
+
+            let index = $(this).parent().index()
+            if (visibleColumnsIndexes !== null) {
+                index = visibleColumnsIndexes[index]
+            }
+
+            table
+                .column(index)
+                .search(value, strict)
+                .draw()
+        });
+        
+        table.on('column-visibility.dt', function(e, settings, column, state) {
+            visibleColumnsIndexes = []
+            table.columns(":visible").every(function(colIdx) {
+                visibleColumnsIndexes.push(colIdx);
+            });
+        })
+    });
+</script>
 @endsection
