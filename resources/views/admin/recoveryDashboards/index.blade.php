@@ -140,7 +140,7 @@
         orderCellsTop: true,
         order: [[ 1, 'desc' ]],
         pageLength: 10,
-        lengthMenu: [[ 10, 25, 100, 1000, 10000, -1], [10, 25, 100, 1000, 10000, "All"]],
+        lengthMenu: [[ 10, 25, 100, 1000, 5000, 10000, -1], [10, 25, 100, 1000, 5000, 10000, "All"]],
         };
         let table = $('.datatable-rfa-recovery').DataTable(dtOverrideGlobals);
         $('a[data-toggle="tab"]').on('shown.bs.tab click', function(e){
