@@ -123,6 +123,7 @@
         buttons: dtButtons,
         processing: true,
         serverSide: true,
+        deferRender: true,
         retrieve: true,
         aaSorting: [],
         ajax: "{{ route('admin.recovery-dashboards.index') }}",
