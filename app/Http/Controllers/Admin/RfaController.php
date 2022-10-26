@@ -1419,8 +1419,8 @@ class RfaController extends Controller
         }
 
         if($rfa->construction_contract->code == "C4-3"){
-            $issue_by = '( Zhou Jia Yi )';
-            $issuer_jobtitle = 'Project manager';
+            $issue_by = '( Dong Weihong )';
+            $issuer_jobtitle = 'For Project manager CAN';
             $issue_position_lf = 260;
             $issue_position_lf_sub = 489;
             $constructor_name = 'CAN Joint Venture';
