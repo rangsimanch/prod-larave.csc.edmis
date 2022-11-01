@@ -129,7 +129,7 @@
         ajax: "{{ route('admin.recovery-dashboards.index') }}",
         columns: [
             { data: 'placeholder', name: 'placeholder' },
-            { data: 'id', name: 'id'},
+            { data: 'model_id', name: 'model_id'},
             { data: 'title', name: 'title' },
             { data: 'document_number', name: 'document_number' },
             { data: 'origin_number', name: 'origin_number' },

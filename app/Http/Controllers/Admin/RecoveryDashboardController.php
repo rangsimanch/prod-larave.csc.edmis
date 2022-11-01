@@ -122,7 +122,7 @@ class RecoveryDashboardController extends Controller
                 return $row->created_at ? $row->created_at : '';
             });
 
-            $table->rawColumns(['id', 'title', 'document_number', 'origin_number', 'code', 'collection_name', 'created_at']);
+            $table->rawColumns(['model_id', 'title', 'document_number', 'origin_number', 'code', 'collection_name', 'created_at']);
             return $table->make(true);
         }
 
