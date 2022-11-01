@@ -78,7 +78,7 @@ class RecoveryDashboardController extends Controller
         $query_rfa_table = DB::table('media')
         ->join('rfas', 'media.model_id', '=', 'rfas.id')
         ->join('construction_contracts','rfas.construction_contract_id', '=', 'construction_contracts.id')
-        ->whereIn('media.id', $rfa_array)->select('media.id', 'rfas.title', 'rfas.document_number', 'rfas.origin_number', 'construction_contracts.code', 'media.collection_name', 'rfas.created_at')
+        ->whereIn('media.id', $rfa_array)->select('media.model_id', 'rfas.title', 'rfas.document_number', 'rfas.origin_number', 'construction_contracts.code', 'media.collection_name', 'rfas.created_at')
         ->get();
         
         if ($request->ajax()) {
