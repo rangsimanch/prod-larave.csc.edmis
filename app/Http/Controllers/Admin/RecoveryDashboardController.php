@@ -62,7 +62,6 @@ class RecoveryDashboardController extends Controller
                 ->where('media.model_type', '=', $model_type)
                 ->whereNull('rfas.deleted_at')
                 ->pluck('media.id')->toArray();
-    
         $rfa_sum = number_format(count($query_rfa));
         $rfa_array = array();
         foreach($query_rfa as $id){
