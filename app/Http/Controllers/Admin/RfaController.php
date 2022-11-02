@@ -1724,7 +1724,7 @@ class RfaController extends Controller
 
         //CSC Incoming 
         $html .= "<div style=\"font-size: 13px; position:absolute;top:486px;left:377;\">ผู้รับ/Receiver :</div>";
-        $html .= "<div style=\"font-size: 14px; position:absolute;top:486px;left:477;\">" . $receive_by . "</div>";
+        // $html .= "<div style=\"font-size: 14px; position:absolute;top:486px;left:477;\">" . $receive_by . "</div>";
         $html .= "<div style=\"font-size: 14px; position:absolute;top:500px;left:477;\">" . $receive_date . "</div>";
         $html .= "<div style=\"font-size: 14px; padding-right:180px; position:absolute;top:610;left:120px;LINE-HEIGHT:15px;\">" 
         . $note_2 . "</div>";
