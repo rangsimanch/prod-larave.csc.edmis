@@ -232,13 +232,13 @@
     var uploadedLetterUploadMap = {}
 Dropzone.options.letterUploadDropzone = {
     url: '{{ route('admin.add-letters.storeMedia') }}',
-    maxFilesize: 500, // MB
+    maxFilesize: 5120, // MB
     addRemoveLinks: true,
     headers: {
       'X-CSRF-TOKEN': "{{ csrf_token() }}"
     },
     params: {
-      size: 500
+      size: 5120
     },
     success: function (file, response) {
       $('form').append('<input type="hidden" name="letter_upload[]" value="' + response.name + '">')
