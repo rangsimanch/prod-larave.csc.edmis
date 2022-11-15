@@ -1689,7 +1689,7 @@ class RfaController extends Controller
           //Date
         $html .= "<div style=\"font-size: 14px; position:absolute;top:217px;left:630px;\">" . $submit_date . "</div>";
           //Document Name
-        $html .= "<div style=\"font-size: 10px; padding-right:240px; position:absolute;top:285px;left:150px;LINE-HEIGHT:15px;\">" . $document_name . "</div>";
+        $html .= "<div style=\"font-size: 10px; padding-right:230px; position:absolute;top:285px;left:163px;LINE-HEIGHT:15px;\">" . $document_name . "</div>";
         $html .= "<div style=\"font-size: 14px; position:absolute;top:265;left:630;\">" . $qty_page . '.' . "</div>";
         
           //WBS Spec.Ref Clase. Contract No.
