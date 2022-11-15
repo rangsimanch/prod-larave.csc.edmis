@@ -1583,7 +1583,7 @@ class RfaController extends Controller
     
         $submittalsRfa = $submittalsRfa ?? '';
         
-        $document_name = wordwrap($rfa->attach_file_name ?? '',400,"<br>\n");
+        $document_name = $rfa->attach_file_name;
         $note_1 = wordwrap($rfa->note_1 ?? '',400,"<br>\n");
         $note_2 = wordwrap($rfa->note_2 ?? '',400,"<br>\n");
         $note_3 = wordwrap($rfa->note_3 ?? '',400,"<br>\n");
