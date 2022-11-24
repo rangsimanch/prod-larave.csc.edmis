@@ -203,14 +203,14 @@
     var uploadedFileUploadMap = {}
 Dropzone.options.fileUploadDropzone = {
     url: '{{ route('admin.srt-input-documents.storeMedia') }}',
-    maxFilesize: 500000, // MB
+    maxFilesize: 5000, // MB
     acceptedFiles: '.pdf',
     addRemoveLinks: true,
     headers: {
       'X-CSRF-TOKEN': "{{ csrf_token() }}"
     },
     params: {
-      size: 500000
+      size: 5000
     },
     success: function (file, response) {
       $('form').append('<input type="hidden" name="file_upload[]" value="' + response.name + '">')
