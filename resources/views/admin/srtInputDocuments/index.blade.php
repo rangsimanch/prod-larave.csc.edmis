@@ -31,6 +31,9 @@
                                     {{ trans('cruds.srtExternalDocument.fields.id') }}
                                 </th> -->
                                 <th>
+                                    {{ trans('cruds.srtInputDocument.fields.created_at') }}
+                                </th>
+                                <th>
                                     {{ trans('cruds.srtInputDocument.fields.docuement_status') }}
                                 </th>
                                 <th>
@@ -80,6 +83,8 @@
                                 </th>
                             </tr>
                             <tr>
+                                <td>
+                                </td>
                                 <td>
                                 </td>
                                 <!-- <td>
@@ -213,6 +218,7 @@
     columns: [
       { data: 'placeholder', name: 'placeholder' },
 //  { data: 'id', name: 'id', visible: false},
+{ data: 'created_at', name: 'created_at' },
 { data: 'docuement_status_title', name: 'docuement_status.title' },
 { data: 'constuction_contract_code', name: 'constuction_contract.code' },
 { data: 'document_number', name: 'document_number' },

@@ -151,14 +151,14 @@
                             @endif
                             <span class="help-block">{{ trans('cruds.srtInputDocument.fields.note_helper') }}</span>
                         </div>
-                        <div class="form-group {{ $errors->has('file_upload') ? 'has-error' : '' }}">
-                            <label for="file_upload">{{ trans('cruds.srtInputDocument.fields.file_upload') }}</label>
-                            <div class="needsclick dropzone" id="file_upload-dropzone" required>
+                        <div class="form-group {{ $errors->has('file_upload_2') ? 'has-error' : '' }}">
+                            <label for="file_upload_2">{{ trans('cruds.srtInputDocument.fields.file_upload_2') }}</label>
+                            <div class="needsclick dropzone" id="file_upload_2-dropzone">
                             </div>
-                            @if($errors->has('file_upload'))
-                                <span class="help-block" role="alert">{{ $errors->first('file_upload') }}</span>
+                            @if($errors->has('file_upload_2'))
+                                <span class="help-block" role="alert">{{ $errors->first('file_upload_2') }}</span>
                             @endif
-                            <span class="help-block">{{ trans('cruds.srtInputDocument.fields.file_upload_helper') }}</span>
+                            <span class="help-block">{{ trans('cruds.srtInputDocument.fields.file_upload_2_helper') }}</span>
                         </div>
                         <div class="form-group {{ $errors->has('save_for') ? 'has-error' : '' }}">
                             <label class="required">{{ trans('cruds.srtInputDocument.fields.save_for') }}</label>
@@ -191,8 +191,8 @@
 
 @section('scripts')
 <script>
-    var uploadedFileUploadMap = {}
-Dropzone.options.fileUploadDropzone = {
+    var uploadedFileUpload2Map = {}
+Dropzone.options.fileUpload2Dropzone = {
     url: '{{ route('admin.srt-input-documents.storeMedia') }}',
     maxFilesize: 5000, // MB
     addRemoveLinks: true,
@@ -204,8 +204,8 @@ Dropzone.options.fileUploadDropzone = {
       size: 5000
     },
     success: function (file, response) {
-      $('form').append('<input type="hidden" name="file_upload[]" value="' + response.name + '">')
-      uploadedFileUploadMap[file.name] = response.name
+      $('form').append('<input type="hidden" name="file_upload_2[]" value="' + response.name + '">')
+      uploadedFileUpload2Map[file.name] = response.name
     },
     removedfile: function (file) {
       file.previewElement.remove()
@@ -213,19 +213,19 @@ Dropzone.options.fileUploadDropzone = {
       if (typeof file.file_name !== 'undefined') {
         name = file.file_name
       } else {
-        name = uploadedFileUploadMap[file.name]
+        name = uploadedFileUpload2Map[file.name]
       }
-      $('form').find('input[name="file_upload[]"][value="' + name + '"]').remove()
+      $('form').find('input[name="file_upload_2[]"][value="' + name + '"]').remove()
     },
     init: function () {
-@if(isset($srtInputDocument) && $srtInputDocument->file_upload)
+@if(isset($srtInputDocument) && $srtInputDocument->file_upload_2)
           var files =
-            {!! json_encode($srtInputDocument->file_upload) !!}
+            {!! json_encode($srtInputDocument->file_upload_2) !!}
               for (var i in files) {
               var file = files[i]
               this.options.addedfile.call(this, file)
               file.previewElement.classList.add('dz-complete')
-              $('form').append('<input type="hidden" name="file_upload[]" value="' + file.file_name + '">')
+              $('form').append('<input type="hidden" name="file_upload_2[]" value="' + file.file_name + '">')
             }
 @endif
     },
