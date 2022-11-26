@@ -1763,7 +1763,7 @@ class RfaController extends Controller
         . $note_3 . "</div>";
 
         $html .= "<div style=\"font-size: 13px; position:absolute;top:825;left:235;\">" . $action_by . "</div>";
-        $html .= "<div style=\"font-size: 13px; position:absolute;top:825;left:530;\">" . $distribute_date . "</div>";
+        // $html .= "<div style=\"font-size: 13px; position:absolute;top:825;left:530;\">" . $distribute_date . "</div>";
 
         //CSC Outgoing (2)
         $html .= "<div style=\"font-size: 13px; position:absolute;top:871px;left:377;\">เลขที่ออก/Outgoing No. :</div>";
