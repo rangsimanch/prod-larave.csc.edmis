@@ -1725,7 +1725,7 @@ class RfaController extends Controller
         //CSC Incoming 
         $html .= "<div style=\"font-size: 13px; position:absolute;top:486px;left:377;\">ผู้รับ/Receiver :</div>";
         // $html .= "<div style=\"font-size: 14px; position:absolute;top:486px;left:477;\">" . $receive_by . "</div>";
-        $html .= "<div style=\"font-size: 14px; position:absolute;top:500px;left:477;\">" . $receive_date . "</div>";
+        // $html .= "<div style=\"font-size: 14px; position:absolute;top:500px;left:477;\">" . $receive_date . "</div>";
         $html .= "<div style=\"font-size: 14px; padding-right:180px; position:absolute;top:610;left:120px;LINE-HEIGHT:15px;\">" 
         . $note_2 . "</div>";
         $html .= "<div style=\"font-size: 14px; position:absolute;top:660x;left:270;\">" . $assign_to . "</div>";
@@ -1740,7 +1740,7 @@ class RfaController extends Controller
             $html .= "<div style=\"font-size: 14px; font-weight: bold; position:absolute;top:675x;left:235;\">" . '( Leader of Design Review Team )' . "</div>";
         }
 
-        $html .= "<div style=\"font-size: 14px; position:absolute;top:675x;left:530;\">" . $receive_date . "</div>";
+        // $html .= "<div style=\"font-size: 14px; position:absolute;top:675x;left:530;\">" . $receive_date . "</div>";
         $html .= "<div style=\"font-size: 12px; position:absolute;top:596x;left:489;\">" . 'Transportation Specialist' . "</div>";
 
         //CSC Outgoing (1)
@@ -1767,8 +1767,8 @@ class RfaController extends Controller
 
         //CSC Outgoing (2)
         $html .= "<div style=\"font-size: 13px; position:absolute;top:871px;left:377;\">เลขที่ออก/Outgoing No. :</div>";
-        $html .= "<div style=\"font-size: 14px; position:absolute;top:871px;left:477;\">" . $outgoing_number . "</div>";
-        $html .= "<div style=\"font-size: 14px; position:absolute;top:885px;left:477;\">" . $outgoing_date . "</div>";
+        // $html .= "<div style=\"font-size: 14px; position:absolute;top:871px;left:477;\">" . $outgoing_number . "</div>";
+        // $html .= "<div style=\"font-size: 14px; position:absolute;top:885px;left:477;\">" . $outgoing_date . "</div>";
 
 
         $html .= "<div style=\"font-size: 12px; font-weight: bold; position:absolute;top:873px;left:230px;\">"
@@ -1805,7 +1805,7 @@ class RfaController extends Controller
         }
 
 
-        $html .= "<div style=\"font-size: 14px; position:absolute;top:990px;left:530;\">" . $outgoing_date . "</div>";
+        // $html .= "<div style=\"font-size: 14px; position:absolute;top:990px;left:530;\">" . $outgoing_date . "</div>";
 
         $mpdf->WriteHTML($html);
          //Add Document
