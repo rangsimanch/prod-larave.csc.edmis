@@ -1419,8 +1419,13 @@ class RfaController extends Controller
         }
 
         if($rfa->construction_contract->code == "C4-3"){
-            $issue_by = '( Dong Weihong )';
-            $issuer_jobtitle = 'For Project manager CAN';
+            // $issue_by = '( Dong Weihong )';
+            // $issuer_jobtitle = 'For Project manager CAN';
+
+            $issue_by = '( Zhou Jia Yi )';
+            $issuer_jobtitle = 'Project Manager';
+            $signature_path = public_path('png-asset/CAN_signature_2.png');
+            
             $issue_position_lf = 260;
             $issue_position_lf_sub = 489;
             $constructor_name = 'CAN Joint Venture';
@@ -1431,7 +1436,6 @@ class RfaController extends Controller
             $logo_top = 109;
             $logo_left = 690;
             $stamp_path =  public_path('png-asset/CAN_stamp.png');
-            $signature_path = public_path('png-asset/CAN_signature.png');
             $signature_size_h = 60;
             $signature_size_w = 60;
             $signature_position_top = 409;
