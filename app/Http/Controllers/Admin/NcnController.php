@@ -187,12 +187,24 @@ class NcnController extends Controller
 
         $ncn = Ncn::create($data);
 
+    
         foreach ($request->input('description_image', []) as $file) {
             $ncn->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('description_image');
         }
 
         foreach ($request->input('file_attachment', []) as $file) {
-            $ncn->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('file_attachment');
+            $inputFile = storage_path('tmp/uploads/' . basename($file));
+            $outputFile = storage_path('tmp/uploads/' . 'Convert_' . basename($file));
+
+            // Set the Ghostscript command
+            $command = "gs -sDEVICE=pdfwrite -dCompatibilityLevel=1.4 -dNOPAUSE -dQUIET -dBATCH -sOutputFile=$outputFile $inputFile";
+
+            // Run the Ghostscript command
+            shell_exec($command);
+
+            // Add the converted PDF file to the media collection
+            $ncn->addMedia($outputFile)->toMediaCollection('file_attachment');
+            // $ncn->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('file_attachment');
         }
 
         if ($media = $request->input('ck-media', false)) {
@@ -256,7 +268,18 @@ class NcnController extends Controller
         $media = $ncn->file_attachment->pluck('file_name')->toArray();
         foreach ($request->input('file_attachment', []) as $file) {
             if (count($media) === 0 || !in_array($file, $media)) {
-                $ncn->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('file_attachment');
+                $inputFile = storage_path('tmp/uploads/' . basename($file));
+                $outputFile = storage_path('tmp/uploads/' . 'Convert_' . basename($file));
+
+                // Set the Ghostscript command
+                $command = "gs -sDEVICE=pdfwrite -dCompatibilityLevel=1.4 -dNOPAUSE -dQUIET -dBATCH -sOutputFile=$outputFile $inputFile";
+
+                // Run the Ghostscript command
+                shell_exec($command);
+
+                // Add the converted PDF file to the media collection
+                $ncn->addMedia($outputFile)->toMediaCollection('file_attachment');
+                // $ncn->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('file_attachment');
             }
         }
 
