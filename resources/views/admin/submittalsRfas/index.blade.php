@@ -4,7 +4,7 @@
     @can('submittals_rfa_create')
         <div style="margin-bottom: 10px;" class="row">
             <div class="col-lg-12">
-                <a class="btn btn-success" href="{{ route("admin.submittals-rfas.create") }}">
+                <a class="btn btn-success" href="{{ route('admin.submittals-rfas.create') }}">
                     {{ trans('global.add') }} {{ trans('cruds.submittalsRfa.title_singular') }}
                 </a>
                 <button class="btn btn-warning" data-toggle="modal" data-target="#csvImportModal">
@@ -21,100 +21,81 @@
                     {{ trans('cruds.submittalsRfa.title_singular') }} {{ trans('global.list') }}
                 </div>
                 <div class="panel-body">
-                    <div class="table-responsive">
-                        <table class=" table table-bordered table-striped table-hover ajaxTable datatable datatable-SubmittalsRfa">
-                            <thead>
-                                <tr>
-                                    <th width="10">
+                    <table class=" table table-bordered table-striped table-hover ajaxTable datatable datatable-SubmittalsRfa">
+                        <thead>
+                            <tr>
+                                <th width="10">
 
-                                    </th>
-                                    <th>
-                                        {{ trans('cruds.submittalsRfa.fields.id') }}
-                                    </th>
-                                    <th>
-                                        {{ trans('cruds.submittalsRfa.fields.item_no') }}
-                                    </th>
-                                    <th>
-                                        {{ trans('cruds.submittalsRfa.fields.description') }}
-                                    </th>
-                                    <th>
-                                        {{ trans('cruds.submittalsRfa.fields.qty_sets') }}
-                                    </th>
-                                    <th>
-                                        {{ trans('cruds.submittalsRfa.fields.review_status') }}
-                                    </th>
-                                    <th>
-                                        {{ trans('cruds.submittalsRfa.fields.date_returned') }}
-                                    </th>
-                                    <th>
-                                        {{ trans('cruds.submittalsRfa.fields.remarks') }}
-                                    </th>
-                                    <th>
-                                        {{ trans('cruds.submittalsRfa.fields.on_rfa') }}
-                                    </th>
-                                    <th>
-                                        &nbsp;
-                                    </th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach($submittalsRfas as $key => $submittalsRfa)
-                                    <tr data-entry-id="{{ $submittalsRfa->id }}">
-                                        <td>
-
-                                        </td>
-                                        <td>
-                                            {{ $submittalsRfa->id ?? '' }}
-                                        </td>
-                                        <td>
-                                            {{ $submittalsRfa->item_no ?? '' }}
-                                        </td>
-                                        <td>
-                                            {{ $submittalsRfa->description ?? '' }}
-                                        </td>
-                                        <td>
-                                            {{ $submittalsRfa->qty_sets ?? '' }}
-                                        </td>
-                                        <td>
-                                            {{ $submittalsRfa->review_status->name ?? '' }}
-                                        </td>
-                                        <td>
-                                            {{ $submittalsRfa->date_returned ?? '' }}
-                                        </td>
-                                        <td>
-                                            {{ $submittalsRfa->remarks ?? '' }}
-                                        </td>
-                                        <td>
-                                            {{ $submittalsRfa->on_rfa->rfa_code ?? '' }}
-                                        </td>
-                                        <td>
-                                            @can('submittals_rfa_show')
-                                                <a class="btn btn-xs btn-primary" href="{{ route('admin.submittals-rfas.show', $submittalsRfa->id) }}">
-                                                    {{ trans('global.view') }}
-                                                </a>
-                                            @endcan
-
-                                            @can('submittals_rfa_edit')
-                                                <a class="btn btn-xs btn-info" href="{{ route('admin.submittals-rfas.edit', $submittalsRfa->id) }}">
-                                                    {{ trans('global.edit') }}
-                                                </a>
-                                            @endcan
-
-                                            @can('submittals_rfa_delete')
-                                                <form action="{{ route('admin.submittals-rfas.destroy', $submittalsRfa->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
-                                                    <input type="hidden" name="_method" value="DELETE">
-                                                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                                                    <input type="submit" class="btn btn-xs btn-danger" value="{{ trans('global.delete') }}">
-                                                </form>
-                                            @endcan
-
-                                        </td>
-
-                                    </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
-                    </div>
+                                </th>
+                                <th>
+                                    {{ trans('cruds.submittalsRfa.fields.id') }}
+                                </th>
+                                <th>
+                                    {{ trans('cruds.submittalsRfa.fields.item_no') }}
+                                </th>
+                                <th>
+                                    {{ trans('cruds.submittalsRfa.fields.description') }}
+                                </th>
+                                <th>
+                                    {{ trans('cruds.submittalsRfa.fields.qty_sets') }}
+                                </th>
+                                <th>
+                                    {{ trans('cruds.submittalsRfa.fields.review_status') }}
+                                </th>
+                                <th>
+                                    {{ trans('cruds.submittalsRfa.fields.date_returned') }}
+                                </th>
+                                <th>
+                                    {{ trans('cruds.submittalsRfa.fields.remarks') }}
+                                </th>
+                                <th>
+                                    {{ trans('cruds.submittalsRfa.fields.on_rfa') }}
+                                </th>
+                                <th>
+                                    &nbsp;
+                                </th>
+                            </tr>
+                            <tr>
+                                <td>
+                                </td>
+                                <td>
+                                    <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                                </td>
+                                <td>
+                                    <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                                </td>
+                                <td>
+                                    <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                                </td>
+                                <td>
+                                    <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                                </td>
+                                <td>
+                                    <select class="search">
+                                        <option value>{{ trans('global.all') }}</option>
+                                        @foreach($rfa_comment_statuses as $key => $item)
+                                            <option value="{{ $item->name }}">{{ $item->name }}</option>
+                                        @endforeach
+                                    </select>
+                                </td>
+                                <td>
+                                </td>
+                                <td>
+                                    <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                                </td>
+                                <td>
+                                    <select class="search">
+                                        <option value>{{ trans('global.all') }}</option>
+                                        @foreach($rfas as $key => $item)
+                                            <option value="{{ $item->rfa_code }}">{{ $item->rfa_code }}</option>
+                                        @endforeach
+                                    </select>
+                                </td>
+                                <td>
+                                </td>
+                            </tr>
+                        </thead>
+                    </table>
                 </div>
             </div>
 
@@ -130,14 +111,14 @@
     $(function () {
   let dtButtons = $.extend(true, [], $.fn.dataTable.defaults.buttons)
 @can('submittals_rfa_delete')
-  let deleteButtonTrans = '{{ trans('global.datatables.delete') }}'
+  let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
   let deleteButton = {
     text: deleteButtonTrans,
     url: "{{ route('admin.submittals-rfas.massDestroy') }}",
     className: 'btn-danger',
     action: function (e, dt, node, config) {
-      var ids = $.map(dt.rows({ selected: true }).nodes(), function (entry) {
-          return $(entry).data('entry-id')
+      var ids = $.map(dt.rows({ selected: true }).data(), function (entry) {
+          return entry.id
       });
 
       if (ids.length === 0) {
@@ -159,16 +140,57 @@
   dtButtons.push(deleteButton)
 @endcan
 
-  $.extend(true, $.fn.dataTable.defaults, {
+  let dtOverrideGlobals = {
+    buttons: dtButtons,
+    processing: true,
+    serverSide: true,
+    retrieve: true,
+    aaSorting: [],
+    ajax: "{{ route('admin.submittals-rfas.index') }}",
+    columns: [
+      { data: 'placeholder', name: 'placeholder' },
+{ data: 'id', name: 'id' },
+{ data: 'item_no', name: 'item_no' },
+{ data: 'description', name: 'description' },
+{ data: 'qty_sets', name: 'qty_sets' },
+{ data: 'review_status_name', name: 'review_status.name' },
+{ data: 'date_returned', name: 'date_returned' },
+{ data: 'remarks', name: 'remarks' },
+{ data: 'on_rfa_rfa_code', name: 'on_rfa.rfa_code' },
+{ data: 'actions', name: '{{ trans('global.actions') }}' }
+    ],
+    orderCellsTop: true,
     order: [[ 1, 'desc' ]],
     pageLength: 10,
+  };
+  let table = $('.datatable-SubmittalsRfa').DataTable(dtOverrideGlobals);
+  $('a[data-toggle="tab"]').on('shown.bs.tab click', function(e){
+      $($.fn.dataTable.tables(true)).DataTable()
+          .columns.adjust();
   });
-  $('.datatable-SubmittalsRfa:not(.ajaxTable)').DataTable({ buttons: dtButtons })
-    $('a[data-toggle="tab"]').on('shown.bs.tab', function(e){
-        $($.fn.dataTable.tables(true)).DataTable()
-            .columns.adjust();
-    });
-})
+  
+let visibleColumnsIndexes = null;
+$('.datatable thead').on('input', '.search', function () {
+      let strict = $(this).attr('strict') || false
+      let value = strict && this.value ? "^" + this.value + "$" : this.value
+
+      let index = $(this).parent().index()
+      if (visibleColumnsIndexes !== null) {
+        index = visibleColumnsIndexes[index]
+      }
+
+      table
+        .column(index)
+        .search(value, strict)
+        .draw()
+  });
+table.on('column-visibility.dt', function(e, settings, column, state) {
+      visibleColumnsIndexes = []
+      table.columns(":visible").every(function(colIdx) {
+          visibleColumnsIndexes.push(colIdx);
+      });
+  })
+});
 
 </script>
 @endsection

@@ -6,7 +6,6 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-
 class SubmittalsRfa extends Model
 {
     use SoftDeletes;
@@ -14,23 +13,23 @@ class SubmittalsRfa extends Model
     public $table = 'submittals_rfas';
 
     protected $dates = [
-        'updated_at',
-        'created_at',
-        'deleted_at',
         'date_returned',
+        'created_at',
+        'updated_at',
+        'deleted_at',
     ];
 
     protected $fillable = [
         'item_no',
-        'remarks',
+        'description',
         'qty_sets',
+        'review_status_id',
+        'date_returned',
+        'remarks',
         'on_rfa_id',
         'created_at',
         'updated_at',
         'deleted_at',
-        'description',
-        'date_returned',
-        'review_status_id',
     ];
 
     public function review_status()
