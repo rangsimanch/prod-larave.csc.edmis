@@ -925,7 +925,7 @@ class RfaController extends Controller
 
         $wbs_level_4s = Wbslevelfour::all()->pluck('wbs_level_4_name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $issuebies = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $issuebies = User::where('team_id',3)->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $assigns = User::find([61, 461, 288])->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), ''); //61->Li,  62->Liu , 461-> Ma, 288->Jiang
 
