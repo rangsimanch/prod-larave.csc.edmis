@@ -12,7 +12,7 @@ box-shadow: 0px 0px 32px 0px rgba(0,0,0,0.75);">
         
         <legend>
         <p>
-        <img src="{{public_path('EDMIS_Logo.png')}}" border="0" style="width:100%; hight:100%;" />
+        <img src="{{ public_path('png-asset/EDMIS_Logo.png') }}" border="0" style="width:100%; hight:100%;" />
         </p>
         <p>
             <b>
