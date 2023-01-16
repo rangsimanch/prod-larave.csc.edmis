@@ -283,7 +283,7 @@ Dropzone.options.filesUploadDropzone = {
 // { data: 'loop_file_upload', name: 'loop_file_upload', sortable: false, searchable: false },
     ],
     orderCellsTop: true,
-    order: [[ 3, 'desc' ]],
+    order: [[ 2, 'desc' ]],
     pageLength: 10,
     aLengthMenu: [
         [5, 10, 25, 50, 100, 200, 1000],
