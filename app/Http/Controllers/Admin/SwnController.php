@@ -201,7 +201,17 @@ class SwnController extends Controller
         $swn = Swn::create($data);
 
         foreach ($request->input('document_attachment', []) as $file) {
-            $swn->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('document_attachment');
+            $inputFile = storage_path('tmp/uploads/' . basename($file));
+            $outputFile = storage_path('tmp/uploads/' . 'Convert_' . basename($file));
+
+            // Set the Ghostscript command
+            $command = "gs -sDEVICE=pdfwrite -dCompatibilityLevel=1.4 -dNOPAUSE -dQUIET -dBATCH -sOutputFile=$outputFile $inputFile";
+
+            // Run the Ghostscript command
+            shell_exec($command);
+
+            $swn->addMedia($outputFile)->toMediaCollection('document_attachment');
+            // $swn->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('document_attachment');
         }
 
         foreach ($request->input('description_image', []) as $file) {
@@ -296,7 +306,17 @@ class SwnController extends Controller
         $media = $swn->document_attachment->pluck('file_name')->toArray();
         foreach ($request->input('document_attachment', []) as $file) {
             if (count($media) === 0 || !in_array($file, $media)) {
-                $swn->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('document_attachment');
+                $inputFile = storage_path('tmp/uploads/' . basename($file));
+                $outputFile = storage_path('tmp/uploads/' . 'Convert_' . basename($file));
+
+                // Set the Ghostscript command
+                $command = "gs -sDEVICE=pdfwrite -dCompatibilityLevel=1.4 -dNOPAUSE -dQUIET -dBATCH -sOutputFile=$outputFile $inputFile";
+
+                // Run the Ghostscript command
+                shell_exec($command);
+            
+                $swn->addMedia($outputFile)->toMediaCollection('document_attachment');
+                // $swn->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('document_attachment');
             }
         }
 
