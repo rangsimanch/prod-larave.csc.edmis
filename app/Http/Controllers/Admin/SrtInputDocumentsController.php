@@ -219,12 +219,15 @@ class SrtInputDocumentsController extends Controller
             $doc_date = $day_digit . $month_digit;
 
         
-            $inDB = SrtInputDocument::where('document_number','LIKE','%' . $contracts_code . "/" .  $doc_date .'%')->count(); 
+            $inDB = SrtInputDocument::where('document_number' , 'LIKE' , '%' . $contracts_code . "/" .  $doc_date .'%')
+            ->whereRaw('RIGHT(document_number,2) LIKE ?' , [$th_year_digit])
+            ->count(); 
 
 
             if($inDB > 0){
 
-                $query= SrtInputDocument::where('document_number','LIKE','%' . $contracts_code . "/" . $doc_date .'%')
+                $query = SrtInputDocument::where('document_number' , 'LIKE' , '%' . $contracts_code . "/" . $doc_date .'%')
+                ->whereRaw('RIGHT(document_number,2) LIKE ?' , [$th_year_digit])
                 ->latest()->first(); 
 
                 $str_last_number = $query->document_number;
