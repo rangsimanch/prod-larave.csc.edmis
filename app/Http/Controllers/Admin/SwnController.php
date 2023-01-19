@@ -200,9 +200,12 @@ class SwnController extends Controller
 
         $swn = Swn::create($data);
 
-        foreach ($request->input('document_attachment', []) as $file) {
+        foreach ($request->input('document_attachment', []) as $index=>$file) {
             $inputFile = storage_path('tmp/uploads/' . basename($file));
-            $outputFile = storage_path('tmp/uploads/' . 'Convert_' . basename($file));
+            $rename_file = "SWN_" . $doc_number . "-" . $index . ".pdf";
+            rename($inputFile, $rename_file);
+            $outputFile = storage_path('tmp/uploads/' . 'Convert_' . $rename_file);
+
 
             // Set the Ghostscript command
             $command = "gs -sDEVICE=pdfwrite -dCompatibilityLevel=1.4 -dNOPAUSE -dQUIET -dBATCH -sOutputFile=$outputFile $inputFile";
@@ -304,10 +307,12 @@ class SwnController extends Controller
             }
         }
         $media = $swn->document_attachment->pluck('file_name')->toArray();
-        foreach ($request->input('document_attachment', []) as $file) {
+        foreach ($request->input('document_attachment', []) as $index=>$file) {
             if (count($media) === 0 || !in_array($file, $media)) {
                 $inputFile = storage_path('tmp/uploads/' . basename($file));
-                $outputFile = storage_path('tmp/uploads/' . 'Convert_' . basename($file));
+                $rename_file = "SWN_ID" . $swn->id . "-" . $index . ".pdf";
+                rename($inputFile, $rename_file);
+                $outputFile = storage_path('tmp/uploads/' . 'Convert_' . $rename_file);
 
                 // Set the Ghostscript command
                 $command = "gs -sDEVICE=pdfwrite -dCompatibilityLevel=1.4 -dNOPAUSE -dQUIET -dBATCH -sOutputFile=$outputFile $inputFile";
