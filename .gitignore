@@ -38,3 +38,6 @@ storage/tmp/uploads/633ac7ce3577c_สรุปรายรับและรา�
 public/.DS_Store
 public/pdf-asset/.DS_Store
 resources/views/.DS_Store
+public/tmp/mpdf/ttfontdata/garudaB.cgm
+public/tmp/mpdf/ttfontdata/garudaB.cw
+public/tmp/mpdf/ttfontdata/garudaB.ps.z

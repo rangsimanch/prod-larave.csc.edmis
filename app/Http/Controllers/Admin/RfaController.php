@@ -980,11 +980,16 @@ class RfaController extends Controller
 
         $str_length = 4;
         $doc_number = substr("0000{$nextId}", -$str_length);
-        $cur_date = date("ymd");
-        $code_year = substr($cur_date,0,2);
-        $code_mouth = substr($cur_date,2,2);
+        // $cur_date = date("ymd");
+        // $code_year = substr($cur_date,0,2);
+        // $code_mouth = substr($cur_date,2,2);
+        // $code_date = $code_year . "-" . $code_mouth;
+
+        $submit_date = $data['submit_date'];
+        $date_replace = str_replace("/","",$submit_date);
+        $code_year = substr($date_replace,-2);
+        $code_mouth = substr($date_replace,2,2);
         $code_date = $code_year . "-" . $code_mouth;
-        
         
         if($request->origin_number == ''){
             $data['rfa_count'] = $nextId;            
