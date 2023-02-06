@@ -1,6 +1,5 @@
 @extends('layouts.admin')
 @section('content')
-
 <div class="content">
     @can('rfa_create')
         <div style="margin-bottom: 10px;" class="row">
@@ -59,13 +58,13 @@
                                     <p style="font-size:12px"> {{ trans('cruds.rfa.fields.worktype') }} </p>
                                 </th> 
                                 <th>
-                                    <p style="font-size:12px"> {{ trans('cruds.rfa.fields.title_eng') }} </p>
+                                    <p style="font-size:12px;"> {{ trans('cruds.rfa.fields.title_eng') }} </p>
                                 </th>
                                 <th>
-                                    <p style="font-size:12px"> {{ trans('cruds.rfa.fields.title') }} </p>
+                                    <p style="font-size:12px;"> {{ trans('cruds.rfa.fields.title') }} </p>
                                 </th>
                                 <th>
-                                    <p style="font-size:12px"> {{ trans('cruds.rfa.fields.origin_number') }} </p>
+                                    <p style="font-size:12px;"> {{ trans('cruds.rfa.fields.origin_number') }} </p>
                                 </th>
                                 <th>
                                     <p style="font-size:12px"> {{ trans('cruds.rfa.fields.document_number') }} </p>
@@ -145,14 +144,14 @@
                                     </select>
                                 </td>
                                 <td>
-                                    <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                                    <input  style="width:160px" class="search" type="text" placeholder="{{ trans('global.search') }}">
                                 </td>
                                 <td>
-                                    <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                                    <input style="width:160px" class="search" type="text" placeholder="{{ trans('global.search') }}" >
                                 </td>
                                
                                 <td>
-                                    <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                                    <input style="width:100px" class="search" type="text" placeholder="{{ trans('global.search') }}" >
                                 </td>
                                 <td>
                                     <input class="search" type="text" placeholder="{{ trans('global.search') }}">
@@ -209,6 +208,7 @@
 @endsection
 @section('scripts')
 @parent
+
 <script>
     
     $(function () {
@@ -259,7 +259,7 @@
 { data: 'document_status_status_name', name: 'document_status.status_name'},
 { data: 'construction_contract_code', name: 'construction_contract.code' ,sortable: false},
 { data: 'boq_name', name: 'boq.name'},
-{ data: 'boq_sub', name: 'boq_sub.name'},
+{ data: 'boq_sub', name: 'boq_sub.name', visible : false},
 { data: 'worktype', name: 'worktype' },
 { data: 'title_eng', name: 'title_eng' , sortable: false},
 { data: 'title', name: 'title' , sortable: false},
@@ -280,13 +280,16 @@
         [5, 10, 25, 50, 100, 200, 1000]
     ],
   };
+  
   let table = $('.datatable-Rfa').DataTable(dtOverrideGlobals)
+
   $('a[data-toggle="tab"]').on('shown.bs.tab click', function(e){
       $($.fn.dataTable.tables(true)).DataTable()
           .columns.adjust();
   });
 
 let visibleColumnsIndexes = null;
+
 
 $('.datatable thead').on('input', '.search', function () {
       let strict = $(this).attr('strict') || false

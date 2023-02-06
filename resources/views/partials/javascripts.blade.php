@@ -1,5 +1,5 @@
-
-
+<!-- ColReorderWithResize JS -->
+<script src="https://cdn.datatables.net/colreorder/1.5.2/js/dataTables.colReorder.js"></script>
 <script>
     // $(function(){
     //     /** add active class and stay opened when selected */
@@ -26,9 +26,6 @@
         });
     @endif
 </script>
-
- 
-
 
 
 @yield('javascript')

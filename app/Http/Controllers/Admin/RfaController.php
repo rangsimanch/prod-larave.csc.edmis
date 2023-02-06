@@ -956,7 +956,6 @@ class RfaController extends Controller
         $data['create_by_user_id'] = auth()->id();
         $data['document_status_id'] = 1;
         
-
             //Works Code
         $workcode_id = ConstructionContract::all()->pluck('works_code_id');
         $workcode = WorksCode::where('id','=',$workcode_id)->value('code');  

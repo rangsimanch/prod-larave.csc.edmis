@@ -88,6 +88,20 @@
   100% { height: 0%;}
 }
 
+.resizable-header .resizable-handle {
+   position: absolute;
+   right: 0;
+   top: 0;
+   bottom: 0;
+   width: 5px;
+   cursor: col-resize;
+   background: #ddd;
+}
+
+.resizable-header:hover .resizable-handle {
+   background: #888;
+}
+
 </style>
 
 <head>
@@ -138,6 +152,8 @@
     <link href="https://unpkg.com/bootstrap-table@1.15.5/dist/bootstrap-table.min.css" rel="stylesheet">
   
     <link href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css" rel="stylesheet"/>
+
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/colreorder/1.5.2/css/colReorder.dataTables.css">
 
     @yield('styles')
 </head>
