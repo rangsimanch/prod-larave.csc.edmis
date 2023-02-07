@@ -144,14 +144,14 @@
                                     </select>
                                 </td>
                                 <td>
-                                    <input  style="width:160px" class="search" type="text" placeholder="{{ trans('global.search') }}">
+                                    <input style="width: 160px" class="search" type="text" placeholder="{{ trans('global.search') }}">
                                 </td>
                                 <td>
-                                    <input style="width:160px" class="search" type="text" placeholder="{{ trans('global.search') }}" >
+                                    <input style="width: 160px" class="search" type="text" placeholder="{{ trans('global.search') }}" >
                                 </td>
                                
                                 <td>
-                                    <input style="width:100px" class="search" type="text" placeholder="{{ trans('global.search') }}" >
+                                    <input style="width: 100px" class="search" type="text" placeholder="{{ trans('global.search') }}" >
                                 </td>
                                 <td>
                                     <input class="search" type="text" placeholder="{{ trans('global.search') }}">
@@ -259,7 +259,7 @@
 { data: 'document_status_status_name', name: 'document_status.status_name'},
 { data: 'construction_contract_code', name: 'construction_contract.code' ,sortable: false},
 { data: 'boq_name', name: 'boq.name'},
-{ data: 'boq_sub', name: 'boq_sub.name', visible : false},
+{ data: 'boq_sub', name: 'boq_sub.name',},
 { data: 'worktype', name: 'worktype' },
 { data: 'title_eng', name: 'title_eng' , sortable: false},
 { data: 'title', name: 'title' , sortable: false},

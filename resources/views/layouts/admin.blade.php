@@ -87,21 +87,6 @@
   75% { height: 100%;}
   100% { height: 0%;}
 }
-
-.resizable-header .resizable-handle {
-   position: absolute;
-   right: 0;
-   top: 0;
-   bottom: 0;
-   width: 5px;
-   cursor: col-resize;
-   background: #ddd;
-}
-
-.resizable-header:hover .resizable-handle {
-   background: #888;
-}
-
 </style>
 
 <head>
