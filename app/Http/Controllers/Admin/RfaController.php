@@ -1375,10 +1375,26 @@ class RfaController extends Controller
         }
 
         if($rfa->construction_contract->code == "C3-4"){
-            $issue_by = '( มฆา  อัศวราชันย์ )';
-            $issuer_jobtitle = 'ผู้อำนวยการโครงการ';
-            $issue_position_lf = 260;
-            $issue_position_lf_sub = 489;
+            $date_1 = new DateTime('2023-02-07');
+            if($rfa->created_at > $date_1) {
+                $issue_by = '( สุดเขต ไวทยาคม )';
+                $issuer_jobtitle = 'ผู้จัดการโครงการ';
+                $signature_path =  public_path('png-asset/ITD-2_signature.png');
+                $issue_position_lf = 265;
+                $issue_position_lf_sub = 480;
+                $signature_position_top = 430;
+                $signature_position_left = 275;
+            }else {
+                $issue_by = '( มฆา  อัศวราชันย์ )';
+                $issuer_jobtitle = 'ผู้อำนวยการโครงการ';
+                $signature_path =  public_path('png-asset/ITD_signature.png');
+                $issue_position_lf = 260;
+                $issue_position_lf_sub = 489;
+                $signature_position_top = 409;
+                $signature_position_left = 280;
+            }
+            
+            
             $constructor_name = 'Italian-Thai Development PCL.';
             $constructor_code = 'ITD';
             $logo_path = public_path('png-asset/ITD_logo.png');
@@ -1387,11 +1403,8 @@ class RfaController extends Controller
             $logo_top = 109;
             $logo_left = 690;
             $stamp_path =  public_path('png-asset/ITD_stamp.png');
-            $signature_path =  public_path('png-asset/ITD_signature.png');
             $signature_size_h = 60;
             $signature_size_w = 60;
-            $signature_position_top = 409;
-            $signature_position_left = 280;
             $stamp_size_h = 120;
             $stamp_size_w = 120;
             $contract_name = 'Contract ' . $rfa->construction_contract->code . ' : ' . $rfa->construction_contract->name;
@@ -1712,7 +1725,7 @@ class RfaController extends Controller
        
         $html .= "<div style=\"font-size: 14px; position:absolute;top:453px;left:". $issue_position_lf ."px;\">" . $issue_by . "</div>";
         if($issuer_jobtitle == 'ผู้จัดการโครงการ'){
-            $html .= "<div style=\"font-size: 10px; position:absolute;top:467px;left:270px\">" . $issuer_jobtitle . "</div>";
+            $html .= "<div style=\"font-size: 10px; position:absolute;top:467px;left:280px\">" . $issuer_jobtitle . "</div>";
         }
         else{
             $html .= "<div style=\"font-size: 10px; position:absolute;top:467px;left:265px\">" . $issuer_jobtitle . "</div>";
@@ -1739,13 +1752,13 @@ class RfaController extends Controller
         $html .= "<div style=\"font-size: 14px; position:absolute;top:660x;left:270;\">" . $assign_to . "</div>";
        
         if($assign_to == "Ma Shengshuang") {
-            $html .= "<div style=\"font-size: 14px; font-weight: bold; position:absolute;top:675x;left:245;\">" . '( Deputy Project Manager )' . "</div>";
+            $html .= "<div style=\"font-size: 14px; font-weight: bold; position:absolute;top:675x;left:245;\">" . 'Deputy Project Manager' . "</div>";
         }
         if($assign_to == "Li Guanghe"){
-            $html .= "<div style=\"font-size: 14px; font-weight: bold; position:absolute;top:675x;left:255;\">" . '( Chief Engineer )' . "</div>";
+            $html .= "<div style=\"font-size: 14px; font-weight: bold; position:absolute;top:675x;left:255;\">" . 'Chief Engineer' . "</div>";
         }
         if($assign_to == "Jiang Yalei"){
-            $html .= "<div style=\"font-size: 14px; font-weight: bold; position:absolute;top:675x;left:235;\">" . '( Leader of Design Review Team )' . "</div>";
+            $html .= "<div style=\"font-size: 14px; font-weight: bold; position:absolute;top:675x;left:225;\">" . 'Leader of Design Review Team' . "</div>";
         }
 
         // $html .= "<div style=\"font-size: 14px; position:absolute;top:675x;left:530;\">" . $receive_date . "</div>";
@@ -1803,13 +1816,13 @@ class RfaController extends Controller
         $html .= "<div style=\"font-size: 14px; position:absolute;top:990x;left:270;\">" . $assign_to . "</div>";
         
         if($assign_to == "Ma Shengshuang") {
-            $html .= "<div style=\"font-size: 14px; font-weight: bold; position:absolute;top:1005x;left:245;\">" . '( Deputy Project Manager )' . "</div>";
+            $html .= "<div style=\"font-size: 14px; font-weight: bold; position:absolute;top:1005x;left:245;\">" . 'Deputy Project Manager' . "</div>";
         }
         if($assign_to == "Li Guanghe"){
-            $html .= "<div style=\"font-size: 14px; font-weight: bold; position:absolute;top:1005x;left:255;\">" . '( Chief Engineer )' . "</div>";
+            $html .= "<div style=\"font-size: 14px; font-weight: bold; position:absolute;top:1005x;left:255;\">" . 'Chief Engineer ' . "</div>";
         }
         if($assign_to == "Jiang Yalei"){
-            $html .= "<div style=\"font-size: 14px; font-weight: bold; position:absolute;top:1005x;left:235;\">" . '( Leader of Design Review Team )' . "</div>";
+            $html .= "<div style=\"font-size: 14px; font-weight: bold; position:absolute;top:1005x;left:225;\">" . 'Leader of Design Review Team' . "</div>";
         }
 
 
