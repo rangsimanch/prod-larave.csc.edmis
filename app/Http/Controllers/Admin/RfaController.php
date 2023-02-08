@@ -1378,7 +1378,7 @@ class RfaController extends Controller
             $date_1 = new DateTime('2023-02-07');
             if($rfa->created_at > $date_1) {
                 $issue_by = '( สุดเขต ไวทยาคม )';
-                $issuer_jobtitle = 'ผู้จัดการโครงการ';
+                $issuer_jobtitle = 'ผู้อำนวยการโครงการ';
                 $signature_path =  public_path('png-asset/ITD-2_signature.png');
                 $issue_position_lf = 265;
                 $issue_position_lf_sub = 480;
