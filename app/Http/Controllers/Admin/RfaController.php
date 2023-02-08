@@ -1728,7 +1728,7 @@ class RfaController extends Controller
             $html .= "<div style=\"font-size: 10px; position:absolute;top:467px;left:280px\">" . $issuer_jobtitle . "</div>";
         }
         else{
-            $html .= "<div style=\"font-size: 10px; position:absolute;top:467px;left:265px\">" . $issuer_jobtitle . "</div>";
+            $html .= "<div style=\"font-size: 10px; position:absolute;top:467px;left:275px\">" . $issuer_jobtitle . "</div>";
         }
 
         //Signature Manager
