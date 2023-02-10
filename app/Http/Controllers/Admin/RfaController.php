@@ -1151,7 +1151,8 @@ class RfaController extends Controller
 
     public function update(UpdateRfaRequest $request, Rfa $rfa)
     {
-        $state= $request->document_status_id;
+        $state = $request->document_status_id;
+        $data = $request->all();
         $data['update_by_user_id'] = auth()->id();
         $data['action_by_id'] = $request->action_by_id;
         $data['comment_by_id'] = $request->comment_by_id;
