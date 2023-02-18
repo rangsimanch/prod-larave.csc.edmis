@@ -281,6 +281,7 @@ class NcnController extends Controller
                 $index_number = substr("00{$index}", -2);
                 $inputFile = storage_path('tmp/uploads/' . basename($file));
                 $renameFile = storage_path('tmp/uploads/' . 'NCN' . $ncn->id . '_' . $index_number . '.pdf');
+                rename($inputFile, $renameFile);
                 $outputFile = storage_path('tmp/uploads/' . 'Convert_' . 'NCN' . $ncn->id . '_' . $index_number . '.pdf');
 
                 // Set the Ghostscript command
