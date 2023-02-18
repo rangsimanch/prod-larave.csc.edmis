@@ -21,8 +21,6 @@ use Spatie\MediaLibrary\Models\Media;
 use Symfony\Component\HttpFoundation\Response;
 use Yajra\DataTables\Facades\DataTables;
 use Image;
-use Illuminate\Support\Facades\Storage;
-
 
 class SwnController extends Controller
 {
@@ -207,13 +205,13 @@ class SwnController extends Controller
             $index++;
             $index_number = substr("00{$index}", -2);
             $inputFile = storage_path('tmp/uploads/' . basename($file));
-            $filename_change = 'SWN' . $doc_number . '_' . $index_number . '.pdf';
-            rename($inputFile, $filename_change);
+            $renameFile = storage_path('tmp/uploads/' . 'SWN' . $doc_number . '_' . $index_number . '.pdf');
+            rename($inputFile, $renameFile);
 
-            $outputFile = storage_path('tmp/uploads/' . 'Convert_' . $filename_change);
+            $outputFile = storage_path('tmp/uploads/' . 'Convert_' . 'SWN' . $doc_number . '_' . $index_number . '.pdf');
 
             // Set the Ghostscript command
-            $command = "gs -sDEVICE=pdfwrite -dCompatibilityLevel=1.4 -dNOPAUSE -dQUIET -dBATCH -sOutputFile=$outputFile $filename_change";
+            $command = "gs -sDEVICE=pdfwrite -dCompatibilityLevel=1.4 -dNOPAUSE -dQUIET -dBATCH -sOutputFile=$outputFile $renameFile";
 
             // Run the Ghostscript command
             shell_exec($command);
