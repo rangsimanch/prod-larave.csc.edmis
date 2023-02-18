@@ -187,17 +187,24 @@ class NcnController extends Controller
 
         $ncn = Ncn::create($data);
 
-    
+       
         foreach ($request->input('description_image', []) as $file) {
             $ncn->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('description_image');
         }
 
+
+        $index = 0;
+        $index_number = substr("00{$index}", -2);
         foreach ($request->input('file_attachment', []) as $file) {
+            $index++;
+            $index_number = substr("00{$index}", -2);
             $inputFile = storage_path('tmp/uploads/' . basename($file));
-            $outputFile = storage_path('tmp/uploads/' . 'Convert_' . basename($file));
+            $renameFile = storage_path('tmp/uploads/' . 'NCN' . $doc_number . '_' . $index_number . '.pdf');
+            rename($inputFile, $renameFile);
+            $outputFile = storage_path('tmp/uploads/' . 'Convert_' . 'NCN' . $doc_number . '_' . $index_number . '.pdf');
 
             // Set the Ghostscript command
-            $command = "gs -sDEVICE=pdfwrite -dCompatibilityLevel=1.4 -dNOPAUSE -dQUIET -dBATCH -sOutputFile=$outputFile $inputFile";
+            $command = "gs -sDEVICE=pdfwrite -dCompatibilityLevel=1.4 -dNOPAUSE -dQUIET -dBATCH -sOutputFile=$outputFile $renameFile";
 
             // Run the Ghostscript command
             shell_exec($command);
@@ -266,13 +273,18 @@ class NcnController extends Controller
             }
         }
         $media = $ncn->file_attachment->pluck('file_name')->toArray();
+        $index = 0;
+        $index_number = substr("00{$index}", -2);
         foreach ($request->input('file_attachment', []) as $file) {
             if (count($media) === 0 || !in_array($file, $media)) {
+                $index++;
+                $index_number = substr("00{$index}", -2);
                 $inputFile = storage_path('tmp/uploads/' . basename($file));
-                $outputFile = storage_path('tmp/uploads/' . 'Convert_' . basename($file));
+                $renameFile = storage_path('tmp/uploads/' . 'NCN' . $ncn->id . '_' . $index_number . '.pdf');
+                $outputFile = storage_path('tmp/uploads/' . 'Convert_' . 'NCN' . $ncn->id . '_' . $index_number . '.pdf');
 
                 // Set the Ghostscript command
-                $command = "gs -sDEVICE=pdfwrite -dCompatibilityLevel=1.4 -dNOPAUSE -dQUIET -dBATCH -sOutputFile=$outputFile $inputFile";
+                $command = "gs -sDEVICE=pdfwrite -dCompatibilityLevel=1.4 -dNOPAUSE -dQUIET -dBATCH -sOutputFile=$outputFile $renameFile";
 
                 // Run the Ghostscript command
                 shell_exec($command);
