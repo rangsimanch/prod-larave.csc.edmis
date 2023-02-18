@@ -21,6 +21,7 @@ use Spatie\MediaLibrary\Models\Media;
 use Symfony\Component\HttpFoundation\Response;
 use Yajra\DataTables\Facades\DataTables;
 use Image;
+use Illuminate\Support\Facades\Storage;
 
 
 class SwnController extends Controller
@@ -320,7 +321,7 @@ class SwnController extends Controller
                 $index_number = substr("00{$index}", -2);
                 $inputFile = storage_path('tmp/uploads/' . basename($file));
                 $filename_change = 'SWN' . $swn->id . '_' . $index_number . '.pdf';
-                rename($inputFile, $filename_change);
+                Strorage::move($inputFile, $filename_change);
 
                 $outputFile = storage_path('tmp/uploads/' . 'Convert_' . $filename_change);
 
