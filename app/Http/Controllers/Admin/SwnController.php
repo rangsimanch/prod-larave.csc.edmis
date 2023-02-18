@@ -318,10 +318,10 @@ class SwnController extends Controller
                 $index++;
                 $index_number = substr("00{$index}", -2);
                 $inputFile = storage_path('tmp/uploads/' . basename($file));
-                $renameFile = storage_path('tmp/uploads/' . 'SWN' . $doc_number . '_' . $index_number . '.pdf');
+                $renameFile = storage_path('tmp/uploads/' . 'SWN' . $swn->id . '_' . $index_number . '.pdf');
                 rename($inputFile, $renameFile);
 
-                $outputFile = storage_path('tmp/uploads/' . 'Convert_' . 'SWN' . $doc_number . '_' . $index_number . '.pdf');
+                $outputFile = storage_path('tmp/uploads/' . 'Convert_' . 'SWN' . $swn->id . '_' . $index_number . '.pdf');
 
                 // Set the Ghostscript command
                 $command = "gs -sDEVICE=pdfwrite -dCompatibilityLevel=1.4 -dNOPAUSE -dQUIET -dBATCH -sOutputFile=$outputFile $renameFile";
