@@ -199,13 +199,20 @@ class SwnController extends Controller
         $data['document_number'] = $contract_code . '/CSC/SWN/' . $dept_code . ' No./' . $code_year . '-' . $doc_number;
 
         $swn = Swn::create($data);
+        $index = 0;
+        $index_number = substr("00{$index}", -2);
 
         foreach ($request->input('document_attachment', []) as $file) {
+            $index++;
+            $index_number = substr("00{$index}", -2);
             $inputFile = storage_path('tmp/uploads/' . basename($file));
-            $outputFile = storage_path('tmp/uploads/' . 'Convert_' . basename($file));
+            $filename_change = 'SWN' . $doc_number . '_' . $index_number . '.pdf';
+            rename($inputFile, $filename_change);
+
+            $outputFile = storage_path('tmp/uploads/' . 'Convert_' . $filename_change);
 
             // Set the Ghostscript command
-            $command = "gs -sDEVICE=pdfwrite -dCompatibilityLevel=1.4 -dNOPAUSE -dQUIET -dBATCH -sOutputFile=$outputFile $inputFile";
+            $command = "gs -sDEVICE=pdfwrite -dCompatibilityLevel=1.4 -dNOPAUSE -dQUIET -dBATCH -sOutputFile=$outputFile $filename_change";
 
             // Run the Ghostscript command
             shell_exec($command);
@@ -304,13 +311,21 @@ class SwnController extends Controller
             }
         }
         $media = $swn->document_attachment->pluck('file_name')->toArray();
+
+        $index = 0;
+        $index_number = substr("00{$index}", -2);
         foreach ($request->input('document_attachment', []) as $file) {
             if (count($media) === 0 || !in_array($file, $media)) {
+                $index++;
+                $index_number = substr("00{$index}", -2);
                 $inputFile = storage_path('tmp/uploads/' . basename($file));
-                $outputFile = storage_path('tmp/uploads/' . 'Convert_' . basename($file));
+                $filename_change = 'SWN' . $swn->id . '_' . $index_number . '.pdf';
+                rename($inputFile, $filename_change);
+
+                $outputFile = storage_path('tmp/uploads/' . 'Convert_' . $filename_change);
 
                 // Set the Ghostscript command
-                $command = "gs -sDEVICE=pdfwrite -dCompatibilityLevel=1.4 -dNOPAUSE -dQUIET -dBATCH -sOutputFile=$outputFile $inputFile";
+                $command = "gs -sDEVICE=pdfwrite -dCompatibilityLevel=1.4 -dNOPAUSE -dQUIET -dBATCH -sOutputFile=$outputFile $filename_change";
 
                 // Run the Ghostscript command
                 shell_exec($command);
