@@ -56,7 +56,19 @@
                             @endif
                             <span class="help-block">{{ trans('cruds.rfa.fields.wbs_level_4_helper') }}</span>
                         </div> --}}
-
+                    
+                    <div class="form-group {{ $errors->has('assign') ? 'has-error' : '' }}">
+                        <label for="assign_id">{{ trans('cruds.rfa.fields.assign') }}</label>
+                        <select class="form-control select2" name="assign_id" id="assign_id">
+                            @foreach($assigns as $id => $entry)
+                                <option value="{{ $id }}" {{ (old('assign_id') ? old('assign_id') : $rfa->assign->id ?? '') == $id ? 'selected' : '' }}>{{ $entry }}</option>
+                            @endforeach
+                        </select>
+                        @if($errors->has('assign'))
+                            <span class="help-block" role="alert">{{ $errors->first('assign') }}</span>
+                        @endif
+                        <span class="help-block">{{ trans('cruds.rfa.fields.assign_helper') }}</span>
+                    </div>
                      
                      <div class="form-group {{ $errors->has('note_1') ? 'has-error' : '' }}">
                             <label for="note_1">{{ trans('cruds.rfa.fields.note_1') }}</label>
