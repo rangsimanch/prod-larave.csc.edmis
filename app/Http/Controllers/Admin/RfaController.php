@@ -1770,6 +1770,9 @@ class RfaController extends Controller
         if($assign_to == "Jiang Yalei"){
             $html .= "<div style=\"font-size: 14px; font-weight: bold; position:absolute;top:675x;left:225;\">" . 'Leader of Design Review Team' . "</div>";
         }
+        if($assign_to == "Wang Bo"){
+            $html .= "<div style=\"font-size: 14px; font-weight: bold; position:absolute;top:1005x;left:225;\">" . 'Deputy Chief Engineer' . "</div>";
+        }
 
         // $html .= "<div style=\"font-size: 14px; position:absolute;top:675x;left:530;\">" . $receive_date . "</div>";
         $html .= "<div style=\"font-size: 12px; position:absolute;top:596x;left:489;\">" . 'Transportation Specialist' . "</div>";
@@ -1833,6 +1836,9 @@ class RfaController extends Controller
         }
         if($assign_to == "Jiang Yalei"){
             $html .= "<div style=\"font-size: 14px; font-weight: bold; position:absolute;top:1005x;left:225;\">" . 'Leader of Design Review Team' . "</div>";
+        }
+        if($assign_to == "Wang Bo"){
+            $html .= "<div style=\"font-size: 14px; font-weight: bold; position:absolute;top:1005x;left:225;\">" . 'Deputy Chief Engineer' . "</div>";
         }
 
 
