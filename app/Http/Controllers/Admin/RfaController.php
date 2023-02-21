@@ -1152,7 +1152,7 @@ class RfaController extends Controller
     public function update(UpdateRfaRequest $request, Rfa $rfa)
     {
         $state = $request->document_status_id;
-        
+        $data = $request->all();   
         // $data['wbs_level_3_id'] = $request->wbs_level_3_id;
         // $data['wbs_level_4_id'] = $request->wbs_level_4_id;
         $data['spec_ref_no'] = $request->spec_ref_no;
