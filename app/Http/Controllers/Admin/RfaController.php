@@ -1929,11 +1929,12 @@ class RfaController extends Controller
                     $mpdf->WriteHTML($html);
 
                 }
+                
                 $htmlsub = "<div style=\"font-size: 8px; padding-right:660px; position:absolute;top:". $top ."px;left:52px;LINE-HEIGHT:12px;\">". 
                 $submittal['item_no'] . '  ' ."</div>";
 
                 $htmlsub .= "<div style=\"font-size: 10px; padding-right:370px; position:absolute;top:". $top ."px;left:138px;LINE-HEIGHT:15px;\">". 
-                wordwrap($submittal['description'],350,"<br>\n") ."</div>";  
+                wordwrap(htmlspecialchars($submittal['description'], ENT_QUOTES),350,"<br>\n") ."</div>";  
                 
                 $htmlsub .= "<div style=\"font-size: 10px; position:absolute;top:". $top ."px;left:445px;\">". 
                 $submittal['qty_sets'] ."</div>";
