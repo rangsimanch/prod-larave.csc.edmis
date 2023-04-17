@@ -178,18 +178,7 @@
                             <span class="help-block">{{ trans('cruds.rfa.fields.issueby_helper') }}</span>
                         </div>
 
-                        <div class="form-group {{ $errors->has('assign') ? 'has-error' : '' }}">
-                            <label for="assign_id">{{ trans('cruds.rfa.fields.assign') }}</label>
-                            <select class="form-control select2" name="assign_id" id="assign_id">
-                                @foreach($assigns as $id => $assign)
-                                    <option value="{{ $id }}" {{ old('assign_id') == $id ? 'selected' : '' }}>{{ $assign }}</option>
-                                @endforeach
-                            </select>
-                            @if($errors->has('assign_id'))
-                                <span class="help-block" role="alert">{{ $errors->first('assign_id') }}</span>
-                            @endif
-                            <span class="help-block">{{ trans('cruds.rfa.fields.assign_helper') }}</span>
-                        </div>
+                    
                         <div class="form-group {{ $errors->has('note_1') ? 'has-error' : '' }}">
                             <label for="note_1">{{ trans('cruds.rfa.fields.note_1') }}</label>
                             <textarea class="form-control" name="note_1" id="note_1">{!! old('note_1') !!}</textarea>

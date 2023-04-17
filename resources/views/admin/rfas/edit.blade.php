@@ -140,6 +140,19 @@
                        <legend><a onclick="HideSection(2)" id="element2"><i class="bi bi-eye"></i></a><b>  Section II : Incoming Distribution</b></legend>
                        <div id="section2">
                        {{-- <legend>Incoming Distribution</legend> --}}
+                       <div class="form-group {{ $errors->has('assign') ? 'has-error' : '' }}">
+                            <label class="required" for="assign_id">{{ trans('cruds.rfa.fields.assign') }}</label>
+                            <select class="form-control select2" name="assign_id" id="assign_id">
+                                @foreach($assigns as $id => $assign)
+                                    <option value="{{ $id }}" {{ (old('assign_id') ? old('assign_id') : $rfa->assign->id ?? '') == $id ? 'selected' : '' }}>{{ $assign }}</option>
+                                @endforeach
+                            </select>
+                            @if($errors->has('assign_id'))
+                                <span class="help-block" role="alert">{{ $errors->first('assign_id') }}</span>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.rfa.fields.assign_helper') }}</span>
+                        </div>
+
                         <div class="form-group {{ $errors->has('action_by') ? 'has-error' : '' }}">
                             <label class="required" for="action_by_id">{{ trans('cruds.rfa.fields.action_by') }}</label>
                             <select class="form-control select2" name="action_by_id" id="action_by_id">
@@ -267,6 +280,8 @@
                             <span class="help-block">{{ trans('cruds.rfa.fields.note_3_helper') }}</span>
                         </div>
                         {{-- @endif --}}
+
+
 
                         <div class="form-group {{ $errors->has('note_4') ? 'has-error' : '' }}">
                             <label for="note_4">{{ trans('cruds.rfa.fields.note_4') }}</label>
