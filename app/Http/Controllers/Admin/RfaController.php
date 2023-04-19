@@ -1273,11 +1273,11 @@ class RfaController extends Controller
         $html .= "<div style=\"font-size: 14px; padding-right:180px; position:absolute;top:610;left:120px;LINE-HEIGHT:15px;\">" 
         . $note_2 . "</div>";
 
-        $html .= "<div style=\"font-size: 14px; position:absolute;top:665x;left:135;\">( Li Guanghe )</div>";
-        $html .= "<div style=\"font-size: 14px; font-weight: bold; position:absolute;top:677x;left:130;\">" . 'Chief Engineer' . "</div>";
+        $html .= "<div style=\"font-size: 14px; position:absolute;top:675x;left:135;\">( Li Guanghe )</div>";
+        $html .= "<div style=\"font-size: 14px; font-weight: bold; position:absolute;top:687x;left:130;\">" . 'Chief Engineer' . "</div>";
 
-        $html .= "<div style=\"font-size: 14px; position:absolute;top:665x;left:350;\">( Wang Bo )</div>";
-        $html .= "<div style=\"font-size: 14px; font-weight: bold; position:absolute;top:677x;left:325;\">" . 'Deputy Chief Engineer' . "</div>";
+        $html .= "<div style=\"font-size: 14px; position:absolute;top:675x;left:350;\">( Wang Bo )</div>";
+        $html .= "<div style=\"font-size: 14px; font-weight: bold; position:absolute;top:687x;left:325;\">" . 'Deputy Chief Engineer' . "</div>";
 
 
 
@@ -1291,11 +1291,13 @@ class RfaController extends Controller
         // }
 
         if($assign_to == "Li Guanghe"){
-            $html .= "<div style=\"font-size: 16px; position:absolute;top:656x;left:86;\">" . 'X' . "</div>";
+            $html .= "<div style=\"font-size: 16px; position:absolute;top:660x;left:83;\">" . 'X' . "</div>";
+
 
         }
         if($assign_to == "Wang Bo"){
-            $html .= "<div style=\"font-size: 16px; position:absolute;top:656x;left:292;\">" . 'X' . "</div>";
+            $html .= "<div style=\"font-size: 16px; position:absolute;top:662x;left:290;\">" . 'X' . "</div>";
+
         }
 
         // $html .= "<div style=\"font-size: 14px; position:absolute;top:675x;left:530;\">" . $receive_date . "</div>";
@@ -1368,11 +1370,12 @@ class RfaController extends Controller
         // }
         
         if($assign_to == "Li Guanghe"){
-            $html .= "<div style=\"font-size: 16px; position:absolute;top:987x;left:86;\">" . 'X' . "</div>";
+            $html .= "<div style=\"font-size: 16px; position:absolute;top:987x;left:83;\">" . 'X' . "</div>";
+
 
         }
         if($assign_to == "Wang Bo"){
-            $html .= "<div style=\"font-size: 16px; position:absolute;top:987x;left:292;\">" . 'X' . "</div>";
+            $html .= "<div style=\"font-size: 16px; position:absolute;top:987x;left:295;\">" . 'X' . "</div>";
         }
 
 
