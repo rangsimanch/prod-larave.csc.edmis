@@ -232,8 +232,8 @@ class SrtInputDocumentsController extends Controller
 
                 $str_last_number = $query->document_number;
 
-                $last_postfix = substr($str_last_number,-10);
-                $lastday_prefix = substr($last_postfix,0,-6);
+                $last_postfix = substr($str_last_number,-12);
+                $lastday_prefix = substr($last_postfix,0,-8);
 
                 // no. Document
                 if($lastday_prefix == $doc_date){
@@ -245,13 +245,13 @@ class SrtInputDocumentsController extends Controller
                     $count = 1;
                 }
 
-                $data['document_number'] = $doc_no_prefix . $doc_date . '-' . substr("00{$count}",-2) . '/' . $th_year_digit;
+                $data['document_number'] = $doc_no_prefix . $doc_date . '-' . substr("0000{$count}",-4) . '/' . $th_year_digit;
             }
             else{
                 //no, Document 
                 $count = 1;
 
-                $data['document_number'] = $doc_no_prefix . $doc_date . '-' . substr("00{$count}",-2) . '/' . $th_year_digit;
+                $data['document_number'] = $doc_no_prefix . $doc_date . '-' . substr("0000{$count}",-4) . '/' . $th_year_digit;
 
             }
         }
