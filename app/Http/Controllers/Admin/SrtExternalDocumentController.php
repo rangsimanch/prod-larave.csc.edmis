@@ -170,10 +170,14 @@ class SrtExternalDocumentController extends Controller
             $th_year_digit = substr($convert_year,2,2);
             $doc_date = $day_digit . $month_digit;
 
-            $inDB = SrtExternalDocument::where('document_number','LIKE','%' . $contracts_code . "/" .  $doc_date .'%')->count(); 
+            $inDB = SrtExternalDocument::where('document_number','LIKE','%' . $contracts_code . "/" .  $doc_date .'%')
+             ->whereRaw('RIGHT(document_number,2) LIKE ?' , [$th_year_digit])
+             ->count(); 
+
             if($inDB > 0){
 
                 $query= SrtExternalDocument::where('document_number','LIKE','%' . $contracts_code . "/" . $doc_date .'%')
+                ->whereRaw('RIGHT(document_number,2) LIKE ?' , [$th_year_digit])
                 ->latest()->first(); 
 
                 $str_last_number = $query->document_number;
