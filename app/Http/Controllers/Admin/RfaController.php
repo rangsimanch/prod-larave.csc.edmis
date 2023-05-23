@@ -1227,19 +1227,19 @@ class RfaController extends Controller
             . $title_th . "</div>";
         }
         //No. Code.
-        $html .= "<div style=\"font-size: 14px; position:absolute;top:30px;left:650px;\">" . $rfa_code . "</div>";
+        $html .= "<div style=\"font-size: 12px; position:absolute;top:30px;left:650px;\">" . $rfa_code . "</div>";
         $html .= "<div style=\"font-size: 10px; position:absolute;top:170px;left:477px;\">" . $document_number . "</div>";
         $html .= "<div style=\"font-size: 12px; position:absolute;top:170px;left:660px;\">" . $rfa_code . "</div>";
           //Date
-        $html .= "<div style=\"font-size: 14px; position:absolute;top:217px;left:630px;\">" . $submit_date . "</div>";
+        $html .= "<div style=\"font-size: 12px; position:absolute;top:217px;left:630px;\">" . $submit_date . "</div>";
         $html .= "<div style=\"font-size: 12px; position:absolute;top:238px;left:612px;font-weight: bold;\">" . "ผู้จัดการโครงการ/Project Manage (CSC)" . "</div>";
 
           //Document Name
-        $html .= "<div style=\"font-size: 10px; padding-right:200px; position:absolute;top:285px;left:163px;LINE-HEIGHT:15px;\">" . $document_name . "</div>";
-        $html .= "<div style=\"font-size: 14px; position:absolute;top:265;left:630;\">" . $qty_page . '.' . "</div>";
+        $html .= "<div style=\"font-size: 10px; padding-right:250px; position:absolute;top:269px;left:163px;LINE-HEIGHT:15px;\">" . $document_name . "</div>";
+        $html .= "<div style=\"font-size: 12px; position:absolute;top:265;left:630;\">" . $qty_page . '.' . "</div>";
         
           //WBS Spec.Ref Clase. Contract No.
-        $html .= "<div style=\"font-size: 14px; position:absolute;top:344px;left:225px;\">" . $wbs . "</div>";
+        $html .= "<div style=\"font-size: 12px; position:absolute;top:344px;left:225px;\">" . $wbs . "</div>";
         $html .= "<div style=\"font-size: 12px; padding-right:230px; position:absolute;top:361px;left:255px;\">" . $spec_ref_no . "</div>";
         $html .= "<div style=\"font-size: 10px; padding-right:60px; position:absolute;top:360px;left:615px;\">" . $clause . "</div>";
         $html .= "<div style=\"font-size: 12px;  padding-right:60px; position:absolute;top:376px;left:210px;\">" . $contract_drawing_no . "</div>";
