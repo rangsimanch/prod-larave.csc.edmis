@@ -1242,7 +1242,7 @@ class RfaController extends Controller
         $html .= "<div style=\"font-size: 14px; position:absolute;top:344px;left:225px;\">" . $wbs . "</div>";
         $html .= "<div style=\"font-size: 12px; padding-right:230px; position:absolute;top:361px;left:255px;\">" . $spec_ref_no . "</div>";
         $html .= "<div style=\"font-size: 10px; padding-right:60px; position:absolute;top:360px;left:615px;\">" . $clause . "</div>";
-        $html .= "<div style=\"font-size: 14px; position:absolute;top:376px;left:210px;\">" . $contract_drawing_no . "</div>";
+        $html .= "<div style=\"font-size: 12px;  padding-right:60px; position:absolute;top:376px;left:210px;\">" . $contract_drawing_no . "</div>";
           //Note
         $html .= "<div style=\"font-size: 12px; padding-right:60px; position:absolute;top:410px;left:120px;LINE-HEIGHT:15px;\">" 
         . $note_1 . "</div>";
