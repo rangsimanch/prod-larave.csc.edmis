@@ -1189,7 +1189,7 @@ class RfaController extends Controller
                       print "Creating an mPDF object failed with" . $e->getMessage();
                   }   
         //RFA Page
-        $pagecount = $mpdf->SetSourceFile(public_path('pdf-asset/RFA-Form_empty_V.7.pdf'));
+        $pagecount = $mpdf->SetSourceFile(public_path('pdf-asset/RFA-Form_empty_V.8.pdf'));
         $tplId = $mpdf->ImportPage($pagecount);
         $mpdf->UseTemplate($tplId);        
         
@@ -1232,6 +1232,8 @@ class RfaController extends Controller
         $html .= "<div style=\"font-size: 12px; position:absolute;top:170px;left:660px;\">" . $rfa_code . "</div>";
           //Date
         $html .= "<div style=\"font-size: 14px; position:absolute;top:217px;left:630px;\">" . $submit_date . "</div>";
+        $html .= "<div style=\"font-size: 12px; position:absolute;top:238px;left:612px;font-weight: bold;\">" . "ผู้จัดการโครงการ/Project Manage (CSC)" . "</div>";
+
           //Document Name
         $html .= "<div style=\"font-size: 10px; padding-right:200px; position:absolute;top:285px;left:163px;LINE-HEIGHT:15px;\">" . $document_name . "</div>";
         $html .= "<div style=\"font-size: 14px; position:absolute;top:265;left:630;\">" . $qty_page . '.' . "</div>";
@@ -1273,11 +1275,11 @@ class RfaController extends Controller
         $html .= "<div style=\"font-size: 14px; padding-right:180px; position:absolute;top:610;left:120px;LINE-HEIGHT:15px;\">" 
         . $note_2 . "</div>";
 
-        $html .= "<div style=\"font-size: 14px; position:absolute;top:675x;left:135;\">( Li Guanghe )</div>";
-        $html .= "<div style=\"font-size: 14px; font-weight: bold; position:absolute;top:687x;left:130;\">" . 'Chief Engineer' . "</div>";
+        // $html .= "<div style=\"font-size: 14px; position:absolute;top:675x;left:135;\">( Li Guanghe )</div>";
+        // $html .= "<div style=\"font-size: 14px; font-weight: bold; position:absolute;top:687x;left:130;\">" . 'Chief Engineer' . "</div>";
 
-        $html .= "<div style=\"font-size: 14px; position:absolute;top:675x;left:350;\">( Wang Bo )</div>";
-        $html .= "<div style=\"font-size: 14px; font-weight: bold; position:absolute;top:687x;left:325;\">" . 'Deputy Chief Engineer' . "</div>";
+        // $html .= "<div style=\"font-size: 14px; position:absolute;top:675x;left:350;\">( Wang Bo )</div>";
+        // $html .= "<div style=\"font-size: 14px; font-weight: bold; position:absolute;top:687x;left:325;\">" . 'Deputy Chief Engineer' . "</div>";
 
 
 
@@ -1291,14 +1293,13 @@ class RfaController extends Controller
         // }
 
         if($assign_to == "Li Guanghe"){
-            $html .= "<div style=\"font-size: 16px; position:absolute;top:660x;left:83;\">" . 'X' . "</div>";
-
-
+            $html .= "<div style=\"font-size: 16px; position:absolute;top:652x;left:85;\">" . 'X' . "</div>";
         }
         if($assign_to == "Wang Bo"){
-            $html .= "<div style=\"font-size: 16px; position:absolute;top:662x;left:290;\">" . 'X' . "</div>";
-
+            $html .= "<div style=\"font-size: 16px; position:absolute;top:652x;left:297;\">" . 'X' . "</div>";
         }
+
+
 
         // $html .= "<div style=\"font-size: 14px; position:absolute;top:675x;left:530;\">" . $receive_date . "</div>";
         $html .= "<div style=\"font-size: 12px; position:absolute;top:596x;left:489;\">" . 'Transportation Specialist' . "</div>";
@@ -1352,11 +1353,11 @@ class RfaController extends Controller
         $html .= "<div style=\"font-size: 14px; padding-right:180px; position:absolute;top:942;left:120px;LINE-HEIGHT:15px;\">" 
         . $note_4 . "</div>";
 
-        $html .= "<div style=\"font-size: 14px; position:absolute;top:997x;left:135;\">( Li Guanghe )</div>";
-        $html .= "<div style=\"font-size: 14px; font-weight: bold; position:absolute;top:1010x;left:130;\">" . 'Chief Engineer' . "</div>";
+        // $html .= "<div style=\"font-size: 14px; position:absolute;top:997x;left:135;\">( Li Guanghe )</div>";
+        // $html .= "<div style=\"font-size: 14px; font-weight: bold; position:absolute;top:1010x;left:130;\">" . 'Chief Engineer' . "</div>";
 
-        $html .= "<div style=\"font-size: 14px; position:absolute;top:997x;left:350;\">( Wang Bo )</div>";
-        $html .= "<div style=\"font-size: 14px; font-weight: bold; position:absolute;top:1010x;left:325;\">" . 'Deputy Chief Engineer' . "</div>";
+        // $html .= "<div style=\"font-size: 14px; position:absolute;top:997x;left:350;\">( Wang Bo )</div>";
+        // $html .= "<div style=\"font-size: 14px; font-weight: bold; position:absolute;top:1010x;left:325;\">" . 'Deputy Chief Engineer' . "</div>";
 
 
 
@@ -1370,12 +1371,11 @@ class RfaController extends Controller
         // }
         
         if($assign_to == "Li Guanghe"){
-            $html .= "<div style=\"font-size: 16px; position:absolute;top:987x;left:83;\">" . 'X' . "</div>";
-
-
+         $html .= "<div style=\"font-size: 16px; position:absolute;top:990x;left:91;\">" . 'X' . "</div>";
         }
         if($assign_to == "Wang Bo"){
-            $html .= "<div style=\"font-size: 16px; position:absolute;top:987x;left:295;\">" . 'X' . "</div>";
+         $html .= "<div style=\"font-size: 16px; position:absolute;top:990x;left:303;\">" . 'X' . "</div>";
+
         }
 
 
