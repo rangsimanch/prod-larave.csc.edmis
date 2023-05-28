@@ -14,6 +14,7 @@ use App\User;
 use Yajra\DataTables\Facades\DataTables;
 use Spatie\MediaLibrary\Models\Media;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 
 class CscInboxController extends Controller
@@ -23,10 +24,14 @@ class CscInboxController extends Controller
         abort_if(Gate::denies('csc_inbox_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         if ($request->ajax()) {
             $query = AddLetter::with(['sender', 'receiver', 'cc_tos', 'construction_contract', 'create_by', 'receive_by', 'team'])
-            ->select(sprintf('%s.*', (new AddLetter)->table))
-            ->orWhere('receiver_id',3);
+            ->select(sprintf('%s.*', (new AddLetter)->table), DB::raw('(SELECT GROUP_CONCAT(team_id) FROM add_letter_team WHERE add_letters.id = add_letter_team.add_letter_id) AS team_ids'))
+            ->where(function ($query) {
+                $query->where('add_letters.receiver_id', 3)
+                    ->orWhere(function ($subquery) {
+                        $subquery->whereRaw('EXISTS (SELECT 1 FROM add_letter_team WHERE add_letters.id = add_letter_team.add_letter_id AND add_letter_team.team_id = 3)');
+                    });
+            });
             $table = Datatables::of($query);
-
             $table->addColumn('placeholder', '&nbsp;');
             $table->addColumn('actions', '&nbsp;');
 

@@ -49,6 +49,9 @@
                                     {{ trans('cruds.addLetter.fields.sender') }}
                                 </th>
                                 <th>
+                                    {{ trans('cruds.addLetter.fields.receiver') }}
+                                </th>
+                                <th>
                                     {{ trans('cruds.addLetter.fields.received_date') }}
                                 </th>
                                 <th>
@@ -104,6 +107,14 @@
                                 <td>
                                 </td>
                                 <td>
+                                    <select class="search">
+                                        <option value>{{ trans('global.all') }}</option>
+                                        @foreach($teams as $key => $item)
+                                            <option value="{{ $item->code }}">{{ $item->code }}</option>
+                                        @endforeach
+                                    </select>
+                                </td>
+                                  <td>
                                     <select class="search">
                                         <option value>{{ trans('global.all') }}</option>
                                         @foreach($teams as $key => $item)
@@ -210,6 +221,7 @@
 { data: 'letter_no', name: 'letter_no' },
 { data: 'sent_date', name: 'sent_date' },
 { data: 'sender_code', name: 'sender.code' },
+{ data: 'receiver_code', name: 'receiver.code' },
 { data: 'received_date', name: 'received_date' },
 { data: 'cc_to', name: 'cc_tos.code' },
 { data: 'construction_contract_code', name: 'construction_contract.code' },

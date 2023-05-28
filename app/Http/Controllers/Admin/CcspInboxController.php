@@ -24,7 +24,12 @@ class CcspInboxController extends Controller
         if ($request->ajax()) {
             $query = AddLetter::with(['sender', 'receiver', 'cc_tos', 'construction_contract', 'create_by', 'receive_by', 'team'])
             ->select(sprintf('%s.*', (new AddLetter)->table))
-            ->orWhere('receiver_id',4);
+            ->where(function ($query) {
+                $query->where('add_letters.receiver_id', 4)
+                    ->orWhere(function ($subquery) {
+                        $subquery->whereRaw('EXISTS (SELECT 1 FROM add_letter_team WHERE add_letters.id = add_letter_team.add_letter_id AND add_letter_team.team_id = 4)');
+                    });
+            });
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');

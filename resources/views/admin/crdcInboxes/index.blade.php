@@ -42,6 +42,9 @@
                                 <th>
                                     {{ trans('cruds.addLetter.fields.sent_date') }}
                                 </th>
+                                  <th>
+                                    {{ trans('cruds.addLetter.fields.sender') }}
+                                </th>
                                 <th>
                                     {{ trans('cruds.addLetter.fields.receiver') }}
                                 </th>
@@ -99,6 +102,14 @@
                                     <input class="search" type="text" placeholder="{{ trans('global.search') }}">
                                 </td>
                                 <td>
+                                </td>
+                                <td>
+                                    <select class="search">
+                                        <option value>{{ trans('global.all') }}</option>
+                                        @foreach($teams as $key => $item)
+                                            <option value="{{ $item->code }}">{{ $item->code }}</option>
+                                        @endforeach
+                                    </select>
                                 </td>
                                 <td>
                                     <select class="search">
@@ -206,6 +217,7 @@
 { data: 'title', name: 'title' },
 { data: 'letter_no', name: 'letter_no' },
 { data: 'sent_date', name: 'sent_date' },
+{ data: 'sender_code', name: 'sender.code' },
 { data: 'receiver_code', name: 'receiver.code' },
 { data: 'received_date', name: 'received_date' },
 { data: 'cc_to', name: 'cc_tos.code' },

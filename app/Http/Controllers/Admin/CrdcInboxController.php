@@ -16,7 +16,7 @@ use Spatie\MediaLibrary\Models\Media;
 use Illuminate\Support\Facades\Auth;
 
 
-class CscInboxController extends Controller
+class CrdcInboxController extends Controller
 {
     public function index(Request $request)
     {
@@ -24,7 +24,12 @@ class CscInboxController extends Controller
         if ($request->ajax()) {
             $query = AddLetter::with(['sender', 'receiver', 'cc_tos', 'construction_contract', 'create_by', 'receive_by', 'team'])
             ->select(sprintf('%s.*', (new AddLetter)->table))
-            ->orWhere('receiver_id',17);
+            ->where(function ($query) {
+                $query->where('add_letters.receiver_id', 17)
+                    ->orWhere(function ($subquery) {
+                        $subquery->whereRaw('EXISTS (SELECT 1 FROM add_letter_team WHERE add_letters.id = add_letter_team.add_letter_id AND add_letter_team.team_id = 17)');
+                    });
+            });
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
@@ -32,7 +37,7 @@ class CscInboxController extends Controller
 
             $table->editColumn('actions', function ($row) {
                 $viewGate      = 'add_letter_show';
-                if($row->receiver->code == "CSC"){
+                if($row->receiver->code == "CRDC"){
                     $editGate      = 'add_letter_edit';
                 }
                 else{
