@@ -576,7 +576,7 @@ class NcnController extends Controller
                 if($httpCode != 404){
                     $pagecount = $mpdf->SetSourceFile($attacment->getPath());
                     for($page = 1; $page <= $pagecount; $page++){
-                        $mpdf->AddPage();
+                        $mpdf->AddPage('P','','','','','','',50,55);
                         $tplId = $mpdf->importPage($page);
                         $mpdf->UseTemplate($tplId);
                     }         
