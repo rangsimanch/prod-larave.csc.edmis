@@ -24,8 +24,13 @@
 
                                 </th>
                                 <th>
+                                    {{ trans('cruds.dailyRequest.fields.created_at') }}
+                                </th>
+
+                                <th>
                                     {{ trans('cruds.dailyRequest.fields.input_date') }}
                                 </th>
+
                                 <th>
                                     {{ trans('cruds.dailyRequest.fields.documents') }}
                                 </th>
@@ -100,6 +105,18 @@
     ajax: "{{ route('admin.daily-requests.index') }}",
     columns: [
       { data: 'placeholder', name: 'placeholder' },
+      { 
+      data: 'created_at', 
+      name: 'created_at',
+      render: function(data, type, full, meta) {
+        if (type === 'display' || type === 'filter') {
+          // Parse the date using Moment.js or any other library
+          let formattedDate = moment(data).format('DD/MM/YYYY');
+          return formattedDate;
+        }
+        return data;
+      }
+    },
 { data: 'input_date', name: 'input_date' },
 { data: 'documents', name: 'documents', sortable: false, searchable: false },
 { data: 'document_code', name: 'document_code' },
@@ -108,7 +125,7 @@
 { data: 'constuction_contract_code', name: 'constuction_contract.code' },
 { data: 'actions', name: '{{ trans('global.actions') }}' }
     ],
-    order: [[ 1, 'desc' ]],
+    order: [[ 2, 'desc' ]],
     pageLength: 100,
     lengthMenu: [[10, 25, 50, 100, 1000, -1], [10, 25, 50, 100, 1000, "All"]],
   };
