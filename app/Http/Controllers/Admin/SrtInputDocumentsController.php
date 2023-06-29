@@ -361,20 +361,20 @@ class SrtInputDocumentsController extends Controller
             }
         }
 
-        
-        if (count($srtInputDocument->complete_file) > 0) {
-            foreach ($srtInputDocument->complete_file as $media) {
-                if (!in_array($media->file_name, $request->input('complete_file', []))) {
-                    $media->delete();
-                }
-            }
-        }
-        $media = $srtInputDocument->complete_file->pluck('file_name')->toArray();
-        foreach ($request->input('complete_file', []) as $file) {
-            if (count($media) === 0 || !in_array($file, $media)) {
-                $srtInputDocument->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('complete_file');
-            }
-        }
+        // Complete file field
+        // if (count($srtInputDocument->complete_file) > 0) {
+        //     foreach ($srtInputDocument->complete_file as $media) {
+        //         if (!in_array($media->file_name, $request->input('complete_file', []))) {
+        //             $media->delete();
+        //         }
+        //     }
+        // }
+        // $media = $srtInputDocument->complete_file->pluck('file_name')->toArray();
+        // foreach ($request->input('complete_file', []) as $file) {
+        //     if (count($media) === 0 || !in_array($file, $media)) {
+        //         $srtInputDocument->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('complete_file');
+        //     }
+        // }
 
     
 
