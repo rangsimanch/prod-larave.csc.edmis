@@ -519,7 +519,6 @@ $(document).ready(function() {
                     }
 
                     switch (event.which) {
-                       
                         // BACKSPACE
                         case 8:
                             if (doGetCaretPosition($input[0]) === 0) {
