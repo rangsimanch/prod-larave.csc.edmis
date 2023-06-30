@@ -4,6 +4,7 @@ Route::group(['prefix' => 'v1', 'as' => 'api.', 'namespace' => 'Api\V1\Admin', '
     
     // Permissions
     Route::apiResource('permissions', 'PermissionsApiController');
+    
 
     // Roles
     Route::apiResource('roles', 'RolesApiController');
@@ -263,4 +264,23 @@ Route::group(['prefix' => 'v1', 'as' => 'api.', 'namespace' => 'Api\V1\Admin', '
     
     Route::post('recovery-files/media', 'RecoveryFilesApiController@storeMedia')->name('recovery-files.storeMedia');
     Route::apiResource('recovery-files', 'RecoveryFilesApiController');
+
+    // Close Out Main
+    Route::post('close-out-mains/media', 'CloseOutMainApiController@storeMedia')->name('close-out-mains.storeMedia');
+    Route::apiResource('close-out-mains', 'CloseOutMainApiController');
+
+    // Close Out Location
+    Route::apiResource('close-out-locations', 'CloseOutLocationApiController');
+
+    // Close Out Work Type
+    Route::apiResource('close-out-work-types', 'CloseOutWorkTypeApiController');
+
+    // Close Out Inspection
+    Route::post('close-out-inspections/media', 'CloseOutInspectionApiController@storeMedia')->name('close-out-inspections.storeMedia');
+    Route::apiResource('close-out-inspections', 'CloseOutInspectionApiController');
+
+    // Close Out Punch List
+    Route::post('close-out-punch-lists/media', 'CloseOutPunchListApiController@storeMedia')->name('close-out-punch-lists.storeMedia');
+    Route::apiResource('close-out-punch-lists', 'CloseOutPunchListApiController');
+    
 });

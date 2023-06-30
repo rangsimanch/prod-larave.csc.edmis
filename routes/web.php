@@ -576,6 +576,43 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::delete('recovery-dashboards/destroy', 'RecoveryDashboardController@massDestroy')->name('recovery-dashboards.massDestroy');
     Route::resource('recovery-dashboards', 'RecoveryDashboardController');
 
+   // Close Out Main
+    Route::delete('close-out-mains/destroy', 'CloseOutMainController@massDestroy')->name('close-out-mains.massDestroy');
+    Route::post('close-out-mains/media', 'CloseOutMainController@storeMedia')->name('close-out-mains.storeMedia');
+    Route::post('close-out-mains/ckmedia', 'CloseOutMainController@storeCKEditorImages')->name('close-out-mains.storeCKEditorImages');
+    Route::post('close-out-mains/parse-csv-import', 'CloseOutMainController@parseCsvImport')->name('close-out-mains.parseCsvImport');
+    Route::post('close-out-mains/process-csv-import', 'CloseOutMainController@processCsvImport')->name('close-out-mains.processCsvImport');
+    Route::resource('close-out-mains', 'CloseOutMainController');
+
+    // Close Out Location
+    Route::delete('close-out-locations/destroy', 'CloseOutLocationController@massDestroy')->name('close-out-locations.massDestroy');
+    Route::post('close-out-locations/parse-csv-import', 'CloseOutLocationController@parseCsvImport')->name('close-out-locations.parseCsvImport');
+    Route::post('close-out-locations/process-csv-import', 'CloseOutLocationController@processCsvImport')->name('close-out-locations.processCsvImport');
+    Route::resource('close-out-locations', 'CloseOutLocationController');
+
+    // Close Out Work Type
+    Route::delete('close-out-work-types/destroy', 'CloseOutWorkTypeController@massDestroy')->name('close-out-work-types.massDestroy');
+    Route::post('close-out-work-types/parse-csv-import', 'CloseOutWorkTypeController@parseCsvImport')->name('close-out-work-types.parseCsvImport');
+    Route::post('close-out-work-types/process-csv-import', 'CloseOutWorkTypeController@processCsvImport')->name('close-out-work-types.processCsvImport');
+    Route::resource('close-out-work-types', 'CloseOutWorkTypeController');
+
+    // Close Out Inspection
+    Route::delete('close-out-inspections/destroy', 'CloseOutInspectionController@massDestroy')->name('close-out-inspections.massDestroy');
+    Route::post('close-out-inspections/media', 'CloseOutInspectionController@storeMedia')->name('close-out-inspections.storeMedia');
+    Route::post('close-out-inspections/ckmedia', 'CloseOutInspectionController@storeCKEditorImages')->name('close-out-inspections.storeCKEditorImages');
+    Route::post('close-out-inspections/parse-csv-import', 'CloseOutInspectionController@parseCsvImport')->name('close-out-inspections.parseCsvImport');
+    Route::post('close-out-inspections/process-csv-import', 'CloseOutInspectionController@processCsvImport')->name('close-out-inspections.processCsvImport');
+    Route::resource('close-out-inspections', 'CloseOutInspectionController');
+
+    // Close Out Punch List
+    Route::delete('close-out-punch-lists/destroy', 'CloseOutPunchListController@massDestroy')->name('close-out-punch-lists.massDestroy');
+    Route::post('close-out-punch-lists/media', 'CloseOutPunchListController@storeMedia')->name('close-out-punch-lists.storeMedia');
+    Route::post('close-out-punch-lists/ckmedia', 'CloseOutPunchListController@storeCKEditorImages')->name('close-out-punch-lists.storeCKEditorImages');
+    Route::post('close-out-punch-lists/parse-csv-import', 'CloseOutPunchListController@parseCsvImport')->name('close-out-punch-lists.parseCsvImport');
+    Route::post('close-out-punch-lists/process-csv-import', 'CloseOutPunchListController@processCsvImport')->name('close-out-punch-lists.processCsvImport');
+    Route::resource('close-out-punch-lists', 'CloseOutPunchListController');
+
+
     Route::get('system-calendar', 'SystemCalendarController@index')->name('systemCalendar');
     Route::get('global-search', 'GlobalSearchController@search')->name('globalSearch');
     Route::get('messenger', 'MessengerController@index')->name('messenger.index');

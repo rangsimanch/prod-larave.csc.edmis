@@ -873,6 +873,75 @@
                 </li>
             @endcan
 
+             @can('project_close_out_access')
+                <li class="treeview">
+                    <a href="#">
+                        <i class="fa-fw fas fa-building">
+
+                        </i>
+                        <span>{{ trans('cruds.projectCloseOut.title') }}</span>
+                        <span class="pull-right-container"><i class="fa fa-fw fa-angle-left pull-right"></i></span>
+                    </a>
+                    <ul class="treeview-menu">
+                        @can('close_out_main_access')
+                            <li class="{{ request()->is("admin/close-out-mains") || request()->is("admin/close-out-mains/*") ? "active" : "" }}">
+                                <a href="{{ route("admin.close-out-mains.index") }}">
+                                    <i class="fa-fw fas fa-project-diagram">
+
+                                    </i>
+                                    <span>{{ trans('cruds.closeOutMain.title') }}</span>
+
+                                </a>
+                            </li>
+                        @endcan
+                        @can('close_out_location_access')
+                            <li class="{{ request()->is("admin/close-out-locations") || request()->is("admin/close-out-locations/*") ? "active" : "" }}">
+                                <a href="{{ route("admin.close-out-locations.index") }}">
+                                    <i class="fa-fw fas fa-building">
+
+                                    </i>
+                                    <span>{{ trans('cruds.closeOutLocation.title') }}</span>
+
+                                </a>
+                            </li>
+                        @endcan
+                        @can('close_out_work_type_access')
+                            <li class="{{ request()->is("admin/close-out-work-types") || request()->is("admin/close-out-work-types/*") ? "active" : "" }}">
+                                <a href="{{ route("admin.close-out-work-types.index") }}">
+                                    <i class="fa-fw fas fa-building">
+
+                                    </i>
+                                    <span>{{ trans('cruds.closeOutWorkType.title') }}</span>
+
+                                </a>
+                            </li>
+                        @endcan
+                        @can('close_out_inspection_access')
+                            <li class="{{ request()->is("admin/close-out-inspections") || request()->is("admin/close-out-inspections/*") ? "active" : "" }}">
+                                <a href="{{ route("admin.close-out-inspections.index") }}">
+                                    <i class="fa-fw fas fa-clipboard-check">
+
+                                    </i>
+                                    <span>{{ trans('cruds.closeOutInspection.title') }}</span>
+
+                                </a>
+                            </li>
+                        @endcan
+                        @can('close_out_punch_list_access')
+                            <li class="{{ request()->is("admin/close-out-punch-lists") || request()->is("admin/close-out-punch-lists/*") ? "active" : "" }}">
+                                <a href="{{ route("admin.close-out-punch-lists.index") }}">
+                                    <i class="fa-fw fas fa-clipboard-check">
+
+                                    </i>
+                                    <span>{{ trans('cruds.closeOutPunchList.title') }}</span>
+
+                                </a>
+                            </li>
+                        @endcan
+                    </ul>
+                </li>
+            @endcan
+
             @can('announcement_access')
                 <li class="{{ request()->is("admin/announcements") || request()->is("admin/announcements/*") ? "active" : "" }}">
                     <a href="{{ route("admin.announcements.index") }}">

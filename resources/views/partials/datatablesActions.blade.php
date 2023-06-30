@@ -17,3 +17,9 @@
         <input type="submit" class="btn btn-xs btn-danger" value="{{ trans('global.delete') }}">
     </form>
 @endcan
+{{-- 
+@can($revisionGate)
+    <a class="btn btn-xs btn-info" href="{{ route('admin.' . $crudRoutePart . '.revision', $row->id) }}" target="_blank">
+        {{ trans('global.revision') }}
+    </a>
+@endcan --}}
