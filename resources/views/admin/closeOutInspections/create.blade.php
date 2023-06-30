@@ -84,7 +84,7 @@
                         </div>
                         <div class="form-group {{ $errors->has('sub_location') ? 'has-error' : '' }}">
                             <label for="sub_location">{{ trans('cruds.closeOutInspection.fields.sub_location') }}</label>
-                            <input class="form-control" data-role="tagsinput" name="sub_location" id="sub_location" onkeydown="handleKeyDown(event)" multiple value="{{ old('sub_location') }}">
+                            <input class="form-control" data-role="tagsinput" name="sub_location" id="sub_location" multiple value="{{ old('sub_location') }}">
                             @if($errors->has('sub_location'))
                                 <span class="help-block" role="alert">{{ $errors->first('sub_location') }}</span>
                             @endif
