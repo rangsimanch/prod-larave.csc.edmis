@@ -58,7 +58,7 @@ class StoreCloseOutInspectionRequest extends FormRequest
             ],
             'files_report_before' => [
                 'array',
-                'required',
+                'nullable',
             ],
             'files_report_before.*' => [
                 'nullable',
