@@ -195,7 +195,7 @@ class SwnController extends Controller
             $legth_of_doc = $legth_of_doc + 1;
         }
         $doc_number = substr("000{$legth_of_doc}", -3);
-        $data['document_number'] = $contract_code . '/CSC/SWN/' . $dept_code . ' No./' . $code_year . '-' . $doc_number;
+        $data['document_number'] = $contract_code . '/CSC/SWN/' . $dept_code . '/' . 'No.' . $code_year . '-' . $doc_number;
 
         $swn = Swn::create($data);
         $index = 0;
