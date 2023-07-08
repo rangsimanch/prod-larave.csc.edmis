@@ -825,6 +825,8 @@ class RfaController extends Controller
         $rfa->load('type', 'construction_contract', 'wbs_level_3', 'wbs_level_4', 'issueby', 'assign', 'action_by', 'comment_by', 'information_by', 'comment_status', 'for_status', 'document_status', 'create_by_user', 'team','onRfaSubmittalsRfas', 'reviewed_by','distribute_by','update_by_user');
 
         //Varible setting
+        $stamp_position_top = 380;
+        $stamp_position_left = 600;
 
         if($rfa->construction_contract->code == "C2-1"){
             $issue_by = '( Sitthichai Pimsawat )';
@@ -1004,8 +1006,10 @@ class RfaController extends Controller
             $signature_size_w = 60;
             $signature_position_top = 409;
             $signature_position_left = 280;
-            $stamp_size_h = 120;
-            $stamp_size_w = 120;
+            $stamp_position_top = 380;
+            $stamp_position_left = 350;
+            $stamp_size_h = 110;
+            $stamp_size_w = 110;
             $contract_name = 'Contract ' . $rfa->construction_contract->code . ' : ' . $rfa->construction_contract->name;
 
         }
@@ -1263,7 +1267,7 @@ class RfaController extends Controller
         }
         //Stamp Organize
         if($stamp_path != ''){
-            $html .= "<div style=\"font-size: 14px; position:absolute;top:380px;left:600px;\">
+            $html .= "<div style=\"font-size: 14px; position:absolute;top:" . $stamp_position_top . "px;left:". $stamp_position_left ."px;\">
                 <img src=\"". $stamp_path ."\" width=\"". $stamp_size_w ."\" higth=\"". $stamp_size_h ."\" style=\"opacity: 0.8;\"> </div>";
         }
         
