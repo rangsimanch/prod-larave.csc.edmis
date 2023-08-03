@@ -167,47 +167,44 @@ class ComplaintController extends Controller
     {
         abort_if(Gate::denies('complaint_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
+        $complaint_recipients = Team::pluck('code', 'id')->prepend(trans('global.pleaseSelect'), '');
+
         $operators = User::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $complaint->load('construction_contract', 'complaint_recipient', 'operator', 'team');
 
-        return view('admin.complaints.edit', compact('operators', 'complaint'));
+        return view('admin.complaints.edit', compact('complaint', 'complaint_recipients', 'operators'));
     }
 
     public function update(UpdateComplaintRequest $request, Complaint $complaint)
     {
-        $data = $request->all();
-        $complaint->update($data);
+        $complaint->update($request->all());
 
         if (count($complaint->file_attachment_create) > 0) {
             foreach ($complaint->file_attachment_create as $media) {
-                if (!in_array($media->file_name, $request->input('file_attachment_create', []))) {
+                if (! in_array($media->file_name, $request->input('file_attachment_create', []))) {
                     $media->delete();
                 }
             }
         }
-
         $media = $complaint->file_attachment_create->pluck('file_name')->toArray();
-
         foreach ($request->input('file_attachment_create', []) as $file) {
-            if (count($media) === 0 || !in_array($file, $media)) {
-                $complaint->addMedia(storage_path('tmp/uploads/' . $file))->toMediaCollection('file_attachment_create');
+            if (count($media) === 0 || ! in_array($file, $media)) {
+                $complaint->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('file_attachment_create');
             }
         }
 
         if (count($complaint->progress_file) > 0) {
             foreach ($complaint->progress_file as $media) {
-                if (!in_array($media->file_name, $request->input('progress_file', []))) {
+                if (! in_array($media->file_name, $request->input('progress_file', []))) {
                     $media->delete();
                 }
             }
         }
-
         $media = $complaint->progress_file->pluck('file_name')->toArray();
-
         foreach ($request->input('progress_file', []) as $file) {
-            if (count($media) === 0 || !in_array($file, $media)) {
-                $complaint->addMedia(storage_path('tmp/uploads/' . $file))->toMediaCollection('progress_file');
+            if (count($media) === 0 || ! in_array($file, $media)) {
+                $complaint->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('progress_file');
             }
         }
 
