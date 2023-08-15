@@ -1239,7 +1239,11 @@ class RfaController extends Controller
         $html .= "<div style=\"font-size: 12px; position:absolute;top:238px;left:612px;font-weight: bold;\">" . "ผู้จัดการโครงการ/Project Manage (CSC)" . "</div>";
 
           //Document Name
-        $html .= "<div style=\"font-size: 10px; padding-right:250px; position:absolute;top:273px;left:163px;LINE-HEIGHT:15px;\">" . $document_name . "</div>";
+        $document_name_fontsize = "10px";
+        if(strlen($document_name) > 300) {
+            $document_name_fontsize = "9px";
+        }
+        $html .= "<div style=\"font-size: " . $document_name_fontsize  . "; padding-right:230px; position:absolute;top:273px;left:163px;LINE-HEIGHT:15px;\">" . $document_name . "</div>";
         $html .= "<div style=\"font-size: 12px; position:absolute;top:265;left:630;\">" . $qty_page . '.' . "</div>";
         
           //WBS Spec.Ref Clase. Contract No.
