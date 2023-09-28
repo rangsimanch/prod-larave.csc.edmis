@@ -397,7 +397,7 @@ class RequestForInformationController extends Controller
             $signature_path =  public_path('png-asset/Signature_CEC.png');
             $signature_size_h = 40;
             $signature_size_w = 40;
-            $signature_position_top = 410;
+            $signature_position_top = 720;
             $signature_position_left = 280;
         }
 
@@ -417,7 +417,7 @@ class RequestForInformationController extends Controller
             $signature_path =  public_path('png-asset/NWR_signature.png');
             $signature_size_h = 55;
             $signature_size_w = 55;
-            $signature_position_top = 400;
+            $signature_position_top = 720;
             $signature_position_left = 280;
 
         }
@@ -438,7 +438,7 @@ class RequestForInformationController extends Controller
             $signature_path =  public_path('png-asset/TEI_signature.png');
             $signature_size_h = 60;
             $signature_size_w = 60;
-            $signature_position_top = 400;
+            $signature_position_top = 720;
             $signature_position_left = 280;
 
         }
@@ -450,12 +450,12 @@ class RequestForInformationController extends Controller
             if($rfi->id > 2253){
                 $issue_by = 'อำนวย ขัตติข่าย';
                 $signature_path =  public_path('png-asset/ITD_signature_2.png');
-                $signature_position_top = 350;
+                $signature_position_top = 740;
             }
             else {
                 $issue_by = 'มฆา  อัศวราชันย์';
                 $signature_path =  public_path('png-asset/ITD_signature.png');
-                $signature_position_top = 394;
+                $signature_position_top = 720;
             }
             
             $issuer_jobtitle = 'ผู้อำนวยการโครงการ';
@@ -491,7 +491,7 @@ class RequestForInformationController extends Controller
             $signature_path =  public_path('png-asset/SPTK_signature.png');
             $signature_size_h = 60;
             $signature_size_w = 60;
-            $signature_position_top = 410;
+            $signature_position_top = 720;
             $signature_position_left = 275;
 
         }
@@ -512,7 +512,7 @@ class RequestForInformationController extends Controller
             $signature_path = public_path('png-asset/CAN_signature.png');
             $signature_size_h = 60;
             $signature_size_w = 60;
-            $signature_position_top = 394;
+            $signature_position_top = 720;
             $signature_position_left = 260;
 
         }
@@ -533,7 +533,7 @@ class RequestForInformationController extends Controller
             $signature_path = public_path('png-asset/ITD2_signature.png');;
             $signature_size_h = 60;
             $signature_size_w = 60;
-            $signature_position_top = 394;
+            $signature_position_top = 720;
             $signature_position_left = 280;
 
         }
@@ -554,7 +554,7 @@ class RequestForInformationController extends Controller
             $signature_path =  '';
             $signature_size_h = 50;
             $signature_size_w = 50;
-            $signature_position_top = 400;
+            $signature_position_top = 720;
             $signature_position_left = 278;
 
         }
@@ -575,7 +575,7 @@ class RequestForInformationController extends Controller
             $signature_path =  public_path('png-asset/CIVIL_signature.png');
             $signature_size_h = 50;
             $signature_size_w = 50;
-            $signature_position_top = 400;
+            $signature_position_top = 720;
             $signature_position_left = 278;
         }
 
@@ -631,7 +631,7 @@ class RequestForInformationController extends Controller
         $html .= "<div style=\"font-size: 11px; position:absolute;top:733px;left:270px;\">" . $issue_by  . "</div>";
 
         if($signature_path != ''){
-            $html .= "<div style=\"font-size: 14px; position:absolute;top:720px;left:500px;\">
+            $html .= "<div style=\"font-size: 14px; position:absolute;top:". $signature_position_top ."px;left:500px;\">
             <img src=\"". $signature_path ."\" width=\"". $signature_size_w ."px\" higth=\"". $signature_size_h ."px\"> </div>";
         }
 
