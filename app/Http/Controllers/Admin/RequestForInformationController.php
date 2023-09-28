@@ -450,7 +450,7 @@ class RequestForInformationController extends Controller
             if($rfi->id > 2253){
                 $issue_by = 'อำนวย ขัตติข่าย';
                 $signature_path =  public_path('png-asset/ITD_signature_2.png');
-                $signature_position_top = 400;
+                $signature_position_top = 450;
             }
             else {
                 $issue_by = 'มฆา  อัศวราชันย์';
