@@ -27,12 +27,11 @@
                                 <th width="10">
 
                                 </th>
-                               
-                                <th>
-                                    {{ trans('cruds.user.fields.name') }}
+                                  <th>
+                                    {{ trans('cruds.user.fields.created_at') }}
                                 </th>
                                 <th>
-                                    {{ trans('cruds.user.fields.dob') }}
+                                    {{ trans('cruds.user.fields.name') }}
                                 </th>
                                 <th>
                                     {{ trans('cruds.user.fields.organization') }}
@@ -55,25 +54,24 @@
                                 <th>
                                     {{ trans('cruds.user.fields.roles') }}
                                 </th>
-                            
                                 <th>
                                     {{ trans('cruds.user.fields.approved') }}
                                 </th>
                                 <th>
                                     {{ trans('cruds.user.fields.construction_contract') }}
                                 </th>
+                              
                                 <th>
                                     &nbsp;
                                 </th>
                             </tr>
                             <tr>
-                
                                 <td>
+                                </td>
+                                 <td>
                                 </td>
                                 <td>
                                     <input class="search" type="text" placeholder="{{ trans('global.search') }}">
-                                </td>
-                                <td>
                                 </td>
                                 <td>
                                     <select class="search">
@@ -114,12 +112,15 @@
                                     <input class="search" type="text" placeholder="{{ trans('global.search') }}">
                                 </td>
                                 <td>
-                                    <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                                    <select class="search">
+                                        <option value>{{ trans('global.all') }}</option>
+                                        @foreach($roles as $key => $item)
+                                            <option value="{{ $item->title }}">{{ $item->title }}</option>
+                                        @endforeach
+                                    </select>
                                 </td>
-                               
                                 <td>
                                 </td>
-                               
                                 <td>
                                     <select class="search">
                                         <option value>{{ trans('global.all') }}</option>
@@ -128,6 +129,7 @@
                                         @endforeach
                                     </select>
                                 </td>
+                               
                                 <td>
                                 </td>
                             </tr>
@@ -186,15 +188,15 @@
     ajax: "{{ route('admin.users.index') }}",
     columns: [
       { data: 'placeholder', name: 'placeholder' },
+{ data: 'created_at', name: 'created_at' },
+
 { data: 'name', name: 'name' },
-{ data: 'dob', name: 'dob' },
 { data: 'organization_title_th', name: 'organization.title_th' },
 { data: 'gender', name: 'gender' },
 { data: 'workphone', name: 'workphone' },
 { data: 'team_name', name: 'team.name' },
 { data: 'jobtitle_name', name: 'jobtitle.name' },
 { data: 'email', name: 'email' },
-// { data: 'email_verified_at', name: 'email_verified_at' },
 { data: 'roles', name: 'roles.title' },
 { data: 'approved', name: 'approved' },
 { data: 'construction_contract', name: 'construction_contracts.code' },
@@ -202,7 +204,7 @@
     ],
     orderCellsTop: true,
     order: [[ 1, 'asc' ]],
-    pageLength: 50,
+    pageLength: 10,
   };
   let table = $('.datatable-User').DataTable(dtOverrideGlobals);
   $('a[data-toggle="tab"]').on('shown.bs.tab click', function(e){

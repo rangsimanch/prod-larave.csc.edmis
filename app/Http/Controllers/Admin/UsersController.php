@@ -58,22 +58,9 @@ class UsersController extends Controller
                     'row'
                 ));
             });
-
-            // $table->editColumn('img_user', function ($row) {
-            //     if ($photo = $row->img_user) {
-            //         return sprintf(
-            //             '<a href="%s" target="_blank"><img src="%s" width="50px" height="50px"></a>',
-            //             $photo->url,
-            //             $photo->thumbnail
-            //         );
-            //     }
-
-            //     return '';
-            // });
-            $table->editColumn('name', function ($row) {
-                return $row->name ? $row->name : "";
+             $table->editColumn('name', function ($row) {
+                return $row->name ? $row->name : '';
             });
-
             $table->addColumn('organization_title_th', function ($row) {
                 return $row->organization ? $row->organization->title_th : '';
             });
@@ -82,7 +69,7 @@ class UsersController extends Controller
                 return $row->gender ? User::GENDER_SELECT[$row->gender] : '';
             });
             $table->editColumn('workphone', function ($row) {
-                return $row->workphone ? $row->workphone : "";
+                return $row->workphone ? $row->workphone : '';
             });
             $table->addColumn('team_name', function ($row) {
                 return $row->team ? $row->team->name : '';
@@ -93,35 +80,21 @@ class UsersController extends Controller
             });
 
             $table->editColumn('email', function ($row) {
-                return $row->email ? $row->email : "";
+                return $row->email ? $row->email : '';
             });
-
             $table->editColumn('roles', function ($row) {
                 $labels = [];
-
                 foreach ($row->roles as $role) {
                     $labels[] = sprintf('<span class="label label-info label-many">%s</span>', $role->title);
                 }
 
                 return implode(' ', $labels);
             });
-            // $table->editColumn('signature', function ($row) {
-            //     if ($photo = $row->signature) {
-            //         return sprintf(
-            //             '<a href="%s" target="_blank"><img src="%s" width="50px" height="50px"></a>',
-            //             $photo->url,
-            //             $photo->thumbnail
-            //         );
-            //     }
-
-            //     return '';
-            // });
             $table->editColumn('approved', function ($row) {
                 return '<input type="checkbox" disabled ' . ($row->approved ? 'checked' : null) . '>';
             });
             $table->editColumn('construction_contract', function ($row) {
                 $labels = [];
-
                 foreach ($row->construction_contracts as $construction_contract) {
                     $labels[] = sprintf('<span class="label label-info label-many">%s</span>', $construction_contract->code);
                 }
@@ -140,7 +113,6 @@ class UsersController extends Controller
         $roles                  = Role::get();
         $construction_contracts = ConstructionContract::get();
 
-        session(['previous-url' => route('admin.users.index')]);
         return view('admin.users.index', compact('organizations', 'teams', 'jobtitles', 'roles', 'construction_contracts'));
     }
 
