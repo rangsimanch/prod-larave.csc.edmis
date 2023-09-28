@@ -446,13 +446,16 @@ class RequestForInformationController extends Controller
         if($rfi->construction_contract->code == "C3-4"){
             $issue_by = '';
             $signature_path =  '';
+            $signature_position_top = 0;
             if($rfi->id > 2253){
                 $issue_by = 'อำนวย ขัตติข่าย';
                 $signature_path =  public_path('png-asset/ITD_signature_2.png');
+                $signature_position_top = 400;
             }
             else {
                 $issue_by = 'มฆา  อัศวราชันย์';
                 $signature_path =  public_path('png-asset/ITD_signature.png');
+                $signature_position_top = 394;
             }
             
             $issuer_jobtitle = 'ผู้อำนวยการโครงการ';
@@ -468,7 +471,6 @@ class RequestForInformationController extends Controller
             $stamp_path =  public_path('png-asset/ITD_stamp.png');
             $signature_size_h = 60;
             $signature_size_w = 60;
-            $signature_position_top = 394;
             $signature_position_left = 280;
 
         }
