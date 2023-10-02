@@ -534,9 +534,18 @@ class TaskController extends Controller
 
         $tags = TaskTag::all()->pluck('name', 'id');
 
+        $user = User::with(['construction_contracts'])->where('id', auth()->id())->first();
+
+        $user_contracts = [];
+        foreach($user->construction_contracts as $contract){
+            array_push($user_contracts, $contract->id);
+        }
+
+        $construction_contracts = ConstructionContract::whereIn('id', $user_contracts)->pluck('code','id')->prepend(trans('global.pleaseSelect'), '');
+
         $statuses = TaskStatus::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        return view('admin.tasks.create', compact('tags', 'statuses'));
+        return view('admin.tasks.create', compact('tags', 'statuses', 'construction_contracts'));
     }
 
 
@@ -545,7 +554,6 @@ class TaskController extends Controller
     {
         $data = $request->all();
         $data['create_by_user_id'] = auth()->id();
-        $data['construction_contract_id'] = session()->get('construction_contract_id');
         $task = Task::create($data);
         $task->tags()->sync($request->input('tags', []));
 
@@ -567,11 +575,20 @@ class TaskController extends Controller
 
         $tags = TaskTag::all()->pluck('name', 'id');
 
+        $user = User::with(['construction_contracts'])->where('id', auth()->id())->first();
+
+        $user_contracts = [];
+        foreach($user->construction_contracts as $contract){
+            array_push($user_contracts, $contract->id);
+        }
+
+        $construction_contracts = ConstructionContract::whereIn('id', $user_contracts)->pluck('code','id')->prepend(trans('global.pleaseSelect'), '');
+
         $statuses = TaskStatus::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $task->load('tags', 'status', 'create_by_user', 'construction_contract', 'team');
 
-        return view('admin.tasks.edit', compact('tags', 'statuses', 'task'));
+        return view('admin.tasks.edit', compact('tags', 'statuses', 'task', 'construction_contracts'));
     }
 
     public function update(UpdateTaskRequest $request, Task $task)
