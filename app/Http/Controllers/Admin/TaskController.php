@@ -575,7 +575,7 @@ class TaskController extends Controller
 
         $tags = TaskTag::all()->pluck('name', 'id');
 
-        $user = User::with(['construction_contracts'])->where('id', auth()->id())->first();
+        $user = User::with(['construction_contracts'])->where('id', $task->create_by_user->id)->first();
 
         $user_contracts = [];
         foreach($user->construction_contracts as $contract){
