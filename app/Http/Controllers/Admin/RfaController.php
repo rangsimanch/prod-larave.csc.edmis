@@ -833,6 +833,7 @@ class RfaController extends Controller
             $issuer_jobtitle = 'ผู้จัดการโครงการ';
             $issue_position_lf = 255;
             $issue_position_lf_sub = 483;
+            $jobittle_position_lf = 275;
             $constructor_name = 'Civil Construction Services & Products Company Limited';
             $constructor_code = 'CCSP';
             $logo_path =  public_path('png-asset/Stamp_CEC.png');
@@ -855,15 +856,16 @@ class RfaController extends Controller
         if($rfa->construction_contract->code == "C3-1"){
             $issue_by = '(นายศรายุธ ทองยศ) และ (Mr.Yu Dongxin)';
             $issuer_jobtitle = 'ผู้อำนวยการโครงการ และ ผู้รับมอบอำนาจกระทำการแทน';
-            $issue_position_lf = 260;
+            $issue_position_lf = 215;
             $issue_position_lf_sub = 485;
+            $jobittle_position_lf = 220;
             $constructor_name = 'ITD-CREC No.10 Joint Venture';
             $constructor_code = 'ITD-CREC No.10 Joint Venture';
-            $logo_path =  public_path('png-asset/ITD-CREC_logo.png');
+            $logo_path =  public_path('png-asset/ITD-CREC_logo.jpg');
             $logo_h = 40;
             $logo_w = 40;
             $logo_top = 109;
-            $logo_left = 690;
+            $logo_left = 700;
             $stamp_path =  '';
             $signature_path =  '';
             $signature_size_h = 55;
@@ -882,6 +884,7 @@ class RfaController extends Controller
             $issuer_jobtitle = 'ผู้จัดการโครงการ';
             $issue_position_lf = 260;
             $issue_position_lf_sub = 485;
+            $jobittle_position_lf = 275;
             $constructor_name = 'Nawarat Patanakarn Public Company Limited';
             $constructor_code = 'NWR';
             $logo_path =  public_path('png-asset/NWR_logo.png');
@@ -906,6 +909,7 @@ class RfaController extends Controller
             $issuer_jobtitle = 'รองผู้จัดการโครงการ';
             $issue_position_lf = 247;
             $issue_position_lf_sub = 480;
+            $jobittle_position_lf = 275;
             $constructor_name = 'Thai Engineers & Industry Company Limited';
             $constructor_code = 'TEI';
             $logo_path = public_path('png-asset/TEI_logo.png');
@@ -945,6 +949,7 @@ class RfaController extends Controller
                 $signature_position_left = 280;
             }
             
+            $jobittle_position_lf = 275;
             
             $constructor_name = 'Italian-Thai Development PCL.';
             $constructor_code = 'ITD';
@@ -967,6 +972,7 @@ class RfaController extends Controller
             $issuer_jobtitle = 'ผู้จัดการโครงการ';
             $issue_position_lf = 245;
             $issue_position_lf_sub = 480;
+            $jobittle_position_lf = 275;
             $constructor_name = 'SPTK Joint Venture Company Limited';
             $constructor_code = 'SPTK';
             $logo_path =  public_path('png-asset/SPTK_stamp.png');
@@ -993,6 +999,7 @@ class RfaController extends Controller
             $issue_by = '( Zhou Jia Yi )';
             $issuer_jobtitle = 'Project Manager';
             $signature_path = public_path('png-asset/CAN_signature_2.png');
+            $jobittle_position_lf = 275;
             
             $issue_position_lf = 260;
             $issue_position_lf_sub = 489;
@@ -1019,6 +1026,7 @@ class RfaController extends Controller
             $issuer_jobtitle = 'ผู้อำนวยการโครงการ';
             $issue_position_lf = 260;
             $issue_position_lf_sub = 489;
+            $jobittle_position_lf = 275;
             $constructor_name = 'Italian-Thai Development PCL.';
             $constructor_code = 'ITD';
             $logo_path = public_path('png-asset/ITD_logo.png');
@@ -1045,6 +1053,7 @@ class RfaController extends Controller
             $issuer_jobtitle = 'ผู้รับมอบอำนาจ';
             $issue_position_lf = 255;
             $issue_position_lf_sub = 489;
+            $jobittle_position_lf = 275;
             $constructor_name = 'Unique Engineering and Construction Public Company Limited';
             $constructor_code = 'UNIQUE';
             $logo_path = public_path('png-asset/UNIQUE_logo.png');
@@ -1069,6 +1078,7 @@ class RfaController extends Controller
             $issuer_jobtitle = 'ผู้รับมอบอำนาจ';
             $issue_position_lf = 255;
             $issue_position_lf_sub = 489;
+            $jobittle_position_lf = 275;
             $constructor_name = 'Unique Engineering and Construction Public Company Limited';
             $constructor_code = 'UNIQUE';
             $logo_path = public_path('png-asset/UNIQUE_logo.png');
@@ -1093,6 +1103,7 @@ class RfaController extends Controller
             $issuer_jobtitle = 'ผู้จัดการโครงการ';
             $issue_position_lf = 265;
             $issue_position_lf_sub = 423;
+            $jobittle_position_lf = 275;
             $constructor_name = 'Civil Enginneering Public Company Limited';
             $constructor_code = 'CIVIL';
             $logo_path = public_path('png-asset/CIVIL_logo.png');
@@ -1287,7 +1298,7 @@ class RfaController extends Controller
             $html .= "<div style=\"font-size: 10px; position:absolute;top:467px;left:280px\">" . $issuer_jobtitle . "</div>";
         }
         else{
-            $html .= "<div style=\"font-size: 10px; position:absolute;top:467px;left:275px\">" . $issuer_jobtitle . "</div>";
+            $html .= "<div style=\"font-size: 10px; position:absolute;top:467px;left:" . $jobittle_position_lf . "px\">" . $issuer_jobtitle . "</div>";
         }
 
         //Signature Manager
