@@ -851,6 +851,32 @@ class RfaController extends Controller
             $contract_name = 'Contract ' . $rfa->construction_contract->code . ' : ' . $rfa->construction_contract->name;
         }
 
+
+        if($rfa->construction_contract->code == "C3-1"){
+            $issue_by = '(นายศรายุธ ทองยศ) และ (Mr.Yu Dongxin)';
+            $issuer_jobtitle = 'ผู้อำนวยการโครงการ และ ผู้รับมอบอำนาจกระทำการแทน';
+            $issue_position_lf = 260;
+            $issue_position_lf_sub = 485;
+            $constructor_name = 'ITD-CREC No.10 Joint Venture';
+            $constructor_code = 'ITD-CREC No.10 Joint Venture';
+            $logo_path =  public_path('png-asset/ITD-CREC_logo.png');
+            $logo_h = 40;
+            $logo_w = 40;
+            $logo_top = 109;
+            $logo_left = 690;
+            $stamp_path =  public_path('');;
+            $signature_path =  public_path('');;
+            $signature_size_h = 55;
+            $signature_size_w = 55;
+            $signature_position_top = 415;
+            $signature_position_left = 280;
+            $stamp_size_h = 120;
+            $stamp_size_w = 120;
+            $contract_name = 'Contract ' . $rfa->construction_contract->code . ' : ' . $rfa->construction_contract->name;
+
+        }
+
+
         if($rfa->construction_contract->code == "C3-2"){
             $issue_by = '( ธนนท์ ดอกลัดดา )';
             $issuer_jobtitle = 'ผู้จัดการโครงการ';
