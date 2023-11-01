@@ -828,6 +828,9 @@ class RfaController extends Controller
         $stamp_position_top = 380;
         $stamp_position_left = 600;
 
+        $multi_signature = false;
+        $multi_stamp = false;
+
         if($rfa->construction_contract->code == "C2-1"){
             $issue_by = '( Sitthichai Pimsawat )';
             $issuer_jobtitle = 'ผู้จัดการโครงการ';
@@ -854,11 +857,13 @@ class RfaController extends Controller
 
 
         if($rfa->construction_contract->code == "C3-1"){
+            $multi_signature = true;
+            $multi_stamp = true;
             $issue_by = '(นายศรายุธ ทองยศ) และ (Mr.Yu Dongxin)';
-            $issuer_jobtitle = 'ผู้อำนวยการโครงการ และ ผู้รับมอบอำนาจกระทำการแทน';
+            $issuer_jobtitle = 'ผู้รับมอบอำนาจกระทำการแทน';
             $issue_position_lf = 215;
             $issue_position_lf_sub = 485;
-            $jobittle_position_lf = 220;
+            $jobittle_position_lf = 260;
             $constructor_name = 'ITD-CREC No.10 Joint Venture';
             $constructor_code = 'ITD-CREC No.10 Joint Venture';
             $logo_path =  public_path('png-asset/ITD-CREC_logo.jpg');
@@ -866,12 +871,31 @@ class RfaController extends Controller
             $logo_w = 40;
             $logo_top = 109;
             $logo_left = 700;
-            $stamp_path =  '';
-            $signature_path =  '';
+
+            $stamp_path =  public_path('png-asset/ITDCREC_stamp_1.png');
+            $stamp_path_2 =  public_path('png-asset/ITDCREC_stamp_2.png');
+
+            $signature_path =  public_path('png-asset/ITDCREC_signature_1.png');
+            $signature_path_2 =  public_path('png-asset/ITDCREC_signature_2.png');
+
             $signature_size_h = 55;
             $signature_size_w = 55;
+
+            $signature_size_h_2 = 80;
+            $signature_size_w_2 = 80;
+
             $signature_position_top = 415;
-            $signature_position_left = 280;
+            $signature_position_left = 220;
+
+            $signature_position_top_2 = 425;
+            $signature_position_left_2 = 290;
+
+            $stamp_position_top = 380;
+            $stamp_position_left = 450;
+
+            $stamp_position_top_2 = 395;
+            $stamp_position_left_2 = 550;
+
             $stamp_size_h = 120;
             $stamp_size_w = 120;
             $contract_name = 'Contract ' . $rfa->construction_contract->code . ' : ' . $rfa->construction_contract->name;
@@ -1301,18 +1325,45 @@ class RfaController extends Controller
             $html .= "<div style=\"font-size: 10px; position:absolute;top:467px;left:" . $jobittle_position_lf . "px\">" . $issuer_jobtitle . "</div>";
         }
 
-        //Signature Manager
-        if($signature_path != ''){
-            $html .= "<div style=\"font-size: 14px; position:absolute;top:" . $signature_position_top  ."px;left:". $signature_position_left ."px;\">
-                <img src=\"". $signature_path ."\" width=\"". $signature_size_w ."\" higth=\"". $signature_size_h ."\"> </div>";
-        }
-        //Stamp Organize
-        if($stamp_path != ''){
-            $html .= "<div style=\"font-size: 14px; position:absolute;top:" . $stamp_position_top . "px;left:". $stamp_position_left ."px;\">
-                <img src=\"". $stamp_path ."\" width=\"". $stamp_size_w ."\" higth=\"". $stamp_size_h ."\" style=\"opacity: 0.8;\"> </div>";
-        }
-        
+        if($multi_signature){
+             if($signature_path != ''){
+                $html .= "<div style=\"font-size: 14px; position:absolute;top:" . $signature_position_top  ."px;left:". $signature_position_left ."px;\">
+                    <img src=\"". $signature_path ."\" width=\"". $signature_size_w ."\" higth=\"". $signature_size_h ."\"> </div>";
 
+             }
+              if($signature_path_2 != ''){
+                $html .= "<div style=\"font-size: 14px; position:absolute;top:" . $signature_position_top_2  ."px;left:". $signature_position_left_2 ."px;\">
+                    <img src=\"". $signature_path_2 ."\" width=\"". $signature_size_w_2 ."\" higth=\"". $signature_size_h_2 ."\"> </div>";
+
+              }
+        }
+        else{
+             //Signature Manager
+            if($signature_path != ''){
+                $html .= "<div style=\"font-size: 14px; position:absolute;top:" . $signature_position_top  ."px;left:". $signature_position_left ."px;\">
+                    <img src=\"". $signature_path ."\" width=\"". $signature_size_w ."\" higth=\"". $signature_size_h ."\"> </div>";
+            }
+        }
+
+        if($multi_stamp){
+            if($stamp_path != ''){
+                $html .= "<div style=\"font-size: 14px; position:absolute;top:" . $stamp_position_top . "px;left:". $stamp_position_left ."px;\">
+                    <img src=\"". $stamp_path ."\" width=\"". $stamp_size_w ."\" higth=\"". $stamp_size_h ."\" style=\"opacity: 0.8;\"> </div>";
+            }
+            if($stamp_path_2 != ''){
+                $html .= "<div style=\"font-size: 14px; position:absolute;top:" . $stamp_position_top_2 . "px;left:". $stamp_position_left_2 ."px;\">
+                    <img src=\"". $stamp_path_2 ."\" width=\"". $stamp_size_w ."\" higth=\"". $stamp_size_h ."\" style=\"opacity: 0.8;\"> </div>";
+            }
+
+        }
+        else{
+            //Stamp Organize
+            if($stamp_path != ''){
+                $html .= "<div style=\"font-size: 14px; position:absolute;top:" . $stamp_position_top . "px;left:". $stamp_position_left ."px;\">
+                    <img src=\"". $stamp_path ."\" width=\"". $stamp_size_w ."\" higth=\"". $stamp_size_h ."\" style=\"opacity: 0.8;\"> </div>";
+            }
+        }
+       
         //CSC Incoming 
         $html .= "<div style=\"font-size: 13px; position:absolute;top:486px;left:377;\">ผู้รับ/Receiver :</div>";
         // $html .= "<div style=\"font-size: 14px; position:absolute;top:486px;left:477;\">" . $receive_by . "</div>";
