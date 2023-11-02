@@ -17,11 +17,11 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 
-class CscInboxController extends Controller
+class ItdCrecInboxController extends Controller
 {
     public function index(Request $request)
     {
-        abort_if(Gate::denies('csc_inbox_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('itdcrec_inbox_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         if ($request->ajax()) {
             $query = AddLetter::with(['sender', 'receiver', 'cc_tos', 'construction_contract', 'create_by', 'receive_by', 'team'])
             ->select(sprintf('%s.*', (new AddLetter)->table), DB::raw('(SELECT GROUP_CONCAT(team_id) FROM add_letter_team WHERE add_letters.id = add_letter_team.add_letter_id) AS team_ids'))

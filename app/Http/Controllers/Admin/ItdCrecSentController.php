@@ -16,11 +16,11 @@ use Spatie\MediaLibrary\Models\Media;
 use Illuminate\Support\Facades\Auth;
 
 
-class CanSentController extends Controller
+class ItdCrecSentController extends Controller
 {
     public function index(Request $request)
     {
-        abort_if(Gate::denies('can_sent_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        abort_if(Gate::denies('itdcrec_sent_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         if ($request->ajax()) {
             $query = AddLetter::with(['sender', 'receiver', 'cc_tos', 'construction_contract', 'create_by', 'receive_by', 'team'])
             ->select(sprintf('%s.*', (new AddLetter)->table))
