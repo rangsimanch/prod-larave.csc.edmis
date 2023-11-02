@@ -860,10 +860,10 @@ class RfaController extends Controller
             $multi_signature = true;
             $multi_stamp = true;
             $issue_by = '(นายศรายุธ ทองยศ) และ (Mr.Yu Dongxin)';
-            $issuer_jobtitle = 'ผู้รับมอบอำนาจกระทำการแทน';
+            $issuer_jobtitle = 'ผู้รับมอบอำนาจกระทำการแทน (Authorized Representatives)';
             $issue_position_lf = 215;
             $issue_position_lf_sub = 485;
-            $jobittle_position_lf = 260;
+            $jobittle_position_lf = 210;
             $constructor_name = 'ITD-CREC No.10 Joint Venture';
             $constructor_code = 'ITD-CREC No.10 Joint Venture';
             $logo_path =  public_path('png-asset/ITD-CREC_logo.jpg');

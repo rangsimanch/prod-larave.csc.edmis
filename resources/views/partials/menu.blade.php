@@ -545,6 +545,7 @@
                                     @endcan
                                 </ul>
                             </li>
+                        
                         @can('crdc_inbox_access')
                             <li class="treeview">
                                 <a href="#">
@@ -852,6 +853,41 @@
 
                                                 </i>
                                                 <span>{{ trans('cruds.canSent.title') }}</span>
+                                            </a>
+                                        </li>
+                                    @endcan
+                                </ul>
+                            </li>
+                        @endif
+                        @if(Auth::user()->team_id == 19)
+                            <li class="treeview">
+                                <a href="#">
+                                    <i class="fa-fw fas fa-envelope">
+
+                                    </i>
+                                    <span>{{ trans('cruds.letterItdCrec.title') }}</span>
+                                    <span class="pull-right-container"><i class="fa fa-fw fa-angle-left pull-right"></i></span>
+                                </a>
+                                <ul class="treeview-menu">
+                                    @can('itdcrec_inbox_access')
+                                        <li class="{{ request()->is("admin/itd-crec-inboxes") || request()->is("admin/itd-crec-inboxes/*") ? "active" : "" }}">
+                                            <a href="{{ route("admin.itd-crec-inboxes.index") }}">
+                                                <i class="fa-fw far fa-envelope">
+
+                                                </i>
+                                                <span>{{ trans('cruds.itdCrecInbox.title') }}</span>
+
+                                            </a>
+                                        </li>
+                                    @endcan
+                                    @can('itdcrec_sent_access')
+                                        <li class="{{ request()->is("admin/itd-crec-sents") || request()->is("admin/itd-crec-sents/*") ? "active" : "" }}">
+                                            <a href="{{ route("admin.itd-crec-sents.index") }}">
+                                                <i class="fa-fw far fa-share-square">
+
+                                                </i>
+                                                <span>{{ trans('cruds.itdCrecSent.title') }}</span>
+
                                             </a>
                                         </li>
                                     @endcan

@@ -1167,6 +1167,10 @@ return [
     'title'          => 'CAN',
     'title_singular' => 'CAN',
 ],
+'letterItdCrec'                 => [
+    'title'          => 'ITD-CREC',
+    'title_singular' => 'ITD-CREC',
+],
 'canInbox'                  => [
     'title'          => 'Inbox',
     'title_singular' => 'Inbox',
@@ -2212,6 +2216,14 @@ return [
         'title_singular' => 'Inbox',
     ],
     'sptkSent'                  => [
+        'title'          => 'Sent',
+        'title_singular' => 'Sent',
+    ],
+     'itdCrecInbox'                  => [
+        'title'          => 'Inbox',
+        'title_singular' => 'Inbox',
+    ],
+    'itdCrecSent'                   => [
         'title'          => 'Sent',
         'title_singular' => 'Sent',
     ],

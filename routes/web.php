@@ -329,6 +329,12 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
 
    // Itd Sents
    Route::resource('itd-sents', 'ItdSentController', ['except' => ['create', 'store', 'edit', 'update', 'show', 'destroy']]);
+  
+   // Itd-Crec Inboxes
+   Route::resource('itd-crec-inboxes', 'ItdCrecInboxController', ['except' => ['create', 'store', 'edit', 'update', 'show', 'destroy']]);
+
+   // Itd-Crec Sents
+   Route::resource('itd-crec-sents', 'ItdCrecSentController', ['except' => ['create', 'store', 'edit', 'update', 'show', 'destroy']]);
 
     // Can Inboxes
     Route::resource('can-inboxes', 'CanInboxController', ['except' => ['create', 'store', 'edit', 'update', 'show', 'destroy']]);
