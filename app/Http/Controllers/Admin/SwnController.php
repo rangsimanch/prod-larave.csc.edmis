@@ -397,10 +397,28 @@ class SwnController extends Controller
                 }
             }
         }
+
+        $index = 0;
+        $index_number = substr("00{$index}", -2);
         $media = $swn->reply_document->pluck('file_name')->toArray();
         foreach ($request->input('reply_document', []) as $file) {
             if (count($media) === 0 || !in_array($file, $media)) {
-                $swn->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('reply_document');
+                $index++;
+                $index_number = substr("00{$index}", -2);
+                $inputFile = storage_path('tmp/uploads/' . basename($file));
+                $renameFile = storage_path('tmp/uploads/' . 'Reply_SWN' . $swn->id . '_' . $index_number . '.pdf');
+                rename($inputFile, $renameFile);
+
+                $outputFile = storage_path('tmp/uploads/' . 'Convert_' . 'Reply_SWN' . $swn->id . '_' . $index_number . '.pdf');
+
+                // Set the Ghostscript command
+                $command = "gs -sDEVICE=pdfwrite -dCompatibilityLevel=1.4 -dNOPAUSE -dQUIET -dBATCH -sOutputFile=$outputFile $renameFile";
+
+                // Run the Ghostscript command
+                shell_exec($command);
+            
+                $swn->addMedia($outputFile)->toMediaCollection('reply_document');;
+                // $swn->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('reply_document');
             }
         }
 
