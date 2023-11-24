@@ -161,6 +161,18 @@
                                         @endforeach
                                     </td>
                                 </tr>
+                                 <tr>
+                                    <th>
+                                        {{ trans('cruds.swn.fields.conditional_file_upload') }}
+                                    </th>
+                                    <td>
+                                        @foreach($swn->conditional_file_upload as $key => $media)
+                                            <a href="{{ $media->getUrl() }}" target="_blank">
+                                                {{ trans('global.view_file') }}
+                                            </a>
+                                        @endforeach
+                                    </td>
+                                </tr>
                             </tbody>
                         </table>
                         <div class="form-group">

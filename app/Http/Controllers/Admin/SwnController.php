@@ -421,7 +421,8 @@ class SwnController extends Controller
                 // $swn->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('reply_document');
             }
         }
-
+        
+       
         if (count($swn->conditional_file_upload) > 0) {
             foreach ($swn->conditional_file_upload as $media) {
                 if (!in_array($media->file_name, $request->input('conditional_file_upload', []))) {
@@ -429,10 +430,27 @@ class SwnController extends Controller
                 }
             }
         }
+        $index = 0;
+        $index_number = substr("00{$index}", -2);
         $media = $swn->conditional_file_upload->pluck('file_name')->toArray();
         foreach ($request->input('conditional_file_upload', []) as $file) {
             if (count($media) === 0 || !in_array($file, $media)) {
-                $swn->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('conditional_file_upload');
+                $index++;
+                $index_number = substr("00{$index}", -2);
+                $inputFile = storage_path('tmp/uploads/' . basename($file));
+                $renameFile = storage_path('tmp/uploads/' . 'Conditional_SWN' . $swn->id . '_' . $index_number . '.pdf');
+                rename($inputFile, $renameFile);
+
+                $outputFile = storage_path('tmp/uploads/' . 'Convert_' . 'Conditional_SWN' . $swn->id . '_' . $index_number . '.pdf');
+
+                // Set the Ghostscript command
+                $command = "gs -sDEVICE=pdfwrite -dCompatibilityLevel=1.4 -dNOPAUSE -dQUIET -dBATCH -sOutputFile=$outputFile $renameFile";
+
+                // Run the Ghostscript command
+                shell_exec($command);
+            
+                $swn->addMedia($outputFile)->toMediaCollection('conditional_file_upload');;
+                // $swn->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('conditional_file_upload');
             }
         }
 
