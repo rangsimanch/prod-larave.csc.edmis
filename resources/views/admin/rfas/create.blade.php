@@ -246,7 +246,7 @@
                         <div class="table-responsive">
                                 <span id="result"> </span>
                                 <label> {{ trans('cruds.submittalsRfa.title')}} </label>
-                                <a name="link" href="{{ public_path('pdf-asset/PasteSubmittalformExcel.pdf') }}" target="_blank"> (อ่านวิธีการคัดลอกชุดข้อมูลจาก Excel) </a>
+                                <a name="link" href="{{ asset('pdf-asset/PasteSubmittalformExcel.pdf') }}" target="_blank"> (อ่านวิธีการคัดลอกชุดข้อมูล Submittals จากไฟล์ Excel) </a>
 
                                 <table class="table table-bordered table-striped" id="submittal_table">
                                     <thead>
