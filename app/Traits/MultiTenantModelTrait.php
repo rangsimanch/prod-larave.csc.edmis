@@ -15,6 +15,7 @@ trait MultiTenantModelTrait
             $isAdmin = auth()->user()->roles->contains(1);
             $isComplaintAdmin = auth()->user()->roles->contains(46);
 
+
             // **Roles ID Dev
             // $isTeamSRT = auth()->user()->roles->contains(4);
             // $isTeamPMC = auth()->user()->roles->contains(5);

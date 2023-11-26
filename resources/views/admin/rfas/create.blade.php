@@ -246,6 +246,8 @@
                         <div class="table-responsive">
                                 <span id="result"> </span>
                                 <label> {{ trans('cruds.submittalsRfa.title')}} </label>
+                                <a name="link" href="{{ public_path('pdf-asset/PasteSubmittalformExcel.pdf') }}" target="_blank"> (อ่านวิธีการคัดลอกชุดข้อมูลจาก Excel) </a>
+
                                 <table class="table table-bordered table-striped" id="submittal_table">
                                     <thead>
                                         <tr>
@@ -257,8 +259,10 @@
                                     </thead>
                                     <tbody>
                                         <td colspan="4" align="center">
-                                            <a name="add" id="add" class="btn btn-success">&nbsp&nbsp&nbsp&nbsp{{ trans('global.add') }}&nbsp&nbsp&nbsp&nbsp</a>
+                                            <a name="add" id="add" class="btn btn-success">{{ trans('global.add') }}</a>
+                                            <a name="addFromExcel" id="addFromExcel" class="btn btn-primary">Paste Data from Excel</a>
                                         </td>
+                                                                        
                                     </tbody>
                                 </table>
                         </div>
@@ -496,35 +500,6 @@ Dropzone.options.fileUpload1Dropzone = {
 //        console.log('click');
     });
 
-    /// Dynamic Input
-    $(document).ready(function(){
-        var count = 0;
-
-        dynamic_field(count);
-
-        function dynamic_field(number){
-            var html = '<tr>';
-
-            if(number > 0){
-                html += '<td><input type="text" name="item[]" class="form-control" /></td>';
-                html += '<td><input type="text" name="des[]" class="form-control" /></td>';
-                html += '<td><input type="number" name="qty[]" class="form-control" /></td>';   
-                html += '<td align="center"><a name="remove" id="remove" class="btn btn-danger">{{ trans('global.remove') }}</a></td></tr>';
-                $('tbody').append(html);
-            }
-        }
-
-        $('#add').click(function(){
-            count++;
-            dynamic_field(count);
-            console.log(count);
-        });
-
-        $(document).on('click', '#remove', function(){
-            count--;
-            $(this).closest("tr").remove();
-        });
-    });
 
      function check_stamp() {
         
@@ -685,4 +660,89 @@ Dropzone.options.submittalsFileDropzone = {
      }
 }
 </script>
+
+<!-- Your HTML code -->
+
+<script>
+    $(document).ready(function () {
+        var count = 0;
+
+
+        dynamic_field(count);
+
+        function dynamic_field(number) {
+            var html = '<tr>';
+
+            if (number > 0) {
+                html += '<td><input type="text" name="item[]" class="form-control" /></td>';
+                html += '<td><input type="text" name="des[]" class="form-control" /></td>';
+                html += '<td><input type="number" name="qty[]" class="form-control" /></td>';
+                html += '<td align="center"><a name="remove" class="btn btn-danger">{{ trans('global.remove') }}</a></td></tr>';
+                $('tbody').append(html);
+            }
+        }
+
+        $('#add').click(function () {
+            count++;
+            dynamic_field(count);
+            console.log(count);
+        });
+
+        $('#addFromExcel').click(function () {
+            // Get the text from the clipboard
+            navigator.clipboard.readText().then(function (text) {
+                // Split the text into rows
+                var rows = text.split('\n');
+
+                // Check if there is at least one row of data
+                if (rows.length === 0 || (rows.length === 1 && rows[0] === '')) {
+                    alert('No data found in the clipboard.');
+                    return;
+                }
+
+                // Iterate through rows and split into columns
+               rows.forEach(function (row) {
+                    var columns = row.split('\t'); // Assuming tab-separated data
+
+                    // Check if the number of columns matches the expected number
+                    if (columns.length !== 3) {
+                        // showError('Invalid data format. Each row should have three columns.');
+                        return;
+                    }
+
+                    // Append a new row with the columns
+                    var newRow = '<tr>';
+                    columns.forEach(function (column, index) {
+                        // Adjust the name attribute based on the index
+                        var nameAttribute = 'item[]'; // Default
+                        if (index === 1) {
+                            nameAttribute = 'des[]';
+                        } else if (index === 2) {
+                            nameAttribute = 'qty[]';
+                        }
+
+                        newRow += '<td><input type="text" name="' + nameAttribute + '" class="form-control" value="' + column + '"></td>';
+                    });
+
+                    newRow += '<td align="center"><a name="remove" class="btn btn-danger">{{ trans('global.remove') }}</a></td></tr>';
+                    $('tbody').append(newRow);
+                    count++;
+                });
+            }).catch(function (err) {
+                console.error('Failed to read clipboard contents: ', err);
+
+                alert('An error occurred while reading data from the clipboard.');
+            });
+        });
+
+        $(document).on('click', '[name="remove"]', function () {
+            count--;
+            $(this).closest("tr").remove();
+        });
+
+        // Initialize Clipboard.js for the 'addFromExcel' button
+        var clipboard = new ClipboardJS('#addFromExcel');
+    });
+</script>
+
 @endsection

@@ -29,6 +29,33 @@
 
                         <legend><a onclick="HideSection(1)" id="element1"><i class="bi bi-eye"></i></a><b>  Section I : Contractor RFA Submittal</b></legend>
                         <div id="section1">
+
+                         <div class="form-group {{ $errors->has('title_eng') ? 'has-error' : '' }}">
+                            <label for="title_eng">{{ trans('cruds.rfa.fields.title_eng') }}</label>
+                            <input class="form-control" type="text" name="title_eng" id="title_eng" value="{{ old('title_eng', $rfa->title_eng) }}">
+                            @if($errors->has('title_eng'))
+                                <span class="help-block" role="alert">{{ $errors->first('title_eng') }}</span>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.rfa.fields.title_eng_helper') }}</span>
+                        </div>
+
+                         <div class="form-group {{ $errors->has('title') ? 'has-error' : '' }}">
+                            <label for="title">{{ trans('cruds.rfa.fields.title') }}</label>
+                            <input class="form-control" type="text" name="title" id="title" value="{{ old('title', $rfa->title) }}">
+                            @if($errors->has('title'))
+                                <span class="help-block" role="alert">{{ $errors->first('title') }}</span>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.rfa.fields.title_helper') }}</span>
+                        </div>
+
+                         <div class="form-group {{ $errors->has('title_cn') ? 'has-error' : '' }}">
+                            <label for="title_cn">{{ trans('cruds.rfa.fields.title_cn') }}</label>
+                            <input class="form-control" type="text" name="title_cn" id="title_cn" value="{{ old('title_cn', $rfa->title_cn) }}">
+                            @if($errors->has('title_cn'))
+                                <span class="help-block" role="alert">{{ $errors->first('title_cn') }}</span>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.rfa.fields.title_cn_helper') }}</span>
+                        </div>
                        
                      
                         {{-- <div class="form-group {{ $errors->has('wbs_level_3') ? 'has-error' : '' }}">

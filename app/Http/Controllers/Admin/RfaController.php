@@ -46,7 +46,7 @@ class RfaController extends Controller
         if ($request->ajax()) {
             $query = Rfa::with(['document_status', 'boq', 'type', 'construction_contract', 'wbs_level_3', 'wbs_level_4', 'issueby', 'assign', 'action_by', 'comment_by', 'information_by', 'comment_status', 'for_status', 'create_by_user', 'distribute_by', 'reviewed_by', 'wbs_level_one', 'team'])->select(sprintf('%s.*', (new Rfa())->table));
             $table = Datatables::of($query);
-
+            
             $table->addColumn('placeholder', '&nbsp;');
             $table->addColumn('actions', '&nbsp;');
 
@@ -262,10 +262,6 @@ class RfaController extends Controller
         }
         echo $output;
     }
-
-    
-
-
     
     public function revision(Rfa $rfa)
     {
@@ -1570,7 +1566,7 @@ class RfaController extends Controller
                 wordwrap(htmlspecialchars($submittal['description'], ENT_QUOTES),350,"<br>\n") ."</div>";  
                 
                 $htmlsub .= "<div style=\"font-size: 10px; position:absolute;top:". $top ."px;left:445px;\">". 
-                $submittal['qty_sets'] ."</div>";
+                htmlspecialchars($submittal['qty_sets']) ."</div>";
 
                 $top += 35;
                 $index++;
