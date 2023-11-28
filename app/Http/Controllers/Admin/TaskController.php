@@ -408,8 +408,8 @@ class TaskController extends Controller
                     
                     
                     if($httpCode != 404){
-                        $html .= "<div style=\"font-weight: bold; position:absolute;top:900;left:630px;\">
-                                <img width=\"80%\" height=\"80%\" src=\"" . $task->create_by_user->signature->getPath()
+                        $html .= "<div style=\"font-weight: bold; position:absolute;top:900;left:620px;\">
+                                <img width=\"70%\" height=\"70%\" src=\"" . $task->create_by_user->signature->getPath()
                                 . "\"></div>";
                     }
                 }
