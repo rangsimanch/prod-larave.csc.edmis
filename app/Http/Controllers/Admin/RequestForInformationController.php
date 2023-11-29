@@ -380,6 +380,8 @@ class RequestForInformationController extends Controller
         $signature_size_w = 0;
         $signature_position_top = 0;
         $signature_position_left = 0;
+        $multi_signature = false;
+        $multi_stamp = false;
 
         if($rfi->construction_contract->code == "C2-1"){
             $issue_by = 'Sitthichai Pimsawat';
@@ -398,7 +400,44 @@ class RequestForInformationController extends Controller
             $signature_size_h = 40;
             $signature_size_w = 40;
             $signature_position_top = 720;
-            $signature_position_left = 280;
+            $signature_position_left = 500;
+        }
+
+         if($rfi->construction_contract->code == "C3-1"){
+            $multi_signature = true;
+            $multi_stamp = true;
+            $issue_by = '(นายศรายุธ ทองยศ) และ (Mr.Yu Dongxin)';
+            $issuer_jobtitle = 'ผู้รับมอบอำนาจกระทำการแทน (Authorized Representatives) ITD-CREC No.10 Joint Venture';
+            $issue_position_lf = 215;
+            $issue_position_lf_sub = 485;
+            $jobittle_position_lf = 165;
+            $constructor_name = 'ITD-CREC No.10 Joint Venture';
+            $constructor_code = 'ITD-CREC No.10 Joint Venture';
+            $logo_path =  public_path('png-asset/ITD-CREC_logo.jpg');
+            $logo_h = 40;
+            $logo_w = 40;
+            $logo_top = 130;
+            $logo_left = 630;
+
+            $stamp_path =  public_path('png-asset/ITDCREC_stamp_1.png');
+            $stamp_path_2 =  public_path('png-asset/ITDCREC_stamp_2.png');
+
+            $signature_path =  public_path('png-asset/ITDCREC_signature_1.png');
+            $signature_path_2 =  public_path('png-asset/ITDCREC_signature_2.png');
+
+            $signature_size_h = 40;
+            $signature_size_w = 40;
+
+            $signature_size_h_2 = 70;
+            $signature_size_w_2 = 70;
+
+            $signature_position_top = 720;
+            $signature_position_left = 480;
+
+            $signature_position_top_2 = 730;
+            $signature_position_left_2 = 525;
+            $stamp_size_w = 120;
+
         }
 
         if($rfi->construction_contract->code == "C3-2"){
@@ -418,7 +457,7 @@ class RequestForInformationController extends Controller
             $signature_size_h = 55;
             $signature_size_w = 55;
             $signature_position_top = 720;
-            $signature_position_left = 280;
+            $signature_position_left = 500;
 
         }
 
@@ -439,7 +478,7 @@ class RequestForInformationController extends Controller
             $signature_size_h = 60;
             $signature_size_w = 60;
             $signature_position_top = 720;
-            $signature_position_left = 280;
+            $signature_position_left = 500;
 
         }
 
@@ -456,6 +495,8 @@ class RequestForInformationController extends Controller
                 $issue_by = 'มฆา  อัศวราชันย์';
                 $signature_path =  public_path('png-asset/ITD_signature.png');
                 $signature_position_top = 720;
+            $signature_position_left = 500;
+            
             }
             
             $issuer_jobtitle = 'ผู้อำนวยการโครงการ';
@@ -471,7 +512,7 @@ class RequestForInformationController extends Controller
             $stamp_path =  public_path('png-asset/ITD_stamp.png');
             $signature_size_h = 60;
             $signature_size_w = 60;
-            $signature_position_left = 280;
+            $signature_position_left = 500;
 
         }
 
@@ -492,7 +533,7 @@ class RequestForInformationController extends Controller
             $signature_size_h = 60;
             $signature_size_w = 60;
             $signature_position_top = 720;
-            $signature_position_left = 275;
+            $signature_position_left = 500;
 
         }
 
@@ -513,7 +554,7 @@ class RequestForInformationController extends Controller
             $signature_size_h = 60;
             $signature_size_w = 60;
             $signature_position_top = 720;
-            $signature_position_left = 260;
+            $signature_position_left = 500;
 
         }
 
@@ -534,7 +575,7 @@ class RequestForInformationController extends Controller
             $signature_size_h = 60;
             $signature_size_w = 60;
             $signature_position_top = 720;
-            $signature_position_left = 280;
+            $signature_position_left = 500;
 
         }
 
@@ -555,7 +596,7 @@ class RequestForInformationController extends Controller
             $signature_size_h = 50;
             $signature_size_w = 50;
             $signature_position_top = 720;
-            $signature_position_left = 278;
+            $signature_position_left = 500;
 
         }
 
@@ -576,7 +617,7 @@ class RequestForInformationController extends Controller
             $signature_size_h = 50;
             $signature_size_w = 50;
             $signature_position_top = 720;
-            $signature_position_left = 278;
+            $signature_position_left = 500;
         }
 
         $rfi_no = $rfi->originator_code;
@@ -631,12 +672,16 @@ class RequestForInformationController extends Controller
         $html .= "<div style=\"font-size: 11px; position:absolute;top:733px;left:270px;\">" . $issue_by  . "</div>";
 
         if($signature_path != ''){
-            $html .= "<div style=\"font-size: 14px; position:absolute;top:". $signature_position_top ."px;left:500px;\">
+            $html .= "<div style=\"font-size: 14px; position:absolute;top:". $signature_position_top ."px;left:". $signature_position_left ."px;\">
             <img src=\"". $signature_path ."\" width=\"". $signature_size_w ."px\" higth=\"". $signature_size_h ."px\"> </div>";
         }
 
-
-
+        if($multi_signature == true){
+         if($signature_path != ''){
+                $html .= "<div style=\"font-size: 14px; position:absolute;top:". $signature_position_top_2 ."px;left:". $signature_position_left_2 ."px;\">
+                            <img src=\"". $signature_path_2 ."\" width=\"". $signature_size_w_2 ."px\" higth=\"". $signature_size_h_2 ."px\"> </div>";      
+            }
+        }
 
         $mpdf->WriteHTML($html);
         return $mpdf->Output();
