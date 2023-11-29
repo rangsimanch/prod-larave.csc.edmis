@@ -683,6 +683,9 @@ class RequestForInformationController extends Controller
             }
         }
 
+        $html .= "<div style=\"font-size: 13px; position:absolute;top:730px;left:620px;\">" . $submit_date . '.' . "</div>";
+
+
         $mpdf->WriteHTML($html);
         return $mpdf->Output();
     }
