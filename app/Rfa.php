@@ -33,6 +33,7 @@ class Rfa extends Model implements HasMedia
     const WORKTYPE_SELECT = [
         'Thai' => 'A',
         'China' => 'B',
+        'Both' => 'A & B',
     ];
 
      const CEC_SIGN_RADIO = [
