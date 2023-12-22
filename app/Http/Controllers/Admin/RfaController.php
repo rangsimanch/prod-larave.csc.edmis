@@ -1522,20 +1522,43 @@ class RfaController extends Controller
 
             $html .= "<div style=\"font-size: 12px; position:absolute;top:770px;left:". $issue_position_lf_sub ."px;\">"
             .  $issue_by  . "</div>";
-            $html .= "<div style=\"font-size: 10px; position:absolute;top:787px;left:485px;\">"
+            $html .= "<div style=\"font-size: 10px;  padding-right:180px; position:absolute;top:787px;left:485px; LINE-HEIGHT:9px;\">"
             . $issuer_jobtitle . '  (' . $constructor_code . ')' . "</div>";
             
             //Signature
-            if($signature_path != ''){
-                $html .= "<div style=\"font-size: 14px; position:absolute;top:740px;left:520px;\">
-                    <img src=\"". $signature_path ."\" width=\"" . $signature_size_w . "\" higth=\"". $signature_size_h ."\"> </div>";
+            if($multi_signature){
+                if($signature_path != ''){
+                    $html .= "<div style=\"font-size: 14px; position:absolute;top:740px;left:480px;\">
+                        <img src=\"". $signature_path ."\" width=\"" . $signature_size_w . "\" higth=\"". $signature_size_h ."\"> </div>";
+                }
+                if($signature_path_2 != ''){
+                    $html .= "<div style=\"font-size: 14px; position:absolute;top:740px;left:550px;\">
+                        <img src=\"". $signature_path_2 ."\" width=\"" . $signature_size_w_2 . "\" higth=\"". $signature_size_h_2 ."\"> </div>";
+                }
             }
-
-            if($stamp_path != ''){
-                $html .= "<div style=\"font-size: 14px; position:absolute;top:500px;left:560px;\">
-                    <img src=\"". $stamp_path ."\" width=\"200px\" higth=\"200px\" style=\"opacity: 0.5;\"> </div>";
+            else {
+                if($signature_path != ''){
+                    $html .= "<div style=\"font-size: 14px; position:absolute;top:740px;left:520px;\">
+                        <img src=\"". $signature_path ."\" width=\"" . $signature_size_w . "\" higth=\"". $signature_size_h ."\"> </div>";
+                }
             }
-
+            if($multi_stamp){
+                if($stamp_path != ''){
+                    $html .= "<div style=\"font-size: 14px; position:absolute;top:500px;left:400px;\">
+                        <img src=\"". $stamp_path ."\" width=\"200px\" higth=\"200px\" style=\"opacity: 0.5;\"> </div>";
+                }
+                if($stamp_path_2 != ''){
+                    $html .= "<div style=\"font-size: 14px; position:absolute;top:530px;left:560px;\">
+                        <img src=\"". $stamp_path_2 ."\" width=\"200px\" higth=\"200px\" style=\"opacity: 0.5;\"> </div>";
+                }
+            }
+            else{
+                if($stamp_path != ''){
+                    $html .= "<div style=\"font-size: 14px; position:absolute;top:500px;left:560px;\">
+                        <img src=\"". $stamp_path ."\" width=\"200px\" higth=\"200px\" style=\"opacity: 0.5;\"> </div>";
+                }
+            }
+            
             $html .= "<div style=\"font-size: 10px; position:absolute;top:930px;left:695px;\">". $outgoing_number  ."</div>";
             $html .= "<div style=\"font-size: 10px; position:absolute;top:950px;left:680px;\">". $outgoing_date  ."</div>";
             $html .= "<div style=\"font-size: 10px; position:absolute;top:930;left:130px;\">". $qty_page  . '.' ."</div>";
