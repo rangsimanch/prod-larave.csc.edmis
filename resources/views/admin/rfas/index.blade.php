@@ -50,9 +50,9 @@
                                     <p style="font-size:12px"> {{ trans('cruds.rfa.fields.boq') }} </p>
                                 </th>
 
-                                <th>
+                                {{-- <th>
                                     <p style="font-size:12px"> {{ trans('cruds.rfa.fields.boq_sub') }} </p>
-                                </th>
+                                </th> --}}
 
                                 <th>
                                     <p style="font-size:12px"> {{ trans('cruds.rfa.fields.worktype') }} </p>
@@ -127,14 +127,14 @@
                                         @endforeach
                                     </select>
                                 </td>
-                                <td>
+                                {{-- <td>
                                     <select class="search" style="width:70%">
                                         <option value>{{ trans('global.all') }}</option>
                                         @foreach($bo_qs as $key => $item)
                                             <option value="{{ $item->name }}">{{ $item->name }}</option>
                                         @endforeach
                                     </select>
-                                </td>
+                                </td> --}}
                                 <td>
                                     <select class="search" strict="true">
                                         <option value>{{ trans('global.all') }}</option>
@@ -259,7 +259,7 @@
 { data: 'document_status_status_name', name: 'document_status.status_name'},
 { data: 'construction_contract_code', name: 'construction_contract.code' ,sortable: false},
 { data: 'boq_name', name: 'boq.name'},
-{ data: 'boq_sub', name: 'boq_sub.name',},
+// { data: 'boq_sub', name: 'boq_sub.name',},
 { data: 'worktype', name: 'worktype' },
 { data: 'title_eng', name: 'title_eng' , sortable: false},
 { data: 'title', name: 'title' , sortable: false},
@@ -283,10 +283,7 @@
   
   let table = $('.datatable-Rfa').DataTable(dtOverrideGlobals)
 
-  $('a[data-toggle="tab"]').on('shown.bs.tab click', function(e){
-      $($.fn.dataTable.tables(true)).DataTable()
-          .columns.adjust();
-  });
+
 
 let visibleColumnsIndexes = null;
 
@@ -323,4 +320,5 @@ table.on('column-visibility.dt', function(e, settings, column, state) {
 });
 
 </script>
+
 @endsection
