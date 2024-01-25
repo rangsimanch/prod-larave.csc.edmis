@@ -157,7 +157,7 @@
                                     <input class="search" type="text" placeholder="{{ trans('global.search') }}">
                                 </td>
                                 <td>
-                                    <select class="form-control filter-select select2" data-column="14" style="width:200%">
+                                    <select class="form-control filter-select select2" data-column="13" style="width:200%">
                                         <option value>{{ trans('global.all') }}</option>
                                         @foreach($rfatypes as $key => $item)
                                             <option value="{{ $item->type_code }}">{{ $item->type_code }}</option>
@@ -165,7 +165,7 @@
                                     </select>
                                 </td>
                                 <td>
-                                    <select class="form-control filter-select select2" data-column="15" style="width:200%">
+                                    <select class="form-control filter-select select2" data-column="14" style="width:200%">
                                         <option value>{{ trans('global.all') }}</option>
                                         @foreach($wbs_level_threes as $key => $item)
                                             <option value="{{ $item->wbs_level_3_code }}">{{ $item->wbs_level_3_code }}</option>
@@ -174,7 +174,7 @@
                                 </td>
                                 
                                 <td>
-                                    <select class="form-control filter-select select2" data-column="16" style="width:200%">
+                                    <select class="form-control filter-select select2" data-column="15" style="width:200%">
                                         <option value>{{ trans('global.all') }}</option>
                                         @foreach($wbslevelfours as $key => $item)
                                             <option value="{{ $item->wbs_level_4_code }}">{{ $item->wbs_level_4_code }}</option>
