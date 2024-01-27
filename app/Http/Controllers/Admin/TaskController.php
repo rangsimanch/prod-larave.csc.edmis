@@ -518,6 +518,32 @@ class TaskController extends Controller
                 }
 
                 $mpdf->WriteHTML($html); 
+
+                $html="";
+                $mpdf->SetHTMLHeader($html,'0',true);
+                $mpdf->SetDocTemplate("");  
+
+                foreach($task->pdf_attachment as $pdf){ 
+                    try{
+                        $url =  url($pdf->getUrl());
+                        $handle = curl_init($url);
+                        curl_setopt($handle,  CURLOPT_RETURNTRANSFER, TRUE);
+                        $response = curl_exec($handle);
+                        $httpCode = curl_getinfo($handle, CURLINFO_HTTP_CODE);
+                        curl_close($handle);
+                        if($httpCode != 404){
+                            $pagecount = $mpdf->SetSourceFile($pdf->getPath());
+                            for($page = 1; $page <= $pagecount; $page++){
+                                $tplId = $mpdf->importPage($page);
+                                $size = $mpdf->getTemplateSize($tplId);
+                                $mpdf->AddPage($size['orientation']);
+                                $mpdf->UseTemplate($tplId, 0, 0, $size['width'], $size['height'], true);
+                            }         
+                        }
+                    }catch(exeption $e){
+                        print "Creating an mPDF object failed with" . $e->getMessage();
+                    }
+                }
             }
             $filename =  $reportType . " " . $StartDate . " to " .  $EndDate . ".pdf";
             return $mpdf->Output($filename, 'I');
@@ -563,6 +589,26 @@ class TaskController extends Controller
 
         if ($media = $request->input('ck-media', false)) {
             Media::whereIn('id', $media)->update(['model_id' => $task->id]);
+        }
+
+        $index = 0;
+        $index_number = substr("00{$index}", -2);
+        foreach ($request->input('pdf_attachment', []) as $file) {
+            $index++;
+            $index_number = substr("00{$index}", -2);
+            $inputFile = storage_path('tmp/uploads/' . basename($file));
+            $renameFile = storage_path('tmp/uploads/' . 'CSC_ACTIVITY' . $data['create_by_user_id'] . '_' . $index_number . '.pdf');
+            rename($inputFile, $renameFile);
+            $outputFile = storage_path('tmp/uploads/' . 'Convert_' . 'CSC_ACTIVITY' . $data['create_by_user_id'] . '_' . $index_number . '.pdf');
+
+            // Set the Ghostscript command
+            $command = "gs -sDEVICE=pdfwrite -dCompatibilityLevel=1.4 -dNOPAUSE -dQUIET -dBATCH -sOutputFile=$outputFile $renameFile";
+
+            // Run the Ghostscript command
+            shell_exec($command);
+
+            // Add the converted PDF file to the media collection
+            $task->addMedia($outputFile)->toMediaCollection('pdf_attachment');
         }
 
         return redirect()->route('admin.tasks.index');
@@ -615,6 +661,36 @@ class TaskController extends Controller
 
         }
 
+        if (count($task->pdf_attachment) > 0) {
+            foreach ($task->pdf_attachment as $media) {
+                if (! in_array($media->file_name, $request->input('pdf_attachment', []))) {
+                    $media->delete();
+                }
+            }
+        }
+        $media = $task->pdf_attachment->pluck('file_name')->toArray();
+        $index = 0;
+        $index_number = substr("00{$index}", -2);
+        foreach ($request->input('pdf_attachment', []) as $file) {
+            if (count($media) === 0 || ! in_array($file, $media)) {
+                $index++;
+                $index_number = substr("00{$index}", -2);
+                $inputFile = storage_path('tmp/uploads/' . basename($file));
+                $renameFile = storage_path('tmp/uploads/' . 'CSC_ACTIVITY' . $data['create_by_user_id'] . '_' . $index_number . '.pdf');
+                rename($inputFile, $renameFile);
+                $outputFile = storage_path('tmp/uploads/' . 'Convert_' . 'CSC_ACTIVITY' . $data['create_by_user_id'] . '_' . $index_number . '.pdf');
+
+                // Set the Ghostscript command
+                $command = "gs -sDEVICE=pdfwrite -dCompatibilityLevel=1.4 -dNOPAUSE -dQUIET -dBATCH -sOutputFile=$outputFile $renameFile";
+
+                // Run the Ghostscript command
+                shell_exec($command);
+
+                // Add the converted PDF file to the media collection
+                $task->addMedia($outputFile)->toMediaCollection('pdf_attachment');
+            }
+        }
+
         return redirect()->route('admin.tasks.index');
 
     }
@@ -645,6 +721,7 @@ class TaskController extends Controller
         return response(null, Response::HTTP_NO_CONTENT);
 
     }
+
 
     public function storeCKEditorImages(Request $request)
     {

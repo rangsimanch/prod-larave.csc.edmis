@@ -231,6 +231,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::get('daily-construction-activities/{request}/ZipFile','DailyConstructionActivitiesController@ZipFile')->name('daily-construction-activities.ZipFile');
     Route::resource('daily-construction-activities', 'DailyConstructionActivitiesController');
 
+    
     // Procedures
     Route::delete('procedures/destroy', 'ProceduresController@massDestroy')->name('procedures.massDestroy');
     Route::post('procedures/media', 'ProceduresController@storeMedia')->name('procedures.storeMedia');

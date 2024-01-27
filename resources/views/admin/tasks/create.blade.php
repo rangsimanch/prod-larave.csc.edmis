@@ -34,7 +34,7 @@
                         </div>
                         <div class="form-group {{ $errors->has('description') ? 'has-error' : '' }}">
                             <label for="description">{{ trans('cruds.task.fields.description') }}</label>
-                            <textarea class="form-control" name="description" id="description">{{ old('description') }}</textarea>
+                            <textarea class="form-control ckeditor cke_browser_webkit" name="description" id="description">{{ old('description') }}</textarea>
                             @if($errors->has('description'))
                                 <span class="help-block" role="alert">{{ $errors->first('description') }}</span>
                             @endif
@@ -93,6 +93,15 @@
                             @endif
                             <span class="help-block">{{ trans('cruds.task.fields.attachment_helper') }}</span>
                         </div>
+                        <div class="form-group {{ $errors->has('pdf_attachment') ? 'has-error' : '' }}">
+                            <label for="pdf_attachment">{{ trans('cruds.task.fields.pdf_attachment') }}</label>
+                            <div class="needsclick dropzone" id="pdf_attachment-dropzone">
+                            </div>
+                            @if($errors->has('pdf_attachment'))
+                                <span class="help-block" role="alert">{{ $errors->first('pdf_attachment') }}</span>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.task.fields.pdf_attachment_helper') }}</span>
+                        </div>
                         <div hidden class="form-group {{ $errors->has('weather') ? 'has-error' : '' }}">
                             <label for="weather">{{ trans('cruds.task.fields.weather') }}</label>
                             <input class="form-control" type="text" name="weather" id="weather" value="{{ old('weather', '') }}">
@@ -134,6 +143,8 @@
 @endsection
 
 @section('scripts')
+
+
 <script>
     var uploadedAttachmentMap = {}
 Dropzone.options.attachmentDropzone = {
@@ -206,5 +217,61 @@ Dropzone.options.attachmentDropzone = {
     document.getElementById('temperature').value = TempC;
     document.getElementById('wind').value = Wind;
 
+</script>
+<script>
+    var uploadedPdfAttachmentMap = {}
+Dropzone.options.pdfAttachmentDropzone = {
+    url: '{{ route('admin.tasks.storeMedia') }}',
+    maxFilesize: 10, // MB
+    addRemoveLinks: true,
+    headers: {
+      'X-CSRF-TOKEN': "{{ csrf_token() }}"
+    },
+    params: {
+      size: 10
+    },
+    success: function (file, response) {
+      $('form').append('<input type="hidden" name="pdf_attachment[]" value="' + response.name + '">')
+      uploadedPdfAttachmentMap[file.name] = response.name
+    },
+    removedfile: function (file) {
+      file.previewElement.remove()
+      var name = ''
+      if (typeof file.file_name !== 'undefined') {
+        name = file.file_name
+      } else {
+        name = uploadedPdfAttachmentMap[file.name]
+      }
+      $('form').find('input[name="pdf_attachment[]"][value="' + name + '"]').remove()
+    },
+    init: function () {
+@if(isset($task) && $task->pdf_attachment)
+          var files =
+            {!! json_encode($task->pdf_attachment) !!}
+              for (var i in files) {
+              var file = files[i]
+              this.options.addedfile.call(this, file)
+              file.previewElement.classList.add('dz-complete')
+              $('form').append('<input type="hidden" name="pdf_attachment[]" value="' + file.file_name + '">')
+            }
+@endif
+    },
+     error: function (file, response) {
+         if ($.type(response) === 'string') {
+             var message = response //dropzone sends it's own error messages in string
+         } else {
+             var message = response.errors.file
+         }
+         file.previewElement.classList.add('dz-error')
+         _ref = file.previewElement.querySelectorAll('[data-dz-errormessage]')
+         _results = []
+         for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+             node = _ref[_i]
+             _results.push(node.textContent = message)
+         }
+
+         return _results
+     }
+}
 </script>
 @endsection

@@ -19,6 +19,7 @@ class Task extends Model implements HasMedia
 
     protected $appends = [
         'attachment',
+        'pdf_attachment',
     ];
 
     protected $dates = [
@@ -87,6 +88,11 @@ class Task extends Model implements HasMedia
     {
         return $this->getMedia('attachment');
 
+    }
+
+    public function getPdfAttachmentAttribute()
+    {
+        return $this->getMedia('pdf_attachment');
     }
 
     public function create_by_user()
