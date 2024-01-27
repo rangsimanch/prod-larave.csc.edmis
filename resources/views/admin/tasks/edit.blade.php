@@ -220,8 +220,9 @@ document.getElementById('wind').value = Wind;
     var uploadedPdfAttachmentMap = {}
 Dropzone.options.pdfAttachmentDropzone = {
     url: '{{ route('admin.tasks.storeMedia') }}',
-    maxFilesize: 10, // MB
+    maxFilesize: 50, // MB
     addRemoveLinks: true,
+    acceptedFiles: '.pdf',
     headers: {
       'X-CSRF-TOKEN': "{{ csrf_token() }}"
     },
