@@ -66,8 +66,8 @@
                             <span class="help-block">{{ trans('cruds.task.fields.location_helper') }}</span>
                         </div>
                         <div class="form-group {{ $errors->has('due_date') ? 'has-error' : '' }}">
-                            <label for="due_date">{{ trans('cruds.task.fields.due_date') }}</label>
-                            <input class="form-control date" type="text" name="due_date" id="due_date" value="{{ old('due_date', $task->due_date) }}">
+                            <label class="required" for="due_date">{{ trans('cruds.task.fields.due_date') }}</label>
+                            <input class="form-control date" type="text" name="due_date" id="due_date" value="{{ old('due_date', $task->due_date) }}" required>
                             @if($errors->has('due_date'))
                                 <span class="help-block" role="alert">{{ $errors->first('due_date') }}</span>
                             @endif
