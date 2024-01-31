@@ -362,11 +362,7 @@ class TaskController extends Controller
                         $mpdf->UseTemplate($tplId);
                     }
                 }
-            
-            $template = $mpdf->SetSourceFile(public_path('pdf-asset/activity.pdf'),true);
-            $tplId = $mpdf->importPage($page);
-            $size = $mpdf->getTemplateSize($tplId);
-
+        
             
             foreach($tasks as $task){
 
