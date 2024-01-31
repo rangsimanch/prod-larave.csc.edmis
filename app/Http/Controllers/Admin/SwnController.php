@@ -886,7 +886,7 @@ class SwnController extends Controller
                 print "Creating an mPDF object failed with" . $e->getMessage();
             }
         }
-
+        
         foreach($swn->reply_document as $attachment){ 
             try{
                 $url = $attachment->getUrl();

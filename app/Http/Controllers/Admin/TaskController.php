@@ -364,17 +364,15 @@ class TaskController extends Controller
                 }
             
             $template = $mpdf->SetSourceFile(public_path('pdf-asset/activity.pdf'),true);
-            $tplId = $mpdf->importPage($template);
+            $tplId = $mpdf->importPage($page);
             $size = $mpdf->getTemplateSize($tplId);
 
             
             foreach($tasks as $task){
 
-                // $mpdf->SetDocTemplate(public_path('pdf-asset/activity.pdf'),true);
-                // $mpdf->AddPage($size['orientation']);
-                
-                $mpdf->UseTemplate($tplId, 0, 0, $size['width'], $size['height']);
-                $mpdf->AddPage($size['orientation']);
+                $mpdf->SetDocTemplate(public_path('pdf-asset/activity.pdf'),true);
+                $mpdf->AddPage('P','','','','','','',60,55);
+
 
                 $description = $task->description ?? '';
                 $description_set = str_split($description, 1500);
@@ -549,6 +547,8 @@ class TaskController extends Controller
                     }
              
                 }
+                $mpdf->SetDocTemplate(""); 
+
             }
             $filename =  $reportType . " " . $StartDate . " to " .  $EndDate . ".pdf";
             return $mpdf->Output($filename, 'I');
