@@ -365,8 +365,10 @@ class TaskController extends Controller
 
             foreach($tasks as $task){
 
+                $task_template =  $mpdf->SetDocTemplate(public_path('pdf-asset/activity.pdf'),true);
                 $mpdf->AddPage('P','','','','','','',60,55);
-                $mpdf->SetDocTemplate(public_path('pdf-asset/activity.pdf'),true);
+                $tplId = $mpdf->ImportPage($task_template);
+                $mpdf->UseTemplate($tplId);
         
                 // Import the last page of the source PDF file
                 // $tplId = $mpdf->ImportPage($pagecount);
@@ -543,10 +545,7 @@ class TaskController extends Controller
                     }catch(exeption $e){
                         print "Creating an mPDF object failed with" . $e->getMessage();
                     }
-                
-                $html="";
-                $mpdf->SetHTMLHeader($html,'0',true);
-                $mpdf->SetDocTemplate("");  
+            
                 }
             }
             $filename =  $reportType . " " . $StartDate . " to " .  $EndDate . ".pdf";
