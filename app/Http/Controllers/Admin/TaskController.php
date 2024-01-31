@@ -362,16 +362,20 @@ class TaskController extends Controller
                         $mpdf->UseTemplate($tplId);
                     }
                 }
+                
+            $mpdf->AddPage('P','','','','','','',60,55);
+            $pdf_template = $mpdf->SetDocTemplate(public_path('pdf-asset/activity.pdf'),true);
+            $tplId = $pdf_template->ImportPage($pdf_template);
+            
 
             foreach($tasks as $task){
-                // $pagecount = $mpdf->SetSourceFile(public_path('pdf-asset/activity.pdf'));
-                $html="";
-                $mpdf->SetHTMLHeader($html,'0',true);
-                $mpdf->SetDocTemplate("");  
+    
+                // $mpdf->SetDocTemplate(public_path('pdf-asset/activity.pdf'),true);
+                // $mpdf->AddPage('P','','','','','','',60,55);
+                $mpdf->UseTemplate($tplId);
 
-                $mpdf->SetDocTemplate(public_path('pdf-asset/activity.pdf'),true);
-                $mpdf->AddPage('P','','','','','','',60,55);
-                
+
+
                 // Import the last page of the source PDF file
                 // $tplId = $mpdf->ImportPage($pagecount);
                 // $mpdf->UseTemplate($tplId);
