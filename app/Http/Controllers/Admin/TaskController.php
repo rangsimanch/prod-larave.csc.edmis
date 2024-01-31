@@ -363,11 +363,16 @@ class TaskController extends Controller
                     }
                 }
         
-            
+            $page_template = $mpdf->SetSourceFile(public_path('pdf-asset/activity.pdf'),true);
+            $import_page = $mpdf->importPage($page_template);
+            $page_size = $mpdf->getTemplateSize($import_page);
             foreach($tasks as $task){
 
-                $mpdf->SetDocTemplate(public_path('pdf-asset/activity.pdf'),true);
-                $mpdf->AddPage('P','','','','','','',60,55);
+                // $mpdf->SetDocTemplate(public_path('pdf-asset/activity.pdf'),true);
+                // $mpdf->AddPage('P','','','','','','',60,55);
+
+                $mpdf->AddPage($page_size['orientation']);
+                $mpdf->UseTemplate($import_page, 0, 0, $page_size['width'], $page_size['height'], true);
 
 
                 $description = $task->description ?? '';
@@ -535,8 +540,7 @@ class TaskController extends Controller
                                 $tplId = $mpdf->importPage($page);
                                 $size = $mpdf->getTemplateSize($tplId);
                                 $mpdf->AddPage($size['orientation']);
-                                // $mpdf->UseTemplate($tplId, 0, 0, $size['width'], $size['height'], true);
-                                $mpdf->SetPageTemplate($tplId);
+                                $mpdf->UseTemplate($tplId, 0, 0, $size['width'], $size['height'], true);
                             }         
                         }
                     }catch(exeption $e){
