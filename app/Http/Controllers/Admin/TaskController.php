@@ -365,8 +365,13 @@ class TaskController extends Controller
 
             foreach($tasks as $task){
                 // $pagecount = $mpdf->SetSourceFile(public_path('pdf-asset/activity.pdf'));
+                $html="";
+                $mpdf->SetHTMLHeader($html,'0',true);
+                $mpdf->SetDocTemplate("");  
+
                 $mpdf->SetDocTemplate(public_path('pdf-asset/activity.pdf'),true);
                 $mpdf->AddPage('P','','','','','','',60,55);
+                
                 // Import the last page of the source PDF file
                 // $tplId = $mpdf->ImportPage($pagecount);
                 // $mpdf->UseTemplate($tplId);
