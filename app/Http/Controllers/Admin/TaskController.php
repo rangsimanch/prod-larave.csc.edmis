@@ -639,7 +639,8 @@ class TaskController extends Controller
 
     public function update(UpdateTaskRequest $request, Task $task)
     {
-        $task->update($request->all());
+        $data = $request->all();
+        $task->update($data);
         $task->tags()->sync($request->input('tags', []));
 
         if (count($task->attachment) > 0) {
