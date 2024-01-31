@@ -371,8 +371,8 @@ class TaskController extends Controller
                 // $mpdf->SetDocTemplate(public_path('pdf-asset/activity.pdf'),true);
                 // $mpdf->AddPage('P','','','','','','',60,55);
 
-                $mpdf->AddPage($page_size['orientation']);
-                $mpdf->UseTemplate($import_page, 60, 55, $page_size['width'], $page_size['height'], true);
+                $mpdf->AddPage($page_size['orientation'],'','','','','','',60,55);
+                $mpdf->UseTemplate($import_page, 0, 0, $page_size['width'], $page_size['height']);
 
 
                 $description = $task->description ?? '';
