@@ -539,7 +539,7 @@ class TaskController extends Controller
                                 $tplId = $mpdf->importPage($page);
                                 $size = $mpdf->getTemplateSize($tplId);
                                 $mpdf->AddPage($size['orientation']);
-                                $mpdf->UseTemplate($tplId, 0, 0, $size['width'], $size['height'], true);
+                                // $mpdf->UseTemplate($tplId, 0, 0, $size['width'], $size['height'], true);
                             }         
                         }
                     }catch(exeption $e){
