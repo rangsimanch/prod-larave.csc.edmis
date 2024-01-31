@@ -593,14 +593,19 @@ class TaskController extends Controller
 
         $index = 0;
         $index_number = substr("00{$index}", -2);
+        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $charactersLength = strlen($characters);
+        $randomString = '';
+        for ($i = 0; $i < 8; $i++) {
+            $randomString .= $characters[random_int(0, $charactersLength - 1)];
+        }
         foreach ($request->input('pdf_attachment', []) as $file) {
             $index++;
             $index_number = substr("00{$index}", -2);
             $inputFile = storage_path('tmp/uploads/' . basename($file));
-            $renameFile = storage_path('tmp/uploads/' . 'CSC_ACTIVITY' . $data['create_by_user_id'] . '_' . $index_number . '.pdf');
+            $renameFile = storage_path('tmp/uploads/' . 'CSC_ACTIVITY' . $randomString . '_' .  $task->startDate . '_' . $index_number . '.pdf');
             rename($inputFile, $renameFile);
-            $outputFile = storage_path('tmp/uploads/' . 'Convert_' . 'CSC_ACTIVITY' . $data['create_by_user_id'] . '_' . $index_number . '.pdf');
-
+            $outputFile = storage_path('tmp/uploads/' . 'Convert_' . 'CSC_ACTIVITY' . $randomString . '_' .  $task->startDate . '_' . $index_number . '.pdf');
             // Set the Ghostscript command
             $command = "gs -sDEVICE=pdfwrite -dCompatibilityLevel=1.4 -dNOPAUSE -dQUIET -dBATCH -sOutputFile=$outputFile $renameFile";
 
@@ -639,8 +644,7 @@ class TaskController extends Controller
 
     public function update(UpdateTaskRequest $request, Task $task)
     {
-        $data = $request->all();
-        $task->update($data);
+        $task->update($request->all());
         $task->tags()->sync($request->input('tags', []));
 
         if (count($task->attachment) > 0) {
@@ -672,14 +676,20 @@ class TaskController extends Controller
         $media = $task->pdf_attachment->pluck('file_name')->toArray();
         $index = 0;
         $index_number = substr("00{$index}", -2);
+        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $charactersLength = strlen($characters);
+        $randomString = '';
+        for ($i = 0; $i < 8; $i++) {
+            $randomString .= $characters[random_int(0, $charactersLength - 1)];
+        }
         foreach ($request->input('pdf_attachment', []) as $file) {
             if (count($media) === 0 || ! in_array($file, $media)) {
                 $index++;
                 $index_number = substr("00{$index}", -2);
                 $inputFile = storage_path('tmp/uploads/' . basename($file));
-                $renameFile = storage_path('tmp/uploads/' . 'CSC_ACTIVITY' . $data['create_by_user_id'] . '_' . $index_number . '.pdf');
+                $renameFile = storage_path('tmp/uploads/' . 'CSC_ACTIVITY' . $randomString . '_' .  $task->startDate . '_' . $index_number . '.pdf');
                 rename($inputFile, $renameFile);
-                $outputFile = storage_path('tmp/uploads/' . 'Convert_' . 'CSC_ACTIVITY' . $data['create_by_user_id'] . '_' . $index_number . '.pdf');
+                $outputFile = storage_path('tmp/uploads/' . 'Convert_' . 'CSC_ACTIVITY' . $randomString . '_' .  $task->startDate . '_' . $index_number . '.pdf');
 
                 // Set the Ghostscript command
                 $command = "gs -sDEVICE=pdfwrite -dCompatibilityLevel=1.4 -dNOPAUSE -dQUIET -dBATCH -sOutputFile=$outputFile $renameFile";
