@@ -364,7 +364,7 @@ class TaskController extends Controller
                 }
             
             $template = $mpdf->SetSourceFile(public_path('pdf-asset/activity.pdf'),true);
-            $tplId = $mpdf->importPage($page);
+            $tplId = $mpdf->importPage($template);
             $size = $mpdf->getTemplateSize($tplId);
 
             
