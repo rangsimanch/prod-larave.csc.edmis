@@ -668,7 +668,7 @@ class RfaController extends Controller
         $data['clause'] = $request->clause;
         $data['contract_drawing_no'] = $request->contract_drawing_no;
         $data['qty_page'] = $request->qty_page;
-        $data['note_1'] = $request->note_1;
+        $data['note_1'] = htmlspecialchars($request->note_1, ENT_QUOTES);
         $data['assign_id'] = $request->assign_id;
 
         $data['update_by_user_id'] = auth()->id();
