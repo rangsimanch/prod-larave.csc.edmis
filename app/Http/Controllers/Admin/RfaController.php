@@ -1191,9 +1191,13 @@ class RfaController extends Controller
         $document_name = $rfa->attach_file_name;
         // $note_1 = wordwrap(htmlspecialchars($rfa->note_1, ENT_QUOTES) ?? '',500,"<br>\n");
         $note_1 = htmlspecialchars($rfa->note_1, ENT_QUOTES);
-        $note_2 = wordwrap($rfa->note_2 ?? '',400,"<br>\n");
-        $note_3 = wordwrap($rfa->note_3 ?? '',400,"<br>\n");
-        $note_4 = wordwrap($rfa->note_4 ?? '',400,"<br>\n");
+        // $note_2 = wordwrap($rfa->note_2 ?? '',400,"<br>\n");
+        $note_2 = htmlspecialchars($rfa->note_2, ENT_QUOTES);
+        // $note_3 = wordwrap($rfa->note_3 ?? '',400,"<br>\n");
+        $note_3 = htmlspecialchars($rfa->note_3, ENT_QUOTES);
+        // $note_4 = wordwrap($rfa->note_4 ?? '',400,"<br>\n");
+        $note_4 = htmlspecialchars($rfa->note_4, ENT_QUOTES);
+
 
         $wbslv1 = "HSR1";
         $wbslv2 = $rfa->construction_contract->code ?? '';
@@ -1310,7 +1314,13 @@ class RfaController extends Controller
         $html .= "<div style=\"font-size: 10px; padding-right:60px; position:absolute;top:289px;left:615px;LINE-HEIGHT:15px;\">" . $clause . "</div>";
         $html .= "<div style=\"font-size: 10px;  padding-right:60px; position:absolute;top:376px;left:210px;LINE-HEIGHT:16px;\">" . $contract_drawing_no . "</div>";
           //Note
-        $html .= "<div style=\"font-size: 12px; padding-right:60px; position:absolute;top:410px;left:120px;LINE-HEIGHT:15px;\">" 
+        if(strlen($note_1) > 300) {
+            $font_size = 9;
+        }
+        else {
+            $font_size = 12;
+        }
+        $html .= "<div style=\"font-size:". $font_size ."px; padding-right:60px; position:absolute;top:410px;left:120px;LINE-HEIGHT:15px;\">" 
         . $note_1 . "</div>";
         
        
