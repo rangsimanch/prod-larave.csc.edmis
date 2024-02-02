@@ -668,7 +668,7 @@ class RfaController extends Controller
         $data['clause'] = $request->clause;
         $data['contract_drawing_no'] = $request->contract_drawing_no;
         $data['qty_page'] = $request->qty_page;
-        $data['note_1'] = htmlspecialchars($request->note_1, ENT_QUOTES);
+        $data['note_1'] = $request->note_1;
         $data['assign_id'] = $request->assign_id;
 
         $data['update_by_user_id'] = auth()->id();
@@ -1189,7 +1189,7 @@ class RfaController extends Controller
         $submittalsRfa = $submittalsRfa ?? '';
         
         $document_name = $rfa->attach_file_name;
-        $note_1 = wordwrap($rfa->note_1 ?? '',400,"<br>\n");
+        $note_1 = wordwrap(htmlspecialchars($request->note_1, ENT_QUOTES) ?? '',500,"<br>\n");
         $note_2 = wordwrap($rfa->note_2 ?? '',400,"<br>\n");
         $note_3 = wordwrap($rfa->note_3 ?? '',400,"<br>\n");
         $note_4 = wordwrap($rfa->note_4 ?? '',400,"<br>\n");
