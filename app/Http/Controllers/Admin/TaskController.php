@@ -372,7 +372,10 @@ class TaskController extends Controller
 
                 // $mpdf->AddPage('P','','','','','','',60,55);
                 $mpdf->RestartDocTemplate();
-                $mpdf->AddPage($page_size['orientation'],'','','','','','',60,55);
+                // $mpdf->AddPage($page_size['orientation'],'','','','','','',60,55);
+                $mpdf->AddPageByArray(array('orientation' => 'P',
+                    'mgt' => '60',
+                    'mgb' => '55',));
 
                 $mpdf->SetDocTemplate(public_path('pdf-asset/activity.pdf'),true);
 
