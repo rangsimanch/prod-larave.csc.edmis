@@ -184,6 +184,7 @@ class TaskController extends Controller
 
 
         $count_task = count($tasks);
+        $count_prev_att = 0;
 
         // $count_task = $tasks->count();
 
@@ -373,8 +374,9 @@ class TaskController extends Controller
                 // $mpdf->AddPage('P','','','','','','',60,55);
                 $mpdf->AddPage($page_size['orientation'],'','','','','','',60,55);
 
-                if (count($task->pdf_attachment) > 0) {
+                if (count($task->pdf_attachment) > 0 || $count_prev_att > 0) {
                     $mpdf->UseTemplate($import_page, 0, 0, $page_size['width'], $page_size['height'], true);
+                    $count_prev_att = 0;
                 }
                 else {
                      $mpdf->SetDocTemplate(public_path('pdf-asset/activity.pdf'),true);
@@ -536,6 +538,7 @@ class TaskController extends Controller
                 $mpdf->SetDocTemplate("");  
                 foreach($task->pdf_attachment as $pdf){ 
                     try{
+                        $count_prev_att += 1;
                         $url =  url($pdf->getUrl());
                         $handle = curl_init($url);
                         curl_setopt($handle,  CURLOPT_RETURNTRANSFER, TRUE);
