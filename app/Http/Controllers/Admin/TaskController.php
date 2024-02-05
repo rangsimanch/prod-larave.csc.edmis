@@ -559,7 +559,7 @@ class TaskController extends Controller
                     }
              
                 }
-                $mpdf->RestartDocTemplate();
+                // $mpdf->RestartDocTemplate();
             }
             $filename =  $reportType . " " . $StartDate . " to " .  $EndDate . ".pdf";
             return $mpdf->Output($filename, 'I');
