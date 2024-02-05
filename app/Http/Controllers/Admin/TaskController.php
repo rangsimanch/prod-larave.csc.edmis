@@ -371,9 +371,8 @@ class TaskController extends Controller
             foreach($tasks as $task){
 
                 // $mpdf->AddPage('P','','','','','','',60,55);
-                $mpdf->RestartDocTemplate();
+                // $mpdf->RestartDocTemplate();
                 $mpdf->AddPage($page_size['orientation'],'','','','','','',60,55);
-
 
                 $mpdf->SetDocTemplate(public_path('pdf-asset/activity.pdf'),true);
 
