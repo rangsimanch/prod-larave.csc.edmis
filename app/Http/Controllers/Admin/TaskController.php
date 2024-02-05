@@ -560,6 +560,7 @@ class TaskController extends Controller
              
                 }
                 // $mpdf->RestartDocTemplate();
+                $mpdf->SetDocTemplate(public_path('pdf-asset/activity.pdf'),true);
             }
             $filename =  $reportType . " " . $StartDate . " to " .  $EndDate . ".pdf";
             return $mpdf->Output($filename, 'I');
