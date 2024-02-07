@@ -538,9 +538,21 @@ class RequestForInformationController extends Controller
         }
 
         if($rfi->construction_contract->code == "C4-3"){
-            $issue_by = 'Zhou Jia Yi';
-            $issuer_jobtitle = 'Project manager';
+            
+            if ($rfi->id > 2817) {
+                $issue_by = 'Wang Kan';
+                $issuer_jobtitle = 'For Project manager';
+                $signature_path = public_path('png-asset/CAN_signature_3.png');
+
+            }else{
+                 $issue_by = 'Zhou Jia Yi';
+                $issuer_jobtitle = 'Project manager';
+                $signature_path = public_path('png-asset/CAN_signature.png');
+            }
+           
+
             $issue_position_lf = 260;
+            
             $issue_position_lf_sub = 489;
             $constructor_name = 'CAN Joint Venture';
             $constructor_code = 'CAN';
@@ -550,7 +562,6 @@ class RequestForInformationController extends Controller
             $logo_top = 115;
             $logo_left = 670;
             $stamp_path =  public_path('png-asset/CAN_stamp.png');
-            $signature_path = public_path('png-asset/CAN_signature.png');
             $signature_size_h = 60;
             $signature_size_w = 60;
             $signature_position_top = 720;
