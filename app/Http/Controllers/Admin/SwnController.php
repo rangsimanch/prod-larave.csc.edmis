@@ -800,12 +800,12 @@ class SwnController extends Controller
             $mpdf->AddPage('P','','','','','','',75,50);
             $html = "<div style=\"font-size: 16px; font-weight: bold; position:absolute;top:224px;left:327px;\">" . "X"  . "</div>";
             if($issuer_name != ''){
-                if($review_status == "1" || $review_status == "2" || $review_status == "3"){
-                    // if(!is_null($swn->issue_by->signature)){
-                    //     $html .= "<div style=\"font-weight: bold; position:absolute;top:775;left:160px;\">
-                    //     <img width=\"30%\" height=\"20%\" src=\"" . $swn->issue_by->signature->getPath()
-                    //     . "\"></div>";
-                    // }
+                if($review_status == "2" || $review_status == "3"){
+                    if(!is_null($swn->issue_by->signature)){
+                        $html .= "<div style=\"font-weight: bold; position:absolute;top:775;left:160px;\">
+                        <img width=\"30%\" height=\"20%\" src=\"" . $swn->issue_by->signature->getPath()
+                        . "\"></div>";
+                    }
                 }
                 $html .= "<div style=\"font-size: 8px; font-weight: bold; position:absolute;top:998px;left:145px;\">( " . $issuer_name  . " )</div>";
                 $html .= "<div style=\"font-size: 7px;  position:absolute;top:1010px;left:145px;\">" . $issuer_position  . "</div>";
