@@ -624,7 +624,7 @@ class SwnController extends Controller
         }
 
         if($issuer_name != ''){
-            if( $review_status == "2" || $review_status == "3"){
+            if($review_status == "1" || $review_status == "2" || $review_status == "3"){
                 if(!is_null($swn->issue_by->signature)){
                     $html .= "<div style=\"font-weight: bold; position:absolute;top:775;left:160px;\">
                     <img width=\"30%\" height=\"20%\" src=\"" . $swn->issue_by->signature->getPath()
@@ -636,7 +636,7 @@ class SwnController extends Controller
 
         }
         if($qa_name != ''){
-            if( $review_status == "2" || $review_status == "3"){
+            if($review_status == "1" || $review_status == "2" || $review_status == "3"){
                 if(!is_null($swn->related_specialist->signature)){
                     $url =  url($swn->related_specialist->signature->getUrl());
                     $handle = curl_init($url);
