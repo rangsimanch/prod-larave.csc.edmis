@@ -1528,6 +1528,63 @@
                 </ul>
             </li>
             @endcan
+            @can('translator_team_access')
+                <li class="treeview">
+                    <a href="#">
+                        <i class="fa-fw fas fa-language">
+
+                        </i>
+                        <span>{{ trans('cruds.translatorTeam.title') }}</span>
+                        <span class="pull-right-container"><i class="fa fa-fw fa-angle-left pull-right"></i></span>
+                    </a>
+                    <ul class="treeview-menu">
+                        @can('design_review_access')
+                            <li class="{{ request()->is("admin/design-reviews") || request()->is("admin/design-reviews/*") ? "active" : "" }}">
+                                <a href="{{ route("admin.design-reviews.index") }}">
+                                    <i class="fa-fw fas fa-pen-nib">
+
+                                    </i>
+                                    <span>{{ trans('cruds.designReview.title') }}</span>
+
+                                </a>
+                            </li>
+                        @endcan
+                        @can('document_record_access')
+                            <li class="{{ request()->is("admin/document-records") || request()->is("admin/document-records/*") ? "active" : "" }}">
+                                <a href="{{ route("admin.document-records.index") }}">
+                                    <i class="fa-fw fas fa-book">
+
+                                    </i>
+                                    <span>{{ trans('cruds.documentRecord.title') }}</span>
+
+                                </a>
+                            </li>
+                        @endcan
+                        @can('letter_tracking_sheet_access')
+                            <li class="{{ request()->is("admin/letter-tracking-sheets") || request()->is("admin/letter-tracking-sheets/*") ? "active" : "" }}">
+                                <a href="{{ route("admin.letter-tracking-sheets.index") }}">
+                                    <i class="fa-fw fas fa-envelope-square">
+
+                                    </i>
+                                    <span>{{ trans('cruds.letterTrackingSheet.title') }}</span>
+
+                                </a>
+                            </li>
+                        @endcan
+                        @can('vocabulary_hub_access')
+                            <li class="{{ request()->is("admin/vocabulary-hubs") || request()->is("admin/vocabulary-hubs/*") ? "active" : "" }}">
+                                <a href="{{ route("admin.vocabulary-hubs.index") }}">
+                                    <i class="fa-fw fab fa-adversal">
+
+                                    </i>
+                                    <span>{{ trans('cruds.vocabularyHub.title') }}</span>
+
+                                </a>
+                            </li>
+                        @endcan
+                    </ul>
+                </li>
+            @endcan
                         
             <li class="{{ request()->is('admin/system-calendar') || request()->is('admin/system-calendar/*') ? 'active' : '' }}">
                 <a href="{{ route("admin.systemCalendar") }}">

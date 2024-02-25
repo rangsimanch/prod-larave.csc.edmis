@@ -619,6 +619,25 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::post('close-out-punch-lists/process-csv-import', 'CloseOutPunchListController@processCsvImport')->name('close-out-punch-lists.processCsvImport');
     Route::resource('close-out-punch-lists', 'CloseOutPunchListController');
 
+    // Document Record
+    Route::delete('document-records/destroy', 'DocumentRecordController@massDestroy')->name('document-records.massDestroy');
+    Route::post('document-records/media', 'DocumentRecordController@storeMedia')->name('document-records.storeMedia');
+    Route::post('document-records/ckmedia', 'DocumentRecordController@storeCKEditorImages')->name('document-records.storeCKEditorImages');
+    Route::resource('document-records', 'DocumentRecordController');
+
+    // Letter Tracking Sheet
+    Route::delete('letter-tracking-sheets/destroy', 'LetterTrackingSheetController@massDestroy')->name('letter-tracking-sheets.massDestroy');
+    Route::resource('letter-tracking-sheets', 'LetterTrackingSheetController');
+
+    // Design Review
+    Route::delete('design-reviews/destroy', 'DesignReviewController@massDestroy')->name('design-reviews.massDestroy');
+    Route::resource('design-reviews', 'DesignReviewController');
+
+    // Vocabulary Hub
+    Route::delete('vocabulary-hubs/destroy', 'VocabularyHubController@massDestroy')->name('vocabulary-hubs.massDestroy');
+    Route::resource('vocabulary-hubs', 'VocabularyHubController');
+
+
 
     Route::get('system-calendar', 'SystemCalendarController@index')->name('systemCalendar');
     Route::get('global-search', 'GlobalSearchController@search')->name('globalSearch');
@@ -631,6 +650,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::delete('messenger/{topic}', 'MessengerController@destroyTopic')->name('messenger.destroyTopic');
     Route::post('messenger/{topic}/reply', 'MessengerController@replyToTopic')->name('messenger.reply');
     Route::get('messenger/{topic}/reply', 'MessengerController@showReply')->name('messenger.showReply');
+
+
 
 //    });
    
