@@ -20,6 +20,14 @@
                             @endif
                             <span class="help-block">{{ trans('cruds.documentRecord.fields.title_helper') }}</span>
                         </div>
+                         <div class="form-group {{ $errors->has('document_number') ? 'has-error' : '' }}">
+                            <label class="required" for="document_number">{{ trans('cruds.documentRecord.fields.document_number') }}</label>
+                            <input class="form-control" type="text" name="document_number" id="document_number" value="{{ old('document_number', $documentRecord->document_number) }}">
+                            @if($errors->has('document_number'))
+                                <span class="help-block" role="alert">{{ $errors->first('document_number') }}</span>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.documentRecord.fields.document_number_helper') }}</span>
+                        </div>
                         <div class="form-group {{ $errors->has('category') ? 'has-error' : '' }}">
                             <label class="required">{{ trans('cruds.documentRecord.fields.category') }}</label>
                             <select class="form-control" name="category" id="category" required>
@@ -32,6 +40,14 @@
                                 <span class="help-block" role="alert">{{ $errors->first('category') }}</span>
                             @endif
                             <span class="help-block">{{ trans('cruds.documentRecord.fields.category_helper') }}</span>
+                        </div>
+                         <div class="form-group {{ $errors->has('translated_by') ? 'has-error' : '' }}">
+                            <label class="required" for="translated_by">{{ trans('cruds.documentRecord.fields.translated_by') }}</label>
+                            <input class="form-control" type="text" name="translated_by" id="translated_by" value="{{ old('translated_by', $documentRecord->translated_by) }}">
+                            @if($errors->has('translated_by'))
+                                <span class="help-block" role="alert">{{ $errors->first('translated_by') }}</span>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.documentRecord.fields.translated_by_helper') }}</span>
                         </div>
                         <div class="form-group {{ $errors->has('file_upload') ? 'has-error' : '' }}">
                             <label for="file_upload">{{ trans('cruds.documentRecord.fields.file_upload') }}</label>

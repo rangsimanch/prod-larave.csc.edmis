@@ -12,7 +12,7 @@ use Spatie\MediaLibrary\Models\Media;
 
 class DocumentRecord extends Model implements HasMedia
 {
-    use SoftDeletes, MultiTenantModelTrait, HasMediaTrait, Auditable;
+    use SoftDeletes, HasMediaTrait, Auditable;
 
     public $table = 'document_records';
 
@@ -28,6 +28,8 @@ class DocumentRecord extends Model implements HasMedia
 
     protected $fillable = [
         'title',
+        'document_number',
+        'translated_by',
         'category',
         'created_at',
         'updated_at',

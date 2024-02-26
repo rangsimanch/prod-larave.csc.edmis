@@ -48,6 +48,9 @@ class DocumentRecordController extends Controller
             $table->editColumn('title', function ($row) {
                 return $row->title ? $row->title : '';
             });
+             $table->editColumn('document_number', function ($row) {
+                return $row->document_number ? $row->document_number : '';
+            });
             $table->editColumn('category', function ($row) {
                 return $row->category ? DocumentRecord::CATEGORY_SELECT[$row->category] : '';
             });
@@ -61,6 +64,10 @@ class DocumentRecordController extends Controller
                 }
 
                 return implode(', ', $links);
+            });
+
+            $table->editColumn('translated_by', function ($row) {
+                return $row->translated_by ? $row->translated_by : '';
             });
 
             $table->rawColumns(['actions', 'placeholder', 'file_upload']);

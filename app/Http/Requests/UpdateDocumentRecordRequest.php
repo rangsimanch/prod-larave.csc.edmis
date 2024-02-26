@@ -19,7 +19,9 @@ class UpdateDocumentRecordRequest extends FormRequest
         return [
             'title' => [
                 'string',
-                'required',
+            ],
+            'document_number' => [
+                'string',
             ],
             'category' => [
                 'required',

@@ -19,7 +19,9 @@ class StoreDocumentRecordRequest extends FormRequest
         return [
             'title' => [
                 'string',
-                'required',
+            ],
+            'document_number' => [
+                'string',
             ],
             'category' => [
                 'required',

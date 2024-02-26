@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class DesignReview extends Model
 {
-    use SoftDeletes, MultiTenantModelTrait, Auditable;
+    use SoftDeletes, Auditable;
 
     public $table = 'design_reviews';
 

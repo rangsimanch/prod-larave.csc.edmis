@@ -26,11 +26,17 @@
                                 <th>
                                     {{ trans('cruds.documentRecord.fields.title') }}
                                 </th>
+                                 <th>
+                                    {{ trans('cruds.documentRecord.fields.document_number') }}
+                                </th>
                                 <th>
                                     {{ trans('cruds.documentRecord.fields.category') }}
                                 </th>
                                 <th>
                                     {{ trans('cruds.documentRecord.fields.file_upload') }}
+                                </th>
+                                <th>
+                                    {{ trans('cruds.documentRecord.fields.translated_by') }}
                                 </th>
                                 <th>
                                     {{ trans('cruds.documentRecord.fields.created_at') }}
@@ -45,6 +51,9 @@
                                 <td>
                                     <input class="search" type="text" placeholder="{{ trans('global.search') }}">
                                 </td>
+                                 <td>
+                                    <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                                </td>
                                 <td>
                                     <select class="search" strict="true">
                                         <option value>{{ trans('global.all') }}</option>
@@ -57,6 +66,8 @@
                                 </td>
                                 <td>
                                     <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                                </td>
+                                <td>
                                 </td>
                                 <td>
                                 </td>
@@ -115,15 +126,17 @@
     aaSorting: [],
     ajax: "{{ route('admin.document-records.index') }}",
     columns: [
-      { data: 'placeholder', name: 'placeholder' },
-{ data: 'title', name: 'title' },
-{ data: 'category', name: 'category' },
-{ data: 'file_upload', name: 'file_upload', sortable: false, searchable: false },
-{ data: 'created_at', name: 'created_at' },
-{ data: 'actions', name: '{{ trans('global.actions') }}' }
+    { data: 'placeholder', name: 'placeholder' },
+    { data: 'title', name: 'title' },
+    { data: 'document_number', name:'document_number'},
+    { data: 'category', name: 'category' },
+    { data: 'file_upload', name: 'file_upload', sortable: false, searchable: false },
+    { data: 'translated_by', name:'translated_by'},
+    { data: 'created_at', name: 'created_at' },
+    { data: 'actions', name: '{{ trans('global.actions') }}' }
     ],
     orderCellsTop: true,
-    order: [[ 4, 'desc' ]],
+    order: [[ 5, 'desc' ]],
     pageLength: 10,
   };
   let table = $('.datatable-DocumentRecord').DataTable(dtOverrideGlobals);
