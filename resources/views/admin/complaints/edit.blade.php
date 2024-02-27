@@ -14,19 +14,6 @@
                         @csrf
                     <legend><a onclick="HideSection(1)" id="element1"><i class="bi bi-eye"></i></a><b>  Section 1 : Open Complaints</b></legend>
                         <div id="section1">
-                        <div class="form-group {{ $errors->has('status') ? 'has-error' : '' }}">
-                            <label>{{ trans('cruds.complaint.fields.status') }}</label>
-                            <select class="form-control" name="status" id="status">
-                                <option value disabled {{ old('status', null) === null ? 'selected' : '' }}>{{ trans('global.pleaseSelect') }}</option>
-                                @foreach(App\Complaint::STATUS_SELECT as $key => $label)
-                                    <option value="{{ $key }}" {{ old('status', $complaint->status) === (string) $key ? 'selected' : '' }}>{{ $label }}</option>
-                                @endforeach
-                            </select>
-                            @if($errors->has('status'))
-                                <span class="help-block" role="alert">{{ $errors->first('status') }}</span>
-                            @endif
-                            <span class="help-block">{{ trans('cruds.complaint.fields.status_helper') }}</span>
-                        </div>
                         <div class="form-group {{ $errors->has('complaint_recipient') ? 'has-error' : '' }}">
                             <label class="required" for="complaint_recipient_id">{{ trans('cruds.complaint.fields.complaint_recipient') }}</label>
                             <select class="form-control select2" name="complaint_recipient_id" id="complaint_recipient_id" required>
@@ -170,6 +157,19 @@
                             <span class="help-block">{{ trans('cruds.complaint.fields.action_date_helper') }}</span>
                         </div>
                     </div>
+                     <div class="form-group {{ $errors->has('status') ? 'has-error' : '' }}">
+                            <label>{{ trans('cruds.complaint.fields.status') }}</label>
+                            <select class="form-control" name="status" id="status">
+                                <option value disabled {{ old('status', null) === null ? 'selected' : '' }}>{{ trans('global.pleaseSelect') }}</option>
+                                @foreach(App\Complaint::STATUS_SELECT as $key => $label)
+                                    <option value="{{ $key }}" {{ old('status', $complaint->status) === (string) $key ? 'selected' : '' }}>{{ $label }}</option>
+                                @endforeach
+                            </select>
+                            @if($errors->has('status'))
+                                <span class="help-block" role="alert">{{ $errors->first('status') }}</span>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.complaint.fields.status_helper') }}</span>
+                        </div>
                         <div class="form-group">
                             <button class="btn btn-danger" type="submit">
                                 {{ trans('global.save') }}
