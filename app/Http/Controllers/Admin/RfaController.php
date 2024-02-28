@@ -1016,7 +1016,7 @@ class RfaController extends Controller
             // $issue_by = '( Dong Weihong )';
             // $issuer_jobtitle = 'For Project manager CAN';
 
-            if ($rfa->id > 76608) {
+            if ($rfa->id > 76608 and $rfa->id < 77826 ){
                 $issue_by = '( Wang Kan )';
                 $issuer_jobtitle = 'For Project Manager';
                 $signature_path = public_path('png-asset/CAN_signature_3.png');
