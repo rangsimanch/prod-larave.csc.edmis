@@ -157,7 +157,7 @@ class SrtHeadOfficeDocumentController extends Controller
     {
         abort_if(Gate::denies('srt_head_office_document_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $refer_documents = SrtInputDocument::all()->pluck('document_number', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $refer_documents = SrtInputDocument::all()->where('id', $srtHeadOfficeDocument->refer_documents_id)->pluck('document_number', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $operators = User::all()->where('team_id','1')->pluck('name', 'id');
 

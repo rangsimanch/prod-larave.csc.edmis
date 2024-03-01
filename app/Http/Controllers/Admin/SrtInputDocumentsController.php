@@ -346,6 +346,19 @@ class SrtInputDocumentsController extends Controller
         $srtInputDocument->update($data);
         $srtInputDocument->tos()->sync($request->input('tos', []));
 
+        if (count($srtInputDocument->file_upload) > 0) {
+            foreach ($srtInputDocument->file_upload as $media) {
+                if (!in_array($media->file_name, $request->input('file_upload', []))) {
+                    $media->delete();
+                }
+            }
+        }
+        $media = $srtInputDocument->file_upload->pluck('file_name')->toArray();
+        foreach ($request->input('file_upload', []) as $file) {
+            if (count($media) === 0 || !in_array($file, $media)) {
+                $srtInputDocument->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('file_upload');
+            }
+        }
 
         if (count($srtInputDocument->file_upload_2) > 0) {
             foreach ($srtInputDocument->file_upload_2 as $media) {
