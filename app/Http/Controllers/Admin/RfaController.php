@@ -1201,10 +1201,14 @@ class RfaController extends Controller
         
         $document_name = $rfa->attach_file_name;
         // $note_1 = wordwrap(htmlspecialchars($rfa->note_1, ENT_QUOTES) ?? '',500,"<br>\n");
-        $note_1 = htmlspecialchars($rfa->note_1, ENT_QUOTES) ?? '';
-        if($note_1 == "<p>&nbsp;</p>"){
-            $note_1 = '';
+        if($rfa->note_1 == "<p>&nbsp;</p>"){
+            $str_note1 = '';
         }
+        else {
+            $str_note1 = $rfa->note_1;
+        }
+        $note_1 = htmlspecialchars($str_note1, ENT_QUOTES) ?? '';
+     
         // $note_2 = wordwrap($rfa->note_2 ?? '',400,"<br>\n") ;
         $note_2 = htmlspecialchars($rfa->note_2, ENT_QUOTES);
         // $note_3 = wordwrap($rfa->note_3 ?? '',400,"<br>\n");
