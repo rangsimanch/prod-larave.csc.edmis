@@ -1161,7 +1161,7 @@ class RfaController extends Controller
         $bill_sub = $rfa->boq_sub->name ?? '';
 
         $title_th = $rfa->title ?? '';
-        $title_en = wordwrap($rfa->title_eng ?? '',300,"<br>\n");
+        $title_en = $rfa->title_eng ?? '';
         $document_number = $rfa->document_number ?? '';
         $check_box = "X";
         $rfa_code = $rfa->rfa_code;  
@@ -1207,6 +1207,9 @@ class RfaController extends Controller
         else {
             $str_note1 = $rfa->note_1;
         }
+        str_replace("<p>","",$str_note1);
+        str_replace("</p>","",$str_note1);
+
         $note_1 = htmlspecialchars($str_note1, ENT_QUOTES) ?? '';
      
         // $note_2 = wordwrap($rfa->note_2 ?? '',400,"<br>\n") ;
