@@ -1207,8 +1207,8 @@ class RfaController extends Controller
         else {
             $str_note1 = $rfa->note_1;
         }
-        str_replace("<p>","",$str_note1);
-        str_replace("</p>","",$str_note1);
+        $str_note1 = str_replace("<p>","",$str_note1);
+        $str_note1 = str_replace("</p>","",$str_note1);
 
         $note_1 = htmlspecialchars($str_note1, ENT_QUOTES) ?? '';
      
