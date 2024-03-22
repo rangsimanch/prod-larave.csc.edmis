@@ -79,7 +79,7 @@ Dropzone.options.documentsDropzone = {
       'X-CSRF-TOKEN': "{{ csrf_token() }}"
     },
     params: {
-      size: 10
+      size: 50
     },
     success: function (file, response) {
       $('form').append('<input type="hidden" name="documents[]" value="' + response.name + '">')
