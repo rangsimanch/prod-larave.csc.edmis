@@ -74,7 +74,7 @@
     var uploadedDocumentsMap = {}
 Dropzone.options.documentsDropzone = {
     url: '{{ route('admin.daily-reports.storeMedia') }}',
-    maxFilesize: 10, // MB
+    maxFilesize: 50, // MB
     addRemoveLinks: true,
     headers: {
       'X-CSRF-TOKEN': "{{ csrf_token() }}"
