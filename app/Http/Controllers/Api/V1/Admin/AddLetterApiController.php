@@ -16,11 +16,24 @@ class AddLetterApiController extends Controller
 {
     use MediaUploadingTrait;
 
-    public function index()
+     public function index()
     {
         abort_if(Gate::denies('add_letter_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        $addLetters = AddLetter::with([ 'sender', 'receiver', 'construction_contract', 'team'])->limit(10)->get();
 
-        return new AddLetterResource(AddLetter::with(['topic_categories', 'sender', 'receiver', 'cc_tos', 'construction_contract', 'create_by', 'receive_by', 'responsible', 'team'])->get());
+        return AddLetterResource::collection($addLetters)->response()->setData(
+            $addLetters->map(function ($addLetter) {
+                return [
+                    'title' => $addLetter->title,
+                    'letter_no' => $addLetter->letter_no,
+                    'sender' => $addLetter->sender->code,
+                    'receiver' => $addLetter->receiver->code,
+                    'construction_contract' => $addLetter->construction_contract->code
+                    // add any other fields you want to include in the response
+                ];
+            })
+        );
+        // return new AddLetterResource(AddLetter::with([ 'sender', 'receiver', 'construction_contract', 'team'])->get());
     }
 
     public function store(StoreAddLetterRequest $request)
