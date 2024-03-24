@@ -77,7 +77,7 @@ Dropzone.options.documentsDropzone = {
     addRemoveLinks: true,
     headers: {
       'X-CSRF-TOKEN': "{{ csrf_token() }}"
-    },
+},
     params: {
       size: 50
     },

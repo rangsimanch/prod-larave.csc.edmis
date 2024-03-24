@@ -19,8 +19,8 @@ class RfaApiController extends Controller
     public function index()
     {
         abort_if(Gate::denies('rfa_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
-        return new RfaResource(Rfa::with(['type', 'construction_contract', 'wbs_level_3', 'wbs_level_4', 'issueby', 'assign', 'action_by', 'comment_by', 'information_by', 'comment_status', 'for_status', 'document_status', 'create_by_user', 'distribute_by', 'reviewed_by', 'team'])->get());
+        
+        return new RfaResource(Rfa::with(['type', 'construction_contract', 'wbs_level_3', 'wbs_level_4', 'issueby', 'assign', 'action_by', 'comment_by', 'information_by', 'comment_status', 'for_status', 'document_status', 'create_by_user', 'distribute_by', 'reviewed_by', 'team'])->limit(10)->get());
     }
 
     public function store(StoreRfaRequest $request)

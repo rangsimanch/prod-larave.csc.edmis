@@ -21,6 +21,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Yajra\DataTables\Facades\DataTables;
 
 
+
 class UsersController extends Controller
 {
     use MediaUploadingTrait, CsvImportTrait;

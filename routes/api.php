@@ -1,5 +1,7 @@
 <?php
 
+Route::post('/oauth/token', '\Laravel\Passport\Http\Controllers\AccessTokenController@issueToken');
+
 Route::group(['prefix' => 'v1', 'as' => 'api.', 'namespace' => 'Api\V1\Admin', 'middleware' => ['auth:api']], function () {
     
     // Permissions
@@ -10,7 +12,7 @@ Route::group(['prefix' => 'v1', 'as' => 'api.', 'namespace' => 'Api\V1\Admin', '
     Route::apiResource('roles', 'RolesApiController');
 
     // Users
-    Route::post('users/media', 'UsersApiController@storeMedia')->name('users.storeMedia');
+    // Route::post('users/media', 'UsersApiController@storeMedia')->name('users.storeMedia');
     Route::apiResource('users', 'UsersApiController');
 
     // Jobtitles
@@ -23,7 +25,7 @@ Route::group(['prefix' => 'v1', 'as' => 'api.', 'namespace' => 'Api\V1\Admin', '
     Route::apiResource('departments', 'DepartmentApiController');
 
     // Rfas
-    Route::post('rfas/media', 'RfaApiController@storeMedia')->name('rfas.storeMedia');
+    // Route::post('rfas/media', 'RfaApiController@storeMedia')->name('rfas.storeMedia');
     Route::apiResource('rfas', 'RfaApiController');
 
     // Rfatypes
@@ -42,14 +44,14 @@ Route::group(['prefix' => 'v1', 'as' => 'api.', 'namespace' => 'Api\V1\Admin', '
     Route::apiResource('task-tags', 'TaskTagApiController');
 
     // Tasks
-    Route::post('tasks/media', 'TaskApiController@storeMedia')->name('tasks.storeMedia');
+    // Route::post('tasks/media', 'TaskApiController@storeMedia')->name('tasks.storeMedia');
     Route::apiResource('tasks', 'TaskApiController');
 
     // Tasks Calendars
     Route::apiResource('tasks-calendars', 'TasksCalendarApiController', ['except' => ['store', 'show', 'update', 'destroy']]);
 
     // File Managers
-    Route::post('file-managers/media', 'FileManagerApiController@storeMedia')->name('file-managers.storeMedia');
+    // Route::post('file-managers/media', 'FileManagerApiController@storeMedia')->name('file-managers.storeMedia');
     Route::apiResource('file-managers', 'FileManagerApiController');
 
     // Construction Contracts
@@ -71,30 +73,30 @@ Route::group(['prefix' => 'v1', 'as' => 'api.', 'namespace' => 'Api\V1\Admin', '
     Route::apiResource('submittals-rfas', 'SubmittalsRfaApiController');
 
     // Daily Requests
-    Route::post('daily-requests/media', 'DailyRequestApiController@storeMedia')->name('daily-requests.storeMedia');
+    // Route::post('daily-requests/media', 'DailyRequestApiController@storeMedia')->name('daily-requests.storeMedia');
     Route::apiResource('daily-requests', 'DailyRequestApiController');
 
     // Daily Reports
-    Route::post('daily-reports/media', 'DailyReportApiController@storeMedia')->name('daily-reports.storeMedia');
+    // Route::post('daily-reports/media', 'DailyReportApiController@storeMedia')->name('daily-reports.storeMedia');
     Route::apiResource('daily-reports', 'DailyReportApiController');
 
     // Request For Inspections
-    Route::post('request-for-inspections/media', 'RequestForInspectionApiController@storeMedia')->name('request-for-inspections.storeMedia');
+    // Route::post('request-for-inspections/media', 'RequestForInspectionApiController@storeMedia')->name('request-for-inspections.storeMedia');
     Route::apiResource('request-for-inspections', 'RequestForInspectionApiController');
 
     // Department Documents
-    Route::post('department-documents/media', 'DepartmentDocumentsApiController@storeMedia')->name('department-documents.storeMedia');
+    // Route::post('department-documents/media', 'DepartmentDocumentsApiController@storeMedia')->name('department-documents.storeMedia');
     Route::apiResource('department-documents', 'DepartmentDocumentsApiController');
 
     // Document Tags
     Route::apiResource('document-tags', 'DocumentTagApiController');
 
     // Contract And Components
-    Route::post('contract-and-components/media', 'ContractAndComponentsApiController@storeMedia')->name('contract-and-components.storeMedia');
+    // Route::post('contract-and-components/media', 'ContractAndComponentsApiController@storeMedia')->name('contract-and-components.storeMedia');
     Route::apiResource('contract-and-components', 'ContractAndComponentsApiController');
 
     // Meeting Monthlies
-    Route::post('meeting-monthlies/media', 'MeetingMonthlyApiController@storeMedia')->name('meeting-monthlies.storeMedia');
+    // Route::post('meeting-monthlies/media', 'MeetingMonthlyApiController@storeMedia')->name('meeting-monthlies.storeMedia');
     Route::apiResource('meeting-monthlies', 'MeetingMonthlyApiController');
 
     // Meeting Weeklies
@@ -126,7 +128,7 @@ Route::group(['prefix' => 'v1', 'as' => 'api.', 'namespace' => 'Api\V1\Admin', '
     Route::apiResource('records-of-visitors', 'RecordsOfVisitorsApiController');
 
     // Add Letters
-    Route::post('add-letters/media', 'AddLetterApiController@storeMedia')->name('add-letters.storeMedia');
+    // Route::post('add-letters/media', 'AddLetterApiController@storeMedia')->name('add-letters.storeMedia');
     Route::apiResource('add-letters', 'AddLetterApiController');
 
     // Check Sheets
@@ -198,6 +200,7 @@ Route::group(['prefix' => 'v1', 'as' => 'api.', 'namespace' => 'Api\V1\Admin', '
 
     // Srt Document Statuses
     Route::apiResource('srt-document-statuses', 'SrtDocumentStatusApiController');
+
 
     // Srt Head Office Documents
     Route::post('srt-head-office-documents/media', 'SrtHeadOfficeDocumentApiController@storeMedia')->name('srt-head-office-documents.storeMedia');

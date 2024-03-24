@@ -20,7 +20,7 @@ class AddLetterApiController extends Controller
     {
         abort_if(Gate::denies('add_letter_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new AddLetterResource(AddLetter::with(['letter_type', 'sender', 'receiver', 'construction_contract', 'team'])->get());
+        return new AddLetterResource(AddLetter::with([ 'sender', 'receiver', 'construction_contract', 'team'])->get());
     }
 
     public function store(StoreAddLetterRequest $request)

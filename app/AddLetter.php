@@ -195,4 +195,5 @@ class AddLetter extends Model implements HasMedia
     {
         return $this->belongsTo(ConstructionContract::class, 'construction_contract_id');
     }
+    
 }
