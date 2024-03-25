@@ -1253,28 +1253,41 @@ class RfaController extends Controller
 
         $for_statuses = $rfa->for_status->id ?? '';
         $comment_status = $$rfa->comment_status->id ?? '';
-        
-                //PDF Setting
-                try {
-                    $mpdf = new \Mpdf\Mpdf([
-                        'tempDir' =>  public_path('tmp'), 
-                        'fontdata'     => [
-                            'sarabun_new' => [
-                                'R' => 'THSarabunNew.ttf',
-                                'B' => 'THSarabunNew Bold.ttf',
-                                'I' => 'THSarabunNew Italic.ttf',
-                            ],
-                        ],
-                        'default_font' => 'sarabun_new',
-                        // 'mode' => '+aCJK',
-                        // "autoScriptToLang" => true,
-                        // "autoLangToFont" => true,
-                        // "allow_charset_conversion" => true,
-                        // "charset_in" => 'UTF-8',
-                    ]);
-                  } catch (\Mpdf\MpdfException $e) {
-                      print "Creating an mPDF object failed with" . $e->getMessage();
-                  }   
+        try {
+            $mpdf = new \Mpdf\Mpdf([
+                'tempDir' =>  public_path('tmp'), 
+                // 'default_font' => 'sarabun_new',
+                'mode' => '+aCJK',
+                "autoScriptToLang" => true,
+                "autoLangToFont" => true,
+                "allow_charset_conversion" => true,
+                "charset_in" => 'UTF-8',
+                
+            ]);
+          } catch (\Mpdf\MpdfException $e) {
+              print "Creating an mPDF object failed with" . $e->getMessage();
+          }
+                // //PDF Setting
+                // try {
+                //     $mpdf = new \Mpdf\Mpdf([
+                //         'tempDir' =>  public_path('tmp'), 
+                //         'fontdata'     => [
+                //             'sarabun_new' => [
+                //                 'R' => 'THSarabunNew.ttf',
+                //                 'B' => 'THSarabunNew Bold.ttf',
+                //                 'I' => 'THSarabunNew Italic.ttf',
+                //             ],
+                //         ],
+                //         'default_font' => 'sarabun_new',
+                //         // 'mode' => '+aCJK',
+                //         // "autoScriptToLang" => true,
+                //         // "autoLangToFont" => true,
+                //         // "allow_charset_conversion" => true,
+                //         // "charset_in" => 'UTF-8',
+                //     ]);
+                //   } catch (\Mpdf\MpdfException $e) {
+                //       print "Creating an mPDF object failed with" . $e->getMessage();
+                //   }   
         //RFA Page
         $pagecount = $mpdf->SetSourceFile(public_path('pdf-asset/RFA-Form_empty_V.9.pdf'));
         $tplId = $mpdf->ImportPage($pagecount);
