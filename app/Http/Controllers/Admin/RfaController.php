@@ -1271,7 +1271,7 @@ class RfaController extends Controller
                 //PDF Setting
     try {
         $mpdf = new \Mpdf\Mpdf([
-            'fontDir' =>  public_path('fonts'), 
+            'tempDir' =>  public_path('tmp'), 
             'fontdata'     => [
                 'sarabun_new' => [
                     'R' => 'THSarabunNew.ttf',
