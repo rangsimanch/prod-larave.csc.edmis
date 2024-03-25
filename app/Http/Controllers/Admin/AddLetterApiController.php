@@ -34,7 +34,6 @@ class AddLetterApiController extends Controller
                     'sent_date' => $addLetter->sent_date,
                     'received_date' => $addLetter->received_date,
                     'construction_contract' => $addLetter->construction_contract->code,
-                    'receive_by' => $addLetter->receive_by->name,
                     'start_date' => $addLetter->start_date,
                     'complete_date' => $addLetter->complete_date,
                     'processing_time' => $addLetter->processing_time
