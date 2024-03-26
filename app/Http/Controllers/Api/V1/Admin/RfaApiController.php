@@ -16,11 +16,37 @@ class RfaApiController extends Controller
 {
     use MediaUploadingTrait;
 
-    public function index()
+     public function index()
     {
         abort_if(Gate::denies('rfa_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        
-        return new RfaResource(Rfa::with(['type', 'construction_contract', 'wbs_level_3', 'wbs_level_4', 'issueby', 'assign', 'action_by', 'comment_by', 'information_by', 'comment_status', 'for_status', 'document_status', 'create_by_user', 'distribute_by', 'reviewed_by', 'team'])->limit(10)->get());
+        $rfas =  Rfa::with(['document_status', 'boq', 'type', 'construction_contract', 'wbs_level_3', 'wbs_level_4', 'issueby', 'assign', 'action_by', 'comment_by', 'information_by', 'comment_status', 'for_status', 'create_by_user', 'distribute_by', 'reviewed_by', 'wbs_level_one', 'team'])->where('deleted_at', '=', null)->orderBy('id', 'desc')->get();
+        return RfaResource::collection($rfas)->response()->setData(
+            $rfas->map(function ($rfa) {
+                $link = [];
+                foreach ($addLetter->letter_upload as $media) {
+                    $link[] = $media->getUrl();
+                }
+                return [
+                    'letter_type' => $addLetter->letter_type,
+                    'objective' => $addLetter->objective,
+                    'speed_class' => $addLetter->speed_class,
+                    'title' => $addLetter->title,
+                    'letter_no' => $addLetter->letter_no,
+                    'sender' => $addLetter->sender->code,
+                    'receiver' => $addLetter->receiver->code,
+                    'sent_date' => $addLetter->sent_date,
+                    'received_date' => $addLetter->received_date,
+                    'construction_contract' => $addLetter->construction_contract->code,
+                    'start_date' => $addLetter->start_date,
+                    'complete_date' => $addLetter->complete_date,
+                    'processing_time' => $addLetter->processing_time,
+                    'responsible' => $addLetter->responsible->name,
+                    'link' => implode(', ', $links)
+                    // add any other fields you want to include in the response
+                ];
+            })
+        );
+        // return new AddLetterResource(AddLetter::with([ 'sender', 'receiver', 'construction_contract', 'team'])->get());
     }
 
     public function store(StoreRfaRequest $request)

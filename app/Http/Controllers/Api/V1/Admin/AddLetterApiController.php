@@ -27,7 +27,7 @@ class AddLetterApiController extends Controller
                 foreach ($addLetter->letter_upload as $media) {
                     $link[] = $media->getUrl();
                 }
-                return [
+                 return [
                     'letter_type' => $addLetter->letter_type,
                     'objective' => $addLetter->objective,
                     'speed_class' => $addLetter->speed_class,
@@ -41,7 +41,7 @@ class AddLetterApiController extends Controller
                     'start_date' => $addLetter->start_date,
                     'complete_date' => $addLetter->complete_date,
                     'processing_time' => $addLetter->processing_time,
-                    'responsible' => $addLetter->responsible->name,
+                    'responsible' => $addLetter->responsible ? $addLetter->responsible->name : '',
                     'link' => implode(', ', $links)
                     // add any other fields you want to include in the response
                 ];
