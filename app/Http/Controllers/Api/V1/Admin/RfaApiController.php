@@ -19,7 +19,9 @@ class RfaApiController extends Controller
      public function index()
     {
         abort_if(Gate::denies('rfa_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $rfas =  Rfa::with(['document_status', 'boq', 'type', 'construction_contract', 'wbs_level_3', 'wbs_level_4', 'issueby', 'assign', 'action_by', 'comment_by', 'information_by', 'comment_status', 'for_status', 'create_by_user', 'distribute_by', 'reviewed_by', 'wbs_level_one', 'team'])->where('deleted_at', '=', null)->orderBy('id', 'desc')->get();
+        $rfas =  Rfa::with(['document_status', 'boq', 'type', 'construction_contract', 'wbs_level_3', 'wbs_level_4', 'issueby', 'assign', 'action_by', 'comment_by', 'information_by', 'comment_status', 'for_status', 'create_by_user', 'distribute_by', 'reviewed_by', 'wbs_level_one', 'team'])
+        ->where('id', '>=', 1)
+        ->orderBy('id', 'asc')->limit(5000)->get();
         return RfaResource::collection($rfas)->response()->setData(
             $rfas->map(function ($rfa) {
                 $file_upload_link = [];
@@ -34,17 +36,22 @@ class RfaApiController extends Controller
 
                 return [
                     'id' => $rfa->id,
-                    'construction_contract' => $rfa->construction_contract->code,
+                    'construction_contract' => $rfa->construction_contract ? $rfa->construction_contract->code : '',
                     'status' => $rfa->document_status->status_name,
                     'boq' => $rfa->boq ? $rfa->boq->name : '',
+                    'boq_sub' =>  $rfa->boq_sub ? $rfa->boq_sub->name : '',
                     'work_type' => $rfa->worktype ? $rfa->worktype : '',
                     'title_eng' => $rfa->title_eng ? $rfa->title_eng : '',
                     'title_th' => $rfa->title ? $rfa->title : '',
                     'document_number' => $rfa->document_number ? $rfa->document_number : '',
-                    'created_at' => $rfa->created_at,
+                    'submit_date' => $rfa->submit_date,
                     'document_type' => $rfa->type ? $rfa->type->type_code : '',
                     'wbs4_code' => $rfa->wbs_level_3 ? $rfa->wbs_level_3->wbs_level_3_code : '',
                     'wbs4_name' => $rfa->wbs_level_3 ? $rfa->wbs_level_3->wbs_level_3_name : '',
+                    'wbs5_code' => $rfa->wbs_level_4 ? $rfa->wbs_level_4->wbs_level_4_code : '',
+                    'wbs5_name' => $rfa->wbs_level_4 ? $rfa->wbs_level_4->wbs_level_4_name : '',
+                    'issue_by' =>  $rfa->issueby ? $rfa->issueby->name : '',
+                    'assign_by' => $row->assign ? $row->assign->name : '',       
                     'action_by' => $rfa->action_by ? $rfa->action_by->name : '',
                     'approve_status' => $rfa->comment_status ? $rfa->comment_status->name : '',
                     'file_upload_link' => implode(', ', $file_upload_link),
