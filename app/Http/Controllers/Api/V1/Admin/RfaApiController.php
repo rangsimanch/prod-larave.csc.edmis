@@ -23,12 +23,12 @@ class RfaApiController extends Controller
         return RfaResource::collection($rfas)->response()->setData(
             $rfas->map(function ($rfa) {
                 $file_upload_link = [];
-                foreach ($rfas->file_upload_1 as $media) {
+                foreach ($rfa->file_upload_1 as $media) {
                     $file_upload_link[] = $media->getUrl();
                 }
 
                 $file_complete_link = [];
-                foreach ($rfas->commercial_file_upload as $media) {
+                foreach ($rfa->commercial_file_upload as $media) {
                     $file_complete_link[] = $media->getUrl();
                 }
 
@@ -36,17 +36,17 @@ class RfaApiController extends Controller
                     'id' => $rfa->id,
                     'construction_contract' => $rfa->construction_contract->code,
                     'status' => $rfa->document_status->status_name,
-                    'boq' => $rfa->boq ? $rfa->boq : '',
+                    'boq' => $rfa->boq ? $rfa->boq->name : '',
                     'work_type' => $rfa->worktype ? $rfa->worktype : '',
                     'title_eng' => $rfa->title_eng ? $rfa->title_eng : '',
                     'title_th' => $rfa->title ? $rfa->title : '',
                     'document_number' => $rfa->document_number ? $rfa->document_number : '',
                     'created_at' => $rfa->created_at,
-                    'document_type' => $rfa->type->type_code ? $rfa->type->type_code : '',
-                    'wbs4_code' => $rfa->wbs_level_3->wbs_level_3_code ? $rfa->wbs_level_3->wbs_level_3_code : '',
-                    'wbs4_name' => $rfa->wbs_level_3->wbs_level_3_name ? $rfa->wbs_level_3->wbs_level_3_name : '',
-                    'action_by' => $rfa->action_by->name ? $rfa->action_by->name : '',
-                    'approve_status' => $rfa->comment_status->name ? $rfa->comment_status->name : '',
+                    'document_type' => $rfa->type ? $rfa->type->type_code : '',
+                    'wbs4_code' => $rfa->wbs_level_3 ? $rfa->wbs_level_3->wbs_level_3_code : '',
+                    'wbs4_name' => $rfa->wbs_level_3 ? $rfa->wbs_level_3->wbs_level_3_name : '',
+                    'action_by' => $rfa->action_by ? $rfa->action_by->name : '',
+                    'approve_status' => $rfa->comment_status ? $rfa->comment_status->name : '',
                     'file_upload_link' => implode(', ', $file_upload_link),
                     'file_complete_link' => implode(', ', $file_complete_link),
                     // add any other fields you want to include in the response
@@ -89,12 +89,12 @@ class RfaApiController extends Controller
         return RfaResource::collection($rfas)->response()->setData(
             $rfas->map(function ($rfa) {
                 $file_upload_link = [];
-                foreach ($rfas->file_upload_1 as $media) {
+                foreach ($rfa->file_upload_1 as $media) {
                     $file_upload_link[] = $media->getUrl();
                 }
 
                 $file_complete_link = [];
-                foreach ($rfas->commercial_file_upload as $media) {
+                foreach ($rfa->commercial_file_upload as $media) {
                     $file_complete_link[] = $media->getUrl();
                 }
 
@@ -102,17 +102,17 @@ class RfaApiController extends Controller
                     'id' => $rfa->id,
                     'construction_contract' => $rfa->construction_contract->code,
                     'status' => $rfa->document_status->status_name,
-                    'boq' => $rfa->boq ? $rfa->boq : '',
+                    'boq' => $rfa->boq ? $rfa->boq->name : '',
                     'work_type' => $rfa->worktype ? $rfa->worktype : '',
                     'title_eng' => $rfa->title_eng ? $rfa->title_eng : '',
                     'title_th' => $rfa->title ? $rfa->title : '',
                     'document_number' => $rfa->document_number ? $rfa->document_number : '',
                     'created_at' => $rfa->created_at,
-                    'document_type' => $rfa->type->type_code ? $rfa->type->type_code : '',
-                    'wbs4_code' => $rfa->wbs_level_3->wbs_level_3_code ? $rfa->wbs_level_3->wbs_level_3_code : '',
-                    'wbs4_name' => $rfa->wbs_level_3->wbs_level_3_name ? $rfa->wbs_level_3->wbs_level_3_name : '',
-                    'action_by' => $rfa->action_by->name ? $rfa->action_by->name : '',
-                    'approve_status' => $rfa->comment_status->name ? $rfa->comment_status->name : '',
+                    'document_type' => $rfa->type ? $rfa->type->type_code : '',
+                    'wbs4_code' => $rfa->wbs_level_3 ? $rfa->wbs_level_3->wbs_level_3_code : '',
+                    'wbs4_name' => $rfa->wbs_level_3 ? $rfa->wbs_level_3->wbs_level_3_name : '',
+                    'action_by' => $rfa->action_by ? $rfa->action_by->name : '',
+                    'approve_status' => $rfa->comment_status ? $rfa->comment_status->name : '',
                     'file_upload_link' => implode(', ', $file_upload_link),
                     'file_complete_link' => implode(', ', $file_complete_link),
                     // add any other fields you want to include in the response
