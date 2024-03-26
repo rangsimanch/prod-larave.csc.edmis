@@ -988,7 +988,23 @@ class RfaController extends Controller
         }
 
         if($rfa->construction_contract->code == "C3-5"){
-            $issue_by = '( MR.ZHANG DAPENG )';
+            if($rfa->id < 80042) {
+                $issue_by = '( MR.ZHANG DAPENG )';
+                $signature_path =  public_path('png-asset/SPTK_signature.png');
+                $signature_size_h = 60;
+                $signature_size_w = 60;
+                $signature_position_top = 425;
+                $signature_position_left = 265;
+
+            }
+            else {
+                $issue_by = '( Mr.Qi Long )';
+                $signature_path =  '';
+                $signature_size_h = 60;
+                $signature_size_w = 60;
+                $signature_position_top = 425;
+                $signature_position_left = 265;
+            }
             $issuer_jobtitle = 'ผู้จัดการโครงการ';
             $issue_position_lf = 245;
             $issue_position_lf_sub = 480;
@@ -1001,11 +1017,6 @@ class RfaController extends Controller
             $logo_top = 109;
             $logo_left = 690;
             $stamp_path =  public_path('png-asset/SPTK_stamp.png');
-            $signature_path =  public_path('png-asset/SPTK_signature.png');
-            $signature_size_h = 60;
-            $signature_size_w = 60;
-            $signature_position_top = 425;
-            $signature_position_left = 265;
             $stamp_size_h = 120;
             $stamp_size_w = 120;
             $contract_name = 'Contract ' . $rfa->construction_contract->code . ' : ' . $rfa->construction_contract->name;
