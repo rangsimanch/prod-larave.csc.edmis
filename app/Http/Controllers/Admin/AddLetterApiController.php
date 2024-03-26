@@ -23,6 +23,10 @@ class AddLetterApiController extends Controller
 
         return AddLetterResource::collection($addLetters)->response()->setData(
             $addLetters->map(function ($addLetter) {
+                $link = [];
+                foreach ($addLetter->letter_upload as $media) {
+                    $link[] = $media->getUrl();
+                }
                 return [
                     'letter_type' => $addLetter->letter_type,
                     'objective' => $addLetter->objective,
@@ -36,7 +40,9 @@ class AddLetterApiController extends Controller
                     'construction_contract' => $addLetter->construction_contract->code,
                     'start_date' => $addLetter->start_date,
                     'complete_date' => $addLetter->complete_date,
-                    'processing_time' => $addLetter->processing_time
+                    'processing_time' => $addLetter->processing_time,
+                    'responsible' => $addLetter->responsible->name,
+                    'link' => implode(', ', $links)
                     // add any other fields you want to include in the response
                 ];
             })

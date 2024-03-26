@@ -999,7 +999,7 @@ class RfaController extends Controller
             }
             else {
                 $issue_by = '( Mr.Qi Long )';
-                $signature_path =  '';
+                $signature_path =  public_path('png-asset/SPTK_signature_2.png');
                 $signature_size_h = 60;
                 $signature_size_w = 60;
                 $signature_position_top = 425;
