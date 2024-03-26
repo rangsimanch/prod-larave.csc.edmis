@@ -51,7 +51,7 @@ class RfaApiController extends Controller
                     'wbs5_code' => $rfa->wbs_level_4 ? $rfa->wbs_level_4->wbs_level_4_code : '',
                     'wbs5_name' => $rfa->wbs_level_4 ? $rfa->wbs_level_4->wbs_level_4_name : '',
                     'issue_by' =>  $rfa->issueby ? $rfa->issueby->name : '',
-                    'assign_by' => $row->assign ? $row->assign->name : '',       
+                    'assign_by' => $rfa->assign ? $rfa->assign->name : '',       
                     'action_by' => $rfa->action_by ? $rfa->action_by->name : '',
                     'approve_status' => $rfa->comment_status ? $rfa->comment_status->name : '',
                     'file_upload_link' => implode(', ', $file_upload_link),
