@@ -42,7 +42,7 @@ class AddLetterApiController extends Controller
                     'complete_date' => $addLetter->complete_date,
                     'processing_time' => $addLetter->processing_time,
                     'responsible' => $addLetter->responsible ? $addLetter->responsible->name : '',
-                    'link' => implode(', ', $links)
+                    'link' => implode(', ', $link)
                     // add any other fields you want to include in the response
                 ];
             })
