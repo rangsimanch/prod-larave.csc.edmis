@@ -28,6 +28,7 @@ class AddLetterApiController extends Controller
                     $link[] = $media->getUrl();
                 }
                  return [
+                    'id' => $addLetter->id,
                     'letter_type' => $addLetter->letter_type,
                     'objective' => $addLetter->objective,
                     'speed_class' => $addLetter->speed_class,
