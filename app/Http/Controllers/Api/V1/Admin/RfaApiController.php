@@ -22,26 +22,33 @@ class RfaApiController extends Controller
         $rfas =  Rfa::with(['document_status', 'boq', 'type', 'construction_contract', 'wbs_level_3', 'wbs_level_4', 'issueby', 'assign', 'action_by', 'comment_by', 'information_by', 'comment_status', 'for_status', 'create_by_user', 'distribute_by', 'reviewed_by', 'wbs_level_one', 'team'])->where('deleted_at', '=', null)->orderBy('id', 'desc')->get();
         return RfaResource::collection($rfas)->response()->setData(
             $rfas->map(function ($rfa) {
-                $link = [];
-                foreach ($addLetter->letter_upload as $media) {
-                    $link[] = $media->getUrl();
+                $file_upload_link = [];
+                foreach ($rfas->file_upload_1 as $media) {
+                    $file_upload_link[] = $media->getUrl();
                 }
+
+                $file_complete_link = [];
+                foreach ($rfas->commercial_file_upload as $media) {
+                    $file_complete_link[] = $media->getUrl();
+                }
+
                 return [
-                    'letter_type' => $addLetter->letter_type,
-                    'objective' => $addLetter->objective,
-                    'speed_class' => $addLetter->speed_class,
-                    'title' => $addLetter->title,
-                    'letter_no' => $addLetter->letter_no,
-                    'sender' => $addLetter->sender->code,
-                    'receiver' => $addLetter->receiver->code,
-                    'sent_date' => $addLetter->sent_date,
-                    'received_date' => $addLetter->received_date,
-                    'construction_contract' => $addLetter->construction_contract->code,
-                    'start_date' => $addLetter->start_date,
-                    'complete_date' => $addLetter->complete_date,
-                    'processing_time' => $addLetter->processing_time,
-                    'responsible' => $addLetter->responsible->name,
-                    'link' => implode(', ', $links)
+                    'id' => $rfa->id,
+                    'construction_contract' => $rfa->construction_contract->code,
+                    'status' => $rfa->document_status->status_name,
+                    'boq' => $rfa->boq ? $rfa->boq : '',
+                    'work_type' => $rfa->worktype ? $rfa->worktype : '',
+                    'title_eng' => $rfa->title_eng ? $rfa->title_eng : '',
+                    'title_th' => $rfa->title ? $rfa->title : '',
+                    'document_number' => $rfa->document_number ? $rfa->document_number : '',
+                    'created_at' => $rfa->created_at,
+                    'document_type' => $rfa->type->type_code ? $rfa->type->type_code : '',
+                    'wbs4_code' => $rfa->wbs_level_3->wbs_level_3_code ? $rfa->wbs_level_3->wbs_level_3_code : '',
+                    'wbs4_name' => $rfa->wbs_level_3->wbs_level_3_name ? $rfa->wbs_level_3->wbs_level_3_name : '',
+                    'action_by' => $rfa->action_by->name ? $rfa->action_by->name : '',
+                    'approve_status' => $rfa->comment_status->name ? $rfa->comment_status->name : '',
+                    'file_upload_link' => implode(', ', $file_upload_link),
+                    'file_complete_link' => implode(', ', $file_complete_link),
                     // add any other fields you want to include in the response
                 ];
             })
