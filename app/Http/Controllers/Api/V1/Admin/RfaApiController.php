@@ -19,7 +19,7 @@ class RfaApiController extends Controller
      public function index()
     {
         abort_if(Gate::denies('rfa_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $rfas =  Rfa::with(['document_status', 'boq', 'type', 'construction_contract', 'wbs_level_3', 'wbs_level_4', 'issueby', 'assign', 'action_by', 'comment_by', 'information_by', 'comment_status', 'for_status', 'create_by_user', 'distribute_by', 'reviewed_by', 'wbs_level_one', 'team'])->where('deleted_at', '=', null)->orderBy('id', 'desc')->get();
+        $rfas =  Rfa::with(['document_status', 'boq', 'type', 'construction_contract', 'wbs_level_3', 'wbs_level_4', 'issueby', 'assign', 'action_by', 'comment_by', 'information_by', 'comment_status', 'for_status', 'create_by_user', 'distribute_by', 'reviewed_by', 'wbs_level_one', 'team'])->where('deleted_at', '=', null)->orderBy('id', 'desc')->limit(100)->get();
         return RfaResource::collection($rfas)->response()->setData(
             $rfas->map(function ($rfa) {
                 $file_upload_link = [];
@@ -84,8 +84,42 @@ class RfaApiController extends Controller
     public function show(Rfa $rfa)
     {
         abort_if(Gate::denies('rfa_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        
+        $rfas =  Rfa::with(['document_status', 'boq', 'type', 'construction_contract', 'wbs_level_3', 'wbs_level_4', 'issueby', 'assign', 'action_by', 'comment_by', 'information_by', 'comment_status', 'for_status', 'create_by_user', 'distribute_by', 'reviewed_by', 'wbs_level_one', 'team'])->where('id', '=', $rfa->id)->orderBy('id', 'desc')->limit(100)->get();
+        return RfaResource::collection($rfas)->response()->setData(
+            $rfas->map(function ($rfa) {
+                $file_upload_link = [];
+                foreach ($rfas->file_upload_1 as $media) {
+                    $file_upload_link[] = $media->getUrl();
+                }
 
-        return new RfaResource($rfa->load(['type', 'construction_contract', 'wbs_level_3', 'wbs_level_4', 'issueby', 'assign', 'action_by', 'comment_by', 'information_by', 'comment_status', 'for_status', 'document_status', 'create_by_user', 'distribute_by', 'reviewed_by', 'team']));
+                $file_complete_link = [];
+                foreach ($rfas->commercial_file_upload as $media) {
+                    $file_complete_link[] = $media->getUrl();
+                }
+
+                return [
+                    'id' => $rfa->id,
+                    'construction_contract' => $rfa->construction_contract->code,
+                    'status' => $rfa->document_status->status_name,
+                    'boq' => $rfa->boq ? $rfa->boq : '',
+                    'work_type' => $rfa->worktype ? $rfa->worktype : '',
+                    'title_eng' => $rfa->title_eng ? $rfa->title_eng : '',
+                    'title_th' => $rfa->title ? $rfa->title : '',
+                    'document_number' => $rfa->document_number ? $rfa->document_number : '',
+                    'created_at' => $rfa->created_at,
+                    'document_type' => $rfa->type->type_code ? $rfa->type->type_code : '',
+                    'wbs4_code' => $rfa->wbs_level_3->wbs_level_3_code ? $rfa->wbs_level_3->wbs_level_3_code : '',
+                    'wbs4_name' => $rfa->wbs_level_3->wbs_level_3_name ? $rfa->wbs_level_3->wbs_level_3_name : '',
+                    'action_by' => $rfa->action_by->name ? $rfa->action_by->name : '',
+                    'approve_status' => $rfa->comment_status->name ? $rfa->comment_status->name : '',
+                    'file_upload_link' => implode(', ', $file_upload_link),
+                    'file_complete_link' => implode(', ', $file_complete_link),
+                    // add any other fields you want to include in the response
+                ];
+            })
+        );
+        // return new RfaResource($rfa->load(['type', 'construction_contract', 'wbs_level_3', 'wbs_level_4', 'issueby', 'assign', 'action_by', 'comment_by', 'information_by', 'comment_status', 'for_status', 'document_status', 'create_by_user', 'distribute_by', 'reviewed_by', 'team']));
     }
 
     public function update(UpdateRfaRequest $request, Rfa $rfa)
