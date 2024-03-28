@@ -18,6 +18,9 @@ class AddLetter extends Model implements HasMedia
     use HasMediaTrait;
     use Auditable;
 
+    public $table = 'add_letters';
+
+
     public const SPEED_CLASS_SELECT = [
         'Normal'      => 'ปกติ',
         'Urgent'      => 'ด่วน',
@@ -54,7 +57,15 @@ class AddLetter extends Model implements HasMedia
         'จึงเรียนมาเพื่อโปรดประสานงานผู้ที่เกี่ยวข้องเข้าร่วมตามวันและเวลาดังกล่าว' => 'จึงเรียนมาเพื่อโปรดประสานงานผู้ที่เกี่ยวข้องเข้าร่วมตามวันและเวลาดังกล่าว',
     ];
 
-    public $table = 'add_letters';
+
+    public const STATUS_SELECT = [
+        'New'          => 'New',
+        'Acknowledged' => 'Acknowledged',
+        'Replied'      => 'Replied',
+        'Other'        => 'Other',
+        'Cancel'       => 'Cancel',
+    ];
+
 
     protected $appends = [
         'letter_upload',
@@ -94,6 +105,8 @@ class AddLetter extends Model implements HasMedia
         'updated_at',
         'deleted_at',
         'team_id',
+        'status',
+        'repiled_ref',
     ];
 
     public function registerMediaConversions(Media $media = null)

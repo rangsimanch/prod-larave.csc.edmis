@@ -201,6 +201,22 @@
                                         {{ $addLetter->processing_time }}
                                     </td>
                                 </tr>
+                                <tr>
+                                    <th>
+                                        {{ trans('cruds.addLetter.fields.status') }}
+                                    </th>
+                                    <td>
+                                        {{ App\AddLetter::STATUS_SELECT[$addLetter->status] ?? '' }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        {{ trans('cruds.addLetter.fields.repiled_ref') }}
+                                    </th>
+                                    <td>
+                                        {{ $addLetter->repiled_ref }}
+                                    </td>
+                                </tr>
                             </tbody>
                         </table>
                         <div class="form-group">

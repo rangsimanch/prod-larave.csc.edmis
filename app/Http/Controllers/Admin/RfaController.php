@@ -693,11 +693,11 @@ class RfaController extends Controller
         // $data['for_status_id'] = $request->for_status_id;
         $data['note_4'] = $request->note_4;
 
-        if($data['comment_status_id'] && ($state == "2" || $state == "3") ){
+        if($data['comment_status_id']){
             $data['document_status_id'] = 4;
         }
 
-        if($data['action_by_id'] != "" && $state == "1"){
+        if($data['action_by_id'] != "" && $data['comment_status_id'] == ""){
             $data['document_status_id'] = 2;
         }
 

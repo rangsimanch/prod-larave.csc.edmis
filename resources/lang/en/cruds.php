@@ -1115,6 +1115,10 @@ return [
         'complete_date_helper'         => ' ',
         'processing_time'              => 'Processing Time (Days)',
         'processing_time_helper'       => ' ',
+        'status'                       => 'Status',
+        'status_helper'                => ' ',
+        'repiled_ref'                  => 'เลขที่เอกสารตอบกลับ (ถ้ามี)',
+        'repiled_ref_helper'           => ' ',
     ],
 ],
 'letterCsc'                 => [

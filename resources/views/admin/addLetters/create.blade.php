@@ -11,6 +11,29 @@
                 <div class="panel-body">
                     <form method="POST" action="{{ route("admin.add-letters.store") }}" enctype="multipart/form-data">
                         @csrf
+                        
+                        <div class="form-group {{ $errors->has('status') ? 'has-error' : '' }}">
+                            <label class="required">{{ trans('cruds.addLetter.fields.status') }}</label>
+                            <select class="form-control" name="status" id="status" required>
+                                <option value disabled {{ old('status', null) === null ? 'selected' : '' }}>{{ trans('global.pleaseSelect') }}</option>
+                                @foreach(App\AddLetter::STATUS_SELECT as $key => $label)
+                                    <option value="{{ $key }}" {{ old('status', 'New') === (string) $key ? 'selected' : '' }}>{{ $label }}</option>
+                                @endforeach
+                            </select>
+                            @if($errors->has('status'))
+                                <span class="help-block" role="alert">{{ $errors->first('status') }}</span>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.addLetter.fields.status_helper') }}</span>
+                        </div>
+                        <div class="form-group {{ $errors->has('repiled_ref') ? 'has-error' : '' }}">
+                            <label for="repiled_ref">{{ trans('cruds.addLetter.fields.repiled_ref') }}</label>
+                            <input class="form-control" type="text" name="repiled_ref" id="repiled_ref" value="{{ old('repiled_ref', '') }}" placeholder="Reference Letter No.">
+                            @if($errors->has('repiled_ref'))
+                                <span class="help-block" role="alert">{{ $errors->first('repiled_ref') }}</span>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.addLetter.fields.repiled_ref_helper') }}</span>
+                        </div>
+
                         <div class="form-group {{ $errors->has('letter_type') ? 'has-error' : '' }}">
                             <label class="required">{{ trans('cruds.addLetter.fields.letter_type') }}</label>
                             <select class="form-control" name="letter_type" id="letter_type" required>

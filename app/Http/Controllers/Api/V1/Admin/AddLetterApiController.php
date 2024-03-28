@@ -19,7 +19,8 @@ class AddLetterApiController extends Controller
     public function index()
     {
         abort_if(Gate::denies('add_letter_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $addLetters = AddLetter::with([ 'sender', 'receiver', 'construction_contract', 'team'])->where('deleted_at', '=', null)->orderBy('id', 'desc')->limit(100)->get();
+        // $addLetters = AddLetter::with([ 'sender', 'receiver', 'construction_contract', 'team'])->orderBy('id', 'desc')->limit(100)->get();
+        $addLetters = AddLetter::with([ 'sender', 'receiver', 'construction_contract', 'team'])->orderBy('id', 'desc')->get();
 
         return AddLetterResource::collection($addLetters)->response()->setData(
             $addLetters->map(function ($addLetter) {
@@ -29,6 +30,8 @@ class AddLetterApiController extends Controller
                 }
                  return [
                     'id' => $addLetter->id,
+                    'status' => $addLetter->status,
+                    'repiled_ref' => $addLetter->repiled_ref,
                     'letter_type' => $addLetter->letter_type,
                     'objective' => $addLetter->objective,
                     'speed_class' => $addLetter->speed_class,

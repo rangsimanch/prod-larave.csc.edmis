@@ -30,6 +30,9 @@
                                 <th>
                                     Actions
                                 </th>
+                                 <th>
+                                    {{ trans('cruds.addLetter.fields.status') }}
+                                </th>
                                 <th>
                                     {{ trans('cruds.addLetter.fields.letter_type') }}
                                 </th>
@@ -78,6 +81,14 @@
                                 <td>
                                 </td>
                                 <td>
+                                </td>
+                                 <td>
+                                    <select class="search" strict="true">
+                                        <option value>{{ trans('global.all') }}</option>
+                                        @foreach(App\AddLetter::STATUS_SELECT as $key => $item)
+                                            <option value="{{ $key }}">{{ $item }}</option>
+                                        @endforeach
+                                    </select>
                                 </td>
                                 <td>
                                     <select class="search" strict="true">
@@ -204,6 +215,8 @@
     columns: [
       { data: 'placeholder', name: 'placeholder' },
 { data: 'actions', name: '{{ trans('global.actions') }}' },
+{ data: 'status', name: 'status' },
+
 { data: 'letter_type', name: 'letter_type' },
 { data: 'topic_category', name: 'topic_categories.subject_name' },
 { data: 'title', name: 'title' },
@@ -220,7 +233,7 @@
 { data: 'processing_time', name: 'processing_time' },
     ],
     orderCellsTop: true,
-    order: [[ 6, 'desc' ]],
+    order: [[ 7, 'desc' ]],
     pageLength: 25,
     aLengthMenu: [
         [5, 10, 25, 50, 100, 200, 1000],

@@ -47,6 +47,28 @@ class CscSentController extends Controller
                 ));
             });
 
+            $table->editColumn('status', function ($row) {
+                if ($row->status == 'New'){
+                    return sprintf('<p style="color:#003399"><b>%s</b></p>',$row->status ? AddLetter::STATUS_SELECT[$row->status] : '');
+                }
+                else if ($row->status == 'Acknowledged'){
+                    return sprintf('<p style="color:#009933"><b>%s</b></p>',$row->status ? AddLetter::STATUS_SELECT[$row->status] : '');
+                }
+                else if ($row->status == 'Replied'){
+                    return sprintf('<p style="color:#ff9900"><b>%s</b></p>',$row->status ? AddLetter::STATUS_SELECT[$row->status] : '');
+                }
+                else if ($row->status == 'Other'){
+                    return sprintf('<p style="color:#6600cc"><b>%s</b></p>',$row->status ? AddLetter::STATUS_SELECT[$row->status] : '');
+                }
+                else if ($row->status == 'Cancel'){
+                    return sprintf('<p style="color:#FF0000"><b>%s</b></p>',$row->status ? AddLetter::STATUS_SELECT[$row->status] : '');
+                }
+                else {
+                    return $row->status ? AddLetter::STATUS_SELECT[$row->status] : '';
+
+                }
+            });
+
             $table->editColumn('letter_type', function ($row) {
                 return $row->letter_type ? AddLetter::LETTER_TYPE_SELECT[$row->letter_type] : '';
             });
@@ -111,7 +133,7 @@ class CscSentController extends Controller
             $table->rawColumns(['actions', 'placeholder', 
             'letter_type', 'title', 'letter_no', 'sender_code', 'receiver_code' ,'construction_contract_code',
             'sender','receiver', 'cc_to', 'construction_contract', 'letter_upload', 'mask_as_received',
-            'responsible_name', 'processing_time', 'topic_category']);
+            'responsible_name', 'processing_time', 'topic_category', 'status']);
 
             return $table->make(true);
         }

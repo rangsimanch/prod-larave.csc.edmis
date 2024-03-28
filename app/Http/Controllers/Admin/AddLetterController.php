@@ -54,6 +54,28 @@ class AddLetterController extends Controller
                 ));
             });
 
+            $table->editColumn('status', function ($row) {
+                if ($row->status == 'New'){
+                    return sprintf('<p style="color:#003399"><b>%s</b></p>',$row->status ? AddLetter::STATUS_SELECT[$row->status] : '');
+                }
+                else if ($row->status == 'Acknowledged'){
+                    return sprintf('<p style="color:#009933"><b>%s</b></p>',$row->status ? AddLetter::STATUS_SELECT[$row->status] : '');
+                }
+                else if ($row->status == 'Replied'){
+                    return sprintf('<p style="color:#ff9900"><b>%s</b></p>',$row->status ? AddLetter::STATUS_SELECT[$row->status] : '');
+                }
+                else if ($row->status == 'Other'){
+                    return sprintf('<p style="color:#6600cc"><b>%s</b></p>',$row->status ? AddLetter::STATUS_SELECT[$row->status] : '');
+                }
+                else if ($row->status == 'Cancel'){
+                    return sprintf('<p style="color:#FF0000"><b>%s</b></p>',$row->status ? AddLetter::STATUS_SELECT[$row->status] : '');
+                }
+                else {
+                    return $row->status ? AddLetter::STATUS_SELECT[$row->status] : '';
+
+                }
+            });
+
             $table->editColumn('letter_type', function ($row) {
                 return $row->letter_type ? AddLetter::LETTER_TYPE_SELECT[$row->letter_type] : '';
             });
@@ -110,7 +132,7 @@ class AddLetterController extends Controller
                 return $row->processing_time ? $row->processing_time : '';
             });
 
-            $table->rawColumns(['actions', 'placeholder', 'topic_category', 'receiver', 'cc_to', 'construction_contract', 'letter_upload', 'responsible']);
+            $table->rawColumns(['actions', 'placeholder', 'topic_category', 'receiver', 'cc_to', 'construction_contract', 'letter_upload', 'responsible', 'status']);
 
             return $table->make(true);
         }
@@ -220,11 +242,11 @@ class AddLetterController extends Controller
     public function update(UpdateAddLetterRequest $request, AddLetter $addLetter)
     {
         $data = $request->all();
-        if($data['mask_as_received'] == 1){
-            $data['receive_by_id'] = auth()->id();
-            $received_date = new DateTime();
-            $data['received_date'] = $received_date->format("d/m/Y");
-        }
+        // if($data['mask_as_received'] == 1){
+        //     $data['receive_by_id'] = auth()->id();
+        //     $received_date = new DateTime();
+        //     $data['received_date'] = $received_date->format("d/m/Y");
+        // }
         $start_date = $data['start_date'];
         $complete_date = $data['complete_date'];
 
