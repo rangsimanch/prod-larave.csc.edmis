@@ -824,6 +824,9 @@ class RfaController extends Controller
         $stamp_position_top = 380;
         $stamp_position_left = 600;
 
+        $signature_size_h = 60;
+        $signature_size_w = 60;
+
         $multi_signature = false;
         $multi_stamp = false;
 
@@ -954,11 +957,13 @@ class RfaController extends Controller
             if($rfa->created_at > $date_1) {
                 $issue_by = '( สุดเขต ไวทยาคม )';
                 $issuer_jobtitle = 'ผู้อำนวยการโครงการ';
-                $signature_path =  public_path('png-asset/ITD-2_signature.png');
+                $signature_path =  public_path('png-asset/ITD-3_signature.png');
+                $signature_size_h = 100;
+                $signature_size_w = 100;
                 $issue_position_lf = 265;
                 $issue_position_lf_sub = 480;
-                $signature_position_top = 430;
-                $signature_position_left = 275;
+                $signature_position_top = 423;
+                $signature_position_left = 250;
             }else {
                 $issue_by = '( มฆา  อัศวราชันย์ )';
                 $issuer_jobtitle = 'ผู้อำนวยการโครงการ';
@@ -979,8 +984,6 @@ class RfaController extends Controller
             $logo_top = 109;
             $logo_left = 690;
             $stamp_path =  public_path('png-asset/ITD_stamp.png');
-            $signature_size_h = 60;
-            $signature_size_w = 60;
             $stamp_size_h = 120;
             $stamp_size_w = 120;
             $contract_name = 'Contract ' . $rfa->construction_contract->code . ' : ' . $rfa->construction_contract->name;
