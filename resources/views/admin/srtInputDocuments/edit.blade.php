@@ -151,7 +151,7 @@
                             @endif
                             <span class="help-block">{{ trans('cruds.srtInputDocument.fields.note_helper') }}</span>
                         </div>
-                        @if(auth()->user()->roles->contains(1))
+                        
                         <div class="form-group {{ $errors->has('file_upload') ? 'has-error' : '' }}">
                                 <label for="file_upload">{{ trans('cruds.srtInputDocument.fields.file_upload') }}</label>
                                 <div class="needsclick dropzone" id="file_upload-dropzone">
@@ -161,7 +161,7 @@
                                 @endif
                                 <span class="help-block">{{ trans('cruds.srtInputDocument.fields.file_upload_helper') }}</span>
                             </div>
-                        @endif
+         
 
                         <div class="form-group {{ $errors->has('file_upload_2') ? 'has-error' : '' }}">
                             <label for="file_upload_2">{{ trans('cruds.srtInputDocument.fields.file_upload_2') }}</label>
