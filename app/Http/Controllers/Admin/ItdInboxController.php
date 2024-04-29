@@ -30,6 +30,7 @@ class ItdInboxController extends Controller
                     ->orWhere(function ($subquery) {
                         $subquery->whereRaw('EXISTS (SELECT 1 FROM add_letter_team WHERE add_letters.id = add_letter_team.add_letter_id AND add_letter_team.team_id = 13)');
                     });
+                    // ->orWhere('receiver_id',13);
             });
             $table = Datatables::of($query);
 
