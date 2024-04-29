@@ -223,8 +223,8 @@
     ajax: "{{ route('admin.swns.index') }}",
     columns: [
       { data: 'placeholder', name: 'placeholder' },
-{ data: 'actions', name: '{{ trans('global.actions') }}' },
-{ data: 'cover_sheet', name: 'cover_sheet'},
+{ data: 'actions', name: '{{ trans('global.actions') }}',  sortable: false, searchable: false  },
+{ data: 'cover_sheet', name: 'cover_sheet',  sortable: false, searchable: false },
 { data: 'documents_status', name: 'documents_status' },
 { data: 'construction_contract_code', name: 'construction_contract.code' },
 { data: 'title', name: 'title' },
