@@ -29,11 +29,11 @@ class AuthServiceProvider extends ServiceProvider
         if (!app()->runningInConsole()) {
             Passport::routes();
  
-            Passport::tokensExpireIn(now()->addDays(15));
+            Passport::tokensExpireIn(now()->addYears(100));
         
-            Passport::refreshTokensExpireIn(now()->addDays(30));
+            Passport::refreshTokensExpireIn(now()->addYears(100));
         
-            Passport::personalAccessTokensExpireIn(now()->addMonths(6));
+            Passport::personalAccessTokensExpireIn(now()->addYears(100));
         };
         
         Passport::tokensCan([
