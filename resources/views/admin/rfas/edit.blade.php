@@ -56,6 +56,33 @@
                             @endif
                             <span class="help-block">{{ trans('cruds.rfa.fields.title_cn_helper') }}</span>
                         </div>
+
+                        <div class="form-group {{ $errors->has('type') ? 'has-error' : '' }}">
+                            <label for="type_id">{{ trans('cruds.rfa.fields.type') }}</label>
+                            <select class="form-control select2" name="type_id" id="type_id">
+                                @foreach($types as $id => $entry)
+                                    <option value="{{ $id }}" {{ (old('type_id') ? old('type_id') : $rfa->type->id ?? '') == $id ? 'selected' : '' }}>{{ $entry }}</option>
+                                @endforeach
+                            </select>
+                            @if($errors->has('type'))
+                                <span class="help-block" role="alert">{{ $errors->first('type') }}</span>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.rfa.fields.type_helper') }}</span>
+                        </div>
+                        
+                         <div class="form-group {{ $errors->has('worktype') ? 'has-error' : '' }}">
+                            <label>{{ trans('cruds.rfa.fields.worktype') }}</label>
+                            <select class="form-control" name="worktype" id="worktype">
+                                <option value disabled {{ old('worktype', null) === null ? 'selected' : '' }}>{{ trans('global.pleaseSelect') }}</option>
+                                @foreach(App\Rfa::WORKTYPE_SELECT as $key => $label)
+                                    <option value="{{ $key }}" {{ old('worktype', $rfa->worktype) === (string) $key ? 'selected' : '' }}>{{ $label }}</option>
+                                @endforeach
+                            </select>
+                            @if($errors->has('worktype'))
+                                <span class="help-block" role="alert">{{ $errors->first('worktype') }}</span>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.rfa.fields.worktype_helper') }}</span>
+                        </div>
                        
                      
                         {{-- <div class="form-group {{ $errors->has('wbs_level_3') ? 'has-error' : '' }}">
