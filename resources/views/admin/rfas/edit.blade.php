@@ -60,8 +60,8 @@
                         <div class="form-group {{ $errors->has('type') ? 'has-error' : '' }}">
                             <label for="type_id">{{ trans('cruds.rfa.fields.type') }}</label>
                             <select class="form-control select2" name="type_id" id="type_id">
-                                @foreach($types as $id => $entry)
-                                    <option value="{{ $id }}" {{ (old('type_id') ? old('type_id') : $rfa->type->id ?? '') == $id ? 'selected' : '' }}>{{ $entry }}</option>
+                                @foreach($types as $id => $type)
+                                    <option value="{{ $id }}" {{ (old('type_id') ? old('type_id') : $rfa->type->id ?? '') == $id ? 'selected' : '' }}>{{ $type }}</option>
                                 @endforeach
                             </select>
                             @if($errors->has('type'))
@@ -69,7 +69,7 @@
                             @endif
                             <span class="help-block">{{ trans('cruds.rfa.fields.type_helper') }}</span>
                         </div>
-                        
+
                          <div class="form-group {{ $errors->has('worktype') ? 'has-error' : '' }}">
                             <label>{{ trans('cruds.rfa.fields.worktype') }}</label>
                             <select class="form-control" name="worktype" id="worktype">

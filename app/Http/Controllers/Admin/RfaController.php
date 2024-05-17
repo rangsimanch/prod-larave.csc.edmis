@@ -603,7 +603,7 @@ class RfaController extends Controller
         else{
             $construction_contracts = ConstructionContract::all()->pluck('code', 'id')->prepend(trans('global.pleaseSelect'), '');
         }
-        $types = Rfatype::pluck('type_name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $types = Rfatype::all()->pluck('type_code', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $wbs_level_3s = WbsLevelThree::all()->pluck('wbs_level_3_name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
