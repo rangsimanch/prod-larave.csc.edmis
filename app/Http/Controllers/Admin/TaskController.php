@@ -317,12 +317,15 @@ class TaskController extends Controller
                             'I' => 'THSarabunNew Italic.ttf',
                         ],
                     ],
-                    'default_font' => 'sarabun_new'
+                    'mode' => '+aCJK',
+                    "autoScriptToLang" => true,
+                    "autoLangToFont" => true,
+                    "allow_charset_conversion" => true,
+                    "charset_in" => 'UTF-8',
                 ]);
               } catch (\Mpdf\MpdfException $e) {
                   print "Creating an mPDF object failed with" . $e->getMessage();
               }
-
             
 
             // Cover Page
@@ -383,9 +386,9 @@ class TaskController extends Controller
                 }
 
 
+                
 
-
-                $description = $task->description ?? '';
+                $description = str_replace("：", ":", $task->description ?? '');
                 $description_set = str_split($description, 1500);
                 
                 $wind = $task->wind ?? '';
@@ -436,7 +439,7 @@ class TaskController extends Controller
                 
                 
                 $html .= "<div style=\" padding-left: 80px; padding-right:80px; padding-bottom:-15px; \">
-                                    <div style=\"vertical-align: top; max-width: 50%; display: inline-block; font-size: 18px;\">".  nl2br(str_replace(';','\n',$description)) ."</div>
+                                    <div style=\"vertical-align: top; max-width: 50%; display: inline-block; font-size: 16px;\">".  nl2br(str_replace(';','\n',$description)) ."</div>
                                     </div><br>";   
                 
                
