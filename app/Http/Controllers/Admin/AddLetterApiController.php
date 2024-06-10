@@ -22,7 +22,7 @@ class AddLetterApiController extends Controller
         // $addLetters = AddLetter::with([ 'sender', 'receiver', 'construction_contract', 'team'])->orderBy('id', 'desc')->limit(500)->get();
         
         $addLetters = AddLetter::with([ 'sender', 'receiver', 'construction_contract', 'team'])
-        ->where('id', '>=', 5001)
+        ->where('id', '>=', 10209)
         ->orderBy('id', 'asc')->limit(5000)->get();
 
 
