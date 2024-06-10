@@ -19,8 +19,13 @@ class RfaApiController extends Controller
      public function index()
     {
         abort_if(Gate::denies('rfa_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $rfas =  Rfa::with(['document_status', 'boq', 'type', 'construction_contract', 'wbs_level_3', 'wbs_level_4', 'issueby', 'assign', 'action_by', 'comment_by', 'information_by', 'comment_status', 'for_status', 'create_by_user', 'distribute_by', 'reviewed_by', 'wbs_level_one', 'team'])
+        // $rfas =  Rfa::with(['document_status', 'boq', 'type', 'construction_contract', 'wbs_level_3', 'wbs_level_4', 'issueby', 'assign', 'action_by', 'comment_by', 'information_by', 'comment_status', 'for_status', 'create_by_user', 'distribute_by', 'reviewed_by', 'wbs_level_one', 'team'])
+        // ->orderBy('id', 'desc')->limit(500)->get();
+
+         $rfas =  Rfa::with(['document_status', 'boq', 'type', 'construction_contract', 'wbs_level_3', 'wbs_level_4', 'issueby', 'assign', 'action_by', 'comment_by', 'information_by', 'comment_status', 'for_status', 'create_by_user', 'distribute_by', 'reviewed_by', 'wbs_level_one', 'team'])
+        ->where('id', '>=', 1)
         ->orderBy('id', 'asc')->limit(5000)->get();
+
         return RfaResource::collection($rfas)->response()->setData(
             $rfas->map(function ($rfa) {
                 $file_upload_link = [];
