@@ -20,7 +20,7 @@ class RfaApiController extends Controller
     {
         abort_if(Gate::denies('rfa_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $rfas =  Rfa::with(['document_status', 'boq', 'type', 'construction_contract', 'wbs_level_3', 'wbs_level_4', 'issueby', 'assign', 'action_by', 'comment_by', 'information_by', 'comment_status', 'for_status', 'create_by_user', 'distribute_by', 'reviewed_by', 'wbs_level_one', 'team'])
-        ->orderBy('id', 'desc')->limit(500)->get();
+        ->orderBy('id', 'desc')->limit(5000)->get();
         return RfaResource::collection($rfas)->response()->setData(
             $rfas->map(function ($rfa) {
                 $file_upload_link = [];
@@ -55,6 +55,7 @@ class RfaApiController extends Controller
                     'approve_status' => $rfa->comment_status ? $rfa->comment_status->name : '',
                     'file_upload_link' => implode(', ', $file_upload_link),
                     'file_complete_link' => implode(', ', $file_complete_link),
+                    'updated_at' => $rfa->updated_at ? $rfa->updated_at : '',
                     // add any other fields you want to include in the response
                 ];
             })
