@@ -38,6 +38,18 @@ class RfaApiController extends Controller
                     $file_complete_link[] = $media->getUrl();
                 }
 
+                // Create a DateTime object from the timestamp
+
+                $updatedDate = '';
+                try {
+                    $date = new DateTime($rfa->updated_at);
+                    $updatedDate = $date->format('d/m/Y');
+                }catch(exeption $e){
+                    $updatedDate = '';
+                }
+    
+               
+
                 return [
                     'id' => $rfa->id,
                     'construction_contract' => $rfa->construction_contract ? $rfa->construction_contract->code : '',
@@ -60,7 +72,7 @@ class RfaApiController extends Controller
                     'approve_status' => $rfa->comment_status ? $rfa->comment_status->name : '',
                     'file_upload_link' => implode(', ', $file_upload_link),
                     'file_complete_link' => implode(', ', $file_complete_link),
-                    'updated_at' => $rfa->updated_at ? $rfa->updated_at : '',
+                    'updated_at' => $updatedDate,
                     // add any other fields you want to include in the response
                 ];
             })
