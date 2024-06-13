@@ -11,6 +11,8 @@ use App\Http\Resources\Admin\AddLetterResource;
 use Gate;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Carbon\Carbon;
+
 
 class AddLetterApiController extends Controller
 {
@@ -19,21 +21,29 @@ class AddLetterApiController extends Controller
     public function index()
     {
         abort_if(Gate::denies('add_letter_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $addLetters = AddLetter::with([ 'sender', 'receiver', 'construction_contract', 'team'])->orderBy('id', 'desc')->limit(500)->get();
 
-        // $addLetters = AddLetter::with([ 'sender', 'receiver', 'construction_contract', 'team'])
-        // ->where('id', '>=', 10209)
-        // ->orderBy('id', 'asc')->limit(5000)->get();
+        // $addLetters = AddLetter::with([ 'sender', 'receiver', 'construction_contract', 'team'])->orderBy('updated_at', 'desc')->limit(500)->get();
+
+        $addLetters = AddLetter::with([ 'sender', 'receiver', 'construction_contract', 'team'])
+        ->where('id', '>=', 1)
+        ->orderBy('id', 'asc')->limit(5000)->get();
 
         
-        // $addLetters = AddLetter::with([ 'sender', 'receiver', 'construction_contract', 'team'])->orderBy('id', 'desc')->get();
-
         return AddLetterResource::collection($addLetters)->response()->setData(
             $addLetters->map(function ($addLetter) {
                 $link = [];
                 foreach ($addLetter->letter_upload as $media) {
                     $link[] = $media->getUrl();
                 }
+
+                $updatedDate = '';
+                try {
+                    $date = Carbon::parse($addLetter->updated_at);
+                    $updatedDate = $date->format('d/m/Y');
+                }catch(exeption $e){
+                    $updatedDate = '';
+                }
+
                  return [
                     'id' => $addLetter->id,
                     'status' => $addLetter->status,
@@ -53,7 +63,7 @@ class AddLetterApiController extends Controller
                     'processing_time' => $addLetter->processing_time,
                     'responsible' => $addLetter->responsible ? $addLetter->responsible->name : '',
                     'link' => implode(', ', $link),
-                    'updated_at' => $addLetter->updated_at ? $addLetter->updated_at : '',
+                    'updated_at' => $updatedDate,
                     // add any other fields you want to include in the response
                 ];
             })

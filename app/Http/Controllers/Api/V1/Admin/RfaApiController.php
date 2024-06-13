@@ -17,7 +17,7 @@ class RfaApiController extends Controller
 {
     use MediaUploadingTrait;
 
-     public function index()
+    public function index()
     {
         abort_if(Gate::denies('rfa_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         
