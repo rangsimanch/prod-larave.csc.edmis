@@ -22,12 +22,12 @@ class RequestForInformationApiController extends Controller
     {
         abort_if(Gate::denies('request_for_information_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        // $rfis = RequestForInformation::with(['construction_contract', 'to', 'wbs_level_4', 'wbs_level_5', 'request_by', 'authorised_rep', 'response_organization', 'team'])
-        // ->orderBy('updated_at', 'desc')->limit(500)->get();
-
         $rfis = RequestForInformation::with(['construction_contract', 'to', 'wbs_level_4', 'wbs_level_5', 'request_by', 'authorised_rep', 'response_organization', 'team'])
-        ->orderBy('id', 'asc')
-        ->limit(5000)->get();
+        ->orderBy('updated_at', 'desc')->limit(500)->get();
+
+        // $rfis = RequestForInformation::with(['construction_contract', 'to', 'wbs_level_4', 'wbs_level_5', 'request_by', 'authorised_rep', 'response_organization', 'team'])
+        // ->orderBy('id', 'asc')
+        // ->limit(5000)->get();
 
 
 
