@@ -54,7 +54,7 @@ class RequestForInspectionApiController extends Controller
                     'title' => $rfn->subject ? $rfn->subject : '',
                     'document_number' => $rfn->ref_no ? $rfn->ref_no : '',
                     'ipa' => $rfn->ipa ? $rfn->ipa : '',
-                    'submit_date' => $rfn->submit_date,
+                    'submit_date' => $rfn->submittal_date,
                     'file_upload_link' => implode(', ', $file_upload_link),
                     'updated_at' => $updatedDate,
                     // add any other fields you want to include in the response
