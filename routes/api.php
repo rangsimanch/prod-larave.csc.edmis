@@ -189,7 +189,7 @@ Route::group(['prefix' => 'v1', 'as' => 'api.', 'namespace' => 'Api\V1\Admin', '
 
     // Request For Informations
     // Route::post('request-for-informations/media', 'RequestForInformationApiController@storeMedia')->name('request-for-informations.storeMedia');
-    Route::apiResource('request-for-informations', 'RequestForInformationApiController');
+    Route::apiResource('rfis', 'RequestForInformationApiController');
 
     // Boq Items
     Route::apiResource('boq-items', 'BoqItemApiController');
