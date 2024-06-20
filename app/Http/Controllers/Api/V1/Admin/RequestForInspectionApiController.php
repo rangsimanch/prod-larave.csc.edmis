@@ -22,13 +22,13 @@ class RequestForInspectionApiController extends Controller
     {
         abort_if(Gate::denies('request_for_inspection_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        // $rfns = RequestForInspection::with(['construction_contract', 'wbs_level_1', 'bill', 'wbs_level_3', 'item_1', 'item_2', 'item_3', 'requested_by', 'contact_person', 'team'])
-        // ->orderBy('updated_at', 'desc')->limit(500)->get();
-
-
         $rfns = RequestForInspection::with(['construction_contract', 'wbs_level_1', 'bill', 'wbs_level_3', 'item_1', 'item_2', 'item_3', 'requested_by', 'contact_person', 'team'])
-        ->where('id', '>=', 112125)
-        ->orderBy('id', 'asc')->limit(10000)->get();
+        ->orderBy('updated_at', 'desc')->limit(500)->get();
+
+
+        // $rfns = RequestForInspection::with(['construction_contract', 'wbs_level_1', 'bill', 'wbs_level_3', 'item_1', 'item_2', 'item_3', 'requested_by', 'contact_person', 'team'])
+        // ->where('id', '>=', 112125)
+        // ->orderBy('id', 'asc')->limit(10000)->get();
 
 
         return RequestForInspectionResource::collection($rfns)->response()->setData(
