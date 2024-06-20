@@ -56,7 +56,7 @@ class RequestForInformationApiController extends Controller
                 return [
                     'id' => $rfi->id,
                     'construction_contract' => $rfi->construction_contract ? $rfi->construction_contract->code : '',
-                    'status' => $rfi->document_status ? $rfi->document_status->name : '' ,
+                    'status' => $rfi->document_status ? RequestForInformation::DOCUMENT_STATUS_SELECT[$rfi->document_status] : '',
                     'title' => $rfi->title ? $rfi->title : '',
                     'document_number' => $rfi->document_no ? $rfi->document_no : '',
                     'original_code' => $rfi->originator_code ? $rfi->originator_code : '',
