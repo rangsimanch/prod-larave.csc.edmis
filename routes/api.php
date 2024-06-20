@@ -81,8 +81,8 @@ Route::group(['prefix' => 'v1', 'as' => 'api.', 'namespace' => 'Api\V1\Admin', '
     Route::apiResource('daily-reports', 'DailyReportApiController');
 
     // Request For Inspections
-    // Route::post('request-for-inspections/media', 'RequestForInspectionApiController@storeMedia')->name('request-for-inspections.storeMedia');
-    Route::apiResource('request-for-inspections', 'RequestForInspectionApiController');
+    Route::apiResource('rfns', 'RequestForInspectionApiController');
+  
 
     // Department Documents
     // Route::post('department-documents/media', 'DepartmentDocumentsApiController@storeMedia')->name('department-documents.storeMedia');
@@ -188,7 +188,7 @@ Route::group(['prefix' => 'v1', 'as' => 'api.', 'namespace' => 'Api\V1\Admin', '
     Route::apiResource('wbs-level-fives', 'WbsLevelFiveApiController');
 
     // Request For Informations
-    Route::post('request-for-informations/media', 'RequestForInformationApiController@storeMedia')->name('request-for-informations.storeMedia');
+    // Route::post('request-for-informations/media', 'RequestForInformationApiController@storeMedia')->name('request-for-informations.storeMedia');
     Route::apiResource('request-for-informations', 'RequestForInformationApiController');
 
     // Boq Items
