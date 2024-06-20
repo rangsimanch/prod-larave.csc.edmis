@@ -31,7 +31,7 @@ class RequestForInspectionApiController extends Controller
         ->orderBy('id', 'asc')->limit(5000)->get();
 
 
-        return RequestForInspection::collection($rfns)->response()->setData(
+        return RequestForInspectionResource::collection($rfns)->response()->setData(
             $rfns->map(function ($rfn) {
                 $file_upload_link = [];
                 foreach ($rfn->files_upload as $media) {
