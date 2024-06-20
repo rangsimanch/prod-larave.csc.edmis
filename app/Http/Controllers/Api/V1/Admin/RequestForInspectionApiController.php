@@ -27,8 +27,8 @@ class RequestForInspectionApiController extends Controller
 
 
         $rfns = RequestForInspection::with(['construction_contract', 'wbs_level_1', 'bill', 'wbs_level_3', 'item_1', 'item_2', 'item_3', 'requested_by', 'contact_person', 'team'])
-        ->where('id', '>=', 5279)
-        ->orderBy('id', 'asc')->limit(5000)->get();
+        ->where('id', '>=', 10466)
+        ->orderBy('id', 'asc')->limit(10000)->get();
 
 
         return RequestForInspectionResource::collection($rfns)->response()->setData(
