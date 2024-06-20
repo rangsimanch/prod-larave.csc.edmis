@@ -378,7 +378,7 @@ class NcnController extends Controller
         
         if($ncn_id > 180){
             $mpdf->SetDocTemplate(public_path('pdf-asset/NCN_No_Deputy_Form.pdf'),true);
-            $mpdf->AddPage('P','','','','','','',50,130);
+            $mpdf->AddPage('P','','','','','','',50,143);
         }
         // $tplId = $mpdf->ImportPage($pagecount);
         // $mpdf->UseTemplate($tplId);
@@ -455,7 +455,7 @@ class NcnController extends Controller
             $html .= "<div style=\"font-size: 10px; position:absolute;top:893px;left:555px\">" . $issue_date  . "</div>";
 
             $mpdf->SetHTMLHeader($html,'0',true);
-            $html = "<div style=\" padding-left: 80px; padding-right:40px; padding-bottom:-100px; \">";
+            $html = "<div style=\" padding-left: 80px; padding-right:40px; padding-bottom:-10px; \">";
             $html .= "<div style=\"font-size: 10px; position:absolute;top:220px;left:105px;LINE-HEIGHT:20px;\">" . $description  . "</div>";
             $html .= "</div>";
         }
@@ -513,7 +513,7 @@ class NcnController extends Controller
             $html .= "<div style=\"font-size: 10px; position:absolute;top:808px;left:520px\">" . $issue_date  . "</div>";
 
             $mpdf->SetHTMLHeader($html,'0',true);
-            $html = "<div style=\" padding-left: 80px; padding-right:40px; padding-bottom:-100px; \">";
+            $html = "<div style=\" padding-left: 80px; padding-right:40px; padding-bottom:-10px; \">";
             $html .= "<div style=\"font-size: 10px; position:absolute;top:220px;left:105px;LINE-HEIGHT:20px;\">" . $description  . "</div>";
             $html .= "</div>";
 
