@@ -414,8 +414,8 @@ return [
         ],
     ],
     'task'                   => [
-        'title'          => 'CSC Activity Report',
-        'title_singular' => 'CSC Activity Report',
+        'title'          => 'Activity Report',
+        'title_singular' => 'Activity Report',
         'fields'         => [
             'img_user'                     => 'Display',
             'id'                           => 'ID',
