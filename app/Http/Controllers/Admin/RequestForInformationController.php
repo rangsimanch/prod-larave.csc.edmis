@@ -658,7 +658,7 @@ class RequestForInformationController extends Controller
         // $tplId = $mpdf->ImportPage($pagecount);
         // $mpdf->UseTemplate($tplId);
 
-        $mpdf->SetDocTemplate(public_path('pdf-asset/RFI_empty_form.pdf'),true);
+        $mpdf->SetDocTemplate(public_path('pdf-asset/RFI_empty_form_2.pdf'),true);
         $mpdf->AddPage('P','','','','','','',110,100);
 
 
