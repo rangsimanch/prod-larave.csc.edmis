@@ -654,9 +654,13 @@ class RequestForInformationController extends Controller
           } catch (\Mpdf\MpdfException $e) {
               print "Creating an mPDF object failed with" . $e->getMessage();
           }
-        $pagecount = $mpdf->SetSourceFile(public_path('pdf-asset/RFI_empty_form.pdf'));
-        $tplId = $mpdf->ImportPage($pagecount);
-        $mpdf->UseTemplate($tplId);
+        // $pagecount = $mpdf->SetSourceFile(public_path('pdf-asset/RFI_empty_form.pdf'));
+        // $tplId = $mpdf->ImportPage($pagecount);
+        // $mpdf->UseTemplate($tplId);
+
+        $mpdf->SetDocTemplate(public_path('pdf-asset/RFI_empty_form.pdf'),true);
+        $mpdf->AddPage('P','','','','','','',110,100);
+
 
         $html = "<div style=\"font-size: 13px; font-weight: bold; position:absolute;top:90px;left:300px;\">" . $contract_name . "</div>";
         $html .= "<div style=\"font-size: 15px; font-weight: bold; position:absolute;top:35px;left:700px;\">" . $rfi_no . "</div>";
@@ -678,7 +682,7 @@ class RequestForInformationController extends Controller
         // $html .= "<div style=\"font-size: 13px; position:absolute;top:373px;left:520px;\">" . $incoming_no . '.' . "</div>";
         // $html .= "<div style=\"font-size: 13px; position:absolute;top:390px;left:520px;\">" . $submit_date . '.' . "</div>";
 
-        $html .= "<div style=\"font-size: 13px; position:absolute;top:430px;left:60px;right:45px;\">" . $description  . "</div>";
+        // $html .= "<div style=\"font-size: 13px; position:absolute;top:430px;left:60px;right:45px;\">" . $description  . "</div>";
 
         $html .= "<div style=\"font-size: 11px; position:absolute;top:733px;left:270px;\">" . $issue_by  . "</div>";
 
@@ -697,7 +701,15 @@ class RequestForInformationController extends Controller
         $html .= "<div style=\"font-size: 13px; position:absolute;top:730px;left:620px;\">" . $submit_date . '.' . "</div>";
 
 
+        $mpdf->SetHTMLHeader($html,'0',true);
+        $html = "<div style=\" padding-left: 30px; padding-bottom:5px; \">";
+        $html .= "<div style=\"font-size: 11px; position:absolute;top:450px;left:30px;\">" . $description  . "</div>";
+        $html .= "</div>";
+
         $mpdf->WriteHTML($html);
+        $html = "";   
+        $mpdf->SetHTMLHeader($html,'0',true);
+
         return $mpdf->Output();
     }
 }
