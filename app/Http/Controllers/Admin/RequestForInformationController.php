@@ -545,9 +545,9 @@ class RequestForInformationController extends Controller
                 $signature_path = public_path('png-asset/CAN_signature_3.png');
 
             }else{
-                 $issue_by = 'Zhou Jia Yi';
+                $issue_by = 'Zhou Jia Yi';
                 $issuer_jobtitle = 'Project manager';
-                $signature_path = public_path('png-asset/CAN_signature.png');
+                $signature_path = public_path('png-asset/CAN_signature_2.png');
             }
            
 
