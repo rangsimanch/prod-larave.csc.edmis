@@ -539,7 +539,7 @@ class RequestForInformationController extends Controller
 
         if($rfi->construction_contract->code == "C4-3"){
             
-            if ($rfi->id > 2817) {
+            if ($rfi->id > 2817 and $rfi->id < 3232) {
                 $issue_by = 'Wang Kan';
                 $issuer_jobtitle = 'For Project manager';
                 $signature_path = public_path('png-asset/CAN_signature_3.png');
