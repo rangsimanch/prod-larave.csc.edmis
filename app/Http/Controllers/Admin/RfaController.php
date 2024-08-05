@@ -46,7 +46,7 @@ class RfaController extends Controller
         if ($request->ajax()) {
             $query = Rfa::with(['document_status', 'boq', 'type', 'construction_contract', 'wbs_level_3', 'wbs_level_4', 'issueby', 'assign', 'action_by', 'comment_by', 'information_by', 'comment_status', 'for_status', 'create_by_user', 'distribute_by', 'reviewed_by', 'wbs_level_one', 'team'])->select(sprintf('%s.*', (new Rfa())->table));
             $table = Datatables::of($query);
-            
+
             $table->addColumn('placeholder', '&nbsp;');
             $table->addColumn('actions', '&nbsp;');
 
@@ -75,9 +75,9 @@ class RfaController extends Controller
 
             $table->addColumn('document_status_status_name', function ($row) {
                 if ($row->document_status->status_name == 'New')
-                    return sprintf('<p style="color:#003399"><b>%s</b></p>',$row->document_status ? $row->document_status->status_name : '');              
+                    return sprintf('<p style="color:#003399"><b>%s</b></p>',$row->document_status ? $row->document_status->status_name : '');
                 else if($row->document_status->status_name == 'Distributed')
-                    return sprintf('<p style="color:#ff9900"><b>%s</b></p>',$row->document_status ? $row->document_status->status_name : '');        
+                    return sprintf('<p style="color:#ff9900"><b>%s</b></p>',$row->document_status ? $row->document_status->status_name : '');
                 else if($row->document_status->status_name == 'Reviewed')
                     return sprintf('<p style="color:#6600cc"><b>%s</b></p>',$row->document_status ? $row->document_status->status_name : '');
                 else if($row->document_status->status_name == 'Done')
@@ -85,7 +85,7 @@ class RfaController extends Controller
                 else
                     return $row->document_status ? $row->document_status->status_name : '';
             });
-    
+
             $table->editColumn('file_upload_1', function ($row) {
                 if (!$row->file_upload_1) {
                     return '';
@@ -245,7 +245,7 @@ class RfaController extends Controller
 
         return view('admin.rfas.index', compact('rfa_document_statuses', 'bo_qs', 'rfatypes', 'construction_contracts', 'wbs_level_threes', 'wbslevelfours', 'users', 'rfa_comment_statuses', 'wbs_level_ones', 'teams'));
     }
-    
+
     function fetch(Request $request){
         $id = $request->get('select');
         $result = array();
@@ -262,7 +262,7 @@ class RfaController extends Controller
         }
         echo $output;
     }
-    
+
     public function revision(Rfa $rfa)
     {
         abort_if(Gate::denies('rfa_revision'), Response::HTTP_FORBIDDEN, '403 Forbidden');
@@ -270,17 +270,17 @@ class RfaController extends Controller
 
         //Contract Check
             //Check is Admin
-            
+
         $wbs_level_3s = WbsLevelThree::all()->pluck('wbs_level_3_code', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $wbs_level_4s = Wbslevelfour::all()->pluck('wbs_level_4_code', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $issuebies = User::find([91,202,219,162,196])->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $assigns = User::where('id',61)->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), ''); //61->Li, 39->Paisan,  62->Liu 
+        $assigns = User::where('id',61)->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), ''); //61->Li, 39->Paisan,  62->Liu
 
         $action_bies = User::where('team_id',3)->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
-        
+
         $comment_bies = User::where('team_id',3)->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $information_bies = User::where('team_id',3)->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
@@ -296,19 +296,19 @@ class RfaController extends Controller
         $review_statuses = RfaCommentStatus::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $reviewed_bies = User::find([39,62])->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
-        
+
 
 
         $rfa->load('type', 'construction_contract', 'issueby', 'assign', 'action_by', 'comment_by', 'information_by', 'comment_status', 'for_status', 'document_status', 'create_by_user', 'update_by_user', 'approve_by_user', 'reviewed_by', 'team');
 
         return view('admin.rfas.revision', compact('review_statuses', 'submittalsRfa', 'types', 'construction_contracts', 'wbs_level_3s', 'wbs_level_4s', 'issuebies', 'assigns', 'action_bies', 'comment_bies', 'information_bies', 'comment_statuses', 'for_statuses', 'rfa', 'reviewed_bies','count_submittalsRfa'));
   }
-    
+
     public function  storeRevision(RevisionRfaRequest $request, Rfa $rfa)
     {   $data = $request->all();
         $data['create_by_user_id'] = auth()->id();
         $data['document_status_id'] = 1;
-        
+
         $data['title_eng'] = $request->title_eng;
         $data['title'] = $request->title;
         $data['title_cn'] = $request->title_cn;
@@ -342,15 +342,15 @@ class RfaController extends Controller
             $document_number = substr($document_number,0,34);
             $data['document_number'] = $document_number . "_R" . $revision_number;
         }
-       
+
 
         $data['check_revision'] = "f";
         $data['rfa_count'] = $request->rfa_count;
-        
+
         Rfa::where('id', $request->id)->update(['check_revision' => "t"]);
 
         $rfa = Rfa::create($data);
-        
+
          // Submittals
         if(count($request->only(['item'])) != 0){
              $item_no = $request->item ?? '';
@@ -367,8 +367,8 @@ class RfaController extends Controller
                  $insert_data[] = $dataSubmittals;
              }
             $submittalsRfa =  SubmittalsRfa::insert($insert_data);
-        }      
-        
+        }
+
         $count_rfa = DB::table('rfas')->where([['cec_sign', '=', 1], ['cec_stamp', '=', 1], ['document_status_id', '=', 1]])->count();
         if($request->cec_sign == 1 && $request->cec_stamp == 1){
             //Alert Manager
@@ -439,15 +439,15 @@ class RfaController extends Controller
         $assigns = User::find([61, 773])->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), ''); //61->Li,  62->Liu , 461-> Ma, 288->Jiang
 
         $action_bies = User::where('team_id',3)->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
-        
+
         $comment_bies = User::where('team_id',3)->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $information_bies = User::where('team_id',3)->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $comment_statuses = RfaCommentStatus::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $for_statuses = RfaCommentStatus::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');  
-        
+        $for_statuses = RfaCommentStatus::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+
         $document_statuses = RfaDocumentStatus::all()->pluck('status_name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $reviewed_bies = User::find([39,62])->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
@@ -464,10 +464,10 @@ class RfaController extends Controller
     {   $data = $request->all();
         $data['create_by_user_id'] = auth()->id();
         $data['document_status_id'] = 1;
-        
+
             //Works Code
         $workcode_id = ConstructionContract::all()->pluck('works_code_id');
-        $workcode = WorksCode::where('id','=',$workcode_id)->value('code');  
+        $workcode = WorksCode::where('id','=',$workcode_id)->value('code');
             //WBS3,4 Code
         $wbs3code = WbsLevelThree::where('id','=',$request->wbs_level_3_id)->value('wbs_level_3_code');
         $wbs4code = Wbslevelfour::where('id','=',$request->wbs_level_4_id)->value('wbs_level_4_code');
@@ -481,9 +481,9 @@ class RfaController extends Controller
         }
         else{
             $previousId = Rfa::orderBy('id', 'desc')->value('rfa_count');
-        }   
+        }
         $nextId = $previousId + 1;
-        
+
         $data['clause'] = $data['clause'] . '.';
 
         $str_length = 4;
@@ -498,20 +498,21 @@ class RfaController extends Controller
         $code_year = substr($date_replace,-2);
         $code_mouth = substr($date_replace,2,2);
         $code_date = $code_year . "-" . $code_mouth;
-        
+        $typecode = $request->type_id->code;
+
         if($request->origin_number == ''){
-            $data['rfa_count'] = $nextId;            
+            $data['rfa_count'] = $nextId;
             //RFA Code
             $data['rfa_code'] = 'RFA' . '/' . $const_code . '/' .  $doc_number;
             // Document Number
-//            $data['document_number'] = 'HSR1/' . $const_code . $workcode  . '/' . $wbs3code . '/' . $wbs4code . '/' . $typecode . '/' . $code_date . '/' . $doc_number; 
-            $data['document_number'] = 'HSR1/' . $const_code . '/' . 'RFA' . '/' . $wbs3code . '/' . $wbs4code . '/' . $typecode . '/' . $code_date . '/' . $doc_number; 
+//            $data['document_number'] = 'HSR1/' . $const_code . $workcode  . '/' . $wbs3code . '/' . $wbs4code . '/' . $typecode . '/' . $code_date . '/' . $doc_number;
+            $data['document_number'] = 'HSR1/' . $const_code . '/' . 'RFA' . '/' . $wbs3code . '/' . $wbs4code . '/' . $typecode . '/' . $code_date . '/' . $doc_number;
 
         }
         else{
             $data['rfa_code'] =  'RFA' . '/' . $const_code . '/' . substr($data['origin_number'],4);
             $data['origin_number'] = $request->origin_number;
-            $data['document_number'] = 'HSR1/' . $const_code . '/' . $wbs3code . '/' . $wbs4code . '/' . $typecode . '/' . $code_date . '/' . $request->origin_number; 
+            $data['document_number'] = 'HSR1/' . $const_code . '/' . $wbs3code . '/' . $wbs4code . '/' . $typecode . '/' . $code_date . '/' . $request->origin_number;
         }
 
         //Review Time
@@ -519,10 +520,10 @@ class RfaController extends Controller
         //Revision Check
         $data['check_revision'] = "f";
 
-       
+
 
         $rfa = Rfa::create($data);
-        
+
         // Submittals
         if(count($request->only(['item'])) != 0){
             $item_no = $request->item;
@@ -554,19 +555,19 @@ class RfaController extends Controller
         //     //Alert Admin Pook
         //     $data_alert['alert_text'] = 'You have new RFA.';
         //     $data_alert['alert_link'] = route('admin.rfas.index');
-    
+
         //     $userAlert = UserAlert::create($data_alert);
         //     $userAlert->users()->sync(11);
 
-        //     //Alert Admin 
+        //     //Alert Admin
         //     $data_alert['alert_text'] = 'You have new RFA.';
         //     $data_alert['alert_link'] = route('admin.rfas.index');
-    
+
         //     $userAlert = UserAlert::create($data_alert);
         //     $userAlert->users()->sync(56);
 
         // }
-        
+
 
         foreach ($request->input('file_upload_1', []) as $file) {
             $rfa->addMedia(storage_path('tmp/uploads/' . $file))->toMediaCollection('file_upload_1');
@@ -587,7 +588,7 @@ class RfaController extends Controller
         if ($media = $request->input('ck-media', false)) {
             Media::whereIn('id', $media)->update(['model_id' => $rfa->id]);
         }
-        
+
 
         return redirect()->route('admin.rfas.index');
     }
@@ -614,15 +615,15 @@ class RfaController extends Controller
         $assigns = User::find([61, 773])->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $action_bies = User::where('team_id',3)->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
-        
+
         $comment_bies = User::where('team_id',3)->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $information_bies = User::where('team_id',3)->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $comment_statuses = RfaCommentStatus::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $for_statuses = RfaCommentStatus::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');  
-        
+        $for_statuses = RfaCommentStatus::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+
         $document_statuses = RfaDocumentStatus::pluck('status_name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $reviewed_bies = User::find([39,62])->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
@@ -635,7 +636,7 @@ class RfaController extends Controller
         //     $action_bies = User::where('team_id',3)->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
         //     $comment_bies = User::where('team_id',3)->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
         //     $information_bies = User::where('team_id',3)->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
-            
+
         //     $rfa->load('action_by', 'comment_by', 'information_by');
 
         //     return view('admin.rfas.edit', compact('construction_contracts', 'action_bies', 'comment_bies', 'information_bies', 'rfa'));
@@ -661,7 +662,7 @@ class RfaController extends Controller
     public function update(UpdateRfaRequest $request, Rfa $rfa)
     {
         $state = $request->document_status_id;
-        $data = $request->all();   
+        $data = $request->all();
         // $data['wbs_level_3_id'] = $request->wbs_level_3_id;
         // $data['wbs_level_4_id'] = $request->wbs_level_4_id;
         $data['spec_ref_no'] = $request->spec_ref_no;
@@ -700,6 +701,62 @@ class RfaController extends Controller
         if($data['action_by_id'] != "" && $data['comment_status_id'] == ""){
             $data['document_status_id'] = 2;
         }
+
+        $str_length = 4;
+        $parts = explode('/', $rfa->document_number);
+        $doc_number = end($parts);
+        $const_code = $rfa->construction_contract->code;
+        //WBS3,4 Code
+
+        if($rfa->isDirty('wbs_level_3_id')){
+            $data['wbs_level_3_id'] = $rfa->wbs_level_3_id;
+            $wbs3code = WbsLevelThree::where('id','=',$rfa->wbs_level_3_id)->value('wbs_level_3_code');
+        }
+        else{
+            $data['wbs_level_3_id'] = $request->wbs_level_3_id;
+            $wbs3code = WbsLevelThree::where('id','=',$request->wbs_level_3_id)->value('wbs_level_3_code');
+        }
+
+
+        $data['wbs_level_4_id'] = $rfa->wbs_level_4_id;
+        $wbs4code = Wbslevelfour::where('id','=',$rfa->wbs_level_4_id)->value('wbs_level_4_code');
+
+
+        if(!$rfa->isDirty('wbs_level_4_id')){
+            $data['wbs_level_4_id'] = $request->wbs_level_4_id;
+            $wbs4code = Wbslevelfour::where('id','=',$request->wbs_level_4_id)->value('wbs_level_4_code');
+        }
+
+
+        //Type Doc. Code
+        $typecode = Rfatype::where('id','=',$request->type_id)->value('type_code');
+
+        // $cur_date = date("ymd");
+        // $code_year = substr($cur_date,0,2);
+        // $code_mouth = substr($cur_date,2,2);
+        // $code_date = $code_year . "-" . $code_mouth;
+
+        $submit_date = $rfa->submit_date;
+        $date_replace = str_replace("/","",$submit_date);
+        $code_year = substr($date_replace,-2);
+        $code_mouth = substr($date_replace,2,2);
+        $code_date = $code_year . "-" . $code_mouth;
+
+        if($request->origin_number == ''){
+            $data['rfa_count'] = $doc_number;
+            //RFA Code
+            $data['rfa_code'] = 'RFA' . '/' . $const_code . '/' .  $doc_number;
+            // Document Number
+//            $data['document_number'] = 'HSR1/' . $const_code . $workcode  . '/' . $wbs3code . '/' . $wbs4code . '/' . $typecode . '/' . $code_date . '/' . $doc_number;
+            $data['document_number'] = 'HSR1/' . $const_code . '/' . 'RFA' . '/' . $wbs3code . '/' . $wbs4code . '/' . $typecode . '/' . $code_date . '/' . $doc_number;
+
+        }
+        else{
+            $data['rfa_code'] =  'RFA' . '/' . $const_code . '/' . substr($data['origin_number'],4);
+            $data['origin_number'] = $request->origin_number;
+            $data['document_number'] = 'HSR1/' . $const_code . '/' . $wbs3code . '/' . $wbs4code . '/' . $typecode . '/' . $code_date . '/' . $request->origin_number;
+        }
+
 
 
         $rfa->update($data);
@@ -973,9 +1030,9 @@ class RfaController extends Controller
                 $signature_position_top = 409;
                 $signature_position_left = 280;
             }
-            
+
             $jobittle_position_lf = 275;
-            
+
             $constructor_name = 'Italian-Thai Development PCL.';
             $constructor_code = 'ITD';
             $logo_path = public_path('png-asset/ITD_logo.png');
@@ -1042,10 +1099,10 @@ class RfaController extends Controller
                 $signature_path = public_path('png-asset/CAN_signature_2.png');
                 $jobittle_position_lf = 275;
             }
-            
 
-         
-            
+
+
+
             $issue_position_lf = 260;
             $issue_position_lf_sub = 489;
             $constructor_name = 'CAN Joint Venture';
@@ -1170,8 +1227,8 @@ class RfaController extends Controller
 
         }
 
-        
-        
+
+
 
         $bill = $rfa->boq->name ?? '';
         $bill_sub = $rfa->boq_sub->name ?? '';
@@ -1180,41 +1237,41 @@ class RfaController extends Controller
         $title_en = $rfa->title_eng ?? '';
         $document_number = $rfa->document_number ?? '';
         $check_box = "X";
-        $rfa_code = $rfa->rfa_code;  
+        $rfa_code = $rfa->rfa_code;
         if(strlen($rfa_code) > 15){
             $revision_count = substr($rfa_code,15,2);
-        } 
+        }
         else{
             $revision_count = "0";
         }
-        
+
         $incoming_no = $rfa->incoming_number ?? '';
         $receive_date = $rfa->receive_date ?? '';
         $spec_ref_no = $rfa->spec_ref_no ?? '';
-        $clause = $rfa->clause ?? '' . ".";  
+        $clause = $rfa->clause ?? '' . ".";
         $contract_drawing_no = $rfa->contract_drawing_no ?? '';
         $qty_page = $rfa->qty_page ?? '';
 
 
 
         $submit_date = $rfa->submit_date ?? '';
-        
+
         $assign_to = $rfa->assign->name ?? '';
 
         $distribute_date = $rfa->distribute_date ?? '';
         $done_date = $rfa->outgoing_date ?? '';
-    
+
         $action_by = $rfa->action_by->name ?? '';
         $process_date = $rfa->process_date ?? '';
-        
+
         $reviewed_by = $rfa->reviewed_by->name ?? '';
         $outgoing_number = $rfa->outgoing_number ?? '';
         $outgoing_date = $rfa->outgoing_date ?? '';
-        
+
         $purpose_for = $rfa->purpose_for ??  '';
-    
+
         $submittalsRfa = $submittalsRfa ?? '';
-        
+
         $document_name = $rfa->attach_file_name;
         // $note_1 = wordwrap(htmlspecialchars($rfa->note_1, ENT_QUOTES) ?? '',500,"<br>\n");
         if($rfa->note_1 == "<p>&nbsp;</p>"){
@@ -1227,7 +1284,7 @@ class RfaController extends Controller
         $str_note1 = str_replace("</p>","",$str_note1);
 
         $note_1 = htmlspecialchars($str_note1, ENT_QUOTES) ?? '';
-     
+
         // $note_2 = wordwrap($rfa->note_2 ?? '',400,"<br>\n") ;
         $note_2 = htmlspecialchars($rfa->note_2, ENT_QUOTES);
         // $note_3 = wordwrap($rfa->note_3 ?? '',400,"<br>\n");
@@ -1262,7 +1319,7 @@ class RfaController extends Controller
 
         $action_by = $rfa->action_by->name ?? '' ;
         $process_date = $rfa->process_date ?? '' ;
-    
+
         $reviewed_by = $rfa->reviewed_by->name ?? '' ;
         $outgoing_number = $rfa->outgoing_number ?? '' ;
         $outgoing_date = $rfa->outgoing_date ?? '' ;
@@ -1271,16 +1328,16 @@ class RfaController extends Controller
         $comment_status = $$rfa->comment_status->id ?? '';
         // try {
         //     $mpdf = new \Mpdf\Mpdf([
-        //         'tempDir' =>  public_path('tmp'), 
+        //         'tempDir' =>  public_path('tmp'),
         //         // 'default_font' => 'sarabun_new',
         //         'mode' => '+aCJK',
         //         "autoScriptToLang" => true,
         //         "autoLangToFont" => true,
         //         "allow_charset_conversion" => true,
         //         "charset_in" => 'UTF-8',
-                
+
         //     ]);
-            
+
         //   } catch (\Mpdf\MpdfException $e) {
         //       print "Creating an mPDF object failed with" . $e->getMessage();
         //   }
@@ -1288,7 +1345,7 @@ class RfaController extends Controller
     try {
         $mpdf = new \Mpdf\Mpdf([
             // 'fontDir' => public_path('tmp/mpdf/ttfontdata') ,
-            // 'fontDir' =>  public_path('tmp'), 
+            // 'fontDir' =>  public_path('tmp'),
             'fontdata'     => [
                 'sarabun_new' => [
                     'R' => 'THSarabunNew.ttf',
@@ -1305,19 +1362,19 @@ class RfaController extends Controller
         ]);
         } catch (\Mpdf\MpdfException $e) {
             print "Creating an mPDF object failed with" . $e->getMessage();
-        }   
+        }
         //RFA Page
         $pagecount = $mpdf->SetSourceFile(public_path('pdf-asset/RFA-Form_empty_V.9.pdf'));
         $tplId = $mpdf->ImportPage($pagecount);
-        $mpdf->UseTemplate($tplId);        
-        
+        $mpdf->UseTemplate($tplId);
+
         //Header
         $html = "<div style=\"font-size: 13px; font-weight: bold; position:absolute;top:84px;left:320px;\">" . $contract_name . "</div>";
             //Logo
-      
+
         $html .= "<div style=\"font-size: 14px; position:absolute;top:". $logo_top ."px;left:". $logo_left ."px;\">
                     <img src=\"". $logo_path ."\" width=\"". $logo_w ."px\" higth=\"". $logo_h ."px\"> </div>";
-        
+
         $html .= "<div style=\"font-size: 13px; position:absolute;top:120px;left:580px;\">" . $constructor_code . '.' . "</div>";
         $html .= "<div style=\"font-size: 13px; position:absolute;top:140px;left:508px;\">" . $constructor_name . '.' . "</div>";
 
@@ -1327,21 +1384,21 @@ class RfaController extends Controller
 
         $html .= "<div style=\"font-size: 12px; position:absolute;top:184px;left:55px;\">" . 'Title :' . "</div>";
         if(strlen($title_en) > 210){
-            $html .= "<div style=\"font-size: 10px; padding-right:240px; position:absolute;top:184px;left:80px; LINE-HEIGHT:16px;\">" 
+            $html .= "<div style=\"font-size: 10px; padding-right:240px; position:absolute;top:184px;left:80px; LINE-HEIGHT:16px;\">"
             . $title_en . "</div>";
         }
         else{
-            $html .= "<div style=\"font-size: 12px; padding-right:240px; position:absolute;top:184px;left:80px; LINE-HEIGHT:16px;\">" 
+            $html .= "<div style=\"font-size: 12px; padding-right:240px; position:absolute;top:184px;left:80px; LINE-HEIGHT:16px;\">"
             . $title_en . "</div>";
         }
-        
+
         $html .= "<div style=\"font-size: 12px; position:absolute;top:235px;left:55px;\">" . 'หัวข้อ :' . "</div>";
         if(strlen($title_th) > 235){
-            $html .= "<div style=\"font-size: 10px; padding-right:230px; position:absolute;top:235px;left:80px; LINE-HEIGHT:14px;\">" 
+            $html .= "<div style=\"font-size: 10px; padding-right:230px; position:absolute;top:235px;left:80px; LINE-HEIGHT:14px;\">"
             . $title_th . "</div>";
         }
         else{
-            $html .= "<div style=\"font-size: 12px; padding-right:230px; position:absolute;top:235px;left:80px; LINE-HEIGHT:14px;\">" 
+            $html .= "<div style=\"font-size: 12px; padding-right:230px; position:absolute;top:235px;left:80px; LINE-HEIGHT:14px;\">"
             . $title_th . "</div>";
         }
         //No. Code.
@@ -1359,7 +1416,7 @@ class RfaController extends Controller
         }
         $html .= "<div style=\"font-size: " . $document_name_fontsize  . "; padding-right:230px; position:absolute;top:273px;left:163px;LINE-HEIGHT:15px;\">" . $document_name . "</div>";
         $html .= "<div style=\"font-size: 12px; position:absolute;top:265;left:630;\">" . $qty_page . '.' . "</div>";
-        
+
           //WBS Spec.Ref Clase. Contract No.
         $html .= "<div style=\"font-size: 12px; padding-right:230px; position:absolute;top:318px;left:215px;LINE-HEIGHT:15px;\">" . $wbs . "</div>";
         $html .= "<div style=\"font-size: 12px; padding-right:60px; position:absolute;top:346px;left:235px;\">" . $spec_ref_no . "</div>";
@@ -1372,10 +1429,10 @@ class RfaController extends Controller
         else {
             $font_size = 12;
         }
-        $html .= "<div style=\"font-size:". $font_size ."px; padding-right:60px; position:absolute;top:410px;left:120px;LINE-HEIGHT:15px;\">" 
+        $html .= "<div style=\"font-size:". $font_size ."px; padding-right:60px; position:absolute;top:410px;left:120px;LINE-HEIGHT:15px;\">"
         . $note_1 . "</div>";
-        
-       
+
+
         $html .= "<div style=\"font-size: 14px; position:absolute;top:453px;left:". $issue_position_lf ."px;\">" . $issue_by . "</div>";
         if($issuer_jobtitle == 'ผู้จัดการโครงการ'){
             $html .= "<div style=\"font-size: 10px; position:absolute;top:467px;left:280px\">" . $issuer_jobtitle . "</div>";
@@ -1422,12 +1479,12 @@ class RfaController extends Controller
                     <img src=\"". $stamp_path ."\" width=\"". $stamp_size_w ."\" higth=\"". $stamp_size_h ."\" style=\"opacity: 0.8;\"> </div>";
             }
         }
-       
-        //CSC Incoming 
+
+        //CSC Incoming
         $html .= "<div style=\"font-size: 13px; position:absolute;top:486px;left:377;\">ผู้รับ/Receiver :</div>";
         // $html .= "<div style=\"font-size: 14px; position:absolute;top:486px;left:477;\">" . $receive_by . "</div>";
         // $html .= "<div style=\"font-size: 14px; position:absolute;top:500px;left:477;\">" . $receive_date . "</div>";
-        $html .= "<div style=\"font-size: 14px; padding-right:180px; position:absolute;top:610;left:120px;LINE-HEIGHT:15px;\">" 
+        $html .= "<div style=\"font-size: 14px; padding-right:180px; position:absolute;top:610;left:120px;LINE-HEIGHT:15px;\">"
         . $note_2 . "</div>";
 
         // $html .= "<div style=\"font-size: 14px; position:absolute;top:675x;left:135;\">( Li Guanghe )</div>";
@@ -1438,7 +1495,7 @@ class RfaController extends Controller
 
 
 
-       
+
         // if($assign_to == "Ma Shengshuang") {
         //     $html .= "<div style=\"font-size: 14px; font-weight: bold; position:absolute;top:675x;left:245;\">" . 'Deputy Project Manager' . "</div>";
         // }
@@ -1475,7 +1532,7 @@ class RfaController extends Controller
         else{
 
         }
-        $html .= "<div style=\"font-size: 14px; padding-right:180px; position:absolute;top:778;left:120px;LINE-HEIGHT:15px;\">" 
+        $html .= "<div style=\"font-size: 14px; padding-right:180px; position:absolute;top:778;left:120px;LINE-HEIGHT:15px;\">"
         . $note_3 . "</div>";
 
         $html .= "<div style=\"font-size: 13px; position:absolute;top:825;left:235;\">" . $action_by . "</div>";
@@ -1505,7 +1562,7 @@ class RfaController extends Controller
         else{
 
         }
-        $html .= "<div style=\"font-size: 14px; padding-right:180px; position:absolute;top:942;left:120px;LINE-HEIGHT:15px;\">" 
+        $html .= "<div style=\"font-size: 14px; padding-right:180px; position:absolute;top:942;left:120px;LINE-HEIGHT:15px;\">"
         . $note_4 . "</div>";
 
         // $html .= "<div style=\"font-size: 14px; position:absolute;top:997x;left:135;\">( Li Guanghe )</div>";
@@ -1516,7 +1573,7 @@ class RfaController extends Controller
 
 
 
-       
+
         // if($assign_to == "Ma Shengshuang") {
         //     $html .= "<div style=\"font-size: 14px; font-weight: bold; position:absolute;top:675x;left:245;\">" . 'Deputy Project Manager' . "</div>";
         // }
@@ -1524,7 +1581,7 @@ class RfaController extends Controller
         // if($assign_to == "Jiang Yalei"){
         //     $html .= "<div style=\"font-size: 14px; font-weight: bold; position:absolute;top:675x;left:225;\">" . 'Leader of Design Review Team' . "</div>";
         // }
-        
+
         if($assign_to == "Li Guanghe"){
          $html .= "<div style=\"font-size: 16px; position:absolute;top:990x;left:91;\">" . 'X' . "</div>";
         }
@@ -1539,14 +1596,14 @@ class RfaController extends Controller
         $mpdf->WriteHTML($html);
          //Add Document
         $allowed = array('pdf','PDF','Pdf');
-        
+
 
         /// SUBMITTAL
         if(count($submittalsRfa) > 0){
             $mpdf->AddPage();
             $pagecount = $mpdf->SetSourceFile(public_path('pdf-asset/Submittals_Form.pdf'));
             $tplId = $mpdf->ImportPage($pagecount);
-            $mpdf->UseTemplate($tplId);    
+            $mpdf->UseTemplate($tplId);
 
             $html = "<div style=\"font-size: 14px; position:absolute;top:55px;left:678px;\">". $rfa_code ."</div>";
             $html .= "<div style=\"font-size: 10px; position:absolute;top:138px;left:520px;\">". $wbslv1 ."</div>";
@@ -1587,7 +1644,7 @@ class RfaController extends Controller
             .  $issue_by  . "</div>";
             $html .= "<div style=\"font-size: 10px;  padding-right:180px; position:absolute;top:787px;left:485px; LINE-HEIGHT:9px;\">"
             . $issuer_jobtitle . '  (' . $constructor_code . ')' . "</div>";
-            
+
             //Signature
             if($multi_signature){
                 if($signature_path != ''){
@@ -1621,12 +1678,12 @@ class RfaController extends Controller
                         <img src=\"". $stamp_path ."\" width=\"200px\" higth=\"200px\" style=\"opacity: 0.5;\"> </div>";
                 }
             }
-            
+
             $html .= "<div style=\"font-size: 10px; position:absolute;top:930px;left:695px;\">". $outgoing_number  ."</div>";
             $html .= "<div style=\"font-size: 10px; position:absolute;top:950px;left:680px;\">". $outgoing_date  ."</div>";
             $html .= "<div style=\"font-size: 10px; position:absolute;top:930;left:130px;\">". $qty_page  . '.' ."</div>";
 
-            
+
 
 
             $top = 425;
@@ -1635,8 +1692,8 @@ class RfaController extends Controller
 
             foreach($submittalsRfa as $submittal){
                 //purpose for HERE!!
-                if($index%8 == 0){ 
-                    $top = 425;       
+                if($index%8 == 0){
+                    $top = 425;
                     $mpdf->AddPage();
                     $pagecount = $mpdf->SetSourceFile(public_path('pdf-asset/Submittals_Form.pdf'));
                     $tplId = $mpdf->ImportPage($pagecount);
@@ -1644,14 +1701,14 @@ class RfaController extends Controller
                     $mpdf->WriteHTML($html);
 
                 }
-                
-                $htmlsub = "<div style=\"font-size: 8px; padding-right:660px; position:absolute;top:". $top ."px;left:52px;LINE-HEIGHT:12px;\">". 
+
+                $htmlsub = "<div style=\"font-size: 8px; padding-right:660px; position:absolute;top:". $top ."px;left:52px;LINE-HEIGHT:12px;\">".
                 $submittal['item_no'] . '  ' ."</div>";
 
-                $htmlsub .= "<div style=\"font-size: 10px; padding-right:370px; position:absolute;top:". $top ."px;left:138px;LINE-HEIGHT:15px;\">". 
-                wordwrap(htmlspecialchars($submittal['description'], ENT_QUOTES),350,"<br>\n") ."</div>";  
-                
-                $htmlsub .= "<div style=\"font-size: 10px; position:absolute;top:". $top ."px;left:445px;\">". 
+                $htmlsub .= "<div style=\"font-size: 10px; padding-right:370px; position:absolute;top:". $top ."px;left:138px;LINE-HEIGHT:15px;\">".
+                wordwrap(htmlspecialchars($submittal['description'], ENT_QUOTES),350,"<br>\n") ."</div>";
+
+                $htmlsub .= "<div style=\"font-size: 10px; position:absolute;top:". $top ."px;left:445px;\">".
                 htmlspecialchars($submittal['qty_sets']) ."</div>";
 
                 $top += 35;
@@ -1659,7 +1716,7 @@ class RfaController extends Controller
                 $mpdf->WriteHTML($htmlsub);
 
             }
-            
+
          }
 
         //Circulation of Work
@@ -1667,18 +1724,18 @@ class RfaController extends Controller
         $mpdf->AddPage();
         $pagecount = $mpdf->SetSourceFile(public_path('pdf-asset/Circulation_General_All_Contract_Update_082023.pdf'));
         $tplId = $mpdf->ImportPage($pagecount);
-        $mpdf->UseTemplate($tplId);   
+        $mpdf->UseTemplate($tplId);
 
         $html = "<div style=\"font-size: 12px; font-weight: bold; position:absolute;top:75px;left:387px;\">". $wbslv2 ."</div>";
-        
+
         $html .= "<div style=\"font-size: 14px; position:absolute;top:94px;left:110px;\">". $incoming_no ."</div>";
         $html .= "<div style=\"font-size: 14px; position:absolute;top:94px;left:340px;\">". $submit_date ."</div>";
         $html .= "<div style=\"font-size: 14px; position:absolute;top:94px;left:570;\">". $qty_page .'.' ."</div>";
         $html .= "<div style=\"font-size: 14px; position:absolute;top:115px;left:165px;\">". $rfa_code ."</div>";
         $html .= "<div style=\"font-size: 14px; position:absolute;top:155px;left:75px;\">". $title_th ."</div>";
 
-        
-        
+
+
 
         $rfa_type = $rfa->type->code ?? '';
         if($rfa_type == 'DWG'){
@@ -1691,7 +1748,7 @@ class RfaController extends Controller
 
         $mpdf->WriteHTML($html);
 
-        // foreach($rfa->file_upload_1 as $attacment){ 
+        // foreach($rfa->file_upload_1 as $attacment){
         //     try{
         //         $pagecount = $mpdf->SetSourceFile($attacment->getPath());
         //         for($page = 1; $page <= $pagecount; $page++){
@@ -1702,12 +1759,12 @@ class RfaController extends Controller
         //             // $mpdf->UseTemplate($tplId);
         //             $mpdf->UseTemplate($tplId, 0, 0, $size['width'], $size['height'], true);
 
-        //         }         
+        //         }
         //     }catch(exeption $e){
         //         print "Creating an mPDF object failed with" . $e->getMessage();
         //     }
         // }
-        
+
 
         return $mpdf->Output();
     }

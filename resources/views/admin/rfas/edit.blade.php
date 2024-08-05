@@ -83,9 +83,9 @@
                             @endif
                             <span class="help-block">{{ trans('cruds.rfa.fields.worktype_helper') }}</span>
                         </div>
-                       
-                     
-                        {{-- <div class="form-group {{ $errors->has('wbs_level_3') ? 'has-error' : '' }}">
+
+
+                        <div class="form-group {{ $errors->has('wbs_level_3') ? 'has-error' : '' }}">
                             <label for="wbs_level_3_id">{{ trans('cruds.rfa.fields.wbs_level_3') }}</label>
                             <select class="form-control select2 wbslv3" name="wbs_level_3_id" id="wbs_level_3_id">
                                 @foreach($wbs_level_3s as $id => $entry)
@@ -97,20 +97,20 @@
                             @endif
                             <span class="help-block">{{ trans('cruds.rfa.fields.wbs_level_3_helper') }}</span>
                         </div>
-                      
+
                         <div class="form-group {{ $errors->has('wbs_level_4') ? 'has-error' : '' }}">
                             <label for="wbs_level_4_id">{{ trans('cruds.rfa.fields.wbs_level_4') }}</label>
                             <select class="form-control select2 wbslv4" name="wbs_level_4_id" id="wbs_level_4_id">
                                 @foreach($wbs_level_4s as $id => $entry)
-                                    <option value="{{ $wbs_level_4s }}" {{ (old('wbs_level_4_id') ? old('wbs_level_4_id') : $rfa->wbs_level_4->id ?? '') == $id ? 'selected' : '' }}>{{ $entry }}</option>
+                                    <option value="{{ $id }}" {{ (old('wbs_level_4_id') ? old('wbs_level_4_id') : $rfa->wbs_level_4->id ?? '') == $id ? 'selected' : '' }}>{{ $entry }}</option>
                                 @endforeach
                             </select>
                             @if($errors->has('wbs_level_4'))
                                 <span class="help-block" role="alert">{{ $errors->first('wbs_level_4') }}</span>
                             @endif
                             <span class="help-block">{{ trans('cruds.rfa.fields.wbs_level_4_helper') }}</span>
-                        </div> --}}
-                    
+                        </div>
+
                     <div class="form-group {{ $errors->has('assign') ? 'has-error' : '' }}">
                         <label for="assign_id">{{ trans('cruds.rfa.fields.assign') }}</label>
                         <select class="form-control select2" name="assign_id" id="assign_id">
@@ -123,7 +123,7 @@
                         @endif
                         <span class="help-block">{{ trans('cruds.rfa.fields.assign_helper') }}</span>
                     </div>
-                     
+
                      <div class="form-group {{ $errors->has('note_1') ? 'has-error' : '' }}">
                             <label for="note_1">{{ trans('cruds.rfa.fields.note_1') }}</label>
                             <textarea class="form-control ckeditor" name="note_1" id="note_1">{!! old('note_1', $rfa->note_1) !!}</textarea>
@@ -188,7 +188,7 @@
                             <span class="help-block">{{ trans('cruds.rfa.fields.contract_drawing_no_helper') }}</span>
                      </div>
                 </div>
-                        
+
                     <!-- IF STATUS NEW -->
                        {{-- @if($rfa->document_status_id == 1) --}}
                        <legend><a onclick="HideSection(2)" id="element2"><i class="bi bi-eye"></i></a><b>  Section II : Incoming Distribution</b></legend>
@@ -311,7 +311,7 @@
                             @endif
                             <span class="help-block">{{ trans('cruds.rfa.fields.reviewed_by_helper') }}</span>
                         </div>
-                        
+
                         <div class="form-group {{ $errors->has('comment_status') ? 'has-error' : '' }}">
                             <label for="comment_status_id">{{ trans('cruds.rfa.fields.comment_status') }}</label>
                             <select class="form-control select2" name="comment_status_id" id="comment_status_id">
@@ -617,33 +617,15 @@ Dropzone.options.documentFileUploadDropzone = {
 
 
 <script type="text/javascript">
-    $('.wbslv3').change(function(){
-        if($(this).val() != ''){
-            var select = $(this).val();
-            console.log(select);
-            var _token = $('input[name="_token"]').val();
-            $.ajax({
-                url:"{{ route('admin.rfas.fetch') }}",
-                method:"POST",
-                data:{select:select , _token:_token},
-                success:function(result){
-                    //Action
-
-                    $('.wbslv4').html(result);
-                    console.log(result);
-                }
-            })
-        }
-    });
 
     $('.doc_counter').change(function(){
         if($('.r_date') != ''){
             var parts =  document.getElementById("receive_date").value.split('/');
             var start_date = new Date(parts[2], parts[1] - 1, parts[0]);
-            var target_date = new Date(parts[2], parts[1] - 1, parts[0]);   
+            var target_date = new Date(parts[2], parts[1] - 1, parts[0]);
             var addDate = 0;
             if($(this).val() == '7'){
-                var toggle_date = new Date(parts[2], parts[1] - 1, parts[0]);  
+                var toggle_date = new Date(parts[2], parts[1] - 1, parts[0]);
                 for(var i = 0; i < 6; i++){
                     if(toggle_date.getDay() == '0'){
                         i--;
@@ -658,7 +640,7 @@ Dropzone.options.documentFileUploadDropzone = {
                 target_date.setDate(start_date.getDate() + addDate);
             }
             else{
-                var toggle_date = new Date(parts[2], parts[1] - 1, parts[0]);  
+                var toggle_date = new Date(parts[2], parts[1] - 1, parts[0]);
                 for(var i = 0; i < 13; i++){
                     if(toggle_date.getDay() == '0'){
                         i--;
@@ -678,7 +660,7 @@ Dropzone.options.documentFileUploadDropzone = {
 
             var format_target_date = dd + '/' + mm + '/' + y;
             document.getElementById("target_date").value = format_target_date;
-           
+
         }
     });
 
@@ -689,7 +671,7 @@ Dropzone.options.documentFileUploadDropzone = {
 
 //        console.log('click');
     });
-    
+
 $("#ApproveAll").click(function () {
     var ident = '1';
     $(".review_status").val(ident).prop("selected", true).change();
@@ -883,10 +865,10 @@ Dropzone.options.workFileUploadDropzone = {
         if($('.r_date') != ''){
             var parts =  document.getElementById("receive_date").value.split('/');
             var start_date = new Date(parts[2], parts[1] - 1, parts[0]);
-            var target_date = new Date(parts[2], parts[1] - 1, parts[0]);   
+            var target_date = new Date(parts[2], parts[1] - 1, parts[0]);
             var addDate = 0;
             if($(this).val() == '7'){
-                var toggle_date = new Date(parts[2], parts[1] - 1, parts[0]);  
+                var toggle_date = new Date(parts[2], parts[1] - 1, parts[0]);
                 for(var i = 0; i < 6; i++){
                     if(toggle_date.getDay() == '0'){
                         i--;
@@ -901,7 +883,7 @@ Dropzone.options.workFileUploadDropzone = {
                 target_date.setDate(start_date.getDate() + addDate);
             }
             else{
-                var toggle_date = new Date(parts[2], parts[1] - 1, parts[0]);  
+                var toggle_date = new Date(parts[2], parts[1] - 1, parts[0]);
                 for(var i = 0; i < 13; i++){
                     if(toggle_date.getDay() == '0'){
                         i--;
@@ -921,7 +903,7 @@ Dropzone.options.workFileUploadDropzone = {
 
             var format_target_date = dd + '/' + mm + '/' + y;
             document.getElementById("target_date").value = format_target_date;
-           
+
         }
     });
 
@@ -944,7 +926,7 @@ if(documents_status == "1"){
     var element1 = document.getElementById('element1');
     section1.style.display = "none";
     element1.innerHTML = '<i class="bi bi-eye-slash-fill"></i>';
-    
+
     var section3 = document.getElementById("section3");
     var element3 = document.getElementById('element3');
     section3.style.display = "none";
@@ -960,7 +942,7 @@ if(documents_status == "2"){
     var element1 = document.getElementById('element1');
     section1.style.display = "none";
     element1.innerHTML = '<i class="bi bi-eye-slash-fill"></i>';
-    
+
     var section2 = document.getElementById("section2");
     var element2 = document.getElementById('element2');
     section2.style.display = "none";
@@ -978,7 +960,7 @@ if(documents_status == "3" || documents_status == "4"){
     var element1 = document.getElementById('element1');
     section1.style.display = "none";
     element1.innerHTML = '<i class="bi bi-eye-slash-fill"></i>';
-    
+
     var section2 = document.getElementById("section2");
     var element2 = document.getElementById('element2');
     section2.style.display = "none";
@@ -999,7 +981,7 @@ if(documents_status == "3" || documents_status == "4"){
 function HideSection(idElement) {
     var element = document.getElementById('element' + idElement);
     if (idElement === 1 || idElement === 2 || idElement === 3 || idElement === 4) {
-        if (element.innerHTML === '<i class="bi bi-eye"></i>') 					
+        if (element.innerHTML === '<i class="bi bi-eye"></i>')
             element.innerHTML = '<i class="bi bi-eye-slash-fill"></i>';
         else {
             element.innerHTML = '<i class="bi bi-eye"></i>';
