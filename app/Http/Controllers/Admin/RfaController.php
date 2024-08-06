@@ -705,9 +705,9 @@ class RfaController extends Controller
         $str_length = 4;
         $parts = explode('/', $rfa->document_number);
         $doc_number = end($parts);
-        $const_code = $rfa->construction_contract->code;
+        $const_code = ConstructionContract::where('id','=',$rfa->construction_contract_id)->value('code');
+        
         //WBS3,4 Code
-
         if($rfa->isDirty('wbs_level_3_id')){
             $data['wbs_level_3_id'] = $rfa->wbs_level_3_id;
             $wbs3code = WbsLevelThree::where('id','=',$rfa->wbs_level_3_id)->value('wbs_level_3_code');
