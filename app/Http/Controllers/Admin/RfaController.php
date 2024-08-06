@@ -498,7 +498,6 @@ class RfaController extends Controller
         $code_year = substr($date_replace,-2);
         $code_mouth = substr($date_replace,2,2);
         $code_date = $code_year . "-" . $code_mouth;
-        $typecode = $request->type_id->code;
 
         if($request->origin_number == ''){
             $data['rfa_count'] = $nextId;
@@ -706,7 +705,7 @@ class RfaController extends Controller
         $parts = explode('/', $rfa->document_number);
         $doc_number = end($parts);
         $const_code = ConstructionContract::where('id','=',$rfa->construction_contract_id)->value('code');
-        
+
         //WBS3,4 Code
         if($rfa->isDirty('wbs_level_3_id')){
             $data['wbs_level_3_id'] = $rfa->wbs_level_3_id;
