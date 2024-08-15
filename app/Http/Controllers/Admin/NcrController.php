@@ -144,7 +144,7 @@ class NcrController extends Controller
             ->where('documents_status', '1')
             ->orWhere('documents_status', '4')
             ->pluck('document_number', 'id')->prepend(trans('global.pleaseSelect'), '');
-        }   
+        }
         else{
             $corresponding_ncns = Ncn::where('documents_status', '1')
             ->orWhere('documents_status', '4')
@@ -176,7 +176,7 @@ class NcrController extends Controller
         $ncr = Ncr::create($data);
 
         $ncn = Ncn::where("id",$data['corresponding_ncn_id'])->update(['documents_status' => $data['documents_status']]);
-        
+
         foreach ($request->input('rootcase_image', []) as $file) {
             $ncr->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('rootcase_image');
         }
@@ -189,13 +189,34 @@ class NcrController extends Controller
             $ncr->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('corrective_image');
         }
 
+        // foreach ($request->input('file_attachment', []) as $file) {
+        //     $ncr->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('file_attachment');
+        // }
+
         foreach ($request->input('file_attachment', []) as $file) {
-            $ncr->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('file_attachment');
+            $index++;
+            $index_number = substr("00{$index}", -2);
+            $inputFile = storage_path('tmp/uploads/' . basename($file));
+            $renameFile = storage_path('tmp/uploads/' . 'NCR' . $doc_number . '_' . $index_number . '.pdf');
+            rename($inputFile, $renameFile);
+
+            $outputFile = storage_path('tmp/uploads/' . 'Convert_' . 'NCR' . $doc_number . '_' . $index_number . '.pdf');
+
+            // Set the Ghostscript command
+            $command = "gs -sDEVICE=pdfwrite -dCompatibilityLevel=1.4 -dNOPAUSE -dQUIET -dBATCH -sOutputFile=$outputFile $renameFile";
+
+            // Run the Ghostscript command
+            shell_exec($command);
+
+            $ncr->addMedia($outputFile)->toMediaCollection('file_attachment');
+            // $swn->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('document_attachment');
         }
 
         if ($media = $request->input('ck-media', false)) {
             Media::whereIn('id', $media)->update(['model_id' => $ncr->id]);
         }
+
+
 
         return redirect()->route('admin.ncrs.index');
     }
@@ -213,7 +234,7 @@ class NcrController extends Controller
 
         if(Auth::id() != 1){
             $corresponding_ncns = Ncn::where('construction_contract_id', session('construction_contract_id'))->pluck('document_number', 'id')->prepend(trans('global.pleaseSelect'), '');
-        }   
+        }
         else{
             $corresponding_ncns = Ncn::pluck('document_number', 'id')->prepend(trans('global.pleaseSelect'), '');
         }
@@ -292,10 +313,35 @@ class NcrController extends Controller
                 }
             }
         }
+
         $media = $ncr->file_attachment->pluck('file_name')->toArray();
+
+        // foreach ($request->input('file_attachment', []) as $file) {
+        //     if (count($media) === 0 || !in_array($file, $media)) {
+        //         $ncr->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('file_attachment');
+        //     }
+        // }
+
+        $index = 0;
+        $index_number = substr("00{$index}", -2);
         foreach ($request->input('file_attachment', []) as $file) {
             if (count($media) === 0 || !in_array($file, $media)) {
-                $ncr->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('file_attachment');
+                $index++;
+                $index_number = substr("00{$index}", -2);
+                $inputFile = storage_path('tmp/uploads/' . basename($file));
+                $renameFile = storage_path('tmp/uploads/' . 'NCR' . $ncr->id . '_' . $index_number . '.pdf');
+                rename($inputFile, $renameFile);
+
+                $outputFile = storage_path('tmp/uploads/' . 'Convert_' . 'NCR' . $ncr->id . '_' . $index_number . '.pdf');
+
+                // Set the Ghostscript command
+                $command = "gs -sDEVICE=pdfwrite -dCompatibilityLevel=1.4 -dNOPAUSE -dQUIET -dBATCH -sOutputFile=$outputFile $renameFile";
+
+                // Run the Ghostscript command
+                shell_exec($command);
+
+                $ncr->addMedia($outputFile)->toMediaCollection('file_attachment');
+                // $swn->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('file_attachment');
             }
         }
 
