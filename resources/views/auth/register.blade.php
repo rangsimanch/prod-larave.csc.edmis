@@ -2,19 +2,19 @@
 @section('content')
 <div class="login-box">
 <link href="https://fonts.googleapis.com/css?family=Kanit&display=swap" rel="stylesheet">
-    
+
     <div class="login-box-body">
     <div class="login-logo">
            <b>REGISTER</b>
     </div>
-    
+
         <form method="POST" action="{{ route('register') }}">
             {{ csrf_field() }}
             <div>
                     <legend> Personal </legend>
                         <div class="form-group {{ $errors->has('name') ? 'has-error' : '' }}">
                             <label class="required" for="name">{{ trans('cruds.user.fields.name') }}</label>
-                            <input class="form-control" type="text" name="name" id="name" value="{{ old('name', '') }}" required placeholder="First name and Last name">
+                            <input class="form-control" type="text" name="name" id="name" value="{{ old('name', '') }}"  maxlength="255" required placeholder="First name and Last name">
                             @if($errors->has('name'))
                                 <span class="help-block" role="alert">{{ $errors->first('name') }}</span>
                             @endif
@@ -133,7 +133,7 @@
                         <a href="{{ route('login') }}"> Back to Login </a>
                     </div>
                     </div>
-                
+
                     <div class="col-xs-4">
                         <!-- <button type="submit" class="btn btn-primary btn-block btn-flat">
                             {{ trans('global.register') }}
@@ -184,16 +184,16 @@
                                             <p style="margin-top:0in;margin-right:0in;margin-bottom:8.0pt;margin-left:0in;line-height:107%;font-size:15px;font-family:&quot;Calibri&quot;,sans-serif;"><span style="font-size:16px;line-height:107%;font-family:Kanit;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;4. กระบวนการยืนยันตัวตนของบุคคลากรบนโปรแกรมโดยให้หน่วยงานที่ใช้โปรแกรมเป็นผู้ตรวจสอบและยืนยันตัวตนผู้ใช้โปรแกรมทุกไตรมาส โดยตรวจสอบข้อมูลในระบบ&nbsp;</span><span style="font-size:16px;line-height:107%;font-family:Kanit;">Hard Copy</span></p>
                                             <p style="margin-top:0in;margin-right:0in;margin-bottom:8.0pt;margin-left:0in;line-height:107%;font-size:15px;font-family:&quot;Calibri&quot;,sans-serif;"><span style="font-size:16px;line-height:107%;font-family:Kanit;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp;ทุกฝ่ายอ่านข้อความทั้งหมดเข้าใจแล้วจึงลงนาม (กด</span><span style="font-size:16px;line-height:107%;font-family:Kanit;">&nbsp;Accept) เพื่อเป็นการยอมรับข้อตกลงและเพื่อไว้เป็นหลักฐาน</span></p>
                                             <p style="margin-top:0in;margin-right:0in;margin-bottom:8.0pt;margin-left:0in;line-height:107%;font-size:15px;font-family:&quot;Calibri&quot;,sans-serif;"><span style="font-size:16px;line-height:107%;font-family:Kanit;">&nbsp;</span></p>
-                                            
-                                    <legend> 
+
+                                    <legend>
                                     </legend>
 
                                             <div class="custom-control custom-checkbox text-center">
                                                 <input type="checkbox" class="custom-control-input" id="policy_checkbox">
                                                 <label style="font-size:17px;font-family:Kanit;" class="custom-control-label" for="policy_checkbox">ฉันยินยอมต่อเงื่อนไขดังกล่าวและยินยอมให้เก็บข้อมูลการทำงานผ่านระบบ EDMIS</label>
                                             </div>
-                                   
-                                            
+
+
                                    </div>
                                     <div class="modal-footer">
                                         <div>
@@ -208,9 +208,9 @@
 
                     </div>
                 </div>
-                
+
             </div>
-           
+
         </form>
     </div>
 </div>

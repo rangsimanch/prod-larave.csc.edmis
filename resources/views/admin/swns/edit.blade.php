@@ -29,7 +29,7 @@
                             </div>
                             <div class="form-group {{ $errors->has('title') ? 'has-error' : '' }}">
                                 <label class="required" for="title">{{ trans('cruds.swn.fields.title') }}</label>
-                                <input class="form-control" type="text" name="title" id="title" value="{{ old('title', $swn->title) }}" required>
+                                <input class="form-control" type="text" name="title" id="title" value="{{ old('title', $swn->title) }}" maxlength="255" required>
                                 @if($errors->has('title'))
                                     <span class="help-block" role="alert">{{ $errors->first('title') }}</span>
                                 @endif
@@ -146,13 +146,13 @@
                                 @endif
                                 <span class="help-block">{{ trans('cruds.swn.fields.construction_specialist_helper') }}</span>
                             </div>
-                           
+
                         </div>
-                        
-                        
+
+
                         <legend><a onclick="HideSection(2)" id="element2"><i class="bi bi-eye"></i></a><b>  Section 2 : Responce & Corrective Action by Contractor </b></legend>
                         <div id="section2">
-                            
+
                             <div class="form-group {{ $errors->has('reply_document') ? 'has-error' : '' }}">
                                 <label for="reply_document">{{ trans('cruds.swn.fields.reply_document') }}</label>
                                 <div class="needsclick dropzone" id="reply_document-dropzone">
@@ -162,8 +162,8 @@
                                 @endif
                                 <span class="help-block">{{ trans('cruds.swn.fields.reply_document_helper') }}</span>
                             </div>
-                           
-                           
+
+
                             <div class="form-group {{ $errors->has('responsible') ? 'has-error' : '' }}">
                                 <label class="required" for="responsible_id">{{ trans('cruds.swn.fields.responsible') }}</label>
                                 <select class="form-control select2" name="responsible_id" id="responsible_id">
@@ -176,7 +176,7 @@
                                 @endif
                                 <span class="help-block">{{ trans('cruds.swn.fields.responsible_helper') }}</span>
                             </div>
-                           
+
                         </div>
 
                         <legend><a onclick="HideSection(3)" id="element3"><i class="bi bi-eye"></i></a><b>  Section 3 : Review and Judgement by CSC</b></legend>
@@ -194,7 +194,7 @@
                                 @endif
                                 <span class="help-block">{{ trans('cruds.swn.fields.review_status_helper') }}</span>
                             </div>
-                
+
                             <div class="form-group {{ $errors->has('review_date') ? 'has-error' : '' }}">
                                 <label class="required" for="review_date">{{ trans('cruds.swn.fields.review_date') }}</label>
                                 <input class="form-control date" type="text" name="review_date" id="review_date" value="{{ old('review_date', $swn->review_date) }}">
@@ -705,7 +705,7 @@ if(documents_status == "1" || documents_status == "5"){
     var element1 = document.getElementById('element1');
     section1.style.display = "none";
     element1.innerHTML = '<i class="bi bi-eye-slash-fill"></i>';
-    
+
     var section3 = document.getElementById("section3");
     var element3 = document.getElementById('element3');
     section3.style.display = "none";
@@ -723,7 +723,7 @@ if(documents_status == "2"){
     var element1 = document.getElementById('element1');
     section1.style.display = "none";
     element1.innerHTML = '<i class="bi bi-eye-slash-fill"></i>';
-    
+
     var section2 = document.getElementById("section2");
     var element2 = document.getElementById('element2');
     section2.style.display = "none";
@@ -733,7 +733,7 @@ if(documents_status == "2"){
     var element4 = document.getElementById('element4');
     section4.style.display = "none";
     element4.innerHTML = '<i class="bi bi-eye-slash-fill"></i>';
-    
+
     $("#responsible_id").attr('required', '');    //turns required on
     $("#review_status").attr('required', '');    //turns required on
 
@@ -744,7 +744,7 @@ if(documents_status == "3"){
     var element1 = document.getElementById('element1');
     section1.style.display = "none";
     element1.innerHTML = '<i class="bi bi-eye-slash-fill"></i>';
-    
+
     var section2 = document.getElementById("section2");
     var element2 = document.getElementById('element2');
     section2.style.display = "none";
@@ -785,7 +785,7 @@ if(documents_status == "4"){
 function HideSection(idElement) {
     var element = document.getElementById('element' + idElement);
     if (idElement === 1 || idElement === 2 || idElement === 3 || idElement === 4) {
-        if (element.innerHTML === '<i class="bi bi-eye"></i>') 					
+        if (element.innerHTML === '<i class="bi bi-eye"></i>')
             element.innerHTML = '<i class="bi bi-eye-slash-fill"></i>';
         else {
             element.innerHTML = '<i class="bi bi-eye"></i>';

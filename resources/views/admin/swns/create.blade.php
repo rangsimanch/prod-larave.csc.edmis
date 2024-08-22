@@ -11,7 +11,7 @@
                 <div class="panel-body">
                     <form method="POST" action="{{ route("admin.swns.store") }}" enctype="multipart/form-data">
                         @csrf
-                        
+
                         <legend>Section 1 : Warning Notice Details</legend>
                         <div class="form-group {{ $errors->has('construction_contract') ? 'has-error' : '' }}">
                             <label class="required" for="construction_contract_id">{{ trans('cruds.swn.fields.construction_contract') }}</label>
@@ -27,7 +27,7 @@
                         </div>
                         <div class="form-group {{ $errors->has('title') ? 'has-error' : '' }}">
                             <label class="required" for="title">{{ trans('cruds.swn.fields.title') }}</label>
-                            <input class="form-control" type="text" name="title" id="title" value="{{ old('title', '') }}" required>
+                            <input class="form-control" type="text" name="title" id="title" value="{{ old('title', '') }}" maxlength="255" required>
                             @if($errors->has('title'))
                                 <span class="help-block" role="alert">{{ $errors->first('title') }}</span>
                             @endif
