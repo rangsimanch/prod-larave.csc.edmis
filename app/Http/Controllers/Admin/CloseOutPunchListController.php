@@ -78,7 +78,7 @@ class CloseOutPunchListController extends Controller
 
                 return implode(' ', $labels);
             });
-            
+
             $table->editColumn('sub_location', function ($row) {
                  $labels = [];
                  $data = [];
@@ -229,9 +229,9 @@ class CloseOutPunchListController extends Controller
         $data = $request->all();
          $state = $closeOutPunchList->document_status;
 
-        if(($request->filled('review_status') && $state == '1' && $data['document_status'] != 3) || $data['document_status'] == 1){
-            $data['document_status'] = 2;
-        }
+        // if(($request->filled('review_status') && $state == '1' && $data['document_status'] != 3) || $data['document_status'] == 1){
+        //     $data['document_status'] = 2;
+        // }
         $closeOutPunchList->update($data);
         $closeOutPunchList->boqs()->sync($request->input('boqs', []));
         $closeOutPunchList->locations()->sync($request->input('locations', []));

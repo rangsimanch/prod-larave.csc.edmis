@@ -183,7 +183,7 @@ class CloseOutInspectionController extends Controller
     }
 
     public function store(StoreCloseOutInspectionRequest $request)
-    {   
+    {
         $data = $request->all();
         $data['document_status'] = 1;
         $closeOutInspection = CloseOutInspection::create($data);
@@ -227,9 +227,9 @@ class CloseOutInspectionController extends Controller
         $data = $request->all();
         $state = $closeOutInspection->document_status;
 
-        if(($request->filled('review_status') && $state == '1' && $data['document_status'] != 3) || $data['document_status'] == 1){
-            $data['document_status'] = 2;
-        }
+        // if(($request->filled('review_status') && $data['document_status'] != 3)){
+        //     $data['document_status'] = 2;
+        // }
 
         $closeOutInspection->update($data);
         $closeOutInspection->boqs()->sync($request->input('boqs', []));
