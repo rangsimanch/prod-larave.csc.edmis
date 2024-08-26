@@ -59,17 +59,17 @@ class UpdateCloseOutPunchListRequest extends FormRequest
                 'date_format:' . config('panel.date_format'),
                 'nullable',
             ],
-            'files_report_after' => [
-                'array',
-                'required',
-            ],
-            'review_date' => [
-                'date_format:' . config('panel.date_format'),
-                'required',
-            ],
-            'review_status' => [
-                'required',
-            ],
+            // 'files_report_after' => [
+            //     'array',
+            //     'required',
+            // ],
+            // 'review_date' => [
+            //     'date_format:' . config('panel.date_format'),
+            //     'required',
+            // ],
+            // 'review_status' => [
+            //     'required',
+            // ],
         ];
     }
 }
