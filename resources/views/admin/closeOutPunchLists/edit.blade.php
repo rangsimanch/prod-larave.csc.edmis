@@ -121,7 +121,7 @@
                             <span class="help-block">{{ trans('cruds.closeOutPunchList.fields.respond_date_helper') }}</span>
                         </div>
                     </div>
-                     
+
                     <legend><a onclick="HideSection(2)" id="element2"><i class="bi bi-eye"></i></a> Section 2 : Corective Punchlist </legend>
                         <div id="section2">
                         <div class="form-group {{ $errors->has('files_report_after') ? 'has-error' : '' }}">
@@ -170,9 +170,9 @@
                             <label>{{ trans('cruds.closeOutPunchList.fields.document_status') }}</label>
                             <select class="form-control" name="document_status" id="document_status">
                                 @foreach(App\CloseOutPunchList::DOCUMENT_STATUS_SELECT as $key => $label)
-                                    @if($key != 1)
+
                                         <option value="{{ $key }}" {{ old('document_status', $closeOutPunchList->document_status) === (string) $key ? 'selected' : '' }}>{{ $label }}</option>
-                                    @endif
+                                    
                                 @endforeach
                             </select>
                             @if($errors->has('document_status'))
@@ -314,7 +314,7 @@ Dropzone.options.filesReportAfterDropzone = {
 function HideSection(idElement) {
     var element = document.getElementById('element' + idElement);
     if (idElement === 1 || idElement === 2 || idElement === 3 || idElement === 4) {
-        if (element.innerHTML === '<i class="bi bi-eye"></i>') 					
+        if (element.innerHTML === '<i class="bi bi-eye"></i>')
             element.innerHTML = '<i class="bi bi-eye-slash-fill"></i>';
         else {
             element.innerHTML = '<i class="bi bi-eye"></i>';

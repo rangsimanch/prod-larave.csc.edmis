@@ -172,9 +172,9 @@
                             <label>{{ trans('cruds.closeOutInspection.fields.document_status') }}</label>
                             <select class="form-control" name="document_status" id="document_status">
                                 @foreach(App\CloseOutInspection::DOCUMENT_STATUS_SELECT as $key => $label)
-                                    @if($key != 1)
+
                                     <option value="{{ $key }}" {{ old('document_status', $closeOutInspection->document_status) === (string) $key ? 'selected' : '' }}>{{ $label }}</option>
-                                    @endif
+
                                 @endforeach
                             </select>
                             @if($errors->has('document_status'))
@@ -316,7 +316,7 @@ Dropzone.options.filesReportAfterDropzone = {
 function HideSection(idElement) {
     var element = document.getElementById('element' + idElement);
     if (idElement === 1 || idElement === 2 || idElement === 3 || idElement === 4) {
-        if (element.innerHTML === '<i class="bi bi-eye"></i>') 					
+        if (element.innerHTML === '<i class="bi bi-eye"></i>')
             element.innerHTML = '<i class="bi bi-eye-slash-fill"></i>';
         else {
             element.innerHTML = '<i class="bi bi-eye"></i>';
