@@ -235,10 +235,10 @@ class RequestForInformationController extends Controller
         $const_code = ConstructionContract::where('id','=',$request->construction_contract_id)->value('code');
 
         $data['incoming_date'] = $request->date;
-        $data['document_no'] = 'HSR1/'. $const_code . '/' . 'RFI' . '/' 
+        $data['document_no'] = 'HSR1/'. $const_code . '/' . 'RFI' . '/'
                                 . $wbs4code . '/' . $wbs5code
                                 . '/' . $typecode . '/' . $code_date . '/' . substr($data['originator_code'],-4);
-        
+
         $data['incoming_no'] = 'IN-' . $data['originator_code'];
 
         // $rfi_code = 'RFI/' . $const_code . '/' . $data['originator_code'];
@@ -249,7 +249,7 @@ class RequestForInformationController extends Controller
          //WBS3,4 Name
          $wbs4name = WbsLevelThree::where('id','=',$request->wbs_level_4_id)->value('wbs_level_3_name');
          $wbs5name = Wbslevelfour::where('id','=',$request->wbs_level_5_id)->value('wbs_level_4_name');
-                         
+
         if($request->wbs_level_4_id != ''){
             $data['discipline'] = '1.' . $wbs4name;
             if($request->wbs_level_5_id != ''){
@@ -300,9 +300,9 @@ class RequestForInformationController extends Controller
             else{
                 $data['document_status'] = 3;
             }
-        
+
         $requestForInformation->update($data);
-        
+
         if (count($requestForInformation->file_upload) > 0) {
             foreach ($requestForInformation->file_upload as $media) {
                 if (!in_array($media->file_name, $request->input('file_upload', []))) {
@@ -361,7 +361,7 @@ class RequestForInformationController extends Controller
     public function createReportRFI(RequestForInformation $rfi)
     {
         $rfi->load('construction_contract', 'to', 'wbs_level_4', 'wbs_level_5', 'request_by', 'authorised_rep', 'response_organization', 'document_type', 'team');
-       
+
         $contract_name = 'Contract ' . $rfi->construction_contract->code . ' : ' . $rfi->construction_contract->name;
         $issue_by = '';
         $issuer_jobtitle = '';
@@ -496,9 +496,9 @@ class RequestForInformationController extends Controller
                 $signature_path =  public_path('png-asset/ITD_signature.png');
                 $signature_position_top = 720;
             $signature_position_left = 500;
-            
+
             }
-            
+
             $issuer_jobtitle = 'ผู้อำนวยการโครงการ';
             $issue_position_lf = 260;
             $issue_position_lf_sub = 489;
@@ -538,7 +538,7 @@ class RequestForInformationController extends Controller
         }
 
         if($rfi->construction_contract->code == "C4-3"){
-            
+
             if ($rfi->id > 2817 and $rfi->id < 3232) {
                 $issue_by = 'Wang Kan';
                 $issuer_jobtitle = 'For Project manager';
@@ -549,10 +549,10 @@ class RequestForInformationController extends Controller
                 $issuer_jobtitle = 'Project manager';
                 $signature_path = public_path('png-asset/CAN_signature_2.png');
             }
-           
+
 
             $issue_position_lf = 260;
-            
+
             $issue_position_lf_sub = 489;
             $constructor_name = 'CAN Joint Venture';
             $constructor_code = 'CAN';
@@ -641,7 +641,7 @@ class RequestForInformationController extends Controller
 
         try {
             $mpdf = new \Mpdf\Mpdf([
-                'tempDir' =>  public_path('tmp'), 
+                'tempDir' =>  public_path('tmp'),
                 'fontdata'     => [
                     'sarabun_new' => [
                         'R' => 'THSarabunNew.ttf',
@@ -661,7 +661,7 @@ class RequestForInformationController extends Controller
         $mpdf->SetDocTemplate(public_path('pdf-asset/RFI_empty_form_2.pdf'),true);
         $mpdf->AddPage('P','','','','','','',110,100);
 
-
+          
         $html = "<div style=\"font-size: 13px; font-weight: bold; position:absolute;top:90px;left:300px;\">" . $contract_name . "</div>";
         $html .= "<div style=\"font-size: 15px; font-weight: bold; position:absolute;top:35px;left:700px;\">" . $rfi_no . "</div>";
         // Logo
@@ -694,7 +694,7 @@ class RequestForInformationController extends Controller
         if($multi_signature == true){
          if($signature_path != ''){
                 $html .= "<div style=\"font-size: 14px; position:absolute;top:". $signature_position_top_2 ."px;left:". $signature_position_left_2 ."px;\">
-                            <img src=\"". $signature_path_2 ."\" width=\"". $signature_size_w_2 ."px\" higth=\"". $signature_size_h_2 ."px\"> </div>";      
+                            <img src=\"". $signature_path_2 ."\" width=\"". $signature_size_w_2 ."px\" higth=\"". $signature_size_h_2 ."px\"> </div>";
             }
         }
 
@@ -707,7 +707,7 @@ class RequestForInformationController extends Controller
         $html .= "</div>";
 
         $mpdf->WriteHTML($html);
-        $html = "";   
+        $html = "";
         $mpdf->SetHTMLHeader($html,'0',true);
 
         return $mpdf->Output();

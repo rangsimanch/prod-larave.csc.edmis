@@ -1236,7 +1236,7 @@ class RfaController extends Controller
         $title_en = $rfa->title_eng ?? '';
         $document_number = $rfa->document_number ?? '';
         $check_box = "X";
-        $rfa_code = $rfa->rfa_code;
+        $rfa_code = str_replace("RFA-", "", $rfa->rfa_code);
         if(strlen($rfa_code) > 15){
             $revision_count = substr($rfa_code,15,2);
         }
