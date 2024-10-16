@@ -47,6 +47,14 @@
                                 @endif
                                 <span class="help-block">{{ trans('cruds.swn.fields.dept_code_helper') }}</span>
                             </div>
+                            <div class="form-group {{ $errors->has('document_number') ? 'has-error' : '' }}">
+                                <label class="required" for="document_number">{{ trans('cruds.swn.fields.document_number') }}</label>
+                                <input class="form-control" type="text" name="document_number" id="document_number" value="{{ old('document_number', $swn->document_number) }}" maxlength="255" required>
+                                @if($errors->has('document_number'))
+                                    <span class="help-block" role="alert">{{ $errors->first('document_number') }}</span>
+                                @endif
+                                <span class="help-block">{{ trans('cruds.swn.fields.title_helper') }}</span>
+                            </div>
                             <div class="form-group {{ $errors->has('submit_date') ? 'has-error' : '' }}">
                                 <label class="required" for="submit_date">{{ trans('cruds.swn.fields.submit_date') }}</label>
                                 <input class="form-control date" type="text" name="submit_date" id="submit_date" value="{{ old('submit_date', $swn->submit_date) }}" required>
