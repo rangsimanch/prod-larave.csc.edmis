@@ -1083,8 +1083,10 @@ class RfaController extends Controller
         }
 
         if($rfa->construction_contract->code == "C4-3"){
-            // $issue_by = '( Dong Weihong )';
-            // $issuer_jobtitle = 'For Project manager CAN';
+            $issue_by = '( Dong Weihong )';
+            $issuer_jobtitle = 'For Project manager CAN';
+            $signature_path = public_path('png-asset/CAN_signature.png');
+            $jobittle_position_lf = 275;
 
              if ( $rfa->id <= 97608){
                 $issue_by = '( Zhou Jia Yi )';

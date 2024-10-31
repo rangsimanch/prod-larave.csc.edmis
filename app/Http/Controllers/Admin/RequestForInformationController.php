@@ -539,15 +539,21 @@ class RequestForInformationController extends Controller
 
         if($rfi->construction_contract->code == "C4-3"){
 
+            $issue_by = 'Zhou Jia Yi';
+            $issuer_jobtitle = 'Project manager';
+            $signature_path = public_path('png-asset/CAN_signature_2.png');
+
             if ($rfi->id > 2817 and $rfi->id < 3232) {
                 $issue_by = 'Wang Kan';
                 $issuer_jobtitle = 'For Project manager';
                 $signature_path = public_path('png-asset/CAN_signature_3.png');
 
-            }else{
-                $issue_by = 'Zhou Jia Yi';
-                $issuer_jobtitle = 'Project manager';
-                $signature_path = public_path('png-asset/CAN_signature_2.png');
+            }
+
+            if ($rfi->id > 3440){
+                $issue_by = 'Gua Liang';
+                $issuer_jobtitle = 'For Project manager';
+                $signature_path = public_path('png-asset/CAN_signature_4.png');
             }
 
 
@@ -661,7 +667,7 @@ class RequestForInformationController extends Controller
         $mpdf->SetDocTemplate(public_path('pdf-asset/RFI_empty_form_2.pdf'),true);
         $mpdf->AddPage('P','','','','','','',110,100);
 
-          
+
         $html = "<div style=\"font-size: 13px; font-weight: bold; position:absolute;top:90px;left:300px;\">" . $contract_name . "</div>";
         $html .= "<div style=\"font-size: 15px; font-weight: bold; position:absolute;top:35px;left:700px;\">" . $rfi_no . "</div>";
         // Logo
