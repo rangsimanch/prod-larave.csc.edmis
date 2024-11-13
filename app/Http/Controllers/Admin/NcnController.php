@@ -169,7 +169,7 @@ class NcnController extends Controller
         // Year Select
         $prev_doc_code = Ncn::where('construction_contract_id' ,'=' ,$data['construction_contract_id'])->where(DB::raw('YEAR(issue_date)'), '=', $code_year)
         ->orderBy('id','desc')->limit(1)->value('document_number');
-        $legth_of_doc = (int)substr(substr($prev_doc_code,-3),0,3); 
+        $legth_of_doc = (int)substr(substr($prev_doc_code,-3),0,3);
         if($legth_of_doc != 0){
             $prev_year = substr(substr($prev_doc_code,-8),0,4);
             if(strcmp($prev_year,$code_year)){
@@ -187,7 +187,7 @@ class NcnController extends Controller
 
         $ncn = Ncn::create($data);
 
-       
+
         foreach ($request->input('description_image', []) as $file) {
             $ncn->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('description_image');
         }
@@ -339,7 +339,7 @@ class NcnController extends Controller
     public function createReportNCN(ncn $ncn){
         try {
             $mpdf = new \Mpdf\Mpdf([
-                'tempDir' =>  public_path('tmp'), 
+                'tempDir' =>  public_path('tmp'),
                 // 'default_font' => 'sarabun_new',
                 'mode' => '+aCJK',
                 "autoScriptToLang" => true,
@@ -369,13 +369,13 @@ class NcnController extends Controller
                 $textbox3 = "The Director of S&Q Dept. of CSC";
             }
             $mpdf->AddPage('P','','','','','','',60,130);
-        
+
         }
         if($ncn_id > 93 && $ncn_id <= 180){
             $mpdf->SetDocTemplate(public_path('pdf-asset/NCN_New_Form.pdf'),true);
             $mpdf->AddPage('P','','','','','','',50,130);
         }
-        
+
         if($ncn_id > 180){
             $mpdf->SetDocTemplate(public_path('pdf-asset/NCN_No_Deputy_Form.pdf'),true);
             $mpdf->AddPage('P','','','','','','',50,143);
@@ -401,7 +401,7 @@ class NcnController extends Controller
         $leader = $ncn->leader->name ?? '';
         $leader_jobtitle = $ncn->leader->jobtitle->name ?? '';
 
-       
+
 
         $cos = $ncn->construction_specialist->name ?? '';
         $cos_jobtitle = $ncn->construction_specialist->jobtitle->name ?? '';
@@ -424,7 +424,7 @@ class NcnController extends Controller
             $html .= "<div style=\"font-size: 10px; font-weight: bold; position:absolute;top:805px;left:153px\">" . $textbox1  . "</div>";
             $html .= "<div style=\"font-size: 10px; font-weight: bold; position:absolute;top:805px;left:375px\">" . $textbox2  . "</div>";
             $html .= "<div style=\"font-size: 10px; font-weight: bold; position:absolute;top:805px;left:528px\">" . $textbox3  . "</div>";
-            
+
             if($issuer != ''){
                 if(!is_null($ncn->issue_by->signature)){
                     $html .= "<div style=\"font-weight: bold; position:absolute;top:810;left:150px;\">
@@ -467,7 +467,7 @@ class NcnController extends Controller
             $html .= "<div style=\"padding-right:120px; font-size: 10px; font-weight: bold; position:absolute;top:150px;left:105px;\">" . $subject  . "</div>";
             $html .= "<div style=\"padding-right:120px;font-size: 10px; position:absolute;top:650px;left:105px\">" . $attachment_description  . "</div>";
             $html .= "<div style=\"padding-right:120px;font-size: 10px; position:absolute;top:691px;left:340px\">" . $pages_of_attachment  .  "</div>";
-           
+
             if($issuer != ''){
                 if(!is_null($ncn->issue_by->signature)){
                     $html .= "<div style=\"font-weight: bold; position:absolute;top:725;left:230px;\">
@@ -478,12 +478,13 @@ class NcnController extends Controller
                 $html .= "<div style=\"font-size: 10px;  position:absolute;top:785px;left:227px\">" . $issuer_jobtitile  . "</div>";
                 $html .= "<div style=\"font-size: 10px; position:absolute;top:802px;left:227px\">" . $issue_date  . "</div>";
             }
-
+            $cos_form_jobtitle = "";
+            $html .= "<div style=\"font-size: 9px;font-weight: bold;  position:absolute;top:860px;left:525\">" . $cos_form_jobtitle . "</div>";
             if($cos_id == 61){
                 $cos_form_jobtitle = "Chief Engineer";
                 $html .= "<div style=\"font-size: 9px;font-weight: bold;  position:absolute;top:860px;left:525\">" . $cos_form_jobtitle . "</div>";
             }
-            else{
+            if($cos_id == 38){
                 $cos_form_jobtitle = "Deputy Chief Engineer";
                 $html .= "<div style=\"font-size: 9px;font-weight: bold;  position:absolute;top:860px;left:505\">" . $cos_form_jobtitle . "</div>";
             }
@@ -497,10 +498,10 @@ class NcnController extends Controller
                 $html .= "<div style=\"font-size: 10px;  position:absolute;top:917px;left:480px\">" . $cos  . "</div>";
                 $html .= "<div style=\"font-size: 10px;  position:absolute;top:935px;left:525px\">" . $cos_jobtitle  . "</div>";
                 $html .= "<div style=\"font-size: 10px; position:absolute;top:953px;left:525px\">" . $issue_date  . "</div>";
-                
+
             }
-            
-            if($leader != ''){   
+
+            if($leader != ''){
                 if(!is_null($ncn->leader->signature)){
                     $html .= "<div style=\"font-weight: bold; position:absolute;top:725;left:535px;\">
                     <img width=\"45%\" height=\"35%\" src=\"" . $ncn->leader->signature->getPath()
@@ -509,7 +510,7 @@ class NcnController extends Controller
                 $html .= "<div style=\"font-size: 10px;  position:absolute;top:771px;left:480\">" . $leader  . "</div>";
                 $html .= "<div style=\"font-size: 10px;  position:absolute;top:790px;left:520px\">" . $leader_jobtitle . "</div>";
             }
-            
+
             $html .= "<div style=\"font-size: 10px; position:absolute;top:808px;left:520px\">" . $issue_date  . "</div>";
 
             $mpdf->SetHTMLHeader($html,'0',true);
@@ -518,20 +519,20 @@ class NcnController extends Controller
             $html .= "</div>";
 
         }
-        
+
         $mpdf->WriteHTML($html);
-        $html = "";   
+        $html = "";
         $mpdf->SetHTMLHeader($html,'0',true);
         //Attachment
         // Image Attacment
         $count_image = count($ncn->description_image);
         if($count_image > 0){
-            $mpdf->SetDocTemplate(public_path('pdf-asset/SWN_Template_Attachment.pdf'),true);  
+            $mpdf->SetDocTemplate(public_path('pdf-asset/SWN_Template_Attachment.pdf'),true);
             $footer_text = "<div style=\"text-align: right; font-size:18px; font-weight: bold;\">" . $document_number . "</div>";
             $mpdf->AddPage('P','','','','','','',50,55);
             $mpdf->SetHTMLFooter($footer_text);
 
-            
+
             for($index = 0; $index < $count_image; $index++){
                 try{
                     $allowed = array('gif', 'png', 'jpg', 'jpeg', 'JPG', 'JPEG', 'PNG');
@@ -543,13 +544,13 @@ class NcnController extends Controller
                     curl_close($handle);
                     if($httpCode != 404){
                         if(in_array(pathinfo(public_path($ncn->description_image[$index]->getUrl()),PATHINFO_EXTENSION),$allowed)){
-                                                
+
                             $img = (string) Image::make($ncn->description_image[$index]->getPath())->orientate()->resize(null, 180, function ($constraint) {
                                 $constraint->aspectRatio();
                             })
                             ->encode('data-url');
 
-                            $html .= "<img style=\"padding-left:90px;\" width=\"". "30%" ."\" height=\"". "30%" ."\" src=\"" 
+                            $html .= "<img style=\"padding-left:90px;\" width=\"". "30%" ."\" height=\"". "30%" ."\" src=\""
                                 . $img
                                 . "\">  ";
                         }
@@ -559,13 +560,13 @@ class NcnController extends Controller
                 }
             }
             $mpdf->WriteHTML($html);
-            $mpdf->SetDocTemplate("");  
+            $mpdf->SetDocTemplate("");
         }
         $html="";
         $mpdf->SetHTMLHeader($html,'0',true);
-        $mpdf->SetDocTemplate("");  
+        $mpdf->SetDocTemplate("");
 
-        foreach($ncn->file_attachment as $attacment){ 
+        foreach($ncn->file_attachment as $attacment){
             try{
                 $url =  url($attacment->getUrl());
                 $handle = curl_init($url);
@@ -580,7 +581,7 @@ class NcnController extends Controller
                         $size = $mpdf->getTemplateSize($tplId);
                         $mpdf->AddPage($size['orientation']);
                         $mpdf->UseTemplate($tplId, 0, 0, $size['width'], $size['height'], true);
-                    }         
+                    }
                 }
             }catch(exeption $e){
                 print "Creating an mPDF object failed with" . $e->getMessage();
@@ -605,7 +606,7 @@ class NcnController extends Controller
                             $tplId = $mpdf->importPage($page);
                             $mpdf->UseTemplate($tplId);
                         }
-                    }         
+                    }
                 }catch(exeption $e){
                     print "Creating an mPDF object failed with" . $e->getMessage();
                 }

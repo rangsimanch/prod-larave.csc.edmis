@@ -324,7 +324,7 @@ return [
             'cover_sheet'                   => 'Cover Sheet',
             'boq_sub'                       => 'BoQ (2)',
             'boq_sub_helper'                => ' ',
-            
+
         ],
     ],
     'rfatype'                => [
@@ -530,7 +530,7 @@ return [
             'document_code_helper'        => '',
             'active'                    => 'Active',
             'active_helper'        => '',
-            
+
         ],
     ],
     'wbsLevelThree'             => [
@@ -618,7 +618,7 @@ return [
             'deleted_at_helper' => '',
         ],
    ],
-  
+
    'submittalsRfa'          => [
     'title'          => 'Submittals RFA',
     'title_singular' => 'Submittals RFA',
@@ -2303,7 +2303,7 @@ return [
             'action_date_helper'            => ' ',
         ],
     ],
-    
+
     'announcement' => [
         'title'          => 'Announcements',
         'title_singular' => 'Announcement',
@@ -2501,9 +2501,9 @@ return [
             'issue_by_helper'                => ' ',
             'related_specialist'             => 'Related Specialist',
             'related_specialist_helper'      => ' ',
-            'leader'                         => 'The Director',
+            'leader'                         => 'The Director or Team Leader',
             'leader_helper'                  => ' ',
-            'construction_specialist'        => 'Deputy Chief Engineer',
+            'construction_specialist'        => 'Deputy Chief Engineer or The Project Engineer (PE) or CSC\'s COS',
             'construction_specialist_helper' => ' ',
             'created_at'                     => 'Created at',
             'created_at_helper'              => ' ',
