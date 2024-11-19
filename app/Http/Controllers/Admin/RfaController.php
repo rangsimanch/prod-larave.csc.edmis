@@ -1102,10 +1102,17 @@ class RfaController extends Controller
                 $jobittle_position_lf = 275;
             }
 
-            if ($rfa->id > 97608){
+            if ($rfa->id > 97608 and $rfa->id <= 99346){
                 $issue_by = '( Gao Liang )';
                 $issuer_jobtitle = 'For Project Manager';
                 $signature_path = public_path('png-asset/CAN_signature_4.png');
+                $jobittle_position_lf = 275;
+            }
+
+            if($rfa->id > 99346){
+                $issue_by = '( Zhou Jia Yi )';
+                $issuer_jobtitle = 'Project Manager';
+                $signature_path = public_path('png-asset/CAN_signature_2.png');
                 $jobittle_position_lf = 275;
             }
 
