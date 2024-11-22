@@ -235,9 +235,14 @@ class RequestForInformationController extends Controller
         $const_code = ConstructionContract::where('id','=',$request->construction_contract_id)->value('code');
 
         $data['incoming_date'] = $request->date;
+        $rfi_no = '';
+        $pattern = '/(\d+(?:[-_][Rr]\d+)?)$/';
+        if (preg_match($pattern, $data['originator_code'], $matches)) {
+            $rfi_no = $matches[1];
+        }
         $data['document_no'] = 'HSR1/'. $const_code . '/' . 'RFI' . '/'
                                 . $wbs4code . '/' . $wbs5code
-                                . '/' . $typecode . '/' . $code_date . '/' . substr($data['originator_code'],-4);
+                                . '/' . $typecode . '/' . $code_date . '/' . $rfi_no;
 
         $data['incoming_no'] = 'IN-' . $data['originator_code'];
 
