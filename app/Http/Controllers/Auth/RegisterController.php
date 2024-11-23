@@ -53,7 +53,7 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'name' => ['required', 'string', 'max:255'],
+            'name' => ['required', 'string', 'max:150'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
         ]);
@@ -65,7 +65,7 @@ class RegisterController extends Controller
      * @param  array  $data
      * @return \App\User
      */
-   
+
      protected function create(array $data)
     {
         $user = User::create([
@@ -78,12 +78,12 @@ class RegisterController extends Controller
             'jobtitle_id' => $data['jobtitle_id'],
             'organization_id' => $data['organization_id'],
         ]);
-        
+
         $user->construction_contracts()->sync($data['construction_contracts']);
 
-        
+
         return $user;
-        
+
     }
 
 

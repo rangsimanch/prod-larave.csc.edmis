@@ -14,7 +14,7 @@
                     <legend> Personal </legend>
                         <div class="form-group {{ $errors->has('name') ? 'has-error' : '' }}">
                             <label class="required" for="name">{{ trans('cruds.user.fields.name') }}</label>
-                            <input class="form-control" type="text" name="name" id="name" value="{{ old('name', '') }}"  maxlength="255" required placeholder="First name and Last name">
+                            <input class="form-control" type="text" name="name" id="name" value="{{ old('name', '') }}"  maxlength="150" required placeholder="First name and Last name">
                             @if($errors->has('name'))
                                 <span class="help-block" role="alert">{{ $errors->first('name') }}</span>
                             @endif
