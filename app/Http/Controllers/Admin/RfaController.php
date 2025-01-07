@@ -916,10 +916,14 @@ class RfaController extends Controller
             $multi_stamp = true;
             $issue_by = '(นายศรายุธ ทองยศ) และ (Mr.Luan Zhiqiang)';
             $signature_path_2 =  public_path('png-asset/ITDCREC_signature_2-2.png');
+            $signature_size_h_2 = 40;
+            $signature_size_w_2 = 40;
 
             if($rfa->id < 102866) {
                 $issue_by = '(นายศรายุธ ทองยศ) และ (Mr.Yu Dongxin)';
                 $signature_path_2 =  public_path('png-asset/ITDCREC_signature_2.png');
+                $signature_size_h_2 = 80;
+                $signature_size_w_2 = 80;
 
             }
 
@@ -943,8 +947,7 @@ class RfaController extends Controller
             $signature_size_h = 55;
             $signature_size_w = 55;
 
-            $signature_size_h_2 = 80;
-            $signature_size_w_2 = 80;
+
 
             $signature_position_top = 415;
             $signature_position_left = 220;
