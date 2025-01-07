@@ -413,12 +413,16 @@ class RequestForInformationController extends Controller
             $multi_stamp = true;
             $issue_by = '(นายศรายุธ ทองยศ) และ (Mr.Luan Zhiqiang)';
             $signature_path_2 =  public_path('png-asset/ITDCREC_signature_2-2.png');
+            $signature_size_h_2 = 35;
+            $signature_size_w_2 = 35;
 
             if($rfi->id < 3596){
                 $issue_by = '(นายศรายุธ ทองยศ) และ (Mr.Yu Dongxin)';
                 $signature_path_2 =  public_path('png-asset/ITDCREC_signature_2.png');
+                $signature_size_h_2 = 70;
+                $signature_size_w_2 = 70;
             }
-            
+
             $issuer_jobtitle = 'ผู้รับมอบอำนาจกระทำการแทน (Authorized Representatives) ITD-CREC No.10 Joint Venture';
             $issue_position_lf = 215;
             $issue_position_lf_sub = 485;
@@ -439,8 +443,6 @@ class RequestForInformationController extends Controller
             $signature_size_h = 40;
             $signature_size_w = 40;
 
-            $signature_size_h_2 = 70;
-            $signature_size_w_2 = 70;
 
             $signature_position_top = 720;
             $signature_position_left = 480;
