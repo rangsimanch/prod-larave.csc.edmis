@@ -411,7 +411,14 @@ class RequestForInformationController extends Controller
          if($rfi->construction_contract->code == "C3-1"){
             $multi_signature = true;
             $multi_stamp = true;
-            $issue_by = '(นายศรายุธ ทองยศ) และ (Mr.Yu Dongxin)';
+            $issue_by = '(นายศรายุธ ทองยศ) และ (Mr.Luan Zhiqiang)';
+            $signature_path_2 =  public_path('png-asset/ITDCREC_signature_2-2.png');
+
+            if($rfi->id < 3596){
+                $issue_by = '(นายศรายุธ ทองยศ) และ (Mr.Yu Dongxin)';
+                $signature_path_2 =  public_path('png-asset/ITDCREC_signature_2.png');
+            }
+            
             $issuer_jobtitle = 'ผู้รับมอบอำนาจกระทำการแทน (Authorized Representatives) ITD-CREC No.10 Joint Venture';
             $issue_position_lf = 215;
             $issue_position_lf_sub = 485;
@@ -428,7 +435,6 @@ class RequestForInformationController extends Controller
             $stamp_path_2 =  public_path('png-asset/ITDCREC_stamp_2.png');
 
             $signature_path =  public_path('png-asset/ITDCREC_signature_1.png');
-            $signature_path_2 =  public_path('png-asset/ITDCREC_signature_2.png');
 
             $signature_size_h = 40;
             $signature_size_w = 40;
