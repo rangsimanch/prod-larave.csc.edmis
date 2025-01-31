@@ -1412,7 +1412,7 @@ class RfaController extends Controller
 
         $html .= "<div style=\"font-size: 12px; position:absolute;top:184px;left:55px;\">" . 'Title :' . "</div>";
         if(strlen($title_en) > 210){
-            $html .= "<div style=\"font-size: 9px; padding-right:240px; position:absolute;top:184px;left:80px; LINE-HEIGHT:16px;\">"
+            $html .= "<div style=\"font-size: 8px; padding-right:240px; position:absolute;top:186px;left:80px; LINE-HEIGHT:16px;\">"
             . $title_en . "</div>";
         }
         else{
@@ -1422,7 +1422,7 @@ class RfaController extends Controller
 
         $html .= "<div style=\"font-size: 12px; position:absolute;top:235px;left:55px;\">" . 'หัวข้อ :' . "</div>";
         if(strlen($title_th) > 235){
-            $html .= "<div style=\"font-size: 9px; padding-right:230px; position:absolute;top:235px;left:80px; LINE-HEIGHT:14px;\">"
+            $html .= "<div style=\"font-size: 8px; padding-right:230px; position:absolute;top:237px;left:80px; LINE-HEIGHT:14px;\">"
             . $title_th . "</div>";
         }
         else{
