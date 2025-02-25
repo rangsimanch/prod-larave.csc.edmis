@@ -547,7 +547,7 @@ class SwnController extends Controller
         $auditing_status = $swn->auditing_status ?? '';
 
         $conditional_accepted = $swn->conditional_accepted ?? '';
-        $html = "<div style=\"font-size: 10px; text-align: center; font-weight: bold; color:#1F4E78;\">" . $contract_name  . "</div>";
+        $html = "<div style=\"font-size: 10px; text-align: center; font-weight: bold; color:#1F4E78;  position:absolute;top:90px;\">" . $contract_name  . "</div>";
         $html .= "<div style=\"font-size: 12px; position:absolute;top:195px;left:120px;\">" . $send_to  . "</div>";
         $html .= "<div style=\"font-size: 12px; position:absolute;top:195px;left:370px;\">" . $submit_date  . "</div>";
         $html .= "<div style=\"font-size: 10px; position:absolute;top:195px;left:510px;\">" . $document_number  . "</div>";
@@ -758,7 +758,7 @@ class SwnController extends Controller
             $mpdf->SetDocTemplate(public_path('pdf-asset/SWN_Template_Attachment.pdf'),true);
             $footer_text = "<div style=\"text-align: right; font-size:18px; font-weight: bold;\">" . $document_number . "</div>";
             $mpdf->SetHTMLFooter($footer_text);
-            $mpdf->AddPage('P','','','','','','',10,55);
+            $mpdf->AddPage('P','','','','','','',50,55);
             $html = "";
             // $html = "<div style=\"font-size: 16px; text-align: center; font-weight: bold; color:#1F4E78;\">" . $contract_name  . "</div>";
             // $html .= "<div style=\"font-size: 18px; position:absolute;top:190px;left:120px;\">" . $send_to  . "</div>";
