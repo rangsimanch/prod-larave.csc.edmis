@@ -742,7 +742,7 @@ class SwnController extends Controller
         $html .= "<div style=\"font-size: 8px; position:absolute;top:990px;left:360px;\">" . $auditing_date  . "</div>";
         $html .= "<div style=\"font-size: 8px; position:absolute;top:990px;left:600px;\">" . $auditing_date  . "</div>";
 
-        $mpdf->SetHTMLHeader($html,'1',true);
+        $mpdf->SetHTMLHeader($html,'0',false);
         $html = "<div style=\" padding-left: 80px; padding-right:40px; padding-bottom:-15px; \">";
         $html .= "<div style=\"font-size: 9px; padding-right:50px; position:absolute;top:380px;left:110px;LINE-HEIGHT:15px;\">" . $description  . "</div>";
         $html .= "</div>";
