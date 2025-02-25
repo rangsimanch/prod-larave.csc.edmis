@@ -171,7 +171,7 @@ class SwnController extends Controller
     }
 
     public function store(StoreSwnRequest $request)
-    {   
+    {
         $data = $request->all();
 
         $contract_code = ConstructionContract::where('id', '=', $data['construction_contract_id'])->value('code');
@@ -236,7 +236,7 @@ class SwnController extends Controller
             $swn->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('corrective_image');
         }
 
-        
+
 
         if ($media = $request->input('ck-media', false)) {
             Media::whereIn('id', $media)->update(['model_id' => $swn->id]);
@@ -279,14 +279,14 @@ class SwnController extends Controller
     {
         $data = $request->all();
         $state = $swn->documents_status;
-        
+
         if($state == '3' && $request->filled('auditing_status')){
             $data['documents_status'] = '4';
         }
 
         if($data['responsible_id'] != "" && $state == '1'){
             $data['documents_status'] = '2';
-        }    
+        }
         if ($state == '2'){
             if($data['review_status'] == '1' || $data['review_status'] == '2'){
                 $data['documents_status'] = '3';
@@ -299,7 +299,7 @@ class SwnController extends Controller
        if ($data['responsible_id'] != "" && $state == '5'){
             $data['documents_status'] = '2';
        }
-    
+
         $swn->update($data);
 
         if (count($swn->document_attachment) > 0) {
@@ -328,7 +328,7 @@ class SwnController extends Controller
 
                 // Run the Ghostscript command
                 shell_exec($command);
-            
+
                 $swn->addMedia($outputFile)->toMediaCollection('document_attachment');
                 // $swn->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('document_attachment');
             }
@@ -416,13 +416,13 @@ class SwnController extends Controller
 
                 // Run the Ghostscript command
                 shell_exec($command);
-            
+
                 $swn->addMedia($outputFile)->toMediaCollection('reply_document');;
                 // $swn->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('reply_document');
             }
         }
-        
-       
+
+
         if (count($swn->conditional_file_upload) > 0) {
             foreach ($swn->conditional_file_upload as $media) {
                 if (!in_array($media->file_name, $request->input('conditional_file_upload', []))) {
@@ -448,7 +448,7 @@ class SwnController extends Controller
 
                 // Run the Ghostscript command
                 shell_exec($command);
-            
+
                 $swn->addMedia($outputFile)->toMediaCollection('conditional_file_upload');;
                 // $swn->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('conditional_file_upload');
             }
@@ -494,18 +494,20 @@ class SwnController extends Controller
 
         return response()->json(['id' => $media->id, 'url' => $media->getUrl()], Response::HTTP_CREATED);
     }
-    
+
     public function createReportSWN(Swn $swn){
+        abort_if(Gate::denies('swn_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
         try {
             $mpdf = new \Mpdf\Mpdf([
-                'tempDir' =>  public_path('tmp'), 
+                'tempDir' =>  public_path('tmp'),
                 // 'default_font' => 'sarabun_new',
                 'mode' => '+aCJK',
                 "autoScriptToLang" => true,
                 "autoLangToFont" => true,
                 "allow_charset_conversion" => true,
                 "charset_in" => 'UTF-8',
-                
+
             ]);
           } catch (\Mpdf\MpdfException $e) {
               print "Creating an mPDF object failed with" . $e->getMessage();
@@ -513,7 +515,7 @@ class SwnController extends Controller
         // $pagecount = $mpdf->SetSourceFile(public_path('pdf-asset/SWN_Template_Section_1.pdf'));
 
         // $tplId = $mpdf->ImportPage($pagecount);
-        // $mpdf->UseTemplate($tplId);    
+        // $mpdf->UseTemplate($tplId);
         $mpdf->SetDocTemplate(public_path('pdf-asset/SWN_Template_Section_1.pdf'),true);
         $mpdf->AddPage('P','','','','','','',110,140);
 
@@ -552,7 +554,7 @@ class SwnController extends Controller
         $html .= "<div style=\"font-size: 10px; position:absolute;top:195px;left:510px;\">" . $document_number  . "</div>";
         $html .= "<div style=\"font-size: 12px; padding-right:80px; position:absolute;top:244px;left:200px;\">" . $subject  . "</div>";
         $html .= "<div style=\"font-size: 8px; padding-right:450px; position:absolute;top:299px;left:150px;\">" . $location  . "</div>";
-        
+
         if($reply_ncr == "Yes"){
             $html .= "<div style=\"font-size: 18px;font-weight: bold; position:absolute;top:299px;left:607px;\">" . "X"  . "</div>";
         }
@@ -568,8 +570,8 @@ class SwnController extends Controller
                     $response = curl_exec($handle);
                     $httpCode = curl_getinfo($handle, CURLINFO_HTTP_CODE);
                     curl_close($handle);
-                    
-                    
+
+
                     if($httpCode != 404){
                         $html .= "<div style=\"font-weight: bold; position:absolute;top:570;left:145px;\">
                         <img width=\"30%\" height=\"20%\" src=\"" . $swn->issue_by->signature->getPath()
@@ -598,14 +600,14 @@ class SwnController extends Controller
                 $response = curl_exec($handle);
                 $httpCode = curl_getinfo($handle, CURLINFO_HTTP_CODE);
                 curl_close($handle);
-                
-                
+
+
                 if($httpCode != 404){
                         $html .= "<div style=\"font-weight: bold; position:absolute;top:570;left:615;\">
                     <img  width=\"50%\" height=\"40%\" src=\"" . $swn->construction_specialist->signature->getPath()
                     . "\"></div>";
                 }
-            }    
+            }
             $html .= "<div style=\"font-size: 8px; font-weight: bold; position:absolute;top:606px;left:597px;\">( " . $cos_name  . " )</div>";
             $html .= "<div style=\"font-size: 8px;  padding-right:55px; position:absolute;top:625px;left:597px;\">" . $cos_position  . "</div>";
         }
@@ -645,8 +647,8 @@ class SwnController extends Controller
                     $response = curl_exec($handle);
                     $httpCode = curl_getinfo($handle, CURLINFO_HTTP_CODE);
                     curl_close($handle);
-                    
-                    
+
+
                     if($httpCode != 404){
                         $html .= "<div style=\"font-weight: bold; position:absolute;top:770;left:590px;\">
                         <img width=\"50%\" height=\"40%\" src=\"" . $swn->related_specialist->signature->getPath()
@@ -679,8 +681,8 @@ class SwnController extends Controller
                     $response = curl_exec($handle);
                     $httpCode = curl_getinfo($handle, CURLINFO_HTTP_CODE);
                     curl_close($handle);
-                    
-                    
+
+
                     if($httpCode != 404){
                         $html .= "<div style=\"font-weight: bold; position:absolute;top:923;left:160px;\">
                         <img width=\"30%\" height=\"20%\" src=\"" . $swn->issue_by->signature->getPath()
@@ -701,8 +703,8 @@ class SwnController extends Controller
                     $response = curl_exec($handle);
                     $httpCode = curl_getinfo($handle, CURLINFO_HTTP_CODE);
                     curl_close($handle);
-                    
-                    
+
+
                     if($httpCode != 404){
                         $html .= "<div style=\"font-weight: bold; position:absolute;top:923;left:360px;\">
                         <img width=\"35%\" height=\"25%\" src=\"" . $swn->related_specialist->signature->getPath()
@@ -723,8 +725,8 @@ class SwnController extends Controller
                     $response = curl_exec($handle);
                     $httpCode = curl_getinfo($handle, CURLINFO_HTTP_CODE);
                     curl_close($handle);
-                    
-                    
+
+
                     if($httpCode != 404){
                         $html .= "<div style=\"font-weight: bold; position:absolute;top:923;left:595px;\">
                         <img  width=\"50%\" height=\"40%\" src=\"" . $swn->construction_specialist->signature->getPath()
@@ -734,30 +736,44 @@ class SwnController extends Controller
             }
             $html .= "<div style=\"font-size: 8px; font-weight: bold; position:absolute;top:960px;left:591px;\">( " . $cos_name  . " )</div>";
             $html .= "<div style=\"font-size: 8px; padding-right:55px; position:absolute;top:975px;left:591px;\">" . $cos_position  . "</div>";
-            
+
         }
         $html .= "<div style=\"font-size: 8px; position:absolute;top:990px;left:160px;\">" . $auditing_date  . "</div>";
         $html .= "<div style=\"font-size: 8px; position:absolute;top:990px;left:360px;\">" . $auditing_date  . "</div>";
         $html .= "<div style=\"font-size: 8px; position:absolute;top:990px;left:600px;\">" . $auditing_date  . "</div>";
-       
+
         $mpdf->SetHTMLHeader($html,'0',true);
         $html = "<div style=\" padding-left: 80px; padding-right:40px; padding-bottom:-15px; \">";
+        $html .= "<div style=\"font-size: 10px; text-align: center; font-weight: bold; color:#1F4E78; padding-top:82px;\">" . $contract_name  . "</div>";
+        $html .= "<div style=\"font-size: 12px; position:absolute;top:195px;left:120px;\">" . $send_to  . "</div>";
+        $html .= "<div style=\"font-size: 12px; position:absolute;top:195px;left:370px;\">" . $submit_date  . "</div>";
+        $html .= "<div style=\"font-size: 10px; position:absolute;top:195px;left:510px;\">" . $document_number  . "</div>";
+        $html .= "<div style=\"font-size: 12px; padding-right:80px; position:absolute;top:244px;left:200px;\">" . $subject  . "</div>";
+        $html .= "<div style=\"font-size: 8px; padding-right:450px; position:absolute;top:299px;left:150px;\">" . $location  . "</div>";
+
+        if($reply_ncr == "Yes"){
+            $html .= "<div style=\"font-size: 18px;font-weight: bold; position:absolute;top:299px;left:607px;\">" . "X"  . "</div>";
+        }
+        // if($reply_ncr == "No"){
+        //     $html .= "<div style=\"font-size: 18px;font-weight: bold; position:absolute;top:299px;left:660px;\">" . "X"  . "</div>";
+        // }
+        $html .= "<div style=\"font-size: 8.5px; padding-right:80px; position:absolute;top:320px;left:240px;\">" . $ref_doc  . "</div>";
         $html .= "<div style=\"font-size: 9px; padding-right:50px; position:absolute;top:380px;left:110px;LINE-HEIGHT:15px;\">" . $description  . "</div>";
         $html .= "</div>";
-       
+
         $mpdf->WriteHTML($html);
-        $html = "";   
+        $html = "";
         $mpdf->SetHTMLHeader($html,'0',true);
-        
+
 
         // Image Attacment
         $count_image = count($swn->description_image);
         if($count_image > 0){
-            $mpdf->SetDocTemplate(public_path('pdf-asset/SWN_Template_Attachment.pdf'),true);  
+            $mpdf->SetDocTemplate(public_path('pdf-asset/SWN_Template_Attachment.pdf'),true);
             $footer_text = "<div style=\"text-align: right; font-size:18px; font-weight: bold;\">" . $document_number . "</div>";
             $mpdf->SetHTMLFooter($footer_text);
             $mpdf->AddPage('P','','','','','','',50,55);
-            $html = "";   
+            $html = "";
             // $html = "<div style=\"font-size: 16px; text-align: center; font-weight: bold; color:#1F4E78;\">" . $contract_name  . "</div>";
             // $html .= "<div style=\"font-size: 18px; position:absolute;top:190px;left:120px;\">" . $send_to  . "</div>";
             // $html .= "<div style=\"font-size: 18px; position:absolute;top:190px;left:370px;\">" . $submit_date  . "</div>";
@@ -775,13 +791,13 @@ class SwnController extends Controller
                     curl_close($handle);
                     if($httpCode != 404){
                         if(in_array(pathinfo(public_path($swn->description_image[$index]->getUrl()),PATHINFO_EXTENSION),$allowed)){
-                                                
+
                             $img = (string) Image::make($swn->description_image[$index]->getPath())->orientate()->resize(null, 180, function ($constraint) {
                                 $constraint->aspectRatio();
                             })
                             ->encode('data-url');
 
-                            $html .= "<img style=\"padding-left:90px;\" width=\"". "30%" ."\" height=\"". "30%" ."\" src=\"" 
+                            $html .= "<img style=\"padding-left:90px;\" width=\"". "30%" ."\" height=\"". "30%" ."\" src=\""
                                 . $img
                                 . "\">  ";
                         }
@@ -793,9 +809,9 @@ class SwnController extends Controller
             $mpdf->WriteHTML($html);
         }
 
-        $mpdf->SetDocTemplate(""); 
+        $mpdf->SetDocTemplate("");
         if (str_replace('<p>&nbsp;</p>', '', $conditional_accepted) != ''){
-            $mpdf->SetDocTemplate(public_path('pdf-asset/SWN_Tenplate_Section_3.pdf'),true);  
+            $mpdf->SetDocTemplate(public_path('pdf-asset/SWN_Tenplate_Section_3.pdf'),true);
             $footer_text = "<div style=\"text-align: right; font-size:18px; font-weight: bold;\">" . $document_number . "</div>";
             $mpdf->SetHTMLFooter($footer_text);
             $mpdf->AddPage('P','','','','','','',75,50);
@@ -810,7 +826,7 @@ class SwnController extends Controller
                 }
                 $html .= "<div style=\"font-size: 8px; font-weight: bold; position:absolute;top:998px;left:145px;\">( " . $issuer_name  . " )</div>";
                 $html .= "<div style=\"font-size: 7px;  position:absolute;top:1010px;left:145px;\">" . $issuer_position  . "</div>";
-    
+
             }
             if($qa_name != ''){
                 if($review_status == "1" || $review_status == "2" || $review_status == "3"){
@@ -822,7 +838,7 @@ class SwnController extends Controller
                 }
                 $html .= "<div style=\"font-size: 8px; font-weight: bold; position:absolute;top:998px;left:610px;\">( " . $qa_name  . " )</div>";
                 $html .= "<div style=\"font-size: 7px; padding-right:55px; position:absolute;top:1010px;left:610px;\">" . $qa_position  . " </div>";
-    
+
             }
             $html .= "<div style=\"font-size: 8px; position:absolute;top:1025px;left:155px;\">" . $review_date  . "</div>";
             $html .= "<div style=\"font-size: 8px; position:absolute;top:1025px;left:620px;\">" . $review_date  . "</div>";
@@ -831,14 +847,14 @@ class SwnController extends Controller
             $html = "<div style=\" padding-left: 80px; padding-right:40px; padding-bottom:-15px; \">";
             $html .= "<div style=\"font-size: 12px; padding-right:50px; position:absolute;top:350px;left:110px;LINE-HEIGHT:15px;\">" . $conditional_accepted  . "</div>";
             $html .= "</div>";
-            
+
             $mpdf->WriteHTML($html);
-            $html = "";   
+            $html = "";
             $mpdf->SetHTMLHeader($html,'0',true);
         }
 
-        $mpdf->SetDocTemplate(""); 
-        foreach($swn->conditional_file_upload as $attachment){ 
+        $mpdf->SetDocTemplate("");
+        foreach($swn->conditional_file_upload as $attachment){
             try{
                 $url = $attachment->getUrl();
                 $handle = curl_init($url);
@@ -856,15 +872,15 @@ class SwnController extends Controller
                         // $mpdf->UseTemplate($tplId);
                         $mpdf->UseTemplate($tplId, 0, 0, $size['width'], $size['height'], true);
 
-                    }         
+                    }
                 }
             }catch(exeption $e){
                 print "Creating an mPDF object failed with" . $e->getMessage();
             }
         }
-        
-        $mpdf->SetDocTemplate(""); 
-        foreach($swn->document_attachment as $attachment){ 
+
+        $mpdf->SetDocTemplate("");
+        foreach($swn->document_attachment as $attachment){
             try{
                 $url = url($attachment->getUrl());
                 $handle = curl_init($url);
@@ -881,14 +897,14 @@ class SwnController extends Controller
                         $mpdf->AddPage($size['orientation']);
                         // $mpdf->UseTemplate($tplId);
                         $mpdf->UseTemplate($tplId, 0, 0, $size['width'], $size['height'], true);
-                    }      
-            }   
+                    }
+            }
             }catch(exeption $e){
                 print "Creating an mPDF object failed with" . $e->getMessage();
             }
         }
-        
-        foreach($swn->reply_document as $attachment){ 
+
+        foreach($swn->reply_document as $attachment){
             try{
                 $url = $attachment->getUrl();
                 $handle = curl_init($url);
@@ -906,13 +922,13 @@ class SwnController extends Controller
                         // $mpdf->UseTemplate($tplId);
                         $mpdf->UseTemplate($tplId, 0, 0, $size['width'], $size['height'], true);
 
-                    }         
+                    }
                 }
             }catch(exeption $e){
                 print "Creating an mPDF object failed with" . $e->getMessage();
             }
         }
-    
+
         // Output a PDF file directly to the browser
         $filename = "SWN-" . str_replace(".","",$subject) . ".pdf";
         return $mpdf->Output($filename, 'I');
