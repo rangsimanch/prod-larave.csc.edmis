@@ -748,7 +748,7 @@ class SwnController extends Controller
         $des .= "</div>";
 
         $mpdf->WriteHTML($des);
-        // $html = "";
+        $html = "";
         $mpdf->SetHTMLHeader($html,'0',true);
 
 
