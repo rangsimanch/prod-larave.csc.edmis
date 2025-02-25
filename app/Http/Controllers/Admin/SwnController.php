@@ -744,20 +744,6 @@ class SwnController extends Controller
 
         $mpdf->SetHTMLHeader($html,'0',true);
         $html = "<div style=\" padding-left: 80px; padding-right:40px; padding-bottom:-15px; \">";
-        $html .= "<div style=\"font-size: 10px; text-align: center; font-weight: bold; color:#1F4E78; padding-top:82px;\">" . $contract_name  . "</div>";
-        $html .= "<div style=\"font-size: 12px; position:absolute;top:195px;left:120px;\">" . $send_to  . "</div>";
-        $html .= "<div style=\"font-size: 12px; position:absolute;top:195px;left:370px;\">" . $submit_date  . "</div>";
-        $html .= "<div style=\"font-size: 10px; position:absolute;top:195px;left:510px;\">" . $document_number  . "</div>";
-        $html .= "<div style=\"font-size: 12px; padding-right:80px; position:absolute;top:244px;left:200px;\">" . $subject  . "</div>";
-        $html .= "<div style=\"font-size: 8px; padding-right:450px; position:absolute;top:299px;left:150px;\">" . $location  . "</div>";
-
-        if($reply_ncr == "Yes"){
-            $html .= "<div style=\"font-size: 18px;font-weight: bold; position:absolute;top:299px;left:607px;\">" . "X"  . "</div>";
-        }
-        // if($reply_ncr == "No"){
-        //     $html .= "<div style=\"font-size: 18px;font-weight: bold; position:absolute;top:299px;left:660px;\">" . "X"  . "</div>";
-        // }
-        $html .= "<div style=\"font-size: 8.5px; padding-right:80px; position:absolute;top:320px;left:240px;\">" . $ref_doc  . "</div>";
         $html .= "<div style=\"font-size: 9px; padding-right:50px; position:absolute;top:380px;left:110px;LINE-HEIGHT:15px;\">" . $description  . "</div>";
         $html .= "</div>";
 
