@@ -13,7 +13,7 @@ class ChangeFieldToClosOutInspectionsTable extends Migration
      */
     public function up()
     {
-        Schema::table('clos_out_inspections', function (Blueprint $table) {
+        Schema::table('close_out_inspections', function (Blueprint $table) {
             //
             $table->longText('subject')->change();
         });
