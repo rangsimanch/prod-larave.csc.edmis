@@ -490,22 +490,22 @@
         },
         {
             "name": "consoletvs/charts",
-            "version": "6.5.5",
+            "version": "6.8.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ConsoleTVs/Charts.git",
-                "reference": "0005d14e4fe6715f4146a4dc3b56add768233001"
+                "reference": "5bc74e6a57fb5d4a9b04a3059d40488875480b9d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ConsoleTVs/Charts/zipball/0005d14e4fe6715f4146a4dc3b56add768233001",
-                "reference": "0005d14e4fe6715f4146a4dc3b56add768233001",
+                "url": "https://api.github.com/repos/ConsoleTVs/Charts/zipball/5bc74e6a57fb5d4a9b04a3059d40488875480b9d",
+                "reference": "5bc74e6a57fb5d4a9b04a3059d40488875480b9d",
                 "shasum": ""
             },
             "require": {
                 "balping/json-raw-encoder": "^1.0",
-                "illuminate/console": "^5.0|^6.0|^7.0|^8.0",
-                "illuminate/support": "^5.0|^6.0|^7.0|^8.0",
+                "illuminate/console": "^5.0|^6.0|^7.0|^8.0|^9.0|^10.0|^11.0|^12.0",
+                "illuminate/support": "^5.0|^6.0|^7.0|^8.0|^9.0|^10.0|^11.0|^12.0",
                 "php": ">=7.0"
             },
             "type": "library",
@@ -532,7 +532,17 @@
                 }
             ],
             "description": "The laravel charting package",
-            "time": "2020-09-10T14:20:26+00:00"
+            "support": {
+                "issues": "https://github.com/ConsoleTVs/Charts/issues",
+                "source": "https://github.com/ConsoleTVs/Charts/tree/6.8.0"
+            },
+            "funding": [
+                {
+                    "url": "https://www.patreon.com/ErikCampobadal",
+                    "type": "patreon"
+                }
+            ],
+            "time": "2025-02-24T15:17:19+00:00"
         },
         {
             "name": "daltcore/lara-pdf-merger",
@@ -9354,11 +9364,12 @@
     ],
     "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": [],
+    "stability-flags": {},
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
         "php": "^7.2"
     },
-    "platform-dev": []
+    "platform-dev": {},
+    "plugin-api-version": "2.6.0"
 }
