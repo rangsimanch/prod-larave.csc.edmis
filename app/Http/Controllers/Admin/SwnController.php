@@ -496,8 +496,7 @@ class SwnController extends Controller
     }
 
     public function createReportSWN(Swn $swn){
-        abort_if(Gate::denies('swn_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
+       
         try {
             $mpdf = new \Mpdf\Mpdf([
                 'tempDir' =>  public_path('tmp'),
