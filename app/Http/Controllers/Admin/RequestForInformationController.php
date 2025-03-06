@@ -423,7 +423,7 @@ class RequestForInformationController extends Controller
                 $signature_size_w_2 = 70;
             }
 
-            if($rfi->id > 3596 && $rfi->id < 3739){
+            if($rfi->id > 3596 && $rfi->id < 3738){
                 $issue_by = '(นายศรายุธ ทองยศ) และ (Mr.Luan Zhiqiang)';
                 $signature_path_2 =  public_path('png-asset/ITDCREC_signature_2-2.png');
                 $signature_size_h_2 = 35;
