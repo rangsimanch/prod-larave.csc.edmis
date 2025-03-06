@@ -411,8 +411,8 @@ class RequestForInformationController extends Controller
          if($rfi->construction_contract->code == "C3-1"){
             $multi_signature = true;
             $multi_stamp = true;
-            $issue_by = '(นายศรายุธ ทองยศ) และ (Mr.Luan Zhiqiang)';
-            $signature_path_2 =  public_path('png-asset/ITDCREC_signature_2-2.png');
+            $issue_by = '(นายศรายุธ ทองยศ) และ (Mr.Zhang Cong)';
+            $signature_path_2 =  public_path('png-asset/ITDCREC_signature_2-3.png');
             $signature_size_h_2 = 35;
             $signature_size_w_2 = 35;
 
@@ -421,6 +421,13 @@ class RequestForInformationController extends Controller
                 $signature_path_2 =  public_path('png-asset/ITDCREC_signature_2.png');
                 $signature_size_h_2 = 70;
                 $signature_size_w_2 = 70;
+            }
+
+            if($rfi->id > 3596 && $rfi->id < 3739){
+                $issue_by = '(นายศรายุธ ทองยศ) และ (Mr.Luan Zhiqiang)';
+                $signature_path_2 =  public_path('png-asset/ITDCREC_signature_2-2.png');
+                $signature_size_h_2 = 35;
+                $signature_size_w_2 = 35;
             }
 
             $issuer_jobtitle = 'ผู้รับมอบอำนาจกระทำการแทน (Authorized Representatives) ITD-CREC No.10 Joint Venture';
