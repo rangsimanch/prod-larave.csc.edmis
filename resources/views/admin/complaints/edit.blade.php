@@ -14,6 +14,14 @@
                         @csrf
                     <legend><a onclick="HideSection(1)" id="element1"><i class="bi bi-eye"></i></a><b>  Section 1 : Open Complaints</b></legend>
                         <div id="section1">
+                        <div class="form-group {{ $errors->has('document_number') ? 'has-error' : '' }}">
+                            <label class="required" for="document_number">{{ trans('cruds.complaint.fields.document_number') }}</label>
+                            <input class="form-control" type="text" name="document_number" id="document_number" value="{{ old('document_number', $complaint->document_number) }}" required>
+                            @if($errors->has('document_number'))
+                                <span class="help-block" role="alert">{{ $errors->first('document_number') }}</span>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.complaint.fields.document_number_helper') }}</span>
+                        </div>
                         <div class="form-group {{ $errors->has('complaint_recipient') ? 'has-error' : '' }}">
                             <label class="required" for="complaint_recipient_id">{{ trans('cruds.complaint.fields.complaint_recipient') }}</label>
                             <select class="form-control select2" name="complaint_recipient_id" id="complaint_recipient_id" required>
@@ -309,7 +317,7 @@ HideSection(1)
 function HideSection(idElement) {
     var element = document.getElementById('element' + idElement);
     if (idElement === 1 || idElement === 2 || idElement === 3 || idElement === 4) {
-        if (element.innerHTML === '<i class="bi bi-eye"></i>') 					
+        if (element.innerHTML === '<i class="bi bi-eye"></i>')
             element.innerHTML = '<i class="bi bi-eye-slash-fill"></i>';
         else {
             element.innerHTML = '<i class="bi bi-eye"></i>';
