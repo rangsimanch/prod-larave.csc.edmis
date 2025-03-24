@@ -45,7 +45,7 @@
                             </select>
                             @if($errors->has('construction_contract'))
                                 <span class="help-block" role="alert">{{ $errors->first('construction_contract') }}</span>
-                            @endif 
+                            @endif
                             <span class="help-block">{{ trans('cruds.dailyReport.fields.construction_contract_helper') }}</span>
                         </div>
                         <div class="form-group">
@@ -74,13 +74,13 @@
     var uploadedDocumentsMap = {}
 Dropzone.options.documentsDropzone = {
     url: '{{ route('admin.daily-reports.storeMedia') }}',
-    maxFilesize: 50, // MB
+    maxFilesize: 100, // MB
     addRemoveLinks: true,
     headers: {
       'X-CSRF-TOKEN': "{{ csrf_token() }}"
     },
     params: {
-      size: 50
+      size: 100
     },
     success: function (file, response) {
       $('form').append('<input type="hidden" name="documents[]" value="' + response.name + '">')

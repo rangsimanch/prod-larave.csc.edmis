@@ -61,25 +61,25 @@
                 </div>
             </div>
 
- 
+
 
         </div>
     </div>
 </div>
 @endsection
- 
+
 @section('scripts')
 <script>
     var uploadedDocumentsMap = {}
 Dropzone.options.documentsDropzone = {
     url: '{{ route('admin.daily-requests.storeMedia') }}',
-    maxFilesize: 50, // MB
+    maxFilesize: 100, // MB
     addRemoveLinks: true,
     headers: {
       'X-CSRF-TOKEN': "{{ csrf_token() }}"
 },
     params: {
-      size: 50
+      size: 100
     },
     success: function (file, response) {
       $('form').append('<input type="hidden" name="documents[]" value="' + response.name + '">')

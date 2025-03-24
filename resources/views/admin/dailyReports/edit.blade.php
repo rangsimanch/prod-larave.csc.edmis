@@ -42,7 +42,7 @@
                             <select class="form-control select2" name="construction_contract_id" id="construction_contract_id">
                                 @foreach($construction_contracts as $id => $construction_contract)
                                     <option value="{{ $id }}" {{ ($dailyReport->construction_contract ? $dailyReport->construction_contract->id : old('construction_contract_id')) == $id ? 'selected' : '' }}>{{ $construction_contract }}</option>
-                                @endforeach 
+                                @endforeach
                             </select>
                             @if($errors->has('construction_contract'))
                                 <span class="help-block" role="alert">{{ $errors->first('construction_contract') }}</span>
@@ -74,13 +74,13 @@
     var uploadedDocumentsMap = {}
 Dropzone.options.documentsDropzone = {
     url: '{{ route('admin.daily-reports.storeMedia') }}',
-    maxFilesize: 50, // MB
+    maxFilesize: 100, // MB
     addRemoveLinks: true,
     headers: {
       'X-CSRF-TOKEN': "{{ csrf_token() }}"
     },
     params: {
-      size: 50
+      size: 100
     },
     success: function (file, response) {
       $('form').append('<input type="hidden" name="documents[]" value="' + response.name + '">')
