@@ -11,7 +11,7 @@
                 <div class="panel-body">
                     <form method="POST" action="{{ route("admin.add-letters.store") }}" enctype="multipart/form-data">
                         @csrf
-                        
+
                         <div class="form-group {{ $errors->has('status') ? 'has-error' : '' }}">
                             <label class="required">{{ trans('cruds.addLetter.fields.status') }}</label>
                             <select class="form-control" name="status" id="status" required>
@@ -102,7 +102,7 @@
                             @endif
                             <span class="help-block">{{ trans('cruds.addLetter.fields.speed_class_helper') }}</span>
                         </div>
-                        
+
                         <div class="form-group {{ $errors->has('sender') ? 'has-error' : '' }}">
                             <label class="required" for="sender_id">{{ trans('cruds.addLetter.fields.sender') }}</label>
                             <select class="form-control select2" name="sender_id" id="sender_id" required>
@@ -135,7 +135,7 @@
                             @endif
                             <span class="help-block">{{ trans('cruds.addLetter.fields.receiver_helper') }}</span>
                         </div>
-                       
+
                         <div class="form-group {{ $errors->has('received_date') ? 'has-error' : '' }}">
                             <label class="required" for="received_date">{{ trans('cruds.addLetter.fields.received_date') }}</label>
                             <input class="form-control date" type="text" name="received_date" id="received_date" value="{{ old('received_date') }}" required>
@@ -213,7 +213,7 @@
                             @endif
                             <span class="help-block">{{ trans('cruds.addLetter.fields.complete_date_helper') }}</span>
                         </div>
-                        
+
                         <div class="form-row">
                             <button class="btn btn-success" type="submit" name="save_form" id="save_form" data-flag="0">
                                 {{ trans('global.save') }}
@@ -235,7 +235,7 @@
     var uploadedLetterUploadMap = {}
 Dropzone.options.letterUploadDropzone = {
     url: '{{ route('admin.add-letters.storeMedia') }}',
-    maxFilesize: 5120, // MB
+    maxFilesize: 2048, // MB
     addRemoveLinks: true,
     timeout: 180000,
     headers: {

@@ -183,7 +183,7 @@
                             @endif
                             <span class="help-block">{{ trans('cruds.addLetter.fields.letter_upload_helper') }}</span>
                         </div>
-                       
+
                         <div class="form-group {{ $errors->has('note') ? 'has-error' : '' }}">
                             <label for="note">{{ trans('cruds.addLetter.fields.note') }}</label>
                             <textarea class="form-control" name="note" id="note">{{ old('note', $addLetter->note) }}</textarea>
@@ -223,7 +223,7 @@
                             @endif
                             <span class="help-block">{{ trans('cruds.addLetter.fields.complete_date_helper') }}</span>
                         </div>
-                       
+
                         <div class="form-group">
                             <button class="btn btn-danger" type="submit">
                                 {{ trans('global.save') }}
@@ -245,8 +245,9 @@
     var uploadedLetterUploadMap = {}
 Dropzone.options.letterUploadDropzone = {
     url: '{{ route('admin.add-letters.storeMedia') }}',
-    maxFilesize: 5120, // MB
+    maxFilesize: 2048, // MB
     addRemoveLinks: true,
+    timeout: 180000,
     headers: {
       'X-CSRF-TOKEN': "{{ csrf_token() }}"
     },
