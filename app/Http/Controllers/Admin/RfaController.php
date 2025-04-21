@@ -1425,7 +1425,7 @@ class RfaController extends Controller
         //Title
         $html .= "<div style=\"font-size: 12px; position:absolute;top:165px;left:52px;\">" . 'Title:' . "</div>";
         if(strlen($title_en) > 210){
-            $html .= "<div style=\"font-size: 12px; padding-right:240px; position:absolute;top:165px;left:75px; LINE-HEIGHT:16px;\">"
+            $html .= "<div style=\"font-size: 11px; padding-right:240px; position:absolute;top:165px;left:75px; LINE-HEIGHT:16px;\">"
             . $title_en . "</div>";
         }
         else{
@@ -1435,11 +1435,11 @@ class RfaController extends Controller
 
         $html .= "<div style=\"font-size: 12px; position:absolute;top:214px;left:52px;\">" . 'หัวข้อ:' . "</div>";
         if(strlen($title_th) > 235){
-            $html .= "<div style=\"font-size: 12px; padding-right:230px; position:absolute;top:214px;left:75px; LINE-HEIGHT:15px;\">"
+            $html .= "<div style=\"font-size: 11px; padding-right:230px; position:absolute;top:214px;left:75px; LINE-HEIGHT:14px;\">"
             . $title_th . "</div>";
         }
         else{
-            $html .= "<div style=\"font-size: 12px; padding-right:230px; position:absolute;top:214px;left:75px; LINE-HEIGHT:15px;\">"
+            $html .= "<div style=\"font-size: 11px; padding-right:230px; position:absolute;top:214px;left:75px; LINE-HEIGHT:14px;\">"
             . $title_th . "</div>";
         }
 
