@@ -1705,11 +1705,11 @@ class RfaController extends Controller
             }
             if($multi_stamp){
                 if($stamp_path != ''){
-                    $html .= "<div style=\"font-size: 14px; position:absolute;top:500px;left:400px;\">
+                    $html .= "<div style=\"font-size: 14px; position:absolute;top:900px;left:400px;\">
                         <img src=\"". $stamp_path ."\" width=\"200px\" higth=\"200px\" style=\"opacity: 0.5;\"> </div>";
                 }
                 if($stamp_path_2 != ''){
-                    $html .= "<div style=\"font-size: 14px; position:absolute;top:530px;left:560px;\">
+                    $html .= "<div style=\"font-size: 14px; position:absolute;top:930px;left:560px;\">
                         <img src=\"". $stamp_path_2 ."\" width=\"200px\" higth=\"200px\" style=\"opacity: 0.5;\"> </div>";
                 }
             }
