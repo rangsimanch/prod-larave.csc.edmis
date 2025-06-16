@@ -438,7 +438,7 @@ class TaskController extends Controller
                                 </div>";
 
 
-                $html .= "<div style=\" padding-left: 80px; padding-right:80px; padding-bottom:-10AddPagepx; \">
+                $html .= "<div style=\" padding-left: 80px; padding-right:80px; padding-bottom:-5px; \">
                                     <div style=\"vertical-align: top; max-width: 50%; display: inline-block; font-size: 16px;\">".  nl2br(str_replace(';','\n',$description)) ."</div>
                                     </div><br>";
 
