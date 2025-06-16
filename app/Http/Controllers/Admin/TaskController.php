@@ -143,7 +143,7 @@ class TaskController extends Controller
     }
 
     public function createReport(){
-       
+
         if(auth()->user()->roles->contains(28) || auth()->user()->roles->contains(1) ){
             $create_by_users = User::all()->where('team_id','3')->pluck('name','id')->prepend(trans('global.pleaseSelect'), '');
             $contracts = ConstructionContract::all()->where('id','!=',15)->pluck('code', 'id')->prepend(trans('global.pleaseSelect'), '');
@@ -156,7 +156,7 @@ class TaskController extends Controller
     }
 
     public function createReportTask(CreateReportTaskRequest $request){
-        
+
         $ebits = ini_get('error_reporting');
         error_reporting($ebits ^ E_NOTICE);
 
@@ -164,7 +164,7 @@ class TaskController extends Controller
 
          $StartDate = Carbon::createFromFormat('d/m/Y', $request->startDate)->format('Y-m-d');
          $EndDate =  Carbon::createFromFormat('d/m/Y', $request->endDate)->format('Y-m-d');
-         
+
         // $tasks = Task::all()
         // ->whereBetween('due_date', array('01/06/2020', '05/06/2020'))
         // ->where('create_by_user_id',$data['create_by_user_id'])->sortBy('due_date');
@@ -172,8 +172,8 @@ class TaskController extends Controller
         if($data['contracts'] != -1){
             $tasks = Task::with(['tags', 'status', 'create_by_user', 'construction_contract', 'team'])
             ->whereBetween('due_date',[$StartDate, $EndDate])
-            ->where([ ['create_by_user_id',$data['create_by_user_id']], 
-                    ['construction_contract_id', $data['contracts']] 
+            ->where([ ['create_by_user_id',$data['create_by_user_id']],
+                    ['construction_contract_id', $data['contracts']]
                     ])->orderBy('due_date')->get();
         }
         else{
@@ -188,8 +188,8 @@ class TaskController extends Controller
 
         // $count_task = $tasks->count();
 
-        
-        if($count_task > 0){ 
+
+        if($count_task > 0){
             //Conver Date
             // $date = date('m/d/Y',strtotime($data['startDate']));
             $date = \DateTime::createFromFormat('d/m/Y', $data['startDate']);
@@ -197,7 +197,7 @@ class TaskController extends Controller
             $reportType = $data['reportType'];
             $create_by = User::all()->where('id',$data['create_by_user_id'])->first();
             $gender = '';
-            
+
             if($create_by->gender == 'Male'){
                 $gender = 'Mr.';
             }else{
@@ -207,7 +207,7 @@ class TaskController extends Controller
             $recordby = $gender . ' ' . $create_by->name;
             $jobtitle = $create_by->jobtitle->name ?? '';
             $team = $create_by->team->name ?? '';
-            
+
             if($data['contracts'] != -1){
                 $contract_code = $tasks->first()->construction_contract->code ?? '';
                 $contract_name = $tasks->first()->construction_contract->name ?? '';
@@ -223,7 +223,7 @@ class TaskController extends Controller
                     $dk_start = $task->construction_contract->dk_start_1 ?? '';
                     $dk_end = $task->construction_contract->dk_end_1 ?? '';
                     if(!in_array($contract_code, $contract_array, true)){
-                        array_push($contract_array, $contract_code);              
+                        array_push($contract_array, $contract_code);
                         if($contract_code == "C4-1"){
                             $dk_start_array["A"] = $dk_start;
                             $dk_end_array["A"] = $dk_end;
@@ -292,7 +292,7 @@ class TaskController extends Controller
                 $contract_name =  '';
             }
             $dateType = '';
-            
+
             // Report Type
             // if($reportType == 'Daily Report'){
             //     $dateType = $date->format("d-m-Y");
@@ -309,7 +309,7 @@ class TaskController extends Controller
             //PDF Setting
             try {
                 $mpdf = new \Mpdf\Mpdf([
-                    'tempDir' =>  public_path('tmp'), 
+                    'tempDir' =>  public_path('tmp'),
                     'fontdata'     => [
                         'sarabun_new' => [
                             'R' => 'THSarabunNew.ttf',
@@ -326,38 +326,38 @@ class TaskController extends Controller
               } catch (\Mpdf\MpdfException $e) {
                   print "Creating an mPDF object failed with" . $e->getMessage();
               }
-            
+
 
             // Cover Page
                 if($reportType != 'Daily Report'){
                     // $html = "<div style=\"text-align: center; font-weight: bold;  font-size: 70px;\">". $reportType ."</div>";
-                    // $html .= "<div style=\"text-align: center; font-weight: bold; font-size: 50px;\">Bangkok - Nakhon Ratchasima HSR</div>";        
-                    // $html .= "<div style=\"text-align: center; font-weight: bold; font-size: 40px;\">" .  $dateType . "</div>";        
-                    // $html .= "<div style=\"text-align: center; font-weight: bold; font-size: 40px;\"><img src=\"". public_path('png-asset/train_cover.png') ."\"\></div>";        
-                    // $html .= "<br></br><div style=\"text-align: center; font-weight: bold; font-size: 40px;\"> Supervision Diary </div>";        
-                    // $html .= "<div style=\"text-align: center; font-weight: bold; font-size: 30px;\">Contract Section No. : " . $contract_code . ' ' . $contract_name  . "</div>";        
-                    // $html .= "<div style=\"text-align: center; font-weight: bold; font-size: 30px;\">BANGKOK-NAKHON RATCHASIMA HIGH SPEED RAILWAY</div>";        
-                    // $html .= "<div style=\"text-align: center; font-weight: bold; font-size: 30px;\">Supevision Unit : State Railway of Thailand</div>";        
-                    // $html .= "<br></br><div style=\"text-align: center; font-weight: bold; font-size: 30px;\">By ". $recordby ."</div>";        
-                    // $html .= "<div style=\"text-align: center; font-weight: bold; font-size: 25px;\">". $jobtitle ."</div>";        
-                    // $html .= "<div style=\"text-align: center; font-weight: bold; font-size: 25px;\">". $team ."</div>"; 
+                    // $html .= "<div style=\"text-align: center; font-weight: bold; font-size: 50px;\">Bangkok - Nakhon Ratchasima HSR</div>";
+                    // $html .= "<div style=\"text-align: center; font-weight: bold; font-size: 40px;\">" .  $dateType . "</div>";
+                    // $html .= "<div style=\"text-align: center; font-weight: bold; font-size: 40px;\"><img src=\"". public_path('png-asset/train_cover.png') ."\"\></div>";
+                    // $html .= "<br></br><div style=\"text-align: center; font-weight: bold; font-size: 40px;\"> Supervision Diary </div>";
+                    // $html .= "<div style=\"text-align: center; font-weight: bold; font-size: 30px;\">Contract Section No. : " . $contract_code . ' ' . $contract_name  . "</div>";
+                    // $html .= "<div style=\"text-align: center; font-weight: bold; font-size: 30px;\">BANGKOK-NAKHON RATCHASIMA HIGH SPEED RAILWAY</div>";
+                    // $html .= "<div style=\"text-align: center; font-weight: bold; font-size: 30px;\">Supevision Unit : State Railway of Thailand</div>";
+                    // $html .= "<br></br><div style=\"text-align: center; font-weight: bold; font-size: 30px;\">By ". $recordby ."</div>";
+                    // $html .= "<div style=\"text-align: center; font-weight: bold; font-size: 25px;\">". $jobtitle ."</div>";
+                    // $html .= "<div style=\"text-align: center; font-weight: bold; font-size: 25px;\">". $team ."</div>";
 
                     $html = "<div style=\"text-align: center; font-weight: bold;  font-size: 70px;\">". $reportType ."</div>";
-                    $html .= "<div style=\"text-align: center; font-weight: bold; font-size: 50px;\">Bangkok - Nakhon Ratchasima HSR</div>";        
-                    $html .= "<div style=\"text-align: center; font-weight: bold; font-size: 40px;\">" .  $dateType . "</div>";        
-                    $html .= "<div style=\"text-align: center; font-weight: bold; font-size: 40px;\"><img src=\"". public_path('png-asset/train_cover.png') ."\"\></div>";        
-                    $html .= "<br></br><div style=\"text-align: center; font-weight: bold; font-size: 40px;\"> Supervision Diary </div>";        
-                    $html .= "<div style=\"text-align: center; font-weight: bold; font-size: 26px;\">Contract Section No. : " . $contract_code . ' ' . $contract_name  . "</div>";      
-                    $html .= "<div style=\"text-align: center; font-weight: bold; font-size: 26px;\">Supervision mileage chainage :". $dk_start ." to ". $dk_end ." Section </div>";        
-                    $html .= "<div style=\"text-align: center; font-weight: bold; font-size: 30px;\">BANGKOK-NAKHON RATCHASIMA HIGH SPEED RAILWAY</div>";        
-                    $html .= "<div style=\"text-align: center; font-weight: bold; font-size: 22px;\">Supervision Unit : Chaina Railway International Corporation and Chaina Railway Design Group</div>";   
-                    $html .= "<div style=\"text-align: center; font-weight: bold; font-size: 22px;\">Thailand Railway Project Department of the Consortium</div>";        
-                    $html .= "<br></br><div style=\"text-align: center; font-weight: bold; font-size: 24px;\">By ". $recordby ."</div>";        
-                    $html .= "<div style=\"text-align: center; font-weight: bold; font-size: 23px;\">". $jobtitle ."</div>";        
-                    $html .= "<div style=\"text-align: center; font-weight: bold; font-size: 22px;\">". $team ."</div>"; 
-                           
+                    $html .= "<div style=\"text-align: center; font-weight: bold; font-size: 50px;\">Bangkok - Nakhon Ratchasima HSR</div>";
+                    $html .= "<div style=\"text-align: center; font-weight: bold; font-size: 40px;\">" .  $dateType . "</div>";
+                    $html .= "<div style=\"text-align: center; font-weight: bold; font-size: 40px;\"><img src=\"". public_path('png-asset/train_cover.png') ."\"\></div>";
+                    $html .= "<br></br><div style=\"text-align: center; font-weight: bold; font-size: 40px;\"> Supervision Diary </div>";
+                    $html .= "<div style=\"text-align: center; font-weight: bold; font-size: 26px;\">Contract Section No. : " . $contract_code . ' ' . $contract_name  . "</div>";
+                    $html .= "<div style=\"text-align: center; font-weight: bold; font-size: 26px;\">Supervision mileage chainage :". $dk_start ." to ". $dk_end ." Section </div>";
+                    $html .= "<div style=\"text-align: center; font-weight: bold; font-size: 30px;\">BANGKOK-NAKHON RATCHASIMA HIGH SPEED RAILWAY</div>";
+                    $html .= "<div style=\"text-align: center; font-weight: bold; font-size: 22px;\">Supervision Unit : Chaina Railway International Corporation and Chaina Railway Design Group</div>";
+                    $html .= "<div style=\"text-align: center; font-weight: bold; font-size: 22px;\">Thailand Railway Project Department of the Consortium</div>";
+                    $html .= "<br></br><div style=\"text-align: center; font-weight: bold; font-size: 24px;\">By ". $recordby ."</div>";
+                    $html .= "<div style=\"text-align: center; font-weight: bold; font-size: 23px;\">". $jobtitle ."</div>";
+                    $html .= "<div style=\"text-align: center; font-weight: bold; font-size: 22px;\">". $team ."</div>";
+
                     $mpdf->WriteHTML($html);
-                    
+
                     if($contract_code == "C2-1"){
                         $mpdf->AddPage();
                         $pagecount = $mpdf->SetSourceFile(public_path('pdf-asset/coverpage.pdf'));
@@ -366,7 +366,7 @@ class TaskController extends Controller
                         $mpdf->UseTemplate($tplId);
                     }
                 }
-        
+
             $page_template = $mpdf->SetSourceFile(public_path('pdf-asset/activity.pdf'),true);
             $import_page = $mpdf->importPage($page_template);
             $page_size = $mpdf->getTemplateSize($import_page);
@@ -386,17 +386,17 @@ class TaskController extends Controller
                 }
 
 
-                
+
 
                 $description = str_replace("：", ":", $task->description ?? '');
                 $description_set = str_split($description, 1500);
-                
+
                 $wind = $task->wind ?? '';
                 if($wind == ''){
                     $wind = rand(150, 300) / 100;
                 }
                 $wind .=   ' m/sec';
-                $due_date = $task->due_date ?? ''; 
+                $due_date = $task->due_date ?? '';
                 $weather = $task->weather ?? '';
                 if($weather == ''){
                     $weather = "Clouds";
@@ -407,14 +407,14 @@ class TaskController extends Controller
                 }
                 $activity_name = $task->name ?? '';
                 $contractNo = $task->construction_contract->code ?? '';
-     
+
                 $html = "<div style=\"font-size: 18px; position:absolute;top:990;left:95px;\">Construction Contract : ". $contractNo  ." </div>";
                 $html .= "<div style=\"text-decoration: underline;font-weight: bold; font-size: 18px; position:absolute;top:112px;left:140px;\">". $due_date ."</div>";
                 $html .= "<div style=\"font-weight: bold; font-size: 20px; position:absolute;top:155px;left:95px;\">Weather : ". $weather ."</div>";
                 $html .= "<div style=\"font-weight: bold; font-size: 20px; position:absolute;top:155px;left:300px;\">Wind : ". $wind ."</div>";
                 $html .= "<div style=\"font-weight: bold; font-size: 20px; position:absolute;top:155px;left:500px;\">Temperature : ". $temperature  ." °C</div>";
                 $html .= "<div style=\"font-weight: bold; font-size: 20px; position:absolute;top:990;left:580px;\">(". $recordby  .")</div>";
-                
+
                 if(!is_null($task->create_by_user->signature)){
                     $url =  url($task->create_by_user->signature->getUrl());
                     $handle = curl_init($url);
@@ -422,27 +422,27 @@ class TaskController extends Controller
                     $response = curl_exec($handle);
                     $httpCode = curl_getinfo($handle, CURLINFO_HTTP_CODE);
                     curl_close($handle);
-                    
-                    
+
+
                     if($httpCode != 404){
                         $html .= "<div style=\"font-weight: bold; position:absolute;top:900;left:620px;\">
                                 <img width=\"70%\" height=\"70%\" src=\"" . $task->create_by_user->signature->getPath()
                                 . "\"></div>";
                     }
                 }
-                
+
                 $mpdf->SetHTMLHeader($html,'0',true);
-                
+
                 $html = "<div style=\" padding-left: 80px; padding-right:80px;\">
                                 <div style=\"text-align: center;font-weight: bold; font-size: 22px;\">". nl2br(str_replace(';',"\r\n",$activity_name))  ."</div>
                                 </div>";
-                
-                
-                $html .= "<div style=\" padding-left: 80px; padding-right:80px; padding-bottom:-15px; \">
+
+
+                $html .= "<div style=\" padding-left: 80px; padding-right:80px; padding-bottom:-10AddPagepx; \">
                                     <div style=\"vertical-align: top; max-width: 50%; display: inline-block; font-size: 16px;\">".  nl2br(str_replace(';','\n',$description)) ."</div>
-                                    </div><br>";   
-                
-               
+                                    </div><br>";
+
+
                 try{
                     $allowed = array('gif', 'png', 'jpg', 'jpeg', 'JPG', 'JPEG');
 
@@ -490,15 +490,15 @@ class TaskController extends Controller
                                     curl_close($handle);
 
                                     // Log::alert("Http Code : " . $httpCode);
-                                    
-                                    
+
+
                                     if($httpCode != 404){
                                         try{
                                             $url_path = $task->attachment[$index]->getPath();
                                             $img = (string) Image::make($url_path)->orientate()->resize(null, 180, function ($constraint) {
                                             $constraint->aspectRatio();})->encode('data-url');
-                                            
-                                            $html .= "<img width=\"". $img_wh ."\" height=\"". $img_wh ."\" src=\"" 
+
+                                            $html .= "<img width=\"". $img_wh ."\" height=\"". $img_wh ."\" src=\""
                                             . $img
                                             . "\"> ";
                                         }catch(Exception $e){
@@ -518,8 +518,8 @@ class TaskController extends Controller
                                     //     $img = (string) Image::make($task->attachment[$index]->getPath())
                                     //     ->orientate()->resize(null, 180, function ($constraint) {
                                     //     $constraint->aspectRatio();})->encode('data-url');
-                                        
-                                    //     $html .= "<img width=\"". $img_wh ."\" height=\"". $img_wh ."\" src=\"" 
+
+                                    //     $html .= "<img width=\"". $img_wh ."\" height=\"". $img_wh ."\" src=\""
                                     //         . $img
                                     //         . "\"> ";
                                     // }
@@ -529,17 +529,17 @@ class TaskController extends Controller
                             $count_img++;
                         }
                         $html .= "</div>";
-                    }    
+                    }
                 }catch(Exception $e){
                     print "Creating an mPDF object failed with" . $e->getMessage();
                 }
 
-                $mpdf->WriteHTML($html); 
+                $mpdf->WriteHTML($html);
 
                 $html="";
                 $mpdf->SetHTMLHeader($html,'0',true);
-                $mpdf->SetDocTemplate("");  
-                foreach($task->pdf_attachment as $pdf){ 
+                $mpdf->SetDocTemplate("");
+                foreach($task->pdf_attachment as $pdf){
                     try{
                         $count_prev_att += 1;
                         $url =  url($pdf->getUrl());
@@ -555,12 +555,12 @@ class TaskController extends Controller
                                 $size = $mpdf->getTemplateSize($tplId);
                                 $mpdf->AddPage($size['orientation']);
                                 $mpdf->UseTemplate($tplId, 0, 0, $size['width'], $size['height'], true);
-                            }         
+                            }
                         }
                     }catch(exeption $e){
                         print "Creating an mPDF object failed with" . $e->getMessage();
                     }
-             
+
                 }
                 // $mpdf->RestartDocTemplate();
                 $mpdf->SetDocTemplate(public_path('pdf-asset/activity.pdf'),true);
@@ -595,7 +595,7 @@ class TaskController extends Controller
     }
 
 
-    
+
     public function store(StoreTaskRequest $request)
     {
         $data = $request->all();
