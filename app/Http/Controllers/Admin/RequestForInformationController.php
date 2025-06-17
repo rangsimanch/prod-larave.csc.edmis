@@ -411,8 +411,8 @@ class RequestForInformationController extends Controller
          if($rfi->construction_contract->code == "C3-1"){
             $multi_signature = true;
             $multi_stamp = true;
-            $issue_by = '(นายศรายุธ ทองยศ) และ (Mr.Zhang Cong)';
-            $signature_path_2 =  public_path('png-asset/ITDCREC_signature_2-3.png');
+            $issue_by = '(นายศรายุธ ทองยศ) และ (Mr.Yao Dechen)';
+            $signature_path_2 =  public_path('png-asset/ITDCREC_signature_2-4.png');
             $signature_size_h_2 = 35;
             $signature_size_w_2 = 35;
 
@@ -426,6 +426,13 @@ class RequestForInformationController extends Controller
             if($rfi->id > 3596 && $rfi->id < 3738){
                 $issue_by = '(นายศรายุธ ทองยศ) และ (Mr.Luan Zhiqiang)';
                 $signature_path_2 =  public_path('png-asset/ITDCREC_signature_2-2.png');
+                $signature_size_h_2 = 35;
+                $signature_size_w_2 = 35;
+            }
+
+            if($rfi->id > 3738 && $rfi->id < 3962){
+                $issue_by = '(นายศรายุธ ทองยศ) และ (Mr.Zhang Cong)';
+                $signature_path_2 =  public_path('png-asset/ITDCREC_signature_2-3.png');
                 $signature_size_h_2 = 35;
                 $signature_size_w_2 = 35;
             }
