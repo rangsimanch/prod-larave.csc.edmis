@@ -916,8 +916,8 @@ class RfaController extends Controller
             $multi_stamp = true;
             $issue_by = '(นายศรายุธ ทองยศ) และ (Mr.Yao Dechen)';
             $signature_path_2 =  public_path('png-asset/ITDCREC_signature_2-4.png');
-            $signature_size_h_2 = 40;
-            $signature_size_w_2 = 40;
+            $signature_size_h_2 = 60;
+            $signature_size_w_2 = 60;
 
             if($rfa->id < 102866) {
                 $issue_by = '(นายศรายุธ ทองยศ) และ (Mr.Yu Dongxin)';
