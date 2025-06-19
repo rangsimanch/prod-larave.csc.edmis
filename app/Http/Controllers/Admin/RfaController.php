@@ -934,7 +934,7 @@ class RfaController extends Controller
                 $signature_size_w_2 = 40;
             }
 
-            if($rfa->id > 108743 && $rfa->id <118702){
+            if($rfa->id > 108743 && $rfa->id <118702 || $rfa->id == 118998){
                  $issue_by = '(นายศรายุธ ทองยศ) และ (Mr.Zhang Cong)';
                 $signature_path_2 =  public_path('png-asset/ITDCREC_signature_2-3.png');
                 $signature_size_h_2 = 40;
