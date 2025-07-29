@@ -95,7 +95,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs/jq-3.6.0/jszip-2.5.0/dt-1.11.4/af-2.3.7/b-2.2.2/b-colvis-2.2.2/b-html5-2.2.2/b-print-2.2.2/cr-1.5.5/date-1.1.2/fh-3.2.1/kt-2.6.4/r-2.2.9/rg-1.1.4/rr-1.2.8/sc-2.0.5/sb-1.3.1/sp-1.4.0/sl-1.3.4/sr-1.1.0/datatables.min.css"/>
+    <link rel="stylesheet" type="text/css" href="https://datatables-cdn.com/v/bs/jq-3.6.0/jszip-2.5.0/dt-1.11.4/af-2.3.7/b-2.2.2/b-colvis-2.2.2/b-html5-2.2.2/b-print-2.2.2/cr-1.5.5/date-1.1.2/fh-3.2.1/kt-2.6.4/r-2.2.9/rg-1.1.4/rr-1.2.8/sc-2.0.5/sb-1.3.1/sp-1.4.0/sl-1.3.4/sr-1.1.0/datatables.min.css"/>
     
     <link rel="icon" href="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e9/Taiwan_High_Speed_Rail_symbol.svg/1200px-Taiwan_High_Speed_Rail_symbol.svg.png">
 
@@ -105,8 +105,8 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.0/font/bootstrap-icons.css">
     <link href="{{ asset('/css/custom.css') }}" rel="stylesheet"> 
 
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.4/css/jquery.dataTables.min.css"/>
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/responsive/2.2.9/css/responsive.dataTables.min.css"/>
+    <link rel="stylesheet" type="text/css" href="https://datatables-cdn.com/1.11.4/css/jquery.dataTables.min.css"/>
+    <link rel="stylesheet" type="text/css" href="https://datatables-cdn.com/responsive/2.2.9/css/responsive.dataTables.min.css"/>
 
     
    
@@ -114,12 +114,12 @@
     
 
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" />
-    {{-- <link href="https://cdn.datatables.net/1.11.4/css/dataTables.bootstrap.min.css" rel="stylesheet" /> --}}
+    {{-- <link href="https://datatables-cdn.com/1.11.4/css/dataTables.bootstrap.min.css" rel="stylesheet" /> --}}
 
     <link href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" rel="stylesheet" />
-    <link href="https://cdn.datatables.net/buttons/1.2.4/css/buttons.dataTables.min.css" rel="stylesheet" />
-    <link href="https://cdn.datatables.net/select/1.3.0/css/select.dataTables.min.css" rel="stylesheet" />
-    <link href="https:////cdn.datatables.net/plug-ins/1.11.4/features/pageResize/dataTables.pageResize.min.js" rel="stylesheet" />
+    <link href="https://datatables-cdn.com/buttons/1.2.4/css/buttons.dataTables.min.css" rel="stylesheet" />
+    <link href="https://datatables-cdn.com/select/1.3.0/css/select.dataTables.min.css" rel="stylesheet" />
+    <link href="https:////datatables-cdn.com/plug-ins/1.11.4/features/pageResize/dataTables.pageResize.min.js" rel="stylesheet" />
 
     
     <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/css/select2.min.css" rel="stylesheet" />
@@ -139,7 +139,7 @@
   
     <link href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css" rel="stylesheet"/>
 
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/colreorder/1.5.2/css/colReorder.dataTables.css">
+    <link rel="stylesheet" type="text/css" href="https://datatables-cdn.com/colreorder/1.5.2/css/colReorder.dataTables.css">
 
     @yield('styles')
 </head>
@@ -299,8 +299,8 @@
     
     <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
 
-    <script src="https://cdn.datatables.net/1.11.4/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/responsive/2.2.9/js/dataTables.responsive.min.js"></script>
+    <script src="https://datatables-cdn.com/1.11.4/js/jquery.dataTables.min.js"></script>
+    <script src="https://datatables-cdn.com/responsive/2.2.9/js/dataTables.responsive.min.js"></script>
 
 
     <script type="text/javascript" src="https://code.jquery.com/jquery-1.9.1.js"></script>
@@ -314,19 +314,19 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/admin-lte/2.4.3/js/adminlte.min.js"></script>
-    <script src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/plug-ins/1.10.22/pagination/input.js"></script>
-    <script src ="https://cdn.datatables.net/plug-ins/1.10.21/pagination/select.js"></script>
-    <script src ="https://cdn.datatables.net/plug-ins/1.10.22/pagination/scrolling.js"></script>
+    <script src="https://datatables-cdn.com/1.10.22/js/jquery.dataTables.min.js"></script>
+    <script src="https://datatables-cdn.com/plug-ins/1.10.22/pagination/input.js"></script>
+    <script src ="https://datatables-cdn.com/plug-ins/1.10.21/pagination/select.js"></script>
+    <script src ="https://datatables-cdn.com/plug-ins/1.10.22/pagination/scrolling.js"></script>
     
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.19/js/dataTables.bootstrap.min.js"></script>
-    <script src="https://cdn.datatables.net/buttons/1.6.5/js/dataTables.buttons.min.js"></script>
-    <script src="https://cdn.datatables.net/select/1.3.0/js/dataTables.select.min.js"></script>
-    <script src="https://cdn.datatables.net/buttons/1.2.4/js/buttons.flash.min.js"></script>
-    <script src="https://cdn.datatables.net/buttons/1.2.4/js/buttons.html5.min.js"></script>
-    <script src="https://cdn.datatables.net/buttons/1.2.4/js/buttons.print.min.js"></script>
-    <script src="https://cdn.datatables.net/buttons/1.2.4/js/buttons.colVis.min.js"></script>
+    <script src="https://datatables-cdn.com/buttons/1.6.5/js/dataTables.buttons.min.js"></script>
+    <script src="https://datatables-cdn.com/select/1.3.0/js/dataTables.select.min.js"></script>
+    <script src="https://datatables-cdn.com/buttons/1.2.4/js/buttons.flash.min.js"></script>
+    <script src="https://datatables-cdn.com/buttons/1.2.4/js/buttons.html5.min.js"></script>
+    <script src="https://datatables-cdn.com/buttons/1.2.4/js/buttons.print.min.js"></script>
+    <script src="https://datatables-cdn.com/buttons/1.2.4/js/buttons.colVis.min.js"></script>
     <script src="https://cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/pdfmake.min.js"></script
     <script src="https://cdn.rawgit.com/bpampuch/pdfmake/0.1.18/build/vfs_fonts.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/2.5.0/jszip.min.js"></script>
@@ -342,11 +342,11 @@
     
     {{-- DataTable Add-on --}}
         {{-- Fixed Header --}}
-    <link href="https://cdn.datatables.net/fixedheader/3.2.4/css/fixedHeader.dataTables.css" rel="stylesheet" type="text/css" />
-    <script src="https://cdn.datatables.net/fixedheader/3.2.4/js/dataTables.fixedHeader.js"></script>
+    <link href="https://datatables-cdn.com/fixedheader/3.2.4/css/fixedHeader.dataTables.css" rel="stylesheet" type="text/css" />
+    <script src="https://datatables-cdn.com/fixedheader/3.2.4/js/dataTables.fixedHeader.js"></script>
         {{-- Fixed Column --}}
-    <link href="https://cdn.datatables.net/fixedcolumns/4.1.0/css/fixedColumns.dataTables.min.css" rel="stylesheet" type="text/css" />
-    <script src="https://cdn.datatables.net/fixedcolumns/4.1.0/js/dataTables.fixedColumns.min.js"></script>
+    <link href="https://datatables-cdn.com/fixedcolumns/4.1.0/css/fixedColumns.dataTables.min.css" rel="stylesheet" type="text/css" />
+    <script src="https://datatables-cdn.com/fixedcolumns/4.1.0/js/dataTables.fixedColumns.min.js"></script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js"></script>
 
@@ -367,9 +367,9 @@
   let colvisButtonTrans = '{{ trans('global.datatables.colvis') }}'
 
   let languages = {
-    'en': 'https://cdn.datatables.net/plug-ins/1.10.19/i18n/English.json',
-        'th': 'https://cdn.datatables.net/plug-ins/1.10.19/i18n/Thai.json',
-        'zh-Hans': 'https://cdn.datatables.net/plug-ins/1.10.19/i18n/Chinese.json'
+    'en': 'https://datatables-cdn.com/plug-ins/1.10.19/i18n/English.json',
+        'th': 'https://datatables-cdn.com/plug-ins/1.10.19/i18n/Thai.json',
+        'zh-Hans': 'https://datatables-cdn.com/plug-ins/1.10.19/i18n/Chinese.json'
   };
 
   $('.datatable').scroll(function() {
