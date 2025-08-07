@@ -181,6 +181,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::post('request-for-inspections/WbsThree','RequestForInspectionController@WbsThree')->name('rfns.WbsThree');
     Route::post('request-for-inspections/itemBoQ','RequestForInspectionController@itemBoQ')->name('rfns.itemBoQ');
     Route::post('request-for-inspections/ModalAttachFilesUpload','RequestForInspectionController@ModalAttachFilesUpload')->name('rfns.ModalAttachFilesUpload');
+    Route::get('request-for-inspections/{id}/download-files', 'RequestForInspectionController@downloadFiles')->name('request-for-inspections.download-files');
+    Route::post('request-for-inspections/bulk-download', 'RequestForInspectionController@bulkDownload')->name('request-for-inspections.bulk-download');
     Route::resource('request-for-inspections', 'RequestForInspectionController');
    
 

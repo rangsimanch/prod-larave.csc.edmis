@@ -23,7 +23,9 @@ use Illuminate\Http\Request;
 use Spatie\MediaLibrary\Models\Media;
 use Symfony\Component\HttpFoundation\Response;
 use Yajra\DataTables\Facades\DataTables;
-
+use Illuminate\Support\Facades\Storage;
+use ZipArchive;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Auth;
 
 
@@ -109,18 +111,28 @@ class RequestForInspectionController extends Controller
             });
 
             $table->editColumn('files_upload', function ($row) {
-                if (!$row->files_upload) {
+                if (!$row->files_upload || $row->files_upload->isEmpty()) {
                     return '';
                 }
 
                 $links = [];
+                $fileCount = $row->files_upload->count();
 
+                // Add individual file download links
                 foreach ($row->files_upload as $media) {
-                    $links[] = '<a href="' . $media->getUrl() . '" target="_blank">' . trans('global.downloadFile') . '</a>';
+                    $links[] = '<a href="' . $media->getUrl() . '" target="_blank" class="btn btn-xs btn-default" title="' . ($media->file_name ?? basename($media->getPath())) . '">' . trans('global.downloadFile') . '</a>';
                 }
 
-                return implode(', ', $links);
-            });
+                // Add download all button if there are files
+                $downloadAllBtn = '';
+                if ($fileCount > 1) {
+                    $downloadAllBtn = '<br><a href="' . route('admin.request-for-inspections.download-files', $row->id) . '" class="btn btn-xs btn-success" title="' . trans('global.downloadAll') . '">' . 
+                                    '<i class="fa fa-download"></i> ' . trans('global.downloadAll') . ' (' . $fileCount . ')' . 
+                                    '</a>';
+                }
+
+                return '<div style="white-space: nowrap;">' . implode(' ', $links) . $downloadAllBtn . '</div>';
+            })->escapeColumns(['files_upload']);
 
             $table->editColumn('end_loop', function ($row) {
                 return $row->end_loop ? $row->end_loop : "";
@@ -459,6 +471,107 @@ class RequestForInspectionController extends Controller
         $media         = $model->addMediaFromRequest('upload')->toMediaCollection('ck-media');
 
         return response()->json(['id' => $media->id, 'url' => $media->getUrl()], Response::HTTP_CREATED);
+    }
+    
+    public function downloadFiles($id)
+    {
+        $requestForInspection = RequestForInspection::findOrFail($id);
+        $files = $requestForInspection->getMedia('files_upload');
+        
+        if ($files->isEmpty()) {
+            return redirect()->back()->with('error', 'No files available for download.');
+        }
+        
+        // Create a temporary directory
+        $tempDir = storage_path('app/public/temp/' . uniqid());
+        File::makeDirectory($tempDir, 0755, true);
+        
+        $zip = new ZipArchive();
+        $zipFileName = 'request_inspection_' . $id . '_files_' . now()->format('Ymd_His') . '.zip';
+        $zipFilePath = storage_path('app/public/' . $zipFileName);
+        
+        if ($zip->open($zipFilePath, ZipArchive::CREATE) === true) {
+            foreach ($files as $file) {
+                $filePath = $file->getPath();
+                $fileName = $file->file_name ?: basename($filePath);
+                $zip->addFile($filePath, $fileName);
+            }
+            $zip->close();
+            
+            // Return the file as a download response
+            return response()->download($zipFilePath, $zipFileName)->deleteFileAfterSend(true);
+        }
+        
+        // Clean up in case of failure
+        File::deleteDirectory($tempDir);
+        return redirect()->back()->with('error', 'Failed to create zip file.');
+    }
+    
+    /**
+     * Bulk download files from multiple RequestForInspection records
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Symfony\Component\HttpFoundation\BinaryFileResponse|\Illuminate\Http\RedirectResponse
+     */
+    public function bulkDownload(Request $request)
+    {
+        $request->validate([
+            'ids' => 'required|array',
+            'ids.*' => 'exists:request_for_inspections,id',
+        ]);
+        
+        $requestForInspections = RequestForInspection::whereIn('id', $request->input('ids'))->get();
+        
+        if ($requestForInspections->isEmpty()) {
+            return redirect()->back()->with('error', 'No valid records selected.');
+        }
+        
+        // Create a temporary directory
+        $tempDir = storage_path('app/public/temp/' . uniqid());
+        File::makeDirectory($tempDir, 0755, true);
+        
+        $zip = new ZipArchive();
+        $zipFileName = 'bulk_request_inspections_' . now()->format('Ymd_His') . '.zip';
+        $zipFilePath = storage_path('app/public/' . $zipFileName);
+        
+        if ($zip->open($zipFilePath, ZipArchive::CREATE) === true) {
+            $fileCount = 0;
+            
+            foreach ($requestForInspections as $inspection) {
+                $files = $inspection->getMedia('files_upload');
+                
+                foreach ($files as $file) {
+                    $filePath = $file->getPath();
+                    $fileName = 'inspection_' . $inspection->id . '/' . ($file->file_name ?: basename($filePath));
+                    
+                    // Ensure the directory exists in the zip
+                    $zip->addEmptyDir('inspection_' . $inspection->id);
+                    $zip->addFile($filePath, $fileName);
+                    $fileCount++;
+                }
+            }
+            
+            $zip->close();
+            
+            if ($fileCount === 0) {
+                File::delete($zipFilePath);
+                File::deleteDirectory($tempDir);
+                return redirect()->back()->with('error', 'No files found in the selected records.');
+            }
+            
+            // Return the file as a download response
+            return response()->download($zipFilePath, $zipFileName)
+                ->deleteFileAfterSend(true)
+                ->deleteFileAfterSend(true);
+        }
+        
+        // Clean up in case of failure
+        if (file_exists($zipFilePath)) {
+            File::delete($zipFilePath);
+        }
+        File::deleteDirectory($tempDir);
+        
+        return redirect()->back()->with('error', 'Failed to create zip file.');
     }
 
     public function ModalAttachFilesUpload(Request $request)

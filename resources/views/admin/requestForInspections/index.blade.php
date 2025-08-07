@@ -8,9 +8,9 @@
 @endif
 
 <div class="content">
-    @can('request_for_inspection_create')
-        <div style="margin-bottom: 10px;" class="row">
-            <div class="col-lg-12">
+    <div style="margin-bottom: 10px;" class="row">
+        <div class="col-lg-12">
+            @can('request_for_inspection_create')
                 <a class="btn btn-success" href="{{ route('admin.request-for-inspections.create') }}">
                     {{ trans('global.add') }} {{ trans('cruds.requestForInspection.title_singular') }}
                 </a>
@@ -22,10 +22,15 @@
                 <!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#fileuploadCCSP">
                     {{ trans('cruds.requestForInspection.fields.modal_file_upload') }}
                 </button> -->
-
-            </div>
+            @endcan
+            
+            
+            <button type="button" class="btn btn-primary" id="bulkDownloadBtn" disabled>
+                <i class="fa fa-download"></i> {{ trans('global.downloadSelected') }}
+            </button>
+            
         </div>
-    @endcan
+    </div>
     <div class="row">
         <div class="col-lg-12">
             <div class="panel panel-default">
@@ -37,7 +42,7 @@
                         <thead>
                             <tr>
                                 <th width="10">
-
+                                    <input type="checkbox" id="select-all" class="form-check-input" style="margin-left: 0;">
                                 </th>
                                 <th>
                                     Action
@@ -231,35 +236,83 @@ Dropzone.options.filesUploadDropzone = {
 <script>
     $(function () {
   let dtButtons = $.extend(true, [], $.fn.dataTable.defaults.buttons)
-@can('request_for_inspection_delete')
-  let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
-  let deleteButton = {
-    text: deleteButtonTrans,
-    url: "{{ route('admin.request-for-inspections.massDestroy') }}",
-    className: 'btn-danger',
-    action: function (e, dt, node, config) {
-      var ids = $.map(dt.rows({ selected: true }).data(), function (entry) {
-          return entry.id
-      });
-
-      if (ids.length === 0) {
-        alert('{{ trans('global.datatables.zero_selected') }}')
-
-        return
+  
+  // Bulk download button handler
+  $('#bulkDownloadBtn').on('click', function() {
+      let rows = table.rows({ selected: true }).data();
+      if (rows.length === 0) {
+          alert('{{ trans('global.datatables.zero_selected') }}');
+          return;
       }
+      
+      let ids = [];
+      rows.each(function(row) {
+          ids.push(row.id);
+      });
+      
+      // Show loading state
+      $(this).html('<i class="fa fa-spinner fa-spin"></i> {{ trans('global.downloading') }}...').prop('disabled', true);
+      
+      // Submit form to download endpoint
+      let form = $('<form>', {
+          'method': 'POST',
+          'action': '{{ route('admin.request-for-inspections.bulk-download') }}',
+          'target': '_blank'
+      });
+      
+      // Add CSRF token and IDs
+      form.append($('<input>', {
+          'type': 'hidden',
+          'name': '_token',
+          'value': '{{ csrf_token() }}'
+      }));
+      
+      $.each(ids, function(index, id) {
+          form.append($('<input>', {
+              'type': 'hidden',
+              'name': 'ids[]',
+              'value': id
+          }));
+      });
+      
+      $('body').append(form);
+      form.submit().remove();
+      
+      // Reset button state after a short delay
+      setTimeout(() => {
+          $('#bulkDownloadBtn').html('<i class="fa fa-download"></i> {{ trans('global.downloadSelected') }}').prop('disabled', false);
+      }, 2000);
+  });
+  
+  @can('request_for_inspection_delete')
+    let deleteButtonTrans = '{{ trans('global.datatables.delete') }}'
+    let deleteButton = {
+      text: deleteButtonTrans,
+      url: "{{ route('admin.request-for-inspections.massDestroy') }}",
+      className: 'btn-danger',
+      action: function (e, dt, node, config) {
+        var ids = $.map(dt.rows({ selected: true }).data(), function (entry) {
+            return entry.id
+        });
 
-      if (confirm('{{ trans('global.areYouSure') }}')) {
-        $.ajax({
-          headers: {'x-csrf-token': _token},
-          method: 'POST',
-          url: config.url,
-          data: { ids: ids, _method: 'DELETE' }})
-          .done(function () { location.reload() })
+        if (ids.length === 0) {
+          alert('{{ trans('global.datatables.zero_selected') }}')
+
+          return
+        }
+
+        if (confirm('{{ trans('global.areYouSure') }}')) {
+          $.ajax({
+            headers: {'x-csrf-token': _token},
+            method: 'POST',
+            url: config.url,
+            data: { ids: ids, _method: 'DELETE' }})
+            .done(function () { location.reload() })
+        }
       }
     }
-  }
-  dtButtons.push(deleteButton)
-@endcan
+    dtButtons.push(deleteButton)
+  @endcan
 
   let dtOverrideGlobals = {
     buttons: dtButtons,
@@ -291,6 +344,29 @@ Dropzone.options.filesUploadDropzone = {
     ],
   };
   let table = $('.datatable-RequestForInspection').DataTable(dtOverrideGlobals);
+  
+  // Update bulk download button state based on selection
+  table.on('select deselect', function(e, dt, type, indexes) {
+      let selectedRows = table.rows({ selected: true }).count();
+      let totalRows = table.rows().count();
+      
+      // Update bulk download button state
+      $('#bulkDownloadBtn').prop('disabled', selectedRows === 0);
+      
+      // Update select all checkbox
+      $('#select-all').prop('checked', selectedRows === totalRows && totalRows > 0);
+      $('#select-all').prop('indeterminate', selectedRows > 0 && selectedRows < totalRows);
+  });
+  
+  // Handle select all checkbox
+  $('#select-all').on('change', function() {
+      if ($(this).is(':checked')) {
+          table.rows().select();
+      } else {
+          table.rows().deselect();
+      }
+  });
+  
   $('a[data-toggle="tab"]').on('shown.bs.tab click', function(e){
       $($.fn.dataTable.tables(true)).DataTable()
           .columns.adjust();

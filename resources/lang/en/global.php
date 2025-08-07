@@ -283,6 +283,7 @@ return [
     'yes_update'                        => 'Yes, Update it!',
     'no_cancel'                         => 'No, cancel please!',
     'next'                              => 'Next',
+    'downloadSelected'                  => 'Download Selected',
 
 
 
