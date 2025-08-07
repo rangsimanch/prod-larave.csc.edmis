@@ -36,7 +36,7 @@
                         <thead>
                             <tr>
                                 <th width="10">
-                                    <input type="checkbox" id="select-all" class="form-check-input" style="margin-left: 0;">
+                                    <!-- Removed check all checkbox -->
                                 </th>
                                 <th>
                                     <p style="font-size:12px"> Action </p>
@@ -303,22 +303,8 @@
   
   let table = $('.datatable-Rfa').DataTable(dtOverrideGlobals);
 
-  // Initialize select all checkbox
-  $('#select-all').on('click', function() {
-    let rows = table.rows({ 'search': 'applied' }).nodes();
-    $('input[type="checkbox"]', rows).prop('checked', this.checked);
-    table.rows({ 'search': 'applied' }).select(this.checked);
-    updateBulkDownloadButton();
-  });
-  
   // Handle individual row checkbox
   $('#rfas-table tbody').on('change', 'input[type="checkbox"]', function() {
-    if (!this.checked) {
-      let el = $('#select-all').get(0);
-      if (el && el.checked) {
-        el.checked = false;
-      }
-    }
     updateBulkDownloadButton();
   });
   
