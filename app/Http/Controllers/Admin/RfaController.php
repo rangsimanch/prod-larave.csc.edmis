@@ -33,11 +33,80 @@ use Symfony\Component\HttpFoundation\Response;
 use Yajra\DataTables\Facades\DataTables;
 use App\BoQ;
 use setasign\Fpdi;
+use ZipArchive;
+use Illuminate\Support\Facades\File;
 
 
 class RfaController extends Controller
 {
     use MediaUploadingTrait, CsvImportTrait;
+
+    /**
+     * Download all files from multiple RFA records as a zip archive
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Symfony\Component\HttpFoundation\BinaryFileResponse|\Illuminate\Http\RedirectResponse
+     */
+    public function bulkDownload(Request $request)
+    {
+        $request->validate([
+            'ids' => 'required|array',
+            'ids.*' => 'exists:rfas,id',
+        ]);
+        
+        $rfas = Rfa::whereIn('id', $request->input('ids'))->get();
+        
+        if ($rfas->isEmpty()) {
+            return redirect()->back()->with('error', 'No valid records selected.');
+        }
+        
+        // Create a temporary directory
+        $tempDir = storage_path('app/public/temp/' . uniqid());
+        File::makeDirectory($tempDir, 0755, true);
+        
+        $zip = new ZipArchive();
+        $zipFileName = 'bulk_rfa_files_' . now()->format('Ymd_His') . '.zip';
+        $zipFilePath = storage_path('app/public/' . $zipFileName);
+        
+        if ($zip->open($zipFilePath, ZipArchive::CREATE) === true) {
+            $fileCount = 0;
+            
+            foreach ($rfas as $rfa) {
+                $collection = 'commercial_file_upload';
+                $files = $rfa->getMedia($collection);
+                
+                foreach ($files as $file) {
+                    $filePath = $file->getPath();
+                    $fileName = $rfa->origin_number . '_' . $rfa->id . '/' . ($file->file_name ?: basename($filePath));
+                    
+                    // Ensure the directory exists in the zip
+                    $zip->addEmptyDir($rfa->origin_number . '_' . $rfa->id);
+                    $zip->addFile($filePath, $fileName);
+                    $fileCount++;
+                }
+            }
+            
+            $zip->close();
+            
+            if ($fileCount === 0) {
+                File::delete($zipFilePath);
+                File::deleteDirectory($tempDir);
+                return redirect()->back()->with('error', 'No files found in the selected records.');
+            }
+            
+            // Return the file as a download response
+            return response()->download($zipFilePath, $zipFileName)
+                ->deleteFileAfterSend(true);
+        }
+        
+        // Clean up in case of failure
+        if (file_exists($zipFilePath)) {
+            File::delete($zipFilePath);
+        }
+        File::deleteDirectory($tempDir);
+        
+        return redirect()->back()->with('error', 'Failed to create zip file.');
+    }
 
     public function index(Request $request)
     {

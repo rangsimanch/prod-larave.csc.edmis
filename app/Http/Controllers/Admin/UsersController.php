@@ -38,6 +38,9 @@ class UsersController extends Controller
                 ->select(sprintf('%s.*', (new User)->table))
                 ->whereHas('construction_contracts', function($q) {
                     $q->where('construction_contract_id', session('construction_contract_id'));
+                })
+                ->whereHas('team', function($q) {
+                    $q->where('team_id', auth()->user()->team_id);
                 });
             }
             $table = Datatables::of($query);
@@ -180,7 +183,7 @@ class UsersController extends Controller
             $roles = Role::all()->pluck('title', 'id');
         }
 
-        $construction_contracts = ConstructionContract::all()->pluck('code', 'id');
+        $construction_contracts = ConstructionContract::where('id', '!=', 15)->pluck('code', 'id');
 
         $user->load('organization' ,'team', 'jobtitle', 'roles', 'construction_contracts');
 

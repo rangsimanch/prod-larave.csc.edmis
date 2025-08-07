@@ -539,6 +539,9 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
 
      // Swn
     Route::delete('swns/destroy', 'SwnController@massDestroy')->name('swns.massDestroy');
+    Route::post('rfas/media', 'RfaController@storeMedia')->name('rfas.storeMedia');
+    Route::post('rfas/ckmedia', 'RfaController@storeCKEditorImages')->name('rfas.storeCKEditorImages');
+    Route::post('rfas/bulk-download', 'RfaController@bulkDownload')->name('rfas.bulk-download');
     Route::post('swns/media', 'SwnController@storeMedia')->name('swns.storeMedia');
     Route::post('swns/ckmedia', 'SwnController@storeCKEditorImages')->name('swns.storeCKEditorImages');
     Route::post('swns/parse-csv-import', 'SwnController@parseCsvImport')->name('swns.parseCsvImport');

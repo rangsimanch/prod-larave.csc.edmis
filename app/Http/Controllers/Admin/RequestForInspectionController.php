@@ -542,10 +542,10 @@ class RequestForInspectionController extends Controller
                 
                 foreach ($files as $file) {
                     $filePath = $file->getPath();
-                    $fileName = 'inspection_' . $inspection->id . '/' . ($file->file_name ?: basename($filePath));
+                    $fileName = $inspection->ref_no . '_' . $inspection->id . '/' . ($file->file_name ?: basename($filePath));
                     
                     // Ensure the directory exists in the zip
-                    $zip->addEmptyDir('inspection_' . $inspection->id);
+                    $zip->addEmptyDir($inspection->ref_no . '_' . $inspection->id);
                     $zip->addFile($filePath, $fileName);
                     $fileCount++;
                 }

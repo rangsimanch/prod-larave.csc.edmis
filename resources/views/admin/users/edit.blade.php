@@ -43,7 +43,7 @@
                             <span class="help-block">{{ trans('cruds.user.fields.img_user_helper') }}</span>
                         </div>
 
-                        @if(auth()->user()->roles->contains(1) || auth()->user()->roles->contains(14))
+                        @if(auth()->user()->roles->contains(1) || auth()->user()->roles->contains(14) || auth()->user()->roles->contains(47))
                             <div class="form-group {{ $errors->has('name') ? 'has-error' : '' }}">
                                 <label class="required" for="name">{{ trans('cruds.user.fields.name') }}</label>
                                 <input class="form-control" type="text" name="name" id="name" value="{{ old('name', $user->name) }}" required>
@@ -145,7 +145,7 @@
                             <span class="help-block">{{ trans('cruds.user.fields.password_helper') }}</span>
                         </div>
 
-                        @if(auth()->user()->roles->contains(1) || auth()->user()->roles->contains(14))
+                        @if(auth()->user()->roles->contains(1) || auth()->user()->roles->contains(14) || auth()->user()->roles->contains(47))
                             <div class="form-group {{ $errors->has('roles') ? 'has-error' : '' }}">
                                 <label class="required" for="roles">{{ trans('cruds.user.fields.roles') }}</label>
                                 <div style="padding-bottom: 4px">
@@ -201,7 +201,7 @@
                             <span class="help-block">{{ trans('cruds.user.fields.stamp_signature_helper') }}</span>
                         </div>
 
-                        @if(auth()->user()->roles->contains(1) || auth()->user()->roles->contains(14))
+                        @if(auth()->user()->roles->contains(1) || auth()->user()->roles->contains(14) || auth()->user()->roles->contains(47))
                             <div class="form-group {{ $errors->has('approved') ? 'has-error' : '' }}">
                                 <div>
                                     <input type="hidden" name="approved" value="0">

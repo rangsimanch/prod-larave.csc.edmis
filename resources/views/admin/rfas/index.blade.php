@@ -11,9 +11,20 @@
                     {{ trans('global.app_csvImport') }}
                 </button>
                 @include('csvImport.modal', ['model' => 'Rfa', 'route' => 'admin.rfas.parseCsvImport'])
+                
+                
+                <button type="button" class="btn btn-primary" id="bulkDownloadBtn" disabled>
+                    <i class="fa fa-download"></i> {{ trans('global.downloadSelected') }}
+                </button>
+                
             </div>
         </div>
     @endcan
+    
+    <form action="{{ route('admin.rfas.bulk-download') }}" method="POST" id="bulkDownloadForm" target="_blank">
+        @csrf
+        <input type="hidden" name="ids" id="bulkDownloadIds">
+    </form>
     <div class="row">
         <div class="col-lg-12">
             <div class="panel panel-default">
@@ -25,7 +36,7 @@
                         <thead>
                             <tr>
                                 <th width="10">
-
+                                    <input type="checkbox" id="select-all" class="form-check-input" style="margin-left: 0;">
                                 </th>
                                 <th>
                                     <p style="font-size:12px"> Action </p>
@@ -243,8 +254,17 @@
   dtButtons.push(deleteButton)
 @endcan
 
+  // Configure DataTables defaults
+  $.extend($.fn.dataTable.defaults, {
+    select: {
+      style: 'multi',
+      selector: 'td:first-child'
+    },
+    dom: 'lBfrtip',
+    buttons: dtButtons
+  });
+  
   let dtOverrideGlobals = {
-    buttons: dtButtons,
     processing: true,
     serverSide: true,
     retrieve: true,
@@ -281,11 +301,72 @@
     ],
   };
   
-  let table = $('.datatable-Rfa').DataTable(dtOverrideGlobals)
+  let table = $('.datatable-Rfa').DataTable(dtOverrideGlobals);
 
+  // Initialize select all checkbox
+  $('#select-all').on('click', function() {
+    let rows = table.rows({ 'search': 'applied' }).nodes();
+    $('input[type="checkbox"]', rows).prop('checked', this.checked);
+    table.rows({ 'search': 'applied' }).select(this.checked);
+    updateBulkDownloadButton();
+  });
+  
+  // Handle individual row checkbox
+  $('#rfas-table tbody').on('change', 'input[type="checkbox"]', function() {
+    if (!this.checked) {
+      let el = $('#select-all').get(0);
+      if (el && el.checked) {
+        el.checked = false;
+      }
+    }
+    updateBulkDownloadButton();
+  });
+  
+  // Update bulk download button state
+  function updateBulkDownloadButton() {
+    let selectedCount = table.rows({ selected: true }).count();
+    $('#bulkDownloadBtn').prop('disabled', selectedCount === 0);
+  }
+  
+  // Handle bulk download button click
+  $('#bulkDownloadBtn').on('click', function() {
+    let selectedRows = table.rows({ selected: true }).data().toArray();
+    let ids = selectedRows.map(row => row.id);
+    
+    if (ids.length > 0) {
+      // Create a new form with array-style parameter names
+      let form = $('<form>', {
+        method: 'POST',
+        action: "{{ route('admin.rfas.bulk-download') }}",
+        target: '_blank'
+      }).append($('<input>', {
+        type: 'hidden',
+        name: '_token',
+        value: $('meta[name="csrf-token"]').attr('content')
+      }));
+      
+      // Add each ID as a separate input
+      ids.forEach(function(id) {
+        form.append($('<input>', {
+          type: 'hidden',
+          name: 'ids[]',
+          value: id
+        }));
+      });
+      
+      // Submit the form
+      $('body').append(form);
+      form.submit();
+      form.remove();
+    }
+  });
+  
+  // Update button state when selection changes
+  table.on('select deselect', function() {
+    updateBulkDownloadButton();
+  });
 
-
-let visibleColumnsIndexes = null;
+  let visibleColumnsIndexes = null;
 
 
 $('.datatable thead').on('input', '.search', function () {
