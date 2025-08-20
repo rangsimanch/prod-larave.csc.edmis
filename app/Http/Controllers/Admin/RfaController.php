@@ -1186,6 +1186,7 @@ class RfaController extends Controller
             $signature_path = public_path('png-asset/CAN_signature.png');
             $jobittle_position_lf = 255;
 
+            
              if ( $rfa->id <= 97608){
                 $issue_by = '( Zhou Jia Yi )';
                 $issuer_jobtitle = 'Project Manager';
@@ -1193,26 +1194,34 @@ class RfaController extends Controller
                 $jobittle_position_lf = 265;
             }
 
-            if ($rfa->id > 76608 and $rfa->id < 77826 ){
+            if ($rfa->id > 76608 && $rfa->id < 77826 ){
                 $issue_by = '( Wang Kan )';
                 $issuer_jobtitle = 'For Project Manager';
                 $signature_path = public_path('png-asset/CAN_signature_3.png');
                 $jobittle_position_lf = 255;
             }
 
-            if ($rfa->id > 97608 and $rfa->id <= 99346){
+            if ($rfa->id > 97608 && $rfa->id <= 99346){
                 $issue_by = '( Gao Liang )';
                 $issuer_jobtitle = 'For Project Manager';
                 $signature_path = public_path('png-asset/CAN_signature_4.png');
                 $jobittle_position_lf = 255;
             }
 
-            if($rfa->id > 99346){
+            if($rfa->id > 99346 && $rfa->id <= 125322){
                 $issue_by = '( Zhou Jia Yi )';
                 $issuer_jobtitle = 'Project Manager';
                 $signature_path = public_path('png-asset/CAN_signature_2.png');
                 $jobittle_position_lf = 265;
             }
+
+            if($rfa->id > 125322){
+                $issue_by = '( Gao Liang )';
+                $issuer_jobtitle = 'Acting Project Manager';
+                $signature_path = public_path('png-asset/CAN_signature_5.png');
+                $jobittle_position_lf = 255;
+            }
+
 
             $issue_position_lf = 260;
             $issue_position_lf_sub = 489;
