@@ -111,32 +111,23 @@ class RequestForInspectionController extends Controller
             });
 
             $table->editColumn('files_upload', function ($row) {
-                if (!$row->files_upload || $row->files_upload->isEmpty()) {
+                if (!$row->files_upload) {
                     return '';
                 }
 
                 $links = [];
-                $fileCount = $row->files_upload->count();
 
-                // Add individual file download links
                 foreach ($row->files_upload as $media) {
-                    $links[] = '<a href="' . $media->getUrl() . '" target="_blank" class="btn btn-xs btn-default" title="' . ($media->file_name ?? basename($media->getPath())) . '">' . trans('global.downloadFile') . '</a>';
+                    $links[] = '<a href="' . $media->getUrl() . '" target="_blank">' . trans('global.downloadFile') . '</a>';
                 }
 
-                // Add download all button if there are files
-                $downloadAllBtn = '';
-                if ($fileCount > 1) {
-                    $downloadAllBtn = '<br><a href="' . route('admin.request-for-inspections.download-files', $row->id) . '" class="btn btn-xs btn-success" title="' . trans('global.downloadAll') . '">' . 
-                                    '<i class="fa fa-download"></i> ' . trans('global.downloadAll') . ' (' . $fileCount . ')' . 
-                                    '</a>';
-                }
-
-                return '<div style="white-space: nowrap;">' . implode(' ', $links) . $downloadAllBtn . '</div>';
-            })->escapeColumns(['files_upload']);
+                return implode(', ', $links);
+            });
 
             $table->editColumn('end_loop', function ($row) {
                 return $row->end_loop ? $row->end_loop : "";
             });
+            
             $table->editColumn('loop_file_upload', function ($row) {
                 if (!$row->loop_file_upload) {
                     return '';
