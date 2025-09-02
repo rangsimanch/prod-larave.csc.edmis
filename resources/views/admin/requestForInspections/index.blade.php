@@ -19,9 +19,9 @@
                 </button>
                 @include('csvImport.modal', ['model' => 'RequestForInspection', 'route' => 'admin.request-for-inspections.parseCsvImport'])
 
-                <!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#fileuploadCCSP">
-                    {{ trans('cruds.requestForInspection.fields.modal_file_upload') }}
-                </button> -->
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#fileuploadCCSP">
+                    Upload matching PDF Files
+                </button>
             @endcan
             
             
@@ -133,6 +133,78 @@
             </div>
 
 
+{{-- Upload Summary Modal --}}
+<div class="modal fade" id="uploadSummaryModal" tabindex="-1" role="dialog" aria-labelledby="uploadSummaryLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title" id="uploadSummaryLabel">ผลลัพธ์การอัปโหลด</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        @if(session()->has('upload_summary'))
+          @php
+            $summary = session('upload_summary');
+          @endphp
+
+          @if(!empty($summary['success']))
+            <h4 class="text-success">Mapping สำเร็จ</h4>
+            <div class="table-responsive">
+              <table class="table table-bordered table-striped">
+                <thead>
+                  <tr>
+                    <th scope="col">Subject</th>
+                    <th scope="col">RFN No.</th>
+                    <th scope="col">File</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  @foreach($summary['success'] as $row)
+                    <tr>
+                      <td>{{ $row['subject'] ?? '-' }}</td>
+                      <td>{{ $row['ref_no'] ?? '-' }}</td>
+                      <td>{{ $row['file'] ?? '-' }}</td>
+                    </tr>
+                  @endforeach
+                </tbody>
+              </table>
+            </div>
+          @endif
+          @if(isset($summary) && !empty($summary['failed']))
+            <h4 class="text-danger" style="margin-top:20px;">Mapping ไม่สำเร็จ</h4>
+            <div class="table-responsive">
+              <table class="table table-bordered table-striped">
+                <thead>
+                  <tr>
+                    <th scope="col">เหตุผล</th>
+                    <th scope="col">RFN No.</th>
+                    <th scope="col">File</th>
+                    <th scope="col">Subject</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  @foreach($summary['failed'] as $row)
+                    <tr>
+                      <td>{{ $row['reason'] ?? '-' }}</td>
+                      <td>{{ $row['ref_no'] ?? '-' }}</td>
+                      <td>{{ $row['file'] ?? '-' }}</td>
+                      <td>{{ $row['subject'] ?? '-' }}</td>
+                    </tr>
+                  @endforeach
+                </tbody>
+              </table>
+            </div>
+          @endif
+        @endif
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+ </div>
 
         </div>
     </div>
@@ -143,7 +215,7 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h4 class="modal-title" id="exampleModalLabel">RFN Files Upload</h4>
+        <h4 class="modal-title" id="exampleModalLabel">Upload matching PDF Files</h4>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -151,6 +223,21 @@
       <div class="modal-body">
         <form method="POST" action="{{ route("admin.rfns.ModalAttachFilesUpload") }}" enctype="multipart/form-data">
             @csrf
+            <div class="form-group">
+                <label for="construction_contract_id">Construction Contract</label>
+                <select class="form-control" name="construction_contract_id" id="construction_contract_id" required oninvalid="this.setCustomValidity('กรุณาเลือกสัญญา')" oninput="this.setCustomValidity('')">
+                    <option value="">{{ trans('global.pleaseSelect') }}</option>
+                    @php
+                        use Illuminate\Support\Facades\Auth;
+                        $ccOptions = Auth::id() != 1
+                            ? \App\ConstructionContract::where('id', session('construction_contract_id'))->pluck('code','id')
+                            : \App\ConstructionContract::all()->pluck('code','id');
+                    @endphp
+                    @foreach($ccOptions as $id => $code)
+                        <option value="{{ $id }}">{{ $code }}</option>
+                    @endforeach
+                </select>
+            </div>
             <div class="form-group {{ $errors->has('files_upload') ? 'has-error' : '' }}">
                 <label for="files_upload">{{ trans('cruds.requestForInspection.fields.files_upload') }}</label>
                 <div class="needsclick dropzone" id="files_upload-dropzone">
@@ -158,13 +245,13 @@
                 @if($errors->has('files_upload'))
                     <span class="help-block" role="alert">{{ $errors->first('files_upload') }}</span>
                 @endif
-                <span class="help-block">{{ trans('cruds.requestForInspection.fields.files_upload_helper') }}</span>
+                <span class="help-block">อัปโหลดได้สูงสุด 50 ไฟล์ | ประเภท PDF เท่านั้น | ขนาดไม่เกินไฟล์ละ 5GB | ระบบจะจับคู่ชื่อไฟล์กับ RFN No.</span>
             </div>
       
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="sumit" class="btn btn-primary">Save changes</button>
+        <button type="submit" class="btn btn-primary">Save changes</button>
       </div>
       </form>
     </div>
@@ -179,18 +266,19 @@
     var uploadedFilesUploadMap = {}
 Dropzone.options.filesUploadDropzone = {
     url: '{{ route('admin.request-for-inspections.storeMedia') }}',
-    maxFilesize: 500, // MB
+    maxFilesize: 5120, // MB (5GB)
+    maxFiles: 50,
+    acceptedFiles: 'application/pdf',
     addRemoveLinks: true,
     headers: {
       'X-CSRF-TOKEN': "{{ csrf_token() }}"
     },
     params: {
-      size: 100
+      size: 5120
     },
     success: function (file, response) {
       $('form').append('<input type="hidden" name="files_upload[]" value="' + response.name + '">')
       uploadedFilesUploadMap[file.name] = response.name
-      console.log(response.name);
     },
     removedfile: function (file) {
       file.previewElement.remove()
@@ -202,24 +290,8 @@ Dropzone.options.filesUploadDropzone = {
       }
       $('form').find('input[name="files_upload[]"][value="' + name + '"]').remove()
     },
-    init: function () {
-@if(isset($requestForInspection) && $requestForInspection->files_upload)
-          var files =
-            {!! json_encode($requestForInspection->files_upload) !!}
-              for (var i in files) {
-              var file = files[i]
-              this.options.addedfile.call(this, file)
-              file.previewElement.classList.add('dz-complete')
-              $('form').append('<input type="hidden" name="files_upload[]" value="' + file.file_name + '">')
-            }
-@endif
-    },
-     error: function (file, response) {
-         if ($.type(response) === 'string') {
-             var message = response //dropzone sends it's own error messages in string
-         } else {
-             var message = response.errors.file
-         }
+    error: function (file, response) {
+         var message = $.type(response) === 'string' ? response : (response.errors ? response.errors.file : 'Upload error')
          file.previewElement.classList.add('dz-error')
          _ref = file.previewElement.querySelectorAll('[data-dz-errormessage]')
          _results = []
@@ -227,7 +299,6 @@ Dropzone.options.filesUploadDropzone = {
              node = _ref[_i]
              _results.push(node.textContent = message)
          }
-
          return _results
      }
 }
@@ -379,6 +450,11 @@ Dropzone.options.filesUploadDropzone = {
         .search(value, strict)
         .draw()
   });
+  
+  // Show upload summary modal if present
+  @if(session('upload_summary'))
+    $('#uploadSummaryModal').modal('show');
+  @endif
 });
 
 </script>

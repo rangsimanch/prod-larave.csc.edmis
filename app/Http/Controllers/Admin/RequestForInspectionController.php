@@ -567,35 +567,81 @@ class RequestForInspectionController extends Controller
 
     public function ModalAttachFilesUpload(Request $request)
     {   
-        $data = $request->all();
-        $files = array();
+        abort_if(Gate::denies('request_for_inspection_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        foreach ($request->input('files_upload', []) as $file){
-            $files[] = $file;  //Get File to Array
-        }
+        // Validate inputs
+        $validated = $request->validate([
+            'construction_contract_id' => 'required|exists:construction_contracts,id',
+            'files_upload' => 'array|max:50',
+            'files_upload.*' => 'string', // names from temporary upload
+        ]);
 
-        foreach ($request->input('files_upload', []) as $file){
-            $files_upload[] = substr(str_replace(':','/',$file),14,-4); //Get Filename and convert to Ref Number
-        }
+        $constructionContractId = (int) $validated['construction_contract_id'];
+        $uploaded = $request->input('files_upload', []);
 
-        foreach ($files_upload as $ref_number){
-            $id[] = RequestForInspection::where('ref_no',$ref_number)->value('id'); // Find ID on Ref Number
-        }
+        $summarySuccess = [];
+        $summaryFailed = [];
 
-        for($i = 0; $i < sizeof($id); $i++){ //Loop for size of array
-            $requestForInspection = RequestForInspection::find($id[$i]); //Find Data in ID Array
-            if(isset($requestForInspection)){  //Check find result is not null
-                $requestForInspection->update($request->all()); // Update Table
-                try{
-                    if(isset($files[$i])){ //Check file array is not null
-                        $requestForInspection->addMedia(storage_path('tmp/uploads/' . $files[$i])) 
-                        ->toMediaCollection('files_upload'); //Put file index i to table
-                    }
-                }catch(Exception $e){
+        // Iterate each uploaded temp filename
+        foreach ($uploaded as $tempName) {
+            // Derive original filename for summary (best effort)
+            $originalFileName = basename($tempName);
 
-                }
+            // Extract ref_no from filename by splitting at the first underscore
+            // Example: 68b40207b7ddb_RFN-9092.pdf -> RFN-9092
+            $baseName = pathinfo($originalFileName, PATHINFO_FILENAME);
+            $underscorePos = strpos($baseName, '_');
+            $refNo = $underscorePos !== false ? substr($baseName, $underscorePos + 1) : $baseName;
+
+            // Find target inspection by ref_no and selected contract
+            $inspection = RequestForInspection::where('ref_no', $refNo)
+                ->where('construction_contract_id', $constructionContractId)
+                ->first();
+
+            if (!$inspection) {
+                $summaryFailed[] = [
+                    'reason' => 'ไม่พบข้อมูลที่ตรงกับสัญญาหรือเลขที่เอกสาร (RFN No.) ไม่ตรง',
+                    'ref_no' => $refNo,
+                    'subject' => null,
+                    'file' => $originalFileName,
+                ];
+                continue;
+            }
+
+            // If already has any file, skip mapping
+            if ($inspection->getMedia('files_upload')->count() > 0) {
+                $summaryFailed[] = [
+                    'reason' => 'รายการนี้มีไฟล์อยู่ก่อนแล้ว',
+                    'ref_no' => $inspection->ref_no,
+                    'subject' => $inspection->subject,
+                    'file' => $originalFileName,
+                ];
+                continue;
+            }
+
+            // Attach media from temp storage
+            try {
+                $inspection->addMedia(storage_path('tmp/uploads/' . $tempName))
+                    ->toMediaCollection('files_upload');
+
+                $summarySuccess[] = [
+                    'ref_no' => $inspection->ref_no,
+                    'subject' => $inspection->subject,
+                    'file' => $originalFileName,
+                ];
+            } catch (\Exception $e) {
+                $summaryFailed[] = [
+                    'reason' => 'อัปโหลดไฟล์ล้มเหลว',
+                    'ref_no' => $inspection->ref_no,
+                    'subject' => $inspection->subject,
+                    'file' => $originalFileName,
+                ];
             }
         }
-        return redirect()->back();
+
+        return redirect()->back()->with('upload_summary', [
+            'success' => $summarySuccess,
+            'failed' => $summaryFailed,
+        ]);
     }
 }
