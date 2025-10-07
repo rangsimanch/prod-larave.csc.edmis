@@ -73,13 +73,13 @@
     var uploadedDocumentsMap = {}
 Dropzone.options.documentsDropzone = {
     url: '{{ route('admin.daily-requests.storeMedia') }}',
-    maxFilesize: 100, // MB
+    maxFilesize: 5120, // MB
     addRemoveLinks: true,
     headers: {
       'X-CSRF-TOKEN': "{{ csrf_token() }}"
 },
     params: {
-      size: 100
+      size: 5120
     },
     success: function (file, response) {
       $('form').append('<input type="hidden" name="documents[]" value="' + response.name + '">')
