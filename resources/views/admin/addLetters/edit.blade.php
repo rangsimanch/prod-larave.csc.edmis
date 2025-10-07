@@ -245,7 +245,7 @@
     var uploadedLetterUploadMap = {}
 Dropzone.options.letterUploadDropzone = {
     url: '{{ route('admin.add-letters.storeMedia') }}',
-    maxFilesize: 2048, // MB
+    maxFilesize: 5120, // MB
     addRemoveLinks: true,
     timeout: 180000,
     headers: {
