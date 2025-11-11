@@ -294,16 +294,11 @@ class TaskController extends Controller
             $dateType = '';
 
             // Report Type
-            // if($reportType == 'Daily Report'){
-            //     $dateType = $date->format("d-m-Y");
-            // }
             if($reportType == 'Weekly Report'){
                 $dateType = 'Weekly No. ' . $date->format("W");
             }
             else{
-                // $dateTypeA = $data['startDate'];
                 $dateType = $date->format("F Y");
-
             }
 
             //PDF Setting
@@ -565,7 +560,9 @@ class TaskController extends Controller
                 // $mpdf->RestartDocTemplate();
                 $mpdf->SetDocTemplate(public_path('pdf-asset/activity.pdf'),true);
             }
+        
             $filename =  $reportType . " " . $StartDate . " to " .  $EndDate . ".pdf";
+
             return $mpdf->Output($filename, 'I');
             // return redirect()->back() ->with('alert', $tasks);
         }
