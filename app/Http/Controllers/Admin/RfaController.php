@@ -1774,8 +1774,7 @@ class RfaController extends Controller
 
             $html .= "<div style=\"font-size: 12px; position:absolute;top:770px;left:". $issue_position_lf_sub ."px;\">"
             .  $issue_by  . "</div>";
-            $html .= "<div style=\"font-size: 10px;  padding-right:180px; position:absolute;top:787px;left:485px; LINE-HEIGHT:9px;\">"
-            . $issuer_jobtitle . '  (' . $constructor_code . ')' . "</div>";
+           
 
             //Signature
             if($multi_signature){
@@ -1793,7 +1792,9 @@ class RfaController extends Controller
                     $html .= "<div style=\"font-size: 14px; position:absolute;top:740px;left:520px;\">
                         <img src=\"". $signature_path ."\" width=\"" . $signature_size_w . "\" higth=\"". $signature_size_h ."\"> </div>";
                 }
-            }
+                 $html .= "<div style=\"font-size: 10px;  padding-right:180px; position:absolute;top:787px;left:485px; LINE-HEIGHT:9px;\">"
+                    . $issuer_jobtitle . '  (' . $constructor_code . ')' . "</div>";
+                    }
             if($multi_stamp){
                 if($stamp_path != ''){
                     $html .= "<div style=\"font-size: 14px; position:absolute;top:900px;left:400px;\">
@@ -1811,6 +1812,7 @@ class RfaController extends Controller
                 }
             }
 
+            $html .= "<div style=\"font-size: 12px; position:absolute;top:802px;left:475px;\">". $submit_date  ."</div>";
             $html .= "<div style=\"font-size: 10px; position:absolute;top:930px;left:695px;\">". $outgoing_number  ."</div>";
             $html .= "<div style=\"font-size: 10px; position:absolute;top:950px;left:680px;\">". $outgoing_date  ."</div>";
             $html .= "<div style=\"font-size: 10px; position:absolute;top:930;left:130px;\">". $qty_page  . '.' ."</div>";
