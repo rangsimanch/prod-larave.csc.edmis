@@ -20,13 +20,14 @@ class CloseOutMainApiController extends Controller
     {
         abort_if(Gate::denies('close_out_main_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new CloseOutMainResource(CloseOutMain::with(['construction_contract', 'team'])->get());
+        return new CloseOutMainResource(CloseOutMain::with(['construction_contract', 'closeout_subject', 'closeout_urls', 'ref_rfas', 'team'])->get());
     }
 
     public function store(StoreCloseOutMainRequest $request)
     {
         $closeOutMain = CloseOutMain::create($request->all());
-
+        $closeOutMain->closeout_urls()->sync($request->input('closeout_urls', []));
+        $closeOutMain->ref_rfas()->sync($request->input('ref_rfas', []));
         foreach ($request->input('final_file', []) as $file) {
             $closeOutMain->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('final_file');
         }
@@ -40,23 +41,24 @@ class CloseOutMainApiController extends Controller
     {
         abort_if(Gate::denies('close_out_main_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new CloseOutMainResource($closeOutMain->load(['construction_contract', 'team']));
+        return new CloseOutMainResource($closeOutMain->load(['construction_contract', 'closeout_subject', 'closeout_urls', 'ref_rfas', 'team']));
     }
 
     public function update(UpdateCloseOutMainRequest $request, CloseOutMain $closeOutMain)
     {
         $closeOutMain->update($request->all());
-
+        $closeOutMain->closeout_urls()->sync($request->input('closeout_urls', []));
+        $closeOutMain->ref_rfas()->sync($request->input('ref_rfas', []));
         if (count($closeOutMain->final_file) > 0) {
             foreach ($closeOutMain->final_file as $media) {
-                if (!in_array($media->file_name, $request->input('final_file', []))) {
+                if (! in_array($media->file_name, $request->input('final_file', []))) {
                     $media->delete();
                 }
             }
         }
         $media = $closeOutMain->final_file->pluck('file_name')->toArray();
         foreach ($request->input('final_file', []) as $file) {
-            if (count($media) === 0 || !in_array($file, $media)) {
+            if (count($media) === 0 || ! in_array($file, $media)) {
                 $closeOutMain->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('final_file');
             }
         }

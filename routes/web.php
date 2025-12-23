@@ -642,6 +642,15 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::delete('vocabulary-hubs/destroy', 'VocabularyHubController@massDestroy')->name('vocabulary-hubs.massDestroy');
     Route::resource('vocabulary-hubs', 'VocabularyHubController');
 
+     // Close Out Description
+    Route::delete('close-out-descriptions/destroy', 'CloseOutDescriptionController@massDestroy')->name('close-out-descriptions.massDestroy');
+    Route::post('close-out-descriptions/parse-csv-import', 'CloseOutDescriptionController@parseCsvImport')->name('close-out-descriptions.parseCsvImport');
+    Route::post('close-out-descriptions/process-csv-import', 'CloseOutDescriptionController@processCsvImport')->name('close-out-descriptions.processCsvImport');
+    Route::resource('close-out-descriptions', 'CloseOutDescriptionController');
+
+    // Close Out Drive
+    Route::delete('close-out-drives/destroy', 'CloseOutDriveController@massDestroy')->name('close-out-drives.massDestroy');
+    Route::resource('close-out-drives', 'CloseOutDriveController');
 
 
     Route::get('system-calendar', 'SystemCalendarController@index')->name('systemCalendar');

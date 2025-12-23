@@ -930,6 +930,28 @@
                                 </a>
                             </li>
                         @endcan
+                         @can('close_out_description_access')
+                            <li class="{{ request()->is("admin/close-out-descriptions") || request()->is("admin/close-out-descriptions/*") ? "active" : "" }}">
+                                <a href="{{ route("admin.close-out-descriptions.index") }}">
+                                    <i class="fa-fw fas fa-align-left">
+
+                                    </i>
+                                    <span>{{ trans('cruds.closeOutDescription.title') }}</span>
+
+                                </a>
+                            </li>
+                        @endcan
+                        @can('close_out_drive_access')
+                            <li class="{{ request()->is("admin/close-out-drives") || request()->is("admin/close-out-drives/*") ? "active" : "" }}">
+                                <a href="{{ route("admin.close-out-drives.index") }}">
+                                    <i class="fa-fw fas fa-external-link-alt">
+
+                                    </i>
+                                    <span>{{ trans('cruds.closeOutDrive.title') }}</span>
+
+                                </a>
+                            </li>
+                        @endcan
                         @can('close_out_location_access')
                             <li class="{{ request()->is("admin/close-out-locations") || request()->is("admin/close-out-locations/*") ? "active" : "" }}">
                                 <a href="{{ route("admin.close-out-locations.index") }}">

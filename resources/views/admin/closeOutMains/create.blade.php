@@ -11,6 +11,19 @@
                 <div class="panel-body">
                     <form method="POST" action="{{ route("admin.close-out-mains.store") }}" enctype="multipart/form-data">
                         @csrf
+                        <div class="form-group {{ $errors->has('status') ? 'has-error' : '' }}">
+                            <label class="required">{{ trans('cruds.closeOutMain.fields.status') }}</label>
+                            <select class="form-control" name="status" id="status" required>
+                                <option value disabled {{ old('status', null) === null ? 'selected' : '' }}>{{ trans('global.pleaseSelect') }}</option>
+                                @foreach(App\CloseOutMain::STATUS_SELECT as $key => $label)
+                                    <option value="{{ $key }}" {{ old('status', 'in_progress') === (string) $key ? 'selected' : '' }}>{{ $label }}</option>
+                                @endforeach
+                            </select>
+                            @if($errors->has('status'))
+                                <span class="help-block" role="alert">{{ $errors->first('status') }}</span>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.closeOutMain.fields.status_helper') }}</span>
+                        </div>
                         <div class="form-group {{ $errors->has('construction_contract') ? 'has-error' : '' }}">
                             <label class="required" for="construction_contract_id">{{ trans('cruds.closeOutMain.fields.construction_contract') }}</label>
                             <select class="form-control select2" name="construction_contract_id" id="construction_contract_id" required>
@@ -23,21 +36,49 @@
                             @endif
                             <span class="help-block">{{ trans('cruds.closeOutMain.fields.construction_contract_helper') }}</span>
                         </div>
-                        <div class="form-group {{ $errors->has('chapter_no') ? 'has-error' : '' }}">
-                            <label class="required" for="chapter_no">{{ trans('cruds.closeOutMain.fields.chapter_no') }}</label>
-                            <input class="form-control" type="text" name="chapter_no" id="chapter_no" value="{{ old('chapter_no', '') }}" required>
-                            @if($errors->has('chapter_no'))
-                                <span class="help-block" role="alert">{{ $errors->first('chapter_no') }}</span>
+                        <div class="form-group {{ $errors->has('closeout_subject') ? 'has-error' : '' }}">
+                            <label class="required" for="closeout_subject_id">{{ trans('cruds.closeOutMain.fields.closeout_subject') }}</label>
+                            <select class="form-control select2" name="closeout_subject_id" id="closeout_subject_id" required>
+                                @foreach($closeout_subjects as $id => $entry)
+                                    <option value="{{ $id }}" {{ old('closeout_subject_id') == $id ? 'selected' : '' }}>{{ $entry }}</option>
+                                @endforeach
+                            </select>
+                            @if($errors->has('closeout_subject'))
+                                <span class="help-block" role="alert">{{ $errors->first('closeout_subject') }}</span>
                             @endif
-                            <span class="help-block">{{ trans('cruds.closeOutMain.fields.chapter_no_helper') }}</span>
+                            <span class="help-block">{{ trans('cruds.closeOutMain.fields.closeout_subject_helper') }}</span>
                         </div>
-                        <div class="form-group {{ $errors->has('title') ? 'has-error' : '' }}">
-                            <label class="required" for="title">{{ trans('cruds.closeOutMain.fields.title') }}</label>
-                            <input class="form-control" type="text" name="title" id="title" value="{{ old('title', '') }}" required>
-                            @if($errors->has('title'))
-                                <span class="help-block" role="alert">{{ $errors->first('title') }}</span>
+                        <div class="form-group {{ $errors->has('detail') ? 'has-error' : '' }}">
+                            <label class="required" for="detail">{{ trans('cruds.closeOutMain.fields.detail') }}</label>
+                            <input class="form-control" type="text" name="detail" id="detail" value="{{ old('detail', '') }}" required>
+                            @if($errors->has('detail'))
+                                <span class="help-block" role="alert">{{ $errors->first('detail') }}</span>
                             @endif
-                            <span class="help-block">{{ trans('cruds.closeOutMain.fields.title_helper') }}</span>
+                            <span class="help-block">{{ trans('cruds.closeOutMain.fields.detail_helper') }}</span>
+                        </div>
+                        <div class="form-group {{ $errors->has('description') ? 'has-error' : '' }}">
+                            <label for="description">{{ trans('cruds.closeOutMain.fields.description') }}</label>
+                            <textarea class="form-control ckeditor" name="description" id="description">{!! old('description') !!}</textarea>
+                            @if($errors->has('description'))
+                                <span class="help-block" role="alert">{{ $errors->first('description') }}</span>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.closeOutMain.fields.description_helper') }}</span>
+                        </div>
+                        <div class="form-group {{ $errors->has('quantity') ? 'has-error' : '' }}">
+                            <label for="quantity">{{ trans('cruds.closeOutMain.fields.quantity') }}</label>
+                            <input class="form-control" type="text" name="quantity" id="quantity" value="{{ old('quantity', '') }}">
+                            @if($errors->has('quantity'))
+                                <span class="help-block" role="alert">{{ $errors->first('quantity') }}</span>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.closeOutMain.fields.quantity_helper') }}</span>
+                        </div>
+                        <div class="form-group {{ $errors->has('ref_documents') ? 'has-error' : '' }}">
+                            <label for="ref_documents">{{ trans('cruds.closeOutMain.fields.ref_documents') }}</label>
+                            <input class="form-control" type="text" name="ref_documents" id="ref_documents" value="{{ old('ref_documents', '') }}">
+                            @if($errors->has('ref_documents'))
+                                <span class="help-block" role="alert">{{ $errors->first('ref_documents') }}</span>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.closeOutMain.fields.ref_documents_helper') }}</span>
                         </div>
                         <div class="form-group {{ $errors->has('final_file') ? 'has-error' : '' }}">
                             <label class="required" for="final_file">{{ trans('cruds.closeOutMain.fields.final_file') }}</label>
@@ -47,6 +88,78 @@
                                 <span class="help-block" role="alert">{{ $errors->first('final_file') }}</span>
                             @endif
                             <span class="help-block">{{ trans('cruds.closeOutMain.fields.final_file_helper') }}</span>
+                        </div>
+                        @php
+                            $oldCloseoutFilenames = old('closeout_url_filename', []);
+                            $oldCloseoutUrls = old('closeout_url_url', []);
+                            $oldCloseoutIds = old('closeout_url_ids', []);
+                        @endphp
+                        <div class="form-group {{ $errors->has('closeout_url_filename') ? 'has-error' : '' }}">
+                            <label>{{ trans('cruds.closeOutMain.fields.closeout_url') }}</label>
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-striped" id="closeout-url-table">
+                                    <thead>
+                                        <tr>
+                                            <th width="35%">{{ trans('cruds.closeOutMain.fields.closeout_url') }} - {{ trans('cruds.closeOutMain.fields.ref_documents') }}</th>
+                                            <th width="50%">URL</th>
+                                            <th width="15%" class="text-center">{{ trans('global.action') }}</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @if(count($oldCloseoutFilenames))
+                                            @foreach($oldCloseoutFilenames as $idx => $filename)
+                                                <tr class="closeout-url-row">
+                                                    <td>
+                                                        <input type="text" class="form-control" name="closeout_url_filename[]" value="{{ $filename }}">
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" class="form-control" name="closeout_url_url[]" value="{{ $oldCloseoutUrls[$idx] ?? '' }}">
+                                                        <input type="hidden" name="closeout_url_ids[]" value="{{ $oldCloseoutIds[$idx] ?? '' }}">
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <button type="button" class="btn btn-danger btn-sm remove-closeout-url">{{ trans('global.remove') }}</button>
+                                                    </td>
+                                                </tr>
+                                            @endforeach
+                                        @else
+                                            <tr class="closeout-url-row">
+                                                <td>
+                                                    <input type="text" class="form-control" name="closeout_url_filename[]" value="">
+                                                </td>
+                                                <td>
+                                                    <input type="text" class="form-control" name="closeout_url_url[]" value="">
+                                                    <input type="hidden" name="closeout_url_ids[]" value="">
+                                                </td>
+                                                <td class="text-center">
+                                                    <button type="button" class="btn btn-danger btn-sm remove-closeout-url">{{ trans('global.remove') }}</button>
+                                                </td>
+                                            </tr>
+                                        @endif
+                                    </tbody>
+                                </table>
+                                <div class="text-center">
+                                    <button type="button" class="btn btn-success btn-sm" id="closeout-url-add">{{ trans('global.add') }}</button>
+                                    <button type="button" class="btn btn-primary btn-sm" id="closeout-url-paste">Paste Data from Excel</button>
+                                </div>
+                            </div>
+                            <span class="help-block">{{ trans('cruds.closeOutMain.fields.closeout_url_helper') }}</span>
+                        </div>
+
+                        <div class="form-group {{ $errors->has('ref_rfa_text') ? 'has-error' : '' }}">
+                            <label for="ref_rfa_text">{{ trans('cruds.closeOutMain.fields.ref_rfa_text') }}</label>
+                            <input class="form-control" type="text" name="ref_rfa_text" id="ref_rfa_text" value="{{ old('ref_rfa_text', '') }}">
+                            @if($errors->has('ref_rfa_text'))
+                                <span class="help-block" role="alert">{{ $errors->first('ref_rfa_text') }}</span>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.closeOutMain.fields.ref_rfa_text_helper') }}</span>
+                        </div>
+                        <div class="form-group {{ $errors->has('remark') ? 'has-error' : '' }}">
+                            <label for="remark">{{ trans('cruds.closeOutMain.fields.remark') }}</label>
+                            <textarea class="form-control ckeditor" name="remark" id="remark">{!! old('remark') !!}</textarea>
+                            @if($errors->has('remark'))
+                                <span class="help-block" role="alert">{{ $errors->first('remark') }}</span>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.closeOutMain.fields.remark_helper') }}</span>
                         </div>
                         <div class="form-group">
                             <button class="btn btn-danger" type="submit">
@@ -65,6 +178,70 @@
 @endsection
 
 @section('scripts')
+<script>
+    $(document).ready(function () {
+  function SimpleUploadAdapter(editor) {
+    editor.plugins.get('FileRepository').createUploadAdapter = function(loader) {
+      return {
+        upload: function() {
+          return loader.file
+            .then(function (file) {
+              return new Promise(function(resolve, reject) {
+                // Init request
+                var xhr = new XMLHttpRequest();
+                xhr.open('POST', '{{ route('admin.close-out-mains.storeCKEditorImages') }}', true);
+                xhr.setRequestHeader('x-csrf-token', window._token);
+                xhr.setRequestHeader('Accept', 'application/json');
+                xhr.responseType = 'json';
+
+                // Init listeners
+                var genericErrorText = `Couldn't upload file: ${ file.name }.`;
+                xhr.addEventListener('error', function() { reject(genericErrorText) });
+                xhr.addEventListener('abort', function() { reject() });
+                xhr.addEventListener('load', function() {
+                  var response = xhr.response;
+
+                  if (!response || xhr.status !== 201) {
+                    return reject(response && response.message ? `${genericErrorText}\n${xhr.status} ${response.message}` : `${genericErrorText}\n ${xhr.status} ${xhr.statusText}`);
+                  }
+
+                  $('form').append('<input type="hidden" name="ck-media[]" value="' + response.id + '">');
+
+                  resolve({ default: response.url });
+                });
+
+                if (xhr.upload) {
+                  xhr.upload.addEventListener('progress', function(e) {
+                    if (e.lengthComputable) {
+                      loader.uploadTotal = e.total;
+                      loader.uploaded = e.loaded;
+                    }
+                  });
+                }
+
+                // Send request
+                var data = new FormData();
+                data.append('upload', file);
+                data.append('crud_id', '{{ $closeOutMain->id ?? 0 }}');
+                xhr.send(data);
+              });
+            })
+        }
+      };
+    }
+  }
+
+  var allEditors = document.querySelectorAll('.ckeditor');
+  for (var i = 0; i < allEditors.length; ++i) {
+    ClassicEditor.create(
+      allEditors[i], {
+        extraPlugins: [SimpleUploadAdapter]
+      }
+    );
+  }
+});
+</script>
+
 <script>
     var uploadedFinalFileMap = {}
 Dropzone.options.finalFileDropzone = {
@@ -120,5 +297,49 @@ Dropzone.options.finalFileDropzone = {
          return _results
      }
 }
+</script>
+
+<script>
+    $(function () {
+        function addCloseoutUrlRow(filename = '', url = '', id = '') {
+            const row = `
+                <tr class="closeout-url-row">
+                    <td>
+                        <input type="text" class="form-control" name="closeout_url_filename[]" value="${filename}">
+                    </td>
+                    <td>
+                        <input type="text" class="form-control" name="closeout_url_url[]" value="${url}">
+                        <input type="hidden" name="closeout_url_ids[]" value="${id}">
+                    </td>
+                    <td class="text-center">
+                        <button type="button" class="btn btn-danger btn-sm remove-closeout-url">{{ trans('global.remove') }}</button>
+                    </td>
+                </tr>
+            `;
+            $('#closeout-url-table tbody').append(row);
+        }
+
+        $('#closeout-url-add').on('click', function () {
+            addCloseoutUrlRow();
+        });
+
+        $(document).on('click', '.remove-closeout-url', function () {
+            $(this).closest('tr').remove();
+        });
+
+        $('#closeout-url-paste').on('click', function () {
+            navigator.clipboard.readText().then(function (text) {
+                const rows = text.split('\n').filter(row => row.trim().length);
+                rows.forEach(function (row) {
+                    const columns = row.split('\t');
+                    if (columns.length >= 2) {
+                        addCloseoutUrlRow(columns[0], columns[1]);
+                    }
+                });
+            }).catch(function () {
+                alert('Unable to read clipboard. Please allow clipboard permissions or paste manually.');
+            });
+        });
+    });
 </script>
 @endsection

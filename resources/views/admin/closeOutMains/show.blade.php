@@ -19,6 +19,14 @@
                             <tbody>
                                 <tr>
                                     <th>
+                                        {{ trans('cruds.closeOutMain.fields.status') }}
+                                    </th>
+                                    <td>
+                                        {{ App\CloseOutMain::STATUS_SELECT[$closeOutMain->status] ?? '' }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
                                         {{ trans('cruds.closeOutMain.fields.construction_contract') }}
                                     </th>
                                     <td>
@@ -27,18 +35,42 @@
                                 </tr>
                                 <tr>
                                     <th>
-                                        {{ trans('cruds.closeOutMain.fields.chapter_no') }}
+                                        {{ trans('cruds.closeOutMain.fields.closeout_subject') }}
                                     </th>
                                     <td>
-                                        {{ $closeOutMain->chapter_no }}
+                                        {{ $closeOutMain->closeout_subject->subject ?? '' }}
                                     </td>
                                 </tr>
                                 <tr>
                                     <th>
-                                        {{ trans('cruds.closeOutMain.fields.title') }}
+                                        {{ trans('cruds.closeOutMain.fields.detail') }}
                                     </th>
                                     <td>
-                                        {{ $closeOutMain->title }}
+                                        {{ $closeOutMain->detail }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        {{ trans('cruds.closeOutMain.fields.description') }}
+                                    </th>
+                                    <td>
+                                        {!! $closeOutMain->description !!}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        {{ trans('cruds.closeOutMain.fields.quantity') }}
+                                    </th>
+                                    <td>
+                                        {{ $closeOutMain->quantity }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        {{ trans('cruds.closeOutMain.fields.ref_documents') }}
+                                    </th>
+                                    <td>
+                                        {{ $closeOutMain->ref_documents }}
                                     </td>
                                 </tr>
                                 <tr>
@@ -51,6 +83,32 @@
                                                 {{ trans('global.view_file') }}
                                             </a>
                                         @endforeach
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        {{ trans('cruds.closeOutMain.fields.closeout_url') }}
+                                    </th>
+                                    <td>
+                                        @foreach($closeOutMain->closeout_urls as $key => $closeout_url)
+                                            <span class="label label-info">{{ $closeout_url->filename }}</span>
+                                        @endforeach
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        {{ trans('cruds.closeOutMain.fields.ref_rfa_text') }}
+                                    </th>
+                                    <td>
+                                        {{ $closeOutMain->ref_rfa_text }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        {{ trans('cruds.closeOutMain.fields.remark') }}
+                                    </th>
+                                    <td>
+                                        {!! $closeOutMain->remark !!}
                                     </td>
                                 </tr>
                             </tbody>

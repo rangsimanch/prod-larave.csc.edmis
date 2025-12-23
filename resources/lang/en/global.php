@@ -285,6 +285,11 @@ return [
     'next'                              => 'Next',
     'downloadSelected'                  => 'Download Selected',
 
+    'close'                             => 'Close',
+    'open'                             => 'Open',
+
+    
+
 
 
 ];

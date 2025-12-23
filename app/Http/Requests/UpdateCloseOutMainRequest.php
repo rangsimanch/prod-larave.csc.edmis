@@ -17,17 +17,31 @@ class UpdateCloseOutMainRequest extends FormRequest
     public function rules()
     {
         return [
+            'status' => [
+                'required',
+            ],
             'construction_contract_id' => [
                 'required',
                 'integer',
             ],
-            'chapter_no' => [
+            'closeout_subject_id' => [
+                'required',
+                'integer',
+            ],
+            'detail' => [
                 'string',
+                'max:255',
                 'required',
             ],
-            'title' => [
+            'quantity' => [
                 'string',
-                'required',
+                'max:255',
+                'nullable',
+            ],
+            'ref_documents' => [
+                'string',
+                'max:255',
+                'nullable',
             ],
             'final_file' => [
                 'array',
@@ -35,6 +49,30 @@ class UpdateCloseOutMainRequest extends FormRequest
             ],
             'final_file.*' => [
                 'required',
+            ],
+            'closeout_url_filename' => [
+                'array',
+            ],
+            'closeout_url_filename.*' => [
+                'nullable',
+                'string',
+                'max:255',
+            ],
+            'closeout_url_url' => [
+                'array',
+            ],
+            'closeout_url_url.*' => [
+                'nullable',
+                'string',
+                'max:2048',
+                'url',
+            ],
+            'closeout_url_ids' => [
+                'array',
+            ],
+            'closeout_url_ids.*' => [
+                'nullable',
+                'integer',
             ],
         ];
     }

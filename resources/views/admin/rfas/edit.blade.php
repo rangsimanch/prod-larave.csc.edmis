@@ -111,6 +111,15 @@
                             <span class="help-block">{{ trans('cruds.rfa.fields.wbs_level_4_helper') }}</span>
                         </div>
 
+                        <div class="form-group {{ $errors->has('submit_date') ? 'has-error' : '' }}">
+                            <label for="submit_date">{{ trans('cruds.rfa.fields.submit_date') }}</label>
+                            <input class="form-control date" type="text" name="submit_date" id="submit_date" value="{{ old('submit_date', $rfa->submit_date) }}">
+                            @if($errors->has('submit_date'))
+                                <span class="help-block" role="alert">{{ $errors->first('submit_date') }}</span>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.rfa.fields.submit_date_helper') }}</span>
+                        </div>
+
                     <div class="form-group {{ $errors->has('assign') ? 'has-error' : '' }}">
                         <label for="assign_id">{{ trans('cruds.rfa.fields.assign') }}</label>
                         <select class="form-control select2" name="assign_id" id="assign_id">

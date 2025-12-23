@@ -12,10 +12,7 @@ use Spatie\MediaLibrary\Models\Media;
 
 class CloseOutMain extends Model implements HasMedia
 {
-    use SoftDeletes;
-    use MultiTenantModelTrait;
-    use HasMediaTrait;
-    use Auditable;
+    use SoftDeletes, MultiTenantModelTrait, HasMediaTrait, Auditable;
 
     public $table = 'close_out_mains';
 
@@ -29,10 +26,21 @@ class CloseOutMain extends Model implements HasMedia
         'deleted_at',
     ];
 
+    public const STATUS_SELECT = [
+        'in_progress' => 'In Progress',
+        'done'        => 'Done',
+    ];
+
     protected $fillable = [
+        'status',
         'construction_contract_id',
-        'chapter_no',
-        'title',
+        'closeout_subject_id',
+        'detail',
+        'description',
+        'quantity',
+        'ref_documents',
+        'ref_rfa_text',
+        'remark',
         'created_at',
         'updated_at',
         'deleted_at',
@@ -50,18 +58,28 @@ class CloseOutMain extends Model implements HasMedia
         return $this->belongsTo(ConstructionContract::class, 'construction_contract_id');
     }
 
+    public function closeout_subject()
+    {
+        return $this->belongsTo(CloseOutDescription::class, 'closeout_subject_id');
+    }
+
     public function getFinalFileAttribute()
     {
         return $this->getMedia('final_file');
     }
 
+    public function closeout_urls()
+    {
+        return $this->belongsToMany(CloseOutDrive::class);
+    }
+
+    public function ref_rfas()
+    {
+        return $this->belongsToMany(Rfa::class);
+    }
+
     public function team()
     {
         return $this->belongsTo(Team::class, 'team_id');
-    }
-
-    public function create_by_construction_contract_id()
-    {
-        return $this->belongsTo(ConstructionContract::class, 'construction_contract_id');
     }
 }
