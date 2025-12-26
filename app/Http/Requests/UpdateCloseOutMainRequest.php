@@ -45,10 +45,10 @@ class UpdateCloseOutMainRequest extends FormRequest
             ],
             'final_file' => [
                 'array',
-                'required',
+                'nullable',
             ],
             'final_file.*' => [
-                'required',
+                'nullable',
             ],
             'closeout_url_filename' => [
                 'array',

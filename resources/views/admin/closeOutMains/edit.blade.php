@@ -82,7 +82,7 @@
                             <span class="help-block">{{ trans('cruds.closeOutMain.fields.ref_documents_helper') }}</span>
                         </div>
                         <div class="form-group {{ $errors->has('final_file') ? 'has-error' : '' }}">
-                            <label class="required" for="final_file">{{ trans('cruds.closeOutMain.fields.final_file') }}</label>
+                            <label for="final_file">{{ trans('cruds.closeOutMain.fields.final_file') }}</label>
                             <div class="needsclick dropzone" id="final_file-dropzone">
                             </div>
                             @if($errors->has('final_file'))
@@ -251,13 +251,13 @@
     var uploadedFinalFileMap = {}
 Dropzone.options.finalFileDropzone = {
     url: '{{ route('admin.close-out-mains.storeMedia') }}',
-    maxFilesize: 1000, // MB
+    maxFilesize: 5120, // MB (5GB)
     addRemoveLinks: true,
     headers: {
       'X-CSRF-TOKEN': "{{ csrf_token() }}"
     },
     params: {
-      size: 1000
+      size: 5120
     },
     success: function (file, response) {
       $('form').append('<input type="hidden" name="final_file[]" value="' + response.name + '">')
