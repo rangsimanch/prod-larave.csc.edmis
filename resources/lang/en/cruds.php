@@ -3052,6 +3052,8 @@ return [
             'deleted_at_helper' => ' ',
             'team'              => 'Team',
             'team_helper'       => ' ',
+            'construction_contract'        => 'Construction Contract',
+            'construction_contract_helper' => ' ',
         ],
     ],
 ];

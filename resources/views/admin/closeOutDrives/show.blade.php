@@ -33,6 +33,14 @@
                                         {{ $closeOutDrive->url }}
                                     </td>
                                 </tr>
+                                <tr>
+                                    <th>
+                                        {{ trans('cruds.closeOutDrive.fields.construction_contract') }}
+                                    </th>
+                                    <td>
+                                        {{ $closeOutDrive->construction_contract->code ?? '' }}
+                                    </td>
+                                </tr>
                             </tbody>
                         </table>
                         <div class="form-group">

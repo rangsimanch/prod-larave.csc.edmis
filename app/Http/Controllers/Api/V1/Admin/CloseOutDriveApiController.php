@@ -17,7 +17,7 @@ class CloseOutDriveApiController extends Controller
     {
         abort_if(Gate::denies('close_out_drive_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new CloseOutDriveResource(CloseOutDrive::with(['team'])->get());
+        return new CloseOutDriveResource(CloseOutDrive::with(['construction_contract', 'team'])->get());
     }
 
     public function store(StoreCloseOutDriveRequest $request)
@@ -33,7 +33,7 @@ class CloseOutDriveApiController extends Controller
     {
         abort_if(Gate::denies('close_out_drive_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return new CloseOutDriveResource($closeOutDrive->load(['team']));
+        return new CloseOutDriveResource($closeOutDrive->load(['construction_contract', 'team']));
     }
 
     public function update(UpdateCloseOutDriveRequest $request, CloseOutDrive $closeOutDrive)

@@ -30,6 +30,9 @@
                                     {{ trans('cruds.closeOutDrive.fields.url') }}
                                 </th>
                                 <th>
+                                    {{ trans('cruds.closeOutDrive.fields.construction_contract') }}
+                                </th>
+                                <th>
                                     &nbsp;
                                 </th>
                             </tr>
@@ -41,6 +44,14 @@
                                 </td>
                                 <td>
                                     <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                                </td>
+                                <td>
+                                    <select class="search">
+                                        <option value>{{ trans('global.all') }}</option>
+                                        @foreach($construction_contracts as $key => $item)
+                                            <option value="{{ $item->code }}">{{ $item->code }}</option>
+                                        @endforeach
+                                    </select>
                                 </td>
                                 <td>
                                 </td>
@@ -102,6 +113,7 @@
       { data: 'placeholder', name: 'placeholder' },
 { data: 'filename', name: 'filename' },
 { data: 'url', name: 'url' },
+{ data: 'construction_contract_code', name: 'construction_contract.code' },
 { data: 'actions', name: '{{ trans('global.actions') }}' }
     ],
     orderCellsTop: true,

@@ -52,6 +52,9 @@
                                         {{ trans('cruds.closeOutMain.fields.ref_rfa') }}
                                     </th>
                                     <th>
+                                        {{ trans('cruds.closeOutMain.fields.ref_rfa_text') }}
+                                    </th>
+                                    <th>
                                         &nbsp;
                                     </th>
                                 </tr>
@@ -96,6 +99,9 @@
                                             @foreach($closeOutMain->ref_rfas as $key => $item)
                                                 <span class="label label-info label-many">{{ $item->origin_number }}</span>
                                             @endforeach
+                                        </td>
+                                        <td>
+                                            {{ $closeOutMain->ref_rfa_text ?? '' }}
                                         </td>
                                         <td>
                                             @can('close_out_main_show')

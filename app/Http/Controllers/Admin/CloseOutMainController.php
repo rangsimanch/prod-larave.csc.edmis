@@ -245,6 +245,7 @@ class CloseOutMainController extends Controller
         $filenames = $request->input('closeout_url_filename', []);
         $urls = $request->input('closeout_url_url', []);
         $ids = $request->input('closeout_url_ids', []);
+        $contractId = $request->input('construction_contract_id') ?: $closeOutMain->construction_contract_id;
 
         $syncedIds = [];
 
@@ -263,6 +264,7 @@ class CloseOutMainController extends Controller
                     $drive->update([
                         'filename' => $name ?: $drive->filename,
                         'url'      => $url,
+                        'construction_contract_id' => $contractId,
                     ]);
                 }
             } else {
@@ -270,6 +272,7 @@ class CloseOutMainController extends Controller
                     'filename' => $name ?: trans('cruds.closeOutMain.fields.closeout_url'),
                     'url'      => $url,
                     'team_id'  => auth()->user()->team_id ?? null,
+                    'construction_contract_id' => $contractId,
                 ]);
             }
 

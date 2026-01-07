@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\CloseOutDrive;
+use App\ConstructionContract;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MassDestroyCloseOutDriveRequest;
 use App\Http\Requests\StoreCloseOutDriveRequest;
@@ -20,7 +21,7 @@ class CloseOutDriveController extends Controller
         abort_if(Gate::denies('close_out_drive_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
-            $query = CloseOutDrive::with(['team'])->select(sprintf('%s.*', (new CloseOutDrive)->table));
+            $query = CloseOutDrive::with(['construction_contract', 'team'])->select(sprintf('%s.*', (new CloseOutDrive)->table));
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
@@ -47,22 +48,28 @@ class CloseOutDriveController extends Controller
             $table->editColumn('url', function ($row) {
                 return $row->url ? $row->url : '';
             });
+            $table->addColumn('construction_contract_code', function ($row) {
+                return $row->construction_contract ? $row->construction_contract->code : '';
+            });
 
-            $table->rawColumns(['actions', 'placeholder']);
+            $table->rawColumns(['actions', 'placeholder', 'construction_contract']);
 
             return $table->make(true);
         }
 
-        $teams = Team::get();
+        $construction_contracts = ConstructionContract::get();
+        $teams                  = Team::get();
 
-        return view('admin.closeOutDrives.index', compact('teams'));
+        return view('admin.closeOutDrives.index', compact('construction_contracts', 'teams'));
     }
 
     public function create()
     {
         abort_if(Gate::denies('close_out_drive_create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        return view('admin.closeOutDrives.create');
+        $construction_contracts = ConstructionContract::pluck('code', 'id')->prepend(trans('global.pleaseSelect'), '');
+
+        return view('admin.closeOutDrives.create', compact('construction_contracts'));
     }
 
     public function store(StoreCloseOutDriveRequest $request)
@@ -76,9 +83,11 @@ class CloseOutDriveController extends Controller
     {
         abort_if(Gate::denies('close_out_drive_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $closeOutDrive->load('team');
+        $construction_contracts = ConstructionContract::pluck('code', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        return view('admin.closeOutDrives.edit', compact('closeOutDrive'));
+        $closeOutDrive->load('construction_contract', 'team');
+
+        return view('admin.closeOutDrives.edit', compact('closeOutDrive', 'construction_contracts'));
     }
 
     public function update(UpdateCloseOutDriveRequest $request, CloseOutDrive $closeOutDrive)
@@ -92,7 +101,7 @@ class CloseOutDriveController extends Controller
     {
         abort_if(Gate::denies('close_out_drive_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $closeOutDrive->load('team', 'closeoutUrlCloseOutMains');
+        $closeOutDrive->load('construction_contract', 'team', 'closeoutUrlCloseOutMains');
 
         return view('admin.closeOutDrives.show', compact('closeOutDrive'));
     }

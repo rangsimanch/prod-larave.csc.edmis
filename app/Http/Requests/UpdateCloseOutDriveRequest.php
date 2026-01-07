@@ -26,6 +26,10 @@ class UpdateCloseOutDriveRequest extends FormRequest
                 'string',
                 'required',
             ],
+            'construction_contract_id' => [
+                'required',
+                'integer',
+            ],
         ];
     }
 }

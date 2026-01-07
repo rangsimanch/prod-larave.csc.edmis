@@ -28,6 +28,18 @@
                             @endif
                             <span class="help-block">{{ trans('cruds.closeOutDrive.fields.url_helper') }}</span>
                         </div>
+                        <div class="form-group {{ $errors->has('construction_contract') ? 'has-error' : '' }}">
+                            <label class="required" for="construction_contract_id">{{ trans('cruds.closeOutDrive.fields.construction_contract') }}</label>
+                            <select class="form-control select2" name="construction_contract_id" id="construction_contract_id" required>
+                                @foreach($construction_contracts as $id => $entry)
+                                    <option value="{{ $id }}" {{ (old('construction_contract_id') ? old('construction_contract_id') : $closeOutDrive->construction_contract->id ?? '') == $id ? 'selected' : '' }}>{{ $entry }}</option>
+                                @endforeach
+                            </select>
+                            @if($errors->has('construction_contract'))
+                                <span class="help-block" role="alert">{{ $errors->first('construction_contract') }}</span>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.closeOutDrive.fields.construction_contract_helper') }}</span>
+                        </div>
                         <div class="form-group">
                             <button class="btn btn-danger" type="submit">
                                 {{ trans('global.save') }}
