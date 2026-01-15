@@ -31,6 +31,9 @@
                                     Action
                                 </th>
                                 <th>
+                                     {{ trans('cruds.swn.fields.created_at') }} 
+                                </th>
+                                <th>
                                     Report
                                 </th>
                                 <th>
@@ -80,7 +83,8 @@
                                 </td>
                                 <td>
                                 </td>
-                                
+                                <td>
+                                </td>
                                 <td>
                                 </td>
                                 <td>
@@ -224,6 +228,7 @@
     columns: [
       { data: 'placeholder', name: 'placeholder' },
 { data: 'actions', name: '{{ trans('global.actions') }}',  sortable: false, searchable: false  },
+{ data: 'created_at', name: 'created_at'},
 { data: 'cover_sheet', name: 'cover_sheet',  sortable: false, searchable: false },
 { data: 'documents_status', name: 'documents_status' },
 { data: 'construction_contract_code', name: 'construction_contract.code' },
@@ -240,7 +245,7 @@
 { data: 'auditing_status', name: 'auditing_status' },
     ],
     orderCellsTop: true,
-    order: [[ 6, 'desc' ]],
+    order: [[ 7, 'desc' ]],
     pageLength: 10,
     aLengthMenu: [
         [5, 10, 25, 50, 100, 200, 1000],
