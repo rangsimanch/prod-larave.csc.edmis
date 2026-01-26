@@ -19,7 +19,7 @@ class ConstructionContractSelect
      */
     public function handle($request, Closure $next)
     {
-        $contractId = session('construction_contract_id');
+        $contractId = (int) session('construction_contract_id', 0);
         if ($contractId === 19) {
             session()->forget('construction_contract_id');
             return redirect()->route('admin.construction_contracts-select.select')
