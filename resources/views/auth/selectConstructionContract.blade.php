@@ -1,6 +1,16 @@
 @extends('layouts.auth')
 @include('layouts.app')
 @section('content')
+    <div class="clearfix m-b-20">
+        <div class="pull-right">
+            <form method="POST" action="{{ route('logout') }}">
+                @csrf
+                <button type="submit" class="btn btn-link text-danger" style="font-weight:600;">
+                    {{ trans('global.logout') }}
+                </button>
+            </form>
+        </div>
+    </div>
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-default">
