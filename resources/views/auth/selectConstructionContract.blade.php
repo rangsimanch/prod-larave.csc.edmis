@@ -1,16 +1,6 @@
 @extends('layouts.auth')
 @include('layouts.app')
 @section('content')
-    <div class="clearfix m-b-20">
-        <div class="pull-right">
-            <form method="POST" action="{{ route('logout') }}">
-                @csrf
-                <button type="submit" class="btn btn-link text-danger" style="font-weight:600;">
-                    {{ trans('global.logout') }}
-                </button>
-            </form>
-        </div>
-    </div>
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-default">
@@ -26,8 +16,14 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <div class="col-md-6 col-md-offset-4">
-                            {!! Form::submit( trans('global.next'), ['class' => 'btn btn-success']) !!}
+                            <div class="col-md-6 col-md-offset-4 text-right">
+                                {!! Form::submit( trans('global.next'), ['class' => 'btn btn-success m-r-10']) !!}
+                                <form method="POST" action="{{ route('logout') }}" class="inline-block">
+                                    @csrf
+                                    <button type="submit" class="btn btn-default">
+                                        {{ trans('global.logout') }}
+                                    </button>
+                                </form>
                            </div>
                         </div>
                     {!! Form::close() !!}
