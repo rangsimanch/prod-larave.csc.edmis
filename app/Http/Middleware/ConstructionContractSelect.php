@@ -19,7 +19,12 @@ class ConstructionContractSelect
      */
     public function handle($request, Closure $next)
     {
-        
+        $contractId = session('construction_contract_id');
+        if ($contractId === 19) {
+            session()->forget('construction_contract_id');
+            return redirect()->route('admin.construction_contracts-select.select')
+                ->with('warning', __('กรุณาเลือกสัญญาก่อสร้างอื่น'));
+        }
        // If user isn't guest or doesn't have team id stored do relevant actions
        if (
             Auth::guest() ||
