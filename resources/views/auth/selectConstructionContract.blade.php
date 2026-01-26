@@ -16,14 +16,8 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <div class="col-md-6 col-md-offset-4 text-right">
-                                {!! Form::submit( trans('global.next'), ['class' => 'btn btn-success m-r-10']) !!}
-                                <form method="POST" action="{{ route('logout') }}" class="inline-block">
-                                    @csrf
-                                    <button type="submit" class="btn btn-default">
-                                        {{ trans('global.logout') }}
-                                    </button>
-                                </form>
+                            <div class="col-md-6 col-md-offset-4">
+                            {!! Form::submit( trans('global.next'), ['class' => 'btn btn-success']) !!}
                            </div>
                         </div>
                     {!! Form::close() !!}
