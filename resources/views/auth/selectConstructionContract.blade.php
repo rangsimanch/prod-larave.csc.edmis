@@ -20,6 +20,16 @@
                             {!! Form::submit( trans('global.next'), ['class' => 'btn btn-success']) !!}
                            </div>
                         </div>
+                        <div class="form-group">
+                            <div class="col-md-6 col-md-offset-4">
+                                <form method="POST" action="{{ route('logout') }}">
+                                    @csrf
+                                    <button type="submit" class="btn btn-default">
+                                        {{ trans('global.logout') ?? __('Logout') }}
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
                     {!! Form::close() !!}
                 </div>
             </div>
