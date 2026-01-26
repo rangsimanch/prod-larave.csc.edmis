@@ -21,16 +21,6 @@
                            </div>
                         </div>
                     {!! Form::close() !!}
-                    <div class="form-group">
-                        <div class="col-md-6 col-md-offset-4">
-                            <form method="POST" action="{{ route('logout') }}">
-                                @csrf
-                                <button type="submit" class="btn btn-default">
-                                    {{ trans('global.logout') ?? __('Logout') }}
-                                </button>
-                            </form>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
