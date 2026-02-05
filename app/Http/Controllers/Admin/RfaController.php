@@ -1524,7 +1524,7 @@ class RfaController extends Controller
 
          //No. Code.
         $html .= "<div style=\"font-size: 12px; font-weight: bold; position:absolute;top:14px;left:700px;\">" . $rfa_code . "</div>";
-        $html .= "<div style=\"font-size: 11px; font-weight: bold; position:absolute;top:150px;left:480px;\">" . $document_number . "</div>";
+        $html .= "<div style=\"font-size: 10px; font-weight: bold; position:absolute;top:150px;left:478px;\">" . $document_number . "</div>";
         $html .= "<div style=\"font-size: 12px; font-weight: bold; position:absolute;top:150px;left:660px;\">" . $rfa_code . "</div>";
 
         //Title
