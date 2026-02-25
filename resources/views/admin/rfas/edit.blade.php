@@ -111,6 +111,32 @@
                             <span class="help-block">{{ trans('cruds.rfa.fields.wbs_level_4_helper') }}</span>
                         </div>
 
+                        <div class="form-group {{ $errors->has('boq') ? 'has-error' : '' }}">
+                            <label for="boq_id">{{ trans('cruds.rfa.fields.boq') }}</label>
+                            <select class="form-control select2" name="boq_id" id="boq_id">
+                                @foreach($boqs as $id => $boq)
+                                    <option value="{{ $id }}" {{ (old('boq_id') ? old('boq_id') : $rfa->boq->id ?? '') == $id ? 'selected' : '' }}>{{ $boq }}</option>
+                                @endforeach
+                            </select>
+                            @if($errors->has('boq'))
+                                <span class="help-block" role="alert">{{ $errors->first('boq') }}</span>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.rfa.fields.boq_helper') }}</span>
+                        </div>
+
+                        <div class="form-group {{ $errors->has('boq_sub') ? 'has-error' : '' }}">
+                            <label for="boq_sub_id">{{ trans('cruds.rfa.fields.boq_sub') }}</label>
+                            <select class="form-control select2" name="boq_sub_id" id="boq_sub_id">
+                                @foreach($boq_subs as $id => $entry)
+                                    <option value="{{ $id }}" {{ (old('boq_sub_id') ? old('boq_sub_id') : $rfa->boq_sub->id ?? '') == $id ? 'selected' : '' }}>{{ $entry }}</option>
+                                @endforeach
+                            </select>
+                            @if($errors->has('boq_sub'))
+                                <span class="help-block" role="alert">{{ $errors->first('boq_sub') }}</span>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.rfa.fields.boq_sub_helper') }}</span>
+                        </div>
+
                         <div class="form-group {{ $errors->has('submit_date') ? 'has-error' : '' }}">
                             <label for="submit_date">{{ trans('cruds.rfa.fields.submit_date') }}</label>
                             <input class="form-control date" type="text" name="submit_date" id="submit_date" value="{{ old('submit_date', $rfa->submit_date) }}">

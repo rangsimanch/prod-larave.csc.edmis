@@ -731,6 +731,8 @@ class RfaController extends Controller
     {
         $state = $request->document_status_id;
         $data = $request->all();
+        $data['boq_id'] = $request->boq_id;
+        $data['boq_sub_id'] = $request->boq_sub_id;
         // $data['wbs_level_3_id'] = $request->wbs_level_3_id;
         // $data['wbs_level_4_id'] = $request->wbs_level_4_id;
         $data['spec_ref_no'] = $request->spec_ref_no;
