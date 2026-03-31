@@ -566,8 +566,8 @@ class RequestForInformationController extends Controller
 
         if($rfi->construction_contract->code == "C4-3"){
 
-            $issue_by = 'Zhou Jia Yi';
-            $issuer_jobtitle = 'Project manager';
+            $issue_by = 'Zhou Jiayi';
+            $issuer_jobtitle = 'Project Director';
             $signature_path = public_path('png-asset/CAN_signature_2.png');
 
             if($rfi->id > 4069 && $rfi->id <= 4118){
