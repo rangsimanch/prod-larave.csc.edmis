@@ -1576,7 +1576,7 @@ class RfaController extends Controller
         $html .= "<div style=\"font-size: 12px;  padding-right:55px; font-weight: bold; position:absolute;top:357px;left:207px;LINE-HEIGHT:15px;\">" . $contract_drawing_no . "</div>";
           //Note
         if(strlen($note_1) > 300) {
-            $font_size = 12;
+            $font_size = 11;
         }
         else {
             $font_size = 12;
