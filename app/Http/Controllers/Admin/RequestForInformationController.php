@@ -601,6 +601,18 @@ class RequestForInformationController extends Controller
                 $signature_path = public_path('png-asset/CAN_signature_5.png');
             }
 
+            if ($rfi->id > 4330 && $rfi->id <= 4418) {
+                $issue_by = 'Gao Liang';
+                $issuer_jobtitle = 'Project Manager';
+                $signature_path = public_path('png-asset/CAN_signature_5.png');
+            }
+
+            if ($rfi->id > 4431) {
+                $issue_by = 'Gao Liang';
+                $issuer_jobtitle = 'Project Manager';
+                $signature_path = public_path('png-asset/CAN_signature_5.png');
+            }
+
 
             $issue_position_lf = 260;
 
