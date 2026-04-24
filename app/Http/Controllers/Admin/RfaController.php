@@ -1210,7 +1210,7 @@ class RfaController extends Controller
                 $issuer_jobtitle = 'For Project Manager';
                 $signature_path = public_path('png-asset/CAN_signature_4.png');
                 $jobittle_position_lf = 255;
-                $signature_position_top = 450;
+                $signature_position_top = 410;
             }
 
             if($rfa->id > 99346 && $rfa->id <= 125322){
@@ -1239,7 +1239,7 @@ class RfaController extends Controller
                 $issuer_jobtitle = 'Construction Manager';
                 $signature_path = public_path('png-asset/CAN_signature_5.png');
                 $jobittle_position_lf = 255;
-                $signature_position_top = 450;
+                $signature_position_top = 410;
             }
 
              if ($rfa->id > 139398 && $rfa->id <= 146835) {
@@ -1247,7 +1247,7 @@ class RfaController extends Controller
                 $issuer_jobtitle = 'Project Manager';
                 $signature_path = public_path('png-asset/CAN_signature_5.png');
                 $jobittle_position_lf = 255;
-                $signature_position_top = 450;
+                $signature_position_top = 410;
             }
 
             if ($rfa->id > 146835 && $rfa->id <= 148534) {
@@ -1262,7 +1262,7 @@ class RfaController extends Controller
                 $issuer_jobtitle = 'Project Manager';
                 $signature_path = public_path('png-asset/CAN_signature_5.png');
                 $jobittle_position_lf = 255;
-                $signature_position_top = 450;
+                $signature_position_top = 410;
             }
 
 
