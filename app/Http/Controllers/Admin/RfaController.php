@@ -1187,6 +1187,8 @@ class RfaController extends Controller
             $issuer_jobtitle = 'For Project manager CAN';
             $signature_path = public_path('png-asset/CAN_signature.png');
             $jobittle_position_lf = 255;
+            $signature_position_top = 400;
+            $signature_position_left = 260;
 
             
              if ( $rfa->id <= 97608){
@@ -1208,6 +1210,7 @@ class RfaController extends Controller
                 $issuer_jobtitle = 'For Project Manager';
                 $signature_path = public_path('png-asset/CAN_signature_4.png');
                 $jobittle_position_lf = 255;
+                $signature_position_top = 450;
             }
 
             if($rfa->id > 99346 && $rfa->id <= 125322){
@@ -1236,6 +1239,7 @@ class RfaController extends Controller
                 $issuer_jobtitle = 'Construction Manager';
                 $signature_path = public_path('png-asset/CAN_signature_5.png');
                 $jobittle_position_lf = 255;
+                $signature_position_top = 450;
             }
 
              if ($rfa->id > 139398 && $rfa->id <= 146835) {
@@ -1243,6 +1247,7 @@ class RfaController extends Controller
                 $issuer_jobtitle = 'Project Manager';
                 $signature_path = public_path('png-asset/CAN_signature_5.png');
                 $jobittle_position_lf = 255;
+                $signature_position_top = 450;
             }
 
             if ($rfa->id > 146835 && $rfa->id <= 148534) {
@@ -1257,6 +1262,7 @@ class RfaController extends Controller
                 $issuer_jobtitle = 'Project Manager';
                 $signature_path = public_path('png-asset/CAN_signature_5.png');
                 $jobittle_position_lf = 255;
+                $signature_position_top = 450;
             }
 
 
@@ -1272,8 +1278,6 @@ class RfaController extends Controller
             $stamp_path =  public_path('png-asset/CAN_stamp.png');
             $signature_size_h = 60;
             $signature_size_w = 60;
-            $signature_position_top = 400;
-            $signature_position_left = 260;
             $stamp_size_h = 160;
             $stamp_size_w = 160;
             $contract_name = 'Contract ' . $rfa->construction_contract->code . ' : ' . $rfa->construction_contract->name;
