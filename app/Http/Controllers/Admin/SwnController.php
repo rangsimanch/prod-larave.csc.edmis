@@ -2,25 +2,26 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Http\Controllers\Controller;
+use App\Http\Requests\UpdateSwnRequest;
+use App\Http\Requests\MassDestroySwnRequest;
+use App\Http\Requests\StoreSwnRequest;
+use App\Swn;
+use Gate;
+use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Http\Request;
+use Symfony\Component\Process\Process;
+use Spatie\MediaLibrary\Models\Media;
+use Yajra\DataTables\Facades\DataTables;
+use Image;
 use App\ConstructionContract;
 use App\Department;
 use Illuminate\Support\Facades\Auth;
 use DB;
-use App\Http\Controllers\Controller;
 use App\Http\Controllers\Traits\CsvImportTrait;
 use App\Http\Controllers\Traits\MediaUploadingTrait;
-use App\Http\Requests\MassDestroySwnRequest;
-use App\Http\Requests\StoreSwnRequest;
-use App\Http\Requests\UpdateSwnRequest;
-use App\Swn;
 use App\Team;
 use App\User;
-use Gate;
-use Illuminate\Http\Request;
-use Spatie\MediaLibrary\Models\Media;
-use Symfony\Component\HttpFoundation\Response;
-use Yajra\DataTables\Facades\DataTables;
-use Image;
 
 class SwnController extends Controller
 {
@@ -297,7 +298,7 @@ class SwnController extends Controller
      * @param Swn $swn
      * @param Request $request
      * @param string $collectionName
-     * @param bool $needsGhostscript - whether to run Ghostscript PDF conversion via Queue
+     * @param bool $needsGhostscript - whether to run Ghostscript PDF conversion synchronously
      * @param string|null $filePrefix - prefix for renamed files (e.g., 'SWN', 'Reply_SWN', 'Conditional_SWN')
      */
     private function syncSwnMedia(Swn $swn, Request $request, string $collectionName, bool $needsGhostscript = false, string $filePrefix = null)
@@ -321,11 +322,31 @@ class SwnController extends Controller
                 $index_number = substr("00{$index}", -2);
 
                 if ($needsGhostscript && $filePrefix) {
-                    // Ghostscript PDF conversion flow - dispatch to Queue
+                    // Ghostscript PDF conversion flow - synchronous with optimized settings
                     $inputFile = storage_path('tmp/uploads/' . basename($file));
+                    $renameFile = storage_path('tmp/uploads/' . $filePrefix . $swn->id . '_' . $index_number . '.pdf');
+                    rename($inputFile, $renameFile);
 
-                    // Dispatch job for async processing (Job will handle file movement)
-                    \App\Jobs\ProcessSwnPdfConversion::dispatch($swn->id, $inputFile, $collectionName, $filePrefix, $index_number);
+                    $outputFile = storage_path('tmp/uploads/' . 'Convert_' . $filePrefix . $swn->id . '_' . $index_number . '.pdf');
+
+                    // Optimized Ghostscript with /ebook settings (faster, smaller size)
+                    $process = new Process([
+                        'gs',
+                        '-sDEVICE=pdfwrite',
+                        '-dCompatibilityLevel=1.4',
+                        '-dPDFSETTINGS=/ebook',
+                        '-dNOPAUSE',
+                        '-dQUIET',
+                        '-dBATCH',
+                        "-sOutputFile={$outputFile}",
+                        $renameFile
+                    ]);
+
+                    $process->run();
+
+                    if ($process->isSuccessful()) {
+                        $swn->addMedia($outputFile)->toMediaCollection($collectionName);
+                    }
                 } else {
                     // Simple file addition - synchronous
                     $swn->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection($collectionName);

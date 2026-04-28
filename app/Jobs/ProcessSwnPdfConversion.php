@@ -47,12 +47,14 @@ class ProcessSwnPdfConversion implements ShouldQueue
     {
         $swn = Swn::find($this->swnId);
         if (!$swn) {
+            error_log("ProcessSwnPdfConversion: SWN #{$this->swnId} not found");
             return;
         }
 
         try {
             // Check if source file exists
             if (!file_exists($this->tmpFilePath)) {
+                error_log("ProcessSwnPdfConversion: Source file not found: {$this->tmpFilePath}");
                 return;
             }
 
@@ -65,12 +67,14 @@ class ProcessSwnPdfConversion implements ShouldQueue
             // Move file to queue directory (prevents cleanup from deleting it)
             $queueFile = storage_path('tmp/queue/' . uniqid() . '_' . basename($this->tmpFilePath));
             if (!rename($this->tmpFilePath, $queueFile)) {
+                error_log("ProcessSwnPdfConversion: Failed to move to queue: {$this->tmpFilePath} -> {$queueFile}");
                 return;
             }
 
             // Rename to final name
             $renameFile = storage_path('tmp/uploads/' . $this->filePrefix . $swn->id . '_' . $this->indexNumber . '.pdf');
             if (!rename($queueFile, $renameFile)) {
+                error_log("ProcessSwnPdfConversion: Failed to rename: {$queueFile} -> {$renameFile}");
                 return;
             }
 
@@ -92,18 +96,27 @@ class ProcessSwnPdfConversion implements ShouldQueue
             $process->run();
 
             if (!$process->isSuccessful()) {
+                error_log("ProcessSwnPdfConversion: Ghostscript failed for SWN #{$swn->id}: " . $process->getErrorOutput());
+                return;
+            }
+
+            // Check if output file exists
+            if (!file_exists($outputFile)) {
+                error_log("ProcessSwnPdfConversion: Output file not created: {$outputFile}");
                 return;
             }
 
             // Add converted file to media collection
             $swn->addMedia($outputFile)->toMediaCollection($this->collectionName);
 
+            error_log("ProcessSwnPdfConversion: Successfully processed SWN #{$swn->id} collection {$this->collectionName}");
+
             // Clean up the renamed file (converted file is kept by Media Library)
             if (file_exists($renameFile)) {
                 unlink($renameFile);
             }
         } catch (\Exception $e) {
-            // Silent fail to avoid permission issues
+            error_log("ProcessSwnPdfConversion: Exception for SWN #{$swn->id}: " . $e->getMessage());
         }
     }
 }
