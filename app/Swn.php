@@ -56,15 +56,17 @@ class Swn extends Model implements HasMedia
         'deleted_at',
     ];
 
-    protected $appends = [
-        'document_attachment',
-        'description_image',
-        'rootcase_image',
-        'containment_image',
-        'corrective_image',
-        'reply_document',
-        'conditional_file_upload',
-    ];
+    // Media attributes removed from $appends to prevent N+1 queries during serialization.
+    // Access explicitly via $swn->document_attachment etc. when needed.
+    // protected $appends = [
+    //     'document_attachment',
+    //     'description_image',
+    //     'rootcase_image',
+    //     'containment_image',
+    //     'corrective_image',
+    //     'reply_document',
+    //     'conditional_file_upload',
+    // ];
 
     protected $fillable = [
         'construction_contract_id',

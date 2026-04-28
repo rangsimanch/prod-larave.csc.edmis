@@ -32,7 +32,7 @@ class SwnController extends Controller
         abort_if(Gate::denies('swn_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
-            $query = Swn::with(['construction_contract', 'dept_code', 'issue_by', 'responsible', 'related_specialist', 'construction_specialist', 'leader', 'team'])->select(sprintf('%s.*', (new Swn())->table));
+            $query = Swn::with(['media', 'construction_contract', 'dept_code', 'issue_by', 'responsible', 'related_specialist', 'construction_specialist', 'leader', 'team'])->select(sprintf('%s.*', (new Swn())->table));
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
@@ -198,43 +198,13 @@ class SwnController extends Controller
         $data['document_number'] = $contract_code . '/CSC/SWN/' . $dept_code . '/' . 'No.' . $code_year . '-' . $doc_number;
 
         $swn = Swn::create($data);
-        $index = 0;
-        $index_number = substr("00{$index}", -2);
 
-        foreach ($request->input('document_attachment', []) as $file) {
-            $index++;
-            $index_number = substr("00{$index}", -2);
-            $inputFile = storage_path('tmp/uploads/' . basename($file));
-            $renameFile = storage_path('tmp/uploads/' . 'SWN' . $doc_number . '_' . $index_number . '.pdf');
-            rename($inputFile, $renameFile);
-
-            $outputFile = storage_path('tmp/uploads/' . 'Convert_' . 'SWN' . $doc_number . '_' . $index_number . '.pdf');
-
-            // Set the Ghostscript command
-            $command = "gs -sDEVICE=pdfwrite -dCompatibilityLevel=1.4 -dNOPAUSE -dQUIET -dBATCH -sOutputFile=$outputFile $renameFile";
-
-            // Run the Ghostscript command
-            shell_exec($command);
-
-            $swn->addMedia($outputFile)->toMediaCollection('document_attachment');
-            // $swn->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('document_attachment');
-        }
-
-        foreach ($request->input('description_image', []) as $file) {
-            $swn->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('description_image');
-        }
-
-        foreach ($request->input('rootcase_image', []) as $file) {
-            $swn->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('rootcase_image');
-        }
-
-        foreach ($request->input('containment_image', []) as $file) {
-            $swn->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('containment_image');
-        }
-
-        foreach ($request->input('corrective_image', []) as $file) {
-            $swn->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('corrective_image');
-        }
+        // Sync media collections using helper method
+        $this->syncSwnMedia($swn, $request, 'document_attachment', true, 'SWN');
+        $this->syncSwnMedia($swn, $request, 'description_image');
+        $this->syncSwnMedia($swn, $request, 'rootcase_image');
+        $this->syncSwnMedia($swn, $request, 'containment_image');
+        $this->syncSwnMedia($swn, $request, 'corrective_image');
 
 
 
@@ -302,160 +272,76 @@ class SwnController extends Controller
 
         $swn->update($data);
 
-        if (count($swn->document_attachment) > 0) {
-            foreach ($swn->document_attachment as $media) {
-                if (!in_array($media->file_name, $request->input('document_attachment', []))) {
-                    $media->delete();
-                }
-            }
-        }
-        $media = $swn->document_attachment->pluck('file_name')->toArray();
+        $this->syncSwnMedia($swn, $request, 'document_attachment', true, 'SWN');
 
-        $index = 0;
-        $index_number = substr("00{$index}", -2);
-        foreach ($request->input('document_attachment', []) as $file) {
-            if (count($media) === 0 || !in_array($file, $media)) {
-                $index++;
-                $index_number = substr("00{$index}", -2);
-                $inputFile = storage_path('tmp/uploads/' . basename($file));
-                $renameFile = storage_path('tmp/uploads/' . 'SWN' . $swn->id . '_' . $index_number . '.pdf');
-                rename($inputFile, $renameFile);
+        $this->syncSwnMedia($swn, $request, 'description_image');
 
-                $outputFile = storage_path('tmp/uploads/' . 'Convert_' . 'SWN' . $swn->id . '_' . $index_number . '.pdf');
+        $this->syncSwnMedia($swn, $request, 'rootcase_image');
 
-                // Set the Ghostscript command
-                $command = "gs -sDEVICE=pdfwrite -dCompatibilityLevel=1.4 -dNOPAUSE -dQUIET -dBATCH -sOutputFile=$outputFile $renameFile";
+        $this->syncSwnMedia($swn, $request, 'containment_image');
 
-                // Run the Ghostscript command
-                shell_exec($command);
+        $this->syncSwnMedia($swn, $request, 'corrective_image');
 
-                $swn->addMedia($outputFile)->toMediaCollection('document_attachment');
-                // $swn->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('document_attachment');
-            }
-        }
-
-        if (count($swn->description_image) > 0) {
-            foreach ($swn->description_image as $media) {
-                if (!in_array($media->file_name, $request->input('description_image', []))) {
-                    $media->delete();
-                }
-            }
-        }
-        $media = $swn->description_image->pluck('file_name')->toArray();
-        foreach ($request->input('description_image', []) as $file) {
-            if (count($media) === 0 || !in_array($file, $media)) {
-                $swn->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('description_image');
-            }
-        }
-
-        if (count($swn->rootcase_image) > 0) {
-            foreach ($swn->rootcase_image as $media) {
-                if (!in_array($media->file_name, $request->input('rootcase_image', []))) {
-                    $media->delete();
-                }
-            }
-        }
-        $media = $swn->rootcase_image->pluck('file_name')->toArray();
-        foreach ($request->input('rootcase_image', []) as $file) {
-            if (count($media) === 0 || !in_array($file, $media)) {
-                $swn->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('rootcase_image');
-            }
-        }
-
-        if (count($swn->containment_image) > 0) {
-            foreach ($swn->containment_image as $media) {
-                if (!in_array($media->file_name, $request->input('containment_image', []))) {
-                    $media->delete();
-                }
-            }
-        }
-        $media = $swn->containment_image->pluck('file_name')->toArray();
-        foreach ($request->input('containment_image', []) as $file) {
-            if (count($media) === 0 || !in_array($file, $media)) {
-                $swn->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('containment_image');
-            }
-        }
-
-        if (count($swn->corrective_image) > 0) {
-            foreach ($swn->corrective_image as $media) {
-                if (!in_array($media->file_name, $request->input('corrective_image', []))) {
-                    $media->delete();
-                }
-            }
-        }
-        $media = $swn->corrective_image->pluck('file_name')->toArray();
-        foreach ($request->input('corrective_image', []) as $file) {
-            if (count($media) === 0 || !in_array($file, $media)) {
-                $swn->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('corrective_image');
-            }
-        }
-
-        if (count($swn->reply_document) > 0) {
-            foreach ($swn->reply_document as $media) {
-                if (!in_array($media->file_name, $request->input('reply_document', []))) {
-                    $media->delete();
-                }
-            }
-        }
-
-        $index = 0;
-        $index_number = substr("00{$index}", -2);
-        $media = $swn->reply_document->pluck('file_name')->toArray();
-        foreach ($request->input('reply_document', []) as $file) {
-            if (count($media) === 0 || !in_array($file, $media)) {
-                $index++;
-                $index_number = substr("00{$index}", -2);
-                $inputFile = storage_path('tmp/uploads/' . basename($file));
-                $renameFile = storage_path('tmp/uploads/' . 'Reply_SWN' . $swn->id . '_' . $index_number . '.pdf');
-                rename($inputFile, $renameFile);
-
-                $outputFile = storage_path('tmp/uploads/' . 'Convert_' . 'Reply_SWN' . $swn->id . '_' . $index_number . '.pdf');
-
-                // Set the Ghostscript command
-                $command = "gs -sDEVICE=pdfwrite -dCompatibilityLevel=1.4 -dNOPAUSE -dQUIET -dBATCH -sOutputFile=$outputFile $renameFile";
-
-                // Run the Ghostscript command
-                shell_exec($command);
-
-                $swn->addMedia($outputFile)->toMediaCollection('reply_document');;
-                // $swn->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('reply_document');
-            }
-        }
+        $this->syncSwnMedia($swn, $request, 'reply_document', true, 'Reply_SWN');
 
 
-        if (count($swn->conditional_file_upload) > 0) {
-            foreach ($swn->conditional_file_upload as $media) {
-                if (!in_array($media->file_name, $request->input('conditional_file_upload', []))) {
-                    $media->delete();
-                }
-            }
-        }
-        $index = 0;
-        $index_number = substr("00{$index}", -2);
-        $media = $swn->conditional_file_upload->pluck('file_name')->toArray();
-        foreach ($request->input('conditional_file_upload', []) as $file) {
-            if (count($media) === 0 || !in_array($file, $media)) {
-                $index++;
-                $index_number = substr("00{$index}", -2);
-                $inputFile = storage_path('tmp/uploads/' . basename($file));
-                $renameFile = storage_path('tmp/uploads/' . 'Conditional_SWN' . $swn->id . '_' . $index_number . '.pdf');
-                rename($inputFile, $renameFile);
-
-                $outputFile = storage_path('tmp/uploads/' . 'Convert_' . 'Conditional_SWN' . $swn->id . '_' . $index_number . '.pdf');
-
-                // Set the Ghostscript command
-                $command = "gs -sDEVICE=pdfwrite -dCompatibilityLevel=1.4 -dNOPAUSE -dQUIET -dBATCH -sOutputFile=$outputFile $renameFile";
-
-                // Run the Ghostscript command
-                shell_exec($command);
-
-                $swn->addMedia($outputFile)->toMediaCollection('conditional_file_upload');;
-                // $swn->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('conditional_file_upload');
-            }
-        }
+        $this->syncSwnMedia($swn, $request, 'conditional_file_upload', true, 'Conditional_SWN');
 
 
         return redirect()->route('admin.swns.index');
+    }
+
+    /**
+     * Sync media collection for SWN model - reduces redundant queries by calling getMedia() once per collection
+     *
+     * @param Swn $swn
+     * @param Request $request
+     * @param string $collectionName
+     * @param bool $needsGhostscript - whether to run Ghostscript PDF conversion via Queue
+     * @param string|null $filePrefix - prefix for renamed files (e.g., 'SWN', 'Reply_SWN', 'Conditional_SWN')
+     */
+    private function syncSwnMedia(Swn $swn, Request $request, string $collectionName, bool $needsGhostscript = false, string $filePrefix = null)
+    {
+        // Get existing media once (prevents duplicate getMedia() calls)
+        $existingMedia = $swn->getMedia($collectionName);
+        $existingFileNames = $existingMedia->pluck('file_name')->toArray();
+
+        // Delete removed files
+        foreach ($existingMedia as $media) {
+            if (!in_array($media->file_name, $request->input($collectionName, []))) {
+                $media->delete();
+            }
+        }
+
+        // Add new files
+        $index = 0;
+        foreach ($request->input($collectionName, []) as $file) {
+            if (!in_array($file, $existingFileNames)) {
+                $index++;
+                $index_number = substr("00{$index}", -2);
+
+                if ($needsGhostscript && $filePrefix) {
+                    // Ghostscript PDF conversion flow - dispatch to Queue
+                    $inputFile = storage_path('tmp/uploads/' . basename($file));
+
+                    // Ensure tmp/queue directory exists
+                    $queueDir = storage_path('tmp/queue');
+                    if (!file_exists($queueDir)) {
+                        mkdir($queueDir, 0755, true);
+                    }
+
+                    // Move file to queue directory for background processing
+                    $queueFilePath = storage_path('tmp/queue/' . uniqid() . '_' . basename($file));
+                    rename($inputFile, $queueFilePath);
+
+                    // Dispatch job for async processing
+                    \App\Jobs\ProcessSwnPdfConversion::dispatch($swn->id, $queueFilePath, $collectionName, $filePrefix, $index_number);
+                } else {
+                    // Simple file addition - synchronous
+                    $swn->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection($collectionName);
+                }
+            }
+        }
     }
 
     public function show(Swn $swn)
