@@ -448,33 +448,11 @@ class RfaController extends Controller
             $userAlert->users()->sync($data['assign_id']);
         }
 
-        if (count($rfa->file_upload_1) > 0) {
-            foreach ($rfa->file_upload_1 as $media) {
-                if (!in_array($media->file_name, $request->input('file_upload_1', []))) {
-                    $media->delete();
-                }
-            }
-        }
-
-        $media = $rfa->file_upload_1->pluck('file_name')->toArray();
-
-        foreach ($request->input('file_upload_1', []) as $file) {
-            if (count($media) === 0 || !in_array($file, $media)) {
-                $rfa->addMedia(storage_path('tmp/uploads/' . $file))->toMediaCollection('file_upload_1');
-            }
-        }
-
-        foreach ($request->input('commercial_file_upload', []) as $file) {
-            $rfa->addMedia(storage_path('tmp/uploads/' . $file))->toMediaCollection('commercial_file_upload');
-        }
-
-        foreach ($request->input('document_file_upload', []) as $file) {
-            $rfa->addMedia(storage_path('tmp/uploads/' . $file))->toMediaCollection('document_file_upload');
-        }
-
-        foreach ($request->input('submittals_file', []) as $file) {
-            $rfa->addMedia(storage_path('tmp/uploads/' . $file))->toMediaCollection('submittals_file');
-        }
+        // Sync media collections using helper method
+        $this->syncRfaMedia($rfa, $request, 'file_upload_1');
+        $this->syncRfaMedia($rfa, $request, 'commercial_file_upload');
+        $this->syncRfaMedia($rfa, $request, 'document_file_upload');
+        $this->syncRfaMedia($rfa, $request, 'submittals_file');
 
         if ($media = $request->input('ck-media', false)) {
             Media::whereIn('id', $media)->update(['model_id' => $rfa->id]);
@@ -830,76 +808,42 @@ class RfaController extends Controller
 
 
         $rfa->update($data);
-        if (count($rfa->file_upload_1) > 0) {
-            foreach ($rfa->file_upload_1 as $media) {
-                if (!in_array($media->file_name, $request->input('file_upload_1', []))) {
-                    $media->delete();
-                }
-            }
-        }
-        $media = $rfa->file_upload_1->pluck('file_name')->toArray();
-        foreach ($request->input('file_upload_1', []) as $file) {
-            if (count($media) === 0 || !in_array($file, $media)) {
-                $rfa->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('file_upload_1');
-            }
-        }
 
-        if (count($rfa->commercial_file_upload) > 0) {
-            foreach ($rfa->commercial_file_upload as $media) {
-                if (!in_array($media->file_name, $request->input('commercial_file_upload', []))) {
-                    $media->delete();
-                }
-            }
-        }
-        $media = $rfa->commercial_file_upload->pluck('file_name')->toArray();
-        foreach ($request->input('commercial_file_upload', []) as $file) {
-            if (count($media) === 0 || !in_array($file, $media)) {
-                $rfa->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('commercial_file_upload');
-            }
-        }
-
-        if (count($rfa->document_file_upload) > 0) {
-            foreach ($rfa->document_file_upload as $media) {
-                if (!in_array($media->file_name, $request->input('document_file_upload', []))) {
-                    $media->delete();
-                }
-            }
-        }
-        $media = $rfa->document_file_upload->pluck('file_name')->toArray();
-        foreach ($request->input('document_file_upload', []) as $file) {
-            if (count($media) === 0 || !in_array($file, $media)) {
-                $rfa->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('document_file_upload');
-            }
-        }
-
-        if (count($rfa->submittals_file) > 0) {
-            foreach ($rfa->submittals_file as $media) {
-                if (!in_array($media->file_name, $request->input('submittals_file', []))) {
-                    $media->delete();
-                }
-            }
-        }
-        $media = $rfa->submittals_file->pluck('file_name')->toArray();
-        foreach ($request->input('submittals_file', []) as $file) {
-            if (count($media) === 0 || !in_array($file, $media)) {
-                $rfa->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('submittals_file');
-            }
-        }
-
-        if (count($rfa->work_file_upload) > 0) {
-            foreach ($rfa->work_file_upload as $media) {
-                if (!in_array($media->file_name, $request->input('work_file_upload', []))) {
-                    $media->delete();
-                }
-            }
-        }
-        $media = $rfa->work_file_upload->pluck('file_name')->toArray();
-        foreach ($request->input('work_file_upload', []) as $file) {
-            if (count($media) === 0 || !in_array($file, $media)) {
-                $rfa->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('work_file_upload');
-            }
-        }
+        // Sync media collections using helper method
+        $this->syncRfaMedia($rfa, $request, 'file_upload_1');
+        $this->syncRfaMedia($rfa, $request, 'commercial_file_upload');
+        $this->syncRfaMedia($rfa, $request, 'document_file_upload');
+        $this->syncRfaMedia($rfa, $request, 'submittals_file');
+        $this->syncRfaMedia($rfa, $request, 'work_file_upload');
         return redirect()->route('admin.rfas.index');
+    }
+
+    /**
+     * Sync media collection for RFA model - reduces redundant queries by calling getMedia() once per collection
+     *
+     * @param Rfa $rfa
+     * @param Request $request
+     * @param string $collectionName
+     */
+    private function syncRfaMedia(Rfa $rfa, Request $request, string $collectionName)
+    {
+        // Get existing media once (prevents duplicate getMedia() calls)
+        $existingMedia = $rfa->getMedia($collectionName);
+        $existingFileNames = $existingMedia->pluck('file_name')->toArray();
+
+        // Delete removed files
+        foreach ($existingMedia as $media) {
+            if (!in_array($media->file_name, $request->input($collectionName, []))) {
+                $media->delete();
+            }
+        }
+
+        // Add new files
+        foreach ($request->input($collectionName, []) as $file) {
+            if (!in_array($file, $existingFileNames)) {
+                $rfa->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection($collectionName);
+            }
+        }
     }
 
     public function show(Rfa $rfa)
