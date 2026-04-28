@@ -166,7 +166,8 @@ class Rfa extends Model implements HasMedia
 
     public function registerMediaConversions(Media $media = null)
     {
-        $this->addMediaConversion('thumb')->width(50)->height(50);
+        // Temporarily disabled thumbnail conversion to test upload performance
+        // $this->addMediaConversion('thumb')->width(50)->height(50);
     }
 
     public function type()
