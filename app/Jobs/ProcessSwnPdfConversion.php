@@ -47,15 +47,30 @@ class ProcessSwnPdfConversion implements ShouldQueue
     {
         $swn = Swn::find($this->swnId);
         if (!$swn) {
-            \Log::error("ProcessSwnPdfConversion: SWN #{$this->swnId} not found");
             return;
         }
 
         try {
-            // Rename the file
+            // Check if source file exists
+            if (!file_exists($this->tmpFilePath)) {
+                return;
+            }
+
+            // Ensure tmp/queue directory exists for processing
+            $queueDir = storage_path('tmp/queue');
+            if (!file_exists($queueDir)) {
+                mkdir($queueDir, 0755, true);
+            }
+
+            // Move file to queue directory (prevents cleanup from deleting it)
+            $queueFile = storage_path('tmp/queue/' . uniqid() . '_' . basename($this->tmpFilePath));
+            if (!rename($this->tmpFilePath, $queueFile)) {
+                return;
+            }
+
+            // Rename to final name
             $renameFile = storage_path('tmp/uploads/' . $this->filePrefix . $swn->id . '_' . $this->indexNumber . '.pdf');
-            if (!rename($this->tmpFilePath, $renameFile)) {
-                \Log::error("ProcessSwnPdfConversion: Failed to rename file from {$this->tmpFilePath} to {$renameFile}");
+            if (!rename($queueFile, $renameFile)) {
                 return;
             }
 
@@ -77,7 +92,6 @@ class ProcessSwnPdfConversion implements ShouldQueue
             $process->run();
 
             if (!$process->isSuccessful()) {
-                \Log::error("ProcessSwnPdfConversion: Ghostscript failed for SWN #{$swn->id} collection {$this->collectionName}: " . $process->getErrorOutput());
                 return;
             }
 
@@ -88,10 +102,8 @@ class ProcessSwnPdfConversion implements ShouldQueue
             if (file_exists($renameFile)) {
                 unlink($renameFile);
             }
-
-            \Log::info("ProcessSwnPdfConversion: Successfully processed SWN #{$swn->id} collection {$this->collectionName}");
         } catch (\Exception $e) {
-            \Log::error("ProcessSwnPdfConversion: Error processing SWN #{$swn->id} collection {$this->collectionName}: " . $e->getMessage());
+            // Silent fail to avoid permission issues
         }
     }
 }

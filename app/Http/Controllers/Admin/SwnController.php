@@ -324,18 +324,8 @@ class SwnController extends Controller
                     // Ghostscript PDF conversion flow - dispatch to Queue
                     $inputFile = storage_path('tmp/uploads/' . basename($file));
 
-                    // Ensure tmp/queue directory exists
-                    $queueDir = storage_path('tmp/queue');
-                    if (!file_exists($queueDir)) {
-                        mkdir($queueDir, 0755, true);
-                    }
-
-                    // Move file to queue directory for background processing
-                    $queueFilePath = storage_path('tmp/queue/' . uniqid() . '_' . basename($file));
-                    rename($inputFile, $queueFilePath);
-
-                    // Dispatch job for async processing
-                    \App\Jobs\ProcessSwnPdfConversion::dispatch($swn->id, $queueFilePath, $collectionName, $filePrefix, $index_number);
+                    // Dispatch job for async processing (Job will handle file movement)
+                    \App\Jobs\ProcessSwnPdfConversion::dispatch($swn->id, $inputFile, $collectionName, $filePrefix, $index_number);
                 } else {
                     // Simple file addition - synchronous
                     $swn->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection($collectionName);
