@@ -284,7 +284,8 @@ return [
     'no_cancel'                         => 'No, cancel please!',
     'next'                              => 'Next',
     'downloadSelected'                  => 'Download Selected',
-
+    'processing'                        => 'Processing',
+    'please_wait'                       => 'Please wait',
     'close'                             => 'Close',
     'open'                             => 'Open',
 
