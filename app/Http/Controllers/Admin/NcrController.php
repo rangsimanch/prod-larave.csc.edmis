@@ -197,19 +197,9 @@ class NcrController extends Controller
             $index++;
             $index_number = substr("00{$index}", -2);
             $inputFile = storage_path('tmp/uploads/' . basename($file));
-            $renameFile = storage_path('tmp/uploads/' . 'NCR' . $doc_number . '_' . $index_number . '.pdf');
-            rename($inputFile, $renameFile);
-
-            $outputFile = storage_path('tmp/uploads/' . 'Convert_' . 'NCR' . $doc_number . '_' . $index_number . '.pdf');
-
-            // Set the Ghostscript command
-            $command = "gs -sDEVICE=pdfwrite -dCompatibilityLevel=1.4 -dNOPAUSE -dQUIET -dBATCH -sOutputFile=$outputFile $renameFile";
-
-            // Run the Ghostscript command
-            shell_exec($command);
-
-            $ncr->addMedia($outputFile)->toMediaCollection('file_attachment');
-            // $swn->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('document_attachment');
+            
+            // Dispatch job for async Ghostscript PDF conversion
+            \App\Jobs\ProcessNcrPdfConversion::dispatch($ncr->id, $inputFile, 'file_attachment', 'NCR' . $doc_number, $index_number);
         }
 
         if ($media = $request->input('ck-media', false)) {
@@ -329,19 +319,9 @@ class NcrController extends Controller
                 $index++;
                 $index_number = substr("00{$index}", -2);
                 $inputFile = storage_path('tmp/uploads/' . basename($file));
-                $renameFile = storage_path('tmp/uploads/' . 'NCR' . $ncr->id . '_' . $index_number . '.pdf');
-                rename($inputFile, $renameFile);
-
-                $outputFile = storage_path('tmp/uploads/' . 'Convert_' . 'NCR' . $ncr->id . '_' . $index_number . '.pdf');
-
-                // Set the Ghostscript command
-                $command = "gs -sDEVICE=pdfwrite -dCompatibilityLevel=1.4 -dNOPAUSE -dQUIET -dBATCH -sOutputFile=$outputFile $renameFile";
-
-                // Run the Ghostscript command
-                shell_exec($command);
-
-                $ncr->addMedia($outputFile)->toMediaCollection('file_attachment');
-                // $swn->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('file_attachment');
+                
+                // Dispatch job for async Ghostscript PDF conversion
+                \App\Jobs\ProcessNcrPdfConversion::dispatch($ncr->id, $inputFile, 'file_attachment', 'NCR', $index_number);
             }
         }
 

@@ -620,17 +620,9 @@ class TaskController extends Controller
             $index++;
             $index_number = substr("00{$index}", -2);
             $inputFile = storage_path('tmp/uploads/' . basename($file));
-            $renameFile = storage_path('tmp/uploads/' . 'CSC_ACTIVITY' . $randomString . '_' .  $task->startDate . '_' . $index_number . '.pdf');
-            rename($inputFile, $renameFile);
-            $outputFile = storage_path('tmp/uploads/' . 'Convert_' . 'CSC_ACTIVITY' . $randomString . '_' .  $task->startDate . '_' . $index_number . '.pdf');
-            // Set the Ghostscript command
-            $command = "gs -sDEVICE=pdfwrite -dCompatibilityLevel=1.4 -dNOPAUSE -dQUIET -dBATCH -sOutputFile=$outputFile $renameFile";
-
-            // Run the Ghostscript command
-            shell_exec($command);
-
-            // Add the converted PDF file to the media collection
-            $task->addMedia($outputFile)->toMediaCollection('pdf_attachment');
+            
+            // Dispatch job for async Ghostscript PDF conversion
+            \App\Jobs\ProcessTaskPdfConversion::dispatch($task->id, $inputFile, 'pdf_attachment', 'CSC_ACTIVITY' . $randomString . '_' . $task->startDate, $index_number);
         }
 
         return redirect()->route('admin.tasks.index');
@@ -704,18 +696,9 @@ class TaskController extends Controller
                 $index++;
                 $index_number = substr("00{$index}", -2);
                 $inputFile = storage_path('tmp/uploads/' . basename($file));
-                $renameFile = storage_path('tmp/uploads/' . 'CSC_ACTIVITY' . $randomString . '_' .  $task->startDate . '_' . $index_number . '.pdf');
-                rename($inputFile, $renameFile);
-                $outputFile = storage_path('tmp/uploads/' . 'Convert_' . 'CSC_ACTIVITY' . $randomString . '_' .  $task->startDate . '_' . $index_number . '.pdf');
-
-                // Set the Ghostscript command
-                $command = "gs -sDEVICE=pdfwrite -dCompatibilityLevel=1.4 -dNOPAUSE -dQUIET -dBATCH -sOutputFile=$outputFile $renameFile";
-
-                // Run the Ghostscript command
-                shell_exec($command);
-
-                // Add the converted PDF file to the media collection
-                $task->addMedia($outputFile)->toMediaCollection('pdf_attachment');
+                
+                // Dispatch job for async Ghostscript PDF conversion
+                \App\Jobs\ProcessTaskPdfConversion::dispatch($task->id, $inputFile, 'pdf_attachment', 'CSC_ACTIVITY' . $randomString . '_' . $task->startDate, $index_number);
             }
         }
 
