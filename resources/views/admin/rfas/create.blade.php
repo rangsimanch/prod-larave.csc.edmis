@@ -594,10 +594,18 @@ Dropzone.options.fileUpload1Dropzone = {
                 },
             function(isConfirm){
               if (isConfirm) {
-                   // $('.swa-confirm').attr('data-flag', '1');
+                   // Show loading indicator
+                    swal({
+                        title: "{{ trans('global.processing') }}",
+                        text: "{{ trans('global.please_wait') }}",
+                        type: "info",
+                        showConfirmButton: false,
+                        showCancelButton: false
+                    });
+                    // Submit form
                     $('.swa-confirm').submit();
                   } else {
-                swal("{{ trans('global.cancelled') }}", "{{trans('global.add_fail')}}", "error");  
+                swal("{{ trans('global.cancelled') }}", "{{trans('global.add_fail')}}", "error");
               }
             });
         });

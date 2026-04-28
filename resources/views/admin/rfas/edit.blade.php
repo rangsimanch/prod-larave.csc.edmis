@@ -1055,6 +1055,37 @@ function HideSection(idElement) {
         }
     }
 }
+
+$("#save_form").on('click',function(e){
+    event.preventDefault();
+    swal({
+        title: "{{ trans('global.are_you_sure') }}",
+        text: "{{ trans('global.verify_form') }}",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#4BB543",
+        confirmButtonText: "{{ trans('global.yes_add') }}",
+        cancelButtonText: "{{ trans('global.no_cancel') }}",
+        closeOnConfirm: false,
+        closeOnCancel: false
+    },
+    function(isConfirm){
+        if (isConfirm) {
+            // Show loading indicator
+            swal({
+                title: "{{ trans('global.processing') }}",
+                text: "{{ trans('global.please_wait') }}",
+                type: "info",
+                showConfirmButton: false,
+                showCancelButton: false
+            });
+            // Submit form
+            $('.swa-confirm').submit();
+        } else {
+            swal("{{ trans('global.cancelled') }}", "{{trans('global.add_fail')}}", "error");
+        }
+    });
+});
 </script>
 
 @endsection
