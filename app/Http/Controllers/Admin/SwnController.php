@@ -321,11 +321,20 @@ class SwnController extends Controller
                 $index_number = substr("00{$index}", -2);
 
                 if ($needsGhostscript && $filePrefix) {
-                    // Ghostscript PDF conversion flow - dispatch to Queue
+                    // Ghostscript PDF conversion flow - synchronous
                     $inputFile = storage_path('tmp/uploads/' . basename($file));
+                    $renameFile = storage_path('tmp/uploads/' . $filePrefix . $swn->id . '_' . $index_number . '.pdf');
+                    rename($inputFile, $renameFile);
+                    $outputFile = storage_path('tmp/uploads/' . 'Convert_' . $filePrefix . $swn->id . '_' . $index_number . '.pdf');
 
-                    // Dispatch job for async processing (Job will handle file movement)
-                    \App\Jobs\ProcessSwnPdfConversion::dispatch($swn->id, $inputFile, $collectionName, $filePrefix, $index_number);
+                    // Set the Ghostscript command
+                    $command = "gs -sDEVICE=pdfwrite -dCompatibilityLevel=1.4 -dNOPAUSE -dQUIET -dBATCH -sOutputFile=$outputFile $renameFile";
+
+                    // Run the Ghostscript command
+                    shell_exec($command);
+
+                    // Add the converted PDF file to the media collection
+                    $swn->addMedia($outputFile)->toMediaCollection($collectionName);
                 } else {
                     // Simple file addition - synchronous
                     $swn->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection($collectionName);
