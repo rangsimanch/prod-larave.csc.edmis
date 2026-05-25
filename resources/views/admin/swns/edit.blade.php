@@ -232,6 +232,7 @@
                             </div>
                         </div>
 
+                        @if(auth()->user()->team_id == 3)
                         <legend><a onclick="HideSection(4)" id="element4"><i class="bi bi-eye"></i></a><b>  Section 4 : Disposition after Auditing Actions(Judge the status after Auditing the actual actions)</b></legend>
                         <div id="section4">
                             <div class="form-group {{ $errors->has('auditing_date') ? 'has-error' : '' }}">
@@ -269,6 +270,7 @@
                                 <span class="help-block">{{ trans('cruds.swn.fields.documents_status_helper') }}</span>
                             </div>
                         </div>
+                        @endif
                         <div class="form-group">
                             <button class="btn btn-danger" type="submit">
                                 {{ trans('global.save') }}
