@@ -1494,11 +1494,11 @@ class RfaController extends Controller
             //Title
             $html .= "<div style=\"font-size: 12px; font-weight: bold; position:absolute;top:165px;left:52px;\">" . 'Title:' . "</div>";
             if(strlen($title_en) > 150){
-                $html .= "<div style=\"font-size: 9px; padding-right:250px; position:absolute;top:165px;left:75px; LINE-HEIGHT:16px;\">"
+                $html .= "<div style=\"font-size: 9px; padding-right:200px; position:absolute;top:165px;left:75px; LINE-HEIGHT:16px;\">"
                 . $title_en . "</div>";
             }
             else{
-                $html .= "<div style=\"font-size: 12px; font-weight: bold; padding-right:250px; position:absolute;top:165px;left:75px; LINE-HEIGHT:16px;\">"
+                $html .= "<div style=\"font-size: 12px; font-weight: bold; padding-right:200px; position:absolute;top:165px;left:75px; LINE-HEIGHT:16px;\">"
                 . $title_en . "</div>";
             }
 
