@@ -1248,7 +1248,6 @@ class RfaController extends Controller
             $signature_position_top = 405;
             $signature_position_left = 280;
             $stamp_position_top = 380;
-            $stamp_position_left = 370;
             $stamp_size_h = 110;
             $stamp_size_w = 110;
             $contract_name = 'Contract ' . $rfa->construction_contract->code . ' : ' . $rfa->construction_contract->name;
@@ -1468,242 +1467,431 @@ class RfaController extends Controller
         } catch (\Mpdf\MpdfException $e) {
             print "Creating an mPDF object failed with" . $e->getMessage();
         }
-        //RFA Page
-        $pagecount = $mpdf->SetSourceFile(public_path('pdf-asset/RFA-Form_empty_V.9.5.pdf'));
-        $tplId = $mpdf->ImportPage($pagecount);
-        $mpdf->UseTemplate($tplId);
+        
+        if($rfa->created_at < '2026-05-30'){
+            $pagecount = $mpdf->SetSourceFile(public_path('pdf-asset/RFA-Form_empty_V.9.5.pdf'));
+            $tplId = $mpdf->ImportPage($pagecount);
+            $mpdf->UseTemplate($tplId);
+             //Header
+            $html = "<div style=\"font-size: 13px; font-weight: bold; position:absolute;top:65px;left:310px;\">" . $contract_name . "</div>";
+                //Logo
 
-        //Header
-        $html = "<div style=\"font-size: 13px; font-weight: bold; position:absolute;top:65px;left:310px;\">" . $contract_name . "</div>";
-            //Logo
+            $html .= "<div style=\"font-size: 14px; position:absolute;top:". $logo_top ."px;left:". $logo_left ."px;\">
+                        <img src=\"". $logo_path ."\" width=\"". $logo_w ."px\" higth=\"". $logo_h ."px\"> </div>";
 
-        $html .= "<div style=\"font-size: 14px; position:absolute;top:". $logo_top ."px;left:". $logo_left ."px;\">
-                    <img src=\"". $logo_path ."\" width=\"". $logo_w ."px\" higth=\"". $logo_h ."px\"> </div>";
+            $html .= "<div style=\"font-size: 13px; position:absolute;top:85px;left:535px;\">" . $constructor_code . '.' . "</div>";
+            $html .= "<div style=\"font-size: 13px; position:absolute;top:113px;left:514px;\">" . $constructor_name . '.' . "</div>";
 
-        $html .= "<div style=\"font-size: 13px; position:absolute;top:85px;left:535px;\">" . $constructor_code . '.' . "</div>";
-        $html .= "<div style=\"font-size: 13px; position:absolute;top:113px;left:514px;\">" . $constructor_name . '.' . "</div>";
+            //Bill
+            $html .= "<div style=\"font-size: 12px; font-weight: bold; position:absolute;top:150px;left:52px;\">" . 'Bill:' . "</div>";
+            $html .= "<div style=\"font-size: 12px; font-weight: bold; position:absolute;top:150px;left:75px;\">" . $bill . ', ' . $bill_sub . "</div>";
 
-        //Bill
-        $html .= "<div style=\"font-size: 12px; font-weight: bold; position:absolute;top:150px;left:52px;\">" . 'Bill:' . "</div>";
-        $html .= "<div style=\"font-size: 12px; font-weight: bold; position:absolute;top:150px;left:75px;\">" . $bill . ', ' . $bill_sub . "</div>";
+            //No. Code.
+            $html .= "<div style=\"font-size: 12px; font-weight: bold; position:absolute;top:14px;left:700px;\">" . $rfa_code . "</div>";
+            $html .= "<div style=\"font-size: 10px; font-weight: bold; position:absolute;top:150px;left:478px;\">" . $document_number . "</div>";
+            $html .= "<div style=\"font-size: 12px; font-weight: bold; position:absolute;top:150px;left:660px;\">" . $rfa_code . "</div>";
 
-         //No. Code.
-        $html .= "<div style=\"font-size: 12px; font-weight: bold; position:absolute;top:14px;left:700px;\">" . $rfa_code . "</div>";
-        $html .= "<div style=\"font-size: 10px; font-weight: bold; position:absolute;top:150px;left:478px;\">" . $document_number . "</div>";
-        $html .= "<div style=\"font-size: 12px; font-weight: bold; position:absolute;top:150px;left:660px;\">" . $rfa_code . "</div>";
-
-        //Title
-        $html .= "<div style=\"font-size: 12px; font-weight: bold; position:absolute;top:165px;left:52px;\">" . 'Title:' . "</div>";
-        if(strlen($title_en) > 210){
-            $html .= "<div style=\"font-size: 11px; font-weight: bold; padding-right:240px; position:absolute;top:165px;left:75px; LINE-HEIGHT:16px;\">"
-            . $title_en . "</div>";
-        }
-        else{
-            $html .= "<div style=\"font-size: 12px; font-weight: bold; padding-right:240px; position:absolute;top:165px;left:75px; LINE-HEIGHT:16px;\">"
-            . $title_en . "</div>";
-        }
-
-        $html .= "<div style=\"font-size: 12px; font-weight: bold; position:absolute;top:214px;left:52px;\">" . 'หัวข้อ:' . "</div>";
-        if(strlen($title_th) > 235){
-            $html .= "<div style=\"font-size: 11px; font-weight: bold; padding-right:230px; position:absolute;top:214px;left:75px; LINE-HEIGHT:14px;\">"
-            . $title_th . "</div>";
-        }
-        else{
-            $html .= "<div style=\"font-size: 11px; font-weight: bold; padding-right:230px; position:absolute;top:214px;left:75px; LINE-HEIGHT:14px;\">"
-            . $title_th . "</div>";
-        }
-
-          //Date
-        $html .= "<div style=\"font-size: 12px; font-weight: bold; position:absolute;top:197px;left:615px;\">" . $submit_date . "</div>";
-        $html .= "<div style=\"font-size: 12px; position:absolute;top:217px;left:615px;font-weight: bold;\">" . "ผู้จัดการโครงการ/Project Manage (CSC)" . "</div>";
-
-          //Document Name
-        $document_name_fontsize = "12px";
-        if(strlen($document_name) > 300) {
-            $document_name_fontsize = "10px";
-        }
-        $html .= "<div style=\"font-size: " . $document_name_fontsize  . "; padding-right:230px; font-weight: bold; position:absolute;top:252px;left:155px;LINE-HEIGHT:15px;\">" . $document_name . "</div>";
-        $html .= "<div style=\"font-size: 12px; font-weight: bold; position:absolute;top:245px;left:615;\">" . $qty_page . '.' . "</div>";
-
-          //WBS Spec.Ref Clase. Contract No.
-        $html .= "<div style=\"font-size: 12px; padding-right:230px; font-weight: bold; position:absolute;top:297px;left:207px;LINE-HEIGHT:15px;\">" . $wbs . "</div>";
-        $html .= "<div style=\"font-size: 12px; padding-right:60px; font-weight: bold; position:absolute;top:325px;left:225px;\">" . $spec_ref_no . "</div>";
-        $html .= "<div style=\"font-size: 12px; padding-right:60px; font-weight: bold; position:absolute;top:265px;left:615px;LINE-HEIGHT:15px;\">" . $clause . "</div>";
-        $html .= "<div style=\"font-size: 12px;  padding-right:55px; font-weight: bold; position:absolute;top:357px;left:207px;LINE-HEIGHT:15px;\">" . $contract_drawing_no . "</div>";
-          //Note
-        if(strlen($note_1) > 300) {
-            $font_size = 11;
-        }
-        else {
-            $font_size = 12;
-        }
-        $html .= "<div style=\"font-size:". $font_size ."px; padding-right:60px; font-weight: bold; position:absolute;top:390px;left:115px;LINE-HEIGHT:16px;\">"
-        . $note_1 . "</div>";
-
-
-        $html .= "<div style=\"font-size: 14px; font-weight: bold; position:absolute;top:433px;left:". $issue_position_lf ."px;\">" . $issue_by . "</div>";
-        if($issuer_jobtitle == 'ผู้จัดการโครงการ'){
-            $html .= "<div style=\"font-size: 10px;  font-weight: bold; position:absolute;top:447px;left:280px\">" . $issuer_jobtitle . "</div>";
-        }
-        else{
-            $html .= "<div style=\"font-size: 10px; font-weight: bold; position:absolute;top:447px;left:" . $jobittle_position_lf . "px\">" . $issuer_jobtitle . "</div>";
-        }
-
-        if($multi_signature){
-             if($signature_path != ''){
-                $html .= "<div style=\"font-size: 14px; font-weight: bold; position:absolute;top:" . $signature_position_top  ."px;left:". $signature_position_left ."px;\">
-                    <img src=\"". $signature_path ."\" width=\"". $signature_size_w ."\" higth=\"". $signature_size_h ."\"> </div>";
-
-             }
-              if($signature_path_2 != ''){
-                $html .= "<div style=\"font-size: 14px; font-weight: bold; position:absolute;top:" . $signature_position_top_2  ."px;left:". $signature_position_left_2 ."px;\">
-                    <img src=\"". $signature_path_2 ."\" width=\"". $signature_size_w_2 ."\" higth=\"". $signature_size_h_2 ."\"> </div>";
-
-              }
-        }
-        else{
-             //Signature Manager
-            if($signature_path != ''){
-                $html .= "<div style=\"font-size: 14px; font-weight: bold; position:absolute;top:" . $signature_position_top  ."px;left:". $signature_position_left ."px;\">
-                    <img src=\"". $signature_path ."\" width=\"". $signature_size_w ."\" higth=\"". $signature_size_h ."\"> </div>";
+            //Title
+            $html .= "<div style=\"font-size: 12px; font-weight: bold; position:absolute;top:165px;left:52px;\">" . 'Title:' . "</div>";
+            if(strlen($title_en) > 150){
+                $html .= "<div style=\"font-size: 9px; font-weight: bold; padding-right:240px; position:absolute;top:165px;left:75px; LINE-HEIGHT:16px;\">"
+                . $title_en . "</div>";
             }
-        }
-
-        if($multi_stamp){
-            if($stamp_path != ''){
-                $html .= "<div style=\"font-size: 14px; font-weight: bold; position:absolute;top:" . $stamp_position_top . "px;left:". $stamp_position_left ."px;\">
-                    <img src=\"". $stamp_path ."\" width=\"". $stamp_size_w ."\" higth=\"". $stamp_size_h ."\" style=\"opacity: 0.8;\"> </div>";
-            }
-            if($stamp_path_2 != ''){
-                $html .= "<div style=\"font-size: 14px; font-weight: bold; position:absolute;top:" . $stamp_position_top_2 . "px;left:". $stamp_position_left_2 ."px;\">
-                    <img src=\"". $stamp_path_2 ."\" width=\"". $stamp_size_w ."\" higth=\"". $stamp_size_h ."\" style=\"opacity: 0.8;\"> </div>";
+            else{
+                $html .= "<div style=\"font-size: 12px; font-weight: bold; padding-right:240px; position:absolute;top:165px;left:75px; LINE-HEIGHT:16px;\">"
+                . $title_en . "</div>";
             }
 
-        }
-        else{
-            //Stamp Organize
-            if($stamp_path != ''){
-                $html .= "<div style=\"font-size: 14px; font-weight: bold; position:absolute;top:" . $stamp_position_top . "px;left:". $stamp_position_left ."px;\">
-                    <img src=\"". $stamp_path ."\" width=\"". $stamp_size_w ."\" higth=\"". $stamp_size_h ."\" style=\"opacity: 0.8;\"> </div>";
+            $html .= "<div style=\"font-size: 12px; font-weight: bold; position:absolute;top:214px;left:52px;\">" . 'หัวข้อ:' . "</div>";
+            if(strlen($title_th) > 200){
+                $html .= "<div style=\"font-size: 9px; font-weight: bold; padding-right:230px; position:absolute;top:214px;left:75px; LINE-HEIGHT:14px;\">"
+                . $title_th . "</div>";
             }
+            else{
+                $html .= "<div style=\"font-size: 11px; font-weight: bold; padding-right:230px; position:absolute;top:214px;left:75px; LINE-HEIGHT:14px;\">"
+                . $title_th . "</div>";
+            }
+
+            //Date
+            $html .= "<div style=\"font-size: 12px; font-weight: bold; position:absolute;top:197px;left:615px;\">" . $submit_date . "</div>";
+            $html .= "<div style=\"font-size: 12px; position:absolute;top:217px;left:615px;font-weight: bold;\">" . "ผู้จัดการโครงการ/Project Manage (CSC)" . "</div>";
+
+            //Document Name
+            $document_name_fontsize = "12px";
+            if(strlen($document_name) > 300) {
+                $document_name_fontsize = "10px";
+            }
+            $html .= "<div style=\"font-size: " . $document_name_fontsize  . "; padding-right:230px; font-weight: bold; position:absolute;top:252px;left:155px;LINE-HEIGHT:15px;\">" . $document_name . "</div>";
+            $html .= "<div style=\"font-size: 12px; font-weight: bold; position:absolute;top:245px;left:615;\">" . $qty_page . '.' . "</div>";
+
+            //WBS Spec.Ref Clase. Contract No.
+            $html .= "<div style=\"font-size: 12px; padding-right:230px; font-weight: bold; position:absolute;top:297px;left:207px;LINE-HEIGHT:15px;\">" . $wbs . "</div>";
+            $html .= "<div style=\"font-size: 12px; padding-right:60px; font-weight: bold; position:absolute;top:325px;left:225px;\">" . $spec_ref_no . "</div>";
+            $html .= "<div style=\"font-size: 12px; padding-right:60px; font-weight: bold; position:absolute;top:265px;left:615px;LINE-HEIGHT:15px;\">" . $clause . "</div>";
+            $html .= "<div style=\"font-size: 12px;  padding-right:55px; font-weight: bold; position:absolute;top:357px;left:207px;LINE-HEIGHT:15px;\">" . $contract_drawing_no . "</div>";
+            //Note
+            if(strlen($note_1) > 300) {
+                $font_size = 11;
+            }
+            else {
+                $font_size = 12;
+            }
+            $html .= "<div style=\"font-size:". $font_size ."px; padding-right:60px; font-weight: bold; position:absolute;top:390px;left:115px;LINE-HEIGHT:16px;\">"
+            . $note_1 . "</div>";
+
+
+            $html .= "<div style=\"font-size: 14px; font-weight: bold; position:absolute;top:433px;left:". $issue_position_lf ."px;\">" . $issue_by . "</div>";
+            if($issuer_jobtitle == 'ผู้จัดการโครงการ'){
+                $html .= "<div style=\"font-size: 10px;  font-weight: bold; position:absolute;top:447px;left:280px\">" . $issuer_jobtitle . "</div>";
+            }
+            else{
+                $html .= "<div style=\"font-size: 10px; font-weight: bold; position:absolute;top:447px;left:" . $jobittle_position_lf . "px\">" . $issuer_jobtitle . "</div>";
+            }
+
+            if($multi_signature){
+                if($signature_path != ''){
+                    $html .= "<div style=\"font-size: 14px; font-weight: bold; position:absolute;top:" . $signature_position_top  ."px;left:". $signature_position_left ."px;\">
+                        <img src=\"". $signature_path ."\" width=\"". $signature_size_w ."\" higth=\"". $signature_size_h ."\"> </div>";
+
+                }
+                if($signature_path_2 != ''){
+                    $html .= "<div style=\"font-size: 14px; font-weight: bold; position:absolute;top:" . $signature_position_top_2  ."px;left:". $signature_position_left_2 ."px;\">
+                        <img src=\"". $signature_path_2 ."\" width=\"". $signature_size_w_2 ."\" higth=\"". $signature_size_h_2 ."\"> </div>";
+
+                }
+            }
+            else{
+                //Signature Manager
+                if($signature_path != ''){
+                    $html .= "<div style=\"font-size: 14px; font-weight: bold; position:absolute;top:" . $signature_position_top  ."px;left:". $signature_position_left ."px;\">
+                        <img src=\"". $signature_path ."\" width=\"". $signature_size_w ."\" higth=\"". $signature_size_h ."\"> </div>";
+                }
+            }
+
+            if($multi_stamp){
+                if($stamp_path != ''){
+                    $html .= "<div style=\"font-size: 14px; font-weight: bold; position:absolute;top:" . $stamp_position_top . "px;left:". $stamp_position_left ."px;\">
+                        <img src=\"". $stamp_path ."\" width=\"". $stamp_size_w ."\" higth=\"". $stamp_size_h ."\" style=\"opacity: 0.8;\"> </div>";
+                }
+                if($stamp_path_2 != ''){
+                    $html .= "<div style=\"font-size: 14px; font-weight: bold; position:absolute;top:" . $stamp_position_top_2 . "px;left:". $stamp_position_left_2 ."px;\">
+                        <img src=\"". $stamp_path_2 ."\" width=\"". $stamp_size_w ."\" higth=\"". $stamp_size_h ."\" style=\"opacity: 0.8;\"> </div>";
+                }
+
+            }
+            else{
+                //Stamp Organize
+                if($stamp_path != ''){
+                    $html .= "<div style=\"font-size: 14px; font-weight: bold; position:absolute;top:" . $stamp_position_top . "px;left:". $stamp_position_left ."px;\">
+                        <img src=\"". $stamp_path ."\" width=\"". $stamp_size_w ."\" higth=\"". $stamp_size_h ."\" style=\"opacity: 0.8;\"> </div>";
+                }
+            }
+
+            // ----------- Section 2 ----------------
+            //CSC Incoming
+            $html .= "<div style=\"font-size: 13px; position:absolute;top:465px;left:377;\">ผู้รับ/Receiver :</div>";
+            // $html .= "<div style=\"font-size: 14px; position:absolute;top:486px;left:477;\">" . $receive_by . "</div>";
+            // $html .= "<div style=\"font-size: 14px; position:absolute;top:500px;left:477;\">" . $receive_date . "</div>";
+            $html .= "<div style=\"font-size: 12px; padding-right:180px; position:absolute;top:587;left:116px;LINE-HEIGHT:15px;\">"
+            . $note_2 . "</div>";
+
+            $html .= "<div style=\"font-size: 12px; position:absolute;top:574x;left:490;\">" . 'Transportation Specialist' . "</div>";
+
+            // $html .= "<div style=\"font-size: 14px; position:absolute;top:675x;left:135;\">( Li Guanghe )</div>";
+            // $html .= "<div style=\"font-size: 14px; font-weight: bold; position:absolute;top:687x;left:130;\">" . 'Chief Engineer' . "</div>";
+
+            // $html .= "<div style=\"font-size: 14px; position:absolute;top:675x;left:350;\">( Wang Bo )</div>";
+            // $html .= "<div style=\"font-size: 14px; font-weight: bold; position:absolute;top:687x;left:325;\">" . 'Deputy Chief Engineer' . "</div>";
+
+
+
+
+            // if($assign_to == "Ma Shengshuang") {
+            //     $html .= "<div style=\"font-size: 14px; font-weight: bold; position:absolute;top:675x;left:245;\">" . 'Deputy Project Manager' . "</div>";
+            // }
+
+            // if($assign_to == "Jiang Yalei"){
+            //     $html .= "<div style=\"font-size: 14px; font-weight: bold; position:absolute;top:675x;left:225;\">" . 'Leader of Design Review Team' . "</div>";
+            // }
+
+            if($assign_to == "Li Guanghe"){
+                $html .= "<div style=\"font-size: 16px; position:absolute;top:632x;left:84;\">" . 'X' . "</div>";
+            }
+            if($assign_to == "Wang Bo"){
+                $html .= "<div style=\"font-size: 16px; position:absolute;top:632x;left:298;\">" . 'X' . "</div>";
+            }
+
+
+
+            // $html .= "<div style=\"font-size: 14px; position:absolute;top:675x;left:530;\">" . $receive_date . "</div>";
+
+            // ------ section 3 -----
+            //CSC Outgoing (1)
+            if($comment_status == 1){
+                $html .= "<div style=\"font-size: 16px; position:absolute;top:726;left:215;\">" . 'X' . "</div>";
+            }
+            else if($comment_status == 2){
+                $html .= "<div style=\"font-size: 16px; position:absolute;top:726;left:308;\">" . 'X' . "</div>";
+            }
+            else if($comment_status == 3){
+                $html .= "<div style=\"font-size: 16px; position:absolute;top:726;left:417;\">" . 'X' . "</div>";
+            }
+            else if($comment_status == 4){
+                $html .= "<div style=\"font-size: 16px; position:absolute;top:726;left:515;\">" . 'X' . "</div>";
+            }
+            else{
+
+            }
+
+            $html .= "<div style=\"font-size: 12px; padding-right:180px; position:absolute;top:758;left:115px;LINE-HEIGHT:15px;\">"
+            . $note_3 . "</div>";
+
+            $html .= "<div style=\"font-size: 12px; position:absolute;top:805;left:236;\">" . $action_by . "</div>";
+            // $html .= "<div style=\"font-size: 13px; position:absolute;top:825;left:530;\">" . $distribute_date . "</div>";
+
+            //CSC Outgoing (2)
+            $html .= "<div style=\"font-size: 13px; position:absolute;top:850px;left:376;\">เลขที่ออก/Outgoing No. :</div>";
+            // $html .= "<div style=\"font-size: 14px; position:absolute;top:871px;left:477;\">" . $outgoing_number . "</div>";
+            // $html .= "<div style=\"font-size: 14px; position:absolute;top:885px;left:477;\">" . $outgoing_date . "</div>";
+
+
+            $html .= "<div style=\"font-size: 12px; font-weight: bold; position:absolute;top:852px;left:230px;\">"
+            . '('. $constructor_code . ')' . "</div>";
+
+            if($for_statuses == 1){
+                    $html .= "<div style=\"font-size: 16px; position:absolute;top:892;left:215;\">" . 'X' . "</div>";
+                }
+                else if($for_statuses == 2){
+                    $html .= "<div style=\"font-size: 16px; position:absolute;top:892;left:308;\">" . 'X' . "</div>";
+                }
+                else if($for_statuses == 3){
+                    $html .= "<div style=\"font-size: 16px; position:absolute;top:892;left:417;\">" . 'X' . "</div>";
+                }
+                else if($for_statuses == 4){
+                    $html .= "<div style=\"font-size: 16px; position:absolute;top:892;left:515;\">" . 'X' . "</div>";
+                }
+                else{
+
+                }
+                $html .= "<div style=\"font-size: 12px; padding-right:180px; position:absolute;top:922;left:115px;LINE-HEIGHT:15px;\">"
+                . $note_4 . "</div>";
+
+                // $html .= "<div style=\"font-size: 14px; position:absolute;top:997x;left:135;\">( Li Guanghe )</div>";
+                // $html .= "<div style=\"font-size: 14px; font-weight: bold; position:absolute;top:1010x;left:130;\">" . 'Chief Engineer' . "</div>";
+
+                // $html .= "<div style=\"font-size: 14px; position:absolute;top:997x;left:350;\">( Wang Bo )</div>";
+                // $html .= "<div style=\"font-size: 14px; font-weight: bold; position:absolute;top:1010x;left:325;\">" . 'Deputy Chief Engineer' . "</div>";
+
+
+
+
+                // if($assign_to == "Ma Shengshuang") {
+                //     $html .= "<div style=\"font-size: 14px; font-weight: bold; position:absolute;top:675x;left:245;\">" . 'Deputy Project Manager' . "</div>";
+                // }
+
+                // if($assign_to == "Jiang Yalei"){
+                //     $html .= "<div style=\"font-size: 14px; font-weight: bold; position:absolute;top:675x;left:225;\">" . 'Leader of Design Review Team' . "</div>";
+                // }
+
+                if($assign_to == "Li Guanghe"){
+                $html .= "<div style=\"font-size: 16px; position:absolute;top:970x;left:91;\">" . 'X' . "</div>";
+                }
+                if($assign_to == "Wang Bo"){
+                $html .= "<div style=\"font-size: 16px; position:absolute;top:970x;left:303;\">" . 'X' . "</div>";
+                }
+
+
+                // $html .= "<div style=\"font-size: 14px; position:absolute;top:990px;left:530;\">" . $outgoing_date . "</div>";
+
         }
 
-        // ----------- Section 2 ----------------
-        //CSC Incoming
-        $html .= "<div style=\"font-size: 13px; position:absolute;top:465px;left:377;\">ผู้รับ/Receiver :</div>";
-        // $html .= "<div style=\"font-size: 14px; position:absolute;top:486px;left:477;\">" . $receive_by . "</div>";
-        // $html .= "<div style=\"font-size: 14px; position:absolute;top:500px;left:477;\">" . $receive_date . "</div>";
-        $html .= "<div style=\"font-size: 12px; padding-right:180px; position:absolute;top:587;left:116px;LINE-HEIGHT:15px;\">"
-        . $note_2 . "</div>";
-
-        $html .= "<div style=\"font-size: 12px; position:absolute;top:574x;left:490;\">" . 'Transportation Specialist' . "</div>";
-
-        // $html .= "<div style=\"font-size: 14px; position:absolute;top:675x;left:135;\">( Li Guanghe )</div>";
-        // $html .= "<div style=\"font-size: 14px; font-weight: bold; position:absolute;top:687x;left:130;\">" . 'Chief Engineer' . "</div>";
-
-        // $html .= "<div style=\"font-size: 14px; position:absolute;top:675x;left:350;\">( Wang Bo )</div>";
-        // $html .= "<div style=\"font-size: 14px; font-weight: bold; position:absolute;top:687x;left:325;\">" . 'Deputy Chief Engineer' . "</div>";
-
-
-
-
-        // if($assign_to == "Ma Shengshuang") {
-        //     $html .= "<div style=\"font-size: 14px; font-weight: bold; position:absolute;top:675x;left:245;\">" . 'Deputy Project Manager' . "</div>";
-        // }
-
-        // if($assign_to == "Jiang Yalei"){
-        //     $html .= "<div style=\"font-size: 14px; font-weight: bold; position:absolute;top:675x;left:225;\">" . 'Leader of Design Review Team' . "</div>";
-        // }
-
-        if($assign_to == "Li Guanghe"){
-            $html .= "<div style=\"font-size: 16px; position:absolute;top:632x;left:84;\">" . 'X' . "</div>";
-        }
-        if($assign_to == "Wang Bo"){
-            $html .= "<div style=\"font-size: 16px; position:absolute;top:632x;left:298;\">" . 'X' . "</div>";
-        }
-
-
-
-        // $html .= "<div style=\"font-size: 14px; position:absolute;top:675x;left:530;\">" . $receive_date . "</div>";
-
-        // ------ section 3 -----
-        //CSC Outgoing (1)
-        if($comment_status == 1){
-            $html .= "<div style=\"font-size: 16px; position:absolute;top:726;left:215;\">" . 'X' . "</div>";
-        }
-        else if($comment_status == 2){
-            $html .= "<div style=\"font-size: 16px; position:absolute;top:726;left:308;\">" . 'X' . "</div>";
-        }
-        else if($comment_status == 3){
-            $html .= "<div style=\"font-size: 16px; position:absolute;top:726;left:417;\">" . 'X' . "</div>";
-        }
-        else if($comment_status == 4){
-            $html .= "<div style=\"font-size: 16px; position:absolute;top:726;left:515;\">" . 'X' . "</div>";
-        }
         else{
+            $pagecount = $mpdf->SetSourceFile(public_path('pdf-asset/RFA_newform_30-05-2026.pdf'));
+            $tplId = $mpdf->ImportPage($pagecount);
+            $mpdf->UseTemplate($tplId);
+             //Header
+            $html = "<div style=\"font-size: 13px; font-weight: bold; position:absolute;top:65px;left:310px;\">" . $contract_name . "</div>";
+                //Logo
 
+            $html .= "<div style=\"font-size: 14px; position:absolute;top:". $logo_top ."px;left:". $logo_left ."px;\">
+                        <img src=\"". $logo_path ."\" width=\"". $logo_w ."px\" higth=\"". $logo_h ."px\"> </div>";
+
+            $html .= "<div style=\"font-size: 13px; font-weight: bold; position:absolute;top:104px;left:610px;\">" . $constructor_code . '.' . "</div>";
+
+            //Bill
+            $html .= "<div style=\"font-size: 12px; font-weight: bold; position:absolute;top:163px;left:98px;\">" . $bill . ', ' . $bill_sub . "</div>";
+
+            //No. Code.
+            $html .= "<div style=\"font-size: 12px; font-weight: bold; position:absolute;top:20px;left:705px;\">" . $rfa_code . "</div>";
+            $html .= "<div style=\"font-size: 10px; font-weight: bold; position:absolute;top:163px;left:495px;\">" . $document_number . "</div>";
+            $html .= "<div style=\"font-size: 12px; font-weight: bold; position:absolute;top:163px;left:670px;\">" . $rfa_code . "</div>";
+
+            //Title
+            if(strlen($title_en) > 250){
+                $html .= "<div style=\"font-size: 10px; font-weight: bold; padding-right:243px; position:absolute;top:179px;left:98px; LINE-HEIGHT:16px;\">"
+                . $title_en . "</div>";
+            }
+            else{
+                $html .= "<div style=\"font-size: 12px; font-weight: bold; padding-right:243px; position:absolute;top:179px;left:98px; LINE-HEIGHT:16px;\">"
+                . $title_en . "</div>";
+            }
+
+            if(strlen($title_th) > 300){
+                $html .= "<div style=\"font-size: 10px; font-weight: bold; padding-right:250px; position:absolute;top:247px;left:98px; LINE-HEIGHT:16px;\">"
+                . $title_th . "</div>";
+            }
+            else{
+                $html .= "<div style=\"font-size: 11px; font-weight: bold; padding-right:250px; position:absolute;top:247px;left:98px; LINE-HEIGHT:16px;\">"
+                . $title_th . "</div>";
+            }
+
+            //Date
+            $html .= "<div style=\"font-size: 12px; font-weight: bold; position:absolute;top:179px;left:610px;\">" . $submit_date . "</div>";
+            $html .= "<div style=\"font-size: 12px; position:absolute;top:213px;left:610px;font-weight: bold;\">" . "ผู้จัดการโครงการ/Project Manage (CSC)" . "</div>";
+
+            // Document Name
+            $document_name_fontsize = "12px";
+            if(strlen($document_name) > 300) {
+                $document_name_fontsize = "10px";
+            }
+            $html .= "<div style=\"font-size: " . $document_name_fontsize  . "; padding-right:255px; font-weight: bold; position:absolute;top:313px;left:198px;LINE-HEIGHT:16px;\">" . $document_name . "</div>";
+            $html .= "<div style=\"font-size: 12px; font-weight: bold; position:absolute;top:245px;left:610;\">" . $qty_page . '.' . "</div>";
+
+            //WBS Spec.Ref Clase. Contract No.
+            $html .= "<div style=\"font-size: 12px; padding-right:250px; font-weight: bold; position:absolute;top:347px;left:249px;LINE-HEIGHT:16px;\">" . $wbs . "</div>";
+            $html .= "<div style=\"font-size: 12px; padding-right:60px; font-weight: bold; position:absolute;top:296px;left:610px;LINE-HEIGHT:16px;\">" . $clause . "</div>";
+
+            $html .= "<div style=\"font-size: 12px; padding-right:60px; font-weight: bold; position:absolute;top:378px;left:275px;\">" . $spec_ref_no . "</div>";
+
+            $html .= "<div style=\"font-size: 12px;  padding-right:55px; font-weight: bold; position:absolute;top:413px;left:237px;LINE-HEIGHT:16px;\">" . $contract_drawing_no . "</div>";
+            
+            // Note
+            if(strlen($note_1) > 300) {
+                $font_size = 11;
+            }
+            else {
+                $font_size = 12;
+            }
+            $html .= "<div style=\"font-size:". $font_size ."px; padding-right:55px; font-weight: bold; position:absolute;top:446px;left:135px;LINE-HEIGHT:16px;\">"
+            . $note_1 . "</div>";
+
+
+            $html .= "<div style=\"position:absolute;top:505px;left:". $issue_position_lf ."px;transform:translateX(-50%);text-align:center;\">";
+
+            if($multi_signature){
+                if($signature_path != ''){
+                    $html .= "<div style=\"font-size: 14px; font-weight: bold;\">
+                        <img src=\"". $signature_path ."\" width=\"". $signature_size_w ."\" higth=\"". $signature_size_h ."\"> </div>";
+                }
+                if($signature_path_2 != ''){
+                    $html .= "<div style=\"font-size: 14px; font-weight: bold;\">
+                        <img src=\"". $signature_path_2 ."\" width=\"". $signature_size_w_2 ."\" higth=\"". $signature_size_h_2 ."\"> </div>";
+                }
+            }
+            else{
+                //Signature Manager
+                if($signature_path != ''){
+                    $html .= "<div style=\"font-size: 14px; font-weight: bold;\">
+                        <img src=\"". $signature_path ."\" width=\"". $signature_size_w ."\" higth=\"". $signature_size_h ."\"> </div>";
+                }
+            }
+
+            // Add spacer if no signature
+            if($multi_signature){
+                if($signature_path == '' && $signature_path_2 == ''){
+                    $html .= "<div style=\"height:25px;\"></div>";
+                }
+            }
+            else{
+                if($signature_path == ''){
+                    $html .= "<div style=\"height:25px;\"></div>";
+                }
+            }
+
+            $html .= "<div style=\"font-size: 14px; font-weight: bold;white-space:nowrap;border-bottom:1px dotted black;\"><span style=\"font-size:0px;line-height:0;\"></span></div>";
+
+            $html .= "<div style=\"font-size: 14px; font-weight: bold;\">" . $issue_by . "</div>";
+            if($issuer_jobtitle == 'ผู้จัดการโครงการ'){
+                $html .= "<div style=\"font-size: 10px; font-weight: bold;\">" . $issuer_jobtitle . "</div>";
+            }
+            else{
+                $html .= "<div style=\"font-size: 10px; font-weight: bold;\">" . $issuer_jobtitle . "</div>";
+            }
+            $html .= "</div>";
+
+
+            
+            if($multi_stamp){
+                if($stamp_path != ''){
+                    $html .= "<div style=\"font-size: 14px; font-weight: bold; position:absolute;top:" . ($stamp_position_top - 50)  . "px;left:". $stamp_position_left ."px;\">
+                        <img src=\"". $stamp_path ."\" width=\"". $stamp_size_w ."\" higth=\"". $stamp_size_h ."\" style=\"opacity: 0.8;\"> </div>";
+                }
+                if($stamp_path_2 != ''){
+                    $html .= "<div style=\"font-size: 14px; font-weight: bold; position:absolute;top:" . ($stamp_position_top_2 - 50) . "px;left:". $stamp_position_left_2 ."px;\">
+                        <img src=\"". $stamp_path_2 ."\" width=\"". $stamp_size_w ."\" higth=\"". $stamp_size_h ."\" style=\"opacity: 0.8;\"> </div>";
+                }
+
+            }
+            else{
+                //Stamp Organize
+                if($stamp_path != ''){
+                    $html .= "<div style=\"font-size: 14px; font-weight: bold; position:absolute;top:" . ($stamp_position_top - 50) . "px;left:". $stamp_position_left ."px;\">
+                        <img src=\"". $stamp_path ."\" width=\"". $stamp_size_w ."\" higth=\"". $stamp_size_h ."\" style=\"opacity: 0.8;\"> </div>";
+                }
+            }
+
+            // ------ section 3 -----
+            //CSC Outgoing (1)
+            if($comment_status == 1){
+                $html .= "<div style=\"font-size: 16px; position:absolute;top:680;left:195;\">" . 'X' . "</div>";
+            }
+            else if($comment_status == 2){
+                $html .= "<div style=\"font-size: 16px; position:absolute;top:680;left:287;\">" . 'X' . "</div>";
+            }
+            else if($comment_status == 3){
+                $html .= "<div style=\"font-size: 16px; position:absolute;top:680;left:413;\">" . 'X' . "</div>";
+            }
+            else if($comment_status == 4){
+                $html .= "<div style=\"font-size: 16px; position:absolute;top:680;left:550;\">" . 'X' . "</div>";
+            }
+            else{
+                $html .= "";
+            }
+
+            $html .= "<div style=\"position:absolute;top:785;left:260px;text-align:center;\">";
+            $html .= "<div style=\"font-size: 12px; font-weight: bold;white-space:nowrap;border-bottom:1px dotted black;\"><span style=\"font-size:0px;line-height:0;\"></span></div>";
+            $html .= "<div style=\"font-size: 12px; font-weight: bold;\"> ( " . $action_by . " )</div>";
+            $html .= "<div style=\"font-size: 10px; font-weight: bold;\">ผู้เชี่ยวชาญ / วิศวกร</div>";
+            $html .= "<div style=\"font-size: 10px; font-weight: bold;\">Specialist/Engineer (CSC)</div>";
+            $html .= "</div>";
+            
+
+            //CSC Outgoing (2)
+            $html .= "<div style=\"font-size: 12px; font-weight: bold; position:absolute;top:840px;left:257px;\">"
+            . '('. $constructor_code . ')' . "</div>";
+
+            if($for_statuses == 1){
+                    $html .= "<div style=\"font-size: 16px; position:absolute;top:919;left:192;\">" . 'X' . "</div>";
+                }
+            else if($for_statuses == 2){
+                    $html .= "<div style=\"font-size: 16px; position:absolute;top:919;left:287;\">" . 'X' . "</div>";
+                }
+            else if($for_statuses == 3){
+                    $html .= "<div style=\"font-size: 16px; position:absolute;top:919;left:413;\">" . 'X' . "</div>";
+                }
+            else if($for_statuses == 4){
+                    $html .= "<div style=\"font-size: 16px; position:absolute;top:919;left:551;\">" . 'X' . "</div>";
+                }
+            else{
+                    $html .= "";
+                }
+
+                // $html .= "<div style=\"font-size: 14px; position:absolute;top:871px;left:477;\">" . $outgoing_number . "</div>";
+                // $html .= "<div style=\"font-size: 14px; position:absolute;top:990px;left:530;\">" . $outgoing_date . "</div>";
+
+        
         }
-
-        $html .= "<div style=\"font-size: 12px; padding-right:180px; position:absolute;top:758;left:115px;LINE-HEIGHT:15px;\">"
-        . $note_3 . "</div>";
-
-        $html .= "<div style=\"font-size: 12px; position:absolute;top:805;left:236;\">" . $action_by . "</div>";
-        // $html .= "<div style=\"font-size: 13px; position:absolute;top:825;left:530;\">" . $distribute_date . "</div>";
-
-        //CSC Outgoing (2)
-        $html .= "<div style=\"font-size: 13px; position:absolute;top:850px;left:376;\">เลขที่ออก/Outgoing No. :</div>";
-        // $html .= "<div style=\"font-size: 14px; position:absolute;top:871px;left:477;\">" . $outgoing_number . "</div>";
-        // $html .= "<div style=\"font-size: 14px; position:absolute;top:885px;left:477;\">" . $outgoing_date . "</div>";
-
-
-        $html .= "<div style=\"font-size: 12px; font-weight: bold; position:absolute;top:852px;left:230px;\">"
-        . '('. $constructor_code . ')' . "</div>";
-
-       if($for_statuses == 1){
-            $html .= "<div style=\"font-size: 16px; position:absolute;top:892;left:215;\">" . 'X' . "</div>";
-        }
-        else if($for_statuses == 2){
-            $html .= "<div style=\"font-size: 16px; position:absolute;top:892;left:308;\">" . 'X' . "</div>";
-        }
-        else if($for_statuses == 3){
-            $html .= "<div style=\"font-size: 16px; position:absolute;top:892;left:417;\">" . 'X' . "</div>";
-        }
-        else if($for_statuses == 4){
-            $html .= "<div style=\"font-size: 16px; position:absolute;top:892;left:515;\">" . 'X' . "</div>";
-        }
-        else{
-
-        }
-        $html .= "<div style=\"font-size: 12px; padding-right:180px; position:absolute;top:922;left:115px;LINE-HEIGHT:15px;\">"
-        . $note_4 . "</div>";
-
-        // $html .= "<div style=\"font-size: 14px; position:absolute;top:997x;left:135;\">( Li Guanghe )</div>";
-        // $html .= "<div style=\"font-size: 14px; font-weight: bold; position:absolute;top:1010x;left:130;\">" . 'Chief Engineer' . "</div>";
-
-        // $html .= "<div style=\"font-size: 14px; position:absolute;top:997x;left:350;\">( Wang Bo )</div>";
-        // $html .= "<div style=\"font-size: 14px; font-weight: bold; position:absolute;top:1010x;left:325;\">" . 'Deputy Chief Engineer' . "</div>";
-
-
-
-
-        // if($assign_to == "Ma Shengshuang") {
-        //     $html .= "<div style=\"font-size: 14px; font-weight: bold; position:absolute;top:675x;left:245;\">" . 'Deputy Project Manager' . "</div>";
-        // }
-
-        // if($assign_to == "Jiang Yalei"){
-        //     $html .= "<div style=\"font-size: 14px; font-weight: bold; position:absolute;top:675x;left:225;\">" . 'Leader of Design Review Team' . "</div>";
-        // }
-
-        if($assign_to == "Li Guanghe"){
-         $html .= "<div style=\"font-size: 16px; position:absolute;top:970x;left:91;\">" . 'X' . "</div>";
-        }
-        if($assign_to == "Wang Bo"){
-         $html .= "<div style=\"font-size: 16px; position:absolute;top:970x;left:303;\">" . 'X' . "</div>";
-        }
-
-
-        // $html .= "<div style=\"font-size: 14px; position:absolute;top:990px;left:530;\">" . $outgoing_date . "</div>";
-
+       
         $mpdf->WriteHTML($html);
          //Add Document
         $allowed = array('pdf','PDF','Pdf');
@@ -1835,17 +2023,17 @@ class RfaController extends Controller
         //Circulation of Work
 
         $mpdf->AddPage();
-        $pagecount = $mpdf->SetSourceFile(public_path('pdf-asset/Circulation_General_All_Contract_Update_042025.pdf'));
+        $pagecount = $mpdf->SetSourceFile(public_path('pdf-asset/Circulation_General_All_Contract_Update_30052026.pdf'));
         $tplId = $mpdf->ImportPage($pagecount);
         $mpdf->UseTemplate($tplId);
 
         $html = "<div style=\"font-size: 12px; font-weight: bold; position:absolute;top:75px;left:387px;\">". $wbslv2 ."</div>";
 
-        $html .= "<div style=\"font-size: 14px; position:absolute;top:94px;left:110px;\">". $incoming_no ."</div>";
-        $html .= "<div style=\"font-size: 14px; position:absolute;top:94px;left:340px;\">". $submit_date ."</div>";
-        $html .= "<div style=\"font-size: 14px; position:absolute;top:94px;left:570;\">". $qty_page .'.' ."</div>";
-        $html .= "<div style=\"font-size: 14px; position:absolute;top:115px;left:165px;\">". $rfa_code ."</div>";
-        $html .= "<div style=\"font-size: 14px; position:absolute;top:155px;left:75px;\">". $title_th ."</div>";
+        $html .= "<div style=\"font-size: 12px; font-weight: bold; position:absolute;top:94px;left:110px;\">". $incoming_no ."</div>";
+        $html .= "<div style=\"font-size: 12px; font-weight: bold; position:absolute;top:94px;left:340px;\">". $submit_date ."</div>";
+        $html .= "<div style=\"font-size: 12px; font-weight: bold; position:absolute;top:94px;left:570;\">". $qty_page .'.' ."</div>";
+        $html .= "<div style=\"font-size: 12px; font-weight: bold; position:absolute;top:115px;left:165px;\">". $rfa_code ."</div>";
+        $html .= "<div style=\"font-size: 10px; font-weight: bold; padding-right:50px; position:absolute;top:135px;left:50px;LINE-HEIGHT:14px;\">". $title_th ."</div>";
 
 
 
