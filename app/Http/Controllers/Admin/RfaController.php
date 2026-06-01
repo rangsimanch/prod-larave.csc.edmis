@@ -894,12 +894,18 @@ class RfaController extends Controller
         //Varible setting
         $stamp_position_top = 380;
         $stamp_position_left = 600;
+        
+        $stamp_position_top_new = 380;
+        $stamp_position_left_new = 600;
 
         $signature_size_h = 60;
         $signature_size_w = 60;
 
         $multi_signature = false;
         $multi_stamp = false;
+
+        $logo_top_new = 0;
+        $logo_left_new = 0;
 
         if($rfa->construction_contract->code == "C2-1"){
             $issue_by = '( Sitthichai Pimsawat )';
@@ -912,8 +918,13 @@ class RfaController extends Controller
             $logo_path =  public_path('png-asset/Stamp_CEC.png');
             $logo_h = 40;
             $logo_w = 40;
+            
             $logo_top = 85;
             $logo_left = 690;
+
+            $logo_top_new = 85;
+            $logo_left_new = 690;
+
             $stamp_path =  public_path('png-asset/Stamp_CEC.png');
             $signature_path =  public_path('png-asset/Signature_CEC.png');
             $signature_size_h = 40;
@@ -968,6 +979,9 @@ class RfaController extends Controller
             $logo_top = 90;
             $logo_left = 700;
 
+            $logo_top_new = 85;
+            $logo_left_new = 700;
+
             $stamp_path =  public_path('png-asset/ITDCREC_stamp_1.png');
             $stamp_path_2 =  public_path('png-asset/ITDCREC_stamp_2.png');
 
@@ -990,6 +1004,12 @@ class RfaController extends Controller
             $stamp_position_top_2 = 375;
             $stamp_position_left_2 = 550;
 
+            $stamp_position_top_new = 290;
+            $stamp_position_left_new = 550;
+
+            $stamp_position_top_2_new = 310;
+            $stamp_position_left_2_new = 660;
+
             $stamp_size_h = 120;
             $stamp_size_w = 120;
             $contract_name = 'Contract ' . $rfa->construction_contract->code . ' : ' . $rfa->construction_contract->name;
@@ -1010,6 +1030,9 @@ class RfaController extends Controller
             $logo_w = 40;
             $logo_top = 85;
             $logo_left = 690;
+            $logo_top_new = 85;
+            $logo_left_new = 690;
+            
             $stamp_path =  public_path('png-asset/NWR_stamp.png');
             $signature_path =  public_path('png-asset/NWR_signature.png');
             $signature_size_h = 55;
@@ -1018,6 +1041,10 @@ class RfaController extends Controller
             $signature_position_left = 280;
             $stamp_size_h = 120;
             $stamp_size_w = 120;
+
+            $stamp_position_top_new = 310;
+            $stamp_position_left_new = 640;
+
             $contract_name = 'Contract ' . $rfa->construction_contract->code . ' : ' . $rfa->construction_contract->name;
 
         }
@@ -1035,12 +1062,16 @@ class RfaController extends Controller
             $logo_w = 40;
             $logo_top = 85;
             $logo_left = 690;
+            $logo_top_new = 85;
+            $logo_left_new = 690;
             $stamp_path =  public_path('png-asset/TEI_stamp.png');
             $signature_path =  public_path('png-asset/TEI_signature.png');
             $signature_size_h = 60;
             $signature_size_w = 60;
             $signature_position_top = 405;
             $signature_position_left = 280;
+            $stamp_position_top_new = 310;
+            $stamp_position_left_new = 640;
             $stamp_size_h = 120;
             $stamp_size_w = 120;
             $contract_name = 'Contract ' . $rfa->construction_contract->code . ' : ' . $rfa->construction_contract->name;
@@ -1078,9 +1109,13 @@ class RfaController extends Controller
             $logo_w = 40;
             $logo_top = 85;
             $logo_left = 690;
+            $logo_top_new = 85;
+            $logo_left_new = 690;
             $stamp_path =  public_path('png-asset/ITD_stamp.png');
             $stamp_size_h = 120;
             $stamp_size_w = 120;
+            $stamp_position_top_new = 310;
+            $stamp_position_left_new = 640;
             $contract_name = 'Contract ' . $rfa->construction_contract->code . ' : ' . $rfa->construction_contract->name;
 
         }
@@ -1119,9 +1154,13 @@ class RfaController extends Controller
             $logo_w = 40;
             $logo_top = 85;
             $logo_left = 690;
+            $logo_top_new = 85;
+            $logo_left_new = 690;
             $stamp_path =  public_path('png-asset/SPTK_stamp.png');
             $stamp_size_h = 120;
             $stamp_size_w = 120;
+            $stamp_position_top_new = 310;
+            $stamp_position_left_new = 640;
             $contract_name = 'Contract ' . $rfa->construction_contract->code . ' : ' . $rfa->construction_contract->name;
 
         }
@@ -1219,11 +1258,15 @@ class RfaController extends Controller
             $logo_w = 60;
             $logo_top = 85; //109
             $logo_left = 690;
+            $logo_top_new = 85;
+            $logo_left_new = 690;
             $stamp_path =  public_path('png-asset/CAN_stamp.png');
             $signature_size_h = 60;
             $signature_size_w = 60;
             $stamp_size_h = 160;
             $stamp_size_w = 160;
+            $stamp_position_top_new = 310;
+            $stamp_position_left_new = 620;
             $contract_name = 'Contract ' . $rfa->construction_contract->code . ' : ' . $rfa->construction_contract->name;
 
         }
@@ -1241,6 +1284,8 @@ class RfaController extends Controller
             $logo_w = 40;
             $logo_top = 85;
             $logo_left = 690;
+            $logo_top_new = 85;
+            $logo_left_new = 690;
             $stamp_path =  public_path('png-asset/ITD_stamp.png');
             $signature_path = public_path('png-asset/ITD2_signature.png');;
             $signature_size_h = 60;
@@ -1248,6 +1293,8 @@ class RfaController extends Controller
             $signature_position_top = 405;
             $signature_position_left = 280;
             $stamp_position_top = 380;
+            $stamp_position_top_new = 315;
+            $stamp_position_left_new = 660;
             $stamp_size_h = 110;
             $stamp_size_w = 110;
             $contract_name = 'Contract ' . $rfa->construction_contract->code . ' : ' . $rfa->construction_contract->name;
@@ -1267,6 +1314,8 @@ class RfaController extends Controller
             $logo_w = 40;
             $logo_top = 80;
             $logo_left = 690;
+            $logo_top_new = 80;
+            $logo_left_new = 690;
             $stamp_path =  '';
             $signature_path =  '';
             $signature_size_h = 50;
@@ -1292,6 +1341,8 @@ class RfaController extends Controller
             $logo_w = 40;
             $logo_top = 85;
             $logo_left = 690;
+            $logo_top_new = 85;
+            $logo_left_new = 690;
             $stamp_path =  '';
             $signature_path =  '';
             $signature_size_h = 50;
@@ -1317,6 +1368,10 @@ class RfaController extends Controller
             $logo_w = 90;
             $logo_top = 85;
             $logo_left = 630;
+            
+            $logo_top_new = 90;
+            $logo_left_new = 680;
+            
             $stamp_path =  public_path('png-asset/CIVIL_stamp.png');
             $signature_path =  public_path('png-asset/CIVIL_signature.png');
             $signature_size_h = 50;
@@ -1325,6 +1380,10 @@ class RfaController extends Controller
             $signature_position_left = 278;
             $stamp_position_top = 270;
             $stamp_position_left = 510;
+
+            $stamp_position_top_new = 330;
+            $stamp_position_left_new = 650;
+            
             $stamp_size_h = 120;
             $stamp_size_w = 120;
             $contract_name = 'Contract ' . $rfa->construction_contract->code . ' : ' . $rfa->construction_contract->name;
@@ -1468,7 +1527,7 @@ class RfaController extends Controller
             print "Creating an mPDF object failed with" . $e->getMessage();
         }
         
-        if($rfa->created_at < '2026-05-31'){
+        if($rfa->created_at < '2025-05-31'){
             $pagecount = $mpdf->SetSourceFile(public_path('pdf-asset/RFA-Form_empty_V.9.5.pdf'));
             $tplId = $mpdf->ImportPage($pagecount);
             $mpdf->UseTemplate($tplId);
@@ -1713,7 +1772,7 @@ class RfaController extends Controller
             $html = "<div style=\"font-size: 13px; font-weight: bold; position:absolute;top:65px;left:310px;\">" . $contract_name . "</div>";
                 //Logo
 
-            $html .= "<div style=\"font-size: 14px; position:absolute;top:". $logo_top ."px;left:". $logo_left ."px;\">
+            $html .= "<div style=\"font-size: 14px; position:absolute;top:". $logo_top_new ."px;left:". $logo_left_new ."px;\">
                         <img src=\"". $logo_path ."\" width=\"". $logo_w ."px\" higth=\"". $logo_h ."px\"> </div>";
 
             $html .= "<div style=\"font-size: 13px; font-weight: bold; position:absolute;top:104px;left:610px;\">" . $constructor_code . '.' . "</div>";
@@ -1751,8 +1810,8 @@ class RfaController extends Controller
 
             // Document Name
             $document_name_fontsize = "12px";
-            if(strlen($document_name) > 250) {
-                $document_name_fontsize = "10px";
+            if(strlen($document_name) > 150) {
+                $document_name_fontsize = "9px";
             }
             $html .= "<div style=\"font-size: " . $document_name_fontsize  . "; padding-right:255px; font-weight: bold; position:absolute;top:313px;left:198px;LINE-HEIGHT:16px;\">" . $document_name . "</div>";
             $html .= "<div style=\"font-size: 12px; font-weight: bold; position:absolute;top:245px;left:610;\">" . $qty_page . '.' . "</div>";
@@ -1779,14 +1838,14 @@ class RfaController extends Controller
             $html .= "<div style=\"position:absolute;top:505px;left:". $issue_position_lf ."px;transform:translateX(-50%);text-align:center;\">";
 
             if($multi_signature){
+                $html .= "<table style=\"border-collapse:collapse;margin:0 auto;\"><tr>";
                 if($signature_path != ''){
-                    $html .= "<div style=\"font-size: 14px; font-weight: bold;\">
-                        <img src=\"". $signature_path ."\" width=\"". $signature_size_w ."\" higth=\"". $signature_size_h ."\"> </div>";
+                    $html .= "<td style=\"padding-right:10px;\"><img src=\"". $signature_path ."\" width=\"". $signature_size_w ."\" higth=\"". $signature_size_h ."\"></td>";
                 }
                 if($signature_path_2 != ''){
-                    $html .= "<div style=\"font-size: 14px; font-weight: bold;\">
-                        <img src=\"". $signature_path_2 ."\" width=\"". $signature_size_w_2 ."\" higth=\"". $signature_size_h_2 ."\"> </div>";
+                    $html .= "<td><img src=\"". $signature_path_2 ."\" width=\"". $signature_size_w_2 ."\" higth=\"". $signature_size_h_2 ."\"></td>";
                 }
+                $html .= "</tr></table>";
             }
             else{
                 //Signature Manager
@@ -1823,11 +1882,11 @@ class RfaController extends Controller
             
             if($multi_stamp){
                 if($stamp_path != ''){
-                    $html .= "<div style=\"font-size: 14px; font-weight: bold; position:absolute;top:" . ($stamp_position_top - 50)  . "px;left:". $stamp_position_left ."px;\">
+                    $html .= "<div style=\"font-size: 14px; font-weight: bold; position:absolute;top:" . ($stamp_position_top_new)  . "px;left:". $stamp_position_left_new ."px;\">
                         <img src=\"". $stamp_path ."\" width=\"". $stamp_size_w ."\" higth=\"". $stamp_size_h ."\" style=\"opacity: 0.8;\"> </div>";
                 }
                 if($stamp_path_2 != ''){
-                    $html .= "<div style=\"font-size: 14px; font-weight: bold; position:absolute;top:" . ($stamp_position_top_2 - 50) . "px;left:". $stamp_position_left_2 ."px;\">
+                    $html .= "<div style=\"font-size: 14px; font-weight: bold; position:absolute;top:" . ($stamp_position_top_2_new) . "px;left:". $stamp_position_left_2_new ."px;\">
                         <img src=\"". $stamp_path_2 ."\" width=\"". $stamp_size_w ."\" higth=\"". $stamp_size_h ."\" style=\"opacity: 0.8;\"> </div>";
                 }
 
@@ -1835,7 +1894,7 @@ class RfaController extends Controller
             else{
                 //Stamp Organize
                 if($stamp_path != ''){
-                    $html .= "<div style=\"font-size: 14px; font-weight: bold; position:absolute;top:" . ($stamp_position_top - 50) . "px;left:". $stamp_position_left ."px;\">
+                    $html .= "<div style=\"font-size: 14px; font-weight: bold; position:absolute;top:" . ($stamp_position_top_new) . "px;left:". $stamp_position_left_new ."px;\">
                         <img src=\"". $stamp_path ."\" width=\"". $stamp_size_w ."\" higth=\"". $stamp_size_h ."\" style=\"opacity: 0.8;\"> </div>";
                 }
             }
@@ -1860,7 +1919,12 @@ class RfaController extends Controller
 
             $html .= "<div style=\"position:absolute;top:785;left:260px;text-align:center;\">";
             $html .= "<div style=\"font-size: 12px; font-weight: bold;white-space:nowrap;border-bottom:1px dotted black;\"><span style=\"font-size:0px;line-height:0;\"></span></div>";
-            $html .= "<div style=\"font-size: 12px; font-weight: bold;\"> ( " . $action_by . " )</div>";
+            if($action_by != ''){
+                $html .= "<div style=\"font-size: 12px; font-weight: bold;\"> ( " . $action_by . " )</div>";
+            }
+            else{
+                $html .= "<div style=\"height:15px;\"></div>";
+            }
             $html .= "<div style=\"font-size: 10px; font-weight: bold;\">ผู้เชี่ยวชาญ / วิศวกร</div>";
             $html .= "<div style=\"font-size: 10px; font-weight: bold;\">Specialist/Engineer (CSC)</div>";
             $html .= "</div>";
