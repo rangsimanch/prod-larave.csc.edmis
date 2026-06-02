@@ -1835,7 +1835,12 @@ class RfaController extends Controller
             . $note_1 . "</div>";
 
 
-            $html .= "<div style=\"position:absolute;top:505px;left:". $issue_position_lf ."px;transform:translateX(-50%);text-align:center;\">";
+            if($multi_signature){
+                $html .= "<div style=\"position:absolute;top:505px;left:". ($issue_position_lf - 50) ."px;transform:translateX(-50%);text-align:center;\">";
+            }
+            else{
+                $html .= "<div style=\"position:absolute;top:505px;left:". $issue_position_lf ."px;transform:translateX(-50%);text-align:center;\">";
+            }
 
             if($multi_signature){
                 $html .= "<table style=\"border-collapse:collapse;margin:0 auto;\"><tr>";
