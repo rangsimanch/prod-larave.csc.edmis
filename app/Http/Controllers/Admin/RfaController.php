@@ -895,7 +895,7 @@ class RfaController extends Controller
         $stamp_position_top = 380;
         $stamp_position_left = 600;
         
-        $stamp_position_top_new = 380;
+        $stamp_position_top_new = 340;
         $stamp_position_left_new = 600;
 
         $signature_size_h = 60;
@@ -1004,10 +1004,10 @@ class RfaController extends Controller
             $stamp_position_top_2 = 375;
             $stamp_position_left_2 = 550;
 
-            $stamp_position_top_new = 290;
+            $stamp_position_top_new = 320;
             $stamp_position_left_new = 550;
 
-            $stamp_position_top_2_new = 310;
+            $stamp_position_top_2_new = 340;
             $stamp_position_left_2_new = 660;
 
             $stamp_size_h = 120;
@@ -1042,7 +1042,7 @@ class RfaController extends Controller
             $stamp_size_h = 120;
             $stamp_size_w = 120;
 
-            $stamp_position_top_new = 310;
+            $stamp_position_top_new = 340;
             $stamp_position_left_new = 640;
 
             $contract_name = 'Contract ' . $rfa->construction_contract->code . ' : ' . $rfa->construction_contract->name;
@@ -1070,7 +1070,7 @@ class RfaController extends Controller
             $signature_size_w = 60;
             $signature_position_top = 405;
             $signature_position_left = 280;
-            $stamp_position_top_new = 310;
+            $stamp_position_top_new = 340;
             $stamp_position_left_new = 640;
             $stamp_size_h = 120;
             $stamp_size_w = 120;
@@ -1114,7 +1114,7 @@ class RfaController extends Controller
             $stamp_path =  public_path('png-asset/ITD_stamp.png');
             $stamp_size_h = 120;
             $stamp_size_w = 120;
-            $stamp_position_top_new = 310;
+            $stamp_position_top_new = 340;
             $stamp_position_left_new = 640;
             $contract_name = 'Contract ' . $rfa->construction_contract->code . ' : ' . $rfa->construction_contract->name;
 
@@ -1159,7 +1159,7 @@ class RfaController extends Controller
             $stamp_path =  public_path('png-asset/SPTK_stamp.png');
             $stamp_size_h = 120;
             $stamp_size_w = 120;
-            $stamp_position_top_new = 310;
+            $stamp_position_top_new = 340;
             $stamp_position_left_new = 640;
             $contract_name = 'Contract ' . $rfa->construction_contract->code . ' : ' . $rfa->construction_contract->name;
 
@@ -1265,7 +1265,7 @@ class RfaController extends Controller
             $signature_size_w = 60;
             $stamp_size_h = 160;
             $stamp_size_w = 160;
-            $stamp_position_top_new = 310;
+            $stamp_position_top_new = 340;
             $stamp_position_left_new = 620;
             $contract_name = 'Contract ' . $rfa->construction_contract->code . ' : ' . $rfa->construction_contract->name;
 
@@ -1293,7 +1293,7 @@ class RfaController extends Controller
             $signature_position_top = 405;
             $signature_position_left = 280;
             $stamp_position_top = 380;
-            $stamp_position_top_new = 315;
+            $stamp_position_top_new = 345;
             $stamp_position_left_new = 660;
             $stamp_size_h = 110;
             $stamp_size_w = 110;
@@ -1381,7 +1381,7 @@ class RfaController extends Controller
             $stamp_position_top = 270;
             $stamp_position_left = 510;
 
-            $stamp_position_top_new = 330;
+            $stamp_position_top_new = 340;
             $stamp_position_left_new = 650;
             
             $stamp_size_h = 120;
@@ -1765,11 +1765,17 @@ class RfaController extends Controller
         }
 
         else{
-            $pagecount = $mpdf->SetSourceFile(public_path('pdf-asset/RFA_newform_30-05-2026.pdf'));
+            $pagecount = $mpdf->SetSourceFile(public_path('pdf-asset/RFA_newform_04-06-2026.pdf'));
             $tplId = $mpdf->ImportPage($pagecount);
             $mpdf->UseTemplate($tplId);
              //Header
-            $html = "<div style=\"font-size: 13px; font-weight: bold; position:absolute;top:65px;left:310px;\">" . $contract_name . "</div>";
+            $contract_name_length = strlen($contract_name);
+            if($contract_name_length < 250) {
+                $contract_left = 350;
+            } else {
+                $contract_left = 310 - (($contract_name_length - 50) * 0.5);
+            }
+            $html = "<div style=\"font-size: 13px; font-weight: bold; position:absolute;top:65px;left:". $contract_left ."px;text-align:center;\">" . $contract_name . "</div>";
                 //Logo
 
             $html .= "<div style=\"font-size: 14px; position:absolute;top:". $logo_top_new ."px;left:". $logo_left_new ."px;\">
@@ -1782,25 +1788,25 @@ class RfaController extends Controller
 
             //No. Code.
             $html .= "<div style=\"font-size: 12px; font-weight: bold; position:absolute;top:20px;left:705px;\">" . $rfa_code . "</div>";
-            $html .= "<div style=\"font-size: 10px; font-weight: bold; position:absolute;top:163px;left:495px;\">" . $document_number . "</div>";
-            $html .= "<div style=\"font-size: 12px; font-weight: bold; position:absolute;top:163px;left:670px;\">" . $rfa_code . "</div>";
+            $html .= "<div style=\"font-size: 10px; font-weight: bold; position:absolute;top:163px;left:498px;\">" . $document_number . "</div>";
+            $html .= "<div style=\"font-size: 10px; font-weight: bold; position:absolute;top:163px;left:693px;\">" . $rfa_code . "</div>";
 
             //Title
             if(strlen($title_en) > 250){
-                $html .= "<div style=\"font-size: 9px; font-weight: bold; padding-right:243px; position:absolute;top:179px;left:98px; LINE-HEIGHT:16px;\">"
+                $html .= "<div style=\"font-size: 10px; font-weight: bold; padding-right:255px; position:absolute;top:179px;left:98px; LINE-HEIGHT:16px;\">"
                 . $title_en . "</div>";
             }
             else{
-                $html .= "<div style=\"font-size: 12px; font-weight: bold; padding-right:243px; position:absolute;top:179px;left:98px; LINE-HEIGHT:16px;\">"
+                $html .= "<div style=\"font-size: 12px; font-weight: bold; padding-right:255px; position:absolute;top:179px;left:98px; LINE-HEIGHT:16px;\">"
                 . $title_en . "</div>";
             }
 
             if(strlen($title_th) > 300){
-                $html .= "<div style=\"font-size: 9px; font-weight: bold; padding-right:250px; position:absolute;top:247px;left:98px; LINE-HEIGHT:16px;\">"
+                $html .= "<div style=\"font-size: 10px; font-weight: bold; padding-right:255px; position:absolute;top:264px;left:98px; LINE-HEIGHT:16px;\">"
                 . $title_th . "</div>";
             }
             else{
-                $html .= "<div style=\"font-size: 11px; font-weight: bold; padding-right:250px; position:absolute;top:247px;left:98px; LINE-HEIGHT:16px;\">"
+                $html .= "<div style=\"font-size: 11px; font-weight: bold; padding-right:255px; position:absolute;top:264px;left:98px; LINE-HEIGHT:16px;\">"
                 . $title_th . "</div>";
             }
 
@@ -1811,18 +1817,18 @@ class RfaController extends Controller
             // Document Name
             $document_name_fontsize = "12px";
             if(strlen($document_name) > 150) {
-                $document_name_fontsize = "9px";
+                $document_name_fontsize = "10px";
             }
-            $html .= "<div style=\"font-size: " . $document_name_fontsize  . "; padding-right:255px; font-weight: bold; position:absolute;top:313px;left:198px;LINE-HEIGHT:16px;\">" . $document_name . "</div>";
-            $html .= "<div style=\"font-size: 12px; font-weight: bold; position:absolute;top:245px;left:610;\">" . $qty_page . '.' . "</div>";
+            $html .= "<div style=\"font-size: " . $document_name_fontsize  . "; padding-right:255px; font-weight: bold; position:absolute;top:347px;left:198px;LINE-HEIGHT:16px;\">" . $document_name . "</div>";
+            $html .= "<div style=\"font-size: 12px; font-weight: bold; position:absolute;top:263px;left:614;\">" . $qty_page . '.' . "</div>";
 
             //WBS Spec.Ref Clase. Contract No.
-            $html .= "<div style=\"font-size: 12px; padding-right:250px; font-weight: bold; position:absolute;top:362px;left:249px;LINE-HEIGHT:16px;\">" . $wbs . "</div>";
-            $html .= "<div style=\"font-size: 12px; padding-right:60px; font-weight: bold; position:absolute;top:296px;left:610px;LINE-HEIGHT:16px;\">" . $clause . "</div>";
+            $html .= "<div style=\"font-size: 12px; padding-right:250px; font-weight: bold; position:absolute;top:396px;left:249px;LINE-HEIGHT:16px;\">" . $wbs . "</div>";
+            $html .= "<div style=\"font-size: 12px; padding-right:60px; font-weight: bold; position:absolute;top:312px;left:610px;LINE-HEIGHT:16px;\">" . $clause . "</div>";
 
-            $html .= "<div style=\"font-size: 12px; padding-right:60px; font-weight: bold; position:absolute;top:378px;left:275px;\">" . $spec_ref_no . "</div>";
+            $html .= "<div style=\"font-size: 12px; padding-right:60px; font-weight: bold; position:absolute;top:428px;left:275px;\">" . $spec_ref_no . "</div>";
 
-            $html .= "<div style=\"font-size: 12px;  padding-right:55px; font-weight: bold; position:absolute;top:413px;left:237px;LINE-HEIGHT:16px;\">" . $contract_drawing_no . "</div>";
+            $html .= "<div style=\"font-size: 12px;  padding-right:55px; font-weight: bold; position:absolute;top:463px;left:237px;LINE-HEIGHT:16px;\">" . $contract_drawing_no . "</div>";
             
             // Note
             if(strlen($note_1) > 300) {
@@ -1831,15 +1837,15 @@ class RfaController extends Controller
             else {
                 $font_size = 12;
             }
-            $html .= "<div style=\"font-size:". $font_size ."px; padding-right:55px; font-weight: bold; position:absolute;top:446px;left:135px;LINE-HEIGHT:16px;\">"
+            $html .= "<div style=\"font-size:". $font_size ."px; padding-right:55px; font-weight: bold; position:absolute;top:496px;left:135px;LINE-HEIGHT:16px;\">"
             . $note_1 . "</div>";
 
 
             if($multi_signature){
-                $html .= "<div style=\"position:absolute;top:505px;left:". ($issue_position_lf - 50) ."px;transform:translateX(-50%);text-align:center;\">";
+                $html .= "<div style=\"position:absolute;top:550px;left:". ($issue_position_lf - 110) ."px;transform:translateX(-50%);text-align:center;\">";
             }
             else{
-                $html .= "<div style=\"position:absolute;top:505px;left:". $issue_position_lf ."px;transform:translateX(-50%);text-align:center;\">";
+                $html .= "<div style=\"position:absolute;top:550px;left:". ($issue_position_lf - 60) ."px;transform:translateX(-50%);text-align:center;\">";
             }
 
             if($multi_signature){
@@ -1907,22 +1913,22 @@ class RfaController extends Controller
             // ------ section 3 -----
             //CSC Outgoing (1)
             if($comment_status == 1){
-                $html .= "<div style=\"font-size: 16px; position:absolute;top:680;left:195;\">" . 'X' . "</div>";
+                $html .= "<div style=\"font-size: 16px; position:absolute;top:690;left:195;\">" . 'X' . "</div>";
             }
             else if($comment_status == 2){
-                $html .= "<div style=\"font-size: 16px; position:absolute;top:680;left:287;\">" . 'X' . "</div>";
+                $html .= "<div style=\"font-size: 16px; position:absolute;top:690;left:287;\">" . 'X' . "</div>";
             }
             else if($comment_status == 3){
-                $html .= "<div style=\"font-size: 16px; position:absolute;top:680;left:413;\">" . 'X' . "</div>";
+                $html .= "<div style=\"font-size: 16px; position:absolute;top:690;left:413;\">" . 'X' . "</div>";
             }
             else if($comment_status == 4){
-                $html .= "<div style=\"font-size: 16px; position:absolute;top:680;left:550;\">" . 'X' . "</div>";
+                $html .= "<div style=\"font-size: 16px; position:absolute;top:690;left:550;\">" . 'X' . "</div>";
             }
             else{
                 $html .= "";
             }
 
-            $html .= "<div style=\"position:absolute;top:785;left:260px;text-align:center;\">";
+            $html .= "<div style=\"position:absolute;top:800;left:200px;text-align:center;\">";
             $html .= "<div style=\"font-size: 12px; font-weight: bold;white-space:nowrap;border-bottom:1px dotted black;\"><span style=\"font-size:0px;line-height:0;\"></span></div>";
             if($action_by != ''){
                 $html .= "<div style=\"font-size: 12px; font-weight: bold;\"> ( " . $action_by . " )</div>";
@@ -1936,20 +1942,20 @@ class RfaController extends Controller
             
 
             //CSC Outgoing (2)
-            $html .= "<div style=\"font-size: 12px; font-weight: bold; position:absolute;top:840px;left:257px;\">"
+            $html .= "<div style=\"font-size: 12px; font-weight: bold; position:absolute;top:852px;left:257px;\">"
             . '('. $constructor_code . ')' . "</div>";
 
             if($for_statuses == 1){
-                    $html .= "<div style=\"font-size: 16px; position:absolute;top:919;left:192;\">" . 'X' . "</div>";
+                    $html .= "<div style=\"font-size: 16px; position:absolute;top:912;left:192;\">" . 'X' . "</div>";
                 }
             else if($for_statuses == 2){
-                    $html .= "<div style=\"font-size: 16px; position:absolute;top:919;left:287;\">" . 'X' . "</div>";
+                    $html .= "<div style=\"font-size: 16px; position:absolute;top:912;left:287;\">" . 'X' . "</div>";
                 }
             else if($for_statuses == 3){
-                    $html .= "<div style=\"font-size: 16px; position:absolute;top:919;left:413;\">" . 'X' . "</div>";
+                    $html .= "<div style=\"font-size: 16px; position:absolute;top:912;left:413;\">" . 'X' . "</div>";
                 }
             else if($for_statuses == 4){
-                    $html .= "<div style=\"font-size: 16px; position:absolute;top:919;left:551;\">" . 'X' . "</div>";
+                    $html .= "<div style=\"font-size: 16px; position:absolute;top:912;left:551;\">" . 'X' . "</div>";
                 }
             else{
                     $html .= "";
