@@ -1793,7 +1793,7 @@ class RfaController extends Controller
 
             //Title
             if(strlen($title_en) > 250){
-                $html .= "<div style=\"font-size: 10px; font-weight: bold; padding-right:255px; position:absolute;top:179px;left:98px; LINE-HEIGHT:16px;\">"
+                $html .= "<div style=\"font-size: 11px; font-weight: bold; padding-right:255px; position:absolute;top:179px;left:98px; LINE-HEIGHT:16px;\">"
                 . $title_en . "</div>";
             }
             else{
@@ -1801,12 +1801,12 @@ class RfaController extends Controller
                 . $title_en . "</div>";
             }
 
-            if(strlen($title_th) > 300){
-                $html .= "<div style=\"font-size: 10px; font-weight: bold; padding-right:255px; position:absolute;top:264px;left:98px; LINE-HEIGHT:16px;\">"
+            if(strlen($title_th) > 350){
+                $html .= "<div style=\"font-size: 11px; font-weight: bold; padding-right:255px; position:absolute;top:264px;left:98px; LINE-HEIGHT:16px;\">"
                 . $title_th . "</div>";
             }
             else{
-                $html .= "<div style=\"font-size: 11px; font-weight: bold; padding-right:255px; position:absolute;top:264px;left:98px; LINE-HEIGHT:16px;\">"
+                $html .= "<div style=\"font-size: 12px; font-weight: bold; padding-right:255px; position:absolute;top:264px;left:98px; LINE-HEIGHT:16px;\">"
                 . $title_th . "</div>";
             }
 
