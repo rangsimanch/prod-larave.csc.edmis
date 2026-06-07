@@ -1975,71 +1975,85 @@ class RfaController extends Controller
         /// SUBMITTAL
         if(count($submittalsRfa) > 0){
             $mpdf->AddPage();
-            $pagecount = $mpdf->SetSourceFile(public_path('pdf-asset/Submittals_Form.pdf'));
+            $pagecount = $mpdf->SetSourceFile(public_path('pdf-asset/submittal_form_07062026.pdf'));
             $tplId = $mpdf->ImportPage($pagecount);
             $mpdf->UseTemplate($tplId);
 
-            $html = "<div style=\"font-size: 14px; position:absolute;top:55px;left:678px;\">". $rfa_code ."</div>";
-            $html .= "<div style=\"font-size: 10px; position:absolute;top:138px;left:520px;\">". $wbslv1 ."</div>";
-            $html .= "<div style=\"font-size: 10px; position:absolute;top:138px;left:546px;\">". $wbslv2 ."</div>";
-            $html .= "<div style=\"font-size: 10px; position:absolute;top:138px;left:576px;\">". $wbslv3_code . '.' ."</div>";
-            $html .= "<div style=\"font-size: 10px; position:absolute;top:138px;left:608px;\">". $wbslv4_code . '.' ."</div>";
-            $html .= "<div style=\"font-size: 10px; position:absolute;top:138px;left:648px;\">". $type ."</div>";
-            $html .= "<div style=\"font-size: 10px; position:absolute;top:138px;left:678px;\">". $num_doc ."</div>";
-            $html .= "<div style=\"font-size: 10px; position:absolute;top:138px;left:700px;\">". $revision_count ."</div>";
+            $html = "<div style=\"font-size: 14px;  font-weight: bold; position:absolute;top:14px;left:678px;white-space:nowrap;\">". $rfa_code ."</div>";
+            $html .= "<div style=\"font-size: 10px; font-weight: bold; position:absolute;top:93px;left:436px;white-space:nowrap;\">". $wbslv1 ."</div>";
+            $html .= "<div style=\"font-size: 10px; font-weight: bold; position:absolute;top:93px;left:472px;white-space:nowrap;\">". $wbslv2 ."</div>";
+            $html .= "<div style=\"font-size: 10px; font-weight: bold; position:absolute;top:93px;left:513px;white-space:nowrap;\">". $wbslv3_code . "." ."</div>";
+            $html .= "<div style=\"font-size: 10px; font-weight: bold; position:absolute;top:93px;left:552px;white-space:nowrap;\">". ($wbslv4_code != '' ? $wbslv4_code . "."  : '-') ."</div>";
+            $html .= "<div style=\"font-size: 10px; font-weight: bold; position:absolute;top:93px;left:588px;white-space:nowrap;\">". $type ."</div>";
+            $html .= "<div style=\"font-size: 10px; font-weight: bold; position:absolute;top:93px;left:625px;white-space:nowrap;\">". $num_doc ."</div>";
+            $html .= "<div style=\"font-size: 10px; font-weight: bold; position:absolute;top:93px;left:670px;white-space:nowrap;\">". $revision_count ."</div>";
 
-            $html .= "<div style=\"font-size: 10px; position:absolute;top:138px;left:722px;\">". $receive_date ."</div>";
+            $html .= "<div style=\"font-size: 10px; font-weight: bold; position:absolute;top:93px;left:712px;white-space:nowrap;\">". $receive_date ."</div>";
 
 
             if($purpose_for == 1){
-                 $html .= "<div style=\"font-size: 14px; position:absolute;top:153px;left:512px;\">X</div>";
+                 $html .= "<div style=\"font-size: 14px; font-weight: bold; position:absolute;top:107px;left:539px;\">X</div>";
              }
             else if($purpose_for == 2){
-                 $html .= "<div style=\"font-size: 14px; position:absolute;top:153px;left:562px;\">X</div>";
+                 $html .= "<div style=\"font-size: 14px; font-weight: bold; position:absolute;top:107px;left:582px;\">X</div>"; 
             }
              else if($purpose_for == 3){
-                  $html .= "<div style=\"font-size: 14px; position:absolute;top:153px;left:622px;\">X</div>";
+                  $html .= "<div style=\"font-size: 14px; font-weight: bold; position:absolute;top:107px;left:631px;\">X</div>";
             }
             else if($purpose_for == 4){
-                  $html .= "<div style=\"font-size: 14px; position:absolute;top:153px;left:695px;\">X</div>";
+                  $html .= "<div style=\"font-size: 14px; font-weight: bold; position:absolute;top:107px;left:688px;\">X</div>";
             }
 
-            $html .= "<div style=\"font-size: 10px; position:absolute;top:194px;left:118px;\">". $bill . '.'."</div>";
-            $html .= "<div style=\"font-size: 10px; position:absolute;top:208px;left:118px;\">". $title_th ."</div>";
-            $html .= "<div style=\"font-size: 10px; position:absolute;top:195px;left:608px;\">". $assign_to ."</div>";
-            $html .= "<div style=\"font-size: 10px; position:absolute;top:245px;left:230px;\">". $spec_ref_no ."</div>";
-            $html .= "<div style=\"font-size: 10px; position:absolute;top:245px;left:685px;\">". $incoming_no ."</div>";
-            $html .= "<div style=\"font-size: 10px; position:absolute;top:260px;left:670;\">". $submit_date ."</div>";
-            $html .= "<div style=\"font-size: 10px; position:absolute;top:260px;left:118px;\">". $clause ."</div>";
-            $html .= "<div style=\"font-size: 10px; position:absolute;top:280px;left:216px;\">". $contract_drawing_no ."</div>";
-            $html .= "<div style=\"font-size: 10px; position:absolute;top:315px;left:130px;\">". $qty_page  . '.' ."</div>";
+            $html .= "<div style=\"font-size: 10px; font-weight: bold; position:absolute;top:144px;left:112px;\">". $bill . '.'."</div>";
+            $html .= "<div style=\"font-size: 10px; font-weight: bold; padding-right:255px; position:absolute;top:162px;left:112px; LINE-HEIGHT:16px;\">". $title_th ."</div>";
+            $html .= "<div style=\"font-size: 10px; font-weight: bold; position:absolute;top:144px;left:580px;\">". $assign_to ."</div>";
+            $html .= "<div style=\"font-size: 10px; font-weight: bold; position:absolute;top:180px;left:615px;\">". $incoming_no ."</div>";
+            // $html .= "<div style=\"font-size: 10px; font-weight: bold; position:absolute;top:260px;left:664px;\">". $submit_date ."</div>";
 
-            $html .= "<div style=\"font-size: 12px; position:absolute;top:770px;left:". $issue_position_lf_sub ."px;\">"
-            .  $issue_by  . "</div>";
-           
+            $html .= "<div style=\"font-size: 10px; font-weight: bold; position:absolute;top:269px;left:256px;\">". $spec_ref_no ."</div>";
+            $html .= "<div style=\"font-size: 10px; font-weight: bold; position:absolute;top:305px;left:112px;\">". $clause ."</div>";
+            $html .= "<div style=\"font-size: 10px; font-weight: bold; position:absolute;top:322px;left:216px;\">". $contract_drawing_no ."</div>";
+            $html .= "<div style=\"font-size: 10px; font-weight: bold; position:absolute;top:358px;left:154px;\">". $qty_page  . '.' ."</div>";
+
+            $issue_by_length = strlen($issue_by);
+            if($issue_by_length < 30) {
+                $issue_position_lf_sub = 490;
+            } else {
+                $issue_position_lf_sub = 490 - (($issue_by_length - 30) * 0.3);
+            }
+
+            $html .= "<div style=\"text-align:center; position:absolute;top:755px;left:". $issue_position_lf_sub ."px;transform:translateX(-50%);\">";
 
             //Signature
             if($multi_signature){
                 if($signature_path != ''){
-                    $html .= "<div style=\"font-size: 14px; position:absolute;top:740px;left:480px;\">
+                    $html .= "<div style=\"font-size: 14px;\">
                         <img src=\"". $signature_path ."\" width=\"" . $signature_size_w . "\" higth=\"". $signature_size_h ."\"> </div>";
                 }
                 if($signature_path_2 != ''){
-                    $html .= "<div style=\"font-size: 14px; position:absolute;top:740px;left:550px;\">
+                    $html .= "<div style=\"font-size: 14px;\">
                         <img src=\"". $signature_path_2 ."\" width=\"" . $signature_size_w_2 . "\" higth=\"". $signature_size_h_2 ."\"> </div>";
                 }
             }
             else {
                 if($signature_path != ''){
-                    $html .= "<div style=\"font-size: 14px; position:absolute;top:740px;left:520px;\">
+                    $html .= "<div style=\"font-size: 14px;\">
                         <img src=\"". $signature_path ."\" width=\"" . $signature_size_w . "\" higth=\"". $signature_size_h ."\"> </div>";
                 }
-                 $html .= "<div style=\"font-size: 10px;  padding-right:180px; position:absolute;top:787px;left:485px; LINE-HEIGHT:9px;\">"
+            }
+
+            $html .= "<div style=\"font-size: 12px;  font-weight: bold; margin-top:0px;\">"
+            .  $issue_by  . "</div>";
+
+            if(!$multi_signature){
+                $html .= "<div style=\"font-size: 10px; LINE-HEIGHT:9px;\">"
                     . $issuer_jobtitle . '  (' . $constructor_code . ')' . "</div>";
-                    }
+            }
+
+            $html .= "</div>";
             if($multi_stamp){
                 if($stamp_path != ''){
-                    $html .= "<div style=\"font-size: 14px; position:absolute;top:900px;left:400px;\">
+                    $html .= "<div style=\"font-size: 14px; position:absolute;top:930px;left:400px;\">
                         <img src=\"". $stamp_path ."\" width=\"200px\" higth=\"200px\" style=\"opacity: 0.5;\"> </div>";
                 }
                 if($stamp_path_2 != ''){
@@ -2053,41 +2067,45 @@ class RfaController extends Controller
                         <img src=\"". $stamp_path ."\" width=\"200px\" higth=\"200px\" style=\"opacity: 0.5;\"> </div>";
                 }
             }
+            $html .= "<div style=\"font-size: 12px; position:absolute;top:822px;left:480px;\">". $submit_date  ."</div>";
 
-            $html .= "<div style=\"font-size: 12px; position:absolute;top:802px;left:475px;\">". $submit_date  ."</div>";
-            $html .= "<div style=\"font-size: 10px; position:absolute;top:930px;left:695px;\">". $outgoing_number  ."</div>";
-            $html .= "<div style=\"font-size: 10px; position:absolute;top:950px;left:680px;\">". $outgoing_date  ."</div>";
-            $html .= "<div style=\"font-size: 10px; position:absolute;top:930;left:130px;\">". $qty_page  . '.' ."</div>";
-
-
+            // $html .= "<div style=\"font-size: 12px; position:absolute;top:930px;left:695px;\">". $outgoing_number  ."</div>";
+            // $html .= "<div style=\"font-size: 12px; position:absolute;top:950px;left:680px;\">". $outgoing_date  ."</div>";
+            $html .= "<div style=\"font-size: 12px; font-weight: bold; position:absolute;top:1006;left:154px;\">". $qty_page  . '.' ."</div>";
 
 
-            $top = 425;
+
+
+            $top = 445;
             $index = 1;
+            $items_per_page = 9;
+            $available_height = 360;
+            $bottom_offset = 10;
+            $row_spacing = floor(($available_height - $bottom_offset) / $items_per_page);
             $mpdf->WriteHTML($html);
 
             foreach($submittalsRfa as $submittal){
                 //purpose for HERE!!
-                if($index%8 == 0){
-                    $top = 425;
+                if($index%$items_per_page == 0){
+                    $top = 445;
                     $mpdf->AddPage();
-                    $pagecount = $mpdf->SetSourceFile(public_path('pdf-asset/Submittals_Form.pdf'));
+                    $pagecount = $mpdf->SetSourceFile(public_path('pdf-asset/submittal_form_07062026.pdf'));
                     $tplId = $mpdf->ImportPage($pagecount);
                     $mpdf->UseTemplate($tplId);
                     $mpdf->WriteHTML($html);
 
                 }
 
-                $htmlsub = "<div style=\"font-size: 8px; padding-right:660px; position:absolute;top:". $top ."px;left:52px;LINE-HEIGHT:12px;\">".
-                $submittal['item_no'] . '  ' ."</div>";
+                $htmlsub = "<div style=\"font-size: 10px; position:absolute;top:". $top ."px;left:40px;width:60px;\">".
+                $submittal['item_no'] . "</div>";
 
-                $htmlsub .= "<div style=\"font-size: 10px; padding-right:370px; position:absolute;top:". $top ."px;left:138px;LINE-HEIGHT:15px;\">".
+                $htmlsub .= "<div style=\"font-size: 10px; padding-right:370px; position:absolute;top:". $top ."px;left:110px;LINE-HEIGHT:15px;\">".
                 wordwrap(htmlspecialchars($submittal['description'], ENT_QUOTES),350,"<br>\n") ."</div>";
 
                 $htmlsub .= "<div style=\"font-size: 10px; position:absolute;top:". $top ."px;left:445px;\">".
                 htmlspecialchars($submittal['qty_sets']) ."</div>";
 
-                $top += 35;
+                $top += $row_spacing;
                 $index++;
                 $mpdf->WriteHTML($htmlsub);
 
