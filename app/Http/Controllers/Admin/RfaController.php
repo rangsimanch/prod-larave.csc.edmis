@@ -2079,9 +2079,7 @@ class RfaController extends Controller
             $top = 445;
             $index = 1;
             $items_per_page = 8;
-            $available_height = 360;
-            $bottom_offset = 5;
-            $row_spacing = ($available_height - $bottom_offset) / $items_per_page;
+            $row_spacing = 44;
             $mpdf->WriteHTML($html);
 
             foreach($submittalsRfa as $submittal){
