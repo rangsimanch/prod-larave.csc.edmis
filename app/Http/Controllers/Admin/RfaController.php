@@ -1817,7 +1817,7 @@ class RfaController extends Controller
             // Document Name
             $document_name_fontsize = "12px";
             if(strlen($document_name) > 150) {
-                $document_name_fontsize = "10px";
+                $document_name_fontsize = "9px";
             }
             $html .= "<div style=\"font-size: " . $document_name_fontsize  . "; padding-right:255px; font-weight: bold; position:absolute;top:347px;left:198px;LINE-HEIGHT:16px;\">" . $document_name . "</div>";
             $html .= "<div style=\"font-size: 12px; font-weight: bold; position:absolute;top:263px;left:614;\">" . $qty_page . '.' . "</div>";
@@ -2083,6 +2083,16 @@ class RfaController extends Controller
             $mpdf->WriteHTML($html);
 
             foreach($submittalsRfa as $submittal){
+                // Check if we need a new page before writing the item
+                if($index > 1 && ($index - 1) % $items_per_page == 0){
+                    $top = 445;
+                    $mpdf->AddPage();
+                    $pagecount = $mpdf->SetSourceFile(public_path('pdf-asset/submittal_form_07062026.pdf'));
+                    $tplId = $mpdf->ImportPage($pagecount);
+                    $mpdf->UseTemplate($tplId);
+                    $mpdf->WriteHTML($html);
+                }
+
                 $htmlsub = "<div style=\"font-size: 10px; position:absolute;top:". $top ."px;left:40px;width:60px;\">".
                 $submittal['item_no'] . "</div>";
 
@@ -2095,17 +2105,6 @@ class RfaController extends Controller
                 $top += $row_spacing;
                 $index++;
                 $mpdf->WriteHTML($htmlsub);
-
-                //purpose for HERE!!
-                if($index%$items_per_page == 0){
-                    $top = 445;
-                    $mpdf->AddPage();
-                    $pagecount = $mpdf->SetSourceFile(public_path('pdf-asset/submittal_form_07062026.pdf'));
-                    $tplId = $mpdf->ImportPage($pagecount);
-                    $mpdf->UseTemplate($tplId);
-                    $mpdf->WriteHTML($html);
-
-                }
 
             }
 
