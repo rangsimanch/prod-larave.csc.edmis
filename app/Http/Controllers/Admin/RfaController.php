@@ -2079,7 +2079,7 @@ class RfaController extends Controller
             $top = 445;
             $index = 1;
             $items_per_page = 8;
-            $row_spacing = 36;
+            $row_spacing = 40;
             $mpdf->WriteHTML($html);
 
             foreach($submittalsRfa as $submittal){
@@ -2103,9 +2103,7 @@ class RfaController extends Controller
                 $htmlsub .= "<div style=\"font-size: 10px; position:absolute;top:". $top ."px;left:445px;\">".
                 htmlspecialchars($submittal['qty_sets']) ."</div>";
 
-                $description_lines = ceil(strlen($submittal['description']) / 35);
-                $adjusted_spacing = $row_spacing + (($description_lines - 1) * 15);
-                $top += $adjusted_spacing;
+                $top += $row_spacing;
                 $index++;
                 $mpdf->WriteHTML($htmlsub);
 
