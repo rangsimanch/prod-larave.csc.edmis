@@ -2080,7 +2080,7 @@ class RfaController extends Controller
             $index = 1;
             $items_per_page = 8;
             $available_height = 360;
-            $bottom_offset = 10;
+            $bottom_offset = 5;
             $row_spacing = floor(($available_height - $bottom_offset) / $items_per_page);
             $mpdf->WriteHTML($html);
 
