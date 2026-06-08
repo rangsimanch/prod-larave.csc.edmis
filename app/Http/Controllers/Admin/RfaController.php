@@ -2078,7 +2078,7 @@ class RfaController extends Controller
 
             $top = 445;
             $index = 1;
-            $items_per_page = 9;
+            $items_per_page = 8;
             $available_height = 360;
             $bottom_offset = 10;
             $row_spacing = floor(($available_height - $bottom_offset) / $items_per_page);
