@@ -2103,7 +2103,9 @@ class RfaController extends Controller
                 $htmlsub .= "<div style=\"font-size: 10px; position:absolute;top:". $top ."px;left:445px;\">".
                 htmlspecialchars($submittal['qty_sets']) ."</div>";
 
-                $top += $row_spacing;
+                $description_lines = ceil(strlen($submittal['description']) / 35);
+                $adjusted_spacing = $row_spacing + (($description_lines - 1) * 15);
+                $top += $adjusted_spacing;
                 $index++;
                 $mpdf->WriteHTML($htmlsub);
 
