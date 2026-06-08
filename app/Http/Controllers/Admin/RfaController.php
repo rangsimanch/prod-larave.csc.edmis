@@ -2071,7 +2071,7 @@ class RfaController extends Controller
 
             // $html .= "<div style=\"font-size: 12px; position:absolute;top:930px;left:695px;\">". $outgoing_number  ."</div>";
             // $html .= "<div style=\"font-size: 12px; position:absolute;top:950px;left:680px;\">". $outgoing_date  ."</div>";
-            $html .= "<div style=\"font-size: 12px; font-weight: bold; position:absolute;top:1006;left:154px;\">". ceil(count($submittalsRfa) / 8)  . '.' ."</div>";
+            $html .= "<div style=\"font-size: 12px; font-weight: bold; position:absolute;top:1006;left:154px;\">". ceil(count($submittalsRfa) / 8)  . ' หน้า' ."</div>";
 
 
 
