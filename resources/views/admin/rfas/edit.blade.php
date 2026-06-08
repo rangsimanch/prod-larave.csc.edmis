@@ -222,6 +222,40 @@
                             @endif
                             <span class="help-block">{{ trans('cruds.rfa.fields.contract_drawing_no_helper') }}</span>
                      </div>
+
+                     <div class="table-responsive">
+                        <span id="result"> </span>
+                        <label> {{ trans('cruds.submittalsRfa.title')}} </label>
+                        <a name="link" href="{{ asset('pdf-asset/PasteSubmittalformExcel.pdf') }}" target="_blank"> (อ่านวิธีการคัดลอกชุดข้อมูล Submittals จากไฟล์ Excel) </a>
+
+                        <table class="table table-bordered table-striped" id="submittal_table">
+                            <thead>
+                                <tr>
+                                    <th width="25%"><center>{{ trans('cruds.submittalsRfa.fields.item_no') }}<center></th>
+                                    <th width="25%"><center></center> {{ trans('cruds.submittalsRfa.fields.description') }}</center></th>
+                                    <th width="25%"><center>{{ trans('cruds.submittalsRfa.fields.qty_sets') }}</center></th>
+                                    <th width="30%"><center>{{ trans('global.action') }}</center></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <td colspan="4" align="center">
+                                    <a name="add" id="add" class="btn btn-success">{{ trans('global.add') }}</a>
+                                    <a name="addFromExcel" id="addFromExcel" class="btn btn-primary">Paste Data from Excel</a>
+                                </td>
+
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="form-group {{ $errors->has('submittals_file') ? 'has-error' : '' }}">
+                        <label for="submittals_file">{{ trans('cruds.rfa.fields.submittals_file') }}</label>
+                        <div class="needsclick dropzone" id="submittals_file-dropzone">
+                        </div>
+                        @if($errors->has('submittals_file'))
+                            <span class="help-block" role="alert">{{ $errors->first('submittals_file') }}</span>
+                        @endif
+                        <span class="help-block">{{ trans('cruds.rfa.fields.submittals_file_helper') }}</span>
+                    </div>
                 </div>
 
                     <!-- IF STATUS NEW -->

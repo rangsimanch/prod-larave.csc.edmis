@@ -618,6 +618,7 @@ Dropzone.options.submittalsFileDropzone = {
     url: '{{ route('admin.rfas.storeMedia') }}',
     maxFilesize: 500, // MB
     addRemoveLinks: true,
+    acceptedFiles: '.pdf',
     headers: {
       'X-CSRF-TOKEN': "{{ csrf_token() }}"
     },

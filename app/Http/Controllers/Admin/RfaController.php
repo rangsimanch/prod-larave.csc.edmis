@@ -892,12 +892,15 @@ class RfaController extends Controller
         $rfa->load('type', 'construction_contract', 'wbs_level_3', 'wbs_level_4', 'issueby', 'assign', 'action_by', 'comment_by', 'information_by', 'comment_status', 'for_status', 'document_status', 'create_by_user', 'team','onRfaSubmittalsRfas', 'reviewed_by','distribute_by','update_by_user');
 
         //Varible setting
+        $stamp_path = "";
         $stamp_position_top = 380;
         $stamp_position_left = 600;
         
+
         $stamp_position_top_new = 340;
         $stamp_position_left_new = 600;
 
+        $signature_path = "";
         $signature_size_h = 60;
         $signature_size_w = 60;
 
@@ -906,6 +909,16 @@ class RfaController extends Controller
 
         $logo_top_new = 0;
         $logo_left_new = 0;
+
+        $contract_name = 'Contract ' . $rfa->construction_contract->code . ' : ' . $rfa->construction_contract->name;
+        $logo_path = "";
+        $logo_w = 0;
+        $logo_h = 0;
+        $constructor_code = $rfa->construction_contract->code;
+        $issue_position_lf = 0;
+        $issue_by = "";
+        $issuer_jobtitle = "";
+
 
         if($rfa->construction_contract->code == "C2-1"){
             $issue_by = '( Sitthichai Pimsawat )';
@@ -1966,11 +1979,25 @@ class RfaController extends Controller
 
         
         }
-       
+
         $mpdf->WriteHTML($html);
-         //Add Document
+
+        //Add Document
         $allowed = array('pdf','PDF','Pdf');
 
+        // Check if submittals_file exists and is PDF
+        if ($rfa->submittals_file && count($rfa->submittals_file) > 0) {
+            foreach ($rfa->submittals_file as $media) {
+                $fileExtension = strtolower(pathinfo($media->file_name, PATHINFO_EXTENSION));
+                if (in_array($fileExtension, $allowed)) {
+                    // Insert the PDF file
+                    $mpdf->AddPage();
+                    $pagecount = $mpdf->SetSourceFile($media->getPath());
+                    $tplId = $mpdf->ImportPage($pagecount);
+                    $mpdf->UseTemplate($tplId);
+                }
+            }
+        }
 
         /// SUBMITTAL
         if(count($submittalsRfa) > 0){
