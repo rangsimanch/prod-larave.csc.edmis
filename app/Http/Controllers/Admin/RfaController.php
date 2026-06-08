@@ -2083,17 +2083,6 @@ class RfaController extends Controller
             $mpdf->WriteHTML($html);
 
             foreach($submittalsRfa as $submittal){
-                //purpose for HERE!!
-                if($index%$items_per_page == 0){
-                    $top = 445;
-                    $mpdf->AddPage();
-                    $pagecount = $mpdf->SetSourceFile(public_path('pdf-asset/submittal_form_07062026.pdf'));
-                    $tplId = $mpdf->ImportPage($pagecount);
-                    $mpdf->UseTemplate($tplId);
-                    $mpdf->WriteHTML($html);
-
-                }
-
                 $htmlsub = "<div style=\"font-size: 10px; position:absolute;top:". $top ."px;left:40px;width:60px;\">".
                 $submittal['item_no'] . "</div>";
 
@@ -2106,6 +2095,17 @@ class RfaController extends Controller
                 $top += $row_spacing;
                 $index++;
                 $mpdf->WriteHTML($htmlsub);
+
+                //purpose for HERE!!
+                if($index%$items_per_page == 0){
+                    $top = 445;
+                    $mpdf->AddPage();
+                    $pagecount = $mpdf->SetSourceFile(public_path('pdf-asset/submittal_form_07062026.pdf'));
+                    $tplId = $mpdf->ImportPage($pagecount);
+                    $mpdf->UseTemplate($tplId);
+                    $mpdf->WriteHTML($html);
+
+                }
 
             }
 
