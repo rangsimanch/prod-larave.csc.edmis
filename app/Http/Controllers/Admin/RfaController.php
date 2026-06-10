@@ -700,9 +700,11 @@ class RfaController extends Controller
         //     return view('admin.rfas.edit', compact('construction_contracts', 'for_statuses','comment_statuses', 'reviewed_bies', 'rfa'));
         // }
 
+        $submittalsRfa = SubmittalsRfa::all()->where('on_rfa_id' , $rfa->id);
+
         $rfa->load('document_status', 'boq', 'boq_sub', 'type', 'construction_contract', 'wbs_level_3', 'wbs_level_4', 'issueby', 'assign', 'action_by', 'comment_by', 'information_by', 'comment_status', 'for_status', 'create_by_user', 'distribute_by', 'reviewed_by', 'wbs_level_one', 'team');
 
-        return view('admin.rfas.edit', compact('action_bies', 'assigns', 'boq_subs', 'boqs', 'comment_bies', 'comment_statuses', 'construction_contracts', 'document_statuses', 'for_statuses', 'information_bies', 'issuebies', 'reviewed_bies', 'rfa', 'types', 'wbs_level_3s', 'wbs_level_4s'));
+        return view('admin.rfas.edit', compact('action_bies', 'assigns', 'boq_subs', 'boqs', 'comment_bies', 'comment_statuses', 'construction_contracts', 'document_statuses', 'for_statuses', 'information_bies', 'issuebies', 'reviewed_bies', 'rfa', 'submittalsRfa', 'types', 'wbs_level_3s', 'wbs_level_4s'));
     }
 
     public function update(UpdateRfaRequest $request, Rfa $rfa)
@@ -808,6 +810,25 @@ class RfaController extends Controller
 
 
         $rfa->update($data);
+
+        // Sync Submittals - delete existing and re-insert from form
+        if(count($request->only(['item'])) != 0){
+            SubmittalsRfa::where('on_rfa_id', $rfa->id)->delete();
+            $item_no = $request->item;
+            $description = $request->des;
+            $qty_sets = $request->qty;
+            $insert_data = [];
+            for($count = 0; $count < count($item_no); $count++){
+                $dataSubmittals = array(
+                    'item_no' => $item_no[$count],
+                    'description' => $description[$count],
+                    'qty_sets' => $qty_sets[$count],
+                    'on_rfa_id' => $rfa->id
+                );
+                $insert_data[] = $dataSubmittals;
+            }
+            SubmittalsRfa::insert($insert_data);
+        }
 
         // Sync media collections using helper method
         $this->syncRfaMedia($rfa, $request, 'file_upload_1');
@@ -1862,14 +1883,12 @@ class RfaController extends Controller
             }
 
             if($multi_signature){
-                $html .= "<table style=\"border-collapse:collapse;margin:0 auto;\"><tr>";
                 if($signature_path != ''){
-                    $html .= "<td style=\"padding-right:10px;\"><img src=\"". $signature_path ."\" width=\"". $signature_size_w ."\" higth=\"". $signature_size_h ."\"></td>";
+                    $html .= "<div style=\"position:absolute;top:550px;left:". ($issue_position_lf - 160) ."px;transform:translateX(-50%);text-align:center;\"><img src=\"". $signature_path ."\" width=\"". $signature_size_w ."\" higth=\"". $signature_size_h ."\"></div>";
                 }
                 if($signature_path_2 != ''){
-                    $html .= "<td><img src=\"". $signature_path_2 ."\" width=\"". $signature_size_w_2 ."\" higth=\"". $signature_size_h_2 ."\"></td>";
+                    $html .= "<div style=\"position:absolute;top:550px;left:". ($issue_position_lf - 20) ."px;transform:translateX(-50%);text-align:center;\"><img src=\"". $signature_path_2 ."\" width=\"". $signature_size_w_2 ."\" higth=\"". $signature_size_h_2 ."\"></div>";
                 }
-                $html .= "</tr></table>";
             }
             else{
                 //Signature Manager
@@ -2043,16 +2062,27 @@ class RfaController extends Controller
             $html .= "<div style=\"font-size: 10px; font-weight: bold; position:absolute;top:358px;left:154px;\">". $qty_page  . '.' ."</div>";
 
             $issue_by_length = strlen($issue_by);
-            if($issue_by_length < 30) {
-                $issue_position_lf_sub = 490;
+            if($issue_by_length < 60) {
+                $issue_position_lf_sub = 495;
             } else {
-                $issue_position_lf_sub = 490 - (($issue_by_length - 30) * 0.3);
+                $issue_position_lf_sub = 475 - (($issue_by_length - 30) * 0.3);
             }
 
-            $html .= "<div style=\"text-align:center; position:absolute;top:755px;left:". $issue_position_lf_sub ."px;transform:translateX(-50%);\">";
+             if($signature_path == ''){
+                $issue_position_lf_sub = 495;
+            }
+
+            // Adjust top when no signature to move content up
+            $signature_top = 755;
+            if($signature_path == ''){
+                $signature_top = 790;
+            }
+
+            $html .= "<div style=\"text-align:center; position:absolute;top:". $signature_top ."px;left:". $issue_position_lf_sub ."px;transform:translateX(-50%);\">";
 
             //Signature
             if($multi_signature){
+                $html .= "<div style=\"display:flex; flex-direction:row; justify-content:center; align-items:center; gap:20px;\">";
                 if($signature_path != ''){
                     $html .= "<div style=\"font-size: 14px;\">
                         <img src=\"". $signature_path ."\" width=\"" . $signature_size_w . "\" higth=\"". $signature_size_h ."\"> </div>";
@@ -2061,6 +2091,7 @@ class RfaController extends Controller
                     $html .= "<div style=\"font-size: 14px;\">
                         <img src=\"". $signature_path_2 ."\" width=\"" . $signature_size_w_2 . "\" higth=\"". $signature_size_h_2 ."\"> </div>";
                 }
+                $html .= "</div>";
             }
             else {
                 if($signature_path != ''){

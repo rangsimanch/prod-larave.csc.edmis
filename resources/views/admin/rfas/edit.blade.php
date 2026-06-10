@@ -238,11 +238,20 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <td colspan="4" align="center">
-                                    <a name="add" id="add" class="btn btn-success">{{ trans('global.add') }}</a>
-                                    <a name="addFromExcel" id="addFromExcel" class="btn btn-primary">Paste Data from Excel</a>
-                                </td>
-
+                                @foreach($submittalsRfa as $submittal)
+                                <tr>
+                                    <td><input type="text" name="item[]" class="form-control" value="{{ $submittal->item_no }}" /></td>
+                                    <td><input type="text" name="des[]" class="form-control" value="{{ $submittal->description }}" /></td>
+                                    <td><input type="number" name="qty[]" class="form-control" value="{{ $submittal->qty_sets }}" /></td>
+                                    <td align="center"><a name="remove" class="btn btn-danger">{{ trans('global.remove') }}</a></td>
+                                </tr>
+                                @endforeach
+                                <tr id="button_row">
+                                    <td colspan="4" align="center">
+                                        <a name="add" id="add" class="btn btn-success">{{ trans('global.add') }}</a>
+                                        <a name="addFromExcel" id="addFromExcel" class="btn btn-primary">Paste Data from Excel</a>
+                                    </td>
+                                </tr>
                             </tbody>
                         </table>
                     </div>
@@ -1120,6 +1129,129 @@ $("#save_form").on('click',function(e){
         }
     });
 });
+</script>
+
+<script>
+    var uploadedSubmittalsFileMap = {}
+Dropzone.options.submittalsFileDropzone = {
+    url: '{{ route('admin.rfas.storeMedia') }}',
+    maxFilesize: 500, // MB
+    addRemoveLinks: true,
+    acceptedFiles: '.pdf',
+    headers: {
+      'X-CSRF-TOKEN': "{{ csrf_token() }}"
+    },
+    params: {
+      size: 500
+    },
+    success: function (file, response) {
+      $('form').append('<input type="hidden" name="submittals_file[]" value="' + response.name + '">')
+      uploadedSubmittalsFileMap[file.name] = response.name
+    },
+    removedfile: function (file) {
+      file.previewElement.remove()
+      var name = ''
+      if (typeof file.file_name !== 'undefined') {
+        name = file.file_name
+      } else {
+        name = uploadedSubmittalsFileMap[file.name]
+      }
+      $('form').find('input[name="submittals_file[]"][value="' + name + '"]').remove()
+    },
+    init: function () {
+@if(isset($rfa) && $rfa->submittals_file)
+          var files =
+            {!! json_encode($rfa->submittals_file) !!}
+              for (var i in files) {
+              var file = files[i]
+              this.options.addedfile.call(this, file)
+              file.previewElement.classList.add('dz-complete')
+              $('form').append('<input type="hidden" name="submittals_file[]" value="' + file.file_name + '">')
+            }
+@endif
+    },
+     error: function (file, response) {
+         if ($.type(response) === 'string') {
+             var message = response //dropzone sends it's own error messages in string
+         } else {
+             var message = response.errors.file
+         }
+         file.previewElement.classList.add('dz-error')
+         _ref = file.previewElement.querySelectorAll('[data-dz-errormessage]')
+         _results = []
+         for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+             node = _ref[_i]
+             _results.push(node.textContent = message)
+         }
+
+         return _results
+     }
+}
+</script>
+
+<script>
+    $(document).ready(function () {
+        var count = {{ count($submittalsRfa) }};
+
+        function dynamic_field(number) {
+            var html = '<tr>';
+            html += '<td><input type="text" name="item[]" class="form-control" /></td>';
+            html += '<td><input type="text" name="des[]" class="form-control" /></td>';
+            html += '<td><input type="number" name="qty[]" class="form-control" /></td>';
+            html += '<td align="center"><a name="remove" class="btn btn-danger">{{ trans('global.remove') }}</a></td></tr>';
+            $('#button_row').before(html);
+        }
+
+        $('#add').click(function () {
+            count++;
+            dynamic_field(count);
+            console.log(count);
+        });
+
+        $('#addFromExcel').click(function () {
+            navigator.clipboard.readText().then(function (text) {
+                var rows = text.split('\n');
+
+                if (rows.length === 0 || (rows.length === 1 && rows[0] === '')) {
+                    alert('No data found in the clipboard.');
+                    return;
+                }
+
+                rows.forEach(function (row) {
+                    var columns = row.split('\t');
+
+                    if (columns.length !== 3) {
+                        return;
+                    }
+
+                    var newRow = '<tr>';
+                    columns.forEach(function (column, index) {
+                        var nameAttribute = 'item[]';
+                        if (index === 1) {
+                            nameAttribute = 'des[]';
+                        } else if (index === 2) {
+                            nameAttribute = 'qty[]';
+                        }
+                        newRow += '<td><input type="text" name="' + nameAttribute + '" class="form-control" value="' + column + '"></td>';
+                    });
+
+                    newRow += '<td align="center"><a name="remove" class="btn btn-danger">{{ trans('global.remove') }}</a></td></tr>';
+                    $('#button_row').before(newRow);
+                    count++;
+                });
+            }).catch(function (err) {
+                console.error('Failed to read clipboard contents: ', err);
+                alert('An error occurred while reading data from the clipboard.');
+            });
+        });
+
+        $(document).on('click', '[name="remove"]', function () {
+            count--;
+            $(this).closest("tr").remove();
+        });
+
+        var clipboard = new ClipboardJS('#addFromExcel');
+    });
 </script>
 
 @endsection
