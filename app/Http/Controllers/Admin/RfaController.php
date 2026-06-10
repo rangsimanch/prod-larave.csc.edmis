@@ -482,8 +482,8 @@ class RfaController extends Controller
         $wbs_level_4s = Wbslevelfour::all()->pluck('wbs_level_4_name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $issuebies = User::find([202,91,162,196,889])->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
-
-        $assigns = User::find([61, 773])->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), ''); //61->Li,  62->Liu , 461-> Ma, 288->Jiang
+    
+        $assigns = User::find([61, 773, 1805, 1001, 1806])->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), ''); //61->Li,  62->Liu , 461-> Ma, 288->Jiang
 
         $action_bies = User::where('team_id',3)->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
@@ -658,7 +658,7 @@ class RfaController extends Controller
 
         $issuebies = User::find([202,91,219,162,196])->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $assigns = User::find([61, 773])->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
+        $assigns = User::find([61, 773, 1805, 1001, 1806])->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $action_bies = User::where('team_id',3)->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
@@ -2150,7 +2150,7 @@ class RfaController extends Controller
         $html .= "<div style=\"font-size: 12px; font-weight: bold; position:absolute;top:94px;left:340px;\">". $submit_date ."</div>";
         $html .= "<div style=\"font-size: 12px; font-weight: bold; position:absolute;top:94px;left:570;\">". $qty_page .'.' ."</div>";
         $html .= "<div style=\"font-size: 12px; font-weight: bold; position:absolute;top:115px;left:165px;\">". $rfa_code ."</div>";
-        $html .= "<div style=\"font-size: 10px; font-weight: bold; padding-right:50px; position:absolute;top:135px;left:50px;LINE-HEIGHT:14px;\">". $title_th ."</div>";
+        $html .= "<div style=\"font-size: 11px; font-weight: bold; padding-right:50px; position:absolute;top:135px;left:50px;LINE-HEIGHT:14px;\">". $title_th ."</div>";
 
 
 
