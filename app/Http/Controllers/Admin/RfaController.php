@@ -2009,11 +2009,13 @@ class RfaController extends Controller
             foreach ($rfa->submittals_file as $media) {
                 $fileExtension = strtolower(pathinfo($media->file_name, PATHINFO_EXTENSION));
                 if (in_array($fileExtension, $allowed)) {
-                    // Insert the PDF file
-                    $mpdf->AddPage();
+                    // Insert all pages of the PDF file
                     $pagecount = $mpdf->SetSourceFile($media->getPath());
-                    $tplId = $mpdf->ImportPage($pagecount);
-                    $mpdf->UseTemplate($tplId);
+                    for ($i = 1; $i <= $pagecount; $i++) {
+                        $mpdf->AddPage();
+                        $tplId = $mpdf->ImportPage($i);
+                        $mpdf->UseTemplate($tplId);
+                    }
                 }
             }
         }
