@@ -1648,7 +1648,7 @@ class RfaController extends Controller
 
                 }
                 if($signature_path_2 != ''){
-                    $html .= "<div style=\"font-size: 14px; font-weight: bold; position:absolute;top:" . $signature_position_top_2  ."px;left:". $signature_position_left_2 ."px;\">
+                    $html .= "<div style=\"font-size: 14px; font-weight: bold; position:absolute;top:" . ($signature_position_top + 15 )  ."px;left:". $signature_position_left_2 ."px;\">
                         <img src=\"". $signature_path_2 ."\" width=\"". $signature_size_w_2 ."\" higth=\"". $signature_size_h_2 ."\"> </div>";
 
                 }
