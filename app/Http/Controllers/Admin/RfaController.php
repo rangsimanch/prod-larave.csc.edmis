@@ -1561,7 +1561,7 @@ class RfaController extends Controller
             print "Creating an mPDF object failed with" . $e->getMessage();
         }
         
-        if($rfa->created_at < '2026-05-31'){
+        if($rfa->created_at < '2025-05-31'){
             $pagecount = $mpdf->SetSourceFile(public_path('pdf-asset/RFA-Form_empty_V.9.5.pdf'));
             $tplId = $mpdf->ImportPage($pagecount);
             $mpdf->UseTemplate($tplId);
@@ -1883,12 +1883,14 @@ class RfaController extends Controller
             }
 
             if($multi_signature){
+                $html .= "<table style=\"border-collapse:collapse;margin:0 auto;\"><tr>";
                 if($signature_path != ''){
-                    $html .= "<div style=\"position:absolute;top:550px;left:". ($issue_position_lf - 160) ."px;transform:translateX(-50%);text-align:center;\"><img src=\"". $signature_path ."\" width=\"". $signature_size_w ."\" higth=\"". $signature_size_h ."\"></div>";
+                    $html .= "<td style=\"padding-right:10px;\"><img src=\"". $signature_path ."\" width=\"". $signature_size_w ."\" higth=\"". $signature_size_h ."\"></td>";
                 }
                 if($signature_path_2 != ''){
-                    $html .= "<div style=\"position:absolute;top:550px;left:". ($issue_position_lf - 20) ."px;transform:translateX(-50%);text-align:center;\"><img src=\"". $signature_path_2 ."\" width=\"". $signature_size_w_2 ."\" higth=\"". $signature_size_h_2 ."\"></div>";
+                    $html .= "<td><img src=\"". $signature_path_2 ."\" width=\"". $signature_size_w_2 ."\" higth=\"". $signature_size_h_2 ."\"></td>";
                 }
+                $html .= "</tr></table>";
             }
             else{
                 //Signature Manager
@@ -2080,20 +2082,25 @@ class RfaController extends Controller
                 $signature_top = 790;
             }
 
+            $issue_position_lf_sub = 480;
+            if($multi_signature){
+                $issue_position_lf_sub = 455;
+                $signature_top += 5;
+            }
+
+
             $html .= "<div style=\"text-align:center; position:absolute;top:". $signature_top ."px;left:". $issue_position_lf_sub ."px;transform:translateX(-50%);\">";
 
             //Signature
             if($multi_signature){
-                $html .= "<div style=\"display:flex; flex-direction:row; justify-content:center; align-items:center; gap:20px;\">";
+                $html .= "<table style=\"border-collapse:collapse;margin:0 auto;\"><tr>";
                 if($signature_path != ''){
-                    $html .= "<div style=\"font-size: 14px;\">
-                        <img src=\"". $signature_path ."\" width=\"" . $signature_size_w . "\" higth=\"". $signature_size_h ."\"> </div>";
+                    $html .= "<td style=\"padding-right:10px;\"><img src=\"". $signature_path ."\" width=\"" . $signature_size_w . "\" higth=\"". $signature_size_h ."\"></td>";
                 }
                 if($signature_path_2 != ''){
-                    $html .= "<div style=\"font-size: 14px;\">
-                        <img src=\"". $signature_path_2 ."\" width=\"" . $signature_size_w_2 . "\" higth=\"". $signature_size_h_2 ."\"> </div>";
+                    $html .= "<td><img src=\"". $signature_path_2 ."\" width=\"" . $signature_size_w_2 . "\" higth=\"". $signature_size_h_2 ."\"></td>";
                 }
-                $html .= "</div>";
+                $html .= "</tr></table>";
             }
             else {
                 if($signature_path != ''){
