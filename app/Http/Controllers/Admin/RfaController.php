@@ -1561,7 +1561,7 @@ class RfaController extends Controller
             print "Creating an mPDF object failed with" . $e->getMessage();
         }
         
-        if($rfa->created_at < '2025-05-31'){
+        if($rfa->created_at < '2026-05-31'){
             $pagecount = $mpdf->SetSourceFile(public_path('pdf-asset/RFA-Form_empty_V.9.5.pdf'));
             $tplId = $mpdf->ImportPage($pagecount);
             $mpdf->UseTemplate($tplId);
