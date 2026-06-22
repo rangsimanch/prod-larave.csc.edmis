@@ -193,14 +193,15 @@ class NcrController extends Controller
         //     $ncr->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('file_attachment');
         // }
 
+        $index = 0;
         foreach ($request->input('file_attachment', []) as $file) {
             $index++;
             $index_number = substr("00{$index}", -2);
             $inputFile = storage_path('tmp/uploads/' . basename($file));
-            $renameFile = storage_path('tmp/uploads/' . 'NCR' . $doc_number . '_' . $index_number . '.pdf');
+            $renameFile = storage_path('tmp/uploads/' . 'NCR' . $ncr->id . '_' . $index_number . '.pdf');
             rename($inputFile, $renameFile);
 
-            $outputFile = storage_path('tmp/uploads/' . 'Convert_' . 'NCR' . $doc_number . '_' . $index_number . '.pdf');
+            $outputFile = storage_path('tmp/uploads/' . 'Convert_' . 'NCR' . $ncr->id . '_' . $index_number . '.pdf');
 
             // Set the Ghostscript command
             $command = "gs -sDEVICE=pdfwrite -dCompatibilityLevel=1.4 -dNOPAUSE -dQUIET -dBATCH -sOutputFile=$outputFile $renameFile";
@@ -208,8 +209,12 @@ class NcrController extends Controller
             // Run the Ghostscript command
             shell_exec($command);
 
-            $ncr->addMedia($outputFile)->toMediaCollection('file_attachment');
-            // $swn->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('document_attachment');
+            // Check if conversion succeeded, otherwise use original file
+            if (file_exists($outputFile)) {
+                $ncr->addMedia($outputFile)->toMediaCollection('file_attachment');
+            } else {
+                $ncr->addMedia($renameFile)->toMediaCollection('file_attachment');
+            }
         }
 
         if ($media = $request->input('ck-media', false)) {
@@ -340,8 +345,12 @@ class NcrController extends Controller
                 // Run the Ghostscript command
                 shell_exec($command);
 
-                $ncr->addMedia($outputFile)->toMediaCollection('file_attachment');
-                // $swn->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('file_attachment');
+                // Check if conversion succeeded, otherwise use original file
+                if (file_exists($outputFile)) {
+                    $ncr->addMedia($outputFile)->toMediaCollection('file_attachment');
+                } else {
+                    $ncr->addMedia($renameFile)->toMediaCollection('file_attachment');
+                }
             }
         }
 

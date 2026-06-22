@@ -209,9 +209,12 @@ class NcnController extends Controller
             // Run the Ghostscript command
             shell_exec($command);
 
-            // Add the converted PDF file to the media collection
-            $ncn->addMedia($outputFile)->toMediaCollection('file_attachment');
-            // $ncn->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('file_attachment');
+            // Check if conversion succeeded, otherwise use original file
+            if (file_exists($outputFile)) {
+                $ncn->addMedia($outputFile)->toMediaCollection('file_attachment');
+            } else {
+                $ncn->addMedia($renameFile)->toMediaCollection('file_attachment');
+            }
         }
 
         if ($media = $request->input('ck-media', false)) {
@@ -290,9 +293,12 @@ class NcnController extends Controller
                 // Run the Ghostscript command
                 shell_exec($command);
 
-                // Add the converted PDF file to the media collection
-                $ncn->addMedia($outputFile)->toMediaCollection('file_attachment');
-                // $ncn->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('file_attachment');
+                // Check if conversion succeeded, otherwise use original file
+                if (file_exists($outputFile)) {
+                    $ncn->addMedia($outputFile)->toMediaCollection('file_attachment');
+                } else {
+                    $ncn->addMedia($renameFile)->toMediaCollection('file_attachment');
+                }
             }
         }
 
