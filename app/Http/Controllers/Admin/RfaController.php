@@ -1799,7 +1799,7 @@ class RfaController extends Controller
         }
 
         else{
-            $pagecount = $mpdf->SetSourceFile(public_path('pdf-asset/RFA_newform_04-06-2026.pdf'));
+            $pagecount = $mpdf->SetSourceFile(public_path('pdf-asset/RFA_newform_28-06-2026.pdf'));
             $tplId = $mpdf->ImportPage($pagecount);
             $mpdf->UseTemplate($tplId);
              //Header
@@ -1853,12 +1853,12 @@ class RfaController extends Controller
             if(strlen($document_name) > 150) {
                 $document_name_fontsize = "9px";
             }
-            $html .= "<div style=\"font-size: " . $document_name_fontsize  . "; padding-right:255px; font-weight: bold; position:absolute;top:347px;left:198px;LINE-HEIGHT:16px;\">" . $document_name . "</div>";
+            $html .= "<div style=\"font-size: " . $document_name_fontsize  . "; padding-right:55px; font-weight: bold; position:absolute;top:347px;left:198px;LINE-HEIGHT:16px;\">" . $document_name . "</div>";
             $html .= "<div style=\"font-size: 12px; font-weight: bold; position:absolute;top:263px;left:614;\">" . $qty_page . '.' . "</div>";
 
             //WBS Spec.Ref Clase. Contract No.
             $html .= "<div style=\"font-size: 12px; padding-right:60px; font-weight: bold; position:absolute;top:396px;left:249px;LINE-HEIGHT:16px;\">" . $wbs . "</div>";
-            $html .= "<div style=\"font-size: 12px; padding-right:60px; font-weight: bold; position:absolute;top:312px;left:610px;LINE-HEIGHT:16px;\">" . $clause . "</div>";
+            $html .= "<div style=\"font-size: 12px; padding-right:60px; font-weight: bold; position:absolute;top:296px;left:610px;LINE-HEIGHT:16px;\">" . $clause . "</div>";
 
             $html .= "<div style=\"font-size: 12px; padding-right:60px; font-weight: bold; position:absolute;top:428px;left:275px;\">" . $spec_ref_no . "</div>";
 
