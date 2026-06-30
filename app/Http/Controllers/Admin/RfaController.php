@@ -1171,7 +1171,9 @@ class RfaController extends Controller
                 $issue_by = '( นายนรุตม์ชัย  สัมมาวิจิตร )';
                 $issuer_jobtitle = 'ผู้อำนวยการโครงการ';
                 // $signature_path =  public_path('png-asset/SPTK_signature_2.png');
-                $signature_path =  public_path('png-asset/SPTK_signature_3.png');
+                // $signature_path =  public_path('png-asset/SPTK_signature_3.png');
+                $signature_path =  public_path('png-asset/SPTK_signature_4.png');
+
 
                 $signature_size_h = 60;
                 $signature_size_w = 60;
