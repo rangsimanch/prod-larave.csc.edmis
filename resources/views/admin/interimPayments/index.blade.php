@@ -136,14 +136,14 @@
     aaSorting: [],
     ajax: "{{ route('admin.interim-payments.index') }}",
     columns: [
-      { data: 'placeholder', name: 'placeholder' },
-{ data: 'created_at', name: 'created_at'},
-{ data: 'payment_period', name: 'payment_period' },
-{ data: 'month', name: 'month' },
-{ data: 'year', name: 'year' },
-{ data: 'construction_contract_code', name: 'construction_contract.code' },
+      { data: 'placeholder', name: 'placeholder', searchable: false },
+{ data: 'created_at', name: 'created_at', searchable: false},
+{ data: 'payment_period', name: 'payment_period', searchable: false },
+{ data: 'month', name: 'month', searchable: false },
+{ data: 'year', name: 'year', searchable: false },
+{ data: 'construction_contract_code', name: 'construction_contract.code', searchable: false },
 { data: 'file_upload', name: 'file_upload', sortable: false, searchable: false },
-{ data: 'actions', name: '{{ trans('global.actions') }}' }
+{ data: 'actions', name: '{{ trans('global.actions') }}', searchable: false }
     ],
     orderCellsTop: true,
     order: [[ 1, 'desc' ]],

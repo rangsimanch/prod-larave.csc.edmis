@@ -132,14 +132,14 @@
     aaSorting: [],
     ajax: "{{ route('admin.add-drawings.index') }}",
     columns: [
-      { data: 'placeholder', name: 'placeholder' },
+      { data: 'placeholder', name: 'placeholder', searchable: false },
 { data: 'drawing_title', name: 'drawing_title' },
-{ data: 'activity_type_activity_title', name: 'activity_type.activity_title' },
-{ data: 'work_type_work_title', name: 'work_type.work_title' },
-{ data: 'coding_of_drawing', name: 'coding_of_drawing' },
+{ data: 'activity_type_activity_title', name: 'activity_type.activity_title', searchable: false },
+{ data: 'work_type_work_title', name: 'work_type.work_title', searchable: false },
+{ data: 'coding_of_drawing', name: 'coding_of_drawing', searchable: false },
 { data: 'location', name: 'location' },
 { data: 'file_upload', name: 'file_upload', sortable: false, searchable: false },
-{ data: 'actions', name: '{{ trans('global.actions') }}' }
+{ data: 'actions', name: '{{ trans('global.actions') }}', searchable: false }
     ],
     orderCellsTop: true,
     order: [[ 1, 'desc' ]],

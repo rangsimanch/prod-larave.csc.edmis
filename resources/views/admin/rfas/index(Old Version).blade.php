@@ -348,7 +348,7 @@
     aaSorting: [],
     ajax: "{{ route('admin.rfas.index') }}",
     columns: [
-      { data: 'placeholder', name: 'placeholder' },   
+      { data: 'placeholder', name: 'placeholder', searchable: false },   
 { data: 'actions', name: '{{ trans('global.actions') }}', sortable: false, }, // 1
 { data: 'created_at', name: 'created_at' ,visible: true}, // 2
 { data: 'cover_sheet', name: 'cover_sheet', sortable: false, searchable: false }, // 3

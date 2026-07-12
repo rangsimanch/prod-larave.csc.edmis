@@ -93,9 +93,9 @@
     aaSorting: [],
     ajax: "{{ route('admin.download-system-works.index') }}",
     columns: [
-      { data: 'placeholder', name: 'placeholder' },
+      { data: 'placeholder', name: 'placeholder', searchable: false },
 { data: 'work_title', name: 'work_title' },
-{ data: 'actions', name: '{{ trans('global.actions') }}' }
+{ data: 'actions', name: '{{ trans('global.actions') }}', searchable: false }
     ],
     orderCellsTop: true,
     order: [[ 1, 'desc' ]],

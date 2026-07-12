@@ -110,11 +110,11 @@
     aaSorting: [],
     ajax: "{{ route('admin.tickets.index') }}",
     columns: [
-      { data: 'placeholder', name: 'placeholder' },
+      { data: 'placeholder', name: 'placeholder', searchable: false },
 { data: 'subject', name: 'subject' },
 { data: 'ticket_code', name: 'ticket_code' },
-{ data: 'status', name: 'status' },
-{ data: 'actions', name: '{{ trans('global.actions') }}' }
+{ data: 'status', name: 'status', searchable: false },
+{ data: 'actions', name: '{{ trans('global.actions') }}', searchable: false }
     ],
     orderCellsTop: true,
     order: [[ 3, 'asc' ]],

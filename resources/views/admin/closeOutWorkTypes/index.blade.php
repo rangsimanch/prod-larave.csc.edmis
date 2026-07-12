@@ -114,11 +114,11 @@
     aaSorting: [],
     ajax: "{{ route('admin.close-out-work-types.index') }}",
     columns: [
-      { data: 'placeholder', name: 'placeholder' },
+      { data: 'placeholder', name: 'placeholder', searchable: false },
 { data: 'work_type_name', name: 'work_type_name' },
 { data: 'work_type_code', name: 'work_type_code' },
-{ data: 'construction_contract_code', name: 'construction_contract.code' },
-{ data: 'actions', name: '{{ trans('global.actions') }}' }
+{ data: 'construction_contract_code', name: 'construction_contract.code', searchable: false },
+{ data: 'actions', name: '{{ trans('global.actions') }}', searchable: false }
     ],
     orderCellsTop: true,
     order: [[ 1, 'desc' ]],

@@ -125,13 +125,13 @@
     aaSorting: [],
     ajax: "{{ route('admin.variation-orders.index') }}",
     columns: [
-      { data: 'placeholder', name: 'placeholder' },
-{ data: 'type_of_vo', name: 'type_of_vo' },
-{ data: 'construction_contract_code', name: 'construction_contract.code' },
+      { data: 'placeholder', name: 'placeholder', searchable: false },
+{ data: 'type_of_vo', name: 'type_of_vo', searchable: false },
+{ data: 'construction_contract_code', name: 'construction_contract.code', searchable: false },
 { data: 'work_title', name: 'work_title' },
-{ data: 'operation_date', name: 'operation_date' },
+{ data: 'operation_date', name: 'operation_date', searchable: false },
 { data: 'file_upload', name: 'file_upload', sortable: false, searchable: false },
-{ data: 'actions', name: '{{ trans('global.actions') }}' }
+{ data: 'actions', name: '{{ trans('global.actions') }}', searchable: false }
     ],
     orderCellsTop: true,
     order: [[ 4, 'desc' ]],

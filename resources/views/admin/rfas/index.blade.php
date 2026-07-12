@@ -1,4 +1,5 @@
 @extends('layouts.admin')
+
 @section('content')
 <div class="content">
     @can('rfa_create')
@@ -31,7 +32,11 @@
                 <div class="panel-heading">
                     {{ trans('cruds.rfa.title_singular') }} {{ trans('global.list') }}
                 </div>
-                <div class="panel-body">
+                <div class="panel-body dt-loading-wrapper">
+                    <div class="dt-loading-overlay">
+                        <div class="spinner-icon"><i class="fa fa-spinner fa-spin"></i></div>
+                        <div class="loading-text">กำลังโหลดข้อมูล...</div>
+                    </div>
                     <table class="table sticky table-bordered table-striped table-hover ajaxTable datatable datatable-Rfa text-center">
                         <thead>
                             <tr>
@@ -271,25 +276,25 @@
     aaSorting: [],
     ajax: "{{ route('admin.rfas.index') }}",
     columns: [
-      { data: 'placeholder', name: 'placeholder' },
+      { data: 'placeholder', name: 'placeholder', searchable: false },
 { data: 'actions', name: '{{ trans('global.actions') }}' ,searchable: false},
-{ data: 'created_at', name: 'created_at'},
+{ data: 'created_at', name: 'created_at', searchable: false},
 { data: 'cover_sheet', name: 'cover_sheet' ,sortable: false, searchable: false},
 { data: 'file_upload_1', name: 'file_upload_1', sortable: false, searchable: false},
-{ data: 'document_status_status_name', name: 'document_status.status_name'},
-{ data: 'construction_contract_code', name: 'construction_contract.code' ,sortable: false},
-{ data: 'boq_name', name: 'boq.name'},
+{ data: 'document_status_status_name', name: 'document_status.status_name', searchable: false},
+{ data: 'construction_contract_code', name: 'construction_contract.code', searchable: false ,sortable: false},
+{ data: 'boq_name', name: 'boq.name', searchable: false},
 // { data: 'boq_sub', name: 'boq_sub.name',},
-{ data: 'worktype', name: 'worktype' },
+{ data: 'worktype', name: 'worktype', searchable: false },
 { data: 'title_eng', name: 'title_eng' , sortable: false},
 { data: 'title', name: 'title' , sortable: false},
-{ data: 'origin_number', name: 'origin_number' , sortable: false},
+{ data: 'origin_number', name: 'origin_number', searchable: false , sortable: false},
 { data: 'document_number', name: 'document_number' , sortable: false},
-{ data: 'type.type_code', name: 'type.type_code' },
-{ data: 'wbs_level_3_wbs_level_3_code', name: 'wbs_level_3.wbs_level_3_code' },
-{ data: 'wbs_level_4_wbs_level_4_code', name: 'wbs_level_4.wbs_level_4_code' },
-{ data: 'submit_date', name: 'submit_date' },
-{ data: 'comment_status_name', name: 'comment_status.name' },
+{ data: 'type.type_code', name: 'type.type_code', searchable: false },
+{ data: 'wbs_level_3_wbs_level_3_code', name: 'wbs_level_3.wbs_level_3_code', searchable: false },
+{ data: 'wbs_level_4_wbs_level_4_code', name: 'wbs_level_4.wbs_level_4_code', searchable: false },
+{ data: 'submit_date', name: 'submit_date', searchable: false },
+{ data: 'comment_status_name', name: 'comment_status.name', searchable: false },
 { data: 'commercial_file_upload', name: 'commercial_file_upload', sortable: false, searchable: false },
 ],
     orderCellsTop: true,

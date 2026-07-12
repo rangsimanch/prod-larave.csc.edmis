@@ -115,12 +115,12 @@
     aaSorting: [],
     ajax: "{{ route('admin.contract-and-components.index') }}",
     columns: [
-      { data: 'placeholder', name: 'placeholder' },
+      { data: 'placeholder', name: 'placeholder', searchable: false },
 { data: 'document_name', name: 'document_name' },
 { data: 'document_code', name: 'document_code' },
-{ data: 'construction_contract_code', name: 'construction_contract.code' },
+{ data: 'construction_contract_code', name: 'construction_contract.code', searchable: false },
 { data: 'file_upload', name: 'file_upload', sortable: false, searchable: false },
-{ data: 'actions', name: '{{ trans('global.actions') }}' }
+{ data: 'actions', name: '{{ trans('global.actions') }}', searchable: false }
     ],
     orderCellsTop: true,
     order: [[ 1, 'asc' ]],

@@ -131,14 +131,14 @@
     aaSorting: [],
     ajax: "{{ route('admin.shop-drawings.index') }}",
     columns: [
-      { data: 'placeholder', name: 'placeholder' },
+      { data: 'placeholder', name: 'placeholder', searchable: false },
 { data: 'shop_drawing_title', name: 'shop_drawing_title' },
-{ data: 'drawing_reference', name: 'drawing_references.coding_of_drawing' },
-{ data: 'coding_of_shop_drawing', name: 'coding_of_shop_drawing' },
-{ data: 'construction_contract_code', name: 'construction_contract.code' },
+{ data: 'drawing_reference', name: 'drawing_references.coding_of_drawing', searchable: false },
+{ data: 'coding_of_shop_drawing', name: 'coding_of_shop_drawing', searchable: false },
+{ data: 'construction_contract_code', name: 'construction_contract.code', searchable: false },
 { data: 'file_upload', name: 'file_upload', sortable: false, searchable: false },
 { data: 'special_file_upload', name: 'special_file_upload', sortable: false, searchable: false },
-{ data: 'actions', name: '{{ trans('global.actions') }}' }
+{ data: 'actions', name: '{{ trans('global.actions') }}', searchable: false }
     ],
     orderCellsTop: true,
     order: [[ 1, 'desc' ]],

@@ -147,16 +147,16 @@ img {
     aaSorting: [],
     ajax: "{{ route('admin.tasks.index') }}",
     columns: [
-      { data: 'placeholder', name: 'placeholder' },
-{ data: 'create_by_user_name', name: 'create_by_user.name', sortable: false, },
+      { data: 'placeholder', name: 'placeholder', searchable: false },
+{ data: 'create_by_user_name', name: 'create_by_user.name', searchable: false, sortable: false, },
 { data: 'name', name: 'name', sortable: false, },
-{ data: 'tag', name: 'tags.name', sortable: false, },
+{ data: 'tag', name: 'tags.name', searchable: false, sortable: false, },
 { data: 'location', name: 'location', sortable: false, },
-{ data: 'due_date', name: 'due_date', },
-{ data: 'status_name', name: 'status.name', sortable: false, },
+{ data: 'due_date', name: 'due_date', searchable: false, },
+{ data: 'status_name', name: 'status.name', searchable: false, sortable: false, },
 // { data: 'attachment', name: 'attachment', sortable: false, searchable: false },
-{ data: 'construction_contract_code', name: 'construction_contract.code' },
-{ data: 'actions', name: '{{ trans('global.actions') }}' }
+{ data: 'construction_contract_code', name: 'construction_contract.code', searchable: false },
+{ data: 'actions', name: '{{ trans('global.actions') }}', searchable: false }
     ],
     order: [[ 5, 'desc' ]],
     pageLength: 10,

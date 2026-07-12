@@ -104,7 +104,7 @@
     aaSorting: [],
     ajax: "{{ route('admin.daily-requests.index') }}",
     columns: [
-      { data: 'placeholder', name: 'placeholder' },
+      { data: 'placeholder', name: 'placeholder', searchable: false },
       { 
       data: 'created_at', 
       name: 'created_at',
@@ -117,13 +117,13 @@
         return data;
       }
     },
-{ data: 'input_date', name: 'input_date' },
+{ data: 'input_date', name: 'input_date', searchable: false },
 { data: 'documents', name: 'documents', sortable: false, searchable: false },
 { data: 'document_code', name: 'document_code' },
-{ data: 'receive_by_name', name: 'receive_by.name' },
-{ data: 'acknowledge_date', name: 'acknowledge_date' },
-{ data: 'constuction_contract_code', name: 'constuction_contract.code' },
-{ data: 'actions', name: '{{ trans('global.actions') }}' }
+{ data: 'receive_by_name', name: 'receive_by.name', searchable: false },
+{ data: 'acknowledge_date', name: 'acknowledge_date', searchable: false },
+{ data: 'constuction_contract_code', name: 'constuction_contract.code', searchable: false },
+{ data: 'actions', name: '{{ trans('global.actions') }}', searchable: false }
     ],
     order: [[ 2, 'desc' ]],
     pageLength: 100,

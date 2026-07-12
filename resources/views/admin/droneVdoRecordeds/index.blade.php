@@ -93,12 +93,12 @@
     aaSorting: [],
     ajax: "{{ route('admin.drone-vdo-recordeds.index') }}",
     columns: [
-      { data: 'placeholder', name: 'placeholder' },
-{ data: 'work_tiltle', name: 'work_tiltle' },
-{ data: 'operation_date', name: 'operation_date' },
-{ data: 'construction_contract_code', name: 'construction_contract.code' },
+      { data: 'placeholder', name: 'placeholder', searchable: false },
+{ data: 'work_tiltle', name: 'work_tiltle', searchable: false },
+{ data: 'operation_date', name: 'operation_date', searchable: false },
+{ data: 'construction_contract_code', name: 'construction_contract.code', searchable: false },
 { data: 'file_upload', name: 'file_upload', sortable: false, searchable: false },
-{ data: 'actions', name: '{{ trans('global.actions') }}' }
+{ data: 'actions', name: '{{ trans('global.actions') }}', searchable: false }
     ],
     order: [[ 2, 'desc' ]],
     pageLength: 10,

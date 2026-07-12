@@ -119,13 +119,13 @@
     aaSorting: [],
     ajax: "{{ route('admin.daily-construction-activities.index') }}",
     columns: [
-      { data: 'placeholder', name: 'placeholder' },
-      { data: 'id', name: 'id' , visible: false},
+      { data: 'placeholder', name: 'placeholder', searchable: false },
+      { data: 'id', name: 'id', searchable: false , visible: false},
 { data: 'work_title', name: 'work_title' },
-{ data: 'operation_date', name: 'operation_date' },
-{ data: 'construction_contract_code', name: 'construction_contract.code' },
+{ data: 'operation_date', name: 'operation_date', searchable: false },
+{ data: 'construction_contract_code', name: 'construction_contract.code', searchable: false },
 { data: 'image_upload', name: 'image_upload', sortable: false, searchable: false },
-{ data: 'actions', name: '{{ trans('global.actions') }}' }
+{ data: 'actions', name: '{{ trans('global.actions') }}', searchable: false }
     ],
     order: [[ 1, 'desc' ]],
     pageLength: 1,

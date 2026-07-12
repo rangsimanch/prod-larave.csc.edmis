@@ -99,14 +99,14 @@
     aaSorting: [],
     ajax: "{{ route('admin.meeting-weeklies.index') }}",
     columns: [
-      { data: 'placeholder', name: 'placeholder' },
+      { data: 'placeholder', name: 'placeholder', searchable: false },
 { data: 'meeting_name', name: 'meeting_name' },
-{ data: 'meeting_no', name: 'meeting_no' },
-{ data: 'date', name: 'date' },
-{ data: 'construction_contract_code', name: 'construction_contract.code' },
-{ data: 'note', name: 'note' },
+{ data: 'meeting_no', name: 'meeting_no', searchable: false },
+{ data: 'date', name: 'date', searchable: false },
+{ data: 'construction_contract_code', name: 'construction_contract.code', searchable: false },
+{ data: 'note', name: 'note', searchable: false },
 { data: 'file_upload', name: 'file_upload', sortable: false, searchable: false },
-{ data: 'actions', name: '{{ trans('global.actions') }}' }
+{ data: 'actions', name: '{{ trans('global.actions') }}', searchable: false }
     ],
     order: [[ 3, 'desc' ]],
     pageLength: 25,

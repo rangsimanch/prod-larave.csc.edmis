@@ -93,12 +93,12 @@
     aaSorting: [],
     ajax: "{{ route('admin.file-managers.index') }}",
     columns: [
-      { data: 'placeholder', name: 'placeholder' },
+      { data: 'placeholder', name: 'placeholder', searchable: false },
 { data: 'file_name', name: 'file_name' },
 { data: 'code', name: 'code' },
 { data: 'file_upload', name: 'file_upload', sortable: false, searchable: false },
-{ data: 'construction_contract', name: 'construction_contracts.code' },
-{ data: 'actions', name: '{{ trans('global.actions') }}' }
+{ data: 'construction_contract', name: 'construction_contracts.code', searchable: false },
+{ data: 'actions', name: '{{ trans('global.actions') }}', searchable: false }
     ],
     order: [[ 1, 'desc' ]],
     pageLength: 100,

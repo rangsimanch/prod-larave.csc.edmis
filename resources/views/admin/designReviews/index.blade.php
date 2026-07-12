@@ -98,10 +98,10 @@
     aaSorting: [],
     ajax: "{{ route('admin.design-reviews.index') }}",
     columns: [
-      { data: 'placeholder', name: 'placeholder' },
+      { data: 'placeholder', name: 'placeholder', searchable: false },
 { data: 'sheet_title', name: 'sheet_title' },
-{ data: 'url', name: 'url'},
-{ data: 'actions', name: '{{ trans('global.actions') }}' }
+{ data: 'url', name: 'url', searchable: false},
+{ data: 'actions', name: '{{ trans('global.actions') }}', searchable: false }
     ],
     orderCellsTop: true,
     order: [[ 1, 'desc' ]],

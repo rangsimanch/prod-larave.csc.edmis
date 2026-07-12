@@ -96,13 +96,13 @@
     aaSorting: [],
     ajax: "{{ route('admin.meeting-others.index') }}",
     columns: [
-      { data: 'placeholder', name: 'placeholder' },
+      { data: 'placeholder', name: 'placeholder', searchable: false },
 { data: 'document_name', name: 'document_name' },
-{ data: 'date', name: 'date' },
-{ data: 'note', name: 'note' },
-{ data: 'construction_contract_code', name: 'construction_contract.code' },
+{ data: 'date', name: 'date', searchable: false },
+{ data: 'note', name: 'note', searchable: false },
+{ data: 'construction_contract_code', name: 'construction_contract.code', searchable: false },
 { data: 'file_upload', name: 'file_upload', sortable: false, searchable: false },
-{ data: 'actions', name: '{{ trans('global.actions') }}' }
+{ data: 'actions', name: '{{ trans('global.actions') }}', searchable: false }
     ],
     order: [[ 2, 'desc' ]],
     pageLength: 25,

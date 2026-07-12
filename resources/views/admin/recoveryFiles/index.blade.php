@@ -123,14 +123,14 @@
     aaSorting: [],
     ajax: "{{ route('admin.recovery-files.index') }}",
     columns: [
-      { data: 'placeholder', name: 'placeholder' },
+      { data: 'placeholder', name: 'placeholder', searchable: false },
 { data: 'dir_name', name: 'dir_name' },
 { data: 'original_name', name: 'original_name' },
-{ data: 'recovery_success', name: 'recovery_success' },
-{ data: 'recovery_fail', name: 'recovery_fail' },
-{ data: 'file_counter', name: 'file_counter' },
-{ data: 'created_at', name: 'created_at' },
-{ data: 'actions', name: '{{ trans('global.actions') }}' }
+{ data: 'recovery_success', name: 'recovery_success', searchable: false },
+{ data: 'recovery_fail', name: 'recovery_fail', searchable: false },
+{ data: 'file_counter', name: 'file_counter', searchable: false },
+{ data: 'created_at', name: 'created_at', searchable: false },
+{ data: 'actions', name: '{{ trans('global.actions') }}', searchable: false }
     ],
     orderCellsTop: true,
     order: [[ 6, 'desc' ]],

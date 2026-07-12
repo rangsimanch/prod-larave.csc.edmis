@@ -96,13 +96,13 @@
     aaSorting: [],
     ajax: "{{ route('admin.daily-reports.index') }}",
     columns: [
-      { data: 'placeholder', name: 'placeholder' },
-{ data: 'input_date', name: 'input_date' },
+      { data: 'placeholder', name: 'placeholder', searchable: false },
+{ data: 'input_date', name: 'input_date', searchable: false },
 { data: 'documents', name: 'documents', sortable: false, searchable: false },
 { data: 'document_code', name: 'document_code' },
-{ data: 'acknowledge_date', name: 'acknowledge_date' },
-{ data: 'construction_contract_code', name: 'construction_contract.code' },
-{ data: 'actions', name: '{{ trans('global.actions') }}' }
+{ data: 'acknowledge_date', name: 'acknowledge_date', searchable: false },
+{ data: 'construction_contract_code', name: 'construction_contract.code', searchable: false },
+{ data: 'actions', name: '{{ trans('global.actions') }}', searchable: false }
     ],
     order: [[ 1, 'desc' ]],
     pageLength: 100,

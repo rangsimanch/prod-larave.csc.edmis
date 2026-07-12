@@ -87,10 +87,10 @@
     aaSorting: [],
     ajax: "{{ route('admin.manuals.index') }}",
     columns: [
-      { data: 'placeholder', name: 'placeholder' },
+      { data: 'placeholder', name: 'placeholder', searchable: false },
 { data: 'document_name', name: 'document_name' },
 { data: 'file_upload', name: 'file_upload', sortable: false, searchable: false },
-{ data: 'actions', name: '{{ trans('global.actions') }}' }
+{ data: 'actions', name: '{{ trans('global.actions') }}', searchable: false }
     ],
     order: [[ 1, 'asc' ]],
     pageLength: 25,

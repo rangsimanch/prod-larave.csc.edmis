@@ -96,13 +96,13 @@
     aaSorting: [],
     ajax: "{{ route('admin.department-documents.index') }}",
     columns: [
-      { data: 'placeholder', name: 'placeholder' },
+      { data: 'placeholder', name: 'placeholder', searchable: false },
 { data: 'document_name', name: 'document_name' },
-{ data: 'tag', name: 'tags.tag_name' },
-{ data: 'construction_contract_code', name: 'construction_contract.code' , visible: false},
+{ data: 'tag', name: 'tags.tag_name', searchable: false },
+{ data: 'construction_contract_code', name: 'construction_contract.code', searchable: false , visible: false},
 { data: 'download', name: 'download', sortable: false, searchable: false },
 { data: 'example_file', name: 'example_file', sortable: false, searchable: false },
-{ data: 'actions', name: '{{ trans('global.actions') }}' }
+{ data: 'actions', name: '{{ trans('global.actions') }}', searchable: false }
     ],
     order: [[ 1, 'asc' ]],
     pageLength: 10,

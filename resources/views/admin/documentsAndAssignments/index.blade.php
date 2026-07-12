@@ -132,15 +132,15 @@
     aaSorting: [],
     ajax: "{{ route('admin.documents-and-assignments.index') }}",
     columns: [
-      { data: 'placeholder', name: 'placeholder' },
+      { data: 'placeholder', name: 'placeholder', searchable: false },
 { data: 'file_name', name: 'file_name' },
-{ data: 'original_no', name: 'original_no' },
-{ data: 'receipt_no', name: 'receipt_no' },
-{ data: 'date_of_receipt', name: 'date_of_receipt' },
-{ data: 'received_from', name: 'received_from' },
-{ data: 'construction_contract_code', name: 'construction_contract.code' },
+{ data: 'original_no', name: 'original_no', searchable: false },
+{ data: 'receipt_no', name: 'receipt_no', searchable: false },
+{ data: 'date_of_receipt', name: 'date_of_receipt', searchable: false },
+{ data: 'received_from', name: 'received_from', searchable: false },
+{ data: 'construction_contract_code', name: 'construction_contract.code', searchable: false },
 { data: 'file_upload', name: 'file_upload', sortable: false, searchable: false },
-{ data: 'actions', name: '{{ trans('global.actions') }}' }
+{ data: 'actions', name: '{{ trans('global.actions') }}', searchable: false }
     ],
     orderCellsTop: true,
     order: [[ 4, 'desc' ]],

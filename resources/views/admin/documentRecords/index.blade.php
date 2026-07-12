@@ -126,14 +126,14 @@
     aaSorting: [],
     ajax: "{{ route('admin.document-records.index') }}",
     columns: [
-    { data: 'placeholder', name: 'placeholder' },
+    { data: 'placeholder', name: 'placeholder', searchable: false },
     { data: 'title', name: 'title' },
     { data: 'document_number', name:'document_number'},
-    { data: 'category', name: 'category' },
+    { data: 'category', name: 'category', searchable: false },
     { data: 'file_upload', name: 'file_upload', sortable: false, searchable: false },
-    { data: 'translated_by', name:'translated_by'},
-    { data: 'created_at', name: 'created_at' },
-    { data: 'actions', name: '{{ trans('global.actions') }}' }
+    { data: 'translated_by', name:'translated_by', searchable: false},
+    { data: 'created_at', name: 'created_at', searchable: false },
+    { data: 'actions', name: '{{ trans('global.actions') }}', searchable: false }
     ],
     orderCellsTop: true,
     order: [[ 5, 'desc' ]],

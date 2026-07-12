@@ -119,12 +119,12 @@
     aaSorting: [],
     ajax: "{{ route('admin.wbslevelfours.index') }}",
     columns: [
-      { data: 'placeholder', name: 'placeholder' },
+      { data: 'placeholder', name: 'placeholder', searchable: false },
 { data: 'wbs_level_4_name', name: 'wbs_level_4_name' },
 { data: 'wbs_level_4_code', name: 'wbs_level_4_code' },
-{ data: 'wbs_level_three_wbs_level_3_name', name: 'wbs_level_three.wbs_level_3_name' },
-{ data: 'wbs_level_three.wbs_level_3_name', name: 'wbs_level_three.wbs_level_3_name' },
-{ data: 'actions', name: '{{ trans('global.actions') }}' }
+{ data: 'wbs_level_three_wbs_level_3_name', name: 'wbs_level_three.wbs_level_3_name', searchable: false },
+{ data: 'wbs_level_three.wbs_level_3_name', name: 'wbs_level_three.wbs_level_3_name', searchable: false },
+{ data: 'actions', name: '{{ trans('global.actions') }}', searchable: false }
     ],
     orderCellsTop: true,
     order: [[ 1, 'desc' ]],

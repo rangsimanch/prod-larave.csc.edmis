@@ -91,10 +91,10 @@
     aaSorting: [],
     ajax: "{{ route('admin.jobtitles.index') }}",
     columns: [
-      { data: 'placeholder', name: 'placeholder' },
+      { data: 'placeholder', name: 'placeholder', searchable: false },
 { data: 'name', name: 'name' },
-{ data: 'department', name: 'departments.name' },
-{ data: 'actions', name: '{{ trans('global.actions') }}' }
+{ data: 'department', name: 'departments.name', searchable: false },
+{ data: 'actions', name: '{{ trans('global.actions') }}', searchable: false }
     ],
     order: [[ 1, 'desc' ]],
     pageLength: 100,

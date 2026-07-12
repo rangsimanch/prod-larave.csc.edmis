@@ -121,13 +121,13 @@
     aaSorting: [],
     ajax: "{{ route('admin.provisional-sums.index') }}",
     columns: [
-      { data: 'placeholder', name: 'placeholder' },
-{ data: 'bill_no', name: 'bill_no' },
-{ data: 'item_no', name: 'item_no' },
-{ data: 'construction_contract_code', name: 'construction_contract.code' },
+      { data: 'placeholder', name: 'placeholder', searchable: false },
+{ data: 'bill_no', name: 'bill_no', searchable: false },
+{ data: 'item_no', name: 'item_no', searchable: false },
+{ data: 'construction_contract_code', name: 'construction_contract.code', searchable: false },
 { data: 'name_of_ps', name: 'name_of_ps' },
 { data: 'file_upload', name: 'file_upload', sortable: false, searchable: false },
-{ data: 'actions', name: '{{ trans('global.actions') }}' }
+{ data: 'actions', name: '{{ trans('global.actions') }}', searchable: false }
     ],
     orderCellsTop: true,
     order: [[ 1, 'desc' ]],

@@ -93,12 +93,12 @@
     aaSorting: [],
     ajax: "{{ route('admin.records-of-visitors.index') }}",
     columns: [
-      { data: 'placeholder', name: 'placeholder' },
-{ data: 'date_of_visit', name: 'date_of_visit' },
+      { data: 'placeholder', name: 'placeholder', searchable: false },
+{ data: 'date_of_visit', name: 'date_of_visit', searchable: false },
 { data: 'name_of_visitor', name: 'name_of_visitor' },
 { data: 'details', name: 'details' },
 { data: 'file_upload', name: 'file_upload', sortable: false, searchable: false },
-{ data: 'actions', name: '{{ trans('global.actions') }}' }
+{ data: 'actions', name: '{{ trans('global.actions') }}', searchable: false }
     ],
     order: [[ 1, 'desc' ]],
     pageLength: 10,

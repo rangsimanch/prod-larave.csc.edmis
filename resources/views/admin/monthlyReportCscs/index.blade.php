@@ -87,10 +87,10 @@
     aaSorting: [],
     ajax: "{{ route('admin.monthly-report-cscs.index') }}",
     columns: [
-      { data: 'placeholder', name: 'placeholder' },
-{ data: 'for_month', name: 'for_month' },
+      { data: 'placeholder', name: 'placeholder', searchable: false },
+{ data: 'for_month', name: 'for_month', searchable: false },
 { data: 'file_upload', name: 'file_upload', sortable: false, searchable: false },
-{ data: 'actions', name: '{{ trans('global.actions') }}' }
+{ data: 'actions', name: '{{ trans('global.actions') }}', searchable: false }
     ],
     orderCellsTop: true,
     order: [[ 1, 'desc' ]],
