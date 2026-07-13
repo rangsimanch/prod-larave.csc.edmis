@@ -126,8 +126,8 @@
     ajax: "{{ route('admin.variation-orders.index') }}",
     columns: [
       { data: 'placeholder', name: 'placeholder', searchable: false },
-{ data: 'type_of_vo', name: 'type_of_vo', searchable: false },
-{ data: 'construction_contract_code', name: 'construction_contract.code', searchable: false },
+{ data: 'type_of_vo', name: 'type_of_vo' },
+{ data: 'construction_contract_code', name: 'construction_contract.code' },
 { data: 'work_title', name: 'work_title' },
 { data: 'operation_date', name: 'operation_date', searchable: false },
 { data: 'file_upload', name: 'file_upload', sortable: false, searchable: false },

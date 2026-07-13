@@ -33,7 +33,7 @@ class AddLetterController extends Controller
         abort_if(Gate::denies('add_letter_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
-            $query = AddLetter::with(['sender', 'receiver', 'cc_tos', 'construction_contract', 'create_by', 'receive_by', 'team'])->select(sprintf('%s.*', (new AddLetter)->table));
+            $query = AddLetter::with(['sender', 'receiver', 'cc_tos', 'construction_contract', 'create_by', 'receive_by', 'team', 'topic_categories'])->select(sprintf('%s.*', (new AddLetter)->table));
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');

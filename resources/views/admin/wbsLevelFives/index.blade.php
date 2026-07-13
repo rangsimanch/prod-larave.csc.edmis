@@ -110,7 +110,7 @@
     ajax: "{{ route('admin.wbs-level-fives.index') }}",
     columns: [
       { data: 'placeholder', name: 'placeholder', searchable: false },
-{ data: 'id', name: 'id', searchable: false },
+{ data: 'id', name: 'id' },
 { data: 'name', name: 'name' },
 { data: 'code', name: 'code' },
 { data: 'actions', name: '{{ trans('global.actions') }}', searchable: false }

@@ -132,7 +132,7 @@
             { data: 'model_id', name: 'model_id', searchable: false},
             { data: 'title', name: 'title' },
             { data: 'document_number', name: 'document_number' },
-            { data: 'origin_number', name: 'origin_number', searchable: false },
+            { data: 'origin_number', name: 'origin_number' },
             { data: 'code', name: 'code' },
             { data: 'collection_name', name: 'collection_name' },
             { data: 'created_at', name: 'created_at', searchable: false },

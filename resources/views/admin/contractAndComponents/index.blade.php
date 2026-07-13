@@ -118,7 +118,7 @@
       { data: 'placeholder', name: 'placeholder', searchable: false },
 { data: 'document_name', name: 'document_name' },
 { data: 'document_code', name: 'document_code' },
-{ data: 'construction_contract_code', name: 'construction_contract.code', searchable: false },
+{ data: 'construction_contract_code', name: 'construction_contract.code' },
 { data: 'file_upload', name: 'file_upload', sortable: false, searchable: false },
 { data: 'actions', name: '{{ trans('global.actions') }}', searchable: false }
     ],

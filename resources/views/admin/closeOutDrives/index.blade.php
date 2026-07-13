@@ -112,8 +112,8 @@
     columns: [
       { data: 'placeholder', name: 'placeholder', searchable: false },
 { data: 'filename', name: 'filename' },
-{ data: 'url', name: 'url', searchable: false },
-{ data: 'construction_contract_code', name: 'construction_contract.code', searchable: false },
+{ data: 'url', name: 'url' },
+{ data: 'construction_contract_code', name: 'construction_contract.code' },
 { data: 'actions', name: '{{ trans('global.actions') }}', searchable: false }
     ],
     orderCellsTop: true,

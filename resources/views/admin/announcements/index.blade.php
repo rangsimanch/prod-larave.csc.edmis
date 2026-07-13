@@ -124,7 +124,7 @@
 { data: 'start_date', name: 'start_date', searchable: false },
 { data: 'end_date', name: 'end_date', searchable: false },
 { data: 'attachments', name: 'attachments', sortable: false, searchable: false },
-{ data: 'announce_contract', name: 'announce_contracts.code', searchable: false },
+{ data: 'announce_contract', name: 'announce_contracts.code' },
 { data: 'actions', name: '{{ trans('global.actions') }}', searchable: false }
     ],
     orderCellsTop: true,

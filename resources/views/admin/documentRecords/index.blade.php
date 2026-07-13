@@ -129,9 +129,9 @@
     { data: 'placeholder', name: 'placeholder', searchable: false },
     { data: 'title', name: 'title' },
     { data: 'document_number', name:'document_number'},
-    { data: 'category', name: 'category', searchable: false },
+    { data: 'category', name: 'category' },
     { data: 'file_upload', name: 'file_upload', sortable: false, searchable: false },
-    { data: 'translated_by', name:'translated_by', searchable: false},
+    { data: 'translated_by', name:'translated_by'},
     { data: 'created_at', name: 'created_at', searchable: false },
     { data: 'actions', name: '{{ trans('global.actions') }}', searchable: false }
     ],

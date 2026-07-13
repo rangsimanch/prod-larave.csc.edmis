@@ -117,7 +117,7 @@
       { data: 'placeholder', name: 'placeholder', searchable: false },
 { data: 'name', name: 'name' },
 { data: 'code', name: 'code' },
-{ data: 'wbs_lv_1_name', name: 'wbs_lv_1.name', searchable: false },
+{ data: 'wbs_lv_1_name', name: 'wbs_lv_1.name' },
 { data: 'actions', name: '{{ trans('global.actions') }}', searchable: false }
     ],
     orderCellsTop: true,

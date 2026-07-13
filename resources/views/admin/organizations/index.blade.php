@@ -112,7 +112,7 @@
     ajax: "{{ route('admin.organizations.index') }}",
     columns: [
       { data: 'placeholder', name: 'placeholder', searchable: false },
-{ data: 'id', name: 'id', searchable: false },
+{ data: 'id', name: 'id' },
 { data: 'title_th', name: 'title_th' },
 { data: 'title_en', name: 'title_en' },
 { data: 'code', name: 'code' },

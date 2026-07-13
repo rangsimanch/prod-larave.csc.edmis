@@ -117,7 +117,7 @@
       { data: 'placeholder', name: 'placeholder', searchable: false },
 { data: 'work_type_name', name: 'work_type_name' },
 { data: 'work_type_code', name: 'work_type_code' },
-{ data: 'construction_contract_code', name: 'construction_contract.code', searchable: false },
+{ data: 'construction_contract_code', name: 'construction_contract.code' },
 { data: 'actions', name: '{{ trans('global.actions') }}', searchable: false }
     ],
     orderCellsTop: true,
