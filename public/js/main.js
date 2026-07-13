@@ -1,15 +1,6 @@
 $(document).ready(function() {
     window._token = $('meta[name="csrf-token"]').attr("content");
 
-    // Global DataTables loading overlay
-    $(document).on('processing.dt', '.datatable', function(e, settings, processing) {
-        var $table = $(this);
-        var $wrapper = $table.closest('.dt-loading-wrapper');
-        if ($wrapper.length) {
-            $wrapper.find('.dt-loading-overlay').toggleClass('active', processing);
-        }
-    });
-
     moment.updateLocale("en", {
         week: { dow: 1 } // Monday is the first day of the week
     });

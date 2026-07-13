@@ -32,11 +32,7 @@
                 <div class="panel-heading">
                     {{ trans('cruds.rfa.title_singular') }} {{ trans('global.list') }}
                 </div>
-                <div class="panel-body dt-loading-wrapper">
-                    <div class="dt-loading-overlay">
-                        <div class="spinner-icon"><i class="fa fa-spinner fa-spin"></i></div>
-                        <div class="loading-text">กำลังโหลดข้อมูล...</div>
-                    </div>
+                <div class="panel-body">
                     <table class="table sticky table-bordered table-striped table-hover ajaxTable datatable datatable-Rfa text-center">
                         <thead>
                             <tr>
