@@ -616,9 +616,10 @@ class TaskController extends Controller
                                     $index++;
                                     continue;
                                 }
+                                $img_height = ($activityLang !== 'thai') ? 126 : 180;
                                 $img = (string) Image::make($url_path)
                                     ->orientate()
-                                    ->resize(null, 180, function ($constraint) {
+                                    ->resize(null, $img_height, function ($constraint) {
                                         $constraint->aspectRatio();
                                     })
                                     ->encode('data-url');
@@ -634,26 +635,30 @@ class TaskController extends Controller
                         // Step 2: Auto-layout based on valid image count (1-10)
                         $valid_count = count($valid_images);
                         if($valid_count > 0){
+                            // English: reduced 30% from original. Thai: original sizes.
+                            $en_sizes = [1 => '49%', 2 => '31%', 3 => '21%', 4 => '31%', 5 => '21%', 6 => '21%', 7 => '12%'];
+                            $th_sizes = [1 => '70%', 2 => '45%', 3 => '30%', 4 => '45%', 5 => '30%', 6 => '30%', 7 => '18%'];
+                            $sizes = ($activityLang !== 'thai') ? $en_sizes : $th_sizes;
                             if($valid_count == 1){
-                                $cols = 1; $img_wh = "70%";
+                                $cols = 1; $img_wh = $sizes[1];
                             }
                             elseif($valid_count == 2){
-                                $cols = 2; $img_wh = "45%";
+                                $cols = 2; $img_wh = $sizes[2];
                             }
                             elseif($valid_count == 3){
-                                $cols = 3; $img_wh = "30%";
+                                $cols = 3; $img_wh = $sizes[3];
                             }
                             elseif($valid_count == 4){
-                                $cols = 2; $img_wh = "45%";
+                                $cols = 2; $img_wh = $sizes[4];
                             }
                             elseif($valid_count == 5){
-                                $cols = 3; $img_wh = "30%";
+                                $cols = 3; $img_wh = $sizes[5];
                             }
                             elseif($valid_count == 6){
-                                $cols = 3; $img_wh = "30%";
+                                $cols = 3; $img_wh = $sizes[6];
                             }
                             else{
-                                $cols = 5; $img_wh = "18%";
+                                $cols = 5; $img_wh = $sizes[7];
                             }
 
                             // Build table layout for reliable grid in mPDF
