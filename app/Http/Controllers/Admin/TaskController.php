@@ -661,11 +661,11 @@ class TaskController extends Controller
                                 $cols = 5; $img_wh = $sizes[7];
                             }
 
-                            // Build table layout for reliable grid in mPDF
+                            $cell_padding = ($activityLang !== 'thai') ? '1px' : '3px';
                             $images_html = "<table style=\"width:100%; border-collapse:collapse; text-align:center;\"><tr>";
                             $col = 0;
                             foreach($valid_images as $img){
-                                $images_html .= "<td style=\"padding:3px;\"><img width=\"" . $img_wh . "\" src=\"" . $img . "\"></td>";
+                                $images_html .= "<td style=\"padding:" . $cell_padding . ";\"><img width=\"" . $img_wh . "\" src=\"" . $img . "\"></td>";
                                 $col++;
                                 if($col >= $cols && $col < $valid_count){
                                     $images_html .= "</tr><tr>";
