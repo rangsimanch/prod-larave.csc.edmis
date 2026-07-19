@@ -466,14 +466,9 @@ class TaskController extends Controller
                     $mpdf->SetDocTemplate($template_path, true);
                 }
 
-                if($activityLang !== 'thai'){
-                    $mpdf->AddPage($page_size['orientation'],'','','','','','',60,55);
-                }
-                else {
-                    // Top margin 35mm reserves space for date+weather header on every page.
-                    // Bottom margin 40mm reserves space for fixed footer.
-                    $mpdf->AddPage('P','','','','','','',45,60);
-                }
+                // Use same margins as Thai report: top 45mm for repeating header,
+                // bottom 60mm for footer (English text, same layout).
+                $mpdf->AddPage($page_size['orientation'],'','','','','','',45,60);
 
                 if($hasPreviousAttachment){
                     $mpdf->UseTemplate($import_page, 0, 0, $page_size['width'], $page_size['height'], true);
@@ -521,21 +516,12 @@ class TaskController extends Controller
 
                 $signature_html = '';
                 if($activityLang === 'thai'){
-                    // Thai: prepare variables, build full page as body HTML (no template, no header)
                     $weatherMap = [
                         'Clear' => 'แจ่มใส', 'Clouds' => 'มีเมฆ', 'Rain' => 'ฝนตก',
                         'Mist' => 'มีหมอก', 'Fog' => 'มีหมอกหนา', 'Haze' => 'มีหลัวควัน',
                         'Thunderstorm' => 'พายุฝนฟ้าคะนอง', 'Drizzle' => 'ฝนละออง',
                     ];
                     $weatherThai = $weatherMap[$weather] ?? $weather;
-                }
-                else {
-                    $html = "<div style=\"font-size: 18px; position:absolute;top:990;left:95px;\">Construction Contract : ". $contractNo  ." </div>";
-                    $html .= "<div style=\"text-decoration: underline;font-weight: bold; font-size: 18px; position:absolute;top:112px;left:140px;\">". $due_date . "</div>";
-                    $html .= "<div style=\"font-weight: bold; font-size: 20px; position:absolute;top:155px;left:95px;\">Weather : ". $weather ."</div>";
-                    $html .= "<div style=\"font-weight: bold; font-size: 20px; position:absolute;top:155px;left:300px;\">Wind : ". $wind ."</div>";
-                    $html .= "<div style=\"font-weight: bold; font-size: 20px; position:absolute;top:155px;left:500px;\">Temperature : ". $temperature  ." °C</div>";
-                    $html .= "<div style=\"font-weight: bold; font-size: 20px; position:absolute;top:990;left:580px;\">(". $recordby  .")</div>";
                 }
 
                 if(!is_null($task->create_by_user->signature)){
@@ -546,48 +532,36 @@ class TaskController extends Controller
                     $httpCode = curl_getinfo($handle, CURLINFO_HTTP_CODE);
                     curl_close($handle);
 
-
                     if($httpCode != 404){
-                        if($activityLang === 'thai'){
-                            // Thai: save signature for body append (flow layout)
-                            $signature_html = "<img width=\"150\" src=\"" . $task->create_by_user->signature->getPath() . "\">";
-                        }
-                        else {
-                            $html .= "<div style=\"font-weight: bold; position:absolute;top:900;left:620px;\">
-                                    <img width=\"70%\" height=\"70%\" src=\"" . $task->create_by_user->signature->getPath()
-                                    . "\"></div>";
-                        }
+                        $signature_html = "<img width=\"120\" src=\"" . $task->create_by_user->signature->getPath() . "\">";
                     }
                 }
 
-                if($activityLang !== 'thai'){
-                    $mpdf->SetHTMLHeader($html,'0',true);
-
-                    $html = "<div style=\" padding-left: 80px; padding-right:80px;\">
-                                <div style=\"text-align: center;font-weight: bold; font-size: 22px;\">". nl2br(str_replace(';',"\r\n",$activity_name))  ."</div>
-                                </div>";
-
-
-                    $html .= "<div style=\" padding-left: 80px; padding-right:80px; padding-bottom:-15px; \">
-                                    <div style=\"vertical-align: top; max-width: 50%; display: inline-block; font-size: 15px;\">".  nl2br(str_replace(';','\n',$description)) ."</div>
-                                    </div><br>";
+                // Build header (date/weather) in language-specific text, same layout as Thai
+                if($activityLang === 'thai'){
+                    $reportHeader = "<div style=\"font-weight: bold; font-size: 16pt; padding: 20px 30px 4px 10px;\">" . $due_date_thai . "</div>";
+                    $reportHeader .= "<div style=\"font-weight: bold; font-size: 16pt; padding: 0px 30px 4px 10px;\">อากาศ : " . $weatherThai . "&nbsp;&nbsp;&nbsp;ลม : " . $wind . "&nbsp;&nbsp;&nbsp;อุณหภูมิ : " . $temperature . " °C</div>";
                 }
                 else {
-                    // Thai: use SetHTMLHeader for date+weather (repeats on every page, same as English approach)
-                    $thaiHeader = "<div style=\"font-weight: bold; font-size: 16pt; padding: 20px 30px 4px 10px;\">" . $due_date_thai . "</div>";
-                    $thaiHeader .= "<div style=\"font-weight: bold; font-size: 16pt; padding: 0px 30px 4px 10px;\">อากาศ : " . $weatherThai . "&nbsp;&nbsp;&nbsp;ลม : " . $wind . "&nbsp;&nbsp;&nbsp;อุณหภูมิ : " . $temperature . " °C</div>";
-                    $mpdf->SetHTMLHeader($thaiHeader, '0', true);
-
-                    // Body: activity_name + description (same layout pattern as English)
-                    $activity_name_lines = array_map('trim', explode(';', $activity_name));
-                    $activity_name_clean = implode("\r\n", $activity_name_lines);
-                    $html = "<div style=\"padding: 0 30px;\">
-                                <div style=\"text-align: center; font-weight: bold; font-size: 16pt; margin-bottom: 20px;\">" . nl2br($activity_name_clean) . "</div>
-                                </div>";
-                    $html .= "<div style=\"padding: 0 15px 0 30px;\"><div style=\"vertical-align: top; max-width: 50%; display: inline-block; font-size: 14pt;\">" . nl2br(str_replace(';', "\n", $description)) . "</div></div>";
-                    $html .= "<!--IMAGES_PLACEHOLDER-->";
-                    $html .= "<!--FOOTER_PLACEHOLDER-->";
+                    $due_date_en = '';
+                    if($due_date !== ''){
+                        $dueDateCarbonEn = Carbon::createFromFormat('d/m/Y', $due_date);
+                        $due_date_en = $dueDateCarbonEn->format('l, F j, Y');
+                    }
+                    $reportHeader = "<div style=\"font-weight: bold; font-size: 16pt; padding: 20px 30px 4px 10px;\">" . $due_date_en . "</div>";
+                    $reportHeader .= "<div style=\"font-weight: bold; font-size: 16pt; padding: 0px 30px 4px 10px;\">Weather : " . $weather . "&nbsp;&nbsp;&nbsp;Wind : " . $wind . "&nbsp;&nbsp;&nbsp;Temperature : " . $temperature . " °C</div>";
                 }
+                $mpdf->SetHTMLHeader($reportHeader, '0', true);
+
+                // Body: same layout for both languages
+                $activity_name_lines = array_map('trim', explode(';', $activity_name));
+                $activity_name_clean = implode("\r\n", $activity_name_lines);
+                $html = "<div style=\"padding: 0 30px;\">
+                            <div style=\"text-align: center; font-weight: bold; font-size: 16pt; margin-bottom: 20px;\">" . nl2br($activity_name_clean) . "</div>
+                            </div>";
+                $html .= "<div style=\"padding: 0 15px 0 30px;\"><div style=\"vertical-align: top; max-width: 50%; display: inline-block; font-size: 14pt;\">" . nl2br(str_replace(';', "\n", $description)) . "</div></div>";
+                $html .= "<!--IMAGES_PLACEHOLDER-->";
+                $html .= "<!--FOOTER_PLACEHOLDER-->";
 
 
                 try{
@@ -616,10 +590,9 @@ class TaskController extends Controller
                                     $index++;
                                     continue;
                                 }
-                                $img_height = ($activityLang !== 'thai') ? 126 : 180;
                                 $img = (string) Image::make($url_path)
                                     ->orientate()
-                                    ->resize(null, $img_height, function ($constraint) {
+                                    ->resize(null, 180, function ($constraint) {
                                         $constraint->aspectRatio();
                                     })
                                     ->encode('data-url');
@@ -635,37 +608,33 @@ class TaskController extends Controller
                         // Step 2: Auto-layout based on valid image count (1-10)
                         $valid_count = count($valid_images);
                         if($valid_count > 0){
-                            // English: reduced 30% from original. Thai: original sizes.
-                            $en_sizes = [1 => '49%', 2 => '31%', 3 => '21%', 4 => '31%', 5 => '21%', 6 => '21%', 7 => '12%'];
-                            $th_sizes = [1 => '70%', 2 => '45%', 3 => '30%', 4 => '45%', 5 => '30%', 6 => '30%', 7 => '18%'];
-                            $sizes = ($activityLang !== 'thai') ? $en_sizes : $th_sizes;
                             if($valid_count == 1){
-                                $cols = 1; $img_wh = $sizes[1];
+                                $cols = 1; $img_wh = "70%";
                             }
                             elseif($valid_count == 2){
-                                $cols = 2; $img_wh = $sizes[2];
+                                $cols = 2; $img_wh = "45%";
                             }
                             elseif($valid_count == 3){
-                                $cols = 3; $img_wh = $sizes[3];
+                                $cols = 3; $img_wh = "30%";
                             }
                             elseif($valid_count == 4){
-                                $cols = 2; $img_wh = $sizes[4];
+                                $cols = 2; $img_wh = "45%";
                             }
                             elseif($valid_count == 5){
-                                $cols = 3; $img_wh = $sizes[5];
+                                $cols = 3; $img_wh = "30%";
                             }
                             elseif($valid_count == 6){
-                                $cols = 3; $img_wh = $sizes[6];
+                                $cols = 3; $img_wh = "30%";
                             }
                             else{
-                                $cols = 5; $img_wh = $sizes[7];
+                                $cols = 5; $img_wh = "18%";
                             }
 
-                            $cell_padding = ($activityLang !== 'thai') ? '1px' : '3px';
+                            // Build table layout for reliable grid in mPDF
                             $images_html = "<table style=\"width:100%; border-collapse:collapse; text-align:center;\"><tr>";
                             $col = 0;
                             foreach($valid_images as $img){
-                                $images_html .= "<td style=\"padding:" . $cell_padding . ";\"><img width=\"" . $img_wh . "\" src=\"" . $img . "\"></td>";
+                                $images_html .= "<td style=\"padding:3px;\"><img width=\"" . $img_wh . "\" src=\"" . $img . "\"></td>";
                                 $col++;
                                 if($col >= $cols && $col < $valid_count){
                                     $images_html .= "</tr><tr>";
@@ -679,38 +648,34 @@ class TaskController extends Controller
                             }
                             $images_html .= "</tr></table>";
 
-                            // Thai: replace placeholder so images appear inside the bordered content box
-                            // English: append after description
-                            if($activityLang === 'thai'){
-                                $html = str_replace('<!--IMAGES_PLACEHOLDER-->', $images_html, $html);
-                            }
-                            else {
-                                $html .= $images_html;
-                            }
+                            // Replace placeholder for both languages so images appear inside the content box
+                            $html = str_replace('<!--IMAGES_PLACEHOLDER-->', $images_html, $html);
                         }
                     }
                 }catch(\Throwable $e){
                     print "Creating an mPDF object failed with" . $e->getMessage();
                 }
 
-                // Thai: clean up unused placeholders (no valid images case)
-                if($activityLang === 'thai'){
-                    $html = str_replace('<!--IMAGES_PLACEHOLDER-->', '', $html);
-                }
+                // Clean up unused placeholders (no valid images case)
+                $html = str_replace('<!--IMAGES_PLACEHOLDER-->', '', $html);
 
                 if($activityLang === 'thai'){
-                    $footer = "<table style=\"width:100%;\"><tr>";
-                    $footer .= "<td style=\"font-size: 16pt; word-break: break-all; word-wrap: break-word; vertical-align: bottom; width: 50%;\">สัญญาก่อสร้าง : " . $contractNo . "</td>";
-                    $footer .= "<td style=\"text-align: right; vertical-align: bottom;\">";
-                    if($signature_html !== ''){
-                        $footer .= "<img width=\"120\" src=\"" . $task->create_by_user->signature->getPath() . "\"><br>";
-                    }
-                    $footer .= "<span style=\"font-weight: bold; font-size: 16pt; word-break: break-all; word-wrap: break-word;\">(" . $recordby . ")</span>";
-                    $footer .= "</td>";
-                    $footer .= "</tr></table>";
-                    $mpdf->SetHTMLFooter($footer);
-                    $html = str_replace('<!--FOOTER_PLACEHOLDER-->', '', $html);
+                    $contractLabel = "สัญญาก่อสร้าง";
                 }
+                else {
+                    $contractLabel = "Construction Contract";
+                }
+                $footer = "<table style=\"width:100%;\"><tr>";
+                $footer .= "<td style=\"font-size: 16pt; word-break: break-all; word-wrap: break-word; vertical-align: bottom; width: 50%;\">" . $contractLabel . " : " . $contractNo . "</td>";
+                $footer .= "<td style=\"text-align: right; vertical-align: bottom;\">";
+                if($signature_html !== ''){
+                    $footer .= $signature_html . "<br>";
+                }
+                $footer .= "<span style=\"font-weight: bold; font-size: 16pt; word-break: break-all; word-wrap: break-word;\">(" . $recordby . ")</span>";
+                $footer .= "</td>";
+                $footer .= "</tr></table>";
+                $mpdf->SetHTMLFooter($footer);
+                $html = str_replace('<!--FOOTER_PLACEHOLDER-->', '', $html);
 
                 $mpdf->WriteHTML($html);
 
