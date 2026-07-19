@@ -49,12 +49,30 @@
                         </div>
 
                         <div class="form-group">
+                            <label for="activityLang" class="required">Activity Form Language</label>
+                            <select id="activityLang" name="activityLang" class="form-control select2" required>
+                                <option selected value="english">English</option>
+                                <option value="thai">Thai (ภาษาไทย)</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
                             <label for="reportType" class="required">Report Type</label>
                             <select id="reportType" name="reportType" class="form-control select2" required>
                                 <option selected value="Daily Report">Daily</option>
                                 <option value="Weekly Report">Weekly</option>
                                 <option value="Monthly Report">Monthly</option>
                             </select>
+                        </div>
+
+                        <div class="form-group" id="work_point_name_group" style="display:none;">
+                            <label for="work_point_name">ชื่อจุดทำงาน (Optional)</label>
+                            <input type="text" class="form-control" id="work_point_name" name="work_point_name" value="{{ old('work_point_name') }}" placeholder="กรอกชื่อจุดทำงาน (ถ้าว่างจะใช้ค่าทีมของผู้ใช้)">
+                        </div>
+
+                        <div class="form-group" id="department_team_group" style="display:none;">
+                            <label for="department_team">แผนกควบคุมงานหรือทีมควบคุมงาน (Optional)</label>
+                            <input type="text" class="form-control" id="department_team" name="department_team" value="{{ old('department_team') }}" placeholder="กรอกแผนก/ทีมควบคุมงาน (ถ้าว่างจะใช้ค่าทีมของผู้ใช้)">
                         </div>
 
                         <div class="form-group">
@@ -82,6 +100,20 @@
       alert(msg);
     }
 
+    // Show work point name and department/team fields only for Weekly/Monthly reports
+    function toggleOptionalFields() {
+        var reportType = $('#reportType').val();
+        var show = (reportType === 'Weekly Report' || reportType === 'Monthly Report');
+        $('#work_point_name_group').toggle(show);
+        $('#department_team_group').toggle(show);
+    }
+
+    $(document).ready(function(){
+        toggleOptionalFields();
+        $('#reportType').on('change', function(){
+            toggleOptionalFields();
+        });
+    });
 
     $('#createReport').click(function(){
         var html = '<div class="loader-wrapper"><span class="loader"><span class="loader-inner"></span></span></div>';
