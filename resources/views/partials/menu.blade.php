@@ -79,6 +79,35 @@
                     </a>
                 </li>
             @endcan
+            @can('rfa_access')
+                <li class="treeview">
+                    <a href="#">
+                        <i class="fa-fw fas fa-draw-polygon"></i>
+                        <span>Design Drawing</span>
+                        <span class="pull-right-container"><i class="fa fa-fw fa-angle-left pull-right"></i></span>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li class="{{ request()->is('admin/drawings') ? 'active' : '' }}">
+                            <a href="{{ route("admin.drawings.index") }}">
+                                <i class="fa-fw fas fa-draw-polygon"></i>
+                                <span>Drawing</span>
+                            </a>
+                        </li>
+                        <li class="{{ request()->is('admin/shop-drawing-rfas') ? 'active' : '' }}">
+                            <a href="{{ route("admin.shop-drawing-rfas.index") }}">
+                                <i class="fa-fw fas fa-pencil-ruler"></i>
+                                <span>Shop Drawing</span>
+                            </a>
+                        </li>
+                        <li class="{{ request()->is('admin/as-built-drawings') ? 'active' : '' }}">
+                            <a href="{{ route("admin.as-built-drawings.index") }}">
+                                <i class="fa-fw fas fa-clipboard-check"></i>
+                                <span>As-Built Drawing</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            @endcan
            
             @can('request_document_setting')
                 <li class="treeview">
