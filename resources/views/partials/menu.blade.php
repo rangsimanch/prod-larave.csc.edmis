@@ -108,6 +108,15 @@
                     </ul>
                 </li>
             @endcan
+
+            @can('rfa_access')
+                <li class="{{ request()->is('admin/method-statements') ? 'active' : '' }}">
+                    <a href="{{ route("admin.method-statements.index") }}">
+                        <i class="fa-fw fas fa-file-alt"></i>
+                        <span>Method Statement</span>
+                    </a>
+                </li>
+            @endcan
            
             @can('request_document_setting')
                 <li class="treeview">

@@ -42,15 +42,27 @@ class DrawingRfaController extends Controller
         return $this->buildIndex($request, 10, 'As-Built Drawing', route('admin.as-built-drawings.index'));
     }
 
-    protected function buildIndex(Request $request, $typeId, $pageTitle, $ajaxRoute)
+    public function methodStatementIndex(Request $request)
+    {
+        return $this->buildIndex($request, ['MAT', 'SUB'], 'Method Statement', route('admin.method-statements.index'));
+    }
+
+    protected function buildIndex(Request $request, $typeFilter, $pageTitle, $ajaxRoute)
     {
         abort_if(Gate::denies('rfa_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
             $query = Rfa::with(['document_status', 'boq', 'type', 'construction_contract', 'wbs_level_3', 'wbs_level_4', 'issueby', 'assign', 'action_by', 'comment_by', 'information_by', 'comment_status', 'for_status', 'create_by_user', 'distribute_by', 'reviewed_by', 'wbs_level_one', 'team'])
-                ->where('type_id', $typeId)
                 ->orderBy('created_at', 'desc')
                 ->select(sprintf('%s.*', (new Rfa())->table));
+
+            if (is_array($typeFilter)) {
+                $query->whereHas('type', function ($q) use ($typeFilter) {
+                    $q->whereIn('type_code', $typeFilter);
+                });
+            } else {
+                $query->where('type_id', $typeFilter);
+            }
             $table = Datatables::of($query);
 
             $table->editColumn('cover_sheet', function ($row) {

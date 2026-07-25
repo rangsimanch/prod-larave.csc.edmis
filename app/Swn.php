@@ -42,6 +42,11 @@ class Swn extends Model implements HasMedia
         '2' => 'Rejected and need further action.',
     ];
 
+    public const IS_CENTRAL_SELECT = [
+        '0' => 'No',
+        '1' => 'Yes',
+    ];
+
     public $table = 'swns';
 
     public static $searchable = [
@@ -76,6 +81,7 @@ class Swn extends Model implements HasMedia
         'review_date',
         'auditing_date',
         'document_number',
+        'is_central',
         'location',
         'reply_ncr',
         'ref_doc',

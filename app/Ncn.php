@@ -25,6 +25,11 @@ class Ncn extends Model implements HasMedia
         '4' => 'Rejected and need further action.',
     ];
 
+    public const IS_CENTRAL_SELECT = [
+        '0' => 'No',
+        '1' => 'Yes',
+    ];
+
     public $table = 'ncns';
 
     public static $searchable = [
@@ -51,6 +56,7 @@ class Ncn extends Model implements HasMedia
         'title',
         'issue_date',
         'document_number',
+        'is_central',
         'description',
         'attachment_description',
         'pages_of_attachment',

@@ -86,10 +86,11 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::get('rfas/{rfa}/createReportRFA','RfaController@createReportRFA')->name('rfas.createReportRFA');
     Route::resource('rfas', 'RfaController');
 
-    // Drawing / Shop Drawing / As-Built Drawing (pre-filtered read-only RFA views)
+    // Drawing / Shop Drawing / As-Built Drawing / Method Statement (pre-filtered read-only RFA views)
     Route::get('drawings', 'DrawingRfaController@drawingIndex')->name('drawings.index');
     Route::get('shop-drawing-rfas', 'DrawingRfaController@shopDrawingIndex')->name('shop-drawing-rfas.index');
     Route::get('as-built-drawings', 'DrawingRfaController@asBuiltIndex')->name('as-built-drawings.index');
+    Route::get('method-statements', 'DrawingRfaController@methodStatementIndex')->name('method-statements.index');
 
     // Rfatypes
     Route::delete('rfatypes/destroy', 'RfatypesController@massDestroy')->name('rfatypes.massDestroy');

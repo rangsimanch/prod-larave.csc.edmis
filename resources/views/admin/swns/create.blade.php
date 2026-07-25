@@ -54,6 +54,18 @@
                             <span class="help-block">{{ trans('cruds.swn.fields.submit_date_helper') }}</span>
                         </div>
 
+                        <div class="form-group {{ $errors->has('is_central') ? 'has-error' : '' }}">
+                            <label for="is_central">Issued by Central</label>
+                            <select class="form-control select2" name="is_central" id="is_central">
+                                <option value="0" {{ old('is_central', '0') === '0' ? 'selected' : '' }}>No</option>
+                                <option value="1" {{ old('is_central', '0') === '1' ? 'selected' : '' }}>Yes</option>
+                            </select>
+                            @if($errors->has('is_central'))
+                                <span class="help-block" role="alert">{{ $errors->first('is_central') }}</span>
+                            @endif
+                            <span class="help-block">Select "Yes" if this SWN is issued by the central team. This prefixes the document number with (Z) and counts it in a separate sequence.</span>
+                        </div>
+
                         <div class="form-group {{ $errors->has('location') ? 'has-error' : '' }}">
                             <label for="location">{{ trans('cruds.swn.fields.location') }}</label>
                             <input class="form-control" type="text" name="location" id="location" value="{{ old('location', '') }}">

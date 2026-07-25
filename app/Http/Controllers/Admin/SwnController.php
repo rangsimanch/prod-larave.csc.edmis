@@ -17,6 +17,7 @@ use App\ConstructionContract;
 use App\Department;
 use Illuminate\Support\Facades\Auth;
 use DB;
+use Carbon\Carbon;
 use App\Http\Controllers\Traits\CsvImportTrait;
 use App\Http\Controllers\Traits\MediaUploadingTrait;
 use App\Team;
@@ -178,9 +179,15 @@ class SwnController extends Controller
         $dept_code = Department::where('id', '=', $data['dept_code_id'])->value('code');
         $submit_date = $data['submit_date'];
         $code_year = substr($submit_date,-4);
+
+        $is_central = !empty($data['is_central']) && in_array((string) $data['is_central'], ['1', 'true', true], true) ? 1 : 0;
+        $data['is_central'] = $is_central;
+
         // $prev_doc_code = Swn::where('construction_contract_id' ,'=' ,$data['construction_contract_id'])->orderBy('id','desc')->limit(1)->value('document_number');
-        $prev_doc_code = Swn::where('construction_contract_id' ,'=' ,$data['construction_contract_id'])->where(DB::raw('YEAR(submit_date)'), '=', $code_year)
-        ->orderBy('id','desc')->limit(1)->value('document_number');
+        $prev_doc_code = Swn::where('construction_contract_id' ,'=' ,$data['construction_contract_id'])
+            ->where('is_central', $is_central)
+            ->where(DB::raw('YEAR(submit_date)'), '=', $code_year)
+            ->orderBy('id','desc')->limit(1)->value('document_number');
         $legth_of_doc = (int)substr(substr($prev_doc_code,-3),0,3);
         if($legth_of_doc != 0){
             $prev_year = substr(substr($prev_doc_code,-8),0,4);
@@ -195,7 +202,8 @@ class SwnController extends Controller
             $legth_of_doc = $legth_of_doc + 1;
         }
         $doc_number = substr("000{$legth_of_doc}", -3);
-        $data['document_number'] = $contract_code . '/CSC/SWN/' . $dept_code . '/' . 'No.' . $code_year . '-' . $doc_number;
+        $prefix = $is_central ? '(Z)' : '';
+        $data['document_number'] = $prefix . $contract_code . '/CSC/SWN/' . $dept_code . '/' . 'No.' . $code_year . '-' . $doc_number;
 
         $swn = Swn::create($data);
 
@@ -381,7 +389,14 @@ class SwnController extends Controller
     }
 
     public function createReportSWN(Swn $swn){
-       
+
+        // New form layout for SWNs created on or after 21/07/2026
+        $cutoffDate = Carbon::createFromFormat('d/m/Y', '26/07/2026')->endOfDay();
+        $swnCreated = $swn->created_at ? Carbon::instance($swn->created_at) : null;
+        if ($swnCreated && $swnCreated->greaterThan($cutoffDate)) {
+            return $this->createReportSWNNewForm($swn);
+        }
+
         try {
             $mpdf = new \Mpdf\Mpdf([
                 'tempDir' =>  public_path('tmp'),
@@ -636,7 +651,7 @@ class SwnController extends Controller
         $mpdf->SetHTMLHeader($html,'0',true);
 
 
-        // Image Attacment
+        // Image Attachment
         $count_image = count($swn->description_image);
         if($count_image > 0){
             $mpdf->SetDocTemplate(public_path('pdf-asset/SWN_Template_Attachment.pdf'),true);
@@ -644,12 +659,6 @@ class SwnController extends Controller
             $mpdf->SetHTMLFooter($footer_text);
             $mpdf->AddPage('P','','','','','','',50,55);
             $html = "";
-            // $html = "<div style=\"font-size: 16px; text-align: center; font-weight: bold; color:#1F4E78;\">" . $contract_name  . "</div>";
-            // $html .= "<div style=\"font-size: 18px; position:absolute;top:190px;left:120px;\">" . $send_to  . "</div>";
-            // $html .= "<div style=\"font-size: 18px; position:absolute;top:190px;left:370px;\">" . $submit_date  . "</div>";
-            // $html .= "<div style=\"font-size: 16px; position:absolute;top:190px;left:520px;\">" . $document_number  . "</div>";
-            // $html .= "<div style=\"font-size: 16px; padding-top:120px;\"></div>";
-
             for($index = 0; $index < $count_image; $index++){
                 try{
                     $allowed = array('gif', 'png', 'jpg', 'jpeg', 'JPG', 'JPEG', 'PNG');
@@ -723,6 +732,7 @@ class SwnController extends Controller
             $mpdf->SetHTMLHeader($html,'0',true);
         }
 
+        // Attachments — merge attached PDFs
         $mpdf->SetDocTemplate("");
         foreach($swn->conditional_file_upload as $attachment){
             try{
@@ -735,16 +745,13 @@ class SwnController extends Controller
                 if($httpCode != 404){
                     $pagecount = $mpdf->SetSourceFile($attachment->getPath());
                     for($page = 1; $page <= $pagecount; $page++){
-                        // $mpdf->AddPage();
                         $tplId = $mpdf->importPage($page);
                         $size = $mpdf->getTemplateSize($tplId);
                         $mpdf->AddPage($size['orientation']);
-                        // $mpdf->UseTemplate($tplId);
                         $mpdf->UseTemplate($tplId, 0, 0, $size['width'], $size['height'], true);
-
                     }
                 }
-            }catch(exeption $e){
+            }catch(\Exception $e){
                 print "Creating an mPDF object failed with" . $e->getMessage();
             }
         }
@@ -761,15 +768,13 @@ class SwnController extends Controller
                 if($httpCode != 404){
                     $pagecount = $mpdf->SetSourceFile($attachment->getPath());
                     for($page = 1; $page <= $pagecount; $page++){
-                        // $mpdf->AddPage();
                         $tplId = $mpdf->importPage($page);
                         $size = $mpdf->getTemplateSize($tplId);
                         $mpdf->AddPage($size['orientation']);
-                        // $mpdf->UseTemplate($tplId);
                         $mpdf->UseTemplate($tplId, 0, 0, $size['width'], $size['height'], true);
                     }
             }
-            }catch(exeption $e){
+            }catch(\Exception $e){
                 print "Creating an mPDF object failed with" . $e->getMessage();
             }
         }
@@ -785,22 +790,310 @@ class SwnController extends Controller
                 if($httpCode != 404){
                     $pagecount = $mpdf->SetSourceFile($attachment->getPath());
                     for($page = 1; $page <= $pagecount; $page++){
-                        // $mpdf->AddPage();
                         $tplId = $mpdf->importPage($page);
                         $size = $mpdf->getTemplateSize($tplId);
                         $mpdf->AddPage($size['orientation']);
-                        // $mpdf->UseTemplate($tplId);
                         $mpdf->UseTemplate($tplId, 0, 0, $size['width'], $size['height'], true);
 
                     }
                 }
-            }catch(exeption $e){
+            }catch(\Exception $e){
                 print "Creating an mPDF object failed with" . $e->getMessage();
             }
         }
 
         // Output a PDF file directly to the browser
         $filename = "SWN-" . str_replace(".","",$subject) . ".pdf";
+        return $mpdf->Output($filename, 'I');
+    }
+
+    /**
+     * New SWN report layout for SWNs created after 20/07/2026.
+     * Uses SWN_form_1page.pdf when description + images fit on a single page,
+     * and SWN_form_multipage.pdf for overflow pages, with the 1-page form
+     * used again as the final page.
+     */
+    protected function createReportSWNNewForm(Swn $swn)
+    {
+        $mpdfConfig = [
+            'tempDir'             => public_path('tmp'),
+            'mode'                => '+aCJK',
+            'autoScriptToLang'    => true,
+            'autoLangToFont'      => true,
+            'allow_charset_conversion' => true,
+            'charset_in'          => 'UTF-8',
+        ];
+
+        $mpdf = new \Mpdf\Mpdf($mpdfConfig);
+
+        // Setting Data (same fields as the legacy layout)
+        $documents_status = $swn->documents_status;
+        $contract_name    = 'Construction Contract Section: ' . $swn->construction_contract->code;
+        $send_to          = "Project Manager";
+        $contract_code    = $swn->construction_contract->code ?? '';
+
+        // Send-to (constructor name) per construction contract — mirrors the
+        // RfaController createReportRFA contract mapping.
+        if ($contract_code == "C4-3") {
+            $send_to = 'CAN Joint Venture';
+        } elseif ($contract_code == "C4-4") {
+            $send_to = 'Italian-Thai Development PCL.';
+        } elseif ($contract_code == "C4-2") {
+            $send_to = 'Unique Engineering and Construction Public Company Limited';
+        } elseif ($contract_code == "C4-6") {
+            $send_to = 'Unique Engineering and Construction Public Company Limited';
+        } elseif ($contract_code == "C4-7") {
+            $send_to = 'Civil Enginneering Public Company Limited';
+        } elseif ($contract_code == "C2-1") {
+            $send_to = 'Civil Construction Services & Products Company Limited';
+        } elseif ($contract_code == "C3-1") {
+            $send_to = 'ITD-CREC No.10 Joint Venture';
+        } elseif ($contract_code == "C3-2") {
+            $send_to = 'Nawarat Patanakarn Public Company Limited';
+        } elseif ($contract_code == "C3-3") {
+            $send_to = 'Thai Engineers & Industry Company Limited';
+        } elseif ($contract_code == "C3-4") {
+            $send_to = 'Italian-Thai Development PCL.';
+        } elseif ($contract_code == "C3-5") {
+            $send_to = 'SPTK Joint Venture Company Limited';
+        }
+        $submit_date      = $swn->submit_date ?? '';
+        $review_date      = $swn->review_date ?? '';
+        $auditing_date    = $swn->auditing_date ?? '';
+        $document_number  = 'No.' . $swn->document_number;
+        $subject          = str_replace(["：", "、"], [":", ","], $swn->title ?? '');
+        $location         = str_replace(["：", "、"], [":", ","], $swn->location ?? '');
+        $reply_ncr        = $swn->reply_ncr ?? '';
+        $ref_doc          = $swn->ref_doc ?? '';
+        $description      = str_replace(["：", "、"], [":", ","], $swn->description ?? '');
+        $issuer_name      = $swn->issue_by->name ?? '';
+        $issuer_position  = $swn->issue_by->jobtitle->name ?? '';
+        $qa_name          = $swn->related_specialist->name ?? '';
+        $qa_position      = $swn->related_specialist->jobtitle->name ?? '';
+        $cos_name         = $swn->construction_specialist->name ?? '';
+        $cos_position     = $swn->construction_specialist->jobtitle->name ?? '';
+        $review_status    = $swn->review_status ?? '';
+        $auditing_status  = $swn->auditing_status ?? '';
+        $conditional_accepted = $swn->conditional_accepted ?? '';
+
+        // Header data block (absolute-positioned, same coordinates as legacy form)
+        $html = "<div style=\"font-size: 10px; text-align: center; font-weight: bold; position:absolute;top:105px;left:95px;\">" . $contract_name . "</div>";
+        $html .= "<div style=\"font-size: 12px; position:absolute;top:129px;left:145px;\">" . $send_to . "</div>";
+        // $html .= "<div style=\"font-size: 12px; position:absolute;top:195px;left:370px;\">" . $submit_date . "</div>";
+        $html .= "<div style=\"font-size: 10px; position:absolute;top:105px;left:525px; font-weight: bold;\">" . $document_number . "</div>";
+        $html .= "<div style=\"font-size: 10px; padding-right:70px; position:absolute;top:156px;left:165px;\">" . $subject . "</div>";
+        // $html .= "<div style=\"font-size: 8px; padding-right:450px; position:absolute;top:299px;left:150px;\">" . $location . "</div>";
+        
+        // Build description images HTML (multiple images supported). Images
+        // are rendered inline as part of the description block so the same
+        // two-pass layout logic (multipage form for non-last pages, 1-page
+        // form for the last content page) applies to text + images together.
+        $imagesHtml = '';
+        $count_image = count($swn->description_image);
+        if ($count_image > 0) {
+            for ($index = 0; $index < $count_image; $index++) {
+                try {
+                    $allowed = ['gif', 'png', 'jpg', 'jpeg', 'JPG', 'JPEG', 'PNG'];
+                    $path = $swn->description_image[$index]->getPath();
+                    if (file_exists($path)) {
+                        $ext = strtolower(pathinfo($path, PATHINFO_EXTENSION));
+                        if (in_array($ext, $allowed)) {
+                            $img = (string) Image::make($path)->orientate()->resize(null, 180, function ($constraint) {
+                                $constraint->aspectRatio();
+                            })->encode('data-url');
+                            $imagesHtml .= "<img style=\"padding-left:90px; padding-top:10px;\" width=\"30%\" height=\"30%\" src=\"" . $img . "\">  ";
+                        }
+                    }
+                } catch (\Exception $e) {
+                    \Log::error('SWN image embed failed: ' . $e->getMessage());
+                }
+            }
+        }
+
+        // Description block — text only. Images go on a separate attachment
+        // page (same approach as legacy createReportSWN).
+        $des = "<div style=\" padding-left: 80px; padding-right:40px; padding-bottom:-15px; \">";
+        $des .= "<div style=\"font-size: 10px; padding-right:20px; position:absolute;top:330px;left:110px;LINE-HEIGHT:15px;\">" . $description . "</div>";
+        $des .= "</div>";
+
+        // Two-pass layout:
+        //  Pass 1 — try the 1-page form. Write header + description (+ images)
+        //           and measure whether the content overflows onto a 2nd page.
+        //  Pass 2 — only if overflow occurred, recreate the mPDF with a custom
+        //           subclass that renders every non-last page with the multipage
+        //           form and switches to the 1-page form for the last content
+        //           page (no empty trailing page).
+        $mpdf->SetDocTemplate(public_path('pdf-asset/SWN_form_1page.pdf'), true);
+        $mpdf->AddPage('P', '', '', '', '', '', '', 70, 70);
+        $mpdf->WriteHTML($html);
+        $mpdf->SetHTMLHeader($html, '0', true);
+
+        $pageBefore = $mpdf->page;
+        $mpdf->WriteHTML($des);
+        $pageAfter = $mpdf->page;
+        $mpdf->SetHTMLHeader('', '0', true);
+
+        if ($pageAfter > $pageBefore) {
+            // Overflow — rebuild with multipage form for non-last pages and
+            // 1page form for the last content page. A custom mPDF subclass
+            // switches the doc template right before the final page break.
+            $totalPages = $pageAfter;
+
+            $mpdf = new class($mpdfConfig) extends \Mpdf\Mpdf {
+                public $switchAtPage = null;
+                public $switchTemplate = null;
+                public $switched = false;
+
+                public function AddPage(
+                    $orientation = '',
+                    $condition = '',
+                    $resetpagenum = '',
+                    $pagenumstyle = '',
+                    $suppress = '',
+                    $mgl = '',
+                    $mgr = '',
+                    $mgt = '',
+                    $mgb = '',
+                    $mgh = '',
+                    $mgf = '',
+                    $ohname = '',
+                    $ehname = '',
+                    $ofname = '',
+                    $efname = '',
+                    $ohvalue = 0,
+                    $ehvalue = 0,
+                    $ofvalue = 0,
+                    $efvalue = 0,
+                    $pagesel = '',
+                    $newformat = ''
+                ) {
+                    if (!$this->switched
+                        && $this->switchAtPage !== null
+                        && ($this->page + 1) >= $this->switchAtPage) {
+                        $this->SetDocTemplate($this->switchTemplate, true);
+                        $this->switched = true;
+                    }
+                    parent::AddPage(
+                        $orientation,
+                        $condition,
+                        $resetpagenum,
+                        $pagenumstyle,
+                        $suppress,
+                        $mgl,
+                        $mgr,
+                        $mgt,
+                        $mgb,
+                        $mgh,
+                        $mgf,
+                        $ohname,
+                        $ehname,
+                        $ofname,
+                        $efname,
+                        $ohvalue,
+                        $ehvalue,
+                        $ofvalue,
+                        $efvalue,
+                        $pagesel,
+                        $newformat
+                    );
+                }
+            };
+            $mpdf->switchAtPage = $totalPages;
+            $mpdf->switchTemplate = public_path('pdf-asset/SWN_form_1page.pdf');
+
+            $mpdf->SetDocTemplate(public_path('pdf-asset/SWN_form_multipage.pdf'), true);
+            $mpdf->AddPage('P', '', '', '', '', '', '', 70, 70);
+            $mpdf->WriteHTML($html);
+            $mpdf->SetHTMLHeader($html, '0', true);
+            $mpdf->WriteHTML($des);
+            $mpdf->SetHTMLHeader('', '0', true);
+        }
+
+        // Image Attachment — same approach as legacy createReportSWN:
+        // dedicated attachment page with SWN_Template_Attachment.pdf template,
+        // images rendered in normal flow (multiple images supported).
+        if ($imagesHtml !== '') {
+            $mpdf->SetDocTemplate(public_path('pdf-asset/SWN_Template_Attachment.pdf'), true);
+            $mpdf->AddPage('P', '', '', '', '', '', '', 50, 55);
+            // Write document number as a positioned div (not a footer) so it
+            // appears ONLY on this attachment page. mPDF footers persist across
+            // pages and are written at page-close time, which makes them hard
+            // to scope to a single page.
+            $mpdf->WriteHTML("<div style=\"position:absolute;bottom:20px;right:30px;font-size:10px;font-weight:bold;\">" . $document_number . "</div>");
+            $mpdf->WriteHTML($imagesHtml);
+        }
+
+
+        // Attachments — merge attached PDFs (same as legacy createReportSWN).
+        $mpdf->SetDocTemplate("");
+        foreach ($swn->conditional_file_upload as $attachment) {
+            try {
+                $url = $attachment->getUrl();
+                $handle = curl_init($url);
+                curl_setopt($handle, CURLOPT_RETURNTRANSFER, TRUE);
+                curl_exec($handle);
+                $httpCode = curl_getinfo($handle, CURLINFO_HTTP_CODE);
+                curl_close($handle);
+                if ($httpCode != 404) {
+                    $pagecount = $mpdf->SetSourceFile($attachment->getPath());
+                    for ($page = 1; $page <= $pagecount; $page++) {
+                        $tplId = $mpdf->importPage($page);
+                        $size = $mpdf->getTemplateSize($tplId);
+                        $mpdf->AddPage($size['orientation']);
+                        $mpdf->UseTemplate($tplId, 0, 0, $size['width'], $size['height'], true);
+                    }
+                }
+            } catch (\Exception $e) {
+                print "Creating an mPDF object failed with" . $e->getMessage();
+            }
+        }
+
+        $mpdf->SetDocTemplate("");
+        foreach ($swn->document_attachment as $attachment) {
+            try {
+                $url = url($attachment->getUrl());
+                $handle = curl_init($url);
+                curl_setopt($handle, CURLOPT_RETURNTRANSFER, TRUE);
+                curl_exec($handle);
+                $httpCode = curl_getinfo($handle, CURLINFO_HTTP_CODE);
+                curl_close($handle);
+                if ($httpCode != 404) {
+                    $pagecount = $mpdf->SetSourceFile($attachment->getPath());
+                    for ($page = 1; $page <= $pagecount; $page++) {
+                        $tplId = $mpdf->importPage($page);
+                        $size = $mpdf->getTemplateSize($tplId);
+                        $mpdf->AddPage($size['orientation']);
+                        $mpdf->UseTemplate($tplId, 0, 0, $size['width'], $size['height'], true);
+                    }
+                }
+            } catch (\Exception $e) {
+                print "Creating an mPDF object failed with" . $e->getMessage();
+            }
+        }
+
+        foreach ($swn->reply_document as $attachment) {
+            try {
+                $url = $attachment->getUrl();
+                $handle = curl_init($url);
+                curl_setopt($handle, CURLOPT_RETURNTRANSFER, TRUE);
+                curl_exec($handle);
+                $httpCode = curl_getinfo($handle, CURLINFO_HTTP_CODE);
+                curl_close($handle);
+                if ($httpCode != 404) {
+                    $pagecount = $mpdf->SetSourceFile($attachment->getPath());
+                    for ($page = 1; $page <= $pagecount; $page++) {
+                        $tplId = $mpdf->importPage($page);
+                        $size = $mpdf->getTemplateSize($tplId);
+                        $mpdf->AddPage($size['orientation']);
+                        $mpdf->UseTemplate($tplId, 0, 0, $size['width'], $size['height'], true);
+                    }
+                }
+            } catch (\Exception $e) {
+                print "Creating an mPDF object failed with" . $e->getMessage();
+            }
+        }
+
+        $filename = "SWN-" . str_replace(".", "", $subject) . ".pdf";
         return $mpdf->Output($filename, 'I');
     }
 }

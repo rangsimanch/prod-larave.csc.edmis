@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\ConstructionContract;
 use App\Department;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use DB;
 
@@ -166,9 +167,15 @@ class NcnController extends Controller
         $dept_code = Department::where('id', '=', $data['dept_code_id'])->value('code');
         $submit_date = $data['issue_date'];
         $code_year = substr($submit_date,-4);
+
+        $is_central = !empty($data['is_central']) && in_array((string) $data['is_central'], ['1', 'true', true], true) ? 1 : 0;
+        $data['is_central'] = $is_central;
+
         // Year Select
-        $prev_doc_code = Ncn::where('construction_contract_id' ,'=' ,$data['construction_contract_id'])->where(DB::raw('YEAR(issue_date)'), '=', $code_year)
-        ->orderBy('id','desc')->limit(1)->value('document_number');
+        $prev_doc_code = Ncn::where('construction_contract_id' ,'=' ,$data['construction_contract_id'])
+            ->where('is_central', $is_central)
+            ->where(DB::raw('YEAR(issue_date)'), '=', $code_year)
+            ->orderBy('id','desc')->limit(1)->value('document_number');
         $legth_of_doc = (int)substr(substr($prev_doc_code,-3),0,3);
         if($legth_of_doc != 0){
             $prev_year = substr(substr($prev_doc_code,-8),0,4);
@@ -183,7 +190,8 @@ class NcnController extends Controller
             $legth_of_doc = $legth_of_doc + 1;
         }
         $doc_number = substr("000{$legth_of_doc}", -3);
-        $data['document_number'] = $contract_code . '/CSC/NCN/' . $dept_code . ' No./' . $code_year . '-' . $doc_number;
+        $prefix = $is_central ? '(Z)' : '';
+        $data['document_number'] = $prefix . $contract_code . '/CSC/NCN/' . $dept_code . ' No./' . $code_year . '-' . $doc_number;
 
         $ncn = Ncn::create($data);
 
@@ -343,6 +351,14 @@ class NcnController extends Controller
     }
 
     public function createReportNCN(ncn $ncn){
+
+        // New form layout for NCNs created on or after 27/07/2026
+        $cutoffDate = Carbon::createFromFormat('d/m/Y', '27/05/2026')->endOfDay();
+        $ncnCreated = $ncn->created_at ? Carbon::instance($ncn->created_at) : null;
+        if ($ncnCreated && $ncnCreated->greaterThan($cutoffDate)) {
+            return $this->createReportNCNNewForm($ncn);
+        }
+
         try {
             $mpdf = new \Mpdf\Mpdf([
                 'tempDir' =>  public_path('tmp'),
@@ -394,8 +410,8 @@ class NcnController extends Controller
         $contract_code = $ncn->construction_contract->code ?? '';
         $contract_name = 'Contract ' . $ncn->construction_contract->code . ' : ' . $ncn->construction_contract->name;
         $contract_header = $project_name . " " . $contract_name;
-        $document_number ="Ref No." .  $ncn->document_number;
-        $subject = "Subject : " . $ncn->title ?? '';
+        $document_number ="No." .  $ncn->document_number;
+        $subject = $ncn->title ?? '';
         $description = $ncn->description ?? '';
         $issue_date = $ncn->issue_date ?? '';
         $dept_name = $ncn->dept_code->name ?? '';
@@ -627,5 +643,246 @@ class NcnController extends Controller
             $filename =  "NCN_Report.pdf";
         }
         return $mpdf->Output($filename , 'I');
+    }
+
+    /**
+     * New NCN report layout for NCNs created after 27/07/2026.
+     * Uses NCN_form_1page.pdf when description fits on a single page,
+     * and NCN_form_multipage.pdf for overflow pages, with the 1-page form
+     * used again as the final page. Same approach as createReportSWNNewForm.
+     */
+    protected function createReportNCNNewForm(Ncn $ncn)
+    {
+        $mpdfConfig = [
+            'tempDir'             => public_path('tmp'),
+            'mode'                => '+aCJK',
+            'autoScriptToLang'    => true,
+            'autoLangToFont'      => true,
+            'allow_charset_conversion' => true,
+            'charset_in'          => 'UTF-8',
+        ];
+
+        $mpdf = new \Mpdf\Mpdf($mpdfConfig);
+
+        // Setting Data (same fields as the legacy layout)
+        $project_name          = '(Section 1 Bangkok - Nakhon Ratchasima)';
+        $contract_code         = $ncn->construction_contract->code ?? '';
+        $contract_name         = 'Contract ' . ($ncn->construction_contract->code ?? '') . ' : ' . ($ncn->construction_contract->name ?? '');
+        $document_number       = 'No.' . $ncn->document_number;
+        $subject               = ($ncn->title ?? '');
+        $description           = $ncn->description ?? '';
+        $issue_date            = $ncn->issue_date ?? '';
+        $attachment_description = $ncn->attachment_description ?? '';
+        $pages_of_attachment   = $ncn->pages_of_attachment ?? '';
+        $issuer                = $ncn->issue_by->name ?? '';
+        $issuer_jobtitle       = $ncn->issue_by->jobtitle->name ?? '';
+        $leader                = $ncn->leader->name ?? '';
+        $leader_jobtitle       = $ncn->leader->jobtitle->name ?? '';
+        $cos                   = $ncn->construction_specialist->name ?? '';
+        $cos_jobtitle          = $ncn->construction_specialist->jobtitle->name ?? '';
+        $cos_id                = $ncn->construction_specialist->id ?? '';
+
+        // Send-to (constructor name) per construction contract — mirrors the
+        // SwnController createReportSWNNewForm contract mapping.
+        $send_to = "Project Manager";
+        if ($contract_code == "C4-3") {
+            $send_to = 'CAN Joint Venture';
+        } elseif ($contract_code == "C4-4") {
+            $send_to = 'Italian-Thai Development PCL.';
+        } elseif ($contract_code == "C4-2") {
+            $send_to = 'Unique Engineering and Construction Public Company Limited';
+        } elseif ($contract_code == "C4-6") {
+            $send_to = 'Unique Engineering and Construction Public Company Limited';
+        } elseif ($contract_code == "C4-7") {
+            $send_to = 'Civil Enginneering Public Company Limited';
+        } elseif ($contract_code == "C2-1") {
+            $send_to = 'Civil Construction Services & Products Company Limited';
+        } elseif ($contract_code == "C3-1") {
+            $send_to = 'ITD-CREC No.10 Joint Venture';
+        } elseif ($contract_code == "C3-2") {
+            $send_to = 'Nawarat Patanakarn Public Company Limited';
+        } elseif ($contract_code == "C3-3") {
+            $send_to = 'Thai Engineers & Industry Company Limited';
+        } elseif ($contract_code == "C3-4") {
+            $send_to = 'Italian-Thai Development PCL.';
+        } elseif ($contract_code == "C3-5") {
+            $send_to = 'SPTK Joint Venture Company Limited';
+        }
+
+        // Header data block (absolute-positioned, same coordinates as SWN new form)
+        $html  = "<div style=\"font-size: 10px; text-align: center; font-weight: bold; position:absolute;top:105px;left:95px;\">" . $contract_name . "</div>";
+        $html .= "<div style=\"font-size: 12px; position:absolute;top:129px;left:145px;\">" . $send_to . "</div>";
+        $html .= "<div style=\"font-size: 10px; position:absolute;top:105px;left:525px; font-weight: bold;\">" . $document_number . "</div>";
+        $html .= "<div style=\"font-size: 10px; padding-right:70px; position:absolute;top:156px;left:165px;\">" . $subject . "</div>";
+        $html .= "<div style=\"padding-right:120px;font-size: 10px; position:absolute;top:650px;left:105px\">" . $attachment_description . "</div>";
+        $html .= "<div style=\"padding-right:120px;font-size: 10px; position:absolute;top:691px;left:340px\">" . $pages_of_attachment . "</div>";
+
+
+        // Build description images HTML (multiple images supported). Images
+        // go on a separate attachment page (same approach as SWN new form).
+        $imagesHtml = '';
+        $count_image = count($ncn->description_image);
+        if ($count_image > 0) {
+            for ($index = 0; $index < $count_image; $index++) {
+                try {
+                    $allowed = ['gif', 'png', 'jpg', 'jpeg', 'JPG', 'JPEG', 'PNG'];
+                    $path = $ncn->description_image[$index]->getPath();
+                    if (file_exists($path)) {
+                        $ext = strtolower(pathinfo($path, PATHINFO_EXTENSION));
+                        if (in_array($ext, $allowed)) {
+                            $img = (string) Image::make($path)->orientate()->resize(null, 180, function ($constraint) {
+                                $constraint->aspectRatio();
+                            })->encode('data-url');
+                            $imagesHtml .= "<img style=\"padding-left:90px; padding-top:10px;\" width=\"30%\" height=\"30%\" src=\"" . $img . "\">  ";
+                        }
+                    }
+                } catch (\Exception $e) {
+                    \Log::error('NCN image embed failed: ' . $e->getMessage());
+                }
+            }
+        }
+
+        // Description block — text only. Images go on a separate attachment page.
+        $des  = "<div style=\" padding-left: 80px; padding-right:40px; padding-bottom:-15px; \">";
+        $des .= "<div style=\"font-size: 10px; padding-right:20px; position:absolute;top:330px;left:110px;LINE-HEIGHT:15px;\">" . $description . "</div>";
+        $des .= "</div>";
+
+        // Two-pass layout (same as createReportSWNNewForm):
+        //  Pass 1 — try the 1-page form, measure overflow.
+        //  Pass 2 — if overflow, rebuild with multipage form for non-last
+        //           pages and 1page form for the last content page.
+        $mpdf->SetDocTemplate(public_path('pdf-asset/NCN_form_1page.pdf'), true);
+        $mpdf->AddPage('P', '', '', '', '', '', '', 70, 70);
+        $mpdf->WriteHTML($html);
+        $mpdf->SetHTMLHeader($html, '0', true);
+
+        $pageBefore = $mpdf->page;
+        $mpdf->WriteHTML($des);
+        $pageAfter = $mpdf->page;
+        $mpdf->SetHTMLHeader('', '0', true);
+
+        if ($pageAfter > $pageBefore) {
+            $totalPages = $pageAfter;
+
+            $mpdf = new class($mpdfConfig) extends \Mpdf\Mpdf {
+                public $switchAtPage = null;
+                public $switchTemplate = null;
+                public $switched = false;
+
+                public function AddPage(
+                    $orientation = '',
+                    $condition = '',
+                    $resetpagenum = '',
+                    $pagenumstyle = '',
+                    $suppress = '',
+                    $mgl = '',
+                    $mgr = '',
+                    $mgt = '',
+                    $mgb = '',
+                    $mgh = '',
+                    $mgf = '',
+                    $ohname = '',
+                    $ehname = '',
+                    $ofname = '',
+                    $efname = '',
+                    $ohvalue = 0,
+                    $ehvalue = 0,
+                    $ofvalue = 0,
+                    $efvalue = 0,
+                    $pagesel = '',
+                    $newformat = ''
+                ) {
+                    if (!$this->switched
+                        && $this->switchAtPage !== null
+                        && ($this->page + 1) >= $this->switchAtPage) {
+                        $this->SetDocTemplate($this->switchTemplate, true);
+                        $this->switched = true;
+                    }
+                    parent::AddPage(
+                        $orientation,
+                        $condition,
+                        $resetpagenum,
+                        $pagenumstyle,
+                        $suppress,
+                        $mgl,
+                        $mgr,
+                        $mgt,
+                        $mgb,
+                        $mgh,
+                        $mgf,
+                        $ohname,
+                        $ehname,
+                        $ofname,
+                        $efname,
+                        $ohvalue,
+                        $ehvalue,
+                        $ofvalue,
+                        $efvalue,
+                        $pagesel,
+                        $newformat
+                    );
+                }
+            };
+            $mpdf->switchAtPage = $totalPages;
+            $mpdf->switchTemplate = public_path('pdf-asset/NCN_form_1page.pdf');
+
+            $mpdf->SetDocTemplate(public_path('pdf-asset/NCN_form_multipage.pdf'), true);
+            $mpdf->AddPage('P', '', '', '', '', '', '', 70, 70);
+            $mpdf->WriteHTML($html);
+            $mpdf->SetHTMLHeader($html, '0', true);
+            $mpdf->WriteHTML($des);
+            $mpdf->SetHTMLHeader('', '0', true);
+        }
+
+        // Image Attachment — dedicated attachment page, images in normal flow.
+        if ($imagesHtml !== '') {
+            $mpdf->SetDocTemplate(public_path('pdf-asset/SWN_Template_Attachment.pdf'), true);
+            $mpdf->AddPage('P', '', '', '', '', '', '', 50, 55);
+            $mpdf->WriteHTML("<div style=\"position:absolute;bottom:20px;right:30px;font-size:10px;font-weight:bold;\">" . $document_number . "</div>");
+            $mpdf->WriteHTML($imagesHtml);
+        }
+
+        // Attachments — merge attached PDFs (file_attachment collection).
+        $mpdf->SetDocTemplate('');
+        foreach ($ncn->file_attachment as $attachment) {
+            try {
+                $path = $attachment->getPath();
+                if (file_exists($path)) {
+                    $pagecount = $mpdf->SetSourceFile($path);
+                    for ($page = 1; $page <= $pagecount; $page++) {
+                        $tplId = $mpdf->importPage($page);
+                        $size = $mpdf->getTemplateSize($tplId);
+                        $mpdf->AddPage($size['orientation']);
+                        $mpdf->UseTemplate($tplId, 0, 0, $size['width'], $size['height'], true);
+                    }
+                }
+            } catch (\Exception $e) {
+                print "Creating an mPDF object failed with" . $e->getMessage();
+            }
+        }
+
+        // Linked NCRs — merge their file_attachment PDFs (same as legacy).
+        $ncrs = Ncr::where('corresponding_ncn_id', $ncn->id)->get();
+        foreach ($ncrs as $ncr) {
+            foreach ($ncr->file_attachment as $attachment) {
+                try {
+                    $path = $attachment->getPath();
+                    if (file_exists($path)) {
+                        $pagecount = $mpdf->SetSourceFile($path);
+                        for ($page = 1; $page <= $pagecount; $page++) {
+                            $tplId = $mpdf->importPage($page);
+                            $size = $mpdf->getTemplateSize($tplId);
+                            $mpdf->AddPage($size['orientation']);
+                            $mpdf->UseTemplate($tplId, 0, 0, $size['width'], $size['height'], true);
+                        }
+                    }
+                } catch (\Exception $e) {
+                    print "Creating an mPDF object failed with" . $e->getMessage();
+                }
+            }
+        }
+
+        $filename = "NCN-" . str_replace(".", "", $subject) . ".pdf";
+        return $mpdf->Output($filename, 'I');
     }
 }

@@ -37,6 +37,10 @@ class StoreNcnRequest extends FormRequest
                 'string',
                 'nullable',
             ],
+            'is_central' => [
+                'nullable',
+                'in:0,1',
+            ],
             'description_image' => [
                 'array',
             ],

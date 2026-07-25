@@ -37,6 +37,10 @@ class StoreSwnRequest extends FormRequest
                 'string',
                 'nullable',
             ],
+            'is_central' => [
+                'nullable',
+                'in:0,1',
+            ],
             'location' => [
                 'string',
                 'nullable',
