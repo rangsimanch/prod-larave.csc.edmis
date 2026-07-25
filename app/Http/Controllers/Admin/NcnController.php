@@ -353,7 +353,7 @@ class NcnController extends Controller
     public function createReportNCN(ncn $ncn){
 
         // New form layout for NCNs created on or after 27/07/2026
-        $cutoffDate = Carbon::createFromFormat('d/m/Y', '27/05/2026')->endOfDay();
+        $cutoffDate = Carbon::createFromFormat('d/m/Y', '26/07/2026')->endOfDay();
         $ncnCreated = $ncn->created_at ? Carbon::instance($ncn->created_at) : null;
         if ($ncnCreated && $ncnCreated->greaterThan($cutoffDate)) {
             return $this->createReportNCNNewForm($ncn);

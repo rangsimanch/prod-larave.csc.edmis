@@ -391,7 +391,7 @@ class SwnController extends Controller
     public function createReportSWN(Swn $swn){
 
         // New form layout for SWNs created on or after 21/07/2026
-        $cutoffDate = Carbon::createFromFormat('d/m/Y', '26/07/2026')->endOfDay();
+        $cutoffDate = Carbon::createFromFormat('d/m/Y', '26/05/2026')->endOfDay();
         $swnCreated = $swn->created_at ? Carbon::instance($swn->created_at) : null;
         if ($swnCreated && $swnCreated->greaterThan($cutoffDate)) {
             return $this->createReportSWNNewForm($swn);
