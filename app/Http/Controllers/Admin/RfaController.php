@@ -2013,12 +2013,29 @@ class RfaController extends Controller
             foreach ($rfa->submittals_file as $media) {
                 $fileExtension = strtolower(pathinfo($media->file_name, PATHINFO_EXTENSION));
                 if (in_array($fileExtension, $allowed)) {
-                    // Insert all pages of the PDF file
-                    $pagecount = $mpdf->SetSourceFile($media->getPath());
-                    for ($i = 1; $i <= $pagecount; $i++) {
-                        $mpdf->AddPage();
-                        $tplId = $mpdf->ImportPage($i);
-                        $mpdf->UseTemplate($tplId);
+                    // Convert to PDF 1.4 via Ghostscript so FPDI's free parser
+                    // can handle cross-reference streams / object streams used
+                    // in newer PDF versions. Fall back to original if gs fails.
+                    $sourcePath = $media->getPath();
+                    $convertedPath = storage_path('tmp/uploads/Convert_RFA_' . $rfa->id . '_' . $media->id . '.pdf');
+                    $command = "gs -sDEVICE=pdfwrite -dCompatibilityLevel=1.4 -dNOPAUSE -dQUIET -dBATCH -sOutputFile=$convertedPath $sourcePath";
+                    @shell_exec($command);
+                    $importPath = file_exists($convertedPath) ? $convertedPath : $sourcePath;
+
+                    try {
+                        $pagecount = $mpdf->SetSourceFile($importPath);
+                        for ($i = 1; $i <= $pagecount; $i++) {
+                            $mpdf->AddPage();
+                            $tplId = $mpdf->ImportPage($i);
+                            $mpdf->UseTemplate($tplId);
+                        }
+                    } catch (\setasign\Fpdi\PdfParser\CrossReference\CrossReferenceException $e) {
+                        \Log::warning('RFA submittals_file PDF parse failed: ' . $media->getPath() . ' - ' . $e->getMessage());
+                    }
+
+                    // Clean up temp converted file
+                    if (file_exists($convertedPath)) {
+                        @unlink($convertedPath);
                     }
                 }
             }
