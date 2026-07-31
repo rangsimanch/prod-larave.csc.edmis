@@ -52,6 +52,9 @@
                                     <p style="font-size:12px"> {{ trans('cruds.rfa.fields.file_upload_1') }} </p>
                                 </th>
                                 <th>
+                                    <p style="font-size:12px"> {{ trans('cruds.rfa.fields.qty_page') }} </p>
+                                </th>
+                                <th>
                                     <p style="font-size:12px"> {{ trans('cruds.rfa.fields.document_status') }} </p>
                                 </th>
                                 <th>
@@ -115,6 +118,9 @@
                                 <td>
                                 </td>
                                 <td>
+                                    <input style="width: 70px" class="search" type="text" placeholder="{{ trans('global.search') }}">
+                                </td>
+                                <td>
                                     <select class="search" style="width:70%">
                                         <option value>{{ trans('global.all') }}</option>
                                         @foreach($rfa_document_statuses as $key => $item)
@@ -169,7 +175,7 @@
                                     <input class="search" type="text" placeholder="{{ trans('global.search') }}">
                                 </td>
                                 <td>
-                                    <select class="form-control filter-select select2" data-column="13" style="width:200%">
+                                    <select class="form-control filter-select select2" data-column="14" style="width:200%">
                                         <option value>{{ trans('global.all') }}</option>
                                         @foreach($rfatypes as $key => $item)
                                             <option value="{{ $item->type_code }}">{{ $item->type_code }}</option>
@@ -177,7 +183,7 @@
                                     </select>
                                 </td>
                                 <td>
-                                    <select class="form-control filter-select select2" data-column="14" style="width:200%">
+                                    <select class="form-control filter-select select2" data-column="15" style="width:200%">
                                         <option value>{{ trans('global.all') }}</option>
                                         @foreach($wbs_level_threes as $key => $item)
                                             <option value="{{ $item->wbs_level_3_code }}">{{ $item->wbs_level_3_code }}</option>
@@ -186,7 +192,7 @@
                                 </td>
                                 
                                 <td>
-                                    <select class="form-control filter-select select2" data-column="15" style="width:200%">
+                                    <select class="form-control filter-select select2" data-column="16" style="width:200%">
                                         <option value>{{ trans('global.all') }}</option>
                                         @foreach($wbslevelfours as $key => $item)
                                             <option value="{{ $item->wbs_level_4_code }}">{{ $item->wbs_level_4_code }}</option>
@@ -271,12 +277,16 @@
     retrieve: true,
     aaSorting: [],
     ajax: "{{ route('admin.rfas.index') }}",
+    columnDefs: [
+        { targets: 5, visible: false }
+    ],
     columns: [
       { data: 'placeholder', name: 'placeholder', searchable: false },
 { data: 'actions', name: '{{ trans('global.actions') }}' ,searchable: false},
 { data: 'created_at', name: 'created_at', searchable: false},
 { data: 'cover_sheet', name: 'cover_sheet' ,sortable: false, searchable: false},
 { data: 'file_upload_1', name: 'file_upload_1', sortable: false, searchable: false},
+{ data: 'qty_page', name: 'qty_page', searchable: false },
 { data: 'document_status_status_name', name: 'document_status.status_name'},
 { data: 'construction_contract_code', name: 'construction_contract.code' ,sortable: false},
 { data: 'boq_name', name: 'boq.name'},
