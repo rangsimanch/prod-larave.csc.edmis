@@ -118,10 +118,10 @@
                                 <td>
                                 </td>
                                 <td>
-                                    <input style="width: 70px" class="search" type="text" placeholder="{{ trans('global.search') }}">
+                                    <input style="width: 70px" class="search" data-column="5" type="text" placeholder="{{ trans('global.search') }}">
                                 </td>
                                 <td>
-                                    <select class="search" style="width:70%">
+                                    <select class="search" data-column="6" style="width:70%">
                                         <option value>{{ trans('global.all') }}</option>
                                         @foreach($rfa_document_statuses as $key => $item)
                                             <option value="{{ $item->status_name }}">{{ $item->status_name }}</option>
@@ -129,7 +129,7 @@
                                     </select>
                                 </td>
                                 <td>
-                                    <select class="search" style="width:70%">
+                                    <select class="search" data-column="7" style="width:70%">
                                         <option value>{{ trans('global.all') }}</option>
                                         @foreach($construction_contracts as $key => $item)
                                             <option value="{{ $item->code }}">{{ $item->code }}</option>
@@ -138,7 +138,7 @@
                                 </td>
                                 
                                 <td>
-                                    <select class="search" style="width:70%">
+                                    <select class="search" data-column="8" style="width:70%">
                                         <option value>{{ trans('global.all') }}</option>
                                         @foreach($bo_qs as $key => $item)
                                             <option value="{{ $item->name }}">{{ $item->name }}</option>
@@ -154,7 +154,7 @@
                                     </select>
                                 </td> --}}
                                 <td>
-                                    <select class="search" strict="true">
+                                    <select class="search" data-column="9" strict="true">
                                         <option value>{{ trans('global.all') }}</option>
                                         @foreach(App\Rfa::WORKTYPE_SELECT as $key => $item)
                                             <option value="{{ $key }}">{{ $item }}</option>
@@ -162,17 +162,17 @@
                                     </select>
                                 </td>
                                 <td>
-                                    <input style="width: 160px" class="search" type="text" placeholder="{{ trans('global.search') }}">
+                                    <input style="width: 160px" class="search" data-column="10" type="text" placeholder="{{ trans('global.search') }}">
                                 </td>
                                 <td>
-                                    <input style="width: 160px" class="search" type="text" placeholder="{{ trans('global.search') }}" >
+                                    <input style="width: 160px" class="search" data-column="11" type="text" placeholder="{{ trans('global.search') }}" >
                                 </td>
                                
                                 <td>
-                                    <input style="width: 100px" class="search" type="text" placeholder="{{ trans('global.search') }}" >
+                                    <input style="width: 100px" class="search" data-column="12" type="text" placeholder="{{ trans('global.search') }}" >
                                 </td>
                                 <td>
-                                    <input class="search" type="text" placeholder="{{ trans('global.search') }}">
+                                    <input class="search" data-column="13" type="text" placeholder="{{ trans('global.search') }}">
                                 </td>
                                 <td>
                                     <select class="form-control filter-select select2" data-column="14" style="width:200%">
@@ -202,7 +202,7 @@
                                 <td>
                                 </td>
                                 <td>
-                                    <select class="search">
+                                    <select class="search" data-column="18">
                                         <option value>{{ trans('global.all') }}</option>
                                         @foreach($rfa_comment_statuses as $key => $item)
                                             <option value="{{ $item->name }}">{{ $item->name }}</option>
@@ -363,16 +363,26 @@
     updateBulkDownloadButton();
   });
 
-  let visibleColumnsIndexes = null;
-
+  let visibleColumnsIndexes = [];
+  function refreshVisibleIndexes() {
+      visibleColumnsIndexes = [];
+      table.columns(":visible").every(function(colIdx) {
+          visibleColumnsIndexes.push(colIdx);
+      });
+  }
+  refreshVisibleIndexes();
 
 $('.datatable thead').on('input', '.search', function () {
       let strict = $(this).attr('strict') || false
       let value = strict && this.value ? "^" + this.value + "$" : this.value
 
-      let index = $(this).parent().index()
-      if (visibleColumnsIndexes !== null) {
-        index = visibleColumnsIndexes[index]
+      // Use the data-column attribute on the input/select as the
+      // authoritative column index. This is locked at render time and
+      // does not shift when columns are hidden/shown.
+      let index = $(this).data('column')
+      if (index === undefined) {
+          let $filterCell = $(this).parent();
+          index = $filterCell.closest('tr').children().index($filterCell);
       }
 
       table
@@ -382,11 +392,8 @@ $('.datatable thead').on('input', '.search', function () {
   });
 
 table.on('column-visibility.dt', function(e, settings, column, state) {
-      visibleColumnsIndexes = []
-      table.columns(":visible").every(function(colIdx) {
-          visibleColumnsIndexes.push(colIdx);
-      });
-  })
+      refreshVisibleIndexes();
+  });
 
   $('.filter-select').change(function(){
             $($.fn.dataTable.tables(true)).DataTable().column( $(this).data('column'))
