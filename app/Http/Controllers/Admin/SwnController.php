@@ -864,7 +864,10 @@ class SwnController extends Controller
         $subject          = str_replace(["：", "、"], [":", ","], $swn->title ?? '');
         $location         = str_replace(["：", "、"], [":", ","], $swn->location ?? '');
         $reply_ncr        = $swn->reply_ncr ?? '';
-        $ref_doc          = $swn->ref_doc ?? '';
+        $ref_doc          = str_replace(["：", "、"], [":", ","], $swn->ref_doc ?? '');
+        // CKEditor wraps content in <p> tags. Insert the label inside the
+        // opening <p> so it stays on the same line as the ref_doc content.
+        $ref_doc          = preg_replace('~^<p([^>]*)>~i', '<p$1>Ref. Doc e.g. Dwg or MS: ', $ref_doc);
         $description      = str_replace(["：", "、"], [":", ","], $swn->description ?? '');
         $issuer_name      = $swn->issue_by->name ?? '';
         $issuer_position  = $swn->issue_by->jobtitle->name ?? '';
@@ -877,11 +880,23 @@ class SwnController extends Controller
         $conditional_accepted = $swn->conditional_accepted ?? '';
 
         // Header data block (absolute-positioned, same coordinates as legacy form)
-        $html = "<div style=\"font-size: 10px; text-align: center; font-weight: bold; position:absolute;top:105px;left:95px;\">" . $contract_name . "</div>";
-        $html .= "<div style=\"font-size: 12px; position:absolute;top:129px;left:145px;\">" . $send_to . "</div>";
+        $html = "<div style=\"font-size: 10px; text-align: center; font-weight: bold; position:absolute;top:93px;left:70px;\">" . $contract_name . "</div>";
         // $html .= "<div style=\"font-size: 12px; position:absolute;top:195px;left:370px;\">" . $submit_date . "</div>";
-        $html .= "<div style=\"font-size: 10px; position:absolute;top:105px;left:525px; font-weight: bold;\">" . $document_number . "</div>";
-        $html .= "<div style=\"font-size: 10px; padding-right:70px; position:absolute;top:156px;left:165px;\">" . $subject . "</div>";
+        $html .= "<div style=\"font-size: 10px; position:absolute;top:93px;left:540px; font-weight: bold;\">" . $document_number . "</div>";
+        $html .= "<div style=\"font-size: 12px; position:absolute;top:115px;left:110px;\">" . $send_to . "</div>";
+        $html .= "<div style=\"font-size: 10px; padding-right:70px; position:absolute;top:170px;left:75px;\">" . "Subject/Problem: " . $subject . "</div>";
+        
+        if($reply_ncr == "Yes"){
+            $html .= "<div style=\"font-size: 12px; padding-right:70px; position:absolute;top:228px;left:323px;\">" . "X" ."</div>";
+        }
+        else{
+            $html .= "<div style=\"font-size: 12px; padding-right:70px; position:absolute;top:228px;left:425px;\">" . "X" ."</div>";
+        }
+
+        $html .= "<div style=\"font-size: 10px; padding-right:70px; position:absolute;top:240px;left:75px;\">" . $ref_doc . "</div>";
+
+    
+
         // $html .= "<div style=\"font-size: 8px; padding-right:450px; position:absolute;top:299px;left:150px;\">" . $location . "</div>";
         
         // Build description images HTML (multiple images supported). Images
@@ -916,98 +931,15 @@ class SwnController extends Controller
         $des .= "<div style=\"font-size: 10px; padding-right:20px; position:absolute;top:330px;left:110px;LINE-HEIGHT:15px;\">" . $description . "</div>";
         $des .= "</div>";
 
-        // Two-pass layout:
-        //  Pass 1 — try the 1-page form. Write header + description (+ images)
-        //           and measure whether the content overflows onto a 2nd page.
-        //  Pass 2 — only if overflow occurred, recreate the mPDF with a custom
-        //           subclass that renders every non-last page with the multipage
-        //           form and switches to the 1-page form for the last content
-        //           page (no empty trailing page).
-        $mpdf->SetDocTemplate(public_path('pdf-asset/SWN_form_1page.pdf'), true);
-        $mpdf->AddPage('P', '', '', '', '', '', '', 70, 70);
+        // Single-form layout: SWN_2Section_1page.pdf is used for every
+        // content page. mPDF auto-applies the doc template to each new page,
+        // so no two-pass overflow detection or template switching is needed.
+        $mpdf->SetDocTemplate(public_path('pdf-asset/SWN_2Section_1page.pdf'), true);
+        $mpdf->AddPage('P', '', '', '', '', '', '', 92, 150);
         $mpdf->WriteHTML($html);
         $mpdf->SetHTMLHeader($html, '0', true);
-
-        $pageBefore = $mpdf->page;
         $mpdf->WriteHTML($des);
-        $pageAfter = $mpdf->page;
         $mpdf->SetHTMLHeader('', '0', true);
-
-        if ($pageAfter > $pageBefore) {
-            // Overflow — rebuild with multipage form for non-last pages and
-            // 1page form for the last content page. A custom mPDF subclass
-            // switches the doc template right before the final page break.
-            $totalPages = $pageAfter;
-
-            $mpdf = new class($mpdfConfig) extends \Mpdf\Mpdf {
-                public $switchAtPage = null;
-                public $switchTemplate = null;
-                public $switched = false;
-
-                public function AddPage(
-                    $orientation = '',
-                    $condition = '',
-                    $resetpagenum = '',
-                    $pagenumstyle = '',
-                    $suppress = '',
-                    $mgl = '',
-                    $mgr = '',
-                    $mgt = '',
-                    $mgb = '',
-                    $mgh = '',
-                    $mgf = '',
-                    $ohname = '',
-                    $ehname = '',
-                    $ofname = '',
-                    $efname = '',
-                    $ohvalue = 0,
-                    $ehvalue = 0,
-                    $ofvalue = 0,
-                    $efvalue = 0,
-                    $pagesel = '',
-                    $newformat = ''
-                ) {
-                    if (!$this->switched
-                        && $this->switchAtPage !== null
-                        && ($this->page + 1) >= $this->switchAtPage) {
-                        $this->SetDocTemplate($this->switchTemplate, true);
-                        $this->switched = true;
-                    }
-                    parent::AddPage(
-                        $orientation,
-                        $condition,
-                        $resetpagenum,
-                        $pagenumstyle,
-                        $suppress,
-                        $mgl,
-                        $mgr,
-                        $mgt,
-                        $mgb,
-                        $mgh,
-                        $mgf,
-                        $ohname,
-                        $ehname,
-                        $ofname,
-                        $efname,
-                        $ohvalue,
-                        $ehvalue,
-                        $ofvalue,
-                        $efvalue,
-                        $pagesel,
-                        $newformat
-                    );
-                }
-            };
-            $mpdf->switchAtPage = $totalPages;
-            $mpdf->switchTemplate = public_path('pdf-asset/SWN_form_1page.pdf');
-
-            $mpdf->SetDocTemplate(public_path('pdf-asset/SWN_form_multipage.pdf'), true);
-            $mpdf->AddPage('P', '', '', '', '', '', '', 70, 70);
-            $mpdf->WriteHTML($html);
-            $mpdf->SetHTMLHeader($html, '0', true);
-            $mpdf->WriteHTML($des);
-            $mpdf->SetHTMLHeader('', '0', true);
-        }
 
         // Image Attachment — same approach as legacy createReportSWN:
         // dedicated attachment page with SWN_Template_Attachment.pdf template,
