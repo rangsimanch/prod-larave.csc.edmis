@@ -983,7 +983,7 @@ class SwnController extends Controller
                         $idx = $i + $c;
                         $html .= '<td style="width:50%; text-align:center; padding:10px 5px; border:none;">';
                         if (isset($imagePaths[$idx])) {
-                            $html .= '<img style="padding-top:10px;" width="45%" src="' . $imagePaths[$idx] . '">';
+                            $html .= '<img style="padding-top:10px;" width="30%" src="' . $imagePaths[$idx] . '">';
                         }
                         $html .= '</td>';
                     }
