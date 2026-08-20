@@ -1,16 +1,8 @@
 <?php
 
 Route::redirect('/', '/login');
-Route::get('dashboard-menu',function(){
-    return view('auth.dashboard-menu');
-})->name('dashboard-menu');
-Route::get('/home', function () {
-    if (session('status')) {
-        return redirect()->route('admin.home')->with('status', session('status'));
-    }
-
-    return redirect()->route('admin.home');
-});
+Route::view('dashboard-menu', 'auth.dashboard-menu')->name('dashboard-menu');
+Route::redirect('/home', '/admin');
 
 Auth::routes();
 
