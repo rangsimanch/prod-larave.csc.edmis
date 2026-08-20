@@ -941,8 +941,11 @@ class SwnController extends Controller
             if (!is_dir($tmpDir)) {
                 @mkdir($tmpDir, 0755, true);
             }
+            // Pass 1: resize each image to a temp file and collect paths.
+            // Temp files are kept until after the single WriteHTML() call
+            // below so mPDF can read them by path during rendering.
+            $imagePaths = [];
             for ($index = 0; $index < $count_image; $index++) {
-                $tmpFile = null;
                 try {
                     $path = $swn->description_image[$index]->getPath();
                     if (!file_exists($path)) {
@@ -959,16 +962,41 @@ class SwnController extends Controller
                     Image::make($path)->orientate()->resize(null, 180, function ($constraint) {
                         $constraint->aspectRatio();
                     })->save($tmpFile, 80);
-
-                    $mpdf->WriteHTML("<img style=\"padding-left:90px; padding-top:10px;\" width=\"30%\" height=\"30%\" src=\"" . $tmpFile . "\">  ");
+                    $imagePaths[] = $tmpFile;
                 } catch (\Exception $e) {
                     \Log::error('SWN image embed failed: ' . $e->getMessage());
-                } finally {
-                    // mPDF reads + embeds the image during WriteHTML(), so the
-                    // temp file is safe to delete immediately afterwards.
-                    if ($tmpFile && file_exists($tmpFile)) {
-                        @unlink($tmpFile);
+                }
+            }
+
+            // Pass 2: build a 2-column table layout and write it in a single
+            // WriteHTML() call. Using <table> gives reliable 2-per-row layout
+            // in mPDF (float/flex support is limited). The HTML string stays
+            // tiny because src is a file path, not a base64 blob — even 100
+            // images = ~10KB, far under pcre.backtrack_limit.
+            if (!empty($imagePaths)) {
+                $html = '<table style="width:100%; border:none; border-collapse:collapse; padding:0 40px;">';
+                $cols = 2;
+                $total = count($imagePaths);
+                for ($i = 0; $i < $total; $i += $cols) {
+                    $html .= '<tr>';
+                    for ($c = 0; $c < $cols; $c++) {
+                        $idx = $i + $c;
+                        $html .= '<td style="width:50%; text-align:center; padding:10px 5px; border:none;">';
+                        if (isset($imagePaths[$idx])) {
+                            $html .= '<img style="padding-top:10px;" width="80%" src="' . $imagePaths[$idx] . '">';
+                        }
+                        $html .= '</td>';
                     }
+                    $html .= '</tr>';
+                }
+                $html .= '</table>';
+                $mpdf->WriteHTML($html);
+            }
+
+            // Pass 3: clean up temp files now that mPDF has embedded them.
+            foreach ($imagePaths as $tmpFile) {
+                if (file_exists($tmpFile)) {
+                    @unlink($tmpFile);
                 }
             }
             // Clean up the per-call temp subdir (empty after file deletion).
