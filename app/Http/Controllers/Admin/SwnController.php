@@ -899,32 +899,6 @@ class SwnController extends Controller
 
         // $html .= "<div style=\"font-size: 8px; padding-right:450px; position:absolute;top:299px;left:150px;\">" . $location . "</div>";
         
-        // Build description images HTML (multiple images supported). Images
-        // are rendered inline as part of the description block so the same
-        // two-pass layout logic (multipage form for non-last pages, 1-page
-        // form for the last content page) applies to text + images together.
-        $imagesHtml = '';
-        $count_image = count($swn->description_image);
-        if ($count_image > 0) {
-            for ($index = 0; $index < $count_image; $index++) {
-                try {
-                    $allowed = ['gif', 'png', 'jpg', 'jpeg', 'JPG', 'JPEG', 'PNG'];
-                    $path = $swn->description_image[$index]->getPath();
-                    if (file_exists($path)) {
-                        $ext = strtolower(pathinfo($path, PATHINFO_EXTENSION));
-                        if (in_array($ext, $allowed)) {
-                            $img = (string) Image::make($path)->orientate()->resize(null, 180, function ($constraint) {
-                                $constraint->aspectRatio();
-                            })->encode('data-url');
-                            $imagesHtml .= "<img style=\"padding-left:90px; padding-top:10px;\" width=\"30%\" height=\"30%\" src=\"" . $img . "\">  ";
-                        }
-                    }
-                } catch (\Exception $e) {
-                    \Log::error('SWN image embed failed: ' . $e->getMessage());
-                }
-            }
-        }
-
         // Description block — text only. Images go on a separate attachment
         // page (same approach as legacy createReportSWN).
         $des = "<div style=\" padding-left: 80px; padding-right:40px; padding-bottom:-15px; \">";
@@ -941,10 +915,15 @@ class SwnController extends Controller
         $mpdf->WriteHTML($des);
         $mpdf->SetHTMLHeader('', '0', true);
 
-        // Image Attachment — same approach as legacy createReportSWN:
-        // dedicated attachment page with SWN_Template_Attachment.pdf template,
-        // images rendered in normal flow (multiple images supported).
-        if ($imagesHtml !== '') {
+        // Image Attachment — dedicated attachment page with
+        // SWN_Template_Attachment.pdf template. Each image is written via
+        // its own WriteHTML() call using a temp-file path (NOT a base64
+        // data URL) so each HTML string stays tiny. Concatenating many
+        // base64-encoded images into one WriteHTML() call exceeds
+        // pcre.backtrack_limit (1,000,000) and triggers:
+        //   "The HTML code size is larger than pcre.backtrack_limit"
+        $count_image = count($swn->description_image);
+        if ($count_image > 0) {
             $mpdf->SetDocTemplate(public_path('pdf-asset/SWN_Template_Attachment.pdf'), true);
             $mpdf->AddPage('P', '', '', '', '', '', '', 50, 55);
             // Write document number as a positioned div (not a footer) so it
@@ -952,7 +931,48 @@ class SwnController extends Controller
             // pages and are written at page-close time, which makes them hard
             // to scope to a single page.
             $mpdf->WriteHTML("<div style=\"position:absolute;bottom:20px;right:30px;font-size:10px;font-weight:bold;\">" . $document_number . "</div>");
-            $mpdf->WriteHTML($imagesHtml);
+
+            $allowed = ['gif', 'png', 'jpg', 'jpeg', 'JPG', 'JPEG', 'PNG'];
+            // Use storage/app/tmp (NOT public/tmp) so temp image files are
+            // never web-accessible, even briefly. Each call gets a unique
+            // subdir via uniqid() so concurrent requests generating the same
+            // SWN cannot collide on or delete each other's temp files.
+            $tmpDir = storage_path('app/tmp/swn_' . ($swn->id ?? 'x') . '_' . uniqid('', true));
+            if (!is_dir($tmpDir)) {
+                @mkdir($tmpDir, 0755, true);
+            }
+            for ($index = 0; $index < $count_image; $index++) {
+                $tmpFile = null;
+                try {
+                    $path = $swn->description_image[$index]->getPath();
+                    if (!file_exists($path)) {
+                        continue;
+                    }
+                    $ext = strtolower(pathinfo($path, PATHINFO_EXTENSION));
+                    if (!in_array($ext, $allowed)) {
+                        continue;
+                    }
+                    // Resize via Intervention, save to a temp file so mPDF
+                    // can read it by path. This keeps the <img> tag string
+                    // tiny (~80 chars) instead of a ~300KB base64 blob.
+                    $tmpFile = $tmpDir . '/img_' . $index . '.' . $ext;
+                    Image::make($path)->orientate()->resize(null, 180, function ($constraint) {
+                        $constraint->aspectRatio();
+                    })->save($tmpFile, 80);
+
+                    $mpdf->WriteHTML("<img style=\"padding-left:90px; padding-top:10px;\" width=\"30%\" height=\"30%\" src=\"" . $tmpFile . "\">  ");
+                } catch (\Exception $e) {
+                    \Log::error('SWN image embed failed: ' . $e->getMessage());
+                } finally {
+                    // mPDF reads + embeds the image during WriteHTML(), so the
+                    // temp file is safe to delete immediately afterwards.
+                    if ($tmpFile && file_exists($tmpFile)) {
+                        @unlink($tmpFile);
+                    }
+                }
+            }
+            // Clean up the per-call temp subdir (empty after file deletion).
+            @rmdir($tmpDir);
         }
 
 
