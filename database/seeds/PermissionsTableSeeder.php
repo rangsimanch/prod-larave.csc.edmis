@@ -495,5 +495,16 @@ class PermissionsTableSeeder extends Seeder
         ];
 
         Permission::insert($permissions);
+
+        // Media Orphan Cleanup Dashboard (added separately to avoid id collision on re-seed)
+        // access = view only; force_delete = perform deletion (separated for least-privilege)
+        Permission::firstOrCreate(
+            ['title' => 'media_orphan_cleanup_access'],
+            ['id' => 121]
+        );
+        Permission::firstOrCreate(
+            ['title' => 'media_orphan_cleanup_force_delete'],
+            ['id' => 122]
+        );
     }
 }

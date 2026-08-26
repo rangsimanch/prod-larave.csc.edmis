@@ -1471,6 +1471,16 @@
                                 </a>
                             </li>
                         @endcan
+                        @can('media_orphan_cleanup_access')
+                            <li class="{{ request()->is('admin/media-orphan-cleanup') || request()->is('admin/media-orphan-cleanup/*') ? 'active' : '' }}">
+                                <a href="{{ route("admin.media-orphan-cleanup.index") }}">
+                                    <i class="fa-fw fas fa-broom">
+
+                                    </i>
+                                    <span>Media Orphan Cleanup</span>
+                                </a>
+                            </li>
+                        @endcan
                     </ul>
                 </li>
             @endcan
