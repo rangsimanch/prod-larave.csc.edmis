@@ -339,8 +339,8 @@ class MediaOrphanCleanupController extends Controller
         }
 
         // Signed URL for the delete form action (anti-script, expires in 30 minutes)
-        // 30 min gives admin time to read details + enter password without re-opening the page
-        $deleteAction = URL::temporarySignedRoute('admin.media-orphan-cleanup.destroy', now()->addMinutes(30), ['id' => $media->id]);
+        // Use $absolute=false so signature is based on relative path — survives reverse proxy scheme/host changes
+        $deleteAction = URL::temporarySignedRoute('admin.media-orphan-cleanup.destroy', now()->addMinutes(30), ['id' => $media->id], false);
 
         return view('admin.mediaOrphanCleanup.show', [
             'media'            => $media,
@@ -399,6 +399,14 @@ class MediaOrphanCleanupController extends Controller
 
         // 1. Signed route check (anti-script) — use relative URL to survive proxy scheme changes
         if (!URL::hasValidSignature($request, false)) {
+            \Log::debug('media_orphan_cleanup signature check failed', [
+                'method' => $request->method(),
+                'full_url' => $request->fullUrl(),
+                'path' => $request->path(),
+                'query' => $request->query(),
+                'has_signature' => $request->has('signature'),
+                'has_expires' => $request->has('expires'),
+            ]);
             abort(403, 'Invalid request signature.');
         }
 
