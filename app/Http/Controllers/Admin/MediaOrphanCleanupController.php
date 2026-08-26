@@ -338,8 +338,9 @@ class MediaOrphanCleanupController extends Controller
             $daysSinceDelete = Carbon::parse($parent->deleted_at)->diffInDays(now());
         }
 
-        // Signed URL for the delete form action (anti-script, expires in 5 minutes)
-        $deleteAction = URL::temporarySignedRoute('admin.media-orphan-cleanup.destroy', now()->addMinutes(5), ['id' => $media->id]);
+        // Signed URL for the delete form action (anti-script, expires in 30 minutes)
+        // 30 min gives admin time to read details + enter password without re-opening the page
+        $deleteAction = URL::temporarySignedRoute('admin.media-orphan-cleanup.destroy', now()->addMinutes(30), ['id' => $media->id]);
 
         return view('admin.mediaOrphanCleanup.show', [
             'media'            => $media,
@@ -396,8 +397,8 @@ class MediaOrphanCleanupController extends Controller
             abort(403, 'Force delete permission required.');
         }
 
-        // 1. Signed route check (anti-script)
-        if (!URL::hasValidSignature($request)) {
+        // 1. Signed route check (anti-script) — use relative URL to survive proxy scheme changes
+        if (!URL::hasValidSignature($request, false)) {
             abort(403, 'Invalid request signature.');
         }
 
