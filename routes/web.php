@@ -671,7 +671,6 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::get('media-orphan-cleanup', 'MediaOrphanCleanupController@index')->name('media-orphan-cleanup.index');
     Route::get('media-orphan-cleanup/{id}', 'MediaOrphanCleanupController@show')->name('media-orphan-cleanup.show');
     Route::get('media-orphan-cleanup/{id}/preview', 'MediaOrphanCleanupController@preview')->name('media-orphan-cleanup.preview');
-    Route::delete('media-orphan-cleanup/destroy/mass', 'MediaOrphanCleanupController@massDestroy')->name('media-orphan-cleanup.massDestroy');
     Route::delete('media-orphan-cleanup/{id}', 'MediaOrphanCleanupController@destroy')->name('media-orphan-cleanup.destroy');
 
 });

@@ -1,5 +1,21 @@
 @extends('layouts.admin')
 
+@section('styles')
+<style>
+    .modal-header-danger {
+        background-color: #d9534f;
+        color: #fff;
+    }
+    .modal-header-danger .close {
+        color: #fff;
+        opacity: 0.8;
+    }
+    .modal-header-danger .close:hover {
+        opacity: 1;
+    }
+</style>
+@endsection
+
 @section('content')
 <div class="content">
     <div class="row">
@@ -126,82 +142,123 @@
                                 ระบบปฏิเสธการลบไฟล์ของ model ที่ยังใช้งานอยู่เด็ดขาด
                             </div>
                         @else
-                        @if($status === 'stale_class')
-                            <div class="alert alert-warning">
-                                <strong>กรณี stale_class:</strong> ต้องกรอกเหตุผลก่อนลบ (เพื่อบันทึกใน audit log ว่าทำไมจึงลบ)
+                            @if($status === 'stale_class')
+                                <div class="alert alert-warning">
+                                    <strong>กรณี stale_class:</strong> ต้องกรอกเหตุผลก่อนลบ (เพื่อบันทึกใน audit log ว่าทำไมจึงลบ)
+                                </div>
+                            @endif
+
+                            <button type="button" class="btn btn-danger btn-lg" data-toggle="modal" data-target="#deleteConfirmModal">
+                                <i class="fa fa-trash"></i> เปิดหน้าต่างยืนยันการลบถาวร
+                            </button>
+
+                            <div class="modal fade" id="deleteConfirmModal" tabindex="-1" role="dialog" data-backdrop="static" data-keyboard="false" aria-labelledby="deleteModalTitle">
+                                <div class="modal-dialog modal-lg" role="document">
+                                    <div class="modal-content">
+                                        <form method="POST" action="{{ $deleteAction }}" id="deleteForm">
+                                            @csrf
+                                            <div class="modal-header modal-header-danger">
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                <h4 class="modal-title" id="deleteModalTitle">
+                                                    <i class="fa fa-exclamation-triangle"></i> ยืนยันการลบถาวร — Media #{{ $media->id }}
+                                                </h4>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div class="alert alert-danger">
+                                                    <strong>คำเตือน:</strong> การลบเป็นถาวร — แม้ model จะถูก restore ภายหลัง ไฟล์จะไม่กลับมา
+                                                    @if(!$fileOnDisk)
+                                                        <br>(ไฟล์ใน disk หายไปแล้ว — การลบจะลบเฉพาะ media row ใน DB)
+                                                    @endif
+                                                </div>
+
+                                                <table class="table table-bordered table-condensed">
+                                                    <tbody>
+                                                        <tr><th width="180">File Name</th><td><code>{{ $media->file_name }}</code></td></tr>
+                                                        <tr><th>Size</th><td>{{ $humanSize }}</td></tr>
+                                                        <tr><th>Model Type</th><td><code>{{ $media->model_type }}</code></td></tr>
+                                                        <tr><th>Model ID</th><td>{{ $media->model_id }}</td></tr>
+                                                        <tr><th>Status</th><td>
+                                                            @if($status === 'soft_deleted')
+                                                                <span class="label label-warning">soft_deleted</span>
+                                                            @elseif($status === 'missing')
+                                                                <span class="label label-danger">missing</span>
+                                                            @elseif($status === 'stale_class')
+                                                                <span class="label label-danger">stale_class</span>
+                                                            @endif
+                                                        </td></tr>
+                                                    </tbody>
+                                                </table>
+
+                                                <hr>
+
+                                                <div class="form-group">
+                                                    <div class="checkbox">
+                                                        <label style="font-weight: bold;">
+                                                            <input type="checkbox" name="acknowledged" value="1" required id="ackCheckbox">
+                                                            ฉันเข้าใจว่าการลบเป็นถาวร และยืนยันว่าได้ตรวจสอบรายละเอียดข้างต้นแล้ว
+                                                        </label>
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label for="pwInput">Password ของคุณ <span class="text-danger">*</span></label>
+                                                    <input type="password" name="confirm_password" class="form-control" required id="pwInput" autocomplete="current-password">
+                                                    <p class="help-block text-muted small">ระบบจะตรวจสอบ password ก่อนลบ และบันทึก audit log ทุกครั้ง</p>
+                                                </div>
+
+                                                @if($status === 'stale_class')
+                                                    <div class="form-group">
+                                                        <label for="reasonInput">เหตุผลในการลบ <span class="text-danger">*</span> (required สำหรับ stale_class)</label>
+                                                        <textarea name="reason" class="form-control" rows="2" required id="reasonInput" placeholder="เช่น: model นี้ถูกลบออกจากระบบแล้ว ไม่มีการใช้งาน"></textarea>
+                                                    </div>
+                                                @else
+                                                    <div class="form-group">
+                                                        <label for="reasonInput">เหตุผล (optional)</label>
+                                                        <textarea name="reason" class="form-control" rows="2" id="reasonInput" placeholder="บันทึกเหตุผลเพิ่มเติม (ถ้ามี)"></textarea>
+                                                    </div>
+                                                @endif
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-default" data-dismiss="modal">ยกเลิก</button>
+                                                <button type="submit" class="btn btn-danger" id="deleteBtn" disabled>
+                                                    <i class="fa fa-trash"></i> ยืนยันลบถาวร
+                                                </button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
                             </div>
+
+                            <script>
+                                (function() {
+                                    const ack = document.getElementById('ackCheckbox');
+                                    const pw = document.getElementById('pwInput');
+                                    const btn = document.getElementById('deleteBtn');
+                                    const reason = document.getElementById('reasonInput');
+                                    const reasonRequired = {{ $status === 'stale_class' ? 'true' : 'false' }};
+
+                                    function updateBtn() {
+                                        let ok = ack.checked && pw.value.length > 0;
+                                        if (reasonRequired && reason.value.trim().length === 0) {
+                                            ok = false;
+                                        }
+                                        btn.disabled = !ok;
+                                    }
+                                    ack.addEventListener('change', updateBtn);
+                                    pw.addEventListener('input', updateBtn);
+                                    if (reason) reason.addEventListener('input', updateBtn);
+
+                                    // Clear password on modal close (security)
+                                    $('#deleteConfirmModal').on('hidden.bs.modal', function() {
+                                        pw.value = '';
+                                        ack.checked = false;
+                                        if (reason) reason.value = '';
+                                        updateBtn();
+                                    });
+                                })();
+                            </script>
                         @endif
-
-                        <form method="POST" action="{{ $deleteAction }}" id="deleteForm">
-                            @csrf
-
-                            <div class="panel panel-warning">
-                                <div class="panel-heading">
-                                    <strong>Step 1: รายละเอียดยืนยัน</strong>
-                                </div>
-                                <div class="panel-body">
-                                    <p>
-                                        กำลังจะลบ: <code>{{ $media->file_name }}</code> ({{ $humanSize }})<br>
-                                        ของ model: <code>{{ $media->model_type }}</code> #{{ $media->model_id }}
-                                    </p>
-                                    <div class="alert alert-danger">
-                                        <strong>คำเตือน:</strong> การลบเป็นถาวร — แม้ model จะถูก restore ภายหลัง ไฟล์จะไม่กลับมา
-                                        @if(!$fileOnDisk)
-                                            <br>(ไฟล์ใน disk หายไปแล้ว — การลบจะลบเฉพาะ media row ใน DB)
-                                        @endif
-                                    </div>
-                                    <div class="checkbox">
-                                        <label>
-                                            <input type="checkbox" name="acknowledged" value="1" required id="ackCheckbox">
-                                            ฉันเข้าใจว่าการลบเป็นถาวรและยืนยันว่าได้ตรวจสอบรายละเอียดข้างต้นแล้ว
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="panel panel-danger">
-                                <div class="panel-heading">
-                                    <strong>Step 2: กรอก password เพื่อยืนยัน</strong>
-                                </div>
-                                <div class="panel-body">
-                                    <div class="form-group">
-                                        <label>Password ของคุณ</label>
-                                        <input type="password" name="confirm_password" class="form-control" required id="pwInput">
-                                    </div>
-                                    @if($status === 'stale_class')
-                                        <div class="form-group">
-                                            <label>เหตุผลในการลบ (required สำหรับ stale_class)</label>
-                                            <textarea name="reason" class="form-control" rows="2" required placeholder="เช่น: model นี้ถูกลบออกจากระบบแล้ว ไม่มีการใช้งาน"></textarea>
-                                        </div>
-                                    @else
-                                        <div class="form-group">
-                                            <label>เหตุผล (optional)</label>
-                                            <textarea name="reason" class="form-control" rows="2" placeholder="บันทึกเหตุผลเพิ่มเติม (ถ้ามี)"></textarea>
-                                        </div>
-                                    @endif
-                                    <button type="submit" class="btn btn-danger" id="deleteBtn" disabled>
-                                        ลบถาวร
-                                    </button>
-                                </div>
-                            </div>
-                        </form>
-
-                        <script>
-                            const ack = document.getElementById('ackCheckbox');
-                            const pw = document.getElementById('pwInput');
-                            const btn = document.getElementById('deleteBtn');
-                            function updateBtn() {
-                                btn.disabled = !(ack.checked && pw.value.length > 0);
-                            }
-                            ack.addEventListener('change', updateBtn);
-                            pw.addEventListener('input', updateBtn);
-
-                            document.getElementById('deleteForm').addEventListener('submit', function(e) {
-                                if (!confirm('ยืนยันการลบถาวรครั้งสุดท้าย?\n\nไฟล์: {{ addslashes($media->file_name) }}\nModel: {{ addslashes($media->model_type) }} #{{ $media->model_id }}\n\nการลบเป็นถาวร ไม่สามารถกู้คืนได้')) {
-                                    e.preventDefault();
-                                }
-                            });
-                        </script>
+                    @endcan
                     @endif
                     @endcan
 

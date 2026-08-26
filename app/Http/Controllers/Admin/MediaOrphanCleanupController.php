@@ -41,8 +41,8 @@ class MediaOrphanCleanupController extends Controller
     {
         // access = view index/show/preview; force_delete = perform deletion
         $this->middleware('can:media_orphan_cleanup_access');
-        $this->middleware('can:media_orphan_cleanup_force_delete')->only(['destroy', 'massDestroy']);
-        $this->middleware('throttle:10,1')->only(['destroy', 'massDestroy', 'preview']);
+        $this->middleware('can:media_orphan_cleanup_force_delete')->only(['destroy']);
+        $this->middleware('throttle:10,1')->only(['destroy', 'preview']);
     }
 
     /**
@@ -483,100 +483,6 @@ class MediaOrphanCleanupController extends Controller
             'model_type'   => $media->model_type,
             'status'       => 'orphan',
         ])->with('success', 'ลบ media id ' . $media->id . ' เรียบร้อยแล้ว');
-    }
-
-    /**
-     * Mass destroy multiple media rows.
-     * Stale_class rows are NOT allowed here (R3) — must be deleted one-by-one via show().
-     */
-    public function massDestroy(Request $request)
-    {
-        // 0. Defense-in-depth: explicit force_delete gate
-        if (Gate::denies('media_orphan_cleanup_force_delete')) {
-            abort(403, 'Force delete permission required.');
-        }
-
-        if (!URL::hasValidSignature($request)) {
-            abort(403, 'Invalid request signature.');
-        }
-
-        $request->validate([
-            'confirm_password' => 'required|string',
-            'acknowledged'     => 'accepted',
-            'ids'              => 'required|array|min:1',
-            'ids.*'            => 'integer',
-        ]);
-
-        $this->assertNotLockedOut();
-
-        if (!Hash::check($request->input('confirm_password'), auth()->user()->password)) {
-            $this->recordPasswordFailure();
-            $this->audit('orphan_media_delete_password_failed', null, [
-                'reason' => 'mass destroy password mismatch',
-                'ids'    => $request->input('ids'),
-            ]);
-            abort(403, 'Password confirmation failed.');
-        }
-
-        $ids = $request->input('ids');
-        $validModelTypes = $this->validModelTypes();
-
-        $deleted = [];
-        $blocked = [];
-
-        foreach ($ids as $id) {
-            $media = Media::find($id);
-            if (!$media) {
-                continue;
-            }
-
-            // Reject stale_class in mass destroy (R3)
-            if (!array_key_exists($media->model_type, $validModelTypes)) {
-                $blocked[] = ['id' => $id, 'reason' => 'stale_class not allowed in mass destroy'];
-                $this->audit('orphan_media_delete_blocked_mass_stale', $id, [
-                    'model_type' => $media->model_type,
-                ]);
-                continue;
-            }
-
-            $parentStatus = $this->resolveStatusAtNow($media);
-            if ($parentStatus === self::STATUS_ACTIVE) {
-                $blocked[] = ['id' => $id, 'reason' => 'parent active'];
-                $this->audit('orphan_media_delete_blocked_active', $id, [
-                    'model_type' => $media->model_type,
-                ]);
-                continue;
-            }
-
-            $fileWasMissing = !$this->fileExistsOnDisk($media);
-            try {
-                if ($fileWasMissing) {
-                    DB::table('media')->where('id', $media->id)->delete();
-                } else {
-                    $media->delete();
-                }
-                $deleted[] = $id;
-            } catch (\Throwable $e) {
-                DB::table('media')->where('id', $media->id)->delete();
-                $deleted[] = $id;
-            }
-
-            $this->audit('orphan_media_deleted', $id, $this->buildAuditProps(
-                $media,
-                $parentStatus,
-                null,
-                $fileWasMissing
-            ));
-        }
-
-        $this->clearLockout();
-
-        $message = 'ลบสำเร็จ ' . count($deleted) . ' row';
-        if (!empty($blocked)) {
-            $message .= '; ถูกปฏิเสธ ' . count($blocked) . ' row';
-        }
-
-        return redirect()->back()->with('success', $message);
     }
 
     /**

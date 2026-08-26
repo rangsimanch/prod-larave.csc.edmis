@@ -101,15 +101,7 @@
                         <hr>
                         <p class="text-muted">ผลลัพธ์ทั้งหมด: <strong>{{ number_format($totalResults) }}</strong> rows (แสดงหน้าละ 50)</p>
 
-                        @can('media_orphan_cleanup_force_delete')
-                            <form method="POST" action="{{ URL::temporarySignedRoute('admin.media-orphan-cleanup.massDestroy', now()->addMinutes(5)) }}" id="massDestroyForm" style="margin-bottom: 10px;">
-                                @csrf
-                                <button type="button" class="btn btn-danger btn-sm" id="massDestroyBtn" disabled>
-                                    ลบที่เลือก (mass)
-                                </button>
-                                <span class="text-muted small">— mass delete ไม่รองรับ stale_class (ต้องลบทีละ row ผ่านหน้า detail)</span>
-                            </form>
-                        @else
+                        @cannot('media_orphan_cleanup_force_delete')
                             <div class="alert alert-info small" style="margin-bottom: 10px;">
                                 คุณมีสิทธิ์เฉพาะการดู — ต้องมี permission <code>media_orphan_cleanup_force_delete</code> เพื่อลบ
                             </div>
@@ -118,7 +110,6 @@
                         <table class="table table-bordered table-striped table-hover">
                             <thead>
                                 <tr>
-                                    <th width="20"><input type="checkbox" id="selectAll"></th>
                                     <th>ID</th>
                                     <th>Model</th>
                                     <th>Model ID</th>
@@ -157,13 +148,6 @@
                                         $canDelete = in_array($status, ['soft_deleted', 'missing', 'stale_class']);
                                     @endphp
                                     <tr>
-                                        <td>
-                                            @can('media_orphan_cleanup_force_delete')
-                                                @if($canDelete && $status !== 'stale_class')
-                                                    <input type="checkbox" name="ids[]" value="{{ $row->id }}" class="rowCheckbox" form="massDestroyForm">
-                                                @endif
-                                            @endcan
-                                        </td>
                                         <td>{{ $row->id }}</td>
                                         <td>{{ class_basename($row->model_type) }}</td>
                                         <td>{{ $row->model_id }}</td>
@@ -201,18 +185,6 @@
                         </table>
 
                         {{ $results->links() }}
-
-                        <script>
-                            document.getElementById('selectAll').addEventListener('change', function() {
-                                document.querySelectorAll('.rowCheckbox').forEach(cb => cb.checked = this.checked);
-                                updateMassBtn();
-                            });
-                            document.querySelectorAll('.rowCheckbox').forEach(cb => cb.addEventListener('change', updateMassBtn));
-                            function updateMassBtn() {
-                                const checked = document.querySelectorAll('.rowCheckbox:checked').length;
-                                document.getElementById('massDestroyBtn').disabled = checked === 0;
-                            }
-                        </script>
                     @else
                         <div class="alert alert-info">
                             เลือก filter ด้านบนแล้วกด Search เพื่อเริ่มตรวจสอบ — หน้านี้ไม่โหลดข้อมูลอัตโนมัติเพื่อประหยัดทรัพยากร
@@ -225,35 +197,4 @@
     </div>
 </div>
 
-@endsection
-
-@section('scripts')
-<script>
-    // Mass destroy: prompt for password + acknowledged before submit
-    document.getElementById('massDestroyBtn')?.addEventListener('click', function() {
-        const checked = document.querySelectorAll('.rowCheckbox:checked');
-        if (checked.length === 0) return;
-        if (!confirm('คุณแน่ใจหรือไม่ว่าต้องการลบ ' + checked.length + ' media rows ถาวร?\n\nการลบเป็นถาวร แม้ model จะถูก restore ภายหลัง ไฟล์จะไม่กลับมา')) {
-            return;
-        }
-        const password = prompt('กรอก password ของคุณเพื่อยืนยันการลบ:');
-        if (!password) return;
-
-        // Add hidden inputs to the form
-        const form = document.getElementById('massDestroyForm');
-        const pwInput = document.createElement('input');
-        pwInput.type = 'hidden';
-        pwInput.name = 'confirm_password';
-        pwInput.value = password;
-        form.appendChild(pwInput);
-
-        const ackInput = document.createElement('input');
-        ackInput.type = 'hidden';
-        ackInput.name = 'acknowledged';
-        ackInput.value = '1';
-        form.appendChild(ackInput);
-
-        form.submit();
-    });
-</script>
 @endsection
