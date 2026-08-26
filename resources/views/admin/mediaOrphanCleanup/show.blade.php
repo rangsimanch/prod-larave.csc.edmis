@@ -158,6 +158,7 @@
                                         <form method="POST" action="{{ $deleteAction }}" id="deleteForm">
                                             @csrf
                                             @method('DELETE')
+                                            <input type="hidden" name="_delete_token" value="{{ $deleteToken }}">
                                             <div class="modal-header modal-header-danger">
                                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                                                 <h4 class="modal-title" id="deleteModalTitle">

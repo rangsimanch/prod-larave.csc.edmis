@@ -11,7 +11,6 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\URL;
 use Spatie\MediaLibrary\HasMedia\HasMedia;
 use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
 use Spatie\MediaLibrary\Models\Media;
@@ -338,9 +337,11 @@ class MediaOrphanCleanupController extends Controller
             $daysSinceDelete = Carbon::parse($parent->deleted_at)->diffInDays(now());
         }
 
-        // Signed URL for the delete form action (anti-script, expires in 30 minutes)
-        // Use $absolute=false so signature is based on relative path — survives reverse proxy scheme/host changes
-        $deleteAction = URL::temporarySignedRoute('admin.media-orphan-cleanup.destroy', now()->addMinutes(30), ['id' => $media->id], false);
+        // Session-based one-time token for delete action (anti-script)
+        // Signed URL approach failed on production due to middleware injecting extra query params (q=...)
+        $deleteToken = hash_hmac('sha256', 'media_delete:' . $media->id, config('app.key'));
+        session(['media_orphan_delete_token' => $deleteToken, 'media_orphan_delete_media_id' => $media->id]);
+        $deleteAction = route('admin.media-orphan-cleanup.destroy', ['id' => $media->id]);
 
         return view('admin.mediaOrphanCleanup.show', [
             'media'            => $media,
@@ -356,6 +357,7 @@ class MediaOrphanCleanupController extends Controller
                 self::STATUS_MISSING,
                 self::STATUS_STALE_CLASS,
             ]),
+            'deleteToken'      => $deleteToken,
         ]);
     }
 
@@ -397,17 +399,16 @@ class MediaOrphanCleanupController extends Controller
             abort(403, 'Force delete permission required.');
         }
 
-        // 1. Signed route check (anti-script) — use relative URL to survive proxy scheme changes
-        if (!URL::hasValidSignature($request, false)) {
-            \Log::debug('media_orphan_cleanup signature check failed', [
-                'method' => $request->method(),
-                'full_url' => $request->fullUrl(),
-                'path' => $request->path(),
-                'query' => $request->query(),
-                'has_signature' => $request->has('signature'),
-                'has_expires' => $request->has('expires'),
-            ]);
-            abort(403, 'Invalid request signature.');
+        // 1. Session-based one-time token check (anti-script)
+        $expectedToken = hash_hmac('sha256', 'media_delete:' . $id, config('app.key'));
+        $sessionToken = session('media_orphan_delete_token');
+        $sessionMediaId = session('media_orphan_delete_media_id');
+
+        if (!$sessionToken
+            || !hash_equals($expectedToken, $sessionToken)
+            || (int) $sessionMediaId !== (int) $id
+        ) {
+            abort(403, 'Invalid request token.');
         }
 
         // 2. Validate
@@ -415,6 +416,7 @@ class MediaOrphanCleanupController extends Controller
             'confirm_password' => 'required|string',
             'acknowledged'     => 'accepted',
             'reason'           => 'nullable|string|max:500',
+            '_delete_token'    => 'required|string',
         ]);
 
         // 3. Lockout check (R8)
@@ -484,8 +486,9 @@ class MediaOrphanCleanupController extends Controller
             $this->buildAuditProps($media, $parentStatus, $request->input('reason'), $fileWasMissing)
         );
 
-        // 10. Reset lockout counter on success
+        // 10. Reset lockout counter + clear one-time delete token
         $this->clearLockout();
+        session()->forget(['media_orphan_delete_token', 'media_orphan_delete_media_id']);
 
         return redirect()->route('admin.media-orphan-cleanup.index', [
             'submitted'    => 1,
