@@ -20,4 +20,9 @@ class AuditLog extends Model
     protected $casts = [
         'properties' => 'collection',
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id')->withTrashed();
+    }
 }
