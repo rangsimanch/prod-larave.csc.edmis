@@ -78,8 +78,9 @@ class AuditLogsController extends Controller
         return view('admin.auditLogs.index');
     }
 
-    protected function preparePropertyChanges($properties): array
+    protected function preparePropertyChanges(AuditLog $auditLog): array
     {
+        $properties = $auditLog->properties;
         if ($properties instanceof \Illuminate\Support\Collection) {
             $properties = $properties->toArray();
         }
@@ -90,9 +91,19 @@ class AuditLogsController extends Controller
 
         $hasSnapshots = array_key_exists('old', $properties) || array_key_exists('new', $properties) || array_key_exists('changes', $properties);
         if (!$hasSnapshots) {
-            $old = [];
-            $new = $properties;
-            $changes = $properties;
+            if ($auditLog->description === 'deleted') {
+                $old = $properties;
+                $new = [];
+                $changes = [];
+            } elseif ($auditLog->description === 'updated') {
+                $old = $this->getPreviousAuditValues($auditLog);
+                $new = $properties;
+                $changes = $properties;
+            } else {
+                $old = [];
+                $new = $properties;
+                $changes = $properties;
+            }
         } else {
             $old = is_array($properties['old'] ?? null) ? $properties['old'] : [];
             $new = is_array($properties['new'] ?? null) ? $properties['new'] : [];
@@ -129,6 +140,39 @@ class AuditLogsController extends Controller
         return $propertyChanges;
     }
 
+    protected function getPreviousAuditValues(AuditLog $auditLog): array
+    {
+        $previousAuditLog = AuditLog::query()
+            ->where('subject_type', $auditLog->subject_type)
+            ->where('subject_id', $auditLog->subject_id)
+            ->where('id', '<', $auditLog->id)
+            ->latest('id')
+            ->first();
+
+        if (!$previousAuditLog) {
+            return [];
+        }
+
+        $properties = $previousAuditLog->properties;
+        if ($properties instanceof \Illuminate\Support\Collection) {
+            $properties = $properties->toArray();
+        }
+
+        if (!is_array($properties)) {
+            return [];
+        }
+
+        if (is_array($properties['new'] ?? null)) {
+            return $properties['new'];
+        }
+
+        if (is_array($properties['old'] ?? null)) {
+            return $properties['old'];
+        }
+
+        return $properties;
+    }
+
     protected function sanitizeAuditValue($value)
     {
         if ($value instanceof \Illuminate\Support\Collection) {
@@ -160,7 +204,7 @@ class AuditLogsController extends Controller
 
         $auditLog->load('user');
         $modelName = $auditLog->subject_type ? class_basename($auditLog->subject_type) : '-';
-        $propertyChanges = $this->preparePropertyChanges($auditLog->properties);
+        $propertyChanges = $this->preparePropertyChanges($auditLog);
 
         return view('admin.auditLogs.show', compact('auditLog', 'modelName', 'propertyChanges'));
     }

@@ -154,6 +154,70 @@ class AuditLogsTest extends TestCase
         $this->assertSame('After', $properties['changes']['title']);
     }
 
+    public function test_auditable_logs_before_values_for_deletes(): void
+    {
+        $subject = AuditLogSubject::create(['title' => 'Removed', 'status' => 'done']);
+        $subject->delete();
+
+        $properties = AuditLog::where('subject_type', AuditLogSubject::class)->latest('id')->first()->properties->toArray();
+
+        $this->assertSame('Removed', $properties['old']['title']);
+        $this->assertSame([], $properties['new']);
+        $this->assertSame([], $properties['changes']);
+    }
+
+    public function test_show_reconstructs_legacy_update_before_values(): void
+    {
+        Gate::shouldReceive('denies')->andReturnFalse();
+
+        DB::table('audit_logs')->insert([
+            'description' => 'created',
+            'subject_id' => 7,
+            'subject_type' => 'App\\Document',
+            'properties' => json_encode(['title' => 'Before', 'status' => 'draft']),
+            'created_at' => '2026-08-29 09:00:00',
+            'updated_at' => '2026-08-29 09:00:00',
+        ]);
+        DB::table('audit_logs')->insert([
+            'description' => 'updated',
+            'subject_id' => 7,
+            'subject_type' => 'App\\Document',
+            'properties' => json_encode(['title' => 'After', 'status' => 'done']),
+            'created_at' => '2026-08-29 10:00:00',
+            'updated_at' => '2026-08-29 10:00:00',
+        ]);
+
+        $view = (new AuditLogsController())->show(AuditLog::latest('id')->first());
+        $data = $view->getData();
+
+        $this->assertSame([
+            ['field' => 'title', 'old' => 'Before', 'new' => 'After'],
+            ['field' => 'status', 'old' => 'draft', 'new' => 'done'],
+        ], $data['propertyChanges']);
+    }
+
+    public function test_show_uses_legacy_delete_properties_as_before_values(): void
+    {
+        Gate::shouldReceive('denies')->andReturnFalse();
+
+        DB::table('audit_logs')->insert([
+            'description' => 'deleted',
+            'subject_id' => 8,
+            'subject_type' => 'App\\Document',
+            'properties' => json_encode(['title' => 'Removed', 'status' => 'done']),
+            'created_at' => '2026-08-29 10:00:00',
+            'updated_at' => '2026-08-29 10:00:00',
+        ]);
+
+        $view = (new AuditLogsController())->show(AuditLog::latest('id')->first());
+        $data = $view->getData();
+
+        $this->assertSame([
+            ['field' => 'title', 'old' => 'Removed', 'new' => null],
+            ['field' => 'status', 'old' => 'done', 'new' => null],
+        ], $data['propertyChanges']);
+    }
+
     public function test_show_prepares_detailed_audit_change_data(): void
     {
         Gate::shouldReceive('denies')->andReturnFalse();
