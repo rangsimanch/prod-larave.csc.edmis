@@ -555,34 +555,81 @@ class NcnController extends Controller
             $mpdf->AddPage('P','','','','','','',50,55);
             $mpdf->SetHTMLFooter($footer_text);
 
-
-            for($index = 0; $index < $count_image; $index++){
+            // Each image is written via a temp-file path (NOT a base64
+            // data URL) so the HTML string stays tiny. Concatenating many
+            // base64-encoded images into one WriteHTML() call exceeds
+            // pcre.backtrack_limit (1,000,000) and triggers:
+            //   "The HTML code size is larger than pcre.backtrack_limit"
+            $allowed = ['gif', 'png', 'jpg', 'jpeg', 'JPG', 'JPEG', 'PNG'];
+            // Use storage/app/tmp (NOT public/tmp) so temp image files are
+            // never web-accessible. Each call gets a unique subdir via
+            // uniqid() so concurrent requests cannot collide on or delete
+            // each other's temp files.
+            $tmpDir = storage_path('app/tmp/ncn_' . ($ncn->id ?? 'x') . '_' . uniqid('', true));
+            if (!is_dir($tmpDir)) {
+                @mkdir($tmpDir, 0755, true);
+            }
+            // Pass 1: resize each image to a temp file and collect paths.
+            // Temp files are kept until after the single WriteHTML() call
+            // below so mPDF can read them by path during rendering.
+            $imagePaths = [];
+            for ($index = 0; $index < $count_image; $index++){
                 try{
-                    $allowed = array('gif', 'png', 'jpg', 'jpeg', 'JPG', 'JPEG', 'PNG');
-                    $url =  url($ncn->description_image[$index]->getUrl());
-                    $handle = curl_init($url);
-                    curl_setopt($handle,  CURLOPT_RETURNTRANSFER, TRUE);
-                    $response = curl_exec($handle);
-                    $httpCode = curl_getinfo($handle, CURLINFO_HTTP_CODE);
-                    curl_close($handle);
-                    if($httpCode != 404){
-                        if(in_array(pathinfo(public_path($ncn->description_image[$index]->getUrl()),PATHINFO_EXTENSION),$allowed)){
-
-                            $img = (string) Image::make($ncn->description_image[$index]->getPath())->orientate()->resize(null, 180, function ($constraint) {
-                                $constraint->aspectRatio();
-                            })
-                            ->encode('data-url');
-
-                            $html .= "<img style=\"padding-left:90px;\" width=\"". "30%" ."\" height=\"". "30%" ."\" src=\""
-                                . $img
-                                . "\">  ";
-                        }
+                    $path = $ncn->description_image[$index]->getPath();
+                    if (!file_exists($path)) {
+                        continue;
                     }
-                }catch(Exception $e){
-                    print "Creating an mPDF object failed with" . $e->getMessage();
+                    $ext = strtolower(pathinfo($path, PATHINFO_EXTENSION));
+                    if (!in_array($ext, $allowed)) {
+                        continue;
+                    }
+                    // Resize via Intervention, save to a temp file so mPDF
+                    // can read it by path. This keeps the <img> tag string
+                    // tiny (~80 chars) instead of a ~300KB base64 blob.
+                    $tmpFile = $tmpDir . '/img_' . $index . '.' . $ext;
+                    Image::make($path)->orientate()->resize(null, 180, function ($constraint) {
+                        $constraint->aspectRatio();
+                    })->save($tmpFile, 80);
+                    $imagePaths[] = $tmpFile;
+                }catch(\Exception $e){
+                    \Log::error('NCN image embed failed: ' . $e->getMessage());
                 }
             }
-            $mpdf->WriteHTML($html);
+
+            // Pass 2: build a 2-column table layout and write it in a single
+            // WriteHTML() call. Using <table> gives reliable 2-per-row layout
+            // in mPDF (float/flex support is limited). The HTML string stays
+            // tiny because src is a file path, not a base64 blob — even 100
+            // images = ~10KB, far under pcre.backtrack_limit.
+            if (!empty($imagePaths)) {
+                $html = '<table style="width:100%; border:none; border-collapse:collapse; padding:0 40px;">';
+                $cols = 2;
+                $total = count($imagePaths);
+                for ($i = 0; $i < $total; $i += $cols) {
+                    $html .= '<tr>';
+                    for ($c = 0; $c < $cols; $c++) {
+                        $idx = $i + $c;
+                        $html .= '<td style="width:50%; text-align:center; padding:10px 5px; border:none;">';
+                        if (isset($imagePaths[$idx])) {
+                            $html .= '<img style="padding-top:10px;" width="30%" src="' . $imagePaths[$idx] . '">';
+                        }
+                        $html .= '</td>';
+                    }
+                    $html .= '</tr>';
+                }
+                $html .= '</table>';
+                $mpdf->WriteHTML($html);
+            }
+
+            // Pass 3: clean up temp files now that mPDF has embedded them.
+            foreach ($imagePaths as $tmpFile) {
+                if (file_exists($tmpFile)) {
+                    @unlink($tmpFile);
+                }
+            }
+            // Clean up the per-call temp subdir (empty after file deletion).
+            @rmdir($tmpDir);
+
             $mpdf->SetDocTemplate("");
         }
         $html="";
