@@ -659,34 +659,66 @@ class SwnController extends Controller
             $footer_text = "<div style=\"text-align: right; font-size:18px; font-weight: bold;\">" . $document_number . "</div>";
             $mpdf->SetHTMLFooter($footer_text);
             $mpdf->AddPage('P','','','','','','',50,55);
-            $html = "";
+
+            $allowed = ['gif', 'png', 'jpg', 'jpeg'];
+            $tmpDir = storage_path('app/tmp/swn_' . ($swn->id ?? 'x') . '_' . uniqid('', true));
+            if (!is_dir($tmpDir)) {
+                @mkdir($tmpDir, 0755, true);
+            }
+            $imagePaths = [];
+
             for($index = 0; $index < $count_image; $index++){
                 try{
-                    $allowed = array('gif', 'png', 'jpg', 'jpeg', 'JPG', 'JPEG', 'PNG');
-                    $url =  url($swn->description_image[$index]->getUrl());
-                    $handle = curl_init($url);
-                    curl_setopt($handle,  CURLOPT_RETURNTRANSFER, TRUE);
-                    $response = curl_exec($handle);
-                    $httpCode = curl_getinfo($handle, CURLINFO_HTTP_CODE);
-                    curl_close($handle);
-                    if($httpCode != 404){
-                        if(in_array(pathinfo(public_path($swn->description_image[$index]->getUrl()),PATHINFO_EXTENSION),$allowed)){
-
-                            $img = (string) Image::make($swn->description_image[$index]->getPath())->orientate()->resize(null, 180, function ($constraint) {
-                                $constraint->aspectRatio();
-                            })
-                            ->encode('data-url');
-
-                            $html .= "<img style=\"padding-left:90px;\" width=\"". "30%" ."\" height=\"". "30%" ."\" src=\""
-                                . $img
-                                . "\">  ";
-                        }
-                }
-                }catch(Exception $e){
-                    print "Creating an mPDF object failed with" . $e->getMessage();
+                    $path = $swn->description_image[$index]->getPath();
+                    if (!file_exists($path)) {
+                        continue;
+                    }
+                    $ext = strtolower(pathinfo($path, PATHINFO_EXTENSION));
+                    if (!in_array($ext, $allowed)) {
+                        continue;
+                    }
+                    $tmpFile = $tmpDir . '/img_' . $index . '.' . $ext;
+                    Image::make($path)->orientate()->resize(null, 180, function ($constraint) {
+                        $constraint->aspectRatio();
+                    })->save($tmpFile, 80);
+                    $imagePaths[] = $tmpFile;
+                } catch (\Exception $e) {
+                    \Log::error('SWN image embed failed: ' . $e->getMessage());
                 }
             }
-            $mpdf->WriteHTML($html);
+
+            try {
+                if (!empty($imagePaths)) {
+                    $cols = 2;
+                    $batchSize = 20;
+                    $total = count($imagePaths);
+                    for ($batchStart = 0; $batchStart < $total; $batchStart += $batchSize) {
+                        $html = '<table style="width:100%; border:none; border-collapse:collapse; padding:0 40px;">';
+                        $batchEnd = min($batchStart + $batchSize, $total);
+                        for ($i = $batchStart; $i < $batchEnd; $i += $cols) {
+                            $html .= '<tr>';
+                            for ($c = 0; $c < $cols; $c++) {
+                                $idx = $i + $c;
+                                $html .= '<td style="width:50%; text-align:center; padding:10px 5px; border:none;">';
+                                if (isset($imagePaths[$idx])) {
+                                    $html .= '<img style="padding-top:10px;" width="30%" src="' . $imagePaths[$idx] . '">';
+                                }
+                                $html .= '</td>';
+                            }
+                            $html .= '</tr>';
+                        }
+                        $html .= '</table>';
+                        $mpdf->WriteHTML($html);
+                    }
+                }
+            } finally {
+                foreach ($imagePaths as $tmpFile) {
+                    if (file_exists($tmpFile)) {
+                        @unlink($tmpFile);
+                    }
+                }
+                @rmdir($tmpDir);
+            }
         }
 
         $mpdf->SetDocTemplate("");
