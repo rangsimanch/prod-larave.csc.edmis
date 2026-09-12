@@ -104,10 +104,7 @@
                                 <th>
                                     <p style="font-size:12px"> {{ trans('cruds.rfa.fields.commercial_file_upload') }} </p>
                                 </th>
-                                <th>
-                                    <p style="font-size:12px"> {{ trans('cruds.rfa.fields.updated_at') }} </p>
-                                </th>
-
+                               
                             </tr>
                             <tr>
                                 <td>
@@ -212,8 +209,6 @@
                                         @endforeach
                                             <option value="Approve">Approved & Approve as Note</option>
                                     </select>
-                                </td>
-                                <td>
                                 </td>
                                 <td>
                                 </td>
