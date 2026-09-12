@@ -299,7 +299,6 @@
 { data: 'submit_date', name: 'submit_date', searchable: false },
 { data: 'comment_status_name', name: 'comment_status.name' },
 { data: 'commercial_file_upload', name: 'commercial_file_upload', sortable: false, searchable: false },
-{ data: 'updated_at', name: 'updated_at', searchable: false },
 ],
     orderCellsTop: true,
     order: [[ 2, 'desc' ]],
