@@ -1836,7 +1836,7 @@ class RfaController extends Controller
 
             //Title
             if(strlen($title_en) > 250){
-                $html .= "<div style=\"font-size: 11px; font-weight: bold; padding-right:255px; position:absolute;top:179px;left:98px; LINE-HEIGHT:16px;\">"
+                $html .= "<div style=\"font-size: 9.5px; font-weight: bold; padding-right:255px; position:absolute;top:179px;left:98px; LINE-HEIGHT:16px;\">"
                 . $title_en . "</div>";
             }
             else{
@@ -1845,7 +1845,7 @@ class RfaController extends Controller
             }
 
             if(strlen($title_th) > 350){
-                $html .= "<div style=\"font-size: 11px; font-weight: bold; padding-right:255px; position:absolute;top:264px;left:98px; LINE-HEIGHT:16px;\">"
+                $html .= "<div style=\"font-size: 9.5px; font-weight: bold; padding-right:255px; position:absolute;top:264px;left:98px; LINE-HEIGHT:16px;\">"
                 . $title_th . "</div>";
             }
             else{
@@ -1859,8 +1859,8 @@ class RfaController extends Controller
 
             // Document Name
             $document_name_fontsize = "12px";
-            if(strlen($document_name) > 100) {
-                $document_name_fontsize = "6px";
+            if(strlen($document_name) > 150) {
+                $document_name_fontsize = "9px";
             }
             $html .= "<div style=\"font-size: " . $document_name_fontsize  . "; padding-right:55px; font-weight: bold; position:absolute;top:347px;left:198px;LINE-HEIGHT:16px;\">" . $document_name . "</div>";
             $html .= "<div style=\"font-size: 12px; font-weight: bold; position:absolute;top:263px;left:614;\">" . $qty_page . '.' . "</div>";
