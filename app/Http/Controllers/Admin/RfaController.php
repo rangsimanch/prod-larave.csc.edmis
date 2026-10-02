@@ -1862,6 +1862,9 @@ class RfaController extends Controller
             if(strlen($document_name) > 150) {
                 $document_name_fontsize = "9px";
             }
+            else if(strlen($document_name) > 250) {
+                $document_name_fontsize = "8px";
+            }
             $html .= "<div style=\"font-size: " . $document_name_fontsize  . "; padding-right:55px; font-weight: bold; position:absolute;top:347px;left:198px;LINE-HEIGHT:16px;\">" . $document_name . "</div>";
             $html .= "<div style=\"font-size: 12px; font-weight: bold; position:absolute;top:263px;left:614;\">" . $qty_page . '.' . "</div>";
 
