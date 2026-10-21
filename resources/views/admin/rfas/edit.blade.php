@@ -541,7 +541,10 @@ Dropzone.options.fileUpload1Dropzone = {
       size: 1000
     },
     success: function (file, response) {
-        if (!response.name) return;
+        if (file.upload && file.upload.chunked) {
+            response = JSON.parse(file.xhr.responseText);
+        }
+        if (!response || !response.name) return;
       $('form').append('<input type="hidden" name="file_upload_1[]" value="' + response.name + '">')
       uploadedFileUpload1Map[file.name] = response.name
     },
@@ -602,7 +605,10 @@ Dropzone.options.commercialFileUploadDropzone = {
       size: 1000
     },
     success: function (file, response) {
-        if (!response.name) return;
+        if (file.upload && file.upload.chunked) {
+            response = JSON.parse(file.xhr.responseText);
+        }
+        if (!response || !response.name) return;
       $('form').append('<input type="hidden" name="commercial_file_upload[]" value="' + response.name + '">')
       uploadedCommercialFileUploadMap[file.name] = response.name
     },
@@ -663,7 +669,10 @@ Dropzone.options.documentFileUploadDropzone = {
       size: 1000
     },
     success: function (file, response) {
-        if (!response.name) return;
+        if (file.upload && file.upload.chunked) {
+            response = JSON.parse(file.xhr.responseText);
+        }
+        if (!response || !response.name) return;
       $('form').append('<input type="hidden" name="document_file_upload[]" value="' + response.name + '">')
       uploadedDocumentFileUploadMap[file.name] = response.name
     },
@@ -836,7 +845,10 @@ Dropzone.options.submittalsFileDropzone = {
       size: 500
     },
     success: function (file, response) {
-        if (!response.name) return;
+        if (file.upload && file.upload.chunked) {
+            response = JSON.parse(file.xhr.responseText);
+        }
+        if (!response || !response.name) return;
       $('form').append('<input type="hidden" name="submittals_file[]" value="' + response.name + '">')
       uploadedSubmittalsFileMap[file.name] = response.name
     },
@@ -898,7 +910,10 @@ Dropzone.options.workFileUploadDropzone = {
       size: 500
     },
     success: function (file, response) {
-        if (!response.name) return;
+        if (file.upload && file.upload.chunked) {
+            response = JSON.parse(file.xhr.responseText);
+        }
+        if (!response || !response.name) return;
       $('form').append('<input type="hidden" name="work_file_upload[]" value="' + response.name + '">')
       uploadedWorkFileUploadMap[file.name] = response.name
     },
@@ -1174,7 +1189,10 @@ Dropzone.options.submittalsFileDropzone = {
       size: 500
     },
     success: function (file, response) {
-        if (!response.name) return;
+        if (file.upload && file.upload.chunked) {
+            response = JSON.parse(file.xhr.responseText);
+        }
+        if (!response || !response.name) return;
       $('form').append('<input type="hidden" name="submittals_file[]" value="' + response.name + '">')
       uploadedSubmittalsFileMap[file.name] = response.name
     },
