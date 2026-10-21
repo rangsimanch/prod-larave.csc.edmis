@@ -195,6 +195,10 @@
 <script>
     var uploadedFilesReportBeforeMap = {}
 Dropzone.options.filesReportBeforeDropzone = {
+    chunking: true,
+    chunkSize: 50 * 1024 * 1024, // 50 MB per request
+    retryChunks: true,
+    retryChunksLimit: 3,
     url: '{{ route('admin.close-out-inspections.storeMedia') }}',
     maxFilesize: 1000, // MB
     addRemoveLinks: true,
@@ -251,6 +255,10 @@ Dropzone.options.filesReportBeforeDropzone = {
 <script>
     var uploadedFilesReportAfterMap = {}
 Dropzone.options.filesReportAfterDropzone = {
+    chunking: true,
+    chunkSize: 50 * 1024 * 1024, // 50 MB per request
+    retryChunks: true,
+    retryChunksLimit: 3,
     url: '{{ route('admin.close-out-inspections.storeMedia') }}',
     maxFilesize: 1000, // MB
     addRemoveLinks: true,

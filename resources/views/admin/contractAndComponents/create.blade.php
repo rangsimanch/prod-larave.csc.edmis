@@ -68,6 +68,10 @@
 <script>
     var uploadedFileUploadMap = {}
 Dropzone.options.fileUploadDropzone = {
+    chunking: true,
+    chunkSize: 50 * 1024 * 1024, // 50 MB per request
+    retryChunks: true,
+    retryChunksLimit: 3,
     url: '{{ route('admin.contract-and-components.storeMedia') }}',
     maxFilesize: 800, // MB
     addRemoveLinks: true,

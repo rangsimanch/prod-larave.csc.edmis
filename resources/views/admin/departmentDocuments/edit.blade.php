@@ -86,6 +86,10 @@
 <script>
     var uploadedDownloadMap = {}
 Dropzone.options.downloadDropzone = {
+    chunking: true,
+    chunkSize: 50 * 1024 * 1024, // 50 MB per request
+    retryChunks: true,
+    retryChunksLimit: 3,
     url: '{{ route('admin.department-documents.storeMedia') }}',
     maxFilesize: 200, // MB
     addRemoveLinks: true,
@@ -142,6 +146,10 @@ Dropzone.options.downloadDropzone = {
 <script>
     var uploadedExampleFileMap = {}
 Dropzone.options.exampleFileDropzone = {
+    chunking: true,
+    chunkSize: 50 * 1024 * 1024, // 50 MB per request
+    retryChunks: true,
+    retryChunksLimit: 3,
     url: '{{ route('admin.department-documents.storeMedia') }}',
     maxFilesize: 200, // MB
     addRemoveLinks: true,

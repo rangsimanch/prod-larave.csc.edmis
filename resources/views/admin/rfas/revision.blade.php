@@ -641,6 +641,10 @@
 <script>
     var uploadedFileUpload1Map = {}
 Dropzone.options.fileUpload1Dropzone = {
+    chunking: true,
+    chunkSize: 50 * 1024 * 1024, // 50 MB per request
+    retryChunks: true,
+    retryChunksLimit: 3,
     url: '{{ route('admin.rfas.storeMedia') }}',
     maxFilesize: 200, // MB
     addRemoveLinks: true,
@@ -697,6 +701,10 @@ Dropzone.options.fileUpload1Dropzone = {
 <script>
     var uploadedCommercialFileUploadMap = {}
 Dropzone.options.commercialFileUploadDropzone = {
+    chunking: true,
+    chunkSize: 50 * 1024 * 1024, // 50 MB per request
+    retryChunks: true,
+    retryChunksLimit: 3,
     url: '{{ route('admin.rfas.storeMedia') }}',
     maxFilesize: 500, // MB
     addRemoveLinks: true,
@@ -753,6 +761,10 @@ Dropzone.options.commercialFileUploadDropzone = {
 <script>
     var uploadedDocumentFileUploadMap = {}
 Dropzone.options.documentFileUploadDropzone = {
+    chunking: true,
+    chunkSize: 50 * 1024 * 1024, // 50 MB per request
+    retryChunks: true,
+    retryChunksLimit: 3,
     url: '{{ route('admin.rfas.storeMedia') }}',
     maxFilesize: 500, // MB
     addRemoveLinks: true,
@@ -811,6 +823,10 @@ Dropzone.options.documentFileUploadDropzone = {
 <script>
     var uploadedDocumentFileUploadMap = {}
 Dropzone.options.documentFileUploadDropzone = {
+    chunking: true,
+    chunkSize: 50 * 1024 * 1024, // 50 MB per request
+    retryChunks: true,
+    retryChunksLimit: 3,
     url: '{{ route('admin.rfas.storeMedia') }}',
     maxFilesize: 500, // MB
     addRemoveLinks: true,
@@ -1143,6 +1159,10 @@ Dropzone.options.documentFileUploadDropzone = {
 <script>
     var uploadedSubmittalsFileMap = {}
 Dropzone.options.submittalsFileDropzone = {
+    chunking: true,
+    chunkSize: 50 * 1024 * 1024, // 50 MB per request
+    retryChunks: true,
+    retryChunksLimit: 3,
     url: '{{ route('admin.rfas.storeMedia') }}',
     maxFilesize: 500, // MB
     addRemoveLinks: true,

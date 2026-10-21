@@ -152,6 +152,10 @@
 <script>
     var uploadedAttachmentsMap = {}
 Dropzone.options.attachmentsDropzone = {
+    chunking: true,
+    chunkSize: 50 * 1024 * 1024, // 50 MB per request
+    retryChunks: true,
+    retryChunksLimit: 3,
     url: '{{ route('admin.announcements.storeMedia') }}',
     maxFilesize: 500, // MB
     addRemoveLinks: true,

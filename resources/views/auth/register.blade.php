@@ -219,6 +219,10 @@
 @section('scripts')
 <script>
     Dropzone.options.imgUserDropzone = {
+        chunking: true,
+        chunkSize: 50 * 1024 * 1024, // 50 MB per request
+        retryChunks: true,
+        retryChunksLimit: 3,
     url: '{{ route('admin.users.storeMedia') }}',
     maxFilesize: 100, // MB
     acceptedFiles: '.jpeg,.jpg,.png,.gif',
@@ -273,6 +277,10 @@
 </script>
 <script>
     Dropzone.options.signatureDropzone = {
+        chunking: true,
+        chunkSize: 50 * 1024 * 1024, // 50 MB per request
+        retryChunks: true,
+        retryChunksLimit: 3,
     url: '{{ route('admin.users.storeMedia') }}',
     maxFilesize: 20, // MB
     acceptedFiles: '.jpeg,.jpg,.png,.gif',

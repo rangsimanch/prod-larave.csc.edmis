@@ -245,6 +245,10 @@
 <script>
     var uploadedFinalFileMap = {}
 Dropzone.options.finalFileDropzone = {
+    chunking: true,
+    chunkSize: 50 * 1024 * 1024, // 50 MB per request
+    retryChunks: true,
+    retryChunksLimit: 3,
     url: '{{ route('admin.close-out-mains.storeMedia') }}',
     maxFilesize: 5120, // MB (5GB)
     addRemoveLinks: true,

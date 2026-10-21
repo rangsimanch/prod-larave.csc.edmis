@@ -234,6 +234,10 @@
 <script>
     var uploadedLetterUploadMap = {}
 Dropzone.options.letterUploadDropzone = {
+    chunking: true,
+    chunkSize: 50 * 1024 * 1024, // 50 MB per request
+    retryChunks: true,
+    retryChunksLimit: 3,
     url: '{{ route('admin.add-letters.storeMedia') }}',
     maxFilesize: 5120, // MB
     addRemoveLinks: true,

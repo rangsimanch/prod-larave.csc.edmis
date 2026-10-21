@@ -71,6 +71,10 @@
 <script>
     var uploadedDocumentsMap = {}
 Dropzone.options.documentsDropzone = {
+    chunking: true,
+    chunkSize: 50 * 1024 * 1024, // 50 MB per request
+    retryChunks: true,
+    retryChunksLimit: 3,
     url: '{{ route('admin.daily-requests.storeMedia') }}',
     maxFilesize: 5120, // 5GB in MB
     addRemoveLinks: true,

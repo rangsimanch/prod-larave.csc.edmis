@@ -3,28 +3,31 @@
 namespace App\Http\Controllers\Traits;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+use Pion\Laravel\ChunkUpload\Handler\HandlerFactory;
+use Pion\Laravel\ChunkUpload\Receiver\FileReceiver;
 
 trait MediaUploadingTrait
 {
     public function storeMedia(Request $request)
     {
-// Validates file size
-        if (request()->has('size')) {
-            $this->validate(request(), [
-                'file' => 'max:' . request()->input('size') * 1024,
+        $receiver = new FileReceiver('file', $request, HandlerFactory::classFromRequest($request));
+
+        if ($receiver->isUploaded() === false) {
+            return response()->json(['error' => 'No file uploaded'], 422);
+        }
+
+        $save = $receiver->receive();
+
+        if (!$save->isFinished()) {
+            return response()->json([
+                'done' => $save->handler()->getPercentageDone(),
             ]);
         }
 
-// If width or height is preset - we are validating it as an image
-        if (request()->has('width') || request()->has('height')) {
-            $this->validate(request(), [
-                'file' => sprintf(
-                    'image|dimensions:max_width=%s,max_height=%s',
-                    request()->input('width', 100000),
-                    request()->input('height', 100000)
-                ),
-            ]);
-        }
+        $file = $save->getFile();
+
+        $this->validateMediaFile($request, $file);
 
         $path = storage_path('tmp/uploads');
 
@@ -35,8 +38,6 @@ trait MediaUploadingTrait
         } catch (\Exception $e) {
         }
 
-        $file = $request->file('file');
-
         $name = uniqid() . '_' . trim($file->getClientOriginalName());
 
         $file->move($path, $name);
@@ -45,5 +46,24 @@ trait MediaUploadingTrait
             'name'          => $name,
             'original_name' => $file->getClientOriginalName(),
         ]);
+    }
+
+    protected function validateMediaFile(Request $request, $file)
+    {
+        if ($request->has('size')) {
+            Validator::make(['file' => $file], [
+                'file' => 'max:' . $request->input('size') * 1024,
+            ])->validate();
+        }
+
+        if ($request->has('width') || $request->has('height')) {
+            Validator::make(['file' => $file], [
+                'file' => sprintf(
+                    'image|dimensions:max_width=%s,max_height=%s',
+                    $request->input('width', 100000),
+                    $request->input('height', 100000)
+                ),
+            ])->validate();
+        }
     }
 }

@@ -77,6 +77,10 @@
 <script>
     var uploadedFileUploadMap = {}
 Dropzone.options.fileUploadDropzone = {
+    chunking: true,
+    chunkSize: 50 * 1024 * 1024, // 50 MB per request
+    retryChunks: true,
+    retryChunksLimit: 3,
     url: '{{ route('admin.drone-vdo-recordeds.storeMedia') }}',
     maxFilesize: 5000, // MB
     addRemoveLinks: true,

@@ -151,6 +151,10 @@
 <script>
     var uploadedFileAttachmentCreateMap = {}
 Dropzone.options.fileAttachmentCreateDropzone = {
+    chunking: true,
+    chunkSize: 50 * 1024 * 1024, // 50 MB per request
+    retryChunks: true,
+    retryChunksLimit: 3,
     url: '{{ route('admin.complaints.storeMedia') }}',
     maxFilesize: 500, // MB
     addRemoveLinks: true,

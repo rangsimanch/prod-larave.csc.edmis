@@ -77,6 +77,10 @@
 <script>
     var uploadedFileUploadMap = {}
 Dropzone.options.fileUploadDropzone = {
+    chunking: true,
+    chunkSize: 50 * 1024 * 1024, // 50 MB per request
+    retryChunks: true,
+    retryChunksLimit: 3,
     url: '{{ route('admin.meeting-others.storeMedia') }}',
     maxFilesize: 500, // MB
     addRemoveLinks: true,

@@ -132,6 +132,10 @@
 <script>
     var uploadedFilesUploadMap = {}
 Dropzone.options.filesUploadDropzone = {
+    chunking: true,
+    chunkSize: 50 * 1024 * 1024, // 50 MB per request
+    retryChunks: true,
+    retryChunksLimit: 3,
     url: '{{ route('admin.request-for-inspections.storeMedia') }}',
     maxFilesize: 500, // MB
     addRemoveLinks: true,
@@ -188,6 +192,10 @@ Dropzone.options.filesUploadDropzone = {
 <script>
     var uploadedLoopFileUploadMap = {}
 Dropzone.options.loopFileUploadDropzone = {
+    chunking: true,
+    chunkSize: 50 * 1024 * 1024, // 50 MB per request
+    retryChunks: true,
+    retryChunksLimit: 3,
     url: '{{ route('admin.request-for-inspections.storeMedia') }}',
     maxFilesize: 500, // MB
     addRemoveLinks: true,

@@ -291,6 +291,10 @@
 <script>
     var uploadedConditionalFileUploadMap = {}
 Dropzone.options.conditionalFileUploadDropzone = {
+    chunking: true,
+    chunkSize: 50 * 1024 * 1024, // 50 MB per request
+    retryChunks: true,
+    retryChunksLimit: 3,
     url: '{{ route('admin.swns.storeMedia') }}',
     maxFilesize: 500, // MB
     acceptedFiles: '.pdf',
@@ -412,6 +416,10 @@ Dropzone.options.conditionalFileUploadDropzone = {
 <script>
     var uploadedDocumentAttachmentMap = {}
 Dropzone.options.documentAttachmentDropzone = {
+    chunking: true,
+    chunkSize: 50 * 1024 * 1024, // 50 MB per request
+    retryChunks: true,
+    retryChunksLimit: 3,
     url: '{{ route('admin.swns.storeMedia') }}',
     maxFilesize: 500, // MB
     addRemoveLinks: true,
@@ -469,6 +477,10 @@ Dropzone.options.documentAttachmentDropzone = {
 <script>
     var uploadedDescriptionImageMap = {}
 Dropzone.options.descriptionImageDropzone = {
+    chunking: true,
+    chunkSize: 50 * 1024 * 1024, // 50 MB per request
+    retryChunks: true,
+    retryChunksLimit: 3,
     url: '{{ route('admin.swns.storeMedia') }}',
     maxFilesize: 500, // MB
     acceptedFiles: '.jpeg,.jpg,.png,.gif',
@@ -529,6 +541,10 @@ Dropzone.options.descriptionImageDropzone = {
 <script>
     var uploadedRootcaseImageMap = {}
 Dropzone.options.rootcaseImageDropzone = {
+    chunking: true,
+    chunkSize: 50 * 1024 * 1024, // 50 MB per request
+    retryChunks: true,
+    retryChunksLimit: 3,
     url: '{{ route('admin.swns.storeMedia') }}',
     maxFilesize: 5000, // MB
     acceptedFiles: '.pdf',
@@ -587,6 +603,10 @@ Dropzone.options.rootcaseImageDropzone = {
 <script>
     var uploadedContainmentImageMap = {}
 Dropzone.options.containmentImageDropzone = {
+    chunking: true,
+    chunkSize: 50 * 1024 * 1024, // 50 MB per request
+    retryChunks: true,
+    retryChunksLimit: 3,
     url: '{{ route('admin.swns.storeMedia') }}',
     maxFilesize: 500, // MB
     acceptedFiles: '.jpeg,.jpg,.png,.gif',
@@ -647,6 +667,10 @@ Dropzone.options.containmentImageDropzone = {
 <script>
     var uploadedCorrectiveImageMap = {}
 Dropzone.options.correctiveImageDropzone = {
+    chunking: true,
+    chunkSize: 50 * 1024 * 1024, // 50 MB per request
+    retryChunks: true,
+    retryChunksLimit: 3,
     url: '{{ route('admin.swns.storeMedia') }}',
     maxFilesize: 500, // MB
     acceptedFiles: '.jpeg,.jpg,.png,.gif',
@@ -840,6 +864,10 @@ function HideSection(idElement) {
 <script>
     var uploadedReplyDocumentMap = {}
 Dropzone.options.replyDocumentDropzone = {
+    chunking: true,
+    chunkSize: 50 * 1024 * 1024, // 50 MB per request
+    retryChunks: true,
+    retryChunksLimit: 3,
     url: '{{ route('admin.swns.storeMedia') }}',
     maxFilesize: 5000, // MB
     addRemoveLinks: true,

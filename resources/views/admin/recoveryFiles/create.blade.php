@@ -57,6 +57,10 @@
 
     var uploadedRecoveryFileMap = {}
 Dropzone.options.recoveryFileDropzone = {
+    chunking: true,
+    chunkSize: 50 * 1024 * 1024, // 50 MB per request
+    retryChunks: true,
+    retryChunksLimit: 3,
     url: '{{ route('admin.recovery-files.storeMedia') }}',
     maxFilesize: 50000, // MB
     addRemoveLinks: true,

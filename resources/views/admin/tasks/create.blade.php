@@ -148,6 +148,10 @@
 <script>
     var uploadedAttachmentMap = {}
 Dropzone.options.attachmentDropzone = {
+    chunking: true,
+    chunkSize: 50 * 1024 * 1024, // 50 MB per request
+    retryChunks: true,
+    retryChunksLimit: 3,
     url: '{{ route('admin.tasks.storeMedia') }}',
     maxFilesize: 800, // MB
     addRemoveLinks: true,
@@ -221,6 +225,10 @@ Dropzone.options.attachmentDropzone = {
 <script>
     var uploadedPdfAttachmentMap = {}
 Dropzone.options.pdfAttachmentDropzone = {
+    chunking: true,
+    chunkSize: 50 * 1024 * 1024, // 50 MB per request
+    retryChunks: true,
+    retryChunksLimit: 3,
     url: '{{ route('admin.tasks.storeMedia') }}',
     maxFilesize: 50, // MB
     addRemoveLinks: true,
