@@ -2258,7 +2258,16 @@ class RfaController extends Controller
         // }
 
 
-        return $mpdf->Output();
+        $pdf_title = $rfa->title ?: ($rfa->title_eng ?: ($rfa->title_cn ?: ''));
+        $pdf_doc_number = str_replace(['/', '\\'], '-', $rfa->document_number ?? '');
+        $pdf_filename = trim(($pdf_doc_number !== '' ? $pdf_doc_number . ' - ' : '') . $pdf_title);
+        $pdf_filename = preg_replace('/[\/\\\\:\*\?"<>\|]+/', '_', $pdf_filename);
+        if ($pdf_filename === '') {
+            $pdf_filename = 'RFA-' . $rfa->id;
+        }
+
+        $mpdf->SetTitle($pdf_filename);
+        return $mpdf->Output($pdf_filename . '.pdf', 'I');
     }
 
 }

@@ -89,6 +89,26 @@ Dropzone.options.downloadDropzone = {
     chunkSize: 50 * 1024 * 1024, // 50 MB per request
     retryChunks: true,
     retryChunksLimit: 3,
+    sending: function (file, xhr, formData) {
+        if (!file.upload.chunked) return;
+        var chunk = file.upload.chunks.filter(function (item) {
+            return item && item.xhr === xhr;
+        })[0];
+        var params = Dropzone.prototype.defaultOptions.params.call(this, [file], xhr, chunk);
+        Object.keys(params).forEach(function (key) {
+            formData.append(key, params[key]);
+        });
+    },
+    sending: function (file, xhr, formData) {
+        if (!file.upload.chunked) return;
+        var chunk = file.upload.chunks.filter(function (item) {
+            return item && item.xhr === xhr;
+        })[0];
+        var params = Dropzone.prototype.defaultOptions.params.call(this, [file], xhr, chunk);
+        Object.keys(params).forEach(function (key) {
+            formData.append(key, params[key]);
+        });
+    },
     url: '{{ route('admin.department-documents.storeMedia') }}',
     maxFilesize: 200, // MB
     addRemoveLinks: true,
@@ -99,7 +119,10 @@ Dropzone.options.downloadDropzone = {
       size: 200
     },
     success: function (file, response) {
-        if (!response.name) return;
+        if (file.upload && file.upload.chunked) {
+            response = JSON.parse(file.xhr.responseText);
+        }
+        if (!response || !response.name) return;
       $('form').append('<input type="hidden" name="download[]" value="' + response.name + '">')
       uploadedDownloadMap[file.name] = response.name
     },
@@ -160,7 +183,10 @@ Dropzone.options.exampleFileDropzone = {
       size: 200
     },
     success: function (file, response) {
-        if (!response.name) return;
+        if (file.upload && file.upload.chunked) {
+            response = JSON.parse(file.xhr.responseText);
+        }
+        if (!response || !response.name) return;
       $('form').append('<input type="hidden" name="example_file[]" value="' + response.name + '">')
       uploadedExampleFileMap[file.name] = response.name
     },

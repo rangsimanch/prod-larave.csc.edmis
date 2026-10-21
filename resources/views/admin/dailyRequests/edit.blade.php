@@ -76,6 +76,16 @@ Dropzone.options.documentsDropzone = {
     chunkSize: 50 * 1024 * 1024, // 50 MB per request
     retryChunks: true,
     retryChunksLimit: 3,
+    sending: function (file, xhr, formData) {
+        if (!file.upload.chunked) return;
+        var chunk = file.upload.chunks.filter(function (item) {
+            return item && item.xhr === xhr;
+        })[0];
+        var params = Dropzone.prototype.defaultOptions.params.call(this, [file], xhr, chunk);
+        Object.keys(params).forEach(function (key) {
+            formData.append(key, params[key]);
+        });
+    },
     url: '{{ route('admin.daily-requests.storeMedia') }}',
     maxFilesize: 5120, // MB
     addRemoveLinks: true,
@@ -86,7 +96,10 @@ Dropzone.options.documentsDropzone = {
       size: 5120
     },
     success: function (file, response) {
-        if (!response.name) return;
+        if (file.upload && file.upload.chunked) {
+            response = JSON.parse(file.xhr.responseText);
+        }
+        if (!response || !response.name) return;
       $('form').append('<input type="hidden" name="documents[]" value="' + response.name + '">')
       uploadedDocumentsMap[file.name] = response.name
     },

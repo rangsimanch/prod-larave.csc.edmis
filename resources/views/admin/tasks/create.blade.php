@@ -152,6 +152,26 @@ Dropzone.options.attachmentDropzone = {
     chunkSize: 50 * 1024 * 1024, // 50 MB per request
     retryChunks: true,
     retryChunksLimit: 3,
+    sending: function (file, xhr, formData) {
+        if (!file.upload.chunked) return;
+        var chunk = file.upload.chunks.filter(function (item) {
+            return item && item.xhr === xhr;
+        })[0];
+        var params = Dropzone.prototype.defaultOptions.params.call(this, [file], xhr, chunk);
+        Object.keys(params).forEach(function (key) {
+            formData.append(key, params[key]);
+        });
+    },
+    sending: function (file, xhr, formData) {
+        if (!file.upload.chunked) return;
+        var chunk = file.upload.chunks.filter(function (item) {
+            return item && item.xhr === xhr;
+        })[0];
+        var params = Dropzone.prototype.defaultOptions.params.call(this, [file], xhr, chunk);
+        Object.keys(params).forEach(function (key) {
+            formData.append(key, params[key]);
+        });
+    },
     url: '{{ route('admin.tasks.storeMedia') }}',
     maxFilesize: 800, // MB
     addRemoveLinks: true,
@@ -163,7 +183,10 @@ Dropzone.options.attachmentDropzone = {
       size: 800
     },
     success: function (file, response) {
-        if (!response.name) return;
+        if (file.upload && file.upload.chunked) {
+            response = JSON.parse(file.xhr.responseText);
+        }
+        if (!response || !response.name) return;
       $('form').append('<input type="hidden" name="attachment[]" value="' + response.name + '">')
       uploadedAttachmentMap[file.name] = response.name
     },
@@ -241,7 +264,10 @@ Dropzone.options.pdfAttachmentDropzone = {
       size: 10
     },
     success: function (file, response) {
-        if (!response.name) return;
+        if (file.upload && file.upload.chunked) {
+            response = JSON.parse(file.xhr.responseText);
+        }
+        if (!response || !response.name) return;
       $('form').append('<input type="hidden" name="pdf_attachment[]" value="' + response.name + '">')
       uploadedPdfAttachmentMap[file.name] = response.name
     },

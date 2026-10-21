@@ -295,6 +295,76 @@ Dropzone.options.conditionalFileUploadDropzone = {
     chunkSize: 50 * 1024 * 1024, // 50 MB per request
     retryChunks: true,
     retryChunksLimit: 3,
+    sending: function (file, xhr, formData) {
+        if (!file.upload.chunked) return;
+        var chunk = file.upload.chunks.filter(function (item) {
+            return item && item.xhr === xhr;
+        })[0];
+        var params = Dropzone.prototype.defaultOptions.params.call(this, [file], xhr, chunk);
+        Object.keys(params).forEach(function (key) {
+            formData.append(key, params[key]);
+        });
+    },
+    sending: function (file, xhr, formData) {
+        if (!file.upload.chunked) return;
+        var chunk = file.upload.chunks.filter(function (item) {
+            return item && item.xhr === xhr;
+        })[0];
+        var params = Dropzone.prototype.defaultOptions.params.call(this, [file], xhr, chunk);
+        Object.keys(params).forEach(function (key) {
+            formData.append(key, params[key]);
+        });
+    },
+    sending: function (file, xhr, formData) {
+        if (!file.upload.chunked) return;
+        var chunk = file.upload.chunks.filter(function (item) {
+            return item && item.xhr === xhr;
+        })[0];
+        var params = Dropzone.prototype.defaultOptions.params.call(this, [file], xhr, chunk);
+        Object.keys(params).forEach(function (key) {
+            formData.append(key, params[key]);
+        });
+    },
+    sending: function (file, xhr, formData) {
+        if (!file.upload.chunked) return;
+        var chunk = file.upload.chunks.filter(function (item) {
+            return item && item.xhr === xhr;
+        })[0];
+        var params = Dropzone.prototype.defaultOptions.params.call(this, [file], xhr, chunk);
+        Object.keys(params).forEach(function (key) {
+            formData.append(key, params[key]);
+        });
+    },
+    sending: function (file, xhr, formData) {
+        if (!file.upload.chunked) return;
+        var chunk = file.upload.chunks.filter(function (item) {
+            return item && item.xhr === xhr;
+        })[0];
+        var params = Dropzone.prototype.defaultOptions.params.call(this, [file], xhr, chunk);
+        Object.keys(params).forEach(function (key) {
+            formData.append(key, params[key]);
+        });
+    },
+    sending: function (file, xhr, formData) {
+        if (!file.upload.chunked) return;
+        var chunk = file.upload.chunks.filter(function (item) {
+            return item && item.xhr === xhr;
+        })[0];
+        var params = Dropzone.prototype.defaultOptions.params.call(this, [file], xhr, chunk);
+        Object.keys(params).forEach(function (key) {
+            formData.append(key, params[key]);
+        });
+    },
+    sending: function (file, xhr, formData) {
+        if (!file.upload.chunked) return;
+        var chunk = file.upload.chunks.filter(function (item) {
+            return item && item.xhr === xhr;
+        })[0];
+        var params = Dropzone.prototype.defaultOptions.params.call(this, [file], xhr, chunk);
+        Object.keys(params).forEach(function (key) {
+            formData.append(key, params[key]);
+        });
+    },
     url: '{{ route('admin.swns.storeMedia') }}',
     maxFilesize: 500, // MB
     acceptedFiles: '.pdf',
@@ -306,7 +376,10 @@ Dropzone.options.conditionalFileUploadDropzone = {
       size: 500
     },
     success: function (file, response) {
-        if (!response.name) return;
+        if (file.upload && file.upload.chunked) {
+            response = JSON.parse(file.xhr.responseText);
+        }
+        if (!response || !response.name) return;
       $('form').append('<input type="hidden" name="conditional_file_upload[]" value="' + response.name + '">')
       uploadedConditionalFileUploadMap[file.name] = response.name
     },
@@ -432,7 +505,10 @@ Dropzone.options.documentAttachmentDropzone = {
       size: 500
     },
     success: function (file, response) {
-        if (!response.name) return;
+        if (file.upload && file.upload.chunked) {
+            response = JSON.parse(file.xhr.responseText);
+        }
+        if (!response || !response.name) return;
       $('form').append('<input type="hidden" name="document_attachment[]" value="' + response.name + '">')
       uploadedDocumentAttachmentMap[file.name] = response.name
     },
@@ -496,7 +572,10 @@ Dropzone.options.descriptionImageDropzone = {
       height: 8192
     },
     success: function (file, response) {
-        if (!response.name) return;
+        if (file.upload && file.upload.chunked) {
+            response = JSON.parse(file.xhr.responseText);
+        }
+        if (!response || !response.name) return;
       $('form').append('<input type="hidden" name="description_image[]" value="' + response.name + '">')
       uploadedDescriptionImageMap[file.name] = response.name
     },
@@ -559,7 +638,10 @@ Dropzone.options.rootcaseImageDropzone = {
       size: 500
     },
     success: function (file, response) {
-        if (!response.name) return;
+        if (file.upload && file.upload.chunked) {
+            response = JSON.parse(file.xhr.responseText);
+        }
+        if (!response || !response.name) return;
       $('form').append('<input type="hidden" name="rootcase_image[]" value="' + response.name + '">')
       uploadedRootcaseImageMap[file.name] = response.name
     },
@@ -624,7 +706,10 @@ Dropzone.options.containmentImageDropzone = {
       height: 4096
     },
     success: function (file, response) {
-        if (!response.name) return;
+        if (file.upload && file.upload.chunked) {
+            response = JSON.parse(file.xhr.responseText);
+        }
+        if (!response || !response.name) return;
       $('form').append('<input type="hidden" name="containment_image[]" value="' + response.name + '">')
       uploadedContainmentImageMap[file.name] = response.name
     },
@@ -689,7 +774,10 @@ Dropzone.options.correctiveImageDropzone = {
       height: 4096
     },
     success: function (file, response) {
-        if (!response.name) return;
+        if (file.upload && file.upload.chunked) {
+            response = JSON.parse(file.xhr.responseText);
+        }
+        if (!response || !response.name) return;
       $('form').append('<input type="hidden" name="corrective_image[]" value="' + response.name + '">')
       uploadedCorrectiveImageMap[file.name] = response.name
     },
@@ -884,7 +972,10 @@ Dropzone.options.replyDocumentDropzone = {
       size: 5000
     },
     success: function (file, response) {
-        if (!response.name) return;
+        if (file.upload && file.upload.chunked) {
+            response = JSON.parse(file.xhr.responseText);
+        }
+        if (!response || !response.name) return;
       $('form').append('<input type="hidden" name="reply_document[]" value="' + response.name + '">')
       uploadedReplyDocumentMap[file.name] = response.name
     },
