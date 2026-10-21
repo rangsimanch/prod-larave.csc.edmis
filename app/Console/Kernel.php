@@ -24,8 +24,14 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')
-        //          ->hourly();
+        // Remove orphaned temporary uploads older than 24 hours
+        $schedule->call(function () {
+            foreach (glob(storage_path('tmp/uploads/*')) ?: [] as $file) {
+                if (is_file($file) && filemtime($file) < now()->subDay()->getTimestamp()) {
+                    @unlink($file);
+                }
+            }
+        })->daily();
     }
 
     /**
