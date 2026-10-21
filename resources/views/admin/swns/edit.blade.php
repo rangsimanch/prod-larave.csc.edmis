@@ -306,6 +306,7 @@ Dropzone.options.conditionalFileUploadDropzone = {
       size: 500
     },
     success: function (file, response) {
+        if (!response.name) return;
       $('form').append('<input type="hidden" name="conditional_file_upload[]" value="' + response.name + '">')
       uploadedConditionalFileUploadMap[file.name] = response.name
     },
@@ -431,6 +432,7 @@ Dropzone.options.documentAttachmentDropzone = {
       size: 500
     },
     success: function (file, response) {
+        if (!response.name) return;
       $('form').append('<input type="hidden" name="document_attachment[]" value="' + response.name + '">')
       uploadedDocumentAttachmentMap[file.name] = response.name
     },
@@ -494,6 +496,7 @@ Dropzone.options.descriptionImageDropzone = {
       height: 8192
     },
     success: function (file, response) {
+        if (!response.name) return;
       $('form').append('<input type="hidden" name="description_image[]" value="' + response.name + '">')
       uploadedDescriptionImageMap[file.name] = response.name
     },
@@ -556,6 +559,7 @@ Dropzone.options.rootcaseImageDropzone = {
       size: 500
     },
     success: function (file, response) {
+        if (!response.name) return;
       $('form').append('<input type="hidden" name="rootcase_image[]" value="' + response.name + '">')
       uploadedRootcaseImageMap[file.name] = response.name
     },
@@ -620,6 +624,7 @@ Dropzone.options.containmentImageDropzone = {
       height: 4096
     },
     success: function (file, response) {
+        if (!response.name) return;
       $('form').append('<input type="hidden" name="containment_image[]" value="' + response.name + '">')
       uploadedContainmentImageMap[file.name] = response.name
     },
@@ -684,6 +689,7 @@ Dropzone.options.correctiveImageDropzone = {
       height: 4096
     },
     success: function (file, response) {
+        if (!response.name) return;
       $('form').append('<input type="hidden" name="corrective_image[]" value="' + response.name + '">')
       uploadedCorrectiveImageMap[file.name] = response.name
     },
@@ -878,6 +884,7 @@ Dropzone.options.replyDocumentDropzone = {
       size: 5000
     },
     success: function (file, response) {
+        if (!response.name) return;
       $('form').append('<input type="hidden" name="reply_document[]" value="' + response.name + '">')
       uploadedReplyDocumentMap[file.name] = response.name
     },

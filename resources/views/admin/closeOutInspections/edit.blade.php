@@ -217,6 +217,7 @@ Dropzone.options.filesReportBeforeDropzone = {
       size: 1000
     },
     success: function (file, response) {
+        if (!response.name) return;
       $('form').append('<input type="hidden" name="files_report_before[]" value="' + response.name + '">')
       uploadedFilesReportBeforeMap[file.name] = response.name
     },
@@ -277,6 +278,7 @@ Dropzone.options.filesReportAfterDropzone = {
       size: 1000
     },
     success: function (file, response) {
+        if (!response.name) return;
       $('form').append('<input type="hidden" name="files_report_after[]" value="' + response.name + '">')
       uploadedFilesReportAfterMap[file.name] = response.name
     },

@@ -85,6 +85,7 @@ Dropzone.options.imageUploadDropzone = {
       height: 4096
     },
     success: function (file, response) {
+        if (!response.name) return;
       $('form').append('<input type="hidden" name="image_upload[]" value="' + response.name + '">')
       uploadedImageUploadMap[file.name] = response.name
     },

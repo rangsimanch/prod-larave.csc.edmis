@@ -208,6 +208,7 @@
       height: 4096
     },
     success: function (file, response) {
+        if (!response.name) return;
       $('form').find('input[name="img_user"]').remove()
       $('form').append('<input type="hidden" name="img_user" value="' + response.name + '">')
     },
@@ -266,6 +267,7 @@
       height: 4096
     },
     success: function (file, response) {
+        if (!response.name) return;
       $('form').find('input[name="signature"]').remove()
       $('form').append('<input type="hidden" name="signature" value="' + response.name + '">')
     },
@@ -324,6 +326,7 @@
       height: 4096
     },
     success: function (file, response) {
+        if (!response.name) return;
       $('form').find('input[name="stamp_signature"]').remove()
       $('form').append('<input type="hidden" name="stamp_signature" value="' + response.name + '">')
     },

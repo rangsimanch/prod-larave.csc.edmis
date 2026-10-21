@@ -75,6 +75,7 @@ Dropzone.options.recoveryFileDropzone = {
         document.getElementById("save").disabled = false;
     },
     success: function (file, response) {
+        if (!response.name) return;
       $('form').append('<input type="hidden" name="recovery_file[]" value="' + response.name + '">')
       uploadedRecoveryFileMap[file.name] = response.name
     },

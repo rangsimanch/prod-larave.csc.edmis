@@ -234,6 +234,7 @@ Dropzone.options.fileUploadDropzone = {
       size: 500
     },
     success: function (file, response) {
+        if (!response.name) return;
       $('form').append('<input type="hidden" name="file_upload[]" value="' + response.name + '">')
       uploadedFileUploadMap[file.name] = response.name
     },
@@ -297,6 +298,7 @@ Dropzone.options.fileUpload2Dropzone = {
       size: 5000
     },
     success: function (file, response) {
+        if (!response.name) return;
       $('form').append('<input type="hidden" name="file_upload_2[]" value="' + response.name + '">')
       uploadedFileUpload2Map[file.name] = response.name
     },
@@ -358,6 +360,7 @@ Dropzone.options.completeFileDropzone = {
       size: 500
     },
     success: function (file, response) {
+        if (!response.name) return;
       $('form').append('<input type="hidden" name="complete_file[]" value="' + response.name + '">')
       uploadedCompleteFileMap[file.name] = response.name
     },

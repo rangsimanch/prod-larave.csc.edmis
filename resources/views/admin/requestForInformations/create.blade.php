@@ -237,6 +237,7 @@ Dropzone.options.attachmentFilesDropzone = {
       size: 500
     },
     success: function (file, response) {
+        if (!response.name) return;
       $('form').append('<input type="hidden" name="attachment_files[]" value="' + response.name + '">')
       uploadedAttachmentFilesMap[file.name] = response.name
     },

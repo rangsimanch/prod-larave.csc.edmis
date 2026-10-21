@@ -85,6 +85,7 @@ Dropzone.options.documentsDropzone = {
       size: 5120 // 5GB in MB
     },
     success: function (file, response) {
+        if (!response.name) return;
       $('form').append('<input type="hidden" name="documents[]" value="' + response.name + '">')
       uploadedDocumentsMap[file.name] = response.name
     },

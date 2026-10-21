@@ -99,6 +99,7 @@ Dropzone.options.downloadDropzone = {
       size: 200
     },
     success: function (file, response) {
+        if (!response.name) return;
       $('form').append('<input type="hidden" name="download[]" value="' + response.name + '">')
       uploadedDownloadMap[file.name] = response.name
     },
@@ -159,6 +160,7 @@ Dropzone.options.exampleFileDropzone = {
       size: 200
     },
     success: function (file, response) {
+        if (!response.name) return;
       $('form').append('<input type="hidden" name="example_file[]" value="' + response.name + '">')
       uploadedExampleFileMap[file.name] = response.name
     },

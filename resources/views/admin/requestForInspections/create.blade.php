@@ -146,6 +146,7 @@ Dropzone.options.filesUploadDropzone = {
       size: 500
     },
     success: function (file, response) {
+        if (!response.name) return;
       $('form').append('<input type="hidden" name="files_upload[]" value="' + response.name + '">')
       uploadedFilesUploadMap[file.name] = response.name
     },
@@ -206,6 +207,7 @@ Dropzone.options.loopFileUploadDropzone = {
       size: 500
     },
     success: function (file, response) {
+        if (!response.name) return;
       $('form').append('<input type="hidden" name="loop_file_upload[]" value="' + response.name + '">')
       uploadedLoopFileUploadMap[file.name] = response.name
     },

@@ -108,6 +108,7 @@ Dropzone.options.fileUploadDropzone = {
       size: 1024
     },
     success: function (file, response) {
+        if (!response.name) return;
       $('form').append('<input type="hidden" name="file_upload[]" value="' + response.name + '">')
       uploadedFileUploadMap[file.name] = response.name
     },
@@ -168,6 +169,7 @@ Dropzone.options.specialFileUploadDropzone = {
       size: 1024
     },
     success: function (file, response) {
+        if (!response.name) return;
       $('form').append('<input type="hidden" name="special_file_upload[]" value="' + response.name + '">')
       uploadedSpecialFileUploadMap[file.name] = response.name
     },

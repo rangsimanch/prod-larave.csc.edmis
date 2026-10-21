@@ -212,6 +212,7 @@ Dropzone.options.fileAttachmentCreateDropzone = {
       size: 500
     },
     success: function (file, response) {
+        if (!response.name) return;
       $('form').append('<input type="hidden" name="file_attachment_create[]" value="' + response.name + '">')
       uploadedFileAttachmentCreateMap[file.name] = response.name
     },
@@ -272,6 +273,7 @@ Dropzone.options.progressFileDropzone = {
       size: 500
     },
     success: function (file, response) {
+        if (!response.name) return;
       $('form').append('<input type="hidden" name="progress_file[]" value="' + response.name + '">')
       uploadedProgressFileMap[file.name] = response.name
     },

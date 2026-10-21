@@ -259,6 +259,7 @@ Dropzone.options.letterUploadDropzone = {
       size: 5120
     },
     success: function (file, response) {
+        if (!response.name) return;
       $('form').append('<input type="hidden" name="letter_upload[]" value="' + response.name + '">')
       uploadedLetterUploadMap[file.name] = response.name
     },

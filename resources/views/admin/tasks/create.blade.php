@@ -163,6 +163,7 @@ Dropzone.options.attachmentDropzone = {
       size: 800
     },
     success: function (file, response) {
+        if (!response.name) return;
       $('form').append('<input type="hidden" name="attachment[]" value="' + response.name + '">')
       uploadedAttachmentMap[file.name] = response.name
     },
@@ -240,6 +241,7 @@ Dropzone.options.pdfAttachmentDropzone = {
       size: 10
     },
     success: function (file, response) {
+        if (!response.name) return;
       $('form').append('<input type="hidden" name="pdf_attachment[]" value="' + response.name + '">')
       uploadedPdfAttachmentMap[file.name] = response.name
     },
