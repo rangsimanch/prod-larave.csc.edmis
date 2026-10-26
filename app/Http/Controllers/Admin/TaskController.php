@@ -145,11 +145,11 @@ class TaskController extends Controller
     public function createReport(){
 
         if(auth()->user()->roles->contains(28) || auth()->user()->roles->contains(1) ){
-            $create_by_users = User::all()->where('team_id','3')->pluck('name','id')->prepend(trans('global.pleaseSelect'), '');
-            $contracts = ConstructionContract::all()->where('id','!=',15)->pluck('code', 'id')->prepend(trans('global.pleaseSelect'), '');
+            $create_by_users = User::where('team_id','3')->pluck('name','id')->prepend(trans('global.pleaseSelect'), '');
+            $contracts = ConstructionContract::where('id','!=',15)->pluck('code', 'id')->prepend(trans('global.pleaseSelect'), '');
         }
         else{
-            $create_by_users = User::all()->where('id',auth()->id())->pluck('name','id')->prepend(trans('global.pleaseSelect'), '');
+            $create_by_users = User::where('id',auth()->id())->pluck('name','id')->prepend(trans('global.pleaseSelect'), '');
             $contracts = ConstructionContract::where('id',session('construction_contract_id'))->pluck('code', 'id')->prepend(trans('global.pleaseSelect'), '');
         }
         return view('admin.tasks.createReport', compact('create_by_users', 'contracts'));
@@ -170,14 +170,14 @@ class TaskController extends Controller
         // ->where('create_by_user_id',$data['create_by_user_id'])->sortBy('due_date');
 
         if($data['contracts'] != -1){
-            $tasks = Task::with(['tags', 'status', 'create_by_user', 'construction_contract', 'team'])
+            $tasks = Task::with(['tags', 'status', 'create_by_user.media', 'construction_contract', 'team', 'media'])
             ->whereBetween('due_date',[$StartDate, $EndDate])
             ->where([ ['create_by_user_id',$data['create_by_user_id']],
                     ['construction_contract_id', $data['contracts']]
                     ])->orderBy('due_date')->get();
         }
         else{
-            $tasks = Task::with(['tags', 'status', 'create_by_user', 'construction_contract', 'team'])
+            $tasks = Task::with(['tags', 'status', 'create_by_user.media', 'construction_contract', 'team', 'media'])
             ->whereBetween('due_date',[$StartDate, $EndDate])
             ->where('create_by_user_id',$data['create_by_user_id'])->orderBy('due_date')->get();
         }
@@ -195,7 +195,7 @@ class TaskController extends Controller
             $date = \DateTime::createFromFormat('d/m/Y', $data['startDate']);
             //DATA PAGE
             $reportType = $data['reportType'];
-            $create_by = User::all()->where('id',$data['create_by_user_id'])->first();
+            $create_by = User::with(['jobtitle', 'team', 'media'])->find($data['create_by_user_id']);
             $gender = '';
 
             if($create_by->gender == 'Male'){
@@ -455,6 +455,14 @@ class TaskController extends Controller
             $page_size = $mpdf->getTemplateSize($import_page);
             $mpdf->SetDocTemplate('');
 
+            $signatureCache = [];
+            if($activityLang === 'thai'){
+                $contractLabel = "สัญญาก่อสร้าง";
+            }
+            else {
+                $contractLabel = "Construction Contract";
+            }
+
             foreach($tasks as $task){
 
                 $hasPreviousAttachment = count($task->pdf_attachment) > 0 || $count_prev_att > 0;
@@ -479,7 +487,6 @@ class TaskController extends Controller
 
 
                 $description = str_replace("：", ":", $task->description ?? '');
-                $description_set = str_split($description, 1500);
 
                 $wind = $task->wind ?? '';
                 if($wind == ''){
@@ -524,18 +531,14 @@ class TaskController extends Controller
                     $weatherThai = $weatherMap[$weather] ?? $weather;
                 }
 
-                if(!is_null($task->create_by_user->signature)){
-                    $url =  url($task->create_by_user->signature->getUrl());
-                    $handle = curl_init($url);
-                    curl_setopt($handle,  CURLOPT_RETURNTRANSFER, TRUE);
-                    $response = curl_exec($handle);
-                    $httpCode = curl_getinfo($handle, CURLINFO_HTTP_CODE);
-                    curl_close($handle);
-
-                    if($httpCode != 404){
-                        $signature_html = "<img width=\"120\" src=\"" . $task->create_by_user->signature->getPath() . "\">";
-                    }
+                $signatureUserId = $task->create_by_user_id;
+                if(!array_key_exists($signatureUserId, $signatureCache)){
+                    $signature = $task->create_by_user->signature;
+                    $signatureCache[$signatureUserId] = ($signature && file_exists($signature->getPath()))
+                        ? "<img width=\"120\" src=\"" . $signature->getPath() . "\">"
+                        : '';
                 }
+                $signature_html = $signatureCache[$signatureUserId];
 
                 // Build header (date/weather) in language-specific text, same layout as Thai
                 if($activityLang === 'thai'){
@@ -566,28 +569,26 @@ class TaskController extends Controller
 
                 try{
                     $allowed = array('gif', 'png', 'jpg', 'jpeg', 'JPG', 'JPEG');
+                    $attachments = $task->attachment;
 
-                    if(count($task['attachment']) > 0){
+                    if(count($attachments) > 0){
                         $max_images = 10;
 
                         // Step 1: Collect valid images (skip broken ones via try/catch on Image::make)
                         // No cURL check needed - Image::make throws on corrupt files, which is faster
                         $valid_images = [];
-                        $index = 0;
-                        foreach($task['attachment'] as $picture){
+                        foreach($attachments as $media){
                             if(count($valid_images) >= $max_images) break;
 
-                            $ext = pathinfo(public_path($task->attachment[$index]->getUrl()), PATHINFO_EXTENSION);
+                            $ext = pathinfo($media->file_name, PATHINFO_EXTENSION);
                             if(!in_array($ext, $allowed)){
-                                $index++;
                                 continue;
                             }
 
                             try{
-                                $url_path = $task->attachment[$index]->getPath();
+                                $url_path = $media->getPath();
                                 // Check file exists and readable before processing
                                 if(!file_exists($url_path) || !is_readable($url_path)){
-                                    $index++;
                                     continue;
                                 }
                                 $img = (string) Image::make($url_path)
@@ -601,8 +602,6 @@ class TaskController extends Controller
                                 // Skip broken/corrupt images (NotReadableException, etc.)
                                 // Report still generates without them
                             }
-
-                            $index++;
                         }
 
                         // Step 2: Auto-layout based on valid image count (1-10)
@@ -659,12 +658,6 @@ class TaskController extends Controller
                 // Clean up unused placeholders (no valid images case)
                 $html = str_replace('<!--IMAGES_PLACEHOLDER-->', '', $html);
 
-                if($activityLang === 'thai'){
-                    $contractLabel = "สัญญาก่อสร้าง";
-                }
-                else {
-                    $contractLabel = "Construction Contract";
-                }
                 $footer = "<table style=\"width:100%;\"><tr>";
                 $footer .= "<td style=\"font-size: 16pt; word-break: break-all; word-wrap: break-word; vertical-align: bottom; width: 50%;\">" . $contractLabel . " : " . $contractNo . "</td>";
                 $footer .= "<td style=\"text-align: right; vertical-align: bottom;\">";
@@ -686,14 +679,9 @@ class TaskController extends Controller
                 foreach($task->pdf_attachment as $pdf){
                     try{
                         $count_prev_att += 1;
-                        $url =  url($pdf->getUrl());
-                        $handle = curl_init($url);
-                        curl_setopt($handle,  CURLOPT_RETURNTRANSFER, TRUE);
-                        $response = curl_exec($handle);
-                        $httpCode = curl_getinfo($handle, CURLINFO_HTTP_CODE);
-                        curl_close($handle);
-                        if($httpCode != 404){
-                            $pagecount = $mpdf->SetSourceFile($pdf->getPath());
+                        $pdfPath = $pdf->getPath();
+                        if(file_exists($pdfPath)){
+                            $pagecount = $mpdf->SetSourceFile($pdfPath);
                             for($page = 1; $page <= $pagecount; $page++){
                                 $tplId = $mpdf->importPage($page);
                                 $size = $mpdf->getTemplateSize($tplId);
@@ -707,7 +695,7 @@ class TaskController extends Controller
                                 $mpdf->UseTemplate($tplId, 0, 0, $size['width'], $size['height'], true);
                             }
                         }
-                    }catch(exeption $e){
+                    }catch(\Throwable $e){
                         print "Creating an mPDF object failed with" . $e->getMessage();
                     }
 
