@@ -1582,6 +1582,10 @@ class RfaController extends Controller
             $pagecount = $mpdf->SetSourceFile(public_path('pdf-asset/RFA-Form_empty_V.9.5.pdf'));
             $tplId = $mpdf->ImportPage($pagecount);
             $mpdf->UseTemplate($tplId);
+            if($rfa->created_at >= '2026-10-01'){
+                $signature_path = '';
+                $signature_path_2 = '';
+            }
              //Header
             $html = "<div style=\"font-size: 13px; font-weight: bold; position:absolute;top:65px;left:310px;\">" . $contract_name . "</div>";
                 //Logo
@@ -1819,6 +1823,11 @@ class RfaController extends Controller
             $pagecount = $mpdf->SetSourceFile(public_path('pdf-asset/RFA_newform_28-06-2026.pdf'));
             $tplId = $mpdf->ImportPage($pagecount);
             $mpdf->UseTemplate($tplId);
+
+            if($rfa->created_at >= '2026-10-01'){
+                $signature_path = '';
+                $signature_path_2 = '';
+            }
              //Header
             $contract_name_length = strlen($contract_name);
             if($contract_name_length < 250) {
@@ -1890,7 +1899,6 @@ class RfaController extends Controller
             }
             $html .= "<div style=\"font-size:". $font_size ."px; padding-right:55px; font-weight: bold; position:absolute;top:496px;left:135px;LINE-HEIGHT:16px;\">"
             . $note_1 . "</div>";
-
 
             if($multi_signature){
                 $html .= "<div style=\"position:absolute;top:550px;left:". ($issue_position_lf - 110) ."px;transform:translateX(-50%);text-align:center;\">";

@@ -729,7 +729,10 @@ class RequestForInformationController extends Controller
 
         $mpdf->SetDocTemplate(public_path('pdf-asset/RFI_empty_form_2.pdf'),true);
         $mpdf->AddPage('P','','','','','','',110,100);
-
+        if($rfi->created_at >= '2026-01-01'){
+                $signature_path = '';
+                $signature_path_2 = '';
+        }
 
         $html = "<div style=\"font-size: 13px; font-weight: bold; position:absolute;top:90px;left:300px;\">" . $contract_name . "</div>";
         $html .= "<div style=\"font-size: 15px; font-weight: bold; position:absolute;top:35px;left:700px;\">" . $rfi_no . "</div>";
