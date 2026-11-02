@@ -328,11 +328,20 @@ class SwnController extends Controller
                 $index++;
                 $index_number = substr("00{$index}", -2);
 
+                $tmpFilePath = storage_path('tmp/uploads/' . basename($file));
+                if (!file_exists($tmpFilePath)) {
+                    error_log("syncSwnMedia: tmp file not found, skipping '{$file}' (SWN #{$swn->id}, {$collectionName})");
+                    continue;
+                }
+
                 if ($needsGhostscript && $filePrefix) {
                     // Ghostscript PDF conversion flow - synchronous
-                    $inputFile = storage_path('tmp/uploads/' . basename($file));
+                    $inputFile = $tmpFilePath;
                     $renameFile = storage_path('tmp/uploads/' . $filePrefix . $swn->id . '_' . $index_number . '.pdf');
-                    rename($inputFile, $renameFile);
+                    if (!@rename($inputFile, $renameFile)) {
+                        error_log("syncSwnMedia: rename failed '{$inputFile}' -> '{$renameFile}'");
+                        continue;
+                    }
                     $outputFile = storage_path('tmp/uploads/' . 'Convert_' . $filePrefix . $swn->id . '_' . $index_number . '.pdf');
 
                     // Set the Ghostscript command
@@ -345,7 +354,7 @@ class SwnController extends Controller
                     $swn->addMedia($outputFile)->toMediaCollection($collectionName);
                 } else {
                     // Simple file addition - synchronous
-                    $swn->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection($collectionName);
+                    $swn->addMedia($tmpFilePath)->toMediaCollection($collectionName);
                 }
             }
         }

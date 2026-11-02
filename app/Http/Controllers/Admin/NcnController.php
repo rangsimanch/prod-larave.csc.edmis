@@ -207,8 +207,15 @@ class NcnController extends Controller
             $index++;
             $index_number = substr("00{$index}", -2);
             $inputFile = storage_path('tmp/uploads/' . basename($file));
+            if (!file_exists($inputFile)) {
+                error_log("NcnController: tmp file not found, skipping '{$file}' (NCN {$doc_number})");
+                continue;
+            }
             $renameFile = storage_path('tmp/uploads/' . 'NCN' . $doc_number . '_' . $index_number . '.pdf');
-            rename($inputFile, $renameFile);
+            if (!@rename($inputFile, $renameFile)) {
+                error_log("NcnController: rename failed '{$inputFile}' -> '{$renameFile}'");
+                continue;
+            }
             $outputFile = storage_path('tmp/uploads/' . 'Convert_' . 'NCN' . $doc_number . '_' . $index_number . '.pdf');
 
             // Set the Ghostscript command
@@ -291,8 +298,15 @@ class NcnController extends Controller
                 $index++;
                 $index_number = substr("00{$index}", -2);
                 $inputFile = storage_path('tmp/uploads/' . basename($file));
+                if (!file_exists($inputFile)) {
+                    error_log("NcnController: tmp file not found, skipping '{$file}' (NCN #{$ncn->id})");
+                    continue;
+                }
                 $renameFile = storage_path('tmp/uploads/' . 'NCN' . $ncn->id . '_' . $index_number . '.pdf');
-                rename($inputFile, $renameFile);
+                if (!@rename($inputFile, $renameFile)) {
+                    error_log("NcnController: rename failed '{$inputFile}' -> '{$renameFile}'");
+                    continue;
+                }
                 $outputFile = storage_path('tmp/uploads/' . 'Convert_' . 'NCN' . $ncn->id . '_' . $index_number . '.pdf');
 
                 // Set the Ghostscript command

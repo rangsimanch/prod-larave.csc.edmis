@@ -380,7 +380,7 @@ Dropzone.options.conditionalFileUploadDropzone = {
             response = JSON.parse(file.xhr.responseText);
         }
         if (!response || !response.name) return;
-      $('form').append('<input type="hidden" name="conditional_file_upload[]" value="' + response.name + '">')
+      $('<input type="hidden" name="conditional_file_upload[]">').val(response.name).appendTo('form')
       uploadedConditionalFileUploadMap[file.name] = response.name
     },
     removedfile: function (file) {
@@ -391,7 +391,7 @@ Dropzone.options.conditionalFileUploadDropzone = {
       } else {
         name = uploadedConditionalFileUploadMap[file.name]
       }
-      $('form').find('input[name="conditional_file_upload[]"][value="' + name + '"]').remove()
+      $('form').find('input[name="conditional_file_upload[]"]').filter(function () { return $(this).val() === name }).remove()
     },
     init: function () {
 @if(isset($swn) && $swn->conditional_file_upload)
@@ -401,7 +401,7 @@ Dropzone.options.conditionalFileUploadDropzone = {
               var file = files[i]
               this.options.addedfile.call(this, file)
               file.previewElement.classList.add('dz-complete')
-              $('form').append('<input type="hidden" name="conditional_file_upload[]" value="' + file.file_name + '">')
+              $('<input type="hidden" name="conditional_file_upload[]">').val(file.file_name).appendTo('form')
             }
 @endif
     },
@@ -450,7 +450,7 @@ Dropzone.options.conditionalFileUploadDropzone = {
                     return reject(response && response.message ? `${genericErrorText}\n${xhr.status} ${response.message}` : `${genericErrorText}\n ${xhr.status} ${xhr.statusText}`);
                   }
 
-                  $('form').append('<input type="hidden" name="ck-media[]" value="' + response.id + '">');
+                  $('<input type="hidden" name="ck-media[]">').val(response.id).appendTo('form');
 
                   resolve({ default: response.url });
                 });
@@ -509,7 +509,7 @@ Dropzone.options.documentAttachmentDropzone = {
             response = JSON.parse(file.xhr.responseText);
         }
         if (!response || !response.name) return;
-      $('form').append('<input type="hidden" name="document_attachment[]" value="' + response.name + '">')
+      $('<input type="hidden" name="document_attachment[]">').val(response.name).appendTo('form')
       uploadedDocumentAttachmentMap[file.name] = response.name
     },
     removedfile: function (file) {
@@ -520,7 +520,7 @@ Dropzone.options.documentAttachmentDropzone = {
       } else {
         name = uploadedDocumentAttachmentMap[file.name]
       }
-      $('form').find('input[name="document_attachment[]"][value="' + name + '"]').remove()
+      $('form').find('input[name="document_attachment[]"]').filter(function () { return $(this).val() === name }).remove()
     },
     init: function () {
 @if(isset($swn) && $swn->document_attachment)
@@ -530,7 +530,7 @@ Dropzone.options.documentAttachmentDropzone = {
               var file = files[i]
               this.options.addedfile.call(this, file)
               file.previewElement.classList.add('dz-complete')
-              $('form').append('<input type="hidden" name="document_attachment[]" value="' + file.file_name + '">')
+              $('<input type="hidden" name="document_attachment[]">').val(file.file_name).appendTo('form')
             }
 @endif
     },
@@ -576,7 +576,7 @@ Dropzone.options.descriptionImageDropzone = {
             response = JSON.parse(file.xhr.responseText);
         }
         if (!response || !response.name) return;
-      $('form').append('<input type="hidden" name="description_image[]" value="' + response.name + '">')
+      $('<input type="hidden" name="description_image[]">').val(response.name).appendTo('form')
       uploadedDescriptionImageMap[file.name] = response.name
     },
     removedfile: function (file) {
@@ -588,7 +588,7 @@ Dropzone.options.descriptionImageDropzone = {
       } else {
         name = uploadedDescriptionImageMap[file.name]
       }
-      $('form').find('input[name="description_image[]"][value="' + name + '"]').remove()
+      $('form').find('input[name="description_image[]"]').filter(function () { return $(this).val() === name }).remove()
     },
     init: function () {
 @if(isset($swn) && $swn->description_image)
@@ -598,7 +598,7 @@ Dropzone.options.descriptionImageDropzone = {
           this.options.addedfile.call(this, file)
           this.options.thumbnail.call(this, file, file.preview)
           file.previewElement.classList.add('dz-complete')
-          $('form').append('<input type="hidden" name="description_image[]" value="' + file.file_name + '">')
+          $('<input type="hidden" name="description_image[]">').val(file.file_name).appendTo('form')
         }
 @endif
     },
@@ -642,7 +642,7 @@ Dropzone.options.rootcaseImageDropzone = {
             response = JSON.parse(file.xhr.responseText);
         }
         if (!response || !response.name) return;
-      $('form').append('<input type="hidden" name="rootcase_image[]" value="' + response.name + '">')
+      $('<input type="hidden" name="rootcase_image[]">').val(response.name).appendTo('form')
       uploadedRootcaseImageMap[file.name] = response.name
     },
     removedfile: function (file) {
@@ -654,7 +654,7 @@ Dropzone.options.rootcaseImageDropzone = {
       } else {
         name = uploadedRootcaseImageMap[file.name]
       }
-      $('form').find('input[name="rootcase_image[]"][value="' + name + '"]').remove()
+      $('form').find('input[name="rootcase_image[]"]').filter(function () { return $(this).val() === name }).remove()
     },
     init: function () {
 @if(isset($swn) && $swn->rootcase_image)
@@ -664,7 +664,7 @@ Dropzone.options.rootcaseImageDropzone = {
           this.options.addedfile.call(this, file)
           this.options.thumbnail.call(this, file, file.preview)
           file.previewElement.classList.add('dz-complete')
-          $('form').append('<input type="hidden" name="rootcase_image[]" value="' + file.file_name + '">')
+          $('<input type="hidden" name="rootcase_image[]">').val(file.file_name).appendTo('form')
         }
 @endif
     },
@@ -710,7 +710,7 @@ Dropzone.options.containmentImageDropzone = {
             response = JSON.parse(file.xhr.responseText);
         }
         if (!response || !response.name) return;
-      $('form').append('<input type="hidden" name="containment_image[]" value="' + response.name + '">')
+      $('<input type="hidden" name="containment_image[]">').val(response.name).appendTo('form')
       uploadedContainmentImageMap[file.name] = response.name
     },
     removedfile: function (file) {
@@ -722,7 +722,7 @@ Dropzone.options.containmentImageDropzone = {
       } else {
         name = uploadedContainmentImageMap[file.name]
       }
-      $('form').find('input[name="containment_image[]"][value="' + name + '"]').remove()
+      $('form').find('input[name="containment_image[]"]').filter(function () { return $(this).val() === name }).remove()
     },
     init: function () {
 @if(isset($swn) && $swn->containment_image)
@@ -732,7 +732,7 @@ Dropzone.options.containmentImageDropzone = {
           this.options.addedfile.call(this, file)
           this.options.thumbnail.call(this, file, file.preview)
           file.previewElement.classList.add('dz-complete')
-          $('form').append('<input type="hidden" name="containment_image[]" value="' + file.file_name + '">')
+          $('<input type="hidden" name="containment_image[]">').val(file.file_name).appendTo('form')
         }
 @endif
     },
@@ -778,7 +778,7 @@ Dropzone.options.correctiveImageDropzone = {
             response = JSON.parse(file.xhr.responseText);
         }
         if (!response || !response.name) return;
-      $('form').append('<input type="hidden" name="corrective_image[]" value="' + response.name + '">')
+      $('<input type="hidden" name="corrective_image[]">').val(response.name).appendTo('form')
       uploadedCorrectiveImageMap[file.name] = response.name
     },
     removedfile: function (file) {
@@ -790,7 +790,7 @@ Dropzone.options.correctiveImageDropzone = {
       } else {
         name = uploadedCorrectiveImageMap[file.name]
       }
-      $('form').find('input[name="corrective_image[]"][value="' + name + '"]').remove()
+      $('form').find('input[name="corrective_image[]"]').filter(function () { return $(this).val() === name }).remove()
     },
     init: function () {
 @if(isset($swn) && $swn->corrective_image)
@@ -800,7 +800,7 @@ Dropzone.options.correctiveImageDropzone = {
           this.options.addedfile.call(this, file)
           this.options.thumbnail.call(this, file, file.preview)
           file.previewElement.classList.add('dz-complete')
-          $('form').append('<input type="hidden" name="corrective_image[]" value="' + file.file_name + '">')
+          $('<input type="hidden" name="corrective_image[]">').val(file.file_name).appendTo('form')
         }
 @endif
     },
@@ -976,7 +976,7 @@ Dropzone.options.replyDocumentDropzone = {
             response = JSON.parse(file.xhr.responseText);
         }
         if (!response || !response.name) return;
-      $('form').append('<input type="hidden" name="reply_document[]" value="' + response.name + '">')
+      $('<input type="hidden" name="reply_document[]">').val(response.name).appendTo('form')
       uploadedReplyDocumentMap[file.name] = response.name
     },
     removedfile: function (file) {
@@ -987,7 +987,7 @@ Dropzone.options.replyDocumentDropzone = {
       } else {
         name = uploadedReplyDocumentMap[file.name]
       }
-      $('form').find('input[name="reply_document[]"][value="' + name + '"]').remove()
+      $('form').find('input[name="reply_document[]"]').filter(function () { return $(this).val() === name }).remove()
     },
     init: function () {
 @if(isset($swn) && $swn->reply_document)
@@ -997,7 +997,7 @@ Dropzone.options.replyDocumentDropzone = {
               var file = files[i]
               this.options.addedfile.call(this, file)
               file.previewElement.classList.add('dz-complete')
-              $('form').append('<input type="hidden" name="reply_document[]" value="' + file.file_name + '">')
+              $('<input type="hidden" name="reply_document[]">').val(file.file_name).appendTo('form')
             }
 @endif
     },
@@ -1018,5 +1018,18 @@ Dropzone.options.replyDocumentDropzone = {
          return _results
      }
 }
+</script>
+<script>
+    $(document).ready(function () {
+        var $swnForm = $('button[type="submit"]').closest('form');
+        $swnForm.on('submit', function () {
+            $swnForm.find('button[type="submit"]').prop('disabled', true);
+        });
+        $(window).on('pageshow', function (e) {
+            if (e.originalEvent.persisted) {
+                $swnForm.find('button[type="submit"]').prop('disabled', false);
+            }
+        });
+    });
 </script>
 @endsection

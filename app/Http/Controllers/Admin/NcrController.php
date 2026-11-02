@@ -198,8 +198,15 @@ class NcrController extends Controller
             $index++;
             $index_number = substr("00{$index}", -2);
             $inputFile = storage_path('tmp/uploads/' . basename($file));
+            if (!file_exists($inputFile)) {
+                error_log("NcrController: tmp file not found, skipping '{$file}' (NCR #{$ncr->id})");
+                continue;
+            }
             $renameFile = storage_path('tmp/uploads/' . 'NCR' . $ncr->id . '_' . $index_number . '.pdf');
-            rename($inputFile, $renameFile);
+            if (!@rename($inputFile, $renameFile)) {
+                error_log("NcrController: rename failed '{$inputFile}' -> '{$renameFile}'");
+                continue;
+            }
 
             $outputFile = storage_path('tmp/uploads/' . 'Convert_' . 'NCR' . $ncr->id . '_' . $index_number . '.pdf');
 
@@ -334,8 +341,15 @@ class NcrController extends Controller
                 $index++;
                 $index_number = substr("00{$index}", -2);
                 $inputFile = storage_path('tmp/uploads/' . basename($file));
+                if (!file_exists($inputFile)) {
+                    error_log("NcrController: tmp file not found, skipping '{$file}' (NCR #{$ncr->id})");
+                    continue;
+                }
                 $renameFile = storage_path('tmp/uploads/' . 'NCR' . $ncr->id . '_' . $index_number . '.pdf');
-                rename($inputFile, $renameFile);
+                if (!@rename($inputFile, $renameFile)) {
+                    error_log("NcrController: rename failed '{$inputFile}' -> '{$renameFile}'");
+                    continue;
+                }
 
                 $outputFile = storage_path('tmp/uploads/' . 'Convert_' . 'NCR' . $ncr->id . '_' . $index_number . '.pdf');
 
