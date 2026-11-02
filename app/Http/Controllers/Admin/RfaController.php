@@ -1582,7 +1582,7 @@ class RfaController extends Controller
             $pagecount = $mpdf->SetSourceFile(public_path('pdf-asset/RFA-Form_empty_V.9.5.pdf'));
             $tplId = $mpdf->ImportPage($pagecount);
             $mpdf->UseTemplate($tplId);
-            if($rfa->created_at >= '2026-10-01'){
+            if($rfa->created_at >= '2026-11-01'){
                 $signature_path = '';
                 $signature_path_2 = '';
             }
@@ -1824,7 +1824,7 @@ class RfaController extends Controller
             $tplId = $mpdf->ImportPage($pagecount);
             $mpdf->UseTemplate($tplId);
 
-            if($rfa->created_at >= '2026-10-01'){
+            if($rfa->created_at >= '2026-11-01'){
                 $signature_path = '';
                 $signature_path_2 = '';
             }
