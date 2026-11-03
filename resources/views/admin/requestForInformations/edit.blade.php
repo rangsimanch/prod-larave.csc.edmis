@@ -34,6 +34,83 @@
                             @endif
                             <span class="help-block">{{ trans('cruds.requestForInformation.fields.authorised_rep_helper') }}</span>
                         </div>
+
+                        @if($show_signatory_fields)
+                        <div class="form-group {{ $errors->has('signatory_id') || $errors->has('signatory_2_id') ? 'has-error' : '' }}">
+                            <label>{{ trans('cruds.rfa.fields.authorized_signatory') }}</label>
+                            <style>
+                                #signatory_table .select2-container { width: 100% !important; }
+                            </style>
+                            <table class="table table-bordered table-striped" id="signatory_table">
+                                <thead>
+                                    <tr>
+                                        <th width="45%">{{ trans('cruds.rfa.fields.authorized_signatory') }}</th>
+                                        <th width="45%">{{ trans('cruds.rfa.fields.signatory_jobtitle') }}</th>
+                                        <th width="10%"></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr id="signatory_row_1">
+                                        <td>
+                                            <select class="form-control select2" name="signatory_id" id="signatory_id">
+                                                <option value="" {{ old('signatory_id', $rfi_signatory_1->authorized_signatory_id ?? '') == '' ? 'selected' : '' }}>{{ trans('global.pleaseSelect') }}</option>
+                                                @foreach($signatories as $id => $entry)
+                                                    <option value="{{ $id }}" {{ old('signatory_id', $rfi_signatory_1->authorized_signatory_id ?? '') == $id ? 'selected' : '' }}>{{ $entry }}</option>
+                                                @endforeach
+                                            </select>
+                                        </td>
+                                        <td>
+                                            <select class="form-control select2" name="signatory_jobtitle_id" id="signatory_jobtitle_id">
+                                                <option value="" {{ old('signatory_jobtitle_id', $rfi_signatory_1->authorized_signatory_jobtitle_id ?? '') == '' ? 'selected' : '' }}>{{ trans('global.pleaseSelect') }}</option>
+                                                @foreach($signatory_jobtitles as $id => $entry)
+                                                    <option value="{{ $id }}" {{ old('signatory_jobtitle_id', $rfi_signatory_1->authorized_signatory_jobtitle_id ?? '') == $id ? 'selected' : '' }}>{{ $entry }}</option>
+                                                @endforeach
+                                            </select>
+                                        </td>
+                                        <td></td>
+                                    </tr>
+                                    <tr id="signatory_row_2" style="{{ $rfi_signatory_2 ? '' : 'display:none;' }}">
+                                        <td>
+                                            <select class="form-control select2" name="signatory_2_id" id="signatory_2_id" style="width:100%;">
+                                                <option value="" {{ old('signatory_2_id', $rfi_signatory_2->authorized_signatory_id ?? '') == '' ? 'selected' : '' }}>{{ trans('global.pleaseSelect') }}</option>
+                                                @foreach($signatories as $id => $entry)
+                                                    <option value="{{ $id }}" {{ old('signatory_2_id', $rfi_signatory_2->authorized_signatory_id ?? '') == $id ? 'selected' : '' }}>{{ $entry }}</option>
+                                                @endforeach
+                                            </select>
+                                        </td>
+                                        <td>
+                                            <select class="form-control select2" name="signatory_jobtitle_2_id" id="signatory_jobtitle_2_id" style="width:100%;">
+                                                <option value="" {{ old('signatory_jobtitle_2_id', $rfi_signatory_2->authorized_signatory_jobtitle_id ?? '') == '' ? 'selected' : '' }}>{{ trans('global.pleaseSelect') }}</option>
+                                                @foreach($signatory_jobtitles_2 as $id => $entry)
+                                                    <option value="{{ $id }}" {{ old('signatory_jobtitle_2_id', $rfi_signatory_2->authorized_signatory_jobtitle_id ?? '') == $id ? 'selected' : '' }}>{{ $entry }}</option>
+                                                @endforeach
+                                            </select>
+                                        </td>
+                                        <td>
+                                            <a class="btn btn-xs btn-danger" id="btn-remove-signatory-2">- {{ trans('cruds.rfa.fields.remove_signatory') }}</a>
+                                        </td>
+                                    </tr>
+                                    <tr id="signatory_add_row" style="{{ $rfi_signatory_2 ? 'display:none;' : '' }}">
+                                        <td colspan="3" align="center">
+                                            <a class="btn btn-success" id="btn-add-signatory">+ {{ trans('cruds.rfa.fields.add_signatory') }}</a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            @if($errors->has('signatory_id'))
+                                <span class="help-block" role="alert">{{ $errors->first('signatory_id') }}</span>
+                            @endif
+                            @if($errors->has('signatory_2_id'))
+                                <span class="help-block" role="alert">{{ $errors->first('signatory_2_id') }}</span>
+                            @endif
+                            @if($errors->has('signatory_jobtitle_id'))
+                                <span class="help-block" role="alert">{{ $errors->first('signatory_jobtitle_id') }}</span>
+                            @endif
+                            @if($errors->has('signatory_jobtitle_2_id'))
+                                <span class="help-block" role="alert">{{ $errors->first('signatory_jobtitle_2_id') }}</span>
+                            @endif
+                        </div>
+                        @endif
                         <div class="form-group {{ $errors->has('response_organization') ? 'has-error' : '' }}">
                             <label for="response_organization_id">{{ trans('cruds.requestForInformation.fields.response_organization') }}</label>
                             <select class="form-control select2" name="response_organization_id" id="response_organization_id">
@@ -90,6 +167,70 @@
 
 @section('scripts')
 <script>
+    //Authorized Signatory dependent dropdowns
+    function rfaLoadJobtitles(signatoryId, targetId){
+        var $target = $('#' + targetId);
+        $target.html('');
+        if(!signatoryId){
+            return;
+        }
+        $.ajax({
+            url:"{{ route('admin.rfas.fetchJobtitles') }}",
+            method:"POST",
+            data:{select:signatoryId, _token:"{{ csrf_token() }}"},
+            success:function(result){
+                $target.html(result);
+            }
+        });
+    }
+
+    function rfaDisableDuplicateSignatories(){
+        var v1 = $('#signatory_id').val();
+        var v2 = $('#signatory_2_id').val();
+        $('#signatory_2_id option').prop('disabled', false);
+        $('#signatory_id option').prop('disabled', false);
+        if(v1){
+            $('#signatory_2_id option[value="' + v1 + '"]').prop('disabled', true);
+            if(v1 === v2){
+                $('#signatory_2_id').val('').trigger('change');
+                $('#signatory_jobtitle_2_id').html('');
+                v2 = '';
+            }
+        }
+        if(v2){
+            $('#signatory_id option[value="' + v2 + '"]').prop('disabled', true);
+        }
+    }
+    rfaDisableDuplicateSignatories();
+
+    if($('#signatory_id').length && $('#signatory_id').val() && $('#signatory_jobtitle_id option').length === 0){
+        rfaLoadJobtitles($('#signatory_id').val(), 'signatory_jobtitle_id');
+    }
+    if($('#signatory_2_id').length && $('#signatory_2_id').val() && $('#signatory_jobtitle_2_id option').length === 0){
+        rfaLoadJobtitles($('#signatory_2_id').val(), 'signatory_jobtitle_2_id');
+    }
+
+    $('#signatory_id').change(function(){
+        rfaLoadJobtitles($(this).val(), 'signatory_jobtitle_id');
+        rfaDisableDuplicateSignatories();
+    });
+    $('#signatory_2_id').change(function(){
+        rfaLoadJobtitles($(this).val(), 'signatory_jobtitle_2_id');
+        rfaDisableDuplicateSignatories();
+    });
+
+    $('#btn-add-signatory').click(function(){
+        $('#signatory_row_2').show();
+        $('#signatory_add_row').hide();
+        $('#signatory_2_id, #signatory_jobtitle_2_id').next('.select2-container').css('width', '100%');
+    });
+    $('#btn-remove-signatory-2').click(function(){
+        $('#signatory_2_id').val('');
+        $('#signatory_jobtitle_2_id').html('');
+        $('#signatory_row_2').hide();
+        $('#signatory_add_row').show();
+    });
+
     var uploadedFileUploadMap = {}
 Dropzone.options.fileUploadDropzone = {
     chunking: true,

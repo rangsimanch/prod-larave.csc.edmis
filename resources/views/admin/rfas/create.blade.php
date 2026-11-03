@@ -130,7 +130,71 @@
                             @endif
                             <span class="help-block">{{ trans('cruds.rfa.fields.construction_contract_helper') }}</span>
                         </div>
-                       
+
+                        <div class="form-group {{ $errors->has('signatory_id') || $errors->has('signatory_2_id') ? 'has-error' : '' }}" id="signatory_section" style="display:none;">
+                            <label>{{ trans('cruds.rfa.fields.authorized_signatory') }}</label>
+                            <style>
+                                #signatory_table .select2-container { width: 100% !important; }
+                            </style>
+                            <table class="table table-bordered table-striped" id="signatory_table">
+                                <thead>
+                                    <tr>
+                                        <th width="45%">{{ trans('cruds.rfa.fields.authorized_signatory') }}</th>
+                                        <th width="45%">{{ trans('cruds.rfa.fields.signatory_jobtitle') }}</th>
+                                        <th width="10%"></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr id="signatory_row_1">
+                                        <td>
+                                            <select class="form-control select2" name="signatory_id" id="signatory_id">
+                                                @foreach($signatories as $id => $signatory)
+                                                    <option value="{{ $id }}" {{ old('signatory_id') == $id ? 'selected' : '' }}>{{ $signatory }}</option>
+                                                @endforeach
+                                            </select>
+                                        </td>
+                                        <td>
+                                            <select class="form-control select2" name="signatory_jobtitle_id" id="signatory_jobtitle_id">
+                                                @foreach($signatory_jobtitles as $id => $jobtitle)
+                                                    <option value="{{ $id }}" {{ old('signatory_jobtitle_id') == $id ? 'selected' : '' }}>{{ $jobtitle }}</option>
+                                                @endforeach
+                                            </select>
+                                        </td>
+                                        <td></td>
+                                    </tr>
+                                    <tr id="signatory_row_2" style="display:none;">
+                                        <td>
+                                            <select class="form-control select2" name="signatory_2_id" id="signatory_2_id" style="width:100%;"></select>
+                                        </td>
+                                        <td>
+                                            <select class="form-control select2" name="signatory_jobtitle_2_id" id="signatory_jobtitle_2_id" style="width:100%;"></select>
+                                        </td>
+                                        <td>
+                                            <a class="btn btn-xs btn-danger" id="btn-remove-signatory-2">- {{ trans('cruds.rfa.fields.remove_signatory') }}</a>
+                                        </td>
+                                    </tr>
+                                    <tr id="signatory_add_row">
+                                        <td colspan="3" align="center">
+                                            <a class="btn btn-success" id="btn-add-signatory">+ {{ trans('cruds.rfa.fields.add_signatory') }}</a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            @if($errors->has('signatory_id'))
+                                <span class="help-block" role="alert">{{ $errors->first('signatory_id') }}</span>
+                            @endif
+                            @if($errors->has('signatory_2_id'))
+                                <span class="help-block" role="alert">{{ $errors->first('signatory_2_id') }}</span>
+                            @endif
+                            @if($errors->has('signatory_jobtitle_id'))
+                                <span class="help-block" role="alert">{{ $errors->first('signatory_jobtitle_id') }}</span>
+                            @endif
+                            @if($errors->has('signatory_jobtitle_2_id'))
+                                <span class="help-block" role="alert">{{ $errors->first('signatory_jobtitle_2_id') }}</span>
+                            @endif
+                            <span class="help-block">{{ trans('cruds.rfa.fields.authorized_signatory_helper') }}</span>
+                        </div>
+
                         <div class="form-group {{ $errors->has('wbs_level_3') ? 'has-error' : '' }}">
                             <label for="wbs_level_3_id" class="required">{{ trans('cruds.rfa.fields.wbs_level_3') }}</label>
                             <select class="form-control select2 wbslv3" name="wbs_level_3_id" id="wbs_level_3_id" required>
@@ -462,6 +526,102 @@ Dropzone.options.fileUpload1Dropzone = {
             })
         }
     });
+
+    //Authorized Signatory dependent dropdowns
+    function rfaLoadJobtitles(signatoryId, targetId){
+        var $target = $('#' + targetId);
+        $target.html('');
+        if(!signatoryId){
+            return;
+        }
+        $.ajax({
+            url:"{{ route('admin.rfas.fetchJobtitles') }}",
+            method:"POST",
+            data:{select:signatoryId, _token:"{{ csrf_token() }}"},
+            success:function(result){
+                $target.html(result);
+            }
+        });
+    }
+
+    //Prevent selecting the same signatory in both slots
+    function rfaDisableDuplicateSignatories(){
+        var v1 = $('#signatory_id').val();
+        var v2 = $('#signatory_2_id').val();
+        $('#signatory_2_id option').prop('disabled', false);
+        $('#signatory_id option').prop('disabled', false);
+        if(v1){
+            $('#signatory_2_id option[value="' + v1 + '"]').prop('disabled', true);
+            if(v1 === v2){
+                $('#signatory_2_id').val('').trigger('change');
+                $('#signatory_jobtitle_2_id').html('');
+                v2 = '';
+            }
+        }
+        if(v2){
+            $('#signatory_id option[value="' + v2 + '"]').prop('disabled', true);
+        }
+    }
+
+    $('#signatory_id').change(function(){
+        rfaLoadJobtitles($(this).val(), 'signatory_jobtitle_id');
+        rfaDisableDuplicateSignatories();
+    });
+    $('#signatory_2_id').change(function(){
+        rfaLoadJobtitles($(this).val(), 'signatory_jobtitle_2_id');
+        rfaDisableDuplicateSignatories();
+    });
+
+    $('#btn-add-signatory').click(function(){
+        $('#signatory_row_2').show();
+        $('#signatory_add_row').hide();
+        $('#signatory_2_id, #signatory_jobtitle_2_id').next('.select2-container').css('width', '100%');
+    });
+    $('#btn-remove-signatory-2').click(function(){
+        $('#signatory_2_id').val('');
+        $('#signatory_jobtitle_2_id').html('');
+        $('#signatory_row_2').hide();
+        $('#signatory_add_row').show();
+    });
+
+    $('#construction_contract_id').change(function(){
+        var select = $(this).val();
+        $('#signatory_id').html('');
+        $('#signatory_2_id').html('');
+        $('#signatory_jobtitle_id').html('');
+        $('#signatory_jobtitle_2_id').html('');
+        $('#signatory_row_2').hide();
+        $('#signatory_add_row').show();
+        if(!select){
+            $('#signatory_section').hide();
+            return;
+        }
+        $('#signatory_section').show();
+        $.ajax({
+            url:"{{ route('admin.rfas.fetchSignatories') }}",
+            method:"POST",
+            data:{select:select, _token:"{{ csrf_token() }}"},
+            success:function(result){
+                $('#signatory_id').html(result);
+                $('#signatory_2_id').html(result).val('');
+                $('#signatory_id').trigger('change');
+                rfaDisableDuplicateSignatories();
+            }
+        });
+    });
+
+    //Auto-select contract when only one real option exists (non-admin users)
+    //and reload signatories when repopulating after a validation error (old())
+    var $constructionContract = $('#construction_contract_id');
+    if(!$constructionContract.val()){
+        var $realOptions = $constructionContract.find('option').filter(function(){ return this.value !== ''; });
+        if($realOptions.length === 1){
+            $constructionContract.val($realOptions.val()).trigger('change');
+        }
+    }
+    else{
+        $constructionContract.trigger('change');
+    }
 
 
     $('.doc_counter').change(function(){

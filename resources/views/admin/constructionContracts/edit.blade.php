@@ -137,6 +137,8 @@
                 </div>
             </div>
 
+            @include('admin.constructionContracts.partials.authorizedSignatories')
+
 
 
         </div>

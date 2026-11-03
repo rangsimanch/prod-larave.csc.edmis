@@ -90,6 +90,11 @@ class RequestForInformation extends Model implements HasMedia
         return $this->belongsTo(ConstructionContract::class, 'construction_contract_id');
     }
 
+    public function rfiSignatories()
+    {
+        return $this->hasMany(RfiAuthorizedSignatory::class, 'request_for_information_id')->orderBy('slot');
+    }
+
     public function getDateAttribute($value)
     {
         return $value ? Carbon::parse($value)->format(config('panel.date_format')) : null;

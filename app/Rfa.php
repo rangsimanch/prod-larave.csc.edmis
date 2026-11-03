@@ -185,6 +185,11 @@ class Rfa extends Model implements HasMedia
         return $this->belongsTo(ConstructionContract::class, 'construction_contract_id');
     }
 
+    public function rfaSignatories()
+    {
+        return $this->hasMany(RfaAuthorizedSignatory::class, 'rfa_id')->orderBy('slot');
+    }
+
     public function wbs_level_3()
     {
         return $this->belongsTo(WbsLevelThree::class, 'wbs_level_3_id');

@@ -47,6 +47,11 @@ class ConstructionContract extends Model
         return $this->hasMany(Rfa::class, 'construction_contract_id', 'id');
     }
 
+    public function authorizedSignatories()
+    {
+        return $this->hasMany(AuthorizedSignatory::class, 'construction_contract_id', 'id')->orderBy('sort_order')->orderBy('id');
+    }
+
     public function constructionContractTasks()
     {
         return $this->hasMany(Task::class, 'construction_contract_id', 'id');

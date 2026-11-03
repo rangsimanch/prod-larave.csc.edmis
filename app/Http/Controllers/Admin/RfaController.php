@@ -32,6 +32,9 @@ use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Yajra\DataTables\Facades\DataTables;
 use App\BoQ;
+use App\AuthorizedSignatory;
+use App\AuthorizedSignatoryJobtitle;
+use App\RfaAuthorizedSignatory;
 use setasign\Fpdi;
 use ZipArchive;
 use Illuminate\Support\Facades\File;
@@ -332,6 +335,65 @@ class RfaController extends Controller
         echo $output;
     }
 
+    function fetchSignatories(Request $request){
+        $contract_id = $request->get('select');
+        $query = AuthorizedSignatory::where('construction_contract_id', $contract_id)
+            ->where('is_active', 1)
+            ->orderBy('sort_order')
+            ->orderBy('id')
+            ->get();
+        $output = '';
+        if($query->isEmpty()){
+            $output = '<option value="">' . trans('global.pleaseSelect') . '</option>';
+        }
+        foreach ($query as $row){
+            $selected = $row->is_default ? ' selected' : '';
+            $output .= '<option value="'. $row->id .'"'. $selected .'>'. e($row->name) .'</option>';
+        }
+        echo $output;
+    }
+
+    function fetchJobtitles(Request $request){
+        $signatory_id = $request->get('select');
+        $query = AuthorizedSignatoryJobtitle::where('authorized_signatory_id', $signatory_id)
+            ->where('is_active', 1)
+            ->orderBy('sort_order')
+            ->orderBy('id')
+            ->get();
+        $output = '';
+        if($query->isEmpty()){
+            $output = '<option value="">' . trans('global.pleaseSelect') . '</option>';
+        }
+        foreach ($query as $row){
+            $selected = $row->is_default ? ' selected' : '';
+            $output .= '<option value="'. $row->id .'"'. $selected .'>'. e($row->jobtitle) .'</option>';
+        }
+        echo $output;
+    }
+
+    private function syncRfaSignatories(Rfa $rfa, Request $request)
+    {
+        RfaAuthorizedSignatory::where('rfa_id', $rfa->id)->delete();
+
+        if($request->signatory_id){
+            RfaAuthorizedSignatory::create([
+                'rfa_id' => $rfa->id,
+                'authorized_signatory_id' => $request->signatory_id,
+                'authorized_signatory_jobtitle_id' => $request->signatory_jobtitle_id ?: null,
+                'slot' => 1,
+            ]);
+        }
+
+        if($request->signatory_2_id){
+            RfaAuthorizedSignatory::create([
+                'rfa_id' => $rfa->id,
+                'authorized_signatory_id' => $request->signatory_2_id,
+                'authorized_signatory_jobtitle_id' => $request->signatory_jobtitle_2_id ?: null,
+                'slot' => 2,
+            ]);
+        }
+    }
+
     public function revision(Rfa $rfa)
     {
         abort_if(Gate::denies('rfa_revision'), Response::HTTP_FORBIDDEN, '403 Forbidden');
@@ -503,8 +565,11 @@ class RfaController extends Controller
 
         $boq_subs = BoQ::pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
+        $signatories = collect();
+        $signatory_jobtitles = collect();
 
-        return view('admin.rfas.create', compact('document_statuses', 'types', 'construction_contracts', 'wbs_level_3s', 'wbs_level_4s', 'issuebies', 'assigns', 'action_bies', 'comment_bies', 'information_bies', 'comment_statuses', 'for_statuses', 'reviewed_bies', 'boqs', 'boq_subs'));
+
+        return view('admin.rfas.create', compact('document_statuses', 'types', 'construction_contracts', 'wbs_level_3s', 'wbs_level_4s', 'issuebies', 'assigns', 'action_bies', 'comment_bies', 'information_bies', 'comment_statuses', 'for_statuses', 'reviewed_bies', 'boqs', 'boq_subs', 'signatories', 'signatory_jobtitles'));
     }
 
     public function store(StoreRfaRequest $request)
@@ -569,6 +634,8 @@ class RfaController extends Controller
 
 
         $rfa = Rfa::create($data);
+
+        $this->syncRfaSignatories($rfa, $request);
 
         // Submittals
         if(count($request->only(['item'])) != 0){
@@ -704,7 +771,41 @@ class RfaController extends Controller
 
         $rfa->load('document_status', 'boq', 'boq_sub', 'type', 'construction_contract', 'wbs_level_3', 'wbs_level_4', 'issueby', 'assign', 'action_by', 'comment_by', 'information_by', 'comment_status', 'for_status', 'create_by_user', 'distribute_by', 'reviewed_by', 'wbs_level_one', 'team');
 
-        return view('admin.rfas.edit', compact('action_bies', 'assigns', 'boq_subs', 'boqs', 'comment_bies', 'comment_statuses', 'construction_contracts', 'document_statuses', 'for_statuses', 'information_bies', 'issuebies', 'reviewed_bies', 'rfa', 'submittalsRfa', 'types', 'wbs_level_3s', 'wbs_level_4s'));
+        $show_signatory_fields = true;
+        $signatories = collect();
+        $signatory_jobtitles = collect();
+        $signatory_jobtitles_2 = collect();
+        $rfa_signatory_1 = null;
+        $rfa_signatory_2 = null;
+
+        if($show_signatory_fields){
+            $signatories = AuthorizedSignatory::where('construction_contract_id', $rfa->construction_contract_id)
+                ->where('is_active', 1)
+                ->orderBy('sort_order')
+                ->orderBy('id')
+                ->pluck('name', 'id');
+
+            $rfaSignatories = $rfa->rfaSignatories;
+            $rfa_signatory_1 = $rfaSignatories->firstWhere('slot', 1);
+            $rfa_signatory_2 = $rfaSignatories->firstWhere('slot', 2);
+
+            if($rfa_signatory_1){
+                $signatory_jobtitles = AuthorizedSignatoryJobtitle::where('authorized_signatory_id', $rfa_signatory_1->authorized_signatory_id)
+                    ->where('is_active', 1)
+                    ->orderBy('sort_order')
+                    ->orderBy('id')
+                    ->pluck('jobtitle', 'id');
+            }
+            if($rfa_signatory_2){
+                $signatory_jobtitles_2 = AuthorizedSignatoryJobtitle::where('authorized_signatory_id', $rfa_signatory_2->authorized_signatory_id)
+                    ->where('is_active', 1)
+                    ->orderBy('sort_order')
+                    ->orderBy('id')
+                    ->pluck('jobtitle', 'id');
+            }
+        }
+
+        return view('admin.rfas.edit', compact('action_bies', 'assigns', 'boq_subs', 'boqs', 'comment_bies', 'comment_statuses', 'construction_contracts', 'document_statuses', 'for_statuses', 'information_bies', 'issuebies', 'reviewed_bies', 'rfa', 'submittalsRfa', 'types', 'wbs_level_3s', 'wbs_level_4s', 'show_signatory_fields', 'signatories', 'signatory_jobtitles', 'signatory_jobtitles_2', 'rfa_signatory_1', 'rfa_signatory_2'));
     }
 
     public function update(UpdateRfaRequest $request, Rfa $rfa)
@@ -810,6 +911,8 @@ class RfaController extends Controller
 
 
         $rfa->update($data);
+
+        $this->syncRfaSignatories($rfa, $request);
 
         // Sync Submittals - delete existing and re-insert from form
         if(count($request->only(['item'])) != 0){
@@ -1442,6 +1545,59 @@ class RfaController extends Controller
         }
 
 
+        $rfaSignatories = $rfa->rfaSignatories;
+        $hasAuthorizedSignatories = $rfaSignatories->isNotEmpty();
+
+        //Authorized Signatory override - per-document selection (overrides legacy when set)
+        if($hasAuthorizedSignatories){
+            $signature_path_2 = $signature_path_2 ?? '';
+            $signature_size_h_2 = $signature_size_h_2 ?? 60;
+            $signature_size_w_2 = $signature_size_w_2 ?? 60;
+            $signature_position_top_2 = $signature_position_top_2 ?? 0;
+            $signature_position_left_2 = $signature_position_left_2 ?? 0;
+
+            $signer_names = [];
+            foreach($rfaSignatories as $rfaSignatory){
+                $signatory = $rfaSignatory->signatory;
+                $jobtitle   = $rfaSignatory->jobtitle;
+                if(!$signatory){
+                    continue;
+                }
+                $signer_names[] = $signatory->name;
+
+                if($rfaSignatory->slot == 1){
+                    $issue_by = $signatory->name;
+                    $signature_path = $signatory->signature_path ? public_path('png-asset/' . basename($signatory->signature_path)) : '';
+                    if($signatory->signature_size_h) $signature_size_h = $signatory->signature_size_h;
+                    if($signatory->signature_size_w) $signature_size_w = $signatory->signature_size_w;
+                    if($jobtitle){
+                        $issuer_jobtitle = $jobtitle->jobtitle;
+                        if($jobtitle->signature_position_top)  $signature_position_top  = $jobtitle->signature_position_top;
+                        if($jobtitle->signature_position_left) $signature_position_left = $jobtitle->signature_position_left;
+                        if($jobtitle->jobtitle_position_lf)    $jobittle_position_lf    = $jobtitle->jobtitle_position_lf;
+                        if($jobtitle->issue_position_lf)       $issue_position_lf       = $jobtitle->issue_position_lf;
+                        if($jobtitle->issue_position_lf_sub)   $issue_position_lf_sub   = $jobtitle->issue_position_lf_sub;
+                    }
+                }
+                else{
+                    $multi_signature = true;
+                    $signature_path_2 = $signatory->signature_path ? public_path('png-asset/' . basename($signatory->signature_path)) : '';
+                    if($signatory->signature_size_h) $signature_size_h_2 = $signatory->signature_size_h;
+                    if($signatory->signature_size_w) $signature_size_w_2 = $signatory->signature_size_w;
+                    if($jobtitle){
+                        if($jobtitle->signature_position_top)  $signature_position_top_2  = $jobtitle->signature_position_top;
+                        if($jobtitle->signature_position_left) $signature_position_left_2 = $jobtitle->signature_position_left;
+                    }
+                    if(!$signature_position_left_2){
+                        $signature_position_left_2 = $signature_position_left + 15;
+                    }
+                }
+            }
+
+            if(count($signer_names) > 1){
+                $issue_by = implode(' และ ', $signer_names);
+            }
+        }
 
 
         $bill = $rfa->boq->name ?? '';
@@ -2279,4 +2435,3 @@ class RfaController extends Controller
     }
 
 }
-

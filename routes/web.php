@@ -72,6 +72,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     Route::post('rfas/parse-csv-import', 'RfaController@parseCsvImport')->name('rfas.parseCsvImport');
     Route::post('rfas/process-csv-import', 'RfaController@processCsvImport')->name('rfas.processCsvImport');
     Route::post('rfas/fetch','RfaController@fetch')->name('rfas.fetch');
+    Route::post('rfas/fetch-signatories','RfaController@fetchSignatories')->name('rfas.fetchSignatories');
+    Route::post('rfas/fetch-jobtitles','RfaController@fetchJobtitles')->name('rfas.fetchJobtitles');
 
     Route::get('rfas/{rfa}/revision','RfaController@revision')->name('rfas.revision');
     Route::post('rfas/storeRevision','RfaController@storeRevision')->name('rfas.storeRevision');
@@ -127,6 +129,15 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     // Construction Contracts
     Route::delete('construction-contracts/destroy', 'ConstructionContractController@massDestroy')->name('construction-contracts.massDestroy');
     Route::resource('construction-contracts', 'ConstructionContractController');
+
+    // Authorized Signatories
+    Route::post('construction-contracts/{constructionContract}/signatories/import-suggested', 'AuthorizedSignatoryController@importSuggested')->name('authorized-signatories.import-suggested');
+    Route::post('construction-contracts/{constructionContract}/signatories', 'AuthorizedSignatoryController@store')->name('authorized-signatories.store');
+    Route::put('authorized-signatories/{authorizedSignatory}', 'AuthorizedSignatoryController@update')->name('authorized-signatories.update');
+    Route::delete('authorized-signatories/{authorizedSignatory}', 'AuthorizedSignatoryController@destroy')->name('authorized-signatories.destroy');
+    Route::post('authorized-signatories/{authorizedSignatory}/jobtitles', 'AuthorizedSignatoryController@storeJobtitle')->name('authorized-signatories.jobtitles.store');
+    Route::put('authorized-signatory-jobtitles/{jobtitle}', 'AuthorizedSignatoryController@updateJobtitle')->name('authorized-signatory-jobtitles.update');
+    Route::delete('authorized-signatory-jobtitles/{jobtitle}', 'AuthorizedSignatoryController@destroyJobtitle')->name('authorized-signatory-jobtitles.destroy');
 
     // Wbs Level Threes
     Route::delete('wbs-level-threes/destroy', 'WbsLevelThreeController@massDestroy')->name('wbs-level-threes.massDestroy');

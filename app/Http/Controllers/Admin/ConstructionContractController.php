@@ -10,6 +10,7 @@ use App\Http\Requests\UpdateConstructionContractRequest;
 use App\WorksCode;
 use Gate;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
 use Symfony\Component\HttpFoundation\Response;
 
 class ConstructionContractController extends Controller
@@ -45,9 +46,21 @@ class ConstructionContractController extends Controller
 
         $works_codes = WorksCode::all()->pluck('code', 'id')->prepend(trans('global.pleaseSelect'), '');
 
-        $constructionContract->load('works_code');
+        $constructionContract->load('works_code', 'authorizedSignatories.jobtitles');
 
-        return view('admin.constructionContracts.edit', compact('works_codes', 'constructionContract'));
+        $signature_files = File::isDirectory(public_path('png-asset'))
+            ? collect(File::files(public_path('png-asset')))
+                ->map(function ($file) {
+                    return $file->getFilename();
+                })
+                ->filter(function ($name) {
+                    return preg_match('/\.(png|jpe?g|gif)$/i', $name);
+                })
+                ->sort()
+                ->values()
+            : collect();
+
+        return view('admin.constructionContracts.edit', compact('works_codes', 'constructionContract', 'signature_files'));
     }
 
     public function update(UpdateConstructionContractRequest $request, ConstructionContract $constructionContract)

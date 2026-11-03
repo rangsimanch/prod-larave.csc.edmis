@@ -10,6 +10,9 @@ use App\Http\Requests\MassDestroyRequestForInformationRequest;
 use App\Http\Requests\StoreRequestForInformationRequest;
 use App\Http\Requests\UpdateRequestForInformationRequest;
 use App\RequestForInformation;
+use App\AuthorizedSignatory;
+use App\AuthorizedSignatoryJobtitle;
+use App\RfiAuthorizedSignatory;
 use App\Team;
 use App\User;
 use App\Rfatype;
@@ -208,8 +211,34 @@ class RequestForInformationController extends Controller
 
         $request_bies = User::all()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
+        $signatories = collect();
+        $signatory_jobtitles = collect();
 
-        return view('admin.requestForInformations.create', compact('construction_contracts', 'tos', 'wbs_level_4s', 'wbs_level_5s', 'request_bies', 'document_types'));
+
+        return view('admin.requestForInformations.create', compact('construction_contracts', 'tos', 'wbs_level_4s', 'wbs_level_5s', 'request_bies', 'document_types', 'signatories', 'signatory_jobtitles'));
+    }
+
+    private function syncRfiSignatories(RequestForInformation $rfi, Request $request)
+    {
+        RfiAuthorizedSignatory::where('request_for_information_id', $rfi->id)->delete();
+
+        if($request->signatory_id){
+            RfiAuthorizedSignatory::create([
+                'request_for_information_id' => $rfi->id,
+                'authorized_signatory_id' => $request->signatory_id,
+                'authorized_signatory_jobtitle_id' => $request->signatory_jobtitle_id ?: null,
+                'slot' => 1,
+            ]);
+        }
+
+        if($request->signatory_2_id){
+            RfiAuthorizedSignatory::create([
+                'request_for_information_id' => $rfi->id,
+                'authorized_signatory_id' => $request->signatory_2_id,
+                'authorized_signatory_jobtitle_id' => $request->signatory_jobtitle_2_id ?: null,
+                'slot' => 2,
+            ]);
+        }
     }
 
     public function store(StoreRequestForInformationRequest $request)
@@ -264,6 +293,8 @@ class RequestForInformationController extends Controller
 
         $requestForInformation = RequestForInformation::create($data);
 
+        $this->syncRfiSignatories($requestForInformation, $request);
+
         foreach ($request->input('attachment_files', []) as $file) {
             $requestForInformation->addMedia(storage_path('tmp/uploads/' . basename($file)))->toMediaCollection('attachment_files');
         }
@@ -289,7 +320,41 @@ class RequestForInformationController extends Controller
 
         $requestForInformation->load('construction_contract', 'to', 'wbs_level_4', 'wbs_level_5', 'request_by', 'authorised_rep', 'response_organization', 'document_type', 'team');
 
-        return view('admin.requestForInformations.edit', compact('authorised_reps', 'response_organizations', 'requestForInformation'));
+        $show_signatory_fields = true;
+        $signatories = collect();
+        $signatory_jobtitles = collect();
+        $signatory_jobtitles_2 = collect();
+        $rfi_signatory_1 = null;
+        $rfi_signatory_2 = null;
+
+        if($show_signatory_fields){
+            $signatories = AuthorizedSignatory::where('construction_contract_id', $requestForInformation->construction_contract_id)
+                ->where('is_active', 1)
+                ->orderBy('sort_order')
+                ->orderBy('id')
+                ->pluck('name', 'id');
+
+            $rfiSignatories = $requestForInformation->rfiSignatories;
+            $rfi_signatory_1 = $rfiSignatories->firstWhere('slot', 1);
+            $rfi_signatory_2 = $rfiSignatories->firstWhere('slot', 2);
+
+            if($rfi_signatory_1){
+                $signatory_jobtitles = AuthorizedSignatoryJobtitle::where('authorized_signatory_id', $rfi_signatory_1->authorized_signatory_id)
+                    ->where('is_active', 1)
+                    ->orderBy('sort_order')
+                    ->orderBy('id')
+                    ->pluck('jobtitle', 'id');
+            }
+            if($rfi_signatory_2){
+                $signatory_jobtitles_2 = AuthorizedSignatoryJobtitle::where('authorized_signatory_id', $rfi_signatory_2->authorized_signatory_id)
+                    ->where('is_active', 1)
+                    ->orderBy('sort_order')
+                    ->orderBy('id')
+                    ->pluck('jobtitle', 'id');
+            }
+        }
+
+        return view('admin.requestForInformations.edit', compact('authorised_reps', 'response_organizations', 'requestForInformation', 'show_signatory_fields', 'signatories', 'signatory_jobtitles', 'signatory_jobtitles_2', 'rfi_signatory_1', 'rfi_signatory_2'));
     }
 
     public function update(UpdateRequestForInformationRequest $request, RequestForInformation $requestForInformation)
@@ -307,6 +372,8 @@ class RequestForInformationController extends Controller
             }
 
         $requestForInformation->update($data);
+
+        $this->syncRfiSignatories($requestForInformation, $request);
 
         if (count($requestForInformation->file_upload) > 0) {
             foreach ($requestForInformation->file_upload as $media) {
@@ -699,6 +766,44 @@ class RequestForInformationController extends Controller
             $signature_position_top = 720;
             $signature_position_left = 500;
         }
+
+
+        $rfiSignatories = $rfi->rfiSignatories;
+        $hasAuthorizedSignatories = $rfiSignatories->isNotEmpty();
+
+        //Authorized Signatory override - per-document selection (overrides legacy when set)
+        if($hasAuthorizedSignatories){
+            $signature_path_2 = $signature_path_2 ?? '';
+
+            $signer_names = [];
+            foreach($rfiSignatories as $rfiSignatory){
+                $signatory = $rfiSignatory->signatory;
+                $jobtitle   = $rfiSignatory->jobtitle;
+                if(!$signatory){
+                    continue;
+                }
+                $signer_names[] = $signatory->name_rfi ?: $signatory->name;
+
+                if($rfiSignatory->slot == 1){
+                    $signature_path = $signatory->signature_path ? public_path('png-asset/' . basename($signatory->signature_path)) : '';
+                    if($jobtitle){
+                        $issuer_jobtitle = $jobtitle->jobtitle;
+                    }
+                }
+                else{
+                    $multi_signature = true;
+                    $signature_path_2 = $signatory->signature_path ? public_path('png-asset/' . basename($signatory->signature_path)) : '';
+                }
+            }
+
+            if(count($signer_names) > 1){
+                $issue_by = implode(' และ ', $signer_names);
+            }
+            elseif(count($signer_names) == 1){
+                $issue_by = $signer_names[0];
+            }
+        }
+
 
         $rfi_no = $rfi->originator_code;
         $submit_date = $rfi->incoming_date;
