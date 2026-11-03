@@ -6,10 +6,9 @@ return [
     | Authorized Signatory Cutoff
     |--------------------------------------------------------------------------
     |
-    | RFAs with id >= this value use the per-document Authorized Signatory
-    | selection (rfa_authorized_signatory). Older RFAs keep using the legacy
-    | hard-coded issuer/signature logic in RfaController::createReportRFA.
+    | Historical reference only. PDF behavior is based on whether an RFA has
+    | selected signatory pivot rows, regardless of its ID.
     |
     */
-    'signatory_cutoff_id' => 152156,
+    'signatory_cutoff_id' => 165190,
 ];
