@@ -883,7 +883,7 @@ Dropzone.options.submittalsFileDropzone = {
                 html += '<td><input type="text" name="des[]" class="form-control" /></td>';
                 html += '<td><input type="number" name="qty[]" class="form-control" /></td>';
                 html += '<td align="center"><a name="remove" class="btn btn-danger">{{ trans('global.remove') }}</a></td></tr>';
-                $('tbody').append(html);
+                $('#submittal_table tbody').append(html);
             }
         }
 
@@ -930,7 +930,7 @@ Dropzone.options.submittalsFileDropzone = {
                     });
 
                     newRow += '<td align="center"><a name="remove" class="btn btn-danger">{{ trans('global.remove') }}</a></td></tr>';
-                    $('tbody').append(newRow);
+                    $('#submittal_table tbody').append(newRow);
                     count++;
                 });
             }).catch(function (err) {
