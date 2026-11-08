@@ -463,27 +463,33 @@ class NcnController extends Controller
             $html .= "<div style=\"font-size: 10px; font-weight: bold; position:absolute;top:805px;left:528px\">" . $textbox3  . "</div>";
 
             if($issuer != ''){
+                /* Electronic signature drawing disabled.
                 if(!is_null($ncn->issue_by->signature)){
                     $html .= "<div style=\"font-weight: bold; position:absolute;top:810;left:150px;\">
                     <img width=\"30%\" height=\"20%\" src=\"" . $ncn->issue_by->signature->getPath()
                     . "\"></div>";
                 }
+                */
                 $html .= "<div style=\"font-size: 10px;  position:absolute;top:848px;left:110px\">" . $issuer  . "</div>";
             }
             if($cos != ''){
+                /* Electronic signature drawing disabled.
                 if(!is_null($ncn->construction_specialist->signature)){
                     $html .= "<div style=\"font-weight: bold; position:absolute;top:810;left:365px;\">
                     <img width=\"35%\" height=\"25%\" src=\"" . $ncn->construction_specialist->signature->getPath()
                     . "\"></div>";
                 }
+                */
                 $html .= "<div style=\"font-size: 10px;  position:absolute;top:848px;left:325px\">" . $cos  . "</div>";
             }
             if($leader != ''){
+                /* Electronic signature drawing disabled.
                 if(!is_null($ncn->leader->signature)){
                     $html .= "<div style=\"font-weight: bold; position:absolute;top:810;left:585px;\">
                     <img width=\"45%\" height=\"35%\" src=\"" . $ncn->leader->signature->getPath()
                     . "\"></div>";
                 }
+                */
                 $html .= "<div style=\"font-size: 10px;  position:absolute;top:848px;left:540\">" . $leader  . "</div>";
             }
 
@@ -506,11 +512,13 @@ class NcnController extends Controller
             $html .= "<div style=\"padding-right:120px;font-size: 10px; position:absolute;top:691px;left:340px\">" . $pages_of_attachment  .  "</div>";
 
             if($issuer != ''){
+                /* Electronic signature drawing disabled.
                 if(!is_null($ncn->issue_by->signature)){
                     $html .= "<div style=\"font-weight: bold; position:absolute;top:725;left:230px;\">
                     <img width=\"30%\" height=\"20%\" src=\"" . $ncn->issue_by->signature->getPath()
                     . "\"></div>";
                 }
+                */
                 $html .= "<div style=\"font-size: 10px;  position:absolute;top:768px;left:185px\">" . $issuer  . "</div>";
                 $html .= "<div style=\"font-size: 10px;  position:absolute;top:785px;left:227px\">" . $issuer_jobtitile  . "</div>";
                 $html .= "<div style=\"font-size: 10px; position:absolute;top:802px;left:227px\">" . $issue_date  . "</div>";
@@ -527,11 +535,13 @@ class NcnController extends Controller
             }
 
             if($cos != ''){
+                /* Electronic signature drawing disabled.
                 if(!is_null($ncn->construction_specialist->signature)){
                     $html .= "<div style=\"font-weight: bold; position:absolute;top:880;left:535px;\">
                     <img width=\"40%\" height=\"30%\" src=\"" . $ncn->construction_specialist->signature->getPath()
                     . "\"></div>";
                 }
+                */
                 $html .= "<div style=\"font-size: 10px;  position:absolute;top:917px;left:480px\">" . $cos  . "</div>";
                 $html .= "<div style=\"font-size: 10px;  position:absolute;top:935px;left:525px\">" . $cos_jobtitle  . "</div>";
                 $html .= "<div style=\"font-size: 10px; position:absolute;top:953px;left:525px\">" . $issue_date  . "</div>";
@@ -539,11 +549,13 @@ class NcnController extends Controller
             }
 
             if($leader != ''){
+                /* Electronic signature drawing disabled.
                 if(!is_null($ncn->leader->signature)){
                     $html .= "<div style=\"font-weight: bold; position:absolute;top:725;left:535px;\">
                     <img width=\"45%\" height=\"35%\" src=\"" . $ncn->leader->signature->getPath()
                     . "\"></div>";
                 }
+                */
                 $html .= "<div style=\"font-size: 10px;  position:absolute;top:771px;left:480\">" . $leader  . "</div>";
                 $html .= "<div style=\"font-size: 10px;  position:absolute;top:790px;left:520px\">" . $leader_jobtitle . "</div>";
             }

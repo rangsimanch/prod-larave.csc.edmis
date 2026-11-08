@@ -473,6 +473,7 @@ class SwnController extends Controller
         // }
         $html .= "<div style=\"font-size: 8.5px; padding-right:80px; position:absolute;top:320px;left:240px;\">" . $ref_doc  . "</div>";
         if($issuer_name != ''){
+            /* Electronic signature drawing disabled.
                 if(!is_null($swn->issue_by->signature)){
                     $url =  url($swn->issue_by->signature->getUrl());
                     $handle = curl_init($url);
@@ -488,21 +489,25 @@ class SwnController extends Controller
                         . "\"></div>";
                     }
                 }
+            */
             $html .= "<div style=\"font-size: 8px; font-weight: bold; position:absolute;top:606px;left:135px;\">( " . $issuer_name  . " )</div>";
             $html .= "<div style=\"font-size: 8px;  position:absolute;top:625px;left:135px;\">" . $issuer_position  . "</div>";
         }
 
         if($qa_name != ''){
+            /* Electronic signature drawing disabled.
             if(!is_null($swn->related_specialist->signature)){
                 $html .= "<div style=\"font-weight: bold; position:absolute;top:570;left:360px;\">
                 <img width=\"35%\" height=\"25%\" src=\"" . $swn->related_specialist->signature->getPath()
                 . "\"></div>";
             }
+            */
             $html .= "<div style=\"font-size: 8px; font-weight: bold; position:absolute;top:606px;left:345px;\">( " . $qa_name  . " )</div>";
             $html .= "<div style=\"font-size: 8px;  position:absolute;top:625px;left:345px;\">" . $qa_position  . "</div>";
         }
 
         if($cos_name != ''){
+            /* Electronic signature drawing disabled.
             if(!is_null($swn->construction_specialist->signature)){
                 $url =  url($swn->construction_specialist->signature->getUrl());
                 $handle = curl_init($url);
@@ -518,6 +523,7 @@ class SwnController extends Controller
                     . "\"></div>";
                 }
             }
+            */
             $html .= "<div style=\"font-size: 8px; font-weight: bold; position:absolute;top:606px;left:597px;\">( " . $cos_name  . " )</div>";
             $html .= "<div style=\"font-size: 8px;  padding-right:55px; position:absolute;top:625px;left:597px;\">" . $cos_position  . "</div>";
         }
@@ -538,11 +544,13 @@ class SwnController extends Controller
 
         if($issuer_name != ''){
             if($documents_status == '3'|| $documents_status == '4'){
+                /* Electronic signature drawing disabled.
                 if(!is_null($swn->issue_by->signature)){
                     $html .= "<div style=\"font-weight: bold; position:absolute;top:775;left:160px;\">
                     <img width=\"30%\" height=\"20%\" src=\"" . $swn->issue_by->signature->getPath()
                     . "\"></div>";
                 }
+                */
             }
             $html .= "<div style=\"font-size: 8px; font-weight: bold; position:absolute;top:809px;left:155px;\">( " . $issuer_name  . " )</div>";
             $html .= "<div style=\"font-size: 8px;  position:absolute;top:825px;left:155px;\">" . $issuer_position  . "</div>";
@@ -550,6 +558,7 @@ class SwnController extends Controller
         }
         if($qa_name != ''){
             if($documents_status == '3'|| $documents_status == '4'){
+                /* Electronic signature drawing disabled.
                 if(!is_null($swn->related_specialist->signature)){
                     $url =  url($swn->related_specialist->signature->getUrl());
                     $handle = curl_init($url);
@@ -565,6 +574,7 @@ class SwnController extends Controller
                         . "\"></div>";
                     }
                 }
+                */
             }
 
             $html .= "<div style=\"font-size: 8px; font-weight: bold; position:absolute;top:809px;left:586px;\">( " . $qa_name  . " )</div>";
@@ -584,6 +594,7 @@ class SwnController extends Controller
         // Auditing Section
         if($issuer_name != ''){
             if($auditing_status == "1" || $auditing_status == "2"){
+                /* Electronic signature drawing disabled.
                 if(!is_null($swn->issue_by->signature)){
                     $url =  url($swn->issue_by->signature->getUrl());
                     $handle = curl_init($url);
@@ -599,6 +610,7 @@ class SwnController extends Controller
                         . "\"></div>";
                     }
                 }
+                */
             }
             $html .= "<div style=\"font-size: 8px; font-weight: bold; position:absolute;top:956px;left:155px;\">( " . $issuer_name  . " )</div>";
             $html .= "<div style=\"font-size: 8px; position:absolute;top:975px;left:155px;\">" . $issuer_position  . "</div>";
@@ -606,6 +618,7 @@ class SwnController extends Controller
         }
         if($qa_name != ''){
             if($auditing_status == "1" || $auditing_status == "2"){
+                /* Electronic signature drawing disabled.
                 if(!is_null($swn->related_specialist->signature)){
                     $url =  url($swn->related_specialist->signature->getUrl());
                     $handle = curl_init($url);
@@ -621,6 +634,7 @@ class SwnController extends Controller
                         . "\"></div>";
                     }
                 }
+                */
             }
             $html .= "<div style=\"font-size: 8px; font-weight: bold; position:absolute;top:956px;left:354px;\">( " . $qa_name  . " )</div>";
             $html .= "<div style=\"font-size: 8px; position:absolute;top:975px;left:354px;\">" . $qa_position  . "</div>";
@@ -628,6 +642,7 @@ class SwnController extends Controller
         }
         if($cos_name != ''){
             if($auditing_status == "1" || $auditing_status == "2"){
+                /* Electronic signature drawing disabled.
                 if(!is_null($swn->construction_specialist->signature)){
                     $url =  url($swn->construction_specialist->signature->getUrl());
                     $handle = curl_init($url);
@@ -643,6 +658,7 @@ class SwnController extends Controller
                         . "\"></div>";
                     }
                 }
+                */
             }
             $html .= "<div style=\"font-size: 8px; font-weight: bold; position:absolute;top:960px;left:591px;\">( " . $cos_name  . " )</div>";
             $html .= "<div style=\"font-size: 8px; padding-right:55px; position:absolute;top:975px;left:591px;\">" . $cos_position  . "</div>";
@@ -741,11 +757,13 @@ class SwnController extends Controller
             $html = "<div style=\"font-size: 16px; font-weight: bold; position:absolute;top:224px;left:327px;\">" . "X"  . "</div>";
             if($issuer_name != ''){
                 if($review_status == "2" || $review_status == "3"){
+                    /* Electronic signature drawing disabled.
                     if(!is_null($swn->issue_by->signature)){
                         $html .= "<div style=\"font-weight: bold; position:absolute;top:775;left:160px;\">
                         <img width=\"30%\" height=\"20%\" src=\"" . $swn->issue_by->signature->getPath()
                         . "\"></div>";
                     }
+                    */
                 }
                 $html .= "<div style=\"font-size: 8px; font-weight: bold; position:absolute;top:998px;left:145px;\">( " . $issuer_name  . " )</div>";
                 $html .= "<div style=\"font-size: 7px;  position:absolute;top:1010px;left:145px;\">" . $issuer_position  . "</div>";
@@ -753,11 +771,13 @@ class SwnController extends Controller
             }
             if($qa_name != ''){
                 if($review_status == "1" || $review_status == "2" || $review_status == "3"){
+                    /* Electronic signature drawing disabled.
                     if(!is_null($swn->related_specialist->signature)){
                         $html .= "<div style=\"font-weight: bold; position:absolute;top:960;left:620px;\">
                         <img width=\"50%\" height=\"40%\" src=\"" . $swn->related_specialist->signature->getPath()
                         . "\"></div>";
                     }
+                    */
                 }
                 $html .= "<div style=\"font-size: 8px; font-weight: bold; position:absolute;top:998px;left:610px;\">( " . $qa_name  . " )</div>";
                 $html .= "<div style=\"font-size: 7px; padding-right:55px; position:absolute;top:1010px;left:610px;\">" . $qa_position  . " </div>";
