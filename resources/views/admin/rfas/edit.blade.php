@@ -195,7 +195,7 @@
                                 </tr>
                                 <tr id="signatory_row_2" style="{{ $rfa_signatory_2 ? '' : 'display:none;' }}">
                                     <td>
-                                        <select class="form-control select2" name="signatory_2_id" id="signatory_2_id" style="width:100%;">
+                                        <select class="form-control select2" name="signatory_2_id" id="signatory_2_id" style="width:100%;" {{ $rfa_signatory_2 ? '' : 'disabled' }}>
                                             <option value="" {{ old('signatory_2_id', $rfa_signatory_2->authorized_signatory_id ?? '') == '' ? 'selected' : '' }}>{{ trans('global.pleaseSelect') }}</option>
                                             @foreach($signatories as $id => $entry)
                                                 <option value="{{ $id }}" {{ old('signatory_2_id', $rfa_signatory_2->authorized_signatory_id ?? '') == $id ? 'selected' : '' }}>{{ $entry }}</option>
@@ -203,7 +203,7 @@
                                         </select>
                                     </td>
                                     <td>
-                                        <select class="form-control select2" name="signatory_jobtitle_2_id" id="signatory_jobtitle_2_id" style="width:100%;">
+                                        <select class="form-control select2" name="signatory_jobtitle_2_id" id="signatory_jobtitle_2_id" style="width:100%;" {{ $rfa_signatory_2 ? '' : 'disabled' }}>
                                             <option value="" {{ old('signatory_jobtitle_2_id', $rfa_signatory_2->authorized_signatory_jobtitle_id ?? '') == '' ? 'selected' : '' }}>{{ trans('global.pleaseSelect') }}</option>
                                             @foreach($signatory_jobtitles_2 as $id => $entry)
                                                 <option value="{{ $id }}" {{ old('signatory_jobtitle_2_id', $rfa_signatory_2->authorized_signatory_jobtitle_id ?? '') == $id ? 'selected' : '' }}>{{ $entry }}</option>
@@ -1162,13 +1162,15 @@ Dropzone.options.workFileUploadDropzone = {
     });
 
     $('#btn-add-signatory').click(function(){
+        $('#signatory_2_id, #signatory_jobtitle_2_id').prop('disabled', false);
         $('#signatory_row_2').show();
         $('#signatory_add_row').hide();
         $('#signatory_2_id, #signatory_jobtitle_2_id').next('.select2-container').css('width', '100%');
     });
     $('#btn-remove-signatory-2').click(function(){
-        $('#signatory_2_id').val('');
+        $('#signatory_2_id').val('').trigger('change');
         $('#signatory_jobtitle_2_id').html('');
+        $('#signatory_2_id, #signatory_jobtitle_2_id').prop('disabled', true);
         $('#signatory_row_2').hide();
         $('#signatory_add_row').show();
     });

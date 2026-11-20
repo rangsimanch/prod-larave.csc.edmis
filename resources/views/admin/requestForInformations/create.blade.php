@@ -57,10 +57,10 @@
                                     </tr>
                                     <tr id="signatory_row_2" style="display:none;">
                                         <td>
-                                            <select class="form-control select2" name="signatory_2_id" id="signatory_2_id" style="width:100%;"></select>
+                                            <select class="form-control select2" name="signatory_2_id" id="signatory_2_id" style="width:100%;" disabled></select>
                                         </td>
                                         <td>
-                                            <select class="form-control select2" name="signatory_jobtitle_2_id" id="signatory_jobtitle_2_id" style="width:100%;"></select>
+                                            <select class="form-control select2" name="signatory_jobtitle_2_id" id="signatory_jobtitle_2_id" style="width:100%;" disabled></select>
                                         </td>
                                         <td>
                                             <a class="btn btn-xs btn-danger" id="btn-remove-signatory-2">- {{ trans('cruds.rfa.fields.remove_signatory') }}</a>
@@ -421,13 +421,15 @@ Dropzone.options.attachmentFilesDropzone = {
     });
 
     $('#btn-add-signatory').click(function(){
+        $('#signatory_2_id, #signatory_jobtitle_2_id').prop('disabled', false);
         $('#signatory_row_2').show();
         $('#signatory_add_row').hide();
         $('#signatory_2_id, #signatory_jobtitle_2_id').next('.select2-container').css('width', '100%');
     });
     $('#btn-remove-signatory-2').click(function(){
-        $('#signatory_2_id').val('');
+        $('#signatory_2_id').val('').trigger('change');
         $('#signatory_jobtitle_2_id').html('');
+        $('#signatory_2_id, #signatory_jobtitle_2_id').prop('disabled', true);
         $('#signatory_row_2').hide();
         $('#signatory_add_row').show();
     });
@@ -438,6 +440,7 @@ Dropzone.options.attachmentFilesDropzone = {
         $('#signatory_2_id').html('');
         $('#signatory_jobtitle_id').html('');
         $('#signatory_jobtitle_2_id').html('');
+        $('#signatory_2_id, #signatory_jobtitle_2_id').prop('disabled', true);
         $('#signatory_row_2').hide();
         $('#signatory_add_row').show();
         if(!select){
@@ -451,7 +454,9 @@ Dropzone.options.attachmentFilesDropzone = {
             data:{select:select, _token:"{{ csrf_token() }}"},
             success:function(result){
                 $('#signatory_id').html(result);
-                $('#signatory_2_id').html(result).val('');
+                $('#signatory_2_id').html('<option value="">{{ trans('global.pleaseSelect') }}</option>' + result)
+                    .find('option').prop('defaultSelected', false).end()
+                    .val('').trigger('change.select2');
                 $('#signatory_id').trigger('change');
                 rfaDisableDuplicateSignatories();
             }
